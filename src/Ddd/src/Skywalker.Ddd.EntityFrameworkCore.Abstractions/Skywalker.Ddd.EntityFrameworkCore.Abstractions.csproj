@@ -1,0 +1,19 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+    <Import Project="..\..\..\..\skywalker.props" />
+    <Import Project="..\..\..\..\version.props" />
+
+    <ItemGroup>
+      <PackageReference Include="Microsoft.EntityFrameworkCore" Version="5.0.0-rc.2.20475.6" />
+      <PackageReference Include="Microsoft.EntityFrameworkCore.Abstractions" Version="5.0.0-rc.2.20475.6" />
+      <PackageReference Include="Microsoft.EntityFrameworkCore.Analyzers" Version="5.0.0-rc.2.20475.6" />
+      <PackageReference Include="Microsoft.EntityFrameworkCore.Proxies" Version="5.0.0-rc.2.20475.6" />
+      <PackageReference Include="Microsoft.EntityFrameworkCore.Relational" Version="5.0.0-rc.2.20475.6" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <ProjectReference Include="..\..\..\Extensions\src\Skywalker.Extensions.GuidGenerator\Skywalker.Extensions.GuidGenerator.csproj" />
+      <ProjectReference Include="..\Skywalker.Ddd\Skywalker.Ddd.csproj" />
+      <ProjectReference Include="..\Skywalker.Ddd.Domain.Abstractions\Skywalker.Ddd.Domain.Abstractions.csproj" />
+    </ItemGroup>
+</Project>

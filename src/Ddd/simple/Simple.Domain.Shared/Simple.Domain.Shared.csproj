@@ -1,0 +1,9 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+    <Import Project="..\..\..\..\skywalker.props" />
+
+    <ItemGroup>
+      <Folder Include="Simple\Domain\" />
+    </ItemGroup>
+    
+</Project>

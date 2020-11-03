@@ -1,0 +1,16 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+    <Import Project="..\..\..\..\skywalker.props" />
+    <Import Project="..\..\..\..\version.props" />
+
+    <ItemGroup>
+      <PackageReference Include="Microsoft.Extensions.Localization" Version="5.0.0-rc.2.20475.17" />
+    </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\..\Extensions\src\Skywalker.Extensions.Universal\Skywalker.Extensions.Universal.csproj" />
+    <ProjectReference Include="..\Skywalker.Ddd.VirtualFileSystem\Skywalker.Ddd.VirtualFileSystem.csproj" />
+    <ProjectReference Include="..\Skywalker.Ddd.Localization.Abstractions\Skywalker.Ddd.Localization.Abstractions.csproj" />
+  </ItemGroup>
+
+</Project>

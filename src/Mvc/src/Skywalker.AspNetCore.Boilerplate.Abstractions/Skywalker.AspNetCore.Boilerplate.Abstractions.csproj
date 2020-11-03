@@ -1,0 +1,13 @@
+﻿<Project Sdk="Microsoft.NET.Sdk.Razor">
+
+    <Import Project="..\..\blazor.props" />
+
+    <ItemGroup>
+      <PackageReference Include="Microsoft.AspNetCore.Components.WebAssembly" Version="5.0.0-rc.2.20475.17" />
+    </ItemGroup>
+
+    <ItemGroup>
+        <ProjectReference Include="..\Skywalker.Abstractions\Skywalker.Abstractions.csproj" />
+    </ItemGroup>
+
+</Project>

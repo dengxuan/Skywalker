@@ -1,0 +1,14 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+    <Import Project="..\..\..\..\skywalker.props" />
+    <Import Project="..\..\..\..\version.props" />
+
+    <ItemGroup>
+      <PackageReference Include="Microsoft.Extensions.DependencyInjection.Abstractions" Version="5.0.0-rc.2.20475.5" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <ProjectReference Include="..\Skywalker.AspNetCore.Security.Abstractions\Skywalker.AspNetCore.Security.Abstractions.csproj" />
+    </ItemGroup>
+
+</Project>

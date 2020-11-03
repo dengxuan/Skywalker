@@ -1,0 +1,30 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.30615.102
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Skywalker.EventBus.Abstractions", "src\Skywalker.EventBus.Abstractions\Skywalker.EventBus.Abstractions.csproj", "{3A935DA7-95DA-4127-B42A-89E6343D8C13}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{6A60F657-4639-446E-A16D-D6B1AFC1C322}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{3A935DA7-95DA-4127-B42A-89E6343D8C13}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{3A935DA7-95DA-4127-B42A-89E6343D8C13}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{3A935DA7-95DA-4127-B42A-89E6343D8C13}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{3A935DA7-95DA-4127-B42A-89E6343D8C13}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{3A935DA7-95DA-4127-B42A-89E6343D8C13} = {6A60F657-4639-446E-A16D-D6B1AFC1C322}
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {427641C2-B020-4DF8-A979-C605FB089761}
+	EndGlobalSection
+EndGlobal

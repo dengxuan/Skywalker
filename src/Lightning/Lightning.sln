@@ -1,0 +1,83 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.30615.102
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Skywalker.Lightning.Abstractions", "src\Skywalker.Lightning.Abstractions\Skywalker.Lightning.Abstractions.csproj", "{9E26E418-BA9E-48B3-BE11-04347E53E8DA}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Skywalker.Lightning.Server.Asbtractions", "src\Skywalker.Lightning.Server.Asbtractions\Skywalker.Lightning.Server.Asbtractions.csproj", "{6583B8A7-C04C-4459-8D12-B3676E3E3BC7}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Skywalker.Lightning.Server.DotNetty", "src\Skywalker.Lightning.Server.DotNetty\Skywalker.Lightning.Server.DotNetty.csproj", "{6D7DCA2F-5AB8-4663-8E5C-0E17D917C5BC}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Skywalker.Lightning.Serializer.MessagePack", "src\Skywalker.Lightning.Serializer.MessagePack\Skywalker.Lightning.Serializer.MessagePack.csproj", "{489F11F2-4F76-4A43-AFE6-703D101A4CDA}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Skywalker.Lightning.Terminal.Abstractions", "src\Skywalker.Lightning.Terminal.Abstractions\Skywalker.Lightning.Terminal.Abstractions.csproj", "{B1AEE805-63B9-4EE4-80A2-8A338419A10E}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Skywalker.Lightning.Terminal.DotNetty", "src\Skywalker.Lightning.Terminal.DotNetty\Skywalker.Lightning.Terminal.DotNetty.csproj", "{08C36913-F97C-421C-AAD4-DEC26DC20B90}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{8D9E120F-648D-4B67-84A7-4BFD65E5F3EA}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "tests", "tests", "{1670F338-03B9-4FE2-B1D3-51C5EF632F8F}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "simple", "simple", "{7E964B47-4999-4467-A47A-B05D8098504D}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Skywalker.Lighting.Server", "simple\Skywalker.Lighting.Server\Skywalker.Lighting.Server.csproj", "{D8F63CC6-5A98-4729-9731-43441CF3ECD5}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Skywalker.Lighting.Terminal", "simple\Skywalker.Lighting.Terminal\Skywalker.Lighting.Terminal.csproj", "{1A4CDB07-AD49-48E5-81A0-6F028C155EF9}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{9E26E418-BA9E-48B3-BE11-04347E53E8DA}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{9E26E418-BA9E-48B3-BE11-04347E53E8DA}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{9E26E418-BA9E-48B3-BE11-04347E53E8DA}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{9E26E418-BA9E-48B3-BE11-04347E53E8DA}.Release|Any CPU.Build.0 = Release|Any CPU
+		{6583B8A7-C04C-4459-8D12-B3676E3E3BC7}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{6583B8A7-C04C-4459-8D12-B3676E3E3BC7}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{6583B8A7-C04C-4459-8D12-B3676E3E3BC7}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{6583B8A7-C04C-4459-8D12-B3676E3E3BC7}.Release|Any CPU.Build.0 = Release|Any CPU
+		{6D7DCA2F-5AB8-4663-8E5C-0E17D917C5BC}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{6D7DCA2F-5AB8-4663-8E5C-0E17D917C5BC}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{6D7DCA2F-5AB8-4663-8E5C-0E17D917C5BC}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{6D7DCA2F-5AB8-4663-8E5C-0E17D917C5BC}.Release|Any CPU.Build.0 = Release|Any CPU
+		{489F11F2-4F76-4A43-AFE6-703D101A4CDA}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{489F11F2-4F76-4A43-AFE6-703D101A4CDA}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{489F11F2-4F76-4A43-AFE6-703D101A4CDA}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{489F11F2-4F76-4A43-AFE6-703D101A4CDA}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B1AEE805-63B9-4EE4-80A2-8A338419A10E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B1AEE805-63B9-4EE4-80A2-8A338419A10E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B1AEE805-63B9-4EE4-80A2-8A338419A10E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B1AEE805-63B9-4EE4-80A2-8A338419A10E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{08C36913-F97C-421C-AAD4-DEC26DC20B90}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{08C36913-F97C-421C-AAD4-DEC26DC20B90}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{08C36913-F97C-421C-AAD4-DEC26DC20B90}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{08C36913-F97C-421C-AAD4-DEC26DC20B90}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D8F63CC6-5A98-4729-9731-43441CF3ECD5}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D8F63CC6-5A98-4729-9731-43441CF3ECD5}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D8F63CC6-5A98-4729-9731-43441CF3ECD5}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D8F63CC6-5A98-4729-9731-43441CF3ECD5}.Release|Any CPU.Build.0 = Release|Any CPU
+		{1A4CDB07-AD49-48E5-81A0-6F028C155EF9}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{1A4CDB07-AD49-48E5-81A0-6F028C155EF9}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{1A4CDB07-AD49-48E5-81A0-6F028C155EF9}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{1A4CDB07-AD49-48E5-81A0-6F028C155EF9}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{9E26E418-BA9E-48B3-BE11-04347E53E8DA} = {8D9E120F-648D-4B67-84A7-4BFD65E5F3EA}
+		{6583B8A7-C04C-4459-8D12-B3676E3E3BC7} = {8D9E120F-648D-4B67-84A7-4BFD65E5F3EA}
+		{6D7DCA2F-5AB8-4663-8E5C-0E17D917C5BC} = {8D9E120F-648D-4B67-84A7-4BFD65E5F3EA}
+		{489F11F2-4F76-4A43-AFE6-703D101A4CDA} = {8D9E120F-648D-4B67-84A7-4BFD65E5F3EA}
+		{B1AEE805-63B9-4EE4-80A2-8A338419A10E} = {8D9E120F-648D-4B67-84A7-4BFD65E5F3EA}
+		{08C36913-F97C-421C-AAD4-DEC26DC20B90} = {8D9E120F-648D-4B67-84A7-4BFD65E5F3EA}
+		{D8F63CC6-5A98-4729-9731-43441CF3ECD5} = {7E964B47-4999-4467-A47A-B05D8098504D}
+		{1A4CDB07-AD49-48E5-81A0-6F028C155EF9} = {7E964B47-4999-4467-A47A-B05D8098504D}
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {6C7AA1E6-487A-4D89-875C-7DA1A9056987}
+	EndGlobalSection
+EndGlobal

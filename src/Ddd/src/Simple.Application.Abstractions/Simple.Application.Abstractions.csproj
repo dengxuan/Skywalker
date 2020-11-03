@@ -1,0 +1,10 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+    <Import Project="..\..\..\..\skywalker.props" />
+
+    <ItemGroup>
+      <ProjectReference Include="..\..\simple\Simple.Domain.Shared\Simple.Domain.Shared.csproj" />
+      <ProjectReference Include="..\Skywalker.Ddd.Application.Abstractions\Skywalker.Ddd.Application.Abstractions.csproj" />
+    </ItemGroup>
+
+</Project>

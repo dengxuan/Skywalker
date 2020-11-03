@@ -1,0 +1,14 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+    <Import Project="..\..\..\..\skywalker.props" />
+    <Import Project="..\..\..\..\version.props" />
+
+    <ItemGroup>
+        <Folder Include="Cryptography\" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <ProjectReference Include="..\Skywalker.Security.Abstractions\Skywalker.Security.Abstractions.csproj" />
+    </ItemGroup>
+
+</Project>

@@ -1,0 +1,10 @@
+<Project>
+    <PropertyGroup>
+        <VersionPrefix>1.0.0</VersionPrefix>
+        <VersionSuffix>rc</VersionSuffix>
+        <BuildNumber Condition="'$(BuildNumber)' == ''">1.0.1</BuildNumber>
+        <PackageVersion Condition="'$(IsFinalBuild)' == 'true' AND '$(VersionSuffix)' == 'rtm' ">$(VersionPrefix)</PackageVersion>
+        <PackageVersion Condition="'$(IsFinalBuild)' == 'true' AND '$(VersionSuffix)' != 'rtm' ">$(VersionPrefix)-$(VersionSuffix).$(BuildNumber)</PackageVersion>
+        <VersionSuffix Condition="'$(VersionSuffix)' != '' And '$(BuildNumber)' != ''">$(VersionSuffix).$(BuildNumber)</VersionSuffix>
+    </PropertyGroup>
+</Project>

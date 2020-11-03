@@ -1,0 +1,10 @@
+<Project Sdk="Microsoft.NET.Sdk">
+    <Import Project="..\..\..\..\skywalker.props" />
+    <ItemGroup>
+      <PackageReference Include="AutoMapper" Version="10.1.1" />
+    </ItemGroup>
+    <ItemGroup>
+      <ProjectReference Include="..\Skywalker.Ddd.ObjectMapping\Skywalker.Ddd.ObjectMapping.csproj" />
+    </ItemGroup>
+
+</Project>

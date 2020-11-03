@@ -1,0 +1,14 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+    <Import Project="..\..\..\..\skywalker.props" />
+    <Import Project="..\..\..\..\version.props" />
+
+    <ItemGroup>
+      <PackageReference Include="MessagePack" Version="2.2.60" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <ProjectReference Include="..\Skywalker.Lightning.Abstractions\Skywalker.Lightning.Abstractions.csproj" />
+    </ItemGroup>
+
+</Project>

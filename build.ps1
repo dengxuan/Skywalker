@@ -1,0 +1,1 @@
+dotnet.exe pack -c Release --output D:\Home\Skywalker\nupkgs

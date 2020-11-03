@@ -1,0 +1,16 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+    <Import Project="..\..\..\..\skywalker.props" />
+    <Import Project="..\..\..\..\version.props" />
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\..\EventBus\src\Skywalker.EventBus.Abstractions\Skywalker.EventBus.Abstractions.csproj" />
+    <ProjectReference Include="..\..\..\Extensions\src\Skywalker.Extensions.GuidGenerator\Skywalker.Extensions.GuidGenerator.csproj" />
+    <ProjectReference Include="..\..\..\Extensions\src\Skywalker.Extensions.Threading\Skywalker.Extensions.Threading.csproj" />
+    <ProjectReference Include="..\..\..\Extensions\src\Skywalker.Extensions.Timing\Skywalker.Extensions.Timing.csproj" />
+    <ProjectReference Include="..\Skywalker.Ddd.ObjectMapping\Skywalker.Ddd.ObjectMapping.csproj" />
+    <ProjectReference Include="..\Skywalker.Ddd.Localization.Abstractions\Skywalker.Ddd.Localization.Abstractions.csproj" />
+    <ProjectReference Include="..\Skywalker.Ddd.Validation.Abstractions\Skywalker.Ddd.Validation.Abstractions.csproj" />
+  </ItemGroup>
+
+</Project>

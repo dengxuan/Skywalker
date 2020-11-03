@@ -1,0 +1,24 @@
+<Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+    <PropertyGroup>
+        <Description>Skywalker</Description>
+        <Authors>Gordon</Authors>
+        <Company></Company>
+        <Copyright>Copyright 2017 Gordon</Copyright>
+        <RepositoryUrl>https://dengxuan.visualstudio.com/Skywalker/_git/Skywalker</RepositoryUrl>
+        <RepositoryType>git</RepositoryType>
+
+        <TargetFramework>net5.0</TargetFramework>
+        <OutputType>Library</OutputType>
+        <IsPackable>true</IsPackable>
+        <LangVersion>9.0</LangVersion>
+        <Nullable>enable</Nullable>
+
+        <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
+        <PackageRequireLicenseAcceptance>false</PackageRequireLicenseAcceptance>
+
+        <RestoreAdditionalProjectSources>
+            http://nexus.douyinwanghong.com.cn/repository/nuget-skywalkers/index.json;
+        </RestoreAdditionalProjectSources>
+        <RootNamespace />
+    </PropertyGroup>
+</Project>

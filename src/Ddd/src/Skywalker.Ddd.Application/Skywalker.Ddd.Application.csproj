@@ -1,0 +1,16 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+    <Import Project="..\..\..\..\skywalker.props" />
+    <Import Project="..\..\..\..\version.props" />
+
+    <ItemGroup>
+      <PackageReference Include="System.Linq.Dynamic.Core" Version="1.2.5" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <ProjectReference Include="..\..\..\Security\src\Skywalker.Security.Abstractions\Skywalker.Security.Abstractions.csproj" />
+      <ProjectReference Include="..\Skywalker.Ddd.Application.Abstractions\Skywalker.Ddd.Application.Abstractions.csproj" />
+      <ProjectReference Include="..\Skywalker.Ddd.Localization\Skywalker.Ddd.Localization.csproj" />
+      <ProjectReference Include="..\Skywalker.Ddd.Validation\Skywalker.Ddd.Validation.csproj" />
+    </ItemGroup>
+</Project>

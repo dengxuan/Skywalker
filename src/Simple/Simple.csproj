@@ -1,0 +1,47 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <OutputType>Exe</OutputType>
+    <TargetFramework>net5.0</TargetFramework>
+    <AssemblyVersion>1.0.0.1</AssemblyVersion>
+    <Version>1.0.1</Version>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
+    <Optimize>false</Optimize>
+    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="5.0.0-rc.2.20475.6">
+      <PrivateAssets>all</PrivateAssets>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+    </PackageReference>
+    <PackageReference Include="Microsoft.Extensions.Configuration" Version="5.0.0-rc.2.20475.5" />
+    <PackageReference Include="Microsoft.Extensions.Configuration.EnvironmentVariables" Version="5.0.0-rc.2.20475.5" />
+    <PackageReference Include="Microsoft.Extensions.Configuration.Json" Version="5.0.0-rc.2.20475.5" />
+    <PackageReference Include="Microsoft.Extensions.Hosting" Version="5.0.0-rc.2.20475.5" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\simple\Simple.Ddd.Application.Abstractions\Simple.Ddd.Application.Abstractions.csproj" />
+    <ProjectReference Include="..\..\simple\Simple.Ddd.Application\Simple.Ddd.Application.csproj" />
+    <ProjectReference Include="..\..\simple\Simple.EntityFrameworkCore\Simple.EntityFrameworkCore.csproj" />
+    <ProjectReference Include="..\Skywalker.Abstractions\Skywalker.Abstractions.csproj" />
+    <ProjectReference Include="..\Skywalker.Caching.Redis\Skywalker.Caching.Redis.csproj" />
+    <ProjectReference Include="..\Skywalker.Distributed.Client.DotNetty\Skywalker.Distributed.Client.DotNetty.csproj" />
+    <ProjectReference Include="..\Skywalker.Distributed.Server.Asbtractions\Skywalker.Distributed.Server.Asbtractions.csproj" />
+    <ProjectReference Include="..\Skywalker.Distributed.Server.DotNetty\Skywalker.Distributed.Server.DotNetty.csproj" />
+    <ProjectReference Include="..\Skywalker.EntityFrameworkCore.SqlServer\Skywalker.EntityFrameworkCore.SqlServer.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Update="appsettings.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="socialnetwork.pfx">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+  </ItemGroup>
+
+</Project>

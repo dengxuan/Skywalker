@@ -1,0 +1,15 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+    <Import Project="..\..\..\..\skywalker.props" />
+    <Import Project="..\..\..\..\version.props" />
+
+    <ItemGroup>
+      <PackageReference Include="DotNetty.Handlers" Version="0.6.0" />
+      <PackageReference Include="DotNetty.Transport.Libuv" Version="0.6.0" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <ProjectReference Include="..\..\..\Extensions\src\Skywalker.Extensions.Collections\Skywalker.Extensions.Collections.csproj" />
+    </ItemGroup>
+
+</Project>
