@@ -13,7 +13,7 @@
         <LangVersion>9.0</LangVersion>
         <Nullable>enable</Nullable>
 
-        <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
+        <GeneratePackageOnBuild>false</GeneratePackageOnBuild>
         <PackageRequireLicenseAcceptance>false</PackageRequireLicenseAcceptance>
 
         <RestoreAdditionalProjectSources>
