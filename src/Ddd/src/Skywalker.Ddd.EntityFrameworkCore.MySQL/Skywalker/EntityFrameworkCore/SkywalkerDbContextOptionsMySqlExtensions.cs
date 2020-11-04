@@ -6,7 +6,7 @@ namespace Skywalker.EntityFrameworkCore
 {
     public static class SkywalkerDbContextOptionsMySqlExtensions
     {
-        public static void UseSqlServer(
+        public static void UseMySql(
                 [NotNull] this SkywalkerDbContextOptions options,
                 [MaybeNull] Action<MySqlDbContextOptionsBuilder> mySQLOptionsAction = null)
         {
@@ -16,7 +16,7 @@ namespace Skywalker.EntityFrameworkCore
             });
         }
 
-        public static void UseSqlServer<TDbContext>(
+        public static void UseMySql<TDbContext>(
             [NotNull] this SkywalkerDbContextOptions options,
             [MaybeNull] Action<MySqlDbContextOptionsBuilder> mySQLOptionsAction = null)
             where TDbContext : SkywalkerDbContext<TDbContext>
