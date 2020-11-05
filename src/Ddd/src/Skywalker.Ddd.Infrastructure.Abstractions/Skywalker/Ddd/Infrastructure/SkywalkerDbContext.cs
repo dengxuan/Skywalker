@@ -87,7 +87,7 @@ namespace Skywalker.Ddd.Infrastructure
 
         public int SaveChanges(bool acceptAllChangesOnSuccess)
         {
-            return DbContext.SaveChanges();
+            return DbContext.SaveChanges(acceptAllChangesOnSuccess);
         }
 
         public Task<int> SaveChangesAsync(CancellationToken cancellationToken = default)
@@ -112,7 +112,7 @@ namespace Skywalker.Ddd.Infrastructure
 
         public Task AddRangeAsync([NotNull] IEnumerable<object> entities, CancellationToken cancellationToken = default)
         {
-            return DbContext.AddRangeAsync(entities);
+            return DbContext.AddRangeAsync(entities, cancellationToken);
         }
 
         public void AttachRange([NotNull] IEnumerable<object> entities)
