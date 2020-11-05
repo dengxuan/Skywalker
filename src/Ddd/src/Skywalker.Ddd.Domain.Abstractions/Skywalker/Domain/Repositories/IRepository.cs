@@ -15,8 +15,7 @@ namespace Skywalker.Domain.Repositories
 
     }
 
-    public interface IRepository<TEntity> : IReadOnlyRepository<TEntity>, IBasicRepository<TEntity>
-        where TEntity : class, IEntity
+    public interface IRepository<TEntity> : IReadOnlyRepository<TEntity>, IBasicRepository<TEntity> where TEntity : class, IEntity
     {
         /// <summary>
         /// Get a single entity by the given <paramref name="predicate"/>.
@@ -26,11 +25,7 @@ namespace Skywalker.Domain.Repositories
         /// <param name="predicate">A condition to find the entity</param>
         /// <param name="includeDetails">Set true to include all children of this entity</param>
         /// <param name="cancellationToken">A <see cref="T:System.Threading.CancellationToken" /> to observe while waiting for the task to complete.</param>
-        Task<TEntity> FindAsync(
-            [NotNull] Expression<Func<TEntity, bool>> predicate,
-            bool includeDetails = true,
-            CancellationToken cancellationToken = default
-        );
+        Task<TEntity> FindAsync([NotNull] Expression<Func<TEntity, bool>> predicate, bool includeDetails = true, CancellationToken cancellationToken = default);
 
         /// <summary>
         /// Get a single entity by the given <paramref name="predicate"/>.
@@ -40,11 +35,7 @@ namespace Skywalker.Domain.Repositories
         /// <param name="predicate">A condition to filter entities</param>
         /// <param name="includeDetails">Set true to include all children of this entity</param>
         /// <param name="cancellationToken">A <see cref="T:System.Threading.CancellationToken" /> to observe while waiting for the task to complete.</param>
-        Task<TEntity> GetAsync(
-            [NotNull] Expression<Func<TEntity, bool>> predicate,
-            bool includeDetails = true,
-            CancellationToken cancellationToken = default
-        );
+        Task<TEntity> GetAsync([NotNull] Expression<Func<TEntity, bool>> predicate, bool includeDetails = true, CancellationToken cancellationToken = default);
 
         /// <summary>
         /// Deletes many entities by function.
@@ -58,15 +49,10 @@ namespace Skywalker.Domain.Repositories
         /// This is useful for ORMs / database APIs those only save changes with an explicit method call, but you need to immediately save changes to the database.
         /// </param>
         /// <param name="cancellationToken">A <see cref="T:System.Threading.CancellationToken" /> to observe while waiting for the task to complete.</param>
-        Task DeleteAsync(
-            [NotNull] Expression<Func<TEntity, bool>> predicate,
-            bool autoSave = false,
-            CancellationToken cancellationToken = default
-        );
+        Task DeleteAsync([NotNull] Expression<Func<TEntity, bool>> predicate, bool autoSave = false, CancellationToken cancellationToken = default);
     }
 
-    public interface IRepository<TEntity, TKey> : IRepository<TEntity>, IReadOnlyRepository<TEntity, TKey>, IBasicRepository<TEntity, TKey>
-        where TEntity : class, IEntity<TKey>
+    public interface IRepository<TEntity, TKey> : IRepository<TEntity>, IReadOnlyRepository<TEntity, TKey>, IBasicRepository<TEntity, TKey> where TEntity : class, IEntity<TKey>
     {
     }
 }

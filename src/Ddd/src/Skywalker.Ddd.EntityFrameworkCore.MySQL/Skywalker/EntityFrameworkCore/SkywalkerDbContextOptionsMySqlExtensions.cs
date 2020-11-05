@@ -1,4 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore.Infrastructure;
+using MySql.Data.EntityFrameworkCore.Infrastructure;
 using System;
 using System.Diagnostics.CodeAnalysis;
 
@@ -8,7 +9,7 @@ namespace Skywalker.EntityFrameworkCore
     {
         public static void UseMySql(
                 [NotNull] this SkywalkerDbContextOptions options,
-                [MaybeNull] Action<MySqlDbContextOptionsBuilder> mySQLOptionsAction = null)
+                [MaybeNull] Action<MySQLDbContextOptionsBuilder> mySQLOptionsAction = null)
         {
             options.Configure(context =>
             {
@@ -18,7 +19,7 @@ namespace Skywalker.EntityFrameworkCore
 
         public static void UseMySql<TDbContext>(
             [NotNull] this SkywalkerDbContextOptions options,
-            [MaybeNull] Action<MySqlDbContextOptionsBuilder> mySQLOptionsAction = null)
+            [MaybeNull] Action<MySQLDbContextOptionsBuilder> mySQLOptionsAction = null)
             where TDbContext : SkywalkerDbContext<TDbContext>
         {
             options.Configure<TDbContext>(context =>

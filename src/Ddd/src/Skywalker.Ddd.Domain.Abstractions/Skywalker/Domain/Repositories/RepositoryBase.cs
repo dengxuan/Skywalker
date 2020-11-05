@@ -4,6 +4,7 @@ using Skywalker.Domain.Entities;
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using System.Linq.Expressions;
 using System.Threading;
@@ -11,10 +12,9 @@ using System.Threading.Tasks;
 
 namespace Skywalker.Domain.Repositories
 {
-    public abstract class RepositoryBase<TEntity> : BasicRepositoryBase<TEntity>, IRepository<TEntity>
-        where TEntity : class, IEntity
+    public abstract class RepositoryBase<TEntity> : BasicRepositoryBase<TEntity>, IRepository<TEntity> where TEntity : class, IEntity
     {
-        public IDataFilter DataFilter { get; set; }
+        public IDataFilter? DataFilter { get; set; }
 
         public virtual Type ElementType => GetQueryable().ElementType;
 
@@ -44,15 +44,9 @@ namespace Skywalker.Domain.Repositories
 
         protected abstract IQueryable<TEntity> GetQueryable();
 
-        public abstract Task<TEntity> FindAsync(
-            Expression<Func<TEntity, bool>> predicate, 
-            bool includeDetails = true,
-            CancellationToken cancellationToken = default);
+        public abstract Task<TEntity> FindAsync([NotNull] Expression<Func<TEntity, bool>> predicate, bool includeDetails = true, CancellationToken cancellationToken = default);
 
-        public async Task<TEntity> GetAsync(
-            Expression<Func<TEntity, bool>> predicate, 
-            bool includeDetails = true,
-            CancellationToken cancellationToken = default)
+        public async Task<TEntity> GetAsync([NotNull] Expression<Func<TEntity, bool>> predicate, bool includeDetails = true, CancellationToken cancellationToken = default)
         {
             var entity = await FindAsync(predicate, includeDetails, cancellationToken);
 
@@ -64,22 +58,20 @@ namespace Skywalker.Domain.Repositories
             return entity;
         }
 
-        public abstract Task DeleteAsync(Expression<Func<TEntity, bool>> predicate, bool autoSave = false, CancellationToken cancellationToken = default);
+        public abstract Task DeleteAsync([NotNull] Expression<Func<TEntity, bool>> predicate, bool autoSave = false, CancellationToken cancellationToken = default);
 
-        protected virtual TQueryable ApplyDataFilters<TQueryable>(TQueryable query)
-            where TQueryable : IQueryable<TEntity>
+        protected virtual TQueryable ApplyDataFilters<TQueryable>(TQueryable query) where TQueryable : IQueryable<TEntity>
         {
             if (typeof(IDeleteable).IsAssignableFrom(typeof(TEntity)))
             {
-                query = (TQueryable)query.WhereIf(DataFilter.IsEnabled<IDeleteable>(), e => ((IDeleteable)e).IsDeleted == false);
+                query = (TQueryable)query.WhereIf(DataFilter!.IsEnabled<IDeleteable>(), e => ((IDeleteable)e).IsDeleted == false);
             }
 
             return query;
         }
     }
 
-    public abstract class RepositoryBase<TEntity, TKey> : RepositoryBase<TEntity>, IRepository<TEntity, TKey>
-        where TEntity : class, IEntity<TKey>
+    public abstract class RepositoryBase<TEntity, TKey> : RepositoryBase<TEntity>, IRepository<TEntity, TKey> where TEntity : class, IEntity<TKey>
     {
         public abstract Task<TEntity> GetAsync(TKey id, bool includeDetails = true, CancellationToken cancellationToken = default);
 

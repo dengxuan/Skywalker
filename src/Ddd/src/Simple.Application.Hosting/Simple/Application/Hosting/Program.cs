@@ -24,13 +24,7 @@ namespace Simple.Application.Hosting
                 });
                 configure.AddSkywalker(builder =>
                 {
-                    builder.AddEntityFrameworkCore<SimpleDbContext>(options =>
-                    {
-                        options.Configure(configure =>
-                        {
-                            configure.UseSqlServer();
-                        });
-                    });
+                    builder.AddMongodb<SimpleDbContext>();
                     builder.AddAutoMapper(options =>
                     {
                         options.AddProfile<SimpleApplicationAutoMapperProfile>();

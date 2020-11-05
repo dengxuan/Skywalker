@@ -6,9 +6,8 @@
 
     <Import Project="..\..\..\..\skywalker.props" />
     <Import Project="..\..\..\..\version.props" />
-
     <ItemGroup>
-      <PackageReference Include="Pomelo.EntityFrameworkCore.MySql" Version="3.2.3" />
+      <PackageReference Include="MySql.Data.EntityFrameworkCore" Version="8.0.22" />
     </ItemGroup>
 
     <ItemGroup>

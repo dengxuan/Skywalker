@@ -13,7 +13,7 @@ namespace Microsoft.Extensions.DependencyInjection
 {
     public static class SkywalkerMongodbServiceCollectionExtensions
     {
-        public static SkywalkerBuilder AddMongodb<TDbContext>(this SkywalkerBuilder builder) where TDbContext : IAbpMongoDbContext
+        public static SkywalkerBuilder AddMongodb<TDbContext>(this SkywalkerBuilder builder)
         {
             builder.Services.TryAddTransient( typeof(IMongoDbContextProvider<>),typeof(DefaultMongoDbContextProvider<>));
 

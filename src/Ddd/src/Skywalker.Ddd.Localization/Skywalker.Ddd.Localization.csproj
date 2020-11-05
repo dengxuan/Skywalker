@@ -8,7 +8,7 @@
     <Import Project="..\..\..\..\version.props" />
 
     <ItemGroup>
-      <PackageReference Include="Microsoft.Extensions.Localization" Version="5.0.0-rc.2.20475.17" />
+      <PackageReference Include="Microsoft.Extensions.Localization" Version="5.0.0-rtm.20512.8" />
     </ItemGroup>
 
   <ItemGroup>
