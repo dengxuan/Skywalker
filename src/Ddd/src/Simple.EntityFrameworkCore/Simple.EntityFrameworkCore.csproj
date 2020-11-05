@@ -8,7 +8,7 @@
 
     <ItemGroup>
       <ProjectReference Include="..\..\simple\Simple.Domain\Simple.Domain.csproj" />
-      <ProjectReference Include="..\Skywalker.Ddd.EntityFrameworkCore.Abstractions\Skywalker.Ddd.EntityFrameworkCore.Abstractions.csproj" />
+      <ProjectReference Include="..\Skywalker.Ddd.Infrastructure.Extensions.EntityFrameworkCore\Skywalker.Ddd.Infrastructure.Extensions.EntityFrameworkCore.csproj" />
     </ItemGroup>
 
 </Project>

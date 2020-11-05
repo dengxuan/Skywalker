@@ -10,7 +10,7 @@ namespace Microsoft.Extensions.DependencyInjection
 {
     public static class InfrastructureSkywalkerBuilderExtensions
     {
-        public static SkywalkerBuilder AddEntityFrameworkCore<TDbContext>(this SkywalkerBuilder builder, Action<SkywalkerDbContextOptions> optionsBuilder) where TDbContext : SkywalkerDbContext<TDbContext>
+        public static SkywalkerBuilder AddEntityFrameworkCore<TDbContext>(this SkywalkerBuilder builder, Action<SkywalkerDbContextOptions> optionsBuilder) where TDbContext : SkywalkerDbContext<TDbContext>, IDbContext
         {
             builder.Services.Configure(optionsBuilder);
 

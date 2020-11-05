@@ -1,4 +1,4 @@
-<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk">
 
     <PropertyGroup>
       <Platforms>AnyCPU;x64;x86</Platforms>
@@ -9,9 +9,8 @@
     <ItemGroup>
       <PackageReference Include="MySql.Data.EntityFrameworkCore" Version="8.0.22" />
     </ItemGroup>
-
     <ItemGroup>
-        <ProjectReference Include="..\Skywalker.Ddd.EntityFrameworkCore.Abstractions\Skywalker.Ddd.EntityFrameworkCore.Abstractions.csproj" />
+      <ProjectReference Include="..\Skywalker.Ddd.Infrastructure.Extensions.EntityFrameworkCore\Skywalker.Ddd.Infrastructure.Extensions.EntityFrameworkCore.csproj" />
     </ItemGroup>
 
 </Project>

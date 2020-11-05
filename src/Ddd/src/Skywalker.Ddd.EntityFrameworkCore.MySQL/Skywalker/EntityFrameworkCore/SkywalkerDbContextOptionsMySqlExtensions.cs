@@ -1,5 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore.Infrastructure;
 using MySql.Data.EntityFrameworkCore.Infrastructure;
+using Skywalker.Ddd.Infrastructure;
+using Skywalker.Ddd.Infrastructure.Abstractions;
 using System;
 using System.Diagnostics.CodeAnalysis;
 
@@ -20,7 +22,7 @@ namespace Skywalker.EntityFrameworkCore
         public static void UseMySql<TDbContext>(
             [NotNull] this SkywalkerDbContextOptions options,
             [MaybeNull] Action<MySQLDbContextOptionsBuilder> mySQLOptionsAction = null)
-            where TDbContext : SkywalkerDbContext<TDbContext>
+            where TDbContext : EntityFrameworkCoreDbContext<TDbContext>,IDbContext
         {
             options.Configure<TDbContext>(context =>
             {

@@ -27,10 +27,10 @@ namespace Simple.WebApi.Hosting
             });
             services.AddSkywalker(skywalker =>
             {
-                skywalker.AddEntityFrameworkCore<SimpleDbContext>(options =>
-                {
-                    options.UseSqlServer();
-                });
+                //skywalker.AddEntityFrameworkCore<SimpleDbContext>(options =>
+                //{
+                //   // options.UseSqlServer();
+                //});
                 skywalker.AddAutoMapper(options =>
                 {
                     options.AddProfile<SimpleApplicationAutoMapperProfile>();

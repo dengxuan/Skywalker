@@ -1,4 +1,5 @@
-﻿using Skywalker.Ddd.Infrastructure.DbContextConfiguration;
+﻿using Skywalker.Ddd.Infrastructure.Abstractions;
+using Skywalker.Ddd.Infrastructure.DbContextConfiguration;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
@@ -36,8 +37,7 @@ namespace Skywalker.Ddd.Infrastructure
             DefaultConfigureAction = action;
         }
 
-        public void PreConfigure<TDbContext>([NotNull] Action<SkywalkerDbContextConfigurationContext<TDbContext>> action)
-            where TDbContext : SkywalkerDbContext<TDbContext>
+        public void PreConfigure<TDbContext>([NotNull] Action<SkywalkerDbContextConfigurationContext<TDbContext>> action) where TDbContext : IDbContext
         {
             Check.NotNull(action, nameof(action));
 
@@ -50,8 +50,7 @@ namespace Skywalker.Ddd.Infrastructure
             actions.Add(action);
         }
 
-        public void Configure<TDbContext>([NotNull] Action<SkywalkerDbContextConfigurationContext<TDbContext>> action) 
-            where TDbContext : SkywalkerDbContext<TDbContext>
+        public void Configure<TDbContext>([NotNull] Action<SkywalkerDbContextConfigurationContext<TDbContext>> action) where TDbContext : IDbContext
         {
             Check.NotNull(action, nameof(action));
 

@@ -9,8 +9,6 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Skywalker.Ddd.Domain.Abstra
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Skywalker.Ddd.Application", "src\Skywalker.Ddd.Application\Skywalker.Ddd.Application.csproj", "{10EE2F3F-2BFA-44C2-8411-316073321290}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Skywalker.Ddd.EntityFrameworkCore.Abstractions", "src\Skywalker.Ddd.EntityFrameworkCore.Abstractions\Skywalker.Ddd.EntityFrameworkCore.Abstractions.csproj", "{949CED43-B99E-4DC8-AABF-941555D41C7F}"
-EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Skywalker.Ddd.EntityFrameworkCore.SqlServer", "src\Skywalker.Ddd.EntityFrameworkCore.SqlServer\Skywalker.Ddd.EntityFrameworkCore.SqlServer.csproj", "{1177AADE-4F34-4A65-84AF-94838D53A675}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Skywalker.Ddd.Localization.Abstractions", "src\Skywalker.Ddd.Localization.Abstractions\Skywalker.Ddd.Localization.Abstractions.csproj", "{A6C39DCF-C1E7-4626-BCC8-7987512CC068}"
@@ -53,7 +51,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Skywalker.Ddd.ObjectMapping
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Skywalker.Ddd.Mongodb", "src\Skywalker.Ddd.Mongodb\Skywalker.Ddd.Mongodb.csproj", "{50539707-918F-4796-A439-F53BAA15C4FA}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Skywalker.Ddd.Infrastructure.Abstractions", "src\Skywalker.Ddd.Infrastructure.Abstractions\Skywalker.Ddd.Infrastructure.Abstractions.csproj", "{63071F6E-B0E3-4ABF-BD00-3E3FFAF81A89}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Skywalker.Ddd.Infrastructure.Abstractions", "src\Skywalker.Ddd.Infrastructure.Abstractions\Skywalker.Ddd.Infrastructure.Abstractions.csproj", "{63071F6E-B0E3-4ABF-BD00-3E3FFAF81A89}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Skywalker.Ddd.Infrastructure.Extensions.EntityFrameworkCore", "src\Skywalker.Ddd.Infrastructure.Extensions.EntityFrameworkCore\Skywalker.Ddd.Infrastructure.Extensions.EntityFrameworkCore.csproj", "{93A35C4F-A34C-4A84-9EF8-1CCB14C316BE}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -101,18 +101,6 @@ Global
 		{10EE2F3F-2BFA-44C2-8411-316073321290}.Release|x64.Build.0 = Release|x64
 		{10EE2F3F-2BFA-44C2-8411-316073321290}.Release|x86.ActiveCfg = Release|x86
 		{10EE2F3F-2BFA-44C2-8411-316073321290}.Release|x86.Build.0 = Release|x86
-		{949CED43-B99E-4DC8-AABF-941555D41C7F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{949CED43-B99E-4DC8-AABF-941555D41C7F}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{949CED43-B99E-4DC8-AABF-941555D41C7F}.Debug|x64.ActiveCfg = Debug|x64
-		{949CED43-B99E-4DC8-AABF-941555D41C7F}.Debug|x64.Build.0 = Debug|x64
-		{949CED43-B99E-4DC8-AABF-941555D41C7F}.Debug|x86.ActiveCfg = Debug|x86
-		{949CED43-B99E-4DC8-AABF-941555D41C7F}.Debug|x86.Build.0 = Debug|x86
-		{949CED43-B99E-4DC8-AABF-941555D41C7F}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{949CED43-B99E-4DC8-AABF-941555D41C7F}.Release|Any CPU.Build.0 = Release|Any CPU
-		{949CED43-B99E-4DC8-AABF-941555D41C7F}.Release|x64.ActiveCfg = Release|x64
-		{949CED43-B99E-4DC8-AABF-941555D41C7F}.Release|x64.Build.0 = Release|x64
-		{949CED43-B99E-4DC8-AABF-941555D41C7F}.Release|x86.ActiveCfg = Release|x86
-		{949CED43-B99E-4DC8-AABF-941555D41C7F}.Release|x86.Build.0 = Release|x86
 		{1177AADE-4F34-4A65-84AF-94838D53A675}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{1177AADE-4F34-4A65-84AF-94838D53A675}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{1177AADE-4F34-4A65-84AF-94838D53A675}.Debug|x64.ActiveCfg = Debug|x64
@@ -353,6 +341,18 @@ Global
 		{63071F6E-B0E3-4ABF-BD00-3E3FFAF81A89}.Release|x64.Build.0 = Release|Any CPU
 		{63071F6E-B0E3-4ABF-BD00-3E3FFAF81A89}.Release|x86.ActiveCfg = Release|Any CPU
 		{63071F6E-B0E3-4ABF-BD00-3E3FFAF81A89}.Release|x86.Build.0 = Release|Any CPU
+		{93A35C4F-A34C-4A84-9EF8-1CCB14C316BE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{93A35C4F-A34C-4A84-9EF8-1CCB14C316BE}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{93A35C4F-A34C-4A84-9EF8-1CCB14C316BE}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{93A35C4F-A34C-4A84-9EF8-1CCB14C316BE}.Debug|x64.Build.0 = Debug|Any CPU
+		{93A35C4F-A34C-4A84-9EF8-1CCB14C316BE}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{93A35C4F-A34C-4A84-9EF8-1CCB14C316BE}.Debug|x86.Build.0 = Debug|Any CPU
+		{93A35C4F-A34C-4A84-9EF8-1CCB14C316BE}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{93A35C4F-A34C-4A84-9EF8-1CCB14C316BE}.Release|Any CPU.Build.0 = Release|Any CPU
+		{93A35C4F-A34C-4A84-9EF8-1CCB14C316BE}.Release|x64.ActiveCfg = Release|Any CPU
+		{93A35C4F-A34C-4A84-9EF8-1CCB14C316BE}.Release|x64.Build.0 = Release|Any CPU
+		{93A35C4F-A34C-4A84-9EF8-1CCB14C316BE}.Release|x86.ActiveCfg = Release|Any CPU
+		{93A35C4F-A34C-4A84-9EF8-1CCB14C316BE}.Release|x86.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -361,7 +361,6 @@ Global
 		{3844A690-EC83-4AEA-A8A5-FC0FC6951BF8} = {623E3830-FD43-4AEB-8060-463C838AA5F3}
 		{294BB139-F959-48FF-B938-17DF5CEA55BB} = {623E3830-FD43-4AEB-8060-463C838AA5F3}
 		{10EE2F3F-2BFA-44C2-8411-316073321290} = {623E3830-FD43-4AEB-8060-463C838AA5F3}
-		{949CED43-B99E-4DC8-AABF-941555D41C7F} = {623E3830-FD43-4AEB-8060-463C838AA5F3}
 		{1177AADE-4F34-4A65-84AF-94838D53A675} = {623E3830-FD43-4AEB-8060-463C838AA5F3}
 		{A6C39DCF-C1E7-4626-BCC8-7987512CC068} = {623E3830-FD43-4AEB-8060-463C838AA5F3}
 		{24768CB5-C519-4544-9199-2FD009D4E798} = {623E3830-FD43-4AEB-8060-463C838AA5F3}
@@ -382,6 +381,7 @@ Global
 		{A573C1C5-1C60-458A-9F4B-E1E31F6136D2} = {623E3830-FD43-4AEB-8060-463C838AA5F3}
 		{50539707-918F-4796-A439-F53BAA15C4FA} = {623E3830-FD43-4AEB-8060-463C838AA5F3}
 		{63071F6E-B0E3-4ABF-BD00-3E3FFAF81A89} = {623E3830-FD43-4AEB-8060-463C838AA5F3}
+		{93A35C4F-A34C-4A84-9EF8-1CCB14C316BE} = {623E3830-FD43-4AEB-8060-463C838AA5F3}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {E59F1C2A-52A9-4954-9BF9-F3338EF8B185}

@@ -9,7 +9,7 @@ using System.Diagnostics.CodeAnalysis;
 namespace Simple.EntityFrameworkCore
 {
     [ConnectionStringName("Simple")]
-    public class SimpleDbContext : SkywalkerDbContext<SimpleDbContext>, ISimpleDbContext
+    public class SimpleDbContext : EntityFrameworkCoreDbContext<SimpleDbContext>, ISimpleDbContext
     {
         public static string TablePrefix { get; set; } = SimpleConsts.DefaultDbTablePrefix;
 

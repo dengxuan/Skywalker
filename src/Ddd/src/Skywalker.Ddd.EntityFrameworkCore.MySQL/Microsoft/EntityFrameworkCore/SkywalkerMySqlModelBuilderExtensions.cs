@@ -6,7 +6,7 @@ namespace Microsoft.EntityFrameworkCore
     {
         public static void UseMySQL(this ModelBuilder modelBuilder)
         {
-            modelBuilder.SetDatabaseProvider(EfCoreDatabaseProvider.MySql);
+            modelBuilder.SetDatabaseProvider(EntityFrameworkCoreDatabaseProvider.MySql);
         }
     }
 }

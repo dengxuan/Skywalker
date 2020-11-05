@@ -1,6 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using MySql.Data.EntityFrameworkCore.Infrastructure;
+using Skywalker.Ddd.Infrastructure.DbContextConfiguration;
 using Skywalker.EntityFrameworkCore.DependencyInjection;
 using System;
 using System.Diagnostics.CodeAnalysis;
@@ -13,14 +14,18 @@ namespace Skywalker.EntityFrameworkCore
            [NotNull] this SkywalkerDbContextConfigurationContext context,
            [MaybeNull] Action<MySQLDbContextOptionsBuilder> mySQLOptionsAction = null)
         {
-            if (context.ExistingConnection != null)
+            if (context is SkywalkerEntityFrameworkCoreDbContextConfigurationContext skywalkerEntityFrameworkCoreDbContext)
             {
-                return context.DbContextOptions.UseMySQL(context.ExistingConnection, mySQLOptionsAction);
+                if (skywalkerEntityFrameworkCoreDbContext.ExistingConnection != null)
+                {
+                    return skywalkerEntityFrameworkCoreDbContext.DbContextOptions.UseMySQL(skywalkerEntityFrameworkCoreDbContext.ExistingConnection, mySQLOptionsAction);
+                }
+                else
+                {
+                    return skywalkerEntityFrameworkCoreDbContext.DbContextOptions.UseMySQL(context.ConnectionString, mySQLOptionsAction);
+                }
             }
-            else
-            {
-                return context.DbContextOptions.UseMySQL(context.ConnectionString, mySQLOptionsAction);
-            }
+            throw new ArgumentException("Context must is SkywalkerEntityFrameworkCoreDbContextConfigurationContext", nameof(context));
         }
     }
 }

@@ -1,4 +1,5 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
+using Skywalker.Ddd.Infrastructure.Abstractions;
 using System;
 using System.Data.Common;
 using System.Diagnostics.CodeAnalysis;
@@ -21,9 +22,9 @@ namespace Skywalker.Ddd.Infrastructure.DbContextConfiguration
         }
     }
 
-    public class SkywalkerDbContextConfigurationContext<TDbContext> : SkywalkerDbContextConfigurationContext where TDbContext : SkywalkerDbContext<TDbContext>
+    public class SkywalkerDbContextConfigurationContext<TDbContext> : SkywalkerDbContextConfigurationContext where TDbContext : IDbContext
     {
-        public SkywalkerDbContextConfigurationContext(string connectionString, [NotNull] IServiceProvider serviceProvider, [MaybeNull] string connectionStringName, [MaybeNull] DbConnection existingConnection) : base(connectionString, serviceProvider, connectionStringName)
+        public SkywalkerDbContextConfigurationContext(string connectionString, [NotNull] IServiceProvider serviceProvider, [MaybeNull] string connectionStringName) : base(connectionString, serviceProvider, connectionStringName)
         {
         }
     }

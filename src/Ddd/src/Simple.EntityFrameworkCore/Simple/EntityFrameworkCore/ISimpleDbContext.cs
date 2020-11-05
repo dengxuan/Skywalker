@@ -6,7 +6,7 @@ using Skywalker.EntityFrameworkCore;
 namespace Simple.EntityFrameworkCore.Weixin.EntityFrameworkCore
 {
     [ConnectionStringName("Simple")]
-    public interface ISimpleDbContext : IEfCoreDbContext
+    public interface ISimpleDbContext : IEntityFrameworkCoreDbContext
     {
         DbSet<User> Users{ get; set; }
     }

@@ -6,7 +6,7 @@ namespace Microsoft.EntityFrameworkCore
     {
         public static void UseSqlServer(this ModelBuilder modelBuilder)
         {
-            modelBuilder.SetDatabaseProvider(EfCoreDatabaseProvider.SqlServer);
+            modelBuilder.SetDatabaseProvider(EntityFrameworkCoreDatabaseProvider.SqlServer);
         }
     }
 }

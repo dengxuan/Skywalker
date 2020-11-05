@@ -2,13 +2,13 @@
 using Skywalker.Ddd.Infrastructure.Abstractions;
 using System;
 
-namespace Skywalker.Ddd.Infrastructure
+namespace Skywalker.EntityFrameworkCore
 {
-    public class DefaultDbContextProvider<TDbContext> : IDbContextProvider<TDbContext> where TDbContext : SkywalkerDbContext<TDbContext>, IDbContext
+    public class EntityFrameworkCoreDbContextProvider<TDbContext> : IDbContextProvider<TDbContext> where TDbContext : EntityFrameworkCoreDbContext<TDbContext>
     {
         private readonly IServiceProvider _serviceProvider;
 
-        public DefaultDbContextProvider(IServiceProvider serviceProvider)
+        public EntityFrameworkCoreDbContextProvider(IServiceProvider serviceProvider)
         {
             _serviceProvider = serviceProvider;
         }

@@ -1,3 +1,4 @@
+using Skywalker.Ddd.Infrastructure.Abstractions;
 using System;
 using System.Diagnostics.CodeAnalysis;
 
@@ -21,10 +22,9 @@ namespace Skywalker.Ddd.Infrastructure.DbContextConfiguration
         }
     }
 
-    public class AbpDbContextConfigurerAction<TDbContext> : SkywalkerDbContextConfigurerAction
-        where TDbContext : SkywalkerDbContext<TDbContext>
+    public class SkywalkerDbContextConfigurerAction<TDbContext> : SkywalkerDbContextConfigurerAction where TDbContext : SkywalkerDbContext<TDbContext>, IDbContext
     {
-        public AbpDbContextConfigurerAction([NotNull] Action<SkywalkerDbContextConfigurationContext> action) 
+        public SkywalkerDbContextConfigurerAction([NotNull] Action<SkywalkerDbContextConfigurationContext> action)
             : base(action)
         {
         }
