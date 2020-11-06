@@ -8,6 +8,7 @@
     <ItemGroup>
       <ProjectReference Include="..\..\..\Extensions\src\Skywalker.Extensions.Universal\Skywalker.Extensions.Universal.csproj" />
       <ProjectReference Include="..\Skywalker.Ddd.Domain.Abstractions\Skywalker.Ddd.Domain.Abstractions.csproj" />
+      <ProjectReference Include="..\Skywalker.Ddd.Infrastructure.Abstractions\Skywalker.Ddd.Infrastructure.Abstractions.csproj" />
     </ItemGroup>
     
 </Project>

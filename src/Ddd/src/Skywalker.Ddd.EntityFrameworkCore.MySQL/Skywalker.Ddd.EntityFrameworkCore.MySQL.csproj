@@ -10,7 +10,7 @@
       <PackageReference Include="MySql.Data.EntityFrameworkCore" Version="8.0.22" />
     </ItemGroup>
     <ItemGroup>
-      <ProjectReference Include="..\Skywalker.Ddd.Infrastructure.Extensions.EntityFrameworkCore\Skywalker.Ddd.Infrastructure.Extensions.EntityFrameworkCore.csproj" />
+      <ProjectReference Include="..\Skywalker.Ddd.Infrastructure.EntityFrameworkCore\Skywalker.Ddd.Infrastructure.EntityFrameworkCore.csproj" />
     </ItemGroup>
 
 </Project>

@@ -1,7 +1,10 @@
-﻿namespace Skywalker.Ddd.Infrastructure.Abstractions
+﻿using Skywalker.Domain.Entities;
+using System.Linq;
+
+namespace Skywalker.Ddd.Infrastructure.Abstractions
 {
-    public interface IDataCollection<TCollection>
+    public interface IDataCollection<TEntity> where TEntity : IEntity
     {
-        TCollection Collection { get; set; }
+        IQueryable<TEntity> Entities { get; set; }
     }
 }

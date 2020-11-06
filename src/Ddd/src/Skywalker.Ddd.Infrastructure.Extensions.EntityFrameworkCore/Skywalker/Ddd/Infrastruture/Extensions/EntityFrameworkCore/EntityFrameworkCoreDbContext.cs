@@ -11,7 +11,6 @@ using Skywalker.Domain.Entities;
 using Skywalker.Domain.Entities.Events;
 using Skywalker.EntityFrameworkCore.Modeling;
 using Skywalker.EntityFrameworkCore.ValueConverters;
-using Skywalker.Extensions.GuidGenerator;
 using Skywalker.Extensions.Timing;
 using Skywalker.Reflection;
 using System;
@@ -24,7 +23,7 @@ using System.Threading.Tasks;
 
 namespace Skywalker.EntityFrameworkCore
 {
-    public abstract class EntityFrameworkCoreDbContext<TDbContext> : DbContext, IDbContext, ITransientDependency where TDbContext : DbContext
+    public class EntityFrameworkCoreDbContext : DbContext, ITransientDependency
     {
 
         protected virtual bool IsSoftDeleteFilterEnabled => DataFilter?.IsEnabled<IDeleteable>() ?? false;
@@ -37,35 +36,35 @@ namespace Skywalker.EntityFrameworkCore
 
         public IClock Clock { get; set; }
 
-        public ILogger<EntityFrameworkCoreDbContext<TDbContext>> Logger { get; set; }
+        public ILogger<EntityFrameworkCoreDbContext> Logger { get; set; }
 
         private static readonly MethodInfo _configureBasePropertiesMethodInfo
-            = typeof(EntityFrameworkCoreDbContext<TDbContext>)
+            = typeof(EntityFrameworkCoreDbContext)
                 .GetMethod(
                     nameof(ConfigureBaseProperties),
                     BindingFlags.Instance | BindingFlags.NonPublic
                 )!;
 
         private static readonly MethodInfo _configureValueConverterMethodInfo
-            = typeof(EntityFrameworkCoreDbContext<TDbContext>)
+            = typeof(EntityFrameworkCoreDbContext)
                 .GetMethod(
                     nameof(ConfigureValueConverter),
                     BindingFlags.Instance | BindingFlags.NonPublic
                 )!;
 
         private static readonly MethodInfo _configureValueGeneratedMethodInfo
-            = typeof(EntityFrameworkCoreDbContext<TDbContext>)
+            = typeof(EntityFrameworkCoreDbContext)
                 .GetMethod(
                     nameof(ConfigureValueGenerated),
                     BindingFlags.Instance | BindingFlags.NonPublic
                 )!;
 
-        protected EntityFrameworkCoreDbContext(DbContextOptions<TDbContext> options)
+        protected EntityFrameworkCoreDbContext(DbContextOptions<EntityFrameworkCoreDbContext> options)
             : base(options)
         {
             GuidGenerator = SimpleGuidGenerator.Instance;
             EntityChangeEventHelper = NullEntityChangeEventHelper.Instance;
-            Logger = NullLogger<EntityFrameworkCoreDbContext<TDbContext>>.Instance;
+            Logger = NullLogger<EntityFrameworkCoreDbContext>.Instance;
         }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
@@ -432,11 +431,6 @@ namespace Skywalker.EntityFrameworkCore
             var right = rightVisitor.Visit(expression2.Body);
 
             return Expression.Lambda<Func<T, bool>>(Expression.AndAlso(left, right), parameter);
-        }
-
-        public IDataCollection<T> DataCollection<T>() where T : class
-        {
-            throw new NotImplementedException();
         }
 
         class ReplaceExpressionVisitor : ExpressionVisitor

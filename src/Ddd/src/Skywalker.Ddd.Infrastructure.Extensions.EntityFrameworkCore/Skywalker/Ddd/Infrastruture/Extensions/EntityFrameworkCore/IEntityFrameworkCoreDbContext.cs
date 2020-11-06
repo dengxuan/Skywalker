@@ -11,7 +11,7 @@ using System.Threading.Tasks;
 
 namespace Skywalker.EntityFrameworkCore
 {
-    public interface IEntityFrameworkCoreDbContext : IDisposable, IInfrastructure<IServiceProvider>, IDbContextDependencies, IDbSetCache, IDbContextPoolable, IDbContext
+    public interface IEntityFrameworkCoreDbContext : IDisposable, IInfrastructure<IServiceProvider>, IDbContextDependencies, IDbSetCache, IDbContextPoolable, ISkywalkerDatabase
     {
         void Initialize();
 

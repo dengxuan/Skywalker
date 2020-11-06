@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace Skywalker.Domain.Repositories
 {
-    public abstract class BasicRepositoryBase<TEntity> : IBasicRepository<TEntity>, IServiceProviderAccessor, ITransientDependency where TEntity : class, IEntity
+    public abstract class BasicRepositoryBase<TEntity> : IBasicRepository<TEntity>, IServiceProviderAccessor where TEntity : class, IEntity
     {
         public IServiceProvider? ServiceProvider { get; set; }
 

@@ -18,28 +18,6 @@ namespace Skywalker.DependencyInjection
         ISkywalkerCommonDbContextRegistrationOptionsBuilder AddDefaultRepositories(bool includeAllEntities = false);
 
         /// <summary>
-        /// Registers default repositories for this DbContext.
-        /// Default repositories will use given <see cref="TDefaultRepositoryDbContext"/>.
-        /// </summary>
-        /// <typeparam name="TDefaultRepositoryDbContext">DbContext type that will be used by default repositories</typeparam>
-        /// <param name="includeAllEntities">
-        /// Registers repositories only for aggregate root entities by default.
-        /// set <see cref="includeAllEntities"/> to true to include all entities.
-        /// </param>
-        ISkywalkerCommonDbContextRegistrationOptionsBuilder AddDefaultRepositories<TDefaultRepositoryDbContext>(bool includeAllEntities = false);
-
-        /// <summary>
-        /// Registers default repositories for this DbContext.
-        /// Default repositories will use given <see cref="defaultRepositoryDbContextType"/>.
-        /// </summary>
-        /// <param name="defaultRepositoryDbContextType">DbContext type that will be used by default repositories</param>
-        /// <param name="includeAllEntities">
-        /// Registers repositories only for aggregate root entities by default.
-        /// set <see cref="includeAllEntities"/> to true to include all entities.
-        /// </param>
-        ISkywalkerCommonDbContextRegistrationOptionsBuilder AddDefaultRepositories(Type defaultRepositoryDbContextType, bool includeAllEntities = false);
-
-        /// <summary>
         /// Registers custom repository for a specific entity.
         /// Custom repositories overrides default repositories.
         /// </summary>
@@ -54,17 +32,5 @@ namespace Skywalker.DependencyInjection
         /// <param name="repositoryImplementationTypeWithoutKey">Repository implementation type (without primary key)</param>
         /// <returns></returns>
         ISkywalkerCommonDbContextRegistrationOptionsBuilder SetDefaultRepositoryClasses([NotNull] Type repositoryImplementationType, [NotNull] Type repositoryImplementationTypeWithoutKey);
-
-        /// <summary>
-        /// Replaces given DbContext type with this DbContext type.
-        /// </summary>
-        /// <typeparam name="TOtherDbContext">The DbContext type to be replaced</typeparam>
-        ISkywalkerCommonDbContextRegistrationOptionsBuilder ReplaceDbContext<TOtherDbContext>();
-
-        /// <summary>
-        /// Replaces given DbContext type with this DbContext type.
-        /// </summary>
-        /// <param name="otherDbContextType">The DbContext type to be replaced</param>
-        ISkywalkerCommonDbContextRegistrationOptionsBuilder ReplaceDbContext(Type otherDbContextType);
     }
 }

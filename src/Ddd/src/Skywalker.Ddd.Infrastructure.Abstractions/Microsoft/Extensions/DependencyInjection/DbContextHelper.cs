@@ -12,12 +12,11 @@ namespace Skywalker.EntityFrameworkCore
     {
         public static IEnumerable<Type> GetEntityTypes(Type dbContextType)
         {
-            return
-                from property in dbContextType.GetTypeInfo().GetProperties(BindingFlags.Public | BindingFlags.Instance)
-                where
-                    ReflectionHelper.IsAssignableToGenericType(property.PropertyType, typeof(IDataCollection<>)) &&
-                    typeof(IEntity).IsAssignableFrom(property.PropertyType.GenericTypeArguments[0])
-                select property.PropertyType.GenericTypeArguments[0];
+            return from property in dbContextType.GetTypeInfo().GetProperties(BindingFlags.Public | BindingFlags.Instance)
+                   where
+                       ReflectionHelper.IsAssignableToGenericType(property.PropertyType,typeof(IDataCollection<>)) &&
+                       typeof(IEntity).IsAssignableFrom(property.PropertyType.GenericTypeArguments[0])
+                   select property.PropertyType.GenericTypeArguments[0];
         }
     }
 }

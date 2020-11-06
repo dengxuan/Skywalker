@@ -1,8 +1,12 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
+using Microsoft.Extensions.Logging.Console;
 using Simple.Application.Abstractions;
+using Simple.Domain.Users;
 using Simple.EntityFrameworkCore;
+using Skywalker.Ddd.Infrastructure.Domain.Repositories;
+using Skywalker.Domain.Repositories;
 using Skywalker.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
@@ -24,13 +28,20 @@ namespace Simple.Application.Hosting
                 });
                 configure.AddSkywalker(builder =>
                 {
-                    builder.AddMongodb<SimpleDbContext>();
+                    builder.AddInfrastructure(initializer =>
+                    {
+                        initializer.AddEntityFrameworkCore<SimpleDbContext>(options =>
+                        {
+                            options.UseSqlServer();
+                        });
+                    });
                     builder.AddAutoMapper(options =>
                     {
                         options.AddProfile<SimpleApplicationAutoMapperProfile>();
                     });
                 });
             }).Build();
+            IRepository<User> user = host.Services.GetRequiredService<IRepository<User>>();
             ISimpleUserApplicationService simpleUserApplicationService = host.Services.GetRequiredService<ISimpleUserApplicationService>();
             for (int i = 0; i < 10; i++)
             {

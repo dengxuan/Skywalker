@@ -58,12 +58,12 @@ namespace Skywalker.Domain.Repositories
             {
                 return Options.SpecifiedDefaultRepositoryTypes
                     ? Options.DefaultRepositoryImplementationTypeWithoutKey.MakeGenericType(entityType)
-                    : GetRepositoryType(Options.DefaultRepositoryDbContextType, entityType);
+                    : GetRepositoryType(Options.OriginalDbContextType, entityType);
             }
 
             return Options.SpecifiedDefaultRepositoryTypes
                 ? Options.DefaultRepositoryImplementationType.MakeGenericType(entityType, primaryKeyType)
-                : GetRepositoryType(Options.DefaultRepositoryDbContextType, entityType, primaryKeyType);
+                : GetRepositoryType(entityType, primaryKeyType);
         }
 
         protected virtual bool ShouldRegisterDefaultRepositoryFor(Type entityType)
@@ -88,8 +88,8 @@ namespace Skywalker.Domain.Repositories
 
         protected abstract IEnumerable<Type> GetEntityTypes(Type dbContextType);
 
-        protected abstract Type GetRepositoryType(Type dbContextType, Type entityType);
+        protected abstract Type GetRepositoryType(Type entityType);
 
-        protected abstract Type GetRepositoryType(Type dbContextType, Type entityType, Type primaryKeyType);
+        protected abstract Type GetRepositoryType(Type entityType, Type primaryKeyType);
     }
 }

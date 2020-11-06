@@ -1,27 +1,19 @@
-﻿using Microsoft.Extensions.DependencyInjection.Extensions;
-using Skywalker;
-using Skywalker.Ddd.Mongodb;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Volo.Abp.Domain.Repositories.MongoDB;
-using Volo.Abp.MongoDB;
+﻿using Skywalker.Ddd.Infrastructure;
+using Skywalker.Ddd.Infrastructure.Abstractions;
 
 namespace Microsoft.Extensions.DependencyInjection
 {
     public static class SkywalkerMongodbServiceCollectionExtensions
     {
-        public static SkywalkerBuilder AddMongodb<TDbContext>(this SkywalkerBuilder builder)
-        {
-            builder.Services.TryAddTransient( typeof(IMongoDbContextProvider<>),typeof(DefaultMongoDbContextProvider<>));
+        //public static SkywalkerDbContextOptions UseMongodb<TDbContext>(this SkywalkerDbContextOptions options) where TDbContext : ISkywalkerDatabase
+        //{
+        //    //builder.Services.TryAddTransient( typeof(IMongoDbContextProvider<>),typeof(DefaultMongoDbContextProvider<>));
 
-            builder.Services.TryAddTransient(typeof(IMongoDbRepositoryFilterer<>),typeof(MongoDbRepositoryFilterer<>));
+        //    //builder.Services.TryAddTransient(typeof(IMongoDbRepositoryFilterer<>),typeof(MongoDbRepositoryFilterer<>));
 
-            builder.Services.TryAddTransient(typeof(IMongoDbRepositoryFilterer<,>),typeof(MongoDbRepositoryFilterer<,>));
+        //    //builder.Services.TryAddTransient(typeof(IMongoDbRepositoryFilterer<,>),typeof(MongoDbRepositoryFilterer<,>));
 
-            return builder;
-        }
+        //    return options;
+        //}
     }
 }

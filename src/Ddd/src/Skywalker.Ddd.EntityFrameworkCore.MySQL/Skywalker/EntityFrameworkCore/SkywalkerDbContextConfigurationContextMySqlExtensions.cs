@@ -14,17 +14,17 @@ namespace Skywalker.EntityFrameworkCore
            [NotNull] this SkywalkerDbContextConfigurationContext context,
            [MaybeNull] Action<MySQLDbContextOptionsBuilder> mySQLOptionsAction = null)
         {
-            if (context is SkywalkerEntityFrameworkCoreDbContextConfigurationContext skywalkerEntityFrameworkCoreDbContext)
-            {
-                if (skywalkerEntityFrameworkCoreDbContext.ExistingConnection != null)
-                {
-                    return skywalkerEntityFrameworkCoreDbContext.DbContextOptions.UseMySQL(skywalkerEntityFrameworkCoreDbContext.ExistingConnection, mySQLOptionsAction);
-                }
-                else
-                {
-                    return skywalkerEntityFrameworkCoreDbContext.DbContextOptions.UseMySQL(context.ConnectionString, mySQLOptionsAction);
-                }
-            }
+            //if (context is SkywalkerEntityFrameworkCoreDbContextConfigurationContext skywalkerEntityFrameworkCoreDbContext)
+            //{
+            //    if (skywalkerEntityFrameworkCoreDbContext.ExistingConnection != null)
+            //    {
+            //        return skywalkerEntityFrameworkCoreDbContext.DbContextOptions.UseMySQL(skywalkerEntityFrameworkCoreDbContext.ExistingConnection, mySQLOptionsAction);
+            //    }
+            //    else
+            //    {
+            //        return skywalkerEntityFrameworkCoreDbContext.DbContextOptions.UseMySQL(context.ConnectionString, mySQLOptionsAction);
+            //    }
+            //}
             throw new ArgumentException("Context must is SkywalkerEntityFrameworkCoreDbContextConfigurationContext", nameof(context));
         }
     }

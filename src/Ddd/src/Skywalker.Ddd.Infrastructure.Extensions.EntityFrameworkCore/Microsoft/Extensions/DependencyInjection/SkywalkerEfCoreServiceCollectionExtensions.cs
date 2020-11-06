@@ -2,34 +2,24 @@
 using Skywalker;
 using Skywalker.Ddd.Infrastructure;
 using Skywalker.Ddd.Infrastructure.Abstractions;
+using Skywalker.Ddd.Infrastruture.Extensions.EntityFrameworkCore;
 using Skywalker.EntityFrameworkCore;
 using Skywalker.EntityFrameworkCore.DependencyInjection;
-using System;
 
 namespace Microsoft.Extensions.DependencyInjection
 {
     public static class SkywalkerEfCoreServiceCollectionExtensions
     {
-        //public static SkywalkerBuilder AddEntityFrameworkCore<TDbContext>(this SkywalkerBuilder builder, Action<SkywalkerDbContextOptions> optionsBuilder) where TDbContext : EntityFrameworkCoreDbContext<TDbContext>
-        //{
-        //    builder.Services.Configure(optionsBuilder);
+        public static SkywalkerDbContextOptions AddEntityFrameworkCore<TDbContext>(this SkywalkerDbContextOptions options)
+        {
+            //options.Services.Replace(ServiceDescriptor.Singleton<ISkywalkerDbContextAdapter<TDbContext>, EntityFrameworkCoreDbContextAdapter<TDbContext>>());
+            //options.Services.AddMemoryCache();
+            //options.Services.TryAddTransient(DbContextOptionsFactory.Create<TDbContext>);
 
-        //    builder.Services.AddMemoryCache();
-        //    var options = new SkywalkerDbContextRegistrationOptions(typeof(TDbContext), builder.Services);
-        //    options.AddDefaultRepositories();
-        //    builder.Services.TryAddTransient(DbContextOptionsFactory.Create<TDbContext>);
+            //options.Services.TryAddTransient(typeof(ISkywalkerDbContextProvider<>), typeof(EntityFrameworkCoreDbContextProvider<>));
+            //options.Services.AddDbContext<TDbContext>();
 
-        //    foreach (var dbContextType in options.ReplacedDbContextTypes)
-        //    {
-        //        builder.Services.Replace(ServiceDescriptor.Transient(dbContextType, typeof(TDbContext)));
-        //    }
-
-        //    new EfCoreRepositoryRegistrar(options).AddRepositories();
-
-        //    builder.Services.TryAddTransient(typeof(IDbContextProvider<>), typeof(EntityFrameworkCoreDbContextProvider<>));
-        //    builder.Services.AddDbContext<TDbContext>();
-
-        //    return builder;
-        //}
+            return options;
+        }
     }
 }

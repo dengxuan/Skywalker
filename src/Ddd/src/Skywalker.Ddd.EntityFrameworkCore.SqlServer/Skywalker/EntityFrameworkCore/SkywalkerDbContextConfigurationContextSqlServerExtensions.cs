@@ -13,18 +13,19 @@ namespace Skywalker.EntityFrameworkCore
            [NotNull] this SkywalkerDbContextConfigurationContext context,
            [MaybeNull] Action<SqlServerDbContextOptionsBuilder> mySQLOptionsAction = null)
         {
-            if (context is SkywalkerEntityFrameworkCoreDbContextConfigurationContext skywalkerEntityFrameworkCoreDbContext)
-            {
-                if (skywalkerEntityFrameworkCoreDbContext.ExistingConnection != null)
-                {
-                    return skywalkerEntityFrameworkCoreDbContext.DbContextOptions.UseSqlServer(skywalkerEntityFrameworkCoreDbContext.ExistingConnection, mySQLOptionsAction);
-                }
-                else
-                {
-                    return skywalkerEntityFrameworkCoreDbContext.DbContextOptions.UseSqlServer(context.ConnectionString, mySQLOptionsAction);
-                }
-            }
-            throw new ArgumentException("Context must is SkywalkerEntityFrameworkCoreDbContextConfigurationContext", nameof(context));
+            //if (context is SkywalkerEntityFrameworkCoreDbContextConfigurationContext skywalkerEntityFrameworkCoreDbContext)
+            //{
+            //    if (skywalkerEntityFrameworkCoreDbContext.ExistingConnection != null)
+            //    {
+            //        return skywalkerEntityFrameworkCoreDbContext.DbContextOptions.UseSqlServer(skywalkerEntityFrameworkCoreDbContext.ExistingConnection, mySQLOptionsAction);
+            //    }
+            //    else
+            //    {
+            //        return skywalkerEntityFrameworkCoreDbContext.DbContextOptions.UseSqlServer(context.ConnectionString, mySQLOptionsAction);
+            //    }
+            //}
+            //throw new ArgumentException("Context must is SkywalkerEntityFrameworkCoreDbContextConfigurationContext", nameof(context));
+            return null;
         }
     }
 }

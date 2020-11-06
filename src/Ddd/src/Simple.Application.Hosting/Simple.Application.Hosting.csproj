@@ -13,8 +13,8 @@
 
     <ItemGroup>
       <ProjectReference Include="..\..\simple\Simple.Application\Simple.Application.csproj" />
-      <ProjectReference Include="..\Simple.EntityFrameworkCore\Simple.EntityFrameworkCore.csproj" />
-      <ProjectReference Include="..\Skywalker.Ddd.Mongodb\Skywalker.Ddd.Mongodb.csproj" />
+      <ProjectReference Include="..\Simple.EntityFrameworkCore\Simple.Infrastructure.csproj" />
+      <ProjectReference Include="..\Skywalker.Ddd.EntityFrameworkCore.SqlServer\Skywalker.Ddd.EntityFrameworkCore.SqlServer.csproj" />
       <ProjectReference Include="..\Skywalker.Ddd.ObjectMapping.AutoMapper\Skywalker.Ddd.ObjectMapping.AutoMapper.csproj" />
       <ProjectReference Include="..\Skywalker.Ddd\Skywalker.Ddd.csproj" />
     </ItemGroup>

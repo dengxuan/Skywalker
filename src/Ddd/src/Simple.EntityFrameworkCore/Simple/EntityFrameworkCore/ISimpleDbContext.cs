@@ -1,13 +1,13 @@
-﻿using Microsoft.EntityFrameworkCore;
-using Simple.Domain.Users;
+﻿using Simple.Domain.Users;
 using Skywalker.Data;
+using Skywalker.Ddd.Infrastructure.Abstractions;
 using Skywalker.EntityFrameworkCore;
 
 namespace Simple.EntityFrameworkCore.Weixin.EntityFrameworkCore
 {
     [ConnectionStringName("Simple")]
-    public interface ISimpleDbContext : IEntityFrameworkCoreDbContext
+    public interface ISimpleDbContext: ISkywalkerDbContext
     {
-        DbSet<User> Users{ get; set; }
+        IDataCollection<User> Users { get; set; }
     }
 }

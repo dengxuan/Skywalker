@@ -18,14 +18,14 @@ namespace Volo.Abp.MongoDB.DependencyInjection
             return MongoDbContextHelper.GetEntityTypes(dbContextType);
         }
 
-        protected override Type GetRepositoryType(Type dbContextType, Type entityType)
+        protected override Type GetRepositoryType(Type entityType)
         {
-            return typeof(MongoDbRepository<,>).MakeGenericType(dbContextType, entityType);
+            return typeof(MongoDbRepository<,>).MakeGenericType(entityType);
         }
 
-        protected override Type GetRepositoryType(Type dbContextType, Type entityType, Type primaryKeyType)
+        protected override Type GetRepositoryType(Type entityType, Type primaryKeyType)
         {
-            return typeof(MongoDbRepository<,,>).MakeGenericType(dbContextType, entityType, primaryKeyType);
+            return typeof(MongoDbRepository<,,>).MakeGenericType(entityType, primaryKeyType);
         }
     }
 }
