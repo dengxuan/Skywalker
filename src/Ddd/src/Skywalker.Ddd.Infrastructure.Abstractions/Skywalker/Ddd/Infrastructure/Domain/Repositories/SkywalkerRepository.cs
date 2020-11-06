@@ -15,10 +15,10 @@ namespace Skywalker.Ddd.Infrastructure.Domain.Repositories
     {
         protected ISkywalkerDatabase<TEntity> Database { get; }
 
-        //public SkywalkerRepository(ISkywalkerDatabase<TEntity> database)
-        //{
-        //    Database = database;
-        //}
+        public SkywalkerRepository(ISkywalkerDatabase<TEntity> database)
+        {
+            Database = database;
+        }
 
         protected override IQueryable<TEntity> GetQueryable()
         {
@@ -67,11 +67,11 @@ namespace Skywalker.Ddd.Infrastructure.Domain.Repositories
 
         where TEntity : class, IEntity<TKey>
     {
-        //public SkywalkerRepository(ISkywalkerDatabase<TEntity, TKey> database)
-        //    : base(database)
-        //{
+        public SkywalkerRepository(ISkywalkerDatabase<TEntity, TKey> database)
+            : base(database)
+        {
 
-        //}
+        }
 
         public async Task DeleteAsync(TKey id, bool autoSave = false, CancellationToken cancellationToken = default)
         {

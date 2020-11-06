@@ -28,12 +28,11 @@ namespace Skywalker.EntityFrameworkCore
             [MaybeNull] Action<SqlServerDbContextOptionsBuilder> mySQLOptionsAction = null)
             where TDbContext : SkywalkerDbContext<TDbContext>
         {
+            //options.Services.AddMemoryCache();
+            ////options.Services.TryAddTransient(DbContextOptionsFactory.Create<TDbContext>);
 
-            options.Services.AddMemoryCache();
-            //options.Services.TryAddTransient(DbContextOptionsFactory.Create<TDbContext>);
-
-            options.Services.TryAddTransient(typeof(ISkywalkerDbContextProvider<>), typeof(SkywalkerDbContextProvider<>));
-            options.Services.AddDbContext<TDbContext>();
+            //options.Services.TryAddTransient(typeof(ISkywalkerDbContextProvider<>), typeof(SkywalkerDbContextProvider<>));
+            //options.Services.AddDbContext<TDbContext>();
             options.Configure<TDbContext>(context =>
             {
                 context.UseSqlServer(mySQLOptionsAction);

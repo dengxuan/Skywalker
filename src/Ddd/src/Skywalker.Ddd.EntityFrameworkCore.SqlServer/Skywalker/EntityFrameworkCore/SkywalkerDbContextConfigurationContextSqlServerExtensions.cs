@@ -13,19 +13,14 @@ namespace Skywalker.EntityFrameworkCore
            [NotNull] this SkywalkerDbContextConfigurationContext context,
            [MaybeNull] Action<SqlServerDbContextOptionsBuilder> mySQLOptionsAction = null)
         {
-            //if (context is SkywalkerEntityFrameworkCoreDbContextConfigurationContext skywalkerEntityFrameworkCoreDbContext)
-            //{
-            //    if (skywalkerEntityFrameworkCoreDbContext.ExistingConnection != null)
-            //    {
-            //        return skywalkerEntityFrameworkCoreDbContext.DbContextOptions.UseSqlServer(skywalkerEntityFrameworkCoreDbContext.ExistingConnection, mySQLOptionsAction);
-            //    }
-            //    else
-            //    {
-            //        return skywalkerEntityFrameworkCoreDbContext.DbContextOptions.UseSqlServer(context.ConnectionString, mySQLOptionsAction);
-            //    }
-            //}
-            //throw new ArgumentException("Context must is SkywalkerEntityFrameworkCoreDbContextConfigurationContext", nameof(context));
-            return null;
+                if (context.ExistingConnection != null)
+                {
+                    return context.DbContextOptions.UseSqlServer(context.ExistingConnection, mySQLOptionsAction);
+                }
+                else
+                {
+                    return context.DbContextOptions.UseSqlServer(context.ConnectionString, mySQLOptionsAction);
+                }
         }
     }
 }

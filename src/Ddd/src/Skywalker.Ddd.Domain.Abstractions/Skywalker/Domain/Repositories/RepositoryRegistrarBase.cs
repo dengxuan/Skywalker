@@ -6,8 +6,7 @@ using Skywalker.Domain.Entities;
 
 namespace Skywalker.Domain.Repositories
 {
-    public abstract class RepositoryRegistrarBase<TOptions>
-        where TOptions: SkywalkerCommonDbContextRegistrationOptions
+    public abstract class RepositoryRegistrarBase<TOptions> where TOptions : SkywalkerCommonDbContextRegistrationOptions
     {
         public TOptions Options { get; }
 
@@ -16,22 +15,9 @@ namespace Skywalker.Domain.Repositories
             Options = options;
         }
 
-        public virtual void AddRepositories()
+        public virtual void AddRepositories(IEnumerable<Type> entityTypes)
         {
-            foreach (var customRepository in Options.CustomRepositories)
-            {
-                Options.Services.AddDefaultRepository(customRepository.Key, customRepository.Value);
-            }
-
-            if (Options.RegisterDefaultRepositories)
-            {
-                RegisterDefaultRepositories();
-            }
-        }
-
-        protected virtual void RegisterDefaultRepositories()
-        {
-            foreach (var entityType in GetEntityTypes(Options.OriginalDbContextType))
+            foreach (var entityType in entityTypes)
             {
                 if (!ShouldRegisterDefaultRepositoryFor(entityType))
                 {
@@ -44,10 +30,7 @@ namespace Skywalker.Domain.Repositories
 
         protected virtual void RegisterDefaultRepository(Type entityType)
         {
-            Options.Services.AddDefaultRepository(
-                entityType,
-                GetDefaultRepositoryImplementationType(entityType)
-            );
+            Options.Services.AddDefaultRepository(entityType, GetDefaultRepositoryImplementationType(entityType));
         }
 
         protected virtual Type GetDefaultRepositoryImplementationType(Type entityType)
@@ -58,7 +41,7 @@ namespace Skywalker.Domain.Repositories
             {
                 return Options.SpecifiedDefaultRepositoryTypes
                     ? Options.DefaultRepositoryImplementationTypeWithoutKey.MakeGenericType(entityType)
-                    : GetRepositoryType(Options.OriginalDbContextType, entityType);
+                    : GetRepositoryType(entityType);
             }
 
             return Options.SpecifiedDefaultRepositoryTypes
@@ -68,25 +51,14 @@ namespace Skywalker.Domain.Repositories
 
         protected virtual bool ShouldRegisterDefaultRepositoryFor(Type entityType)
         {
-            if (!Options.RegisterDefaultRepositories)
-            {
-                return false;
-            }
 
-            if (Options.CustomRepositories.ContainsKey(entityType))
-            {
-                return false;
-            }
-
-            if (!Options.IncludeAllEntitiesForDefaultRepositories && !typeof(IAggregateRoot).IsAssignableFrom(entityType))
+            if (!typeof(IAggregateRoot).IsAssignableFrom(entityType))
             {
                 return false;
             }
 
             return true;
         }
-
-        protected abstract IEnumerable<Type> GetEntityTypes(Type dbContextType);
 
         protected abstract Type GetRepositoryType(Type entityType);
 

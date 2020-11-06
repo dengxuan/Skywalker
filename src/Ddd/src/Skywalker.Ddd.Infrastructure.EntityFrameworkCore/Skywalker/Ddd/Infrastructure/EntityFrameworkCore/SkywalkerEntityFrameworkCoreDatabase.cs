@@ -1,7 +1,9 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.ChangeTracking;
 using Skywalker.Ddd.Infrastructure.Abstractions;
 using Skywalker.Ddd.Infrastruture.Extensions.EntityFrameworkCore;
 using Skywalker.Domain.Entities;
+using Skywalker.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
@@ -12,8 +14,9 @@ using System.Threading.Tasks;
 
 namespace Skywalker.Ddd.Infrastructure.EntityFrameworkCore
 {
-    public class SkywalkerEntityFrameworkCoreDatabase<TDbContext, TEntity> : ISkywalkerDatabase<TEntity> where TEntity : class, IEntity where TDbContext : DbContext
+    public class SkywalkerEntityFrameworkCoreDatabase<TDbContext, TEntity> : ISkywalkerDatabase<TEntity> where TEntity : class, IEntity where TDbContext : SkywalkerDbContext<TDbContext>
     {
+        [NotNull]
         protected TDbContext Database { get; }
 
         public SkywalkerEntityFrameworkCoreDatabase(ISkywalkerDbContextProvider<TDbContext> dbContextProvider)
@@ -49,9 +52,14 @@ namespace Skywalker.Ddd.Infrastructure.EntityFrameworkCore
             throw new NotImplementedException();
         }
 
-        public Task<TEntity> InsertAsync([NotNull] TEntity entity, bool autoSave = false, CancellationToken cancellationToken = default)
+        public async Task<TEntity> InsertAsync([NotNull] TEntity entity, bool autoSave = false, CancellationToken cancellationToken = default)
         {
-            throw new NotImplementedException();
+            EntityEntry<TEntity> entry = await Database.AddAsync(entity, cancellationToken);
+            if (autoSave)
+            {
+                await Database.SaveChangesAsync(cancellationToken);
+            }
+            return entry.Entity;
         }
 
         public Task<TEntity> UpdateAsync([NotNull] TEntity entity, bool autoSave = false, CancellationToken cancellationToken = default)
@@ -60,7 +68,7 @@ namespace Skywalker.Ddd.Infrastructure.EntityFrameworkCore
         }
     }
 
-    public class SkywalkerEntityFrameworkCoreDatabase<TDbContext, TEntity, TKey> : SkywalkerEntityFrameworkCoreDatabase<TDbContext, TEntity>, ISkywalkerDatabase<TEntity, TKey> where TEntity : class, IEntity<TKey> where TDbContext : DbContext
+    public class SkywalkerEntityFrameworkCoreDatabase<TDbContext, TEntity, TKey> : SkywalkerEntityFrameworkCoreDatabase<TDbContext, TEntity>, ISkywalkerDatabase<TEntity, TKey> where TEntity : class, IEntity<TKey> where TDbContext : SkywalkerDbContext<TDbContext>
     {
         public SkywalkerEntityFrameworkCoreDatabase(ISkywalkerDbContextProvider<TDbContext> dbContextProvider) : base(dbContextProvider)
         {

@@ -13,11 +13,6 @@ namespace Volo.Abp.MongoDB.DependencyInjection
 
         }
 
-        protected override IEnumerable<Type> GetEntityTypes(Type dbContextType)
-        {
-            return MongoDbContextHelper.GetEntityTypes(dbContextType);
-        }
-
         protected override Type GetRepositoryType(Type entityType)
         {
             return typeof(MongoDbRepository<,>).MakeGenericType(entityType);

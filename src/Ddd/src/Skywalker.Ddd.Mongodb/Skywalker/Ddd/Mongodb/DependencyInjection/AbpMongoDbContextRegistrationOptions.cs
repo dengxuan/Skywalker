@@ -7,7 +7,7 @@ namespace Volo.Abp.MongoDB.DependencyInjection
     public class AbpMongoDbContextRegistrationOptions : SkywalkerCommonDbContextRegistrationOptions, IAbpMongoDbContextRegistrationOptionsBuilder
     {
         public AbpMongoDbContextRegistrationOptions(Type originalDbContextType, IServiceCollection services) 
-            : base(originalDbContextType, services)
+            : base(services)
         {
         }
     }

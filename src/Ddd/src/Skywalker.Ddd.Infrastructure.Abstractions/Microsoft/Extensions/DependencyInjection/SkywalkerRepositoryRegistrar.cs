@@ -13,11 +13,6 @@ namespace Microsoft.Extensions.DependencyInjection
 
         }
 
-        protected override IEnumerable<Type> GetEntityTypes(Type dbContextType)
-        {
-            return DbContextHelper.GetEntityTypes(dbContextType);
-        }
-
         protected override Type GetRepositoryType(Type entityType)
         {
             return typeof(SkywalkerRepository<>).MakeGenericType(entityType);

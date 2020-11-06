@@ -27,15 +27,10 @@ namespace Simple.EntityFrameworkCore
         [NotNull]
         public IDataCollection<User> Users { get; set; }
 
-        //protected override void OnModelCreating(ModelBuilder modelBuilder)
-        //{
-        //    base.OnModelCreating(modelBuilder);
-
-        //    modelBuilder.ConfigureWeixin(options =>
-        //    {
-        //        options.TablePrefix = TablePrefix;
-        //        options.Schema = Schema;
-        //    });
-        //}
+        protected override void OnModelCreating(ModelBuilder modelBuilder)
+        {
+            base.OnModelCreating(modelBuilder);
+            modelBuilder.ConfigureWeixin();
+        }
     }
 }

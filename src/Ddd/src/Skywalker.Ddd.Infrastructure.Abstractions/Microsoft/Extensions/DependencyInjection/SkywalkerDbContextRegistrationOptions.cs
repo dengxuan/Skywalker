@@ -1,9 +1,8 @@
+using Skywalker.DependencyInjection;
+using Skywalker.Domain.Entities;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
-using Microsoft.Extensions.DependencyInjection;
-using Skywalker.DependencyInjection;
-using Skywalker.Domain.Entities;
 
 namespace Microsoft.Extensions.DependencyInjection
 {
@@ -11,7 +10,7 @@ namespace Microsoft.Extensions.DependencyInjection
     {
         public Dictionary<Type, object> EntityOptions { get; }
 
-        public SkywalkerDbContextRegistrationOptions(Type originalDbContextType, IServiceCollection services) : base(originalDbContextType, services)
+        public SkywalkerDbContextRegistrationOptions(IServiceCollection services) : base(services)
         {
             EntityOptions = new Dictionary<Type, object>();
         }

@@ -1,5 +1,7 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
+using Skywalker.EntityFrameworkCore;
 using System;
+using System.Collections.Generic;
 
 namespace Skywalker.Ddd.Infrastructure
 {
@@ -12,12 +14,13 @@ namespace Skywalker.Ddd.Infrastructure
             Services = services;
         }
 
-        internal void AddRepositories<TDatabase>()
+        internal void Initialize(Type dbContextType, ISkywalkerDatabaseInitializer databaseInitializer)
         {
-            SkywalkerDbContextRegistrationOptions options = new SkywalkerDbContextRegistrationOptions(typeof(TDatabase), Services);
-            options.AddDefaultRepositories();
-            SkywalkerRepositoryRegistrar registrar = new SkywalkerRepositoryRegistrar(options);
-            registrar.AddRepositories();
+            IEnumerable<Type> entityTypes = DbContextHelper.GetEntityTypes(dbContextType);
+            SkywalkerDbContextRegistrationOptions options = new SkywalkerDbContextRegistrationOptions(Services);
+            SkywalkerRepositoryRegistrar repositoryRegistrar = new SkywalkerRepositoryRegistrar(options);
+            repositoryRegistrar.AddRepositories(entityTypes);
+            databaseInitializer.AddDatabases(entityTypes);
         }
     }
 }

@@ -5,7 +5,7 @@ using System;
 
 namespace Skywalker.EntityFrameworkCore
 {
-    public class SkywalkerDbContextProvider<TDbContext> : ISkywalkerDbContextProvider<TDbContext> where TDbContext : DbContext
+    public class SkywalkerDbContextProvider<TDbContext> : ISkywalkerDbContextProvider<TDbContext> where TDbContext : SkywalkerDbContext<TDbContext>
     {
         private readonly IServiceProvider _serviceProvider;
 

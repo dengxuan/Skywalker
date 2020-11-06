@@ -9,8 +9,6 @@ namespace Skywalker.Ddd.Infrastructure
 {
     public class SkywalkerDbContextOptions
     {
-        public IServiceCollection Services { get; }
-
         internal List<Action<SkywalkerDbContextConfigurationContext>> DefaultPreConfigureActions { get; set; }
 
         internal Action<SkywalkerDbContextConfigurationContext>? DefaultConfigureAction { get; set; }
@@ -19,9 +17,8 @@ namespace Skywalker.Ddd.Infrastructure
 
         internal Dictionary<Type, object> ConfigureActions { get; set; }
 
-        public SkywalkerDbContextOptions(IServiceCollection services)
+        public SkywalkerDbContextOptions()
         {
-            Services = services;
             DefaultPreConfigureActions = new List<Action<SkywalkerDbContextConfigurationContext>>();
             PreConfigureActions = new Dictionary<Type, List<object>>();
             ConfigureActions = new Dictionary<Type, object>();
@@ -59,15 +56,6 @@ namespace Skywalker.Ddd.Infrastructure
             Check.NotNull(action, nameof(action));
 
             ConfigureActions[typeof(TDbContext)] = action;
-
-            Use<TDbContext>();
-        }
-
-        internal void Use<TDbContext>()
-        {
-            var options = new SkywalkerDbContextRegistrationOptions(typeof(TDbContext), Services);
-            options.AddDefaultRepositories();
-            new SkywalkerRepositoryRegistrar(options).AddRepositories();
         }
     }
 }
