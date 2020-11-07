@@ -1,12 +1,10 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using Microsoft.EntityFrameworkCore.Infrastructure;
 using MySql.Data.EntityFrameworkCore.Infrastructure;
-using Skywalker.Ddd.Infrastructure.DbContextConfiguration;
-using Skywalker.EntityFrameworkCore.DependencyInjection;
+using Skywalker.Ddd.Infrastructure.EntityFrameworkCore.DbContextConfiguration;
 using System;
 using System.Diagnostics.CodeAnalysis;
 
-namespace Skywalker.EntityFrameworkCore
+namespace Skywalker.Ddd.Infrastructure.EntityFrameworkCore
 {
     public static class SkywalkerDbContextConfigurationContextMySqlExtensions
     {

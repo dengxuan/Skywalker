@@ -8,7 +8,7 @@ using System.Diagnostics.CodeAnalysis;
 using System.Threading;
 using System.Threading.Tasks;
 
-namespace Skywalker.EntityFrameworkCore
+namespace Skywalker.Ddd.Infrastructure.EntityFrameworkCore
 {
     public interface ISkywalkerDbContext : IDisposable, IInfrastructure<IServiceProvider>, IDbContextDependencies, IDbSetCache, IDbContextPoolable
     {

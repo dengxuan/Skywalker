@@ -2,7 +2,7 @@
 using MongoDB.Driver;
 using Skywalker.Data;
 using System;
-using Volo.Abp.MongoDB;
+using Skywalker.Ddd.Infrastructure.Mongodb;
 
 namespace Skywalker.Ddd.Mongodb
 {

@@ -1,16 +1,14 @@
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.ChangeTracking;
 using Microsoft.EntityFrameworkCore.Metadata;
-using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Logging.Abstractions;
 using Skywalker.Data;
 using Skywalker.Data.Filtering;
-using Skywalker.Ddd.Infrastructure.Abstractions;
+using Skywalker.Ddd.Infrastructure.EntityFrameworkCore.Modeling;
+using Skywalker.Ddd.Infrastructure.EntityFrameworkCore.ValueConverters;
 using Skywalker.Domain.Entities;
 using Skywalker.Domain.Entities.Events;
-using Skywalker.EntityFrameworkCore.Modeling;
-using Skywalker.EntityFrameworkCore.ValueConverters;
 using Skywalker.Extensions.Timing;
 using Skywalker.Reflection;
 using System;
@@ -21,7 +19,7 @@ using System.Reflection;
 using System.Threading;
 using System.Threading.Tasks;
 
-namespace Skywalker.EntityFrameworkCore
+namespace Skywalker.Ddd.Infrastructure.EntityFrameworkCore
 {
     public class SkywalkerDbContext<TDbContext> : DbContext where TDbContext : DbContext
     {

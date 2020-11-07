@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace Volo.Abp.MongoDB
+namespace Skywalker.Ddd.Infrastructure.Mongodb
 {
     public class MongoCollectionAttribute : Attribute
     {

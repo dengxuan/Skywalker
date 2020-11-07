@@ -2,7 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 
-namespace Volo.Abp.MongoDB
+namespace Skywalker.Ddd.Infrastructure.Mongodb
 {
     public interface IMongoModelBuilder
     {

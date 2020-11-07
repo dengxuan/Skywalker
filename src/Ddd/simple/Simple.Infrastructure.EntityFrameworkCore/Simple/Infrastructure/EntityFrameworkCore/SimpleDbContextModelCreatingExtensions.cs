@@ -1,10 +1,10 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Simple.Domain.Users;
 using Skywalker;
-using Skywalker.EntityFrameworkCore.Modeling;
+using Skywalker.Ddd.Infrastructure.EntityFrameworkCore.Modeling;
 using System;
 
-namespace Simple.EntityFrameworkCore.Weixin.EntityFrameworkCore
+namespace Simple.Infrastructure.EntityFrameworkCore
 {
     public static class SimpleDbContextModelCreatingExtensions
     {

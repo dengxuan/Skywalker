@@ -1,7 +1,7 @@
 using System;
 using System.Collections.Generic;
 
-namespace Volo.Abp.MongoDB
+namespace Skywalker.Ddd.Infrastructure.Mongodb
 {
     public class MongoDbContextModel
     {

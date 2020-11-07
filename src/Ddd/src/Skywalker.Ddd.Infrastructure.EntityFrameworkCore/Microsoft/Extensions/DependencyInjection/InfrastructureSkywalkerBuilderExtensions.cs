@@ -3,10 +3,8 @@ using Microsoft.Extensions.DependencyInjection.Extensions;
 using Skywalker.Ddd.Infrastructure;
 using Skywalker.Ddd.Infrastructure.Abstractions;
 using Skywalker.Ddd.Infrastructure.EntityFrameworkCore;
-using Skywalker.Ddd.Infrastruture.Extensions.EntityFrameworkCore;
+using Skywalker.Ddd.Infrastructure.EntityFrameworkCore.DbContextConfiguration;
 using Skywalker.Domain.Entities;
-using Skywalker.EntityFrameworkCore;
-using Skywalker.EntityFrameworkCore.DependencyInjection;
 using System;
 using System.Collections.Generic;
 
@@ -18,7 +16,7 @@ namespace Microsoft.Extensions.DependencyInjection
         {
             initializer.Services.Configure(optionsBuilder);
             initializer.Services.AddMemoryCache();
-            initializer.Services.TryAddTransient(DbContextOptionsFactory.Create<TDbContext>);
+            initializer.Services.TryAddTransient(SkywalkerDbContextOptionsFactory.Create<TDbContext>);
             initializer.Services.AddTransient(typeof(ISkywalkerDbContextProvider<>), typeof(SkywalkerDbContextProvider<>));
             initializer.Services.AddDbContext<TDbContext>();
             initializer.Initialize(typeof(TDbContext), new EntityFrameworkCoreDatabaseInitializer<TDbContext>(initializer.Services));

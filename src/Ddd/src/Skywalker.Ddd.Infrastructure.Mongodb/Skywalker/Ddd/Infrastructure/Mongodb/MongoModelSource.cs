@@ -7,13 +7,13 @@ using System.Collections.Concurrent;
 using System.Linq;
 using System.Reflection;
 
-namespace Volo.Abp.MongoDB
+namespace Skywalker.Ddd.Infrastructure.Mongodb
 {
     public class MongoModelSource : IMongoModelSource, ISingletonDependency
     {
         protected readonly ConcurrentDictionary<Type, MongoDbContextModel> ModelCache = new ConcurrentDictionary<Type, MongoDbContextModel>();
         
-        public virtual MongoDbContextModel GetModel(AbpMongoDbContext dbContext)
+        public virtual MongoDbContextModel GetModel(SkywalkerMongodbContext dbContext)
         {
             return ModelCache.GetOrAdd(
                 dbContext.GetType(),
@@ -21,7 +21,7 @@ namespace Volo.Abp.MongoDB
             );
         }
 
-        protected virtual MongoDbContextModel CreateModel(AbpMongoDbContext dbContext)
+        protected virtual MongoDbContextModel CreateModel(SkywalkerMongodbContext dbContext)
         {
             var modelBuilder = CreateModelBuilder();
             BuildModelFromDbContextType(modelBuilder, dbContext.GetType());
@@ -60,7 +60,7 @@ namespace Volo.Abp.MongoDB
             });
         }
 
-        protected virtual void BuildModelFromDbContextInstance(IMongoModelBuilder modelBuilder, AbpMongoDbContext dbContext)
+        protected virtual void BuildModelFromDbContextInstance(IMongoModelBuilder modelBuilder, SkywalkerMongodbContext dbContext)
         {
             dbContext.CreateModel(modelBuilder);
         }

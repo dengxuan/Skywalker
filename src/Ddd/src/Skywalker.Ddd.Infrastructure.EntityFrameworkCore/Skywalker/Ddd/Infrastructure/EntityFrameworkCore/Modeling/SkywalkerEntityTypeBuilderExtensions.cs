@@ -4,7 +4,7 @@ using Skywalker.Data;
 using Skywalker.Domain.Entities;
 using System;
 
-namespace Skywalker.EntityFrameworkCore.Modeling
+namespace Skywalker.Ddd.Infrastructure.EntityFrameworkCore.Modeling
 {
     public static class SkywalkerEntityTypeBuilderExtensions
     {

@@ -5,7 +5,7 @@ using System.Collections.Generic;
 using System.Collections.Immutable;
 using System.Linq;
 
-namespace Volo.Abp.MongoDB
+namespace Skywalker.Ddd.Infrastructure.Mongodb
 {
     public class MongoModelBuilder : IMongoModelBuilder
     {

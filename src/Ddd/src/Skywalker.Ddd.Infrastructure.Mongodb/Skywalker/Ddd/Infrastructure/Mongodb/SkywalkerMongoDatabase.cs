@@ -1,4 +1,6 @@
 ﻿using MongoDB.Driver;
+using MongoDB.Driver.Linq;
+using Skywalker.Data;
 using Skywalker.Ddd.Infrastructure.Abstractions;
 using Skywalker.Domain.Entities;
 using System;
@@ -8,13 +10,15 @@ using System.Linq;
 using System.Linq.Expressions;
 using System.Threading;
 using System.Threading.Tasks;
-using Volo.Abp.MongoDB;
+using Skywalker.Ddd.Infrastructure.Mongodb;
 
 namespace Skywalker.Ddd.Infrastructure.Mongodb
 {
     public class SkywalkerMongoDatabase<TDbContext, TEntity> : ISkywalkerDatabase<TEntity> where TEntity : IEntity where TDbContext : IMongodbContext
     {
         protected TDbContext Database { get; }
+
+        protected IMongoQueryable<TEntity> Queryable => Database.Collection<TEntity>().AsQueryable();
 
         public IQueryable<TEntity> Entities => Database.Collection<TEntity>().AsQueryable();
 
@@ -23,39 +27,104 @@ namespace Skywalker.Ddd.Infrastructure.Mongodb
             Database = dbContextProvider.GetDbContext();
         }
 
-        public Task DeleteAsync([NotNull] Expression<Func<TEntity, bool>> predicate, bool autoSave = false, CancellationToken cancellationToken = default)
+
+        protected virtual void ThrowOptimisticConcurrencyException()
         {
-            throw new NotImplementedException();
+            throw new SkywalkerDbConcurrencyException("Database operation expected to affect 1 row but actually affected 0 row. Data may have been modified or deleted since entities were loaded. This exception has been thrown on optimistic concurrency check.");
         }
 
-        public Task DeleteAsync([NotNull] TEntity entity, bool autoSave = false, CancellationToken cancellationToken = default)
+        protected virtual FilterDefinition<TEntity> CreateEntityFilter(TEntity entity, bool withConcurrencyStamp = false, string? concurrencyStamp = null)
         {
-            throw new NotImplementedException();
+            throw new NotImplementedException(
+                $"{nameof(CreateEntityFilter)} is not implemented for MongoDB by default. It should be overriden and implemented by the deriving class!"
+            );
+        }
+
+        /// <summary>
+        /// Sets a new <see cref="IHasConcurrencyStamp.ConcurrencyStamp"/> value
+        /// if given entity implements <see cref="IHasConcurrencyStamp"/> interface.
+        /// Returns the old <see cref="IHasConcurrencyStamp.ConcurrencyStamp"/> value.
+        /// </summary>
+        protected virtual string? SetNewConcurrencyStamp(TEntity entity)
+        {
+            if (entity is not IHasConcurrencyStamp concurrencyStampEntity)
+            {
+                return null;
+            }
+
+            var oldConcurrencyStamp = concurrencyStampEntity.ConcurrencyStamp;
+            concurrencyStampEntity.ConcurrencyStamp = Guid.NewGuid().ToString("N");
+            return oldConcurrencyStamp;
+        }
+
+        public async Task DeleteAsync([NotNull] Expression<Func<TEntity, bool>> predicate, bool autoSave = false, CancellationToken cancellationToken = default)
+        {
+            var entities = Entities.Where(predicate).ToList();
+
+            foreach (var entity in entities)
+            {
+                await DeleteAsync(entity, autoSave, cancellationToken);
+            }
+        }
+
+        public async Task DeleteAsync([NotNull] TEntity entity, bool autoSave = false, CancellationToken cancellationToken = default)
+        {
+            var oldConcurrencyStamp = SetNewConcurrencyStamp(entity);
+            if (entity is IDeleteable deleteable)
+            {
+                deleteable.IsDeleted = true;
+                var result = await Database.Collection<TEntity>().ReplaceOneAsync(CreateEntityFilter(entity, true, oldConcurrencyStamp!), entity, cancellationToken: cancellationToken);
+
+                if (result.MatchedCount <= 0)
+                {
+                    ThrowOptimisticConcurrencyException();
+                }
+            }
+            else
+            {
+                var result = await Database.Collection<TEntity>().DeleteOneAsync(CreateEntityFilter(entity, true, oldConcurrencyStamp), cancellationToken);
+
+                if (result.DeletedCount <= 0)
+                {
+                    ThrowOptimisticConcurrencyException();
+                }
+            }
         }
 
         public Task<TEntity> FindAsync([NotNull] Expression<Func<TEntity, bool>> predicate, bool includeDetails = true, CancellationToken cancellationToken = default)
         {
-            throw new NotImplementedException();
+            TEntity entity = Entities.Where(predicate).FirstOrDefault();
+            return Task.FromResult(entity!);
         }
 
-        public Task<long> GetCountAsync(CancellationToken cancellationToken = default)
+        public async Task<long> GetCountAsync(CancellationToken cancellationToken = default)
         {
-            throw new NotImplementedException();
+            return await Queryable.LongCountAsync(cancellationToken);
         }
 
-        public Task<List<TEntity>> GetListAsync(bool includeDetails = false, CancellationToken cancellationToken = default)
+        public async Task<List<TEntity>> GetListAsync(bool includeDetails = false, CancellationToken cancellationToken = default)
         {
-            throw new NotImplementedException();
+            return await Queryable.ToListAsync(cancellationToken);
         }
 
-        public Task<TEntity> InsertAsync([NotNull] TEntity entity, bool autoSave = false, CancellationToken cancellationToken = default)
+        public async Task<TEntity> InsertAsync([NotNull] TEntity entity, bool autoSave = false, CancellationToken cancellationToken = default)
         {
-            throw new NotImplementedException();
+            await Database.Collection<TEntity>().InsertOneAsync(entity, cancellationToken: cancellationToken);
+            return entity;
         }
 
-        public Task<TEntity> UpdateAsync([NotNull] TEntity entity, bool autoSave = false, CancellationToken cancellationToken = default)
+        public async Task<TEntity> UpdateAsync([NotNull] TEntity entity, bool autoSave = false, CancellationToken cancellationToken = default)
         {
-            throw new NotImplementedException();
+            var oldConcurrencyStamp = SetNewConcurrencyStamp(entity);
+
+            var result = await Database.Collection<TEntity>().ReplaceOneAsync(CreateEntityFilter(entity, true, oldConcurrencyStamp), entity, cancellationToken: cancellationToken);
+
+            if (result.MatchedCount <= 0)
+            {
+                ThrowOptimisticConcurrencyException();
+            }
+
+            return entity;
         }
     }
 
@@ -65,9 +134,14 @@ namespace Skywalker.Ddd.Infrastructure.Mongodb
         {
         }
 
-        public Task DeleteAsync(TKey id, bool autoSave = false, CancellationToken cancellationToken = default)
+        public async Task DeleteAsync(TKey id, bool autoSave = false, CancellationToken cancellationToken = default)
         {
-            throw new NotImplementedException();
+            TEntity entity = await FindAsync(predicate => predicate.Id!.Equals(id), false, cancellationToken);
+            if (entity == null)
+            {
+                return;
+            }
+            await DeleteAsync(entity, autoSave, cancellationToken);
         }
 
         public Task EnsureCollectionLoadedAsync<TProperty>(TEntity entity, Expression<Func<TEntity, IEnumerable<TProperty>>> propertyExpression, CancellationToken cancellationToken) where TProperty : class
@@ -82,12 +156,17 @@ namespace Skywalker.Ddd.Infrastructure.Mongodb
 
         public Task<TEntity> FindAsync(TKey id, bool includeDetails = true, CancellationToken cancellationToken = default)
         {
-            throw new NotImplementedException();
+            return FindAsync(predicate => predicate.Id!.Equals(id), includeDetails, cancellationToken);
         }
 
-        public Task<TEntity> GetAsync(TKey id, bool includeDetails = true, CancellationToken cancellationToken = default)
+        public async Task<TEntity> GetAsync(TKey id, bool includeDetails = true, CancellationToken cancellationToken = default)
         {
-            throw new NotImplementedException();
+            TEntity entity = await FindAsync(id, includeDetails, cancellationToken);
+            if (entity == null)
+            {
+                throw new EntityNotFoundException();
+            }
+            return entity;
         }
     }
 }

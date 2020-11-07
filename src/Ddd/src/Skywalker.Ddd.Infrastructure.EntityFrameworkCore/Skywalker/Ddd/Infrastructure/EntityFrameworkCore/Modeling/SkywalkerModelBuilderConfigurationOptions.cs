@@ -1,6 +1,6 @@
 ﻿using System.Diagnostics.CodeAnalysis;
 
-namespace Skywalker.EntityFrameworkCore.Modeling
+namespace Skywalker.Ddd.Infrastructure.EntityFrameworkCore
 {
     public class SkywalkerModelBuilderConfigurationOptions
     {

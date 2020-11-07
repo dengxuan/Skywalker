@@ -1,9 +1,7 @@
-﻿using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.DependencyInjection;
-using Skywalker.Ddd.Infrastruture.Extensions.EntityFrameworkCore;
+﻿using Microsoft.Extensions.DependencyInjection;
 using System;
 
-namespace Skywalker.EntityFrameworkCore
+namespace Skywalker.Ddd.Infrastructure.EntityFrameworkCore
 {
     public class SkywalkerDbContextProvider<TDbContext> : ISkywalkerDbContextProvider<TDbContext> where TDbContext : SkywalkerDbContext<TDbContext>
     {

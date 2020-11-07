@@ -1,12 +1,13 @@
-﻿using Simple.EntityFrameworkCore;
-using Simple.Application;
-using Microsoft.AspNetCore.Builder;
+﻿using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc.ApplicationParts;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using Skywalker.EntityFrameworkCore;
+using Simple.Application;
+using Simple.Infrastructure.EntityFrameworkCore;
+using Simple.Infrastructure.Mongodb;
+using Skywalker.Ddd.Infrastructure.EntityFrameworkCore;
 
 namespace Simple.WebApi.Hosting
 {
@@ -27,10 +28,14 @@ namespace Simple.WebApi.Hosting
             });
             services.AddSkywalker(skywalker =>
             {
-                //skywalker.AddEntityFrameworkCore<SimpleDbContext>(options =>
-                //{
-                //   // options.UseSqlServer();
-                //});
+                skywalker.AddInfrastructure(initializer =>
+                {
+                    initializer.AddEntityFrameworkCore<SimpleDbContext>(options =>
+                    {
+                        options.UseSqlServer();
+                    });
+                    initializer.AddMongodb<SimpleMongoContext>();
+                });
                 skywalker.AddAutoMapper(options =>
                 {
                     options.AddProfile<SimpleApplicationAutoMapperProfile>();

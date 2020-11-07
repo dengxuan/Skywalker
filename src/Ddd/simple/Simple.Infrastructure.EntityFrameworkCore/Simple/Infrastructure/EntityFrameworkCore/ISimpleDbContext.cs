@@ -1,9 +1,9 @@
 ﻿using Simple.Domain.Users;
 using Skywalker.Data;
 using Skywalker.Ddd.Infrastructure.Abstractions;
-using Skywalker.EntityFrameworkCore;
+using Skywalker.Ddd.Infrastructure.EntityFrameworkCore;
 
-namespace Simple.EntityFrameworkCore.Weixin.EntityFrameworkCore
+namespace Simple.Infrastructure.EntityFrameworkCore
 {
     [ConnectionStringName("Simple")]
     public interface ISimpleDbContext: ISkywalkerDbContext

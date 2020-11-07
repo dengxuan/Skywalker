@@ -1,6 +1,6 @@
 using MongoDB.Driver;
 
-namespace Volo.Abp.MongoDB
+namespace Skywalker.Ddd.Infrastructure.Mongodb
 {
     public interface IMongodbContext
     {

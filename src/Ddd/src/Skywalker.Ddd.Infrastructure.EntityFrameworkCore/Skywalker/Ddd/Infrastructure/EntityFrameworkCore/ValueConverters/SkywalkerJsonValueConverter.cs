@@ -1,7 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Newtonsoft.Json;
 
-namespace Skywalker.EntityFrameworkCore.ValueConverters
+namespace Skywalker.Ddd.Infrastructure.EntityFrameworkCore.ValueConverters
 {
     public class SkywalkerJsonValueConverter<TPropertyType> : ValueConverter<TPropertyType, string>
     {

@@ -2,7 +2,7 @@ using Skywalker.EntityFrameworkCore;
 using System;
 using System.Diagnostics.CodeAnalysis;
 
-namespace Skywalker.Ddd.Infrastructure.DbContextConfiguration
+namespace Skywalker.Ddd.Infrastructure.EntityFrameworkCore.DbContextConfiguration
 {
     public class SkywalkerDbContextConfigurerAction : ISkywalkerDbContextConfigurer
     {

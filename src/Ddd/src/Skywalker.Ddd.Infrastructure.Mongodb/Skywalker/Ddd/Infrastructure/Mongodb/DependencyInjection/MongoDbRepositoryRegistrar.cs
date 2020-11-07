@@ -3,7 +3,7 @@ using System;
 using System.Collections.Generic;
 using Volo.Abp.Domain.Repositories.MongoDB;
 
-namespace Volo.Abp.MongoDB.DependencyInjection
+namespace Skywalker.Ddd.Infrastructure.Mongodb.DependencyInjection
 {
     public class MongoDbRepositoryRegistrar : RepositoryRegistrarBase<AbpMongoDbContextRegistrationOptions>
     {

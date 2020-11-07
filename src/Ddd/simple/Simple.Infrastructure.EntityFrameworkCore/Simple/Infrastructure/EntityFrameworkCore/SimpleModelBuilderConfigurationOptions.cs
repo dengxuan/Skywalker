@@ -1,8 +1,8 @@
 ﻿using Simple.Domain;
-using Skywalker.EntityFrameworkCore.Modeling;
+using Skywalker.Ddd.Infrastructure.EntityFrameworkCore;
 using System.Diagnostics.CodeAnalysis;
 
-namespace Simple.EntityFrameworkCore.Weixin.EntityFrameworkCore
+namespace Simple.Infrastructure.EntityFrameworkCore
 {
     public class SimpleModelBuilderConfigurationOptions : SkywalkerModelBuilderConfigurationOptions
     {

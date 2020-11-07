@@ -1,15 +1,9 @@
-﻿using Microsoft.EntityFrameworkCore;
-using Microsoft.EntityFrameworkCore.Infrastructure;
-using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.DependencyInjection.Extensions;
-using Skywalker.Ddd.Infrastructure;
-using Skywalker.Ddd.Infrastructure.Abstractions;
-using Skywalker.Ddd.Infrastruture.Extensions.EntityFrameworkCore;
-using Skywalker.EntityFrameworkCore.DependencyInjection;
+﻿using Microsoft.EntityFrameworkCore.Infrastructure;
+using Skywalker.Ddd.Infrastructure.EntityFrameworkCore.DbContextConfiguration;
 using System;
 using System.Diagnostics.CodeAnalysis;
 
-namespace Skywalker.EntityFrameworkCore
+namespace Skywalker.Ddd.Infrastructure.EntityFrameworkCore
 {
     public static class SkywalkerDbContextOptionsSqlServerExtensions
     {

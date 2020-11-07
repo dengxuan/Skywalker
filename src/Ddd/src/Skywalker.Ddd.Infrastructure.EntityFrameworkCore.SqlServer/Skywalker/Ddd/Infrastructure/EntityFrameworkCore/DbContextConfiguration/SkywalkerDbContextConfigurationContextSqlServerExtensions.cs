@@ -1,17 +1,15 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
-using Skywalker.Ddd.Infrastructure.DbContextConfiguration;
-using Skywalker.EntityFrameworkCore.DependencyInjection;
 using System;
 using System.Diagnostics.CodeAnalysis;
 
-namespace Skywalker.EntityFrameworkCore
+namespace Skywalker.Ddd.Infrastructure.EntityFrameworkCore.DbContextConfiguration
 {
     public static class SkywalkerDbContextConfigurationContextSqlServerExtensions
     {
         public static DbContextOptionsBuilder UseSqlServer(
            [NotNull] this SkywalkerDbContextConfigurationContext context,
-           [MaybeNull] Action<SqlServerDbContextOptionsBuilder> mySQLOptionsAction = null)
+           [MaybeNull] Action<SqlServerDbContextOptionsBuilder>? mySQLOptionsAction = null)
         {
                 if (context.ExistingConnection != null)
                 {

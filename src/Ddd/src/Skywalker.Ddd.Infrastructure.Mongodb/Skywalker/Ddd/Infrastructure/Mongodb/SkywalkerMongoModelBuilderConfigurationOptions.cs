@@ -1,9 +1,9 @@
 using Skywalker;
 using System.Diagnostics.CodeAnalysis;
 
-namespace Volo.Abp.MongoDB
+namespace Skywalker.Ddd.Infrastructure.Mongodb
 {
-    public class AbpMongoModelBuilderConfigurationOptions
+    public class SkywalkerMongoModelBuilderConfigurationOptions
     {
         [NotNull]
         public string CollectionPrefix
@@ -17,7 +17,7 @@ namespace Volo.Abp.MongoDB
         }
         private string _collectionPrefix;
 
-        public AbpMongoModelBuilderConfigurationOptions([NotNull] string collectionPrefix = "")
+        public SkywalkerMongoModelBuilderConfigurationOptions([NotNull] string collectionPrefix = "")
         {
             Check.NotNull(collectionPrefix, nameof(collectionPrefix));
 

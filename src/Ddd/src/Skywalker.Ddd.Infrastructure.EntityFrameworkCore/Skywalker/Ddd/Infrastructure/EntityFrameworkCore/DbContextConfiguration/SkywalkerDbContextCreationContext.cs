@@ -2,12 +2,12 @@ using System;
 using System.Data.Common;
 using System.Threading;
 
-namespace Skywalker.EntityFrameworkCore.DependencyInjection
+namespace Skywalker.Ddd.Infrastructure.EntityFrameworkCore.DbContextConfiguration
 {
-    public class DbContextCreationContext
+    public class SkywalkerDbContextCreationContext
     {
-        public static DbContextCreationContext Current => _current.Value;
-        private static readonly AsyncLocal<DbContextCreationContext> _current = new AsyncLocal<DbContextCreationContext>();
+        public static SkywalkerDbContextCreationContext Current => _current.Value;
+        private static readonly AsyncLocal<SkywalkerDbContextCreationContext> _current = new AsyncLocal<SkywalkerDbContextCreationContext>();
 
         public string ConnectionStringName { get; }
 
@@ -15,13 +15,13 @@ namespace Skywalker.EntityFrameworkCore.DependencyInjection
 
         public DbConnection ExistingConnection { get; set; }
 
-        public DbContextCreationContext(string connectionStringName, string connectionString)
+        public SkywalkerDbContextCreationContext(string connectionStringName, string connectionString)
         {
             ConnectionStringName = connectionStringName;
             ConnectionString = connectionString;
         }
 
-        public static IDisposable Use(DbContextCreationContext context)
+        public static IDisposable Use(SkywalkerDbContextCreationContext context)
         {
             var previousValue = Current;
             _current.Value = context;

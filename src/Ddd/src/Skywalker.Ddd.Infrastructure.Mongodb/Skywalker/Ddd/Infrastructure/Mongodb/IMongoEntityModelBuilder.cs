@@ -1,7 +1,7 @@
 using System;
 using MongoDB.Bson.Serialization;
 
-namespace Volo.Abp.MongoDB
+namespace Skywalker.Ddd.Infrastructure.Mongodb
 {
     public interface IMongoEntityModelBuilder<TEntity>
     {

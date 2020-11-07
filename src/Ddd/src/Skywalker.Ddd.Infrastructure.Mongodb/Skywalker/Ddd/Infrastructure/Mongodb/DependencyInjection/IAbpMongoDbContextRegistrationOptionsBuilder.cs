@@ -1,6 +1,6 @@
 using Skywalker.DependencyInjection;
 
-namespace Volo.Abp.MongoDB.DependencyInjection
+namespace Skywalker.Ddd.Infrastructure.Mongodb.DependencyInjection
 {
     public interface IAbpMongoDbContextRegistrationOptionsBuilder : ISkywalkerCommonDbContextRegistrationOptionsBuilder
     {

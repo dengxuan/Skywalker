@@ -1,15 +1,19 @@
 using Microsoft.Extensions.DependencyInjection;
 using MongoDB.Driver;
-using Skywalker;
 using System.Collections.Generic;
 
-namespace Volo.Abp.MongoDB
+namespace Skywalker.Ddd.Infrastructure.Mongodb
 {
-    public abstract class AbpMongoDbContext : IMongodbContext, ITransientDependency
+    public abstract class SkywalkerMongodbContext : IMongodbContext, ITransientDependency
     {
         public IMongoModelSource ModelSource { get; set; }
 
         public IMongoDatabase Database { get; private set; }
+
+        protected SkywalkerMongodbContext(IMongoModelSource modelSource)
+        {
+            ModelSource = modelSource;
+        }
 
         protected internal virtual void CreateModel(IMongoModelBuilder modelBuilder)
         {

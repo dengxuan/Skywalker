@@ -17,7 +17,9 @@
     <ItemGroup>
       <ProjectReference Include="..\..\simple\Simple.Application\Simple.Application.csproj" />
       <ProjectReference Include="..\..\simple\Simple.WebApi\Simple.WebApi.csproj" />
+      <ProjectReference Include="..\..\src\Skywalker.Ddd.Infrastructure.EntityFrameworkCore.SqlServer\Skywalker.Ddd.Infrastructure.EntityFrameworkCore.SqlServer.csproj" />
       <ProjectReference Include="..\Simple.Infrastructure.EntityFrameworkCore\Simple.Infrastructure.EntityFrameworkCore.csproj" />
+      <ProjectReference Include="..\Simple.Infrastructure.Mongodb\Simple.Infrastructure.Mongodb.csproj" />
     </ItemGroup>
 
 </Project>

@@ -7,7 +7,7 @@ using Skywalker.Domain.Entities;
 using System;
 using System.Collections.Generic;
 using Volo.Abp.Domain.Repositories.MongoDB;
-using Volo.Abp.MongoDB;
+using Skywalker.Ddd.Infrastructure.Mongodb;
 
 namespace Microsoft.Extensions.DependencyInjection
 {
@@ -20,6 +20,8 @@ namespace Microsoft.Extensions.DependencyInjection
             initializer.Services.TryAddTransient(typeof(IMongoDbRepositoryFilterer<>), typeof(MongoDbRepositoryFilterer<>));
 
             initializer.Services.TryAddTransient(typeof(IMongoDbRepositoryFilterer<,>), typeof(MongoDbRepositoryFilterer<,>));
+
+            initializer.Services.AddSingleton<IMongoModelSource, MongoModelSource>();
 
             //initializer.Services.AddDbContext<TDbContext>();
             initializer.Initialize(typeof(TDbContext), new MongodbDatabaseInitializer<TDbContext>(initializer.Services));

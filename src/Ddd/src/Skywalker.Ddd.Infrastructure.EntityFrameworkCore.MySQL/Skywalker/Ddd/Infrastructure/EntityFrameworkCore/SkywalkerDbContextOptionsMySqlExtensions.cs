@@ -1,9 +1,8 @@
 ﻿using MySql.Data.EntityFrameworkCore.Infrastructure;
-using Skywalker.Ddd.Infrastructure;
 using System;
 using System.Diagnostics.CodeAnalysis;
 
-namespace Skywalker.EntityFrameworkCore
+namespace Skywalker.Ddd.Infrastructure.EntityFrameworkCore
 {
     public static class SkywalkerDbContextOptionsMySqlExtensions
     {

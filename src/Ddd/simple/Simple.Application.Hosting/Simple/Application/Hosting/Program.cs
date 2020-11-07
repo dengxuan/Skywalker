@@ -2,18 +2,13 @@
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
-using Microsoft.Extensions.Logging.Console;
 using Simple.Application.Abstractions;
 using Simple.Domain.Users;
-using Simple.EntityFrameworkCore;
+using Simple.Infrastructure.EntityFrameworkCore;
 using Simple.Infrastructure.Mongodb;
-using Skywalker.Ddd.Infrastructure.Domain.Repositories;
+using Skywalker.Ddd.Infrastructure.EntityFrameworkCore;
 using Skywalker.Domain.Repositories;
-using Skywalker.EntityFrameworkCore;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 
 namespace Simple.Application.Hosting

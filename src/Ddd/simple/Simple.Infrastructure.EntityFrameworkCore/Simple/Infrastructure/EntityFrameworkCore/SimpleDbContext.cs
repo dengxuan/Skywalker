@@ -1,14 +1,11 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Simple.Domain;
 using Simple.Domain.Users;
-using Simple.EntityFrameworkCore.Weixin.EntityFrameworkCore;
 using Skywalker.Data;
-using Skywalker.Ddd.Infrastructure;
 using Skywalker.Ddd.Infrastructure.Abstractions;
-using Skywalker.EntityFrameworkCore;
-using System.Diagnostics.CodeAnalysis;
+using Skywalker.Ddd.Infrastructure.EntityFrameworkCore;
 
-namespace Simple.EntityFrameworkCore
+namespace Simple.Infrastructure.EntityFrameworkCore
 {
     [ConnectionStringName("Simple")]
     public class SimpleDbContext : SkywalkerDbContext<SimpleDbContext>, ISimpleDbContext

@@ -11,7 +11,7 @@ using System.Linq;
 using System.Linq.Expressions;
 using System.Threading;
 using System.Threading.Tasks;
-using Volo.Abp.MongoDB;
+using Skywalker.Ddd.Infrastructure.Mongodb;
 
 namespace Volo.Abp.Domain.Repositories.MongoDB
 {

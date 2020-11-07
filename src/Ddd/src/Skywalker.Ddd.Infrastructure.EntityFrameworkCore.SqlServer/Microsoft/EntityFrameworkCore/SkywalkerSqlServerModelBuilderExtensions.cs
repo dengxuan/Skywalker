@@ -1,4 +1,4 @@
-﻿using Skywalker.EntityFrameworkCore;
+﻿using Skywalker.Ddd.Infrastructure.EntityFrameworkCore;
 
 namespace Microsoft.EntityFrameworkCore
 {

@@ -2,13 +2,12 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Options;
 using Skywalker.Data;
-using Skywalker.Ddd.Infrastructure.DbContextConfiguration;
 using System;
 using System.Collections.Generic;
 
-namespace Skywalker.EntityFrameworkCore.DependencyInjection
+namespace Skywalker.Ddd.Infrastructure.EntityFrameworkCore.DbContextConfiguration
 {
-    public static class DbContextOptionsFactory
+    public static class SkywalkerDbContextOptionsFactory
     {
         public static DbContextOptions<TDbContext> Create<TDbContext>(IServiceProvider serviceProvider)
             where TDbContext : SkywalkerDbContext<TDbContext>
@@ -30,8 +29,7 @@ namespace Skywalker.EntityFrameworkCore.DependencyInjection
             return context.DbContextOptions.Options;
         }
 
-        private static void PreConfigure<TDbContext>(
-            Ddd.Infrastructure.SkywalkerDbContextOptions options,
+        private static void PreConfigure<TDbContext>(SkywalkerDbContextOptions options,
             SkywalkerDbContextConfigurationContext<TDbContext> context)
             where TDbContext : SkywalkerDbContext<TDbContext>
         {
@@ -50,8 +48,7 @@ namespace Skywalker.EntityFrameworkCore.DependencyInjection
             }
         }
 
-        private static void Configure<TDbContext>(
-            Ddd.Infrastructure.SkywalkerDbContextOptions options,
+        private static void Configure<TDbContext>(SkywalkerDbContextOptions options,
             SkywalkerDbContextConfigurationContext<TDbContext> context)
             where TDbContext : SkywalkerDbContext<TDbContext>
         {
@@ -70,16 +67,16 @@ namespace Skywalker.EntityFrameworkCore.DependencyInjection
             }
         }
 
-        private static Ddd.Infrastructure.SkywalkerDbContextOptions GetDbContextOptions<TDbContext>(IServiceProvider serviceProvider)
+        private static SkywalkerDbContextOptions GetDbContextOptions<TDbContext>(IServiceProvider serviceProvider)
             where TDbContext : SkywalkerDbContext<TDbContext>
         {
-            return serviceProvider.GetRequiredService<IOptions<Ddd.Infrastructure.SkywalkerDbContextOptions>>().Value;
+            return serviceProvider.GetRequiredService<IOptions<SkywalkerDbContextOptions>>().Value;
         }
 
-        private static DbContextCreationContext GetCreationContext<TDbContext>(IServiceProvider serviceProvider)
+        private static SkywalkerDbContextCreationContext GetCreationContext<TDbContext>(IServiceProvider serviceProvider)
             where TDbContext : SkywalkerDbContext<TDbContext>
         {
-            var context = DbContextCreationContext.Current;
+            var context = SkywalkerDbContextCreationContext.Current;
             if (context != null)
             {
                 return context;
@@ -88,7 +85,7 @@ namespace Skywalker.EntityFrameworkCore.DependencyInjection
             var connectionStringName = ConnectionStringNameAttribute.GetConnStringName<TDbContext>();
             var connectionString = serviceProvider.GetRequiredService<IConnectionStringResolver>().Resolve(connectionStringName);
 
-            return new DbContextCreationContext(
+            return new SkywalkerDbContextCreationContext(
                 connectionStringName,
                 connectionString
             );

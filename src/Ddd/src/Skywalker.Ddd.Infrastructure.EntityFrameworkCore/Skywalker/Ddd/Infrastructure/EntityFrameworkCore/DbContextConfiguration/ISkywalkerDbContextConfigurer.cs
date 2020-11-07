@@ -1,6 +1,6 @@
 using Skywalker.EntityFrameworkCore;
 
-namespace Skywalker.Ddd.Infrastructure.DbContextConfiguration
+namespace Skywalker.Ddd.Infrastructure.EntityFrameworkCore.DbContextConfiguration
 {
     public interface ISkywalkerDbContextConfigurer
     {

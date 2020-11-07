@@ -1,7 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Skywalker.EntityFrameworkCore;
 
-namespace Skywalker.Ddd.Infrastruture.Extensions.EntityFrameworkCore
+namespace Skywalker.Ddd.Infrastructure.EntityFrameworkCore
 {
     public interface ISkywalkerDbContextProvider<TDbContext> where TDbContext : SkywalkerDbContext<TDbContext>
     {

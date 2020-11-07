@@ -1,8 +1,4 @@
-﻿using MongoDB.Bson.Serialization;
-using System;
-using System.Reflection;
-
-namespace Volo.Abp.MongoDB
+﻿namespace MongoDB.Bson.Serialization
 {
     public static class AbpBsonClassMapExtensions
     {

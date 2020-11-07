@@ -2,7 +2,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Skywalker.DependencyInjection;
 using System;
 
-namespace Volo.Abp.MongoDB.DependencyInjection
+namespace Skywalker.Ddd.Infrastructure.Mongodb.DependencyInjection
 {
     public class AbpMongoDbContextRegistrationOptions : SkywalkerCommonDbContextRegistrationOptions, IAbpMongoDbContextRegistrationOptionsBuilder
     {

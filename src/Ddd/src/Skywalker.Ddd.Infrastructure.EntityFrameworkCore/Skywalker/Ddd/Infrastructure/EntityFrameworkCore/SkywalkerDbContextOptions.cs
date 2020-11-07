@@ -1,11 +1,9 @@
-﻿using Microsoft.Extensions.DependencyInjection;
-using Skywalker.Ddd.Infrastructure.DbContextConfiguration;
-using Skywalker.EntityFrameworkCore;
+﻿using Skywalker.Ddd.Infrastructure.EntityFrameworkCore.DbContextConfiguration;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 
-namespace Skywalker.Ddd.Infrastructure
+namespace Skywalker.Ddd.Infrastructure.EntityFrameworkCore
 {
     public class SkywalkerDbContextOptions
     {

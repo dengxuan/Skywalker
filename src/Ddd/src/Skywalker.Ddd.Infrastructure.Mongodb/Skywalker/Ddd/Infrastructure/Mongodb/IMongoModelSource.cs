@@ -1,7 +1,7 @@
-namespace Volo.Abp.MongoDB
+namespace Skywalker.Ddd.Infrastructure.Mongodb
 {
     public interface IMongoModelSource
     {
-        MongoDbContextModel GetModel(AbpMongoDbContext dbContext);
+        MongoDbContextModel GetModel(SkywalkerMongodbContext dbContext);
     }
 }

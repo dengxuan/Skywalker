@@ -1,4 +1,4 @@
-﻿namespace Skywalker.EntityFrameworkCore
+﻿namespace Skywalker.Ddd.Infrastructure.EntityFrameworkCore
 {
     public enum EntityFrameworkCoreDatabaseProvider
     {
