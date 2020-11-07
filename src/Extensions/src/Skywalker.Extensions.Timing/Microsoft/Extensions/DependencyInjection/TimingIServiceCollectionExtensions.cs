@@ -1,4 +1,5 @@
-﻿using Skywalker.Extensions.Timing;
+﻿using Microsoft.Extensions.DependencyInjection;
+using Skywalker.Extensions.Timing;
 using System;
 using System.Collections.Generic;
 using System.Text;

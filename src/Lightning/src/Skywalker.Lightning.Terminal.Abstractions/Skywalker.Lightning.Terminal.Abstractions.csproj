@@ -5,8 +5,8 @@
 
     <ItemGroup>
       <PackageReference Include="Microsoft.CodeAnalysis.CSharp" Version="3.8.0-5.final" />
-      <PackageReference Include="Microsoft.Extensions.DependencyModel" Version="6.0.0-alpha.1.20420.3" />
-        <PackageReference Include="Microsoft.Extensions.Options" Version="6.0.0-alpha.1.20420.3" />
+      <PackageReference Include="Microsoft.Extensions.DependencyModel" Version="5.0.0-rc.2.20475.5" />
+        <PackageReference Include="Microsoft.Extensions.Options" Version="5.0.0-rc.2.20475.5" />
     </ItemGroup>
 
     <ItemGroup>

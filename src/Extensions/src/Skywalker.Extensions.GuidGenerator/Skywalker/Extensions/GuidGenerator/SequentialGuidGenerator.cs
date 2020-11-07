@@ -27,7 +27,7 @@ namespace Skywalker
             return Create(Options.GetDefaultSequentialGuidType());
         }
 
-        public Guid Create(SequentialGuidType guidType)
+        public static Guid Create(SequentialGuidType guidType)
         {
             // We start with 16 bytes of cryptographically strong random data.
             var randomBytes = new byte[10];

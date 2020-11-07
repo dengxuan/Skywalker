@@ -11,6 +11,8 @@ namespace Skywalker.EventBus
     /// </summary>
     public class IocEventHandlerFactory : IEventHandlerFactory, IDisposable
     {
+        private bool disposedValue;
+
         public Type HandlerType { get; }
 
         protected IServiceScopeFactory ScopeFactory { get; }
@@ -41,9 +43,27 @@ namespace Skywalker.EventBus
                 .Any(f => f.HandlerType == HandlerType);
         }
 
+        protected virtual void Dispose(bool disposing)
+        {
+            if (!disposedValue)
+            {
+                if (disposing)
+                {
+                }
+
+                disposedValue = true;
+            }
+        }
+
+        ~IocEventHandlerFactory()
+        {
+            Dispose(disposing: false);
+        }
+
         public void Dispose()
         {
-
+            Dispose(disposing: true);
+            GC.SuppressFinalize(this);
         }
     }
 }

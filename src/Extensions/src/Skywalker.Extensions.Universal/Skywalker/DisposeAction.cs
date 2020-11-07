@@ -11,22 +11,44 @@ namespace Skywalker
     {
         public static readonly DisposeAction Empty = new DisposeAction(null);
 
-        private Action _action;
+        private Action? _action;
+        private bool disposedValue;
 
         /// <summary>
         /// Creates a new <see cref="DisposeAction"/> object.
         /// </summary>
         /// <param name="action">Action to be executed when this object is disposed.</param>
-        public DisposeAction(Action action)
+        public DisposeAction(Action? action)
         {
             _action = action;
         }
 
+        /// <summary>
+        /// </summary>
+        /// <param name="disposing"></param>
+        protected virtual void Dispose(bool disposing)
+        {
+            if (!disposedValue)
+            {
+                if (disposing)
+                {
+                    // Interlocked prevents multiple execution of the _action.
+                    var action = Interlocked.Exchange(ref _action, null);
+                    action?.Invoke();
+                }
+                disposedValue = true;
+            }
+        }
+
+        ~DisposeAction()
+        {
+            Dispose(disposing: false);
+        }
+
         public void Dispose()
         {
-            // Interlocked prevents multiple execution of the _action.
-            var action = Interlocked.Exchange(ref _action, null);
-            action?.Invoke();
+            Dispose(disposing: true);
+            GC.SuppressFinalize(this);
         }
     }
 }

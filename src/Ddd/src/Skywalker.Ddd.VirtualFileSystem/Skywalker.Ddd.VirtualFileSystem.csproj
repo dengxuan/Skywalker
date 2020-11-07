@@ -8,9 +8,9 @@
     <Import Project="..\..\..\..\version.props" />
 
     <ItemGroup>
-        <PackageReference Include="Microsoft.Extensions.FileProviders.Composite" Version="6.0.0-alpha.1.20420.3" />
-        <PackageReference Include="Microsoft.Extensions.FileProviders.Physical" Version="6.0.0-alpha.1.20420.3" />
-        <PackageReference Include="Microsoft.Extensions.FileProviders.Embedded" Version="5.0.0-rtm.20512.8" />
+        <PackageReference Include="Microsoft.Extensions.FileProviders.Composite" Version="5.0.0-rc.2.20475.5" />
+        <PackageReference Include="Microsoft.Extensions.FileProviders.Embedded" Version="5.0.0-rc.2.20475.17" />
+        <PackageReference Include="Microsoft.Extensions.FileProviders.Physical" Version="5.0.0-rc.2.20475.5" />
     </ItemGroup>
 
     <ItemGroup>
