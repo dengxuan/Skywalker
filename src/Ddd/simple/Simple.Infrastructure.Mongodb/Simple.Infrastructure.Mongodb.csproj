@@ -1,0 +1,10 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+    <Import Project="..\..\..\..\skywalker.props" />
+
+    <ItemGroup>
+      <ProjectReference Include="..\..\src\Skywalker.Ddd.Infrastructure.Mongodb\Skywalker.Ddd.Infrastructure.Mongodb.csproj" />
+      <ProjectReference Include="..\Simple.Domain\Simple.Domain.csproj" />
+    </ItemGroup>
+
+</Project>

@@ -9,21 +9,21 @@ namespace Simple.Domain.Users
 {
     public class UserManager : DomainService
     {
-        private readonly IRepository<User> _users;
+        private readonly IRepository<MongoUser> _users;
 
-        public UserManager(IRepository<User> users)
+        public UserManager(IRepository<MongoUser> users)
         {
             _users = users;
         }
 
-        public Task<List<User>> FindUsersAsync()
+        public Task<List<MongoUser>> FindUsersAsync()
         {
             return Task.FromResult(_users.ToList());
         }
 
-        public async Task<User> CreateUser(string name)
+        public async Task<MongoUser> CreateUser(string name)
         {
-            User user = await _users.InsertAsync(new User(GuidGenerator.Create()) { Name = name }, true);
+            MongoUser user = await _users.InsertAsync(new MongoUser(name), true);
             return user;
         }
     }

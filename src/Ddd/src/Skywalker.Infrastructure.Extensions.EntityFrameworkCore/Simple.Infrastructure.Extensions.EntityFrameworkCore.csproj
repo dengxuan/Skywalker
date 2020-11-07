@@ -1,9 +1,0 @@
-<Project Sdk="Microsoft.NET.Sdk">
-
-    <Import Project="..\..\..\..\skywalker.props" />
-
-    <ItemGroup>
-      <ProjectReference Include="..\Simple.EntityFrameworkCore\Simple.Infrastructure.csproj" />
-    </ItemGroup>
-
-</Project>

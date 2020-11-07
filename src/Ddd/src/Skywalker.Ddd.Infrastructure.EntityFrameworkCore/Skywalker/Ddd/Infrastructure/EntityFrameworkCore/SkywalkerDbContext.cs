@@ -23,7 +23,7 @@ using System.Threading.Tasks;
 
 namespace Skywalker.EntityFrameworkCore
 {
-    public class SkywalkerDbContext<TDbContext> : DbContext/*, ITransientDependency*/ where TDbContext : DbContext
+    public class SkywalkerDbContext<TDbContext> : DbContext where TDbContext : DbContext
     {
 
         protected virtual bool IsSoftDeleteFilterEnabled => DataFilter?.IsEnabled<IDeleteable>() ?? false;

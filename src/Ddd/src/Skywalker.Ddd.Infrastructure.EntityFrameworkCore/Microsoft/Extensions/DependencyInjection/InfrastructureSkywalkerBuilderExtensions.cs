@@ -14,15 +14,15 @@ namespace Microsoft.Extensions.DependencyInjection
 {
     public static class InfrastructureSkywalkerBuilderExtensions
     {
-        public static SkywalkerRepositoryInitializer AddEntityFrameworkCore<TDbContext>(this SkywalkerRepositoryInitializer builder, Action<SkywalkerDbContextOptions> optionsBuilder) where TDbContext : SkywalkerDbContext<TDbContext>
+        public static SkywalkerRepositoryInitializer AddEntityFrameworkCore<TDbContext>(this SkywalkerRepositoryInitializer initializer, Action<SkywalkerDbContextOptions> optionsBuilder) where TDbContext : SkywalkerDbContext<TDbContext>
         {
-            builder.Services.Configure(optionsBuilder);
-            builder.Services.AddMemoryCache();
-            builder.Services.TryAddTransient(DbContextOptionsFactory.Create<TDbContext>);
-            builder.Services.AddTransient(typeof(ISkywalkerDbContextProvider<>), typeof(SkywalkerDbContextProvider<>));
-            builder.Services.AddDbContext<TDbContext>();
-            builder.Initialize(typeof(TDbContext), new EntityFrameworkCoreDatabaseInitializer<TDbContext>(builder.Services));
-            return builder;
+            initializer.Services.Configure(optionsBuilder);
+            initializer.Services.AddMemoryCache();
+            initializer.Services.TryAddTransient(DbContextOptionsFactory.Create<TDbContext>);
+            initializer.Services.AddTransient(typeof(ISkywalkerDbContextProvider<>), typeof(SkywalkerDbContextProvider<>));
+            initializer.Services.AddDbContext<TDbContext>();
+            initializer.Initialize(typeof(TDbContext), new EntityFrameworkCoreDatabaseInitializer<TDbContext>(initializer.Services));
+            return initializer;
         }
     }
 
