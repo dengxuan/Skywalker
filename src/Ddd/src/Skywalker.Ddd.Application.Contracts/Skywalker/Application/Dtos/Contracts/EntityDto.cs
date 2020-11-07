@@ -1,6 +1,6 @@
 using System;
 
-namespace Skywalker.Application.Dtos.Abstractions
+namespace Skywalker.Application.Dtos.Contracts
 {
     [Serializable]
     public abstract class EntityDto : IEntityDto //TODO: Consider to delete this class

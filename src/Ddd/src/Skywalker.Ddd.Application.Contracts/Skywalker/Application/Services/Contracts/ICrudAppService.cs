@@ -1,6 +1,6 @@
 using Skywalker.Application.Dtos;
 
-namespace Skywalker.Application.Services.Abstractions
+namespace Skywalker.Application.Services.Contracts
 {
     public interface ICrudAppService<TEntityDto, in TKey>
         : ICrudAppService<TEntityDto, TKey, PagedAndSortedResultRequestDto>

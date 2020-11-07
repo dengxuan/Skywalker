@@ -1,6 +1,6 @@
 ﻿using System.Threading.Tasks;
 
-namespace Skywalker.Application.Services.Abstractions
+namespace Skywalker.Application.Services.Contracts
 {
     public interface IDeleteAppService<in TKey> : IApplicationService
     {

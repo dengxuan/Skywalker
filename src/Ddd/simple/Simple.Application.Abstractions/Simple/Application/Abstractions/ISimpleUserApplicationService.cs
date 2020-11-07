@@ -1,4 +1,4 @@
-﻿using Skywalker.Application.Services.Abstractions;
+﻿using Skywalker.Application.Services.Contracts;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using System.Threading.Tasks;

@@ -3,7 +3,7 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 16
 VisualStudioVersion = 16.0.30615.102
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Skywalker.Ddd.Application.Abstractions", "src\Skywalker.Ddd.Application.Abstractions\Skywalker.Ddd.Application.Abstractions.csproj", "{3844A690-EC83-4AEA-A8A5-FC0FC6951BF8}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Skywalker.Ddd.Application.Contracts", "src\Skywalker.Ddd.Application.Contracts\Skywalker.Ddd.Application.Contracts.csproj", "{3844A690-EC83-4AEA-A8A5-FC0FC6951BF8}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Skywalker.Ddd.Domain.Abstractions", "src\Skywalker.Ddd.Domain.Abstractions\Skywalker.Ddd.Domain.Abstractions.csproj", "{294BB139-F959-48FF-B938-17DF5CEA55BB}"
 EndProject
@@ -55,7 +55,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Skywalker.Ddd.Infrastructur
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Skywalker.Ddd.Infrastructure.EntityFrameworkCore", "src\Skywalker.Ddd.Infrastructure.EntityFrameworkCore\Skywalker.Ddd.Infrastructure.EntityFrameworkCore.csproj", "{2A62978E-EF56-4DB5-BA73-81F2EA7C9D3B}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Simple.Infrastructure.Mongodb", "simple\Simple.Infrastructure.Mongodb\Simple.Infrastructure.Mongodb.csproj", "{1844B898-6DAD-44C9-8544-F27D96458A10}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Simple.Infrastructure.Mongodb", "simple\Simple.Infrastructure.Mongodb\Simple.Infrastructure.Mongodb.csproj", "{1844B898-6DAD-44C9-8544-F27D96458A10}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

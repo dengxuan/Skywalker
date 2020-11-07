@@ -8,7 +8,7 @@
 
     <ItemGroup>
       <ProjectReference Include="..\..\simple\Simple.Domain.Shared\Simple.Domain.Shared.csproj" />
-      <ProjectReference Include="..\..\src\Skywalker.Ddd.Application.Abstractions\Skywalker.Ddd.Application.Abstractions.csproj" />
+      <ProjectReference Include="..\..\src\Skywalker.Ddd.Application.Contracts\Skywalker.Ddd.Application.Contracts.csproj" />
     </ItemGroup>
 
 </Project>

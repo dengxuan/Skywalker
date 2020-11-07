@@ -1,7 +1,7 @@
 ﻿using System.Threading.Tasks;
 using Skywalker.Application.Dtos;
 
-namespace Skywalker.Application.Services.Abstractions
+namespace Skywalker.Application.Services.Contracts
 {
     public interface IReadOnlyAppService<TEntityDto, in TKey>
         : IReadOnlyAppService<TEntityDto, TEntityDto, TKey, PagedAndSortedResultRequestDto>

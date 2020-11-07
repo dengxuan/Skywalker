@@ -1,4 +1,4 @@
-﻿namespace Skywalker.Application.Dtos.Abstractions
+﻿namespace Skywalker.Application.Dtos.Contracts
 {
     public interface IEntityDto
     {

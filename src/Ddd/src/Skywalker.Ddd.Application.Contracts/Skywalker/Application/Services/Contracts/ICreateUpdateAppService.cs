@@ -1,4 +1,4 @@
-﻿namespace Skywalker.Application.Services.Abstractions
+﻿namespace Skywalker.Application.Services.Contracts
 {
     public interface ICreateUpdateAppService<TEntityDto, in TKey>
         : ICreateUpdateAppService<TEntityDto, TKey, TEntityDto, TEntityDto>

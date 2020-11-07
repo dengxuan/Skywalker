@@ -2,7 +2,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Localization;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Logging.Abstractions;
-using Skywalker.Application.Services.Abstractions;
+using Skywalker.Application.Services.Contracts;
 using Skywalker.DependencyInjection;
 using Skywalker.Extensions.GuidGenerator;
 using Skywalker.Extensions.Linq;

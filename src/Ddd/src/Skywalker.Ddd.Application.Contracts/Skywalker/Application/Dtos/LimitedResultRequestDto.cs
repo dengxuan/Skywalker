@@ -1,6 +1,6 @@
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Localization;
-using Skywalker.Application.Dtos.Abstractions;
+using Skywalker.Application.Dtos.Contracts;
 using Skywalker.Application.Localization;
 using System;
 using System.Collections.Generic;

@@ -1,5 +1,5 @@
 ﻿using Skywalker;
-using Skywalker.Application.Dtos.Abstractions;
+using Skywalker.Application.Dtos.Contracts;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;

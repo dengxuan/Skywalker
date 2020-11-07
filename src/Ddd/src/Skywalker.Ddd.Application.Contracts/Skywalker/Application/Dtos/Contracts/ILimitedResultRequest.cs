@@ -1,4 +1,4 @@
-namespace Skywalker.Application.Dtos.Abstractions
+namespace Skywalker.Application.Dtos.Contracts
 {
     /// <summary>
     /// This interface is defined to standardize to request a limited result.

@@ -1,4 +1,4 @@
-﻿using Skywalker.Application.Dtos.Abstractions;
+﻿using Skywalker.Application.Dtos.Contracts;
 using System.Diagnostics.CodeAnalysis;
 
 namespace Simple.Application.Abstractions

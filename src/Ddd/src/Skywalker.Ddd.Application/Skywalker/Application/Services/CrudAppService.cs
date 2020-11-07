@@ -1,6 +1,6 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
 using Skywalker.Application.Dtos;
-using Skywalker.Application.Dtos.Abstractions;
+using Skywalker.Application.Dtos.Contracts;
 using Skywalker.Domain.Entities;
 using Skywalker.Domain.Repositories;
 using System;

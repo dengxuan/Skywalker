@@ -25,7 +25,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Skywalker.AspNetCore.Securi
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Skywalker.AspNetCore.Security.Abstractions", "src\Security\src\Skywalker.AspNetCore.Security.Abstractions\Skywalker.AspNetCore.Security.Abstractions.csproj", "{861F6221-E68D-4B99-8DAF-0EC1419E3A58}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Skywalker.Ddd.Application.Abstractions", "src\Ddd\src\Skywalker.Ddd.Application.Abstractions\Skywalker.Ddd.Application.Abstractions.csproj", "{FF2E461B-804A-4D6C-9196-69E0EA960D4B}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Skywalker.Ddd.Application.Contracts", "src\Ddd\src\Skywalker.Ddd.Application.Contracts\Skywalker.Ddd.Application.Contracts.csproj", "{FF2E461B-804A-4D6C-9196-69E0EA960D4B}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Skywalker.Ddd.Domain.Abstractions", "src\Ddd\src\Skywalker.Ddd.Domain.Abstractions\Skywalker.Ddd.Domain.Abstractions.csproj", "{1297888C-734A-4467-AA40-76DB501EB1FA}"
 EndProject
