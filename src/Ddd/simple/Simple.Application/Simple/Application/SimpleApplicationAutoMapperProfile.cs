@@ -14,6 +14,7 @@ namespace Simple.Application
         public SimpleApplicationAutoMapperProfile()
         {
             CreateMap<User, UserDto>();
+            CreateMap<MongoUser, UserDto>();
         }
     }
 }

@@ -9,6 +9,8 @@ using Simple.Infrastructure.Mongodb;
 using Skywalker.Ddd.Infrastructure.EntityFrameworkCore;
 using Skywalker.Domain.Repositories;
 using System;
+using System.Collections.Generic;
+using System.Diagnostics;
 using System.Threading.Tasks;
 
 namespace Simple.Application.Hosting
@@ -39,15 +41,21 @@ namespace Simple.Application.Hosting
                     });
                 });
             }).Build();
-            IRepository<User> user = host.Services.GetRequiredService<IRepository<User>>();
-            IRepository<MongoUser> mongoUsers = host.Services.GetRequiredService<IRepository<MongoUser>>();
+            Stopwatch stopwatch = Stopwatch.StartNew();
             ISimpleUserApplicationService simpleUserApplicationService = host.Services.GetRequiredService<ISimpleUserApplicationService>();
-            for (int i = 0; i < 10; i++)
+            for (int i = 0; i < 1000; i++)
             {
                 var dto = await simpleUserApplicationService.CreateUserAsync($"Laod-{i}");
-                Console.WriteLine(dto.Name);
             }
-            await simpleUserApplicationService.FindUsersAsync();
+            Console.WriteLine(stopwatch.ElapsedMilliseconds);
+            stopwatch.Restart();
+            List<UserDto> userDtos = await simpleUserApplicationService.FindUsersAsync();
+            stopwatch.Stop();
+            foreach (var item in userDtos)
+            {
+                Console.WriteLine(item.Name);
+            }
+            Console.WriteLine(stopwatch.ElapsedMilliseconds);
             await host.RunAsync();
         }
     }
