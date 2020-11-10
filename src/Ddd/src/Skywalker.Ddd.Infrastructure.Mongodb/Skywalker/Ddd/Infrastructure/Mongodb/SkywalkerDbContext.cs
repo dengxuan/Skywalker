@@ -4,13 +4,13 @@ using System.Collections.Generic;
 
 namespace Skywalker.Ddd.Infrastructure.Mongodb
 {
-    public abstract class SkywalkerMongodbContext : IMongodbContext, ITransientDependency
+    public abstract class SkywalkerDbContext : ISkywalkerContext, ITransientDependency
     {
         public IMongoModelSource ModelSource { get; set; }
 
         public IMongoDatabase Database { get; private set; }
 
-        protected SkywalkerMongodbContext(IMongoModelSource modelSource)
+        protected SkywalkerDbContext(IMongoModelSource modelSource)
         {
             ModelSource = modelSource;
         }

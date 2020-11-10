@@ -6,7 +6,7 @@ using Skywalker.Ddd.Infrastructure.Mongodb;
 
 namespace Skywalker.Ddd.Mongodb
 {
-    public class DefaultMongoDbContextProvider<TMongoDbContext> : IMongoDbContextProvider<TMongoDbContext> where TMongoDbContext : IMongodbContext
+    public class DefaultMongoDbContextProvider<TMongoDbContext> : ISkywalkerContextProvider<TMongoDbContext> where TMongoDbContext : ISkywalkerContext
     {
         private readonly IServiceProvider _serviceProvider;
 

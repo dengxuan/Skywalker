@@ -3,8 +3,8 @@
     <Import Project="..\..\..\..\skywalker.props" />
     <Import Project="..\..\..\..\version.props" />
     <ItemGroup>
-      <PackageReference Include="Microsoft.EntityFrameworkCore" Version="5.0.0-rc.2.20475.6" />
-      <PackageReference Include="Microsoft.EntityFrameworkCore.Relational" Version="5.0.0-rc.2.20475.6" />
+      <PackageReference Include="Microsoft.EntityFrameworkCore" Version="5.0.0" />
+      <PackageReference Include="Microsoft.EntityFrameworkCore.Relational" Version="5.0.0" />
     </ItemGroup>
     <ItemGroup>
       <ProjectReference Include="..\Skywalker.Ddd.Infrastructure.Abstractions\Skywalker.Ddd.Infrastructure.Abstractions.csproj" />

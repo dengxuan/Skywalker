@@ -13,7 +13,7 @@ namespace Skywalker.Ddd.Infrastructure.Mongodb
     {
         protected readonly ConcurrentDictionary<Type, MongoDbContextModel> ModelCache = new ConcurrentDictionary<Type, MongoDbContextModel>();
         
-        public virtual MongoDbContextModel GetModel(SkywalkerMongodbContext dbContext)
+        public virtual MongoDbContextModel GetModel(SkywalkerDbContext dbContext)
         {
             return ModelCache.GetOrAdd(
                 dbContext.GetType(),
@@ -21,7 +21,7 @@ namespace Skywalker.Ddd.Infrastructure.Mongodb
             );
         }
 
-        protected virtual MongoDbContextModel CreateModel(SkywalkerMongodbContext dbContext)
+        protected virtual MongoDbContextModel CreateModel(SkywalkerDbContext dbContext)
         {
             var modelBuilder = CreateModelBuilder();
             BuildModelFromDbContextType(modelBuilder, dbContext.GetType());
@@ -60,7 +60,7 @@ namespace Skywalker.Ddd.Infrastructure.Mongodb
             });
         }
 
-        protected virtual void BuildModelFromDbContextInstance(IMongoModelBuilder modelBuilder, SkywalkerMongodbContext dbContext)
+        protected virtual void BuildModelFromDbContextInstance(IMongoModelBuilder modelBuilder, SkywalkerDbContext dbContext)
         {
             dbContext.CreateModel(modelBuilder);
         }

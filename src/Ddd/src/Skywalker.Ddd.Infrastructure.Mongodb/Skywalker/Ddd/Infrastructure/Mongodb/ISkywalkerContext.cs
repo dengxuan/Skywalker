@@ -2,7 +2,7 @@ using MongoDB.Driver;
 
 namespace Skywalker.Ddd.Infrastructure.Mongodb
 {
-    public interface IMongodbContext
+    public interface ISkywalkerContext
     {
         IMongoDatabase Database { get; }
 

@@ -13,9 +13,9 @@ namespace Microsoft.Extensions.DependencyInjection
 {
     public static class SkywalkerMongodbServiceCollectionExtensions
     {
-        public static SkywalkerRepositoryInitializer AddMongodb<TDbContext>(this SkywalkerRepositoryInitializer initializer) where TDbContext : IMongodbContext
+        public static SkywalkerRepositoryInitializer AddMongodb<TDbContext>(this SkywalkerRepositoryInitializer initializer) where TDbContext : ISkywalkerContext
         {
-            initializer.Services.TryAddTransient(typeof(IMongoDbContextProvider<>), typeof(DefaultMongoDbContextProvider<>));
+            initializer.Services.TryAddTransient(typeof(ISkywalkerContextProvider<>), typeof(DefaultMongoDbContextProvider<>));
 
             initializer.Services.TryAddTransient(typeof(IMongoDbRepositoryFilterer<>), typeof(MongoDbRepositoryFilterer<>));
 
@@ -31,7 +31,7 @@ namespace Microsoft.Extensions.DependencyInjection
     }
 
 
-    internal class MongodbDatabaseInitializer<TDbContext> : ISkywalkerDatabaseInitializer where TDbContext : IMongodbContext
+    internal class MongodbDatabaseInitializer<TDbContext> : ISkywalkerDatabaseInitializer where TDbContext : ISkywalkerContext
     {
         IServiceCollection Services { get; }
 

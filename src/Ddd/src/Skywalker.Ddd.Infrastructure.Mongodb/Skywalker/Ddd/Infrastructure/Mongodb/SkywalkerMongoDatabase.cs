@@ -10,11 +10,10 @@ using System.Linq;
 using System.Linq.Expressions;
 using System.Threading;
 using System.Threading.Tasks;
-using Skywalker.Ddd.Infrastructure.Mongodb;
 
 namespace Skywalker.Ddd.Infrastructure.Mongodb
 {
-    public class SkywalkerMongoDatabase<TDbContext, TEntity> : ISkywalkerDatabase<TEntity> where TEntity : IEntity where TDbContext : IMongodbContext
+    public class SkywalkerMongoDatabase<TDbContext, TEntity> : ISkywalkerDatabase<TEntity> where TEntity : IEntity where TDbContext : ISkywalkerContext
     {
         protected TDbContext Database { get; }
 
@@ -22,7 +21,7 @@ namespace Skywalker.Ddd.Infrastructure.Mongodb
 
         public IQueryable<TEntity> Entities => Database.Collection<TEntity>().AsQueryable();
 
-        public SkywalkerMongoDatabase(IMongoDbContextProvider<TDbContext> dbContextProvider)
+        public SkywalkerMongoDatabase(ISkywalkerContextProvider<TDbContext> dbContextProvider)
         {
             Database = dbContextProvider.GetDbContext();
         }
@@ -128,9 +127,9 @@ namespace Skywalker.Ddd.Infrastructure.Mongodb
         }
     }
 
-    public class SkywalkerMongoDatabase<TDbContext, TEntity, TKey> : SkywalkerMongoDatabase<TDbContext, TEntity>, ISkywalkerDatabase<TEntity, TKey> where TEntity : class, IEntity<TKey> where TDbContext : IMongodbContext
+    public class SkywalkerMongoDatabase<TDbContext, TEntity, TKey> : SkywalkerMongoDatabase<TDbContext, TEntity>, ISkywalkerDatabase<TEntity, TKey> where TEntity : class, IEntity<TKey> where TDbContext : ISkywalkerContext
     {
-        public SkywalkerMongoDatabase(IMongoDbContextProvider<TDbContext> dbContextProvider) : base(dbContextProvider)
+        public SkywalkerMongoDatabase(ISkywalkerContextProvider<TDbContext> dbContextProvider) : base(dbContextProvider)
         {
         }
 

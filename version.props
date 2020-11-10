@@ -1,7 +1,7 @@
 <Project>
     <PropertyGroup>
         <VersionPrefix>1.0.0</VersionPrefix>
-        <VersionSuffix>dev</VersionSuffix>
+        <VersionSuffix></VersionSuffix>
         <BuildNumber Condition="'$(BuildNumber)' == ''">3</BuildNumber>
         <PackageVersion Condition="'$(IsFinalBuild)' == 'true' AND '$(VersionSuffix)' == 'rtm' ">$(VersionPrefix).$(BuildNumber)</PackageVersion>
         <PackageVersion Condition="'$(IsFinalBuild)' == 'true' AND '$(VersionSuffix)' != 'rtm' ">$(VersionPrefix)-$(VersionSuffix)$(BuildNumber)</PackageVersion>

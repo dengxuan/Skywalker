@@ -6,7 +6,7 @@ using Skywalker.Ddd.Infrastructure.Mongodb;
 namespace Simple.Infrastructure.Mongodb
 {
     [ConnectionStringName("Mongo")]
-    public class SimpleMongoContext : SkywalkerMongodbContext
+    public class SimpleMongoContext : SkywalkerDbContext
     {
         public IDataCollection<MongoUser>? MongoUsers { get; }
 

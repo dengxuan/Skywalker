@@ -19,7 +19,7 @@ namespace Volo.Abp.Domain.Repositories.MongoDB
         : RepositoryBase<TEntity>,
         IMongoDbRepository<TEntity>,
         IMongoQueryable<TEntity>
-        where TMongoDbContext : IMongodbContext
+        where TMongoDbContext : ISkywalkerContext
         where TEntity : class, IEntity
     {
         public virtual IMongoCollection<TEntity> Collection => DbContext.Collection<TEntity>();
@@ -28,13 +28,13 @@ namespace Volo.Abp.Domain.Repositories.MongoDB
 
         public virtual TMongoDbContext DbContext => DbContextProvider.GetDbContext();
 
-        protected IMongoDbContextProvider<TMongoDbContext> DbContextProvider { get; }
+        protected ISkywalkerContextProvider<TMongoDbContext> DbContextProvider { get; }
 
         public IEntityChangeEventHelper EntityChangeEventHelper { get; set; }
 
         public IGuidGenerator GuidGenerator { get; set; }
 
-        public MongoDbRepository(IMongoDbContextProvider<TMongoDbContext> dbContextProvider)
+        public MongoDbRepository(ISkywalkerContextProvider<TMongoDbContext> dbContextProvider)
         {
             DbContextProvider = dbContextProvider;
 
@@ -318,12 +318,12 @@ namespace Volo.Abp.Domain.Repositories.MongoDB
     public class MongoDbRepository<TMongoDbContext, TEntity, TKey>
         : MongoDbRepository<TMongoDbContext, TEntity>,
         IMongoDbRepository<TEntity, TKey>
-        where TMongoDbContext : IMongodbContext
+        where TMongoDbContext : ISkywalkerContext
         where TEntity : class, IEntity<TKey>
     {
         public IMongoDbRepositoryFilterer<TEntity, TKey> RepositoryFilterer { get; set; }
 
-        public MongoDbRepository(IMongoDbContextProvider<TMongoDbContext> dbContextProvider)
+        public MongoDbRepository(ISkywalkerContextProvider<TMongoDbContext> dbContextProvider)
             : base(dbContextProvider)
         {
 
