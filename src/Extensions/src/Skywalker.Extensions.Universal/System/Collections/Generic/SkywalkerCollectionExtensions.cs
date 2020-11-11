@@ -129,7 +129,7 @@ namespace System.Collections.Generic
                 action(item);
         }
 
-        public static T Find<T>(this T[] items, Predicate<T> predicate)
+        public static T? Find<T>(this T[] items, Predicate<T> predicate)
         {
             return Array.Find(items, predicate);
         }
@@ -168,7 +168,7 @@ namespace System.Collections.Generic
                 if (list[i] != null)
                 {
                     // simply add since order does not matter
-                    result += list[i].GetHashCode();
+                    result += list[i]!.GetHashCode();
                 }
             }
 
@@ -235,7 +235,7 @@ namespace System.Collections.Generic
         /// <param name="source">A list of objects to sort</param>
         /// <param name="dependenciesResolver">Function to resolve the dependencies</param>
         /// <returns></returns>
-        public static List<T> SortByDependencies<T>(this IEnumerable<T> source, Func<T, IEnumerable<T>> dependenciesResolver)
+        public static List<T> SortByDependencies<T>(this IEnumerable<T> source, Func<T, IEnumerable<T>> dependenciesResolver) where T : notnull
         {
             /* See: http://www.codeproject.com/Articles/869059/Topological-sorting-in-Csharp
              *      http://en.wikipedia.org/wiki/Topological_sorting
@@ -260,7 +260,7 @@ namespace System.Collections.Generic
         /// <param name="dependenciesResolver">Function to resolve the dependencies</param>
         /// <param name="sorted">List with the sortet items</param>
         /// <param name="visited">Dictionary with the visited items</param>
-        private static void SortByDependenciesVisit<T>(this T item, Func<T, IEnumerable<T>> dependenciesResolver, List<T> sorted, Dictionary<T, bool> visited)
+        private static void SortByDependenciesVisit<T>(this T item, Func<T, IEnumerable<T>> dependenciesResolver, List<T> sorted, Dictionary<T, bool> visited) where T : notnull
         {
             var alreadyVisited = visited.TryGetValue(item, out bool inProcess);
 

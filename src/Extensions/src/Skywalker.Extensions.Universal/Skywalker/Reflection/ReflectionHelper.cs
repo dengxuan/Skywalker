@@ -82,7 +82,7 @@ namespace Skywalker.Reflection
         /// <param name="memberInfo">MemberInfo</param>
         /// <param name="defaultValue">Default value (null as default)</param>
         /// <param name="inherit">Inherit attribute from base classes</param>
-        public static TAttribute GetSingleAttributeOrDefault<TAttribute>(MemberInfo memberInfo, TAttribute defaultValue = default, bool inherit = true)
+        public static TAttribute? GetSingleAttributeOrDefault<TAttribute>(MemberInfo memberInfo, TAttribute? defaultValue = default, bool inherit = true)
             where TAttribute : Attribute
         {
             //Get attribute on the member
@@ -102,7 +102,7 @@ namespace Skywalker.Reflection
         /// <param name="memberInfo">MemberInfo</param>
         /// <param name="defaultValue">Default value (null as default)</param>
         /// <param name="inherit">Inherit attribute from base classes</param>
-        public static TAttribute GetSingleAttributeOfMemberOrDeclaringTypeOrDefault<TAttribute>(MemberInfo memberInfo, TAttribute defaultValue = default, bool inherit = true)
+        public static TAttribute? GetSingleAttributeOfMemberOrDeclaringTypeOrDefault<TAttribute>(MemberInfo memberInfo, TAttribute? defaultValue = default, bool inherit = true)
             where TAttribute : class
         {
             return memberInfo.GetCustomAttributes(true).OfType<TAttribute>().FirstOrDefault()
@@ -136,7 +136,7 @@ namespace Skywalker.Reflection
             var currentType = objectType;
             var objectPath = currentType.FullName;
             var absolutePropertyPath = propertyPath;
-            if (absolutePropertyPath.StartsWith(objectPath))
+            if (absolutePropertyPath.StartsWith(objectPath!))
             {
                 absolutePropertyPath = absolutePropertyPath.Replace(objectPath + ".", "");
             }
@@ -144,7 +144,7 @@ namespace Skywalker.Reflection
             foreach (var propertyName in absolutePropertyPath.Split('.'))
             {
                 var property = currentType.GetProperty(propertyName);
-                value = property.GetValue(value, null);
+                value = property!.GetValue(value, null);
                 currentType = property.PropertyType;
             }
 
@@ -157,10 +157,10 @@ namespace Skywalker.Reflection
         internal static void SetValueByPath(object obj, Type objectType, string propertyPath, object value)
         {
             var currentType = objectType;
-            PropertyInfo property;
+            PropertyInfo? property;
             var objectPath = currentType.FullName;
             var absolutePropertyPath = propertyPath;
-            if (absolutePropertyPath.StartsWith(objectPath))
+            if (absolutePropertyPath.StartsWith(objectPath!))
             {
                 absolutePropertyPath = absolutePropertyPath.Replace(objectPath + ".", "");
             }
@@ -170,19 +170,19 @@ namespace Skywalker.Reflection
             if (properties.Length == 1)
             {
                 property = objectType.GetProperty(properties.First());
-                property.SetValue(obj, value);
+                property!.SetValue(obj, value);
                 return;
             }
 
             for (int i = 0; i < properties.Length - 1; i++)
             {
                 property = currentType.GetProperty(properties[i]);
-                obj = property.GetValue(obj, null);
+                obj = property!.GetValue(obj, null)!;
                 currentType = property.PropertyType;
             }
 
             property = currentType.GetProperty(properties.Last());
-            property.SetValue(obj, value);
+            property!.SetValue(obj, value);
         }
 
 
@@ -197,7 +197,7 @@ namespace Skywalker.Reflection
 
             var publicConstants = new List<string>();
 
-            void Recursively(List<string> constants, Type targetType, int currentDepth)
+            static void Recursively(List<string> constants, Type targetType, int currentDepth)
             {
                 if (currentDepth > maxRecursiveParameterValidationDepth)
                 {
@@ -206,7 +206,7 @@ namespace Skywalker.Reflection
 
                 constants.AddRange(targetType.GetFields(BindingFlags.Public | BindingFlags.Static | BindingFlags.FlattenHierarchy)
                     .Where(x => x.IsLiteral && !x.IsInitOnly)
-                    .Select(x => x.GetValue(null).ToString()));
+                    .Select(x => x.GetValue(null)!.ToString())!);
 
                 var nestedTypes = targetType.GetNestedTypes(BindingFlags.Public);
 
