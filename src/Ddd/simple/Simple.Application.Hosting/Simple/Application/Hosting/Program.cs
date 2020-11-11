@@ -8,10 +8,12 @@ using Simple.Infrastructure.EntityFrameworkCore;
 using Simple.Infrastructure.Mongodb;
 using Skywalker.Ddd.Infrastructure.EntityFrameworkCore;
 using Skywalker.Domain.Repositories;
+using Skywalker.Extensions.Timing;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Threading.Tasks;
+using Volo.Abp.Domain.Repositories;
 
 namespace Simple.Application.Hosting
 {
@@ -31,7 +33,7 @@ namespace Simple.Application.Hosting
                     {
                         initializer.AddEntityFrameworkCore<SimpleDbContext>(options =>
                         {
-                            options.UseSqlServer();
+                            options.UseMySql();
                         });
                         initializer.AddMongodb<SimpleMongoContext>();
                     });
@@ -39,14 +41,18 @@ namespace Simple.Application.Hosting
                     {
                         options.AddProfile<SimpleApplicationAutoMapperProfile>();
                     });
+                    builder.Services.AddSingleton<IClock, Clock>();
                 });
             }).Build();
             Stopwatch stopwatch = Stopwatch.StartNew();
+            IRepository<User, short> users = host.Services.GetRequiredService<IRepository<User, short>>();
             ISimpleUserApplicationService simpleUserApplicationService = host.Services.GetRequiredService<ISimpleUserApplicationService>();
             for (int i = 0; i < 1000; i++)
             {
+                await users.InsertAsync(new User(0) { Name = $"Laod-{i}" });
                 var dto = await simpleUserApplicationService.CreateUserAsync($"Laod-{i}");
             }
+            await users.InsertAsync(new User(0) { Name = $"Laod-{1002}" },true);
             Console.WriteLine(stopwatch.ElapsedMilliseconds);
             stopwatch.Restart();
             List<UserDto> userDtos = await simpleUserApplicationService.FindUsersAsync();

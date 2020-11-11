@@ -170,38 +170,38 @@ namespace Skywalker.Ddd.Infrastructure.EntityFrameworkCore
 
             foreach (var entry in ChangeTracker.Entries().ToList())
             {
-                ApplyAbpConcepts(entry, changeReport);
+                ApplySkywalkerConcepts(entry, changeReport);
             }
 
             return changeReport;
         }
 
-        protected virtual void ApplyAbpConcepts(EntityEntry entry, EntityChangeReport changeReport)
+        protected virtual void ApplySkywalkerConcepts(EntityEntry entry, EntityChangeReport changeReport)
         {
             switch (entry.State)
             {
                 case EntityState.Added:
-                    ApplyAbpConceptsForAddedEntity(entry, changeReport);
+                    ApplySkywalkerConceptsForAddedEntity(entry, changeReport);
                     break;
                 case EntityState.Modified:
-                    ApplyAbpConceptsForModifiedEntity(entry, changeReport);
+                    ApplySkywalkerConceptsForModifiedEntity(entry, changeReport);
                     break;
                 case EntityState.Deleted:
-                    ApplyAbpConceptsForDeletedEntity(entry, changeReport);
+                    ApplySkywalkerConceptsForDeletedEntity(entry, changeReport);
                     break;
             }
 
             AddDomainEvents(changeReport, entry.Entity);
         }
 
-        protected virtual void ApplyAbpConceptsForAddedEntity(EntityEntry entry, EntityChangeReport changeReport)
+        protected virtual void ApplySkywalkerConceptsForAddedEntity(EntityEntry entry, EntityChangeReport changeReport)
         {
             CheckAndSetId(entry);
             SetConcurrencyStampIfNull(entry);
             changeReport.ChangedEntities.Add(new EntityChangeEntry(entry.Entity, EntityChangeType.Created));
         }
 
-        protected virtual void ApplyAbpConceptsForModifiedEntity(EntityEntry entry, EntityChangeReport changeReport)
+        protected virtual void ApplySkywalkerConceptsForModifiedEntity(EntityEntry entry, EntityChangeReport changeReport)
         {
             UpdateConcurrencyStamp(entry);
 
@@ -215,7 +215,7 @@ namespace Skywalker.Ddd.Infrastructure.EntityFrameworkCore
             }
         }
 
-        protected virtual void ApplyAbpConceptsForDeletedEntity(EntityEntry entry, EntityChangeReport changeReport)
+        protected virtual void ApplySkywalkerConceptsForDeletedEntity(EntityEntry entry, EntityChangeReport changeReport)
         {
             if (TryCancelDeletionForSoftDelete(entry))
             {
@@ -258,7 +258,7 @@ namespace Skywalker.Ddd.Infrastructure.EntityFrameworkCore
 
         protected virtual void SetConcurrencyStampIfNull(EntityEntry entry)
         {
-            if (!(entry.Entity is IHasConcurrencyStamp entity))
+            if (entry.Entity is not IHasConcurrencyStamp entity)
             {
                 return;
             }

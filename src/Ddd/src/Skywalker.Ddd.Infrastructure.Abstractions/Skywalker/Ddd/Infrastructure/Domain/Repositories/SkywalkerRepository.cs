@@ -1,6 +1,7 @@
 ﻿using Skywalker.Ddd.Infrastructure.Abstractions;
 using Skywalker.Domain.Entities;
 using Skywalker.Domain.Repositories;
+using Skywalker.Extensions.Timing;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
@@ -13,11 +14,13 @@ namespace Skywalker.Ddd.Infrastructure.Domain.Repositories
 {
     public class SkywalkerRepository<TEntity> : RepositoryBase<TEntity>, ISkywalkerRepository<TEntity> where TEntity : class, IEntity
     {
+        private readonly IClock _clock;
         protected ISkywalkerDatabase<TEntity> Database { get; }
 
-        public SkywalkerRepository(ISkywalkerDatabase<TEntity> database)
+        public SkywalkerRepository(ISkywalkerDatabase<TEntity> database, IClock clock)
         {
             Database = database;
+            _clock = clock;
         }
 
         protected override IQueryable<TEntity> GetQueryable()
@@ -37,6 +40,10 @@ namespace Skywalker.Ddd.Infrastructure.Domain.Repositories
 
         public override Task<TEntity> InsertAsync([NotNull] TEntity entity, bool autoSave = false, CancellationToken cancellationToken = default)
         {
+            if (entity is IHasCreationTime objectWithCreationTime)
+            {
+                objectWithCreationTime.CreationTime = _clock.Now;
+            }
             return Database.InsertAsync(entity, autoSave, cancellationToken);
         }
 
@@ -67,8 +74,8 @@ namespace Skywalker.Ddd.Infrastructure.Domain.Repositories
 
         where TEntity : class, IEntity<TKey>
     {
-        public SkywalkerRepository(ISkywalkerDatabase<TEntity, TKey> database)
-            : base(database)
+        public SkywalkerRepository(ISkywalkerDatabase<TEntity, TKey> database, IClock clock)
+            : base(database, clock)
         {
 
         }

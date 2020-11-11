@@ -3,11 +3,11 @@ using System;
 
 namespace Simple.Domain.Users
 {
-    public class User : AggregateRoot<Guid>
+    public class User : AggregateRoot<short>
     {
         public string? Name { get; set; }
 
-        public User(Guid id)
+        public User(short id)
         {
             Id = id;
         }
