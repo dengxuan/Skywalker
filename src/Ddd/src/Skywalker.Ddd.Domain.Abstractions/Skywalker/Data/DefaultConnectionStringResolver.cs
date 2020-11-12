@@ -14,13 +14,13 @@ namespace Skywalker.Data
             Options = options.Value;
         }
 
-        public virtual string Resolve(string connectionStringName = null)
+        public virtual string? Resolve(string? connectionStringName = null)
         {
             //Get module specific value if provided
-            if (!connectionStringName.IsNullOrEmpty())
+            if (!connectionStringName!.IsNullOrEmpty())
             {
-                var moduleConnString = Options.ConnectionStrings.GetOrDefault(connectionStringName);
-                if (!moduleConnString.IsNullOrEmpty())
+                var moduleConnString = Options.ConnectionStrings.GetOrDefault(connectionStringName!);
+                if (!moduleConnString!.IsNullOrEmpty())
                 {
                     return moduleConnString;
                 }

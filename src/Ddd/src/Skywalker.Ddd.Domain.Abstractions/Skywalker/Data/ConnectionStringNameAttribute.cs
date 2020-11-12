@@ -4,6 +4,7 @@ using System.Reflection;
 
 namespace Skywalker.Data
 {
+    [AttributeUsage(AttributeTargets.Class)]
     public class ConnectionStringNameAttribute : Attribute
     {
         [NotNull]

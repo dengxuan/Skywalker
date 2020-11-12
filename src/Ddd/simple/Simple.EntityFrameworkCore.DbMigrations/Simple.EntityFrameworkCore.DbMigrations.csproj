@@ -1,0 +1,15 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+    <Import Project="..\..\..\..\skywalker.props" />
+
+    <ItemGroup>
+      <PackageReference Include="Microsoft.Extensions.Configuration.FileExtensions" Version="5.0.0" />
+      <PackageReference Include="Microsoft.Extensions.Configuration.Json" Version="5.0.0" />
+    </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\src\Skywalker.Ddd.Infrastructure.EntityFrameworkCore.MySQL\Skywalker.Ddd.Infrastructure.EntityFrameworkCore.MySQL.csproj" />
+    <ProjectReference Include="..\Simple.Infrastructure.EntityFrameworkCore\Simple.Infrastructure.EntityFrameworkCore.csproj" />
+  </ItemGroup>
+
+</Project>

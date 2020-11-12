@@ -9,7 +9,7 @@ namespace Simple.Infrastructure.EntityFrameworkCore
     public static class SimpleDbContextModelCreatingExtensions
     {
 
-        public static void ConfigureWeixin(this ModelBuilder builder, Action<SimpleModelBuilderConfigurationOptions>? optionsAction = null)
+        public static void ConfigureSimple(this ModelBuilder builder, Action<SimpleModelBuilderConfigurationOptions>? optionsAction = null)
         {
 
             Check.NotNull(builder, nameof(builder));

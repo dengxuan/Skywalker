@@ -26,7 +26,7 @@ namespace Simple.Infrastructure.EntityFrameworkCore
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             base.OnModelCreating(modelBuilder);
-            modelBuilder.ConfigureWeixin();
+            modelBuilder.ConfigureSimple();
         }
     }
 }

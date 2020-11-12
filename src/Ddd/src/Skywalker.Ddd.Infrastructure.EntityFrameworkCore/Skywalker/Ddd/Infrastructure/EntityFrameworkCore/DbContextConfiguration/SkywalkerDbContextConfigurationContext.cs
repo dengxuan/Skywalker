@@ -16,7 +16,7 @@ namespace Skywalker.Ddd.Infrastructure.EntityFrameworkCore.DbContextConfiguratio
 
         public string ConnectionStringName { get; }
 
-        public DbConnection ExistingConnection { get; }
+        public DbConnection? ExistingConnection { get; }
 
         public DbContextOptionsBuilder DbContextOptions { get; protected set; }
 
@@ -24,7 +24,7 @@ namespace Skywalker.Ddd.Infrastructure.EntityFrameworkCore.DbContextConfiguratio
             [NotNull] string connectionString,
             [NotNull] IServiceProvider serviceProvider,
             [MaybeNull] string connectionStringName,
-            [MaybeNull] DbConnection existingConnection)
+            [MaybeNull] DbConnection? existingConnection)
         {
             ConnectionString = connectionString;
             ServiceProvider = serviceProvider;
@@ -45,7 +45,7 @@ namespace Skywalker.Ddd.Infrastructure.EntityFrameworkCore.DbContextConfiguratio
             string connectionString,
             [NotNull] IServiceProvider serviceProvider,
             [MaybeNull] string connectionStringName,
-            [MaybeNull] DbConnection existingConnection)
+            [MaybeNull] DbConnection? existingConnection)
             : base(
                   connectionString,
                   serviceProvider,

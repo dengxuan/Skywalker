@@ -6,14 +6,15 @@ namespace Skywalker.Ddd.Infrastructure.EntityFrameworkCore.DbContextConfiguratio
 {
     public class SkywalkerDbContextCreationContext
     {
-        public static SkywalkerDbContextCreationContext Current => _current.Value;
+        public static SkywalkerDbContextCreationContext Current => _current.Value!;
+
         private static readonly AsyncLocal<SkywalkerDbContextCreationContext> _current = new AsyncLocal<SkywalkerDbContextCreationContext>();
 
         public string ConnectionStringName { get; }
 
         public string ConnectionString { get; }
 
-        public DbConnection ExistingConnection { get; set; }
+        public DbConnection? ExistingConnection { get; set; }
 
         public SkywalkerDbContextCreationContext(string connectionStringName, string connectionString)
         {

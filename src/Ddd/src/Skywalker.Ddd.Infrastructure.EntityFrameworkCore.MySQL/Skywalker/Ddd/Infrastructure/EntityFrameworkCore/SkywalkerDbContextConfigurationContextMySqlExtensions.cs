@@ -8,9 +8,7 @@ namespace Skywalker.Ddd.Infrastructure.EntityFrameworkCore
 {
     public static class SkywalkerDbContextConfigurationContextMySqlExtensions
     {
-        public static DbContextOptionsBuilder UseMySql(
-           [NotNull] this SkywalkerDbContextConfigurationContext context,
-           [MaybeNull] Action<MySqlDbContextOptionsBuilder> mySQLOptionsAction = null)
+        public static DbContextOptionsBuilder UseMySql([NotNull] this SkywalkerDbContextConfigurationContext context, [MaybeNull] Action<MySqlDbContextOptionsBuilder>? mySQLOptionsAction = null)
         {
             if (context.ExistingConnection != null)
             {
