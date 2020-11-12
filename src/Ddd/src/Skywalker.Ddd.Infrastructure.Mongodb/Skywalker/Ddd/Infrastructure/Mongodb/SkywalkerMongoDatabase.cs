@@ -56,17 +56,17 @@ namespace Skywalker.Ddd.Infrastructure.Mongodb
             return oldConcurrencyStamp;
         }
 
-        public async Task DeleteAsync([NotNull] Expression<Func<TEntity, bool>> predicate, bool autoSave = false, CancellationToken cancellationToken = default)
+        public async Task DeleteAsync([NotNull] Expression<Func<TEntity, bool>> predicate, CancellationToken cancellationToken = default)
         {
             var entities = Entities.Where(predicate).ToList();
 
             foreach (var entity in entities)
             {
-                await DeleteAsync(entity, autoSave, cancellationToken);
+                await DeleteAsync(entity, cancellationToken);
             }
         }
 
-        public async Task DeleteAsync([NotNull] TEntity entity, bool autoSave = false, CancellationToken cancellationToken = default)
+        public async Task DeleteAsync([NotNull] TEntity entity, CancellationToken cancellationToken = default)
         {
             var oldConcurrencyStamp = SetNewConcurrencyStamp(entity);
             if (entity is IDeleteable deleteable)
@@ -106,13 +106,20 @@ namespace Skywalker.Ddd.Infrastructure.Mongodb
             return await Queryable.ToListAsync(cancellationToken);
         }
 
-        public async Task<TEntity> InsertAsync([NotNull] TEntity entity, bool autoSave = false, CancellationToken cancellationToken = default)
+        public async Task<TEntity> InsertAsync([NotNull] TEntity entity, CancellationToken cancellationToken = default)
         {
             await Database.Collection<TEntity>().InsertOneAsync(entity, cancellationToken: cancellationToken);
             return entity;
         }
 
-        public async Task<TEntity> UpdateAsync([NotNull] TEntity entity, bool autoSave = false, CancellationToken cancellationToken = default)
+
+        public async Task<int> InsertAsync([NotNull] IEnumerable<TEntity> entities, CancellationToken cancellationToken = default)
+        {
+            await Database.Collection<TEntity>().InsertManyAsync(entities, cancellationToken: cancellationToken);
+            return entities.Count();
+        }
+
+        public async Task<TEntity> UpdateAsync([NotNull] TEntity entity, CancellationToken cancellationToken = default)
         {
             var oldConcurrencyStamp = SetNewConcurrencyStamp(entity);
 
@@ -133,14 +140,14 @@ namespace Skywalker.Ddd.Infrastructure.Mongodb
         {
         }
 
-        public async Task DeleteAsync(TKey id, bool autoSave = false, CancellationToken cancellationToken = default)
+        public async Task DeleteAsync(TKey id, CancellationToken cancellationToken = default)
         {
             TEntity entity = await FindAsync(predicate => predicate.Id!.Equals(id), false, cancellationToken);
             if (entity == null)
             {
                 return;
             }
-            await DeleteAsync(entity, autoSave, cancellationToken);
+            await DeleteAsync(entity, cancellationToken);
         }
 
         public Task EnsureCollectionLoadedAsync<TProperty>(TEntity entity, Expression<Func<TEntity, IEnumerable<TProperty>>> propertyExpression, CancellationToken cancellationToken) where TProperty : class

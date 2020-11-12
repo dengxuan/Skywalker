@@ -8,9 +8,17 @@ namespace Simple.Application.Abstractions
         [NotNull]
         public string Name { get; set; }
 
+        public UserValueDto Value { get; set; }
+
         public UserDto([NotNull] string name)
         {
             Name = name;
         }
+    }
+
+    public class UserValueDto : EntityDto
+    {
+        public string Value { get; set; }
+
     }
 }

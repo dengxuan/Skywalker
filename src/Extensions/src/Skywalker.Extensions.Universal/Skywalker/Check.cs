@@ -155,7 +155,7 @@ namespace Skywalker
                 throw new ArgumentException($"{argumentName} length must be equal to or lower than {maxLength}!", argumentName);
             }
 
-            return value;
+            return value!;
         }
     }
 }

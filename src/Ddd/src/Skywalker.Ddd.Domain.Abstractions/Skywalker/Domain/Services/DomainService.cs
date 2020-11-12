@@ -41,10 +41,5 @@ namespace Skywalker.Domain.Services
 
         protected ILogger Logger => _lazyLogger.Value;
         private Lazy<ILogger> _lazyLogger => new Lazy<ILogger>(() => LoggerFactory?.CreateLogger(GetType().FullName) ?? NullLogger.Instance, true);
-
-        protected DomainService()
-        {
-            GuidGenerator = SimpleGuidGenerator.Instance;
-        }
     }
 }

@@ -1,13 +1,12 @@
 ﻿using Microsoft.Extensions.DependencyInjection.Extensions;
 using Skywalker.Ddd.Infrastructure;
 using Skywalker.Ddd.Infrastructure.Abstractions;
+using Skywalker.Ddd.Infrastructure.Domain.Repositories.MongoDB;
 using Skywalker.Ddd.Infrastructure.Mongodb;
 using Skywalker.Ddd.Mongodb;
 using Skywalker.Domain.Entities;
 using System;
 using System.Collections.Generic;
-using Volo.Abp.Domain.Repositories.MongoDB;
-using Skywalker.Ddd.Infrastructure.Mongodb;
 
 namespace Microsoft.Extensions.DependencyInjection
 {
@@ -23,7 +22,6 @@ namespace Microsoft.Extensions.DependencyInjection
 
             initializer.Services.AddSingleton<IMongoModelSource, MongoModelSource>();
 
-            //initializer.Services.AddDbContext<TDbContext>();
             initializer.Initialize(typeof(TDbContext), new MongodbDatabaseInitializer<TDbContext>(initializer.Services));
 
             return initializer;

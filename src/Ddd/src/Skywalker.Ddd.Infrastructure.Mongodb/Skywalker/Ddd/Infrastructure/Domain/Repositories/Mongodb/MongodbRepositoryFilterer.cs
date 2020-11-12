@@ -4,7 +4,7 @@ using Skywalker.Data.Filtering;
 using Skywalker.Domain.Entities;
 using System.Collections.Generic;
 
-namespace Volo.Abp.Domain.Repositories.MongoDB
+namespace Skywalker.Ddd.Infrastructure.Domain.Repositories.MongoDB
 {
     public class MongoDbRepositoryFilterer<TEntity> : IMongoDbRepositoryFilterer<TEntity>
         where TEntity : class, IEntity
@@ -20,7 +20,7 @@ namespace Volo.Abp.Domain.Repositories.MongoDB
         {
             if (typeof(IDeleteable).IsAssignableFrom(typeof(TEntity)) && DataFilter.IsEnabled<IDeleteable>())
             {
-                filters.Add(Builders<TEntity>.Filter.Eq(e => ((IDeleteable) e).IsDeleted, false));
+                filters.Add(Builders<TEntity>.Filter.Eq(e => ((IDeleteable)e).IsDeleted, false));
             }
         }
     }
@@ -49,9 +49,9 @@ namespace Volo.Abp.Domain.Repositories.MongoDB
             return Builders<TEntity>.Filter.And(filters);
         }
 
-        public FilterDefinition<TEntity> CreateEntityFilter(TEntity entity, bool withConcurrencyStamp = false, string concurrencyStamp = null)
+        public FilterDefinition<TEntity> CreateEntityFilter(TEntity entity, bool withConcurrencyStamp = false, string? concurrencyStamp = null)
         {
-            if (!withConcurrencyStamp || !(entity is IHasConcurrencyStamp entityWithConcurrencyStamp))
+            if (!withConcurrencyStamp || entity is not IHasConcurrencyStamp entityWithConcurrencyStamp)
             {
                 return Builders<TEntity>.Filter.Eq(e => e.Id, entity.Id);
             }
@@ -61,10 +61,7 @@ namespace Volo.Abp.Domain.Repositories.MongoDB
                 concurrencyStamp = entityWithConcurrencyStamp.ConcurrencyStamp;
             }
 
-            return Builders<TEntity>.Filter.And(
-                Builders<TEntity>.Filter.Eq(e => e.Id, entity.Id),
-                Builders<TEntity>.Filter.Eq(e => ((IHasConcurrencyStamp) e).ConcurrencyStamp, concurrencyStamp)
-            );
+            return Builders<TEntity>.Filter.And(Builders<TEntity>.Filter.Eq(e => e.Id, entity.Id), Builders<TEntity>.Filter.Eq(e => ((IHasConcurrencyStamp)e).ConcurrencyStamp, concurrencyStamp));
         }
     }
 }

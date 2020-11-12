@@ -15,6 +15,7 @@ namespace Simple.Application
         {
             CreateMap<User, UserDto>();
             CreateMap<MongoUser, UserDto>();
+            CreateMap<UserValue, UserValueDto>();
         }
     }
 }

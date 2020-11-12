@@ -44,12 +44,8 @@ namespace Skywalker.Domain.Repositories
         /// given predicate.
         /// </summary>
         /// <param name="predicate">A condition to filter entities</param>
-        /// <param name="autoSave">
-        /// Set true to automatically save changes to database.
-        /// This is useful for ORMs / database APIs those only save changes with an explicit method call, but you need to immediately save changes to the database.
-        /// </param>
         /// <param name="cancellationToken">A <see cref="T:System.Threading.CancellationToken" /> to observe while waiting for the task to complete.</param>
-        Task DeleteAsync([NotNull] Expression<Func<TEntity, bool>> predicate, bool autoSave = false, CancellationToken cancellationToken = default);
+        Task DeleteAsync([NotNull] Expression<Func<TEntity, bool>> predicate, CancellationToken cancellationToken = default);
     }
 
     public interface IRepository<TEntity, TKey> : IRepository<TEntity>, IReadOnlyRepository<TEntity, TKey>, IBasicRepository<TEntity, TKey> where TEntity : class, IEntity<TKey>

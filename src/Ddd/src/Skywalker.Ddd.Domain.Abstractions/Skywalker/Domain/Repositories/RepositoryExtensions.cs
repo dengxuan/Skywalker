@@ -43,19 +43,17 @@ namespace Skywalker.Domain.Repositories
         public static async Task HardDeleteAsync<TEntity>(
             this IBasicRepository<TEntity> repository,
             TEntity entity,
-            bool autoSave = false,
             CancellationToken cancellationToken = default
         )
             where TEntity : class, IEntity, IDeleteable
         {
 
-                await HardDeleteWithUnitOfWorkAsync(repository, entity, autoSave, cancellationToken);
+                await HardDeleteWithUnitOfWorkAsync(repository, entity, cancellationToken);
         }
 
         private static async Task HardDeleteWithUnitOfWorkAsync<TEntity>(
             IBasicRepository<TEntity> repository, 
-            TEntity entity, 
-            bool autoSave,
+            TEntity entity,
             CancellationToken cancellationToken
         )
             where TEntity : class, IEntity, IDeleteable
@@ -69,7 +67,7 @@ namespace Skywalker.Domain.Repositories
                 entity
             };
 
-            await repository.DeleteAsync(entity, autoSave, cancellationToken);
+            await repository.DeleteAsync(entity, cancellationToken);
         }
     }
 }

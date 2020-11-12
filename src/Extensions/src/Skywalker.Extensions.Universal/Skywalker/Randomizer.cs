@@ -5,12 +5,14 @@ namespace Skywalker
 {
     public static class Randomizer
     {
-        private const string Digits = "0123456789ABCDEFGHJKMNPRSTUVWXYZ";
+        private const string _digits = "0123456789ABCDEFGHJKMNPRSTUVWXYZ";
         private static readonly RandomNumberGenerator _random = RandomNumberGenerator.Create();
         public static byte[] Generate(int length)
         {
             if (length < 1)
-                throw new ArgumentOutOfRangeException("length");
+            {
+                throw new ArgumentOutOfRangeException(nameof(length));
+            }
 
             var bytes = new byte[length];
             _random.GetBytes(bytes);
@@ -39,7 +41,9 @@ namespace Skywalker
         public static string GenerateString(int length, bool digitOnly = false)
         {
             if (length < 1 || length > 128)
-                throw new ArgumentOutOfRangeException("length");
+            {
+                throw new ArgumentOutOfRangeException(nameof(length));
+            }
 
             var result = new char[length];
             var data = new byte[length];
@@ -47,11 +51,11 @@ namespace Skywalker
             _random.GetBytes(data);
 
             //确保首位字符始终为数字字符
-            result[0] = Digits[data[0] % 10];
+            result[0] = _digits[data[0] % 10];
 
             for (int i = 1; i < length; i++)
             {
-                result[i] = Digits[data[i] % (digitOnly ? 10 : 32)];
+                result[i] = _digits[data[i] % (digitOnly ? 10 : 32)];
             }
 
             return new string(result);

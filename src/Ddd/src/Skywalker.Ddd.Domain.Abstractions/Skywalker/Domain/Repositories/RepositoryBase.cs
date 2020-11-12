@@ -58,7 +58,7 @@ namespace Skywalker.Domain.Repositories
             return entity;
         }
 
-        public abstract Task DeleteAsync([NotNull] Expression<Func<TEntity, bool>> predicate, bool autoSave = false, CancellationToken cancellationToken = default);
+        public abstract Task DeleteAsync([NotNull] Expression<Func<TEntity, bool>> predicate, CancellationToken cancellationToken = default);
 
         protected virtual TQueryable ApplyDataFilters<TQueryable>(TQueryable query) where TQueryable : IQueryable<TEntity>
         {
@@ -77,7 +77,7 @@ namespace Skywalker.Domain.Repositories
 
         public abstract Task<TEntity?> FindAsync(TKey id, bool includeDetails = true, CancellationToken cancellationToken = default);
 
-        public virtual async Task DeleteAsync(TKey id, bool autoSave = false, CancellationToken cancellationToken = default)
+        public virtual async Task DeleteAsync(TKey id, CancellationToken cancellationToken = default)
         {
             var entity = await FindAsync(id, cancellationToken: cancellationToken);
             if (entity == null)
@@ -85,7 +85,7 @@ namespace Skywalker.Domain.Repositories
                 return;
             }
 
-            await DeleteAsync(entity, autoSave, cancellationToken);
+            await DeleteAsync(entity, cancellationToken);
         }
     }
 }

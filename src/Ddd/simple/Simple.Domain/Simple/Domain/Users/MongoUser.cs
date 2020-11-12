@@ -11,9 +11,21 @@ namespace Simple.Domain.Users
     {
         public string Name { get; set; }
 
+        public UserValue? Value { get; set; }
+
         public MongoUser(string name)
         {
             Name = name;
+        }
+    }
+
+    public class UserValue
+    {
+        public string Value { get; set; }
+
+        public UserValue(string value)
+        {
+            Value = value;
         }
     }
 }

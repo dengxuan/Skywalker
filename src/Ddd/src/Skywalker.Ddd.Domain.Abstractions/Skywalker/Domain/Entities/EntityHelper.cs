@@ -14,8 +14,7 @@ namespace Skywalker.Domain.Entities
     /// </summary>
     public static class EntityHelper
     {
-        private static readonly ConcurrentDictionary<string, PropertyInfo> CachedIdProperties =
-            new ConcurrentDictionary<string, PropertyInfo>();
+        private static readonly ConcurrentDictionary<string, PropertyInfo> _cachedIdProperties = new ConcurrentDictionary<string, PropertyInfo>();
 
         public static bool EntityEquals(IEntity entity1, IEntity entity2)
         {
@@ -56,7 +55,7 @@ namespace Skywalker.Domain.Entities
             {
                 var entity1Key = entity1Keys[i];
                 var entity2Key = entity2Keys[i];
-                
+
                 if (entity1Key == null)
                 {
                     if (entity2Key == null)
@@ -68,13 +67,13 @@ namespace Skywalker.Domain.Entities
                     //entity2Key is not null!
                     return false;
                 }
-                
+
                 if (entity2Key == null)
                 {
                     //entity1Key was not null!
                     return false;
                 }
-                
+
                 if (TypeHelper.IsDefaultValue(entity1Key) && TypeHelper.IsDefaultValue(entity2Key))
                 {
                     return false;
@@ -213,33 +212,25 @@ namespace Skywalker.Domain.Entities
             return Expression.Lambda<Func<TEntity, bool>>(lambdaBody, lambdaParam);
         }
 
-        public static void TrySetId<TKey>(
-            IEntity<TKey> entity,
-            Func<TKey> idFactory,
-            bool checkForDisableIdGenerationAttribute = false)
+        public static void TrySetId<TKey>(IEntity<TKey> entity, Func<TKey> idFactory, bool checkForDisableIdGenerationAttribute = false)
         {
-            var property = CachedIdProperties.GetOrAdd(
-                $"{entity.GetType().FullName}-{checkForDisableIdGenerationAttribute}", () =>
+            var property = _cachedIdProperties!.GetOrAdd($"{entity.GetType().FullName}-{checkForDisableIdGenerationAttribute}", () =>
+            {
+                var idProperty = entity.GetType().GetProperties().FirstOrDefault(x => x.Name == nameof(entity.Id) && x.GetSetMethod(true) != null);
+
+                if (idProperty == null)
                 {
-                    var idProperty = entity
-                        .GetType()
-                        .GetProperties()
-                        .FirstOrDefault(x => x.Name == nameof(entity.Id) &&
-                                             x.GetSetMethod(true) != null);
+                    return null;
+                }
 
-                    if (idProperty == null)
-                    {
-                        return null;
-                    }
+                if (checkForDisableIdGenerationAttribute &&
+                    idProperty.IsDefined(typeof(DisableIdGenerationAttribute), true))
+                {
+                    return null;
+                }
 
-                    if (checkForDisableIdGenerationAttribute &&
-                        idProperty.IsDefined(typeof(DisableIdGenerationAttribute), true))
-                    {
-                        return null;
-                    }
-
-                    return idProperty;
-                });
+                return idProperty;
+            });
 
             property?.SetValue(entity, idFactory());
         }

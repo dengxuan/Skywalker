@@ -10,5 +10,6 @@ namespace Simple.Application.Abstractions
         Task<UserDto> CreateUserAsync([NotNull] string name);
 
         Task<List<UserDto>> FindUsersAsync();
+        Task<List<UserDto>> FindUsersAsync([NotNull] string name);
     }
 }

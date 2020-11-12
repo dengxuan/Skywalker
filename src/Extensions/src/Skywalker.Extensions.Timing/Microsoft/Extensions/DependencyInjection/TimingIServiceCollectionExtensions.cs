@@ -1,8 +1,4 @@
-﻿using Microsoft.Extensions.DependencyInjection;
-using Skywalker.Extensions.Timing;
-using System;
-using System.Collections.Generic;
-using System.Text;
+﻿using Skywalker.Extensions.Timing;
 
 namespace Microsoft.Extensions.DependencyInjection
 {
@@ -10,18 +6,8 @@ namespace Microsoft.Extensions.DependencyInjection
     {
         public static IServiceCollection AddTiming(this IServiceCollection services)
         {
-            //services.Configure<AbpVirtualFileSystemOptions>(options =>
-            //{
-            //    options.FileSets.AddEmbedded<AbpTimingResource>();
-            //});
-
-            //services.Configure<AbpLocalizationOptions>(options =>
-            //{
-            //    options
-            //        .Resources
-            //        .Add<AbpTimingResource>("en")
-            //        .AddVirtualJson("/Volo/Abp/Timing/Localization");
-            //});
+            services.AddSingleton<IClock, Clock>();
+            services.AddSingleton<ITimezoneProvider, TZConvertTimezoneProvider>();
             return services;
         }
     }

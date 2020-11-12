@@ -82,7 +82,7 @@ namespace Skywalker.Application.Services
 
             var entity = MapToEntity(input);
 
-            await Repository.InsertAsync(entity, autoSave: true);
+            await Repository.InsertAsync(entity);
 
             return MapToGetOutputDto(entity);
         }
@@ -94,7 +94,7 @@ namespace Skywalker.Application.Services
             var entity = await GetEntityByIdAsync(id);
             //TODO: Check if input has id different than given id and normalize if it's default value, throw ex otherwise
             MapToEntity(input, entity);
-            await Repository.UpdateAsync(entity, autoSave: true);
+            await Repository.UpdateAsync(entity);
 
             return MapToGetOutputDto(entity);
         }

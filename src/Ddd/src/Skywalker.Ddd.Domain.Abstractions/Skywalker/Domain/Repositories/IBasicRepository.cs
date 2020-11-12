@@ -1,4 +1,5 @@
 ﻿using Skywalker.Domain.Entities;
+using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using System.Threading;
 using System.Threading.Tasks;
@@ -10,35 +11,30 @@ namespace Skywalker.Domain.Repositories
         /// <summary>
         /// Inserts a new entity.
         /// </summary>
-        /// <param name="autoSave">
-        /// Set true to automatically save changes to database.
-        /// This is useful for ORMs / database APIs those only save changes with an explicit method call, but you need to immediately save changes to the database.
-        /// </param>
         /// <param name="cancellationToken">A <see cref="T:System.Threading.CancellationToken" /> to observe while waiting for the task to complete.</param>
         /// <param name="entity">Inserted entity</param>
-        Task<TEntity> InsertAsync([NotNull] TEntity entity, bool autoSave = false, CancellationToken cancellationToken = default);
+        Task<TEntity> InsertAsync([NotNull] TEntity entity, CancellationToken cancellationToken = default);
+
+        /// <summary>
+        /// Inserts a new entity from entity collection.
+        /// </summary>
+        /// <param name="cancellationToken">A <see cref="T:System.Threading.CancellationToken" /> to observe while waiting for the task to complete.</param>
+        /// <param name="entities"></param>
+        Task InsertAsync([NotNull] IEnumerable<TEntity> entities, CancellationToken cancellationToken = default);
 
         /// <summary>
         /// Updates an existing entity. 
         /// </summary>
-        /// <param name="autoSave">
-        /// Set true to automatically save changes to database.
-        /// This is useful for ORMs / database APIs those only save changes with an explicit method call, but you need to immediately save changes to the database.
-        /// </param>
         /// <param name="cancellationToken">A <see cref="T:System.Threading.CancellationToken" /> to observe while waiting for the task to complete.</param>
         /// <param name="entity">Entity</param>
-        Task<TEntity> UpdateAsync([NotNull] TEntity entity, bool autoSave = false, CancellationToken cancellationToken = default);
+        Task<TEntity> UpdateAsync([NotNull] TEntity entity, CancellationToken cancellationToken = default);
 
         /// <summary>
         /// Deletes an entity.
         /// </summary>
         /// <param name="entity">Entity to be deleted</param>
-        /// <param name="autoSave">
-        /// Set true to automatically save changes to database.
-        /// This is useful for ORMs / database APIs those only save changes with an explicit method call, but you need to immediately save changes to the database.
-        /// </param>
         /// <param name="cancellationToken">A <see cref="T:System.Threading.CancellationToken" /> to observe while waiting for the task to complete.</param>
-        Task DeleteAsync([NotNull] TEntity entity, bool autoSave = false, CancellationToken cancellationToken = default);
+        Task DeleteAsync([NotNull] TEntity entity, CancellationToken cancellationToken = default);
     }
 
     public interface IBasicRepository<TEntity, TKey> : IBasicRepository<TEntity>, IReadOnlyBasicRepository<TEntity, TKey> where TEntity : class, IEntity<TKey>
@@ -47,11 +43,7 @@ namespace Skywalker.Domain.Repositories
         /// Deletes an entity by primary key.
         /// </summary>
         /// <param name="id">Primary key of the entity</param>
-        /// <param name="autoSave">
-        /// Set true to automatically save changes to database.
-        /// This is useful for ORMs / database APIs those only save changes with an explicit method call, but you need to immediately save changes to the database.
-        /// </param>
         /// <param name="cancellationToken">A <see cref="T:System.Threading.CancellationToken" /> to observe while waiting for the task to complete.</param>
-        Task DeleteAsync(TKey id, bool autoSave = false, CancellationToken cancellationToken = default);  //TODO: Return true if deleted
+        Task DeleteAsync(TKey id, CancellationToken cancellationToken = default);
     }
 }

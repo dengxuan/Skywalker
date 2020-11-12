@@ -24,18 +24,15 @@ namespace Skywalker.Ddd.Infrastructure.EntityFrameworkCore
 
         public IQueryable<TEntity> Entities => Database.Set<TEntity>().AsQueryable();
 
-        public Task DeleteAsync([NotNull] Expression<Func<TEntity, bool>> predicate, bool autoSave = false, CancellationToken cancellationToken = default)
+        public Task DeleteAsync([NotNull] Expression<Func<TEntity, bool>> predicate, CancellationToken cancellationToken = default)
         {
             throw new NotImplementedException();
         }
 
-        public async Task DeleteAsync([NotNull] TEntity entity, bool autoSave = false, CancellationToken cancellationToken = default)
+        public async Task DeleteAsync([NotNull] TEntity entity, CancellationToken cancellationToken = default)
         {
             Database.Remove(entity);
-            if (autoSave)
-            {
-                await Database.SaveChangesAsync(cancellationToken);
-            }
+            await Database.SaveChangesAsync(cancellationToken);
         }
 
         public Task<TEntity> FindAsync([NotNull] Expression<Func<TEntity, bool>> predicate, bool includeDetails = true, CancellationToken cancellationToken = default)
@@ -54,23 +51,23 @@ namespace Skywalker.Ddd.Infrastructure.EntityFrameworkCore
             return entities;
         }
 
-        public async Task<TEntity> InsertAsync([NotNull] TEntity entity, bool autoSave = false, CancellationToken cancellationToken = default)
+        public async Task<TEntity> InsertAsync([NotNull] TEntity entity, CancellationToken cancellationToken = default)
         {
             EntityEntry<TEntity> entry = await Database.AddAsync(entity, cancellationToken);
-            if (autoSave)
-            {
-                await Database.SaveChangesAsync(cancellationToken);
-            }
+            await Database.SaveChangesAsync(cancellationToken);
             return entry.Entity;
         }
 
-        public async Task<TEntity> UpdateAsync([NotNull] TEntity entity, bool autoSave = false, CancellationToken cancellationToken = default)
+        public async Task<int> InsertAsync([NotNull] IEnumerable<TEntity> entities, CancellationToken cancellationToken = default)
+        {
+            await Database.AddRangeAsync(entities, cancellationToken);
+            return await Database.SaveChangesAsync(cancellationToken);
+        }
+
+        public async Task<TEntity> UpdateAsync([NotNull] TEntity entity, CancellationToken cancellationToken = default)
         {
             Database.Attach(entity).State = EntityState.Modified;
-            if (autoSave)
-            {
-                await Database.SaveChangesAsync(cancellationToken);
-            }
+            await Database.SaveChangesAsync(cancellationToken);
             return entity;
         }
     }
@@ -81,7 +78,7 @@ namespace Skywalker.Ddd.Infrastructure.EntityFrameworkCore
         {
         }
 
-        public async Task DeleteAsync(TKey id, bool autoSave = false, CancellationToken cancellationToken = default)
+        public async Task DeleteAsync(TKey id, CancellationToken cancellationToken = default)
         {
             TEntity entity = await Entities.FirstOrDefaultAsync(predicate => predicate.Id!.Equals(id), cancellationToken);
             if (entity == null)
@@ -89,10 +86,7 @@ namespace Skywalker.Ddd.Infrastructure.EntityFrameworkCore
                 return;
             }
             Database.Remove(entity);
-            if (autoSave)
-            {
-                await Database.SaveChangesAsync(cancellationToken);
-            }
+            await Database.SaveChangesAsync(cancellationToken);
         }
 
         public Task EnsureCollectionLoadedAsync<TProperty>(TEntity entity, Expression<Func<TEntity, IEnumerable<TProperty>>> propertyExpression, CancellationToken cancellationToken) where TProperty : class

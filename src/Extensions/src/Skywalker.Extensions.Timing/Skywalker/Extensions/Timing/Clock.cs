@@ -5,9 +5,9 @@ namespace Skywalker.Extensions.Timing
 {
     public class Clock : IClock
     {
-        protected AbpClockOptions Options { get; }
+        protected SkywalkerClockOptions Options { get; }
 
-        public Clock(IOptions<AbpClockOptions> options)
+        public Clock(IOptions<SkywalkerClockOptions> options)
         {
             Options = options.Value;
         }

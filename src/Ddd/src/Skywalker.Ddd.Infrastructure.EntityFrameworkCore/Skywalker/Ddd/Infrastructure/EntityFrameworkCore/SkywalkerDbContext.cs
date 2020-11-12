@@ -57,10 +57,8 @@ namespace Skywalker.Ddd.Infrastructure.EntityFrameworkCore
                     BindingFlags.Instance | BindingFlags.NonPublic
                 )!;
 
-        protected SkywalkerDbContext(DbContextOptions<TDbContext> options)
-            : base(options)
+        protected SkywalkerDbContext(DbContextOptions<TDbContext> options) : base(options)
         {
-            GuidGenerator = SimpleGuidGenerator.Instance;
             EntityChangeEventHelper = NullEntityChangeEventHelper.Instance;
             Logger = NullLogger<SkywalkerDbContext<TDbContext>>.Instance;
         }
@@ -196,8 +194,6 @@ namespace Skywalker.Ddd.Infrastructure.EntityFrameworkCore
 
         protected virtual void ApplySkywalkerConceptsForAddedEntity(EntityEntry entry, EntityChangeReport changeReport)
         {
-            CheckAndSetId(entry);
-            SetConcurrencyStampIfNull(entry);
             changeReport.ChangedEntities.Add(new EntityChangeEntry(entry.Entity, EntityChangeType.Created));
         }
 
@@ -256,21 +252,6 @@ namespace Skywalker.Ddd.Infrastructure.EntityFrameworkCore
             entity.ConcurrencyStamp = Guid.NewGuid().ToString("N");
         }
 
-        protected virtual void SetConcurrencyStampIfNull(EntityEntry entry)
-        {
-            if (entry.Entity is not IHasConcurrencyStamp entity)
-            {
-                return;
-            }
-
-            if (entity.ConcurrencyStamp != null)
-            {
-                return;
-            }
-
-            entity.ConcurrencyStamp = Guid.NewGuid().ToString("N");
-        }
-
         protected virtual bool TryCancelDeletionForSoftDelete(EntityEntry entry)
         {
             if (!(entry.Entity is IDeleteable))
@@ -287,41 +268,6 @@ namespace Skywalker.Ddd.Infrastructure.EntityFrameworkCore
             entry.State = EntityState.Modified;
             entry.Entity.As<IDeleteable>().IsDeleted = true;
             return true;
-        }
-
-        protected virtual void CheckAndSetId(EntityEntry entry)
-        {
-            if (entry.Entity is IEntity<Guid> entityWithGuidId)
-            {
-                TrySetGuidId(entry, entityWithGuidId);
-            }
-        }
-
-        protected virtual void TrySetGuidId(EntityEntry entry, IEntity<Guid> entity)
-        {
-            if (entity.Id != default)
-            {
-                return;
-            }
-
-            var idProperty = entry.Property("Id").Metadata.PropertyInfo;
-
-            //Check for DatabaseGeneratedAttribute
-            var dbGeneratedAttr = ReflectionHelper
-                .GetSingleAttributeOrDefault<DatabaseGeneratedAttribute>(
-                    idProperty
-                );
-
-            if (dbGeneratedAttr != null && dbGeneratedAttr.DatabaseGeneratedOption != DatabaseGeneratedOption.None)
-            {
-                return;
-            }
-
-            EntityHelper.TrySetId(
-                entity,
-                () => GuidGenerator.Create(),
-                true
-            );
         }
 
         protected virtual void ConfigureBaseProperties<TEntity>(ModelBuilder modelBuilder, IMutableEntityType mutableEntityType)

@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Skywalker;
+using System;
 using System.Collections.Generic;
 using System.Globalization;
 using System.Text.RegularExpressions;
@@ -112,6 +113,16 @@ namespace System
         public static bool IsNullOrWhiteSpace(this string str)
         {
             return string.IsNullOrWhiteSpace(str);
+        }
+
+        /// <summary>
+        /// indicates whether this string is empty, or consists only of white-space characters.
+        /// </summary>
+        /// <exception cref="ArgumentNullException">If this string is null</exception>
+        public static bool IsEmptyOrWhiteSpace(this string str)
+        {
+            string trimed = str.NotNull(nameof(str)).Trim();
+            return string.Empty == trimed;
         }
 
         /// <summary>

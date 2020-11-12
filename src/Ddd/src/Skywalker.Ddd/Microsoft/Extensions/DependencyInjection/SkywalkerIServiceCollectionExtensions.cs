@@ -34,7 +34,7 @@ namespace Microsoft.Extensions.DependencyInjection
             return services.Replace(ServiceDescriptor.Singleton(configuration));
         }
 
-        public static IConfiguration GetConfiguration(this IServiceCollection services)
+        public static IConfiguration? GetConfiguration(this IServiceCollection services)
         {
             var hostBuilderContext = services.GetSingletonInstanceOrNull<HostBuilderContext>();
             if (hostBuilderContext?.Configuration != null)
@@ -51,6 +51,9 @@ namespace Microsoft.Extensions.DependencyInjection
             {
                 return new MsDependencyInjectionLazyLoader(sp);
             });
+            services.AddGuidGenerator();
+            services.AddTiming();
+
             AddTransientServices(services);
             AddSingletonServices(services);
             AddScopedServices(services);

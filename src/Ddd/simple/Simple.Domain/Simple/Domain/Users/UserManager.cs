@@ -2,6 +2,7 @@
 using Skywalker.Domain.Services;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -21,9 +22,23 @@ namespace Simple.Domain.Users
             return Task.FromResult(_users.ToList());
         }
 
+        public Task<List<MongoUser>> FindUsersAsync([NotNull] string name)
+        {
+            return Task.Run(() =>
+            {
+                return _users.Where(predicate => name.IsEmptyOrWhiteSpace() || predicate.Value!.Value.Contains(name)).ToList();
+            });
+        }
+
         public async Task<MongoUser> CreateUser(string name)
         {
-            MongoUser user = await _users.InsertAsync(new MongoUser(name), true);
+            MongoUser user = await _users.InsertAsync(new MongoUser(name));
+            return user;
+        }
+
+        public async Task<MongoUser> CreateUser(MongoUser mongoUser)
+        {
+            MongoUser user = await _users.InsertAsync(mongoUser);
             return user;
         }
     }
