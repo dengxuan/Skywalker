@@ -1,21 +1,34 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
+using Simple.Application.Abstractions;
+using System.Collections.Generic;
+using System.Threading.Tasks;
 
 namespace Simple.WebApi.Users
 {
     [ApiController]
-    [Route("[Controller]")]
+    [Route("api/[Controller]")]
     public class UserController : SimpleController
     {
-        public UserController(ILogger<SimpleController> logger) : base(logger)
+        private readonly ISimpleUserApplicationService _simpleUserApplicationService;
+
+        public UserController(ISimpleUserApplicationService simpleUserApplicationService, ILogger<SimpleController> logger) : base(logger)
         {
+            _simpleUserApplicationService = simpleUserApplicationService;
         }
 
         [HttpGet]
-        public string GetUser(int id)
+        [Route("all")]
+        public Task<List<UserDto>> GetUsersAsync()
         {
-            Logger.LogInformation(id.ToString());
-            return $"Name-{id}";
+            return _simpleUserApplicationService.FindUsersAsync();
+        }
+
+        [HttpGet]
+        [Route("all-{name}")]
+        public Task<List<UserDto>> GetUsersAsync(string name)
+        {
+            return _simpleUserApplicationService.FindUsersAsync(name);
         }
     }
 }

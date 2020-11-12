@@ -13,6 +13,14 @@
     <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x86'">
       <Prefer32Bit>false</Prefer32Bit>
     </PropertyGroup>
+    <ItemGroup>
+      <Content Remove="appsettings.json" />
+    </ItemGroup>
+    <ItemGroup>
+      <None Include="appsettings.json">
+        <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      </None>
+    </ItemGroup>
 
     <ItemGroup>
       <ProjectReference Include="..\..\simple\Simple.Application\Simple.Application.csproj" />

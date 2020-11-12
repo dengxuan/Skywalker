@@ -26,6 +26,10 @@ namespace Simple.WebApi.Hosting
             {
                 apm.ApplicationParts.Add(new AssemblyPart(typeof(SimpleController).Assembly));
             });
+            services.AddRouting(options =>
+            {
+                options.LowercaseUrls = true;
+            });
             services.AddSkywalker(skywalker =>
             {
                 skywalker.AddInfrastructure(initializer =>

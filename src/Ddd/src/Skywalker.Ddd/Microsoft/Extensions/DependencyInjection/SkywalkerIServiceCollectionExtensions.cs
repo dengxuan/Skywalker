@@ -47,7 +47,7 @@ namespace Microsoft.Extensions.DependencyInjection
 
         public static IServiceCollection AddSkywalker(this IServiceCollection services, Action<SkywalkerBuilder> buildAction)
         {
-            services.AddSingleton<ILazyLoader>(sp =>
+            services.AddScoped<ILazyLoader>(sp =>
             {
                 return new MsDependencyInjectionLazyLoader(sp);
             });

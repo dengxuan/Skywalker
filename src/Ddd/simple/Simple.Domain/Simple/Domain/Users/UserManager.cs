@@ -26,7 +26,7 @@ namespace Simple.Domain.Users
         {
             return Task.Run(() =>
             {
-                return _users.Where(predicate => name.IsEmptyOrWhiteSpace() || predicate.Value!.Value.Contains(name)).ToList();
+                return _users.Where(predicate => name.IsEmptyOrWhiteSpace() || predicate.Name.Contains(name)).ToList();
             });
         }
 
