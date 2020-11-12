@@ -11,10 +11,6 @@ namespace Microsoft.Extensions.DependencyInjection
     {
         public static IServiceCollection AddDefaultRepository(this IServiceCollection services, Type entityType, Type repositoryImplementationType)
         {
-            var configuration = services.GetConfiguration();
-            services.Configure<SkywalkerDbConnectionOptions>(configuration);
-
-            services.AddSingleton(typeof(IDataFilter<>), typeof(DataFilter<>));
 
             //IReadOnlyBasicRepository<TEntity>
             var readOnlyBasicRepositoryInterface = typeof(IReadOnlyBasicRepository<>).MakeGenericType(entityType);
@@ -76,6 +72,15 @@ namespace Microsoft.Extensions.DependencyInjection
                 }
             }
 
+            return services;
+        }
+
+        internal static IServiceCollection AddDomainServices(this IServiceCollection services)
+        {
+            var configuration = services.GetConfiguration();
+            services.Configure<SkywalkerDbConnectionOptions>(configuration);
+
+            services.AddSingleton(typeof(IDataFilter<>), typeof(DataFilter<>));
             return services;
         }
     }

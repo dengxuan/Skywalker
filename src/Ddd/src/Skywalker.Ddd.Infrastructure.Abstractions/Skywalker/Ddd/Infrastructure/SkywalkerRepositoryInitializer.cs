@@ -16,6 +16,7 @@ namespace Skywalker.Ddd.Infrastructure
 
         internal void Initialize(Type dbContextType, ISkywalkerDatabaseInitializer databaseInitializer)
         {
+            Services.AddDomainServices();
             IEnumerable<Type> entityTypes = DbContextHelper.GetEntityTypes(dbContextType);
             SkywalkerDbContextRegistrationOptions options = new SkywalkerDbContextRegistrationOptions(Services);
             SkywalkerRepositoryRegistrar repositoryRegistrar = new SkywalkerRepositoryRegistrar(options);

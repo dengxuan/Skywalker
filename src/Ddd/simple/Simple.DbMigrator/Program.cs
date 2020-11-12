@@ -28,7 +28,7 @@ namespace ActivityCenter.DbMigrator
                                    {
                                        options.UseMySql(mysql =>
                                        {
-                                           mysql.MigrationsAssembly("ActivityCenter.EntityFrameworkCore.DbMigrations");
+                                           mysql.MigrationsAssembly("Simple.EntityFrameworkCore.DbMigrations");
                                        });
                                    });
                                });
