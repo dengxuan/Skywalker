@@ -57,9 +57,11 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Skywalker.Ddd.Infrastructur
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Simple.Infrastructure.Mongodb", "simple\Simple.Infrastructure.Mongodb\Simple.Infrastructure.Mongodb.csproj", "{1844B898-6DAD-44C9-8544-F27D96458A10}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Simple.EntityFrameworkCore.DbMigrations", "simple\Simple.EntityFrameworkCore.DbMigrations\Simple.EntityFrameworkCore.DbMigrations.csproj", "{D3F5DC06-3E69-4E07-94BB-326A70B0E0FE}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Simple.EntityFrameworkCore.DbMigrations", "simple\Simple.EntityFrameworkCore.DbMigrations\Simple.EntityFrameworkCore.DbMigrations.csproj", "{D3F5DC06-3E69-4E07-94BB-326A70B0E0FE}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Simple.DbMigrator", "simple\Simple.DbMigrator\Simple.DbMigrator.csproj", "{32E0DBDB-2459-456F-B501-785B2A6E7A25}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Simple.DbMigrator", "simple\Simple.DbMigrator\Simple.DbMigrator.csproj", "{32E0DBDB-2459-456F-B501-785B2A6E7A25}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Skywalker.AspNetCore.Mvc.ResponseWrapper", "..\Mvc\src\Skywalker.AspNetCore.Mvc.ResponseWrapper\Skywalker.AspNetCore.Mvc.ResponseWrapper.csproj", "{9E82F614-70CA-4BEB-A316-6A2B6205B63D}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -395,6 +397,18 @@ Global
 		{32E0DBDB-2459-456F-B501-785B2A6E7A25}.Release|x64.Build.0 = Release|Any CPU
 		{32E0DBDB-2459-456F-B501-785B2A6E7A25}.Release|x86.ActiveCfg = Release|Any CPU
 		{32E0DBDB-2459-456F-B501-785B2A6E7A25}.Release|x86.Build.0 = Release|Any CPU
+		{9E82F614-70CA-4BEB-A316-6A2B6205B63D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{9E82F614-70CA-4BEB-A316-6A2B6205B63D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{9E82F614-70CA-4BEB-A316-6A2B6205B63D}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{9E82F614-70CA-4BEB-A316-6A2B6205B63D}.Debug|x64.Build.0 = Debug|Any CPU
+		{9E82F614-70CA-4BEB-A316-6A2B6205B63D}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{9E82F614-70CA-4BEB-A316-6A2B6205B63D}.Debug|x86.Build.0 = Debug|Any CPU
+		{9E82F614-70CA-4BEB-A316-6A2B6205B63D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{9E82F614-70CA-4BEB-A316-6A2B6205B63D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{9E82F614-70CA-4BEB-A316-6A2B6205B63D}.Release|x64.ActiveCfg = Release|Any CPU
+		{9E82F614-70CA-4BEB-A316-6A2B6205B63D}.Release|x64.Build.0 = Release|Any CPU
+		{9E82F614-70CA-4BEB-A316-6A2B6205B63D}.Release|x86.ActiveCfg = Release|Any CPU
+		{9E82F614-70CA-4BEB-A316-6A2B6205B63D}.Release|x86.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

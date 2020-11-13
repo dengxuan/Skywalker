@@ -1,13 +1,10 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using Skywalker.AspNetCore.Mvc.Models;
 
 namespace Simple.WebApi
 {
+    [WrapResult]
     public abstract class SimpleController : ControllerBase
     {
         protected ILogger<SimpleController> Logger { get; }

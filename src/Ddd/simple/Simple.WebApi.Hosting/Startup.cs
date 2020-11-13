@@ -45,6 +45,7 @@ namespace Simple.WebApi.Hosting
                     options.AddProfile<SimpleApplicationAutoMapperProfile>();
                 });
             });
+            services.AddWebApiResponseWrapper();
         }
 
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
