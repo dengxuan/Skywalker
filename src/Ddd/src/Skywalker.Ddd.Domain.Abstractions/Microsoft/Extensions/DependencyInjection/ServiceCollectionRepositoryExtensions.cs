@@ -13,7 +13,7 @@ namespace Microsoft.Extensions.DependencyInjection
         {
 
             //IReadOnlyBasicRepository<TEntity>
-            var readOnlyBasicRepositoryInterface = typeof(IReadOnlyBasicRepository<>).MakeGenericType(entityType);
+            var readOnlyBasicRepositoryInterface = typeof(IReadOnlyRepository<>).MakeGenericType(entityType);
             if (readOnlyBasicRepositoryInterface.IsAssignableFrom(repositoryImplementationType))
             {
                 services.TryAddTransient(readOnlyBasicRepositoryInterface, repositoryImplementationType);
@@ -44,7 +44,7 @@ namespace Microsoft.Extensions.DependencyInjection
             if (primaryKeyType != null)
             {
                 //IReadOnlyBasicRepository<TEntity, TKey>
-                var readOnlyBasicRepositoryInterfaceWithPk = typeof(IReadOnlyBasicRepository<,>).MakeGenericType(entityType, primaryKeyType);
+                var readOnlyBasicRepositoryInterfaceWithPk = typeof(IReadOnlyRepository<,>).MakeGenericType(entityType, primaryKeyType);
                 if (readOnlyBasicRepositoryInterfaceWithPk.IsAssignableFrom(repositoryImplementationType))
                 {
                     services.TryAddTransient(readOnlyBasicRepositoryInterfaceWithPk, repositoryImplementationType);

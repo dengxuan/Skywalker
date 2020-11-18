@@ -2,8 +2,11 @@
 using Skywalker.Domain.Entities;
 using Skywalker.Extensions.Threading;
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
+using System.Linq;
+using System.Linq.Expressions;
 using System.Threading;
 using System.Threading.Tasks;
 
@@ -15,10 +18,34 @@ namespace Skywalker.Domain.Repositories
 
         public ICancellationTokenProvider CancellationTokenProvider { get; set; }
 
+        public Type ElementType => GetQueryable().ElementType;
+
+        public Expression Expression => GetQueryable().Expression;
+
+        public IQueryProvider Provider => GetQueryable().Provider;
+
+        public IEnumerator<TEntity> GetEnumerator()
+        {
+            return GetQueryable().GetEnumerator();
+        }
+
+        IEnumerator IEnumerable.GetEnumerator()
+        {
+            return GetQueryable().GetEnumerator();
+        }
+
         protected BasicRepositoryBase()
         {
             CancellationTokenProvider = NullCancellationTokenProvider.Instance;
         }
+
+
+        protected virtual CancellationToken GetCancellationToken(CancellationToken preferredValue = default)
+        {
+            return CancellationTokenProvider.FallbackToProvider(preferredValue);
+        }
+
+        protected abstract IQueryable<TEntity> GetQueryable();
 
         public abstract Task<TEntity> InsertAsync([NotNull] TEntity entity, CancellationToken cancellationToken = default);
 
@@ -28,22 +55,17 @@ namespace Skywalker.Domain.Repositories
 
         public abstract Task DeleteAsync([NotNull] TEntity entity, CancellationToken cancellationToken = default);
 
-        public abstract Task<List<TEntity>> GetListAsync(bool includeDetails = false, CancellationToken cancellationToken = default);
+        public abstract Task<List<TEntity>> GetListAsync(CancellationToken cancellationToken = default);
 
         public abstract Task<long> GetCountAsync(CancellationToken cancellationToken = default);
-
-        protected virtual CancellationToken GetCancellationToken(CancellationToken preferredValue = default)
-        {
-            return CancellationTokenProvider.FallbackToProvider(preferredValue);
-        }
     }
 
     public abstract class BasicRepositoryBase<TEntity, TKey> : BasicRepositoryBase<TEntity>, IBasicRepository<TEntity, TKey>
         where TEntity : class, IEntity<TKey>
     {
-        public virtual async Task<TEntity> GetAsync(TKey id, bool includeDetails = true, CancellationToken cancellationToken = default)
+        public virtual async Task<TEntity> GetAsync(TKey id, CancellationToken cancellationToken = default)
         {
-            var entity = await FindAsync(id, includeDetails, cancellationToken);
+            var entity = await FindAsync(id, cancellationToken);
 
             if (entity == null)
             {
@@ -53,7 +75,7 @@ namespace Skywalker.Domain.Repositories
             return entity;
         }
 
-        public abstract Task<TEntity?> FindAsync(TKey id, bool includeDetails = true, CancellationToken cancellationToken = default);
+        public abstract Task<TEntity?> FindAsync(TKey id, CancellationToken cancellationToken = default);
 
         public virtual async Task DeleteAsync(TKey id, CancellationToken cancellationToken = default)
         {
@@ -63,7 +85,7 @@ namespace Skywalker.Domain.Repositories
                 return;
             }
 
-           await DeleteAsync(entity, cancellationToken);
+            await DeleteAsync(entity, cancellationToken);
         }
     }
 }

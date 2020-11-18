@@ -16,39 +16,11 @@ namespace Skywalker.Domain.Repositories
     {
         public IDataFilter? DataFilter { get; set; }
 
-        public virtual Type ElementType => GetQueryable().ElementType;
+        public abstract Task<TEntity> FindAsync([NotNull] Expression<Func<TEntity, bool>> predicate, CancellationToken cancellationToken = default);
 
-        public virtual Expression Expression => GetQueryable().Expression;
-
-        public virtual IQueryProvider Provider => GetQueryable().Provider;
-
-        public virtual IQueryable<TEntity> WithDetails()
+        public async Task<TEntity> GetAsync([NotNull] Expression<Func<TEntity, bool>> predicate, CancellationToken cancellationToken = default)
         {
-            return GetQueryable();
-        }
-
-        public virtual IQueryable<TEntity> WithDetails(params Expression<Func<TEntity, object>>[] propertySelectors)
-        {
-            return GetQueryable();
-        }
-
-        IEnumerator IEnumerable.GetEnumerator()
-        {
-            return GetEnumerator();
-        }
-
-        public IEnumerator<TEntity> GetEnumerator()
-        {
-            return GetQueryable().GetEnumerator();
-        }
-
-        protected abstract IQueryable<TEntity> GetQueryable();
-
-        public abstract Task<TEntity> FindAsync([NotNull] Expression<Func<TEntity, bool>> predicate, bool includeDetails = true, CancellationToken cancellationToken = default);
-
-        public async Task<TEntity> GetAsync([NotNull] Expression<Func<TEntity, bool>> predicate, bool includeDetails = true, CancellationToken cancellationToken = default)
-        {
-            var entity = await FindAsync(predicate, includeDetails, cancellationToken);
+            var entity = await FindAsync(predicate, cancellationToken);
 
             if (entity == null)
             {
@@ -73,9 +45,9 @@ namespace Skywalker.Domain.Repositories
 
     public abstract class RepositoryBase<TEntity, TKey> : RepositoryBase<TEntity>, IRepository<TEntity, TKey> where TEntity : class, IEntity<TKey>
     {
-        public abstract Task<TEntity> GetAsync(TKey id, bool includeDetails = true, CancellationToken cancellationToken = default);
+        public abstract Task<TEntity> GetAsync(TKey id, CancellationToken cancellationToken = default);
 
-        public abstract Task<TEntity?> FindAsync(TKey id, bool includeDetails = true, CancellationToken cancellationToken = default);
+        public abstract Task<TEntity?> FindAsync(TKey id, CancellationToken cancellationToken = default);
 
         public virtual async Task DeleteAsync(TKey id, CancellationToken cancellationToken = default)
         {

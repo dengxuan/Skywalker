@@ -35,7 +35,7 @@ namespace Skywalker.Ddd.Infrastructure.EntityFrameworkCore
             await Database.SaveChangesAsync(cancellationToken);
         }
 
-        public Task<TEntity> FindAsync([NotNull] Expression<Func<TEntity, bool>> predicate, bool includeDetails = true, CancellationToken cancellationToken = default)
+        public Task<TEntity> FindAsync([NotNull] Expression<Func<TEntity, bool>> predicate, CancellationToken cancellationToken = default)
         {
             return Entities.Where(predicate).FirstOrDefaultAsync(cancellationToken);
         }
@@ -45,7 +45,7 @@ namespace Skywalker.Ddd.Infrastructure.EntityFrameworkCore
             return await Entities.LongCountAsync(cancellationToken);
         }
 
-        public async Task<List<TEntity>> GetListAsync(bool includeDetails = false, CancellationToken cancellationToken = default)
+        public async Task<List<TEntity>> GetListAsync(CancellationToken cancellationToken = default)
         {
             List<TEntity> entities = await Entities.ToListAsync(cancellationToken);
             return entities;
@@ -99,13 +99,13 @@ namespace Skywalker.Ddd.Infrastructure.EntityFrameworkCore
             throw new NotImplementedException();
         }
 
-        public async Task<TEntity> FindAsync(TKey id, bool includeDetails = true, CancellationToken cancellationToken = default)
+        public async Task<TEntity> FindAsync(TKey id, CancellationToken cancellationToken = default)
         {
             TEntity entity = await Entities.FirstOrDefaultAsync(predicate => predicate.Id!.Equals(id), cancellationToken);
             return entity;
         }
 
-        public async Task<TEntity> GetAsync(TKey id, bool includeDetails = true, CancellationToken cancellationToken = default)
+        public async Task<TEntity> GetAsync(TKey id, CancellationToken cancellationToken = default)
         {
             TEntity entity = await Entities.FirstOrDefaultAsync(predicate => predicate.Id!.Equals(id), cancellationToken);
             if (entity == null)

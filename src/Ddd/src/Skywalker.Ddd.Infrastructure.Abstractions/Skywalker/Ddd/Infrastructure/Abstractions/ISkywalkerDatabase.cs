@@ -13,7 +13,7 @@ namespace Skywalker.Ddd.Infrastructure.Abstractions
     {
         IQueryable<TEntity> Entities { get; }
 
-        Task<TEntity> FindAsync([NotNull] Expression<Func<TEntity, bool>> predicate, bool includeDetails = true, CancellationToken cancellationToken = default);
+        Task<TEntity> FindAsync([NotNull] Expression<Func<TEntity, bool>> predicate, CancellationToken cancellationToken = default);
 
         Task DeleteAsync([NotNull] Expression<Func<TEntity, bool>> predicate, CancellationToken cancellationToken = default);
 
@@ -31,7 +31,7 @@ namespace Skywalker.Ddd.Infrastructure.Abstractions
 
         Task DeleteAsync([NotNull] TEntity entity, CancellationToken cancellationToken = default);
 
-        Task<List<TEntity>> GetListAsync(bool includeDetails = false, CancellationToken cancellationToken = default);
+        Task<List<TEntity>> GetListAsync(CancellationToken cancellationToken = default);
 
         Task<long> GetCountAsync(CancellationToken cancellationToken = default);
     }
@@ -45,8 +45,8 @@ namespace Skywalker.Ddd.Infrastructure.Abstractions
 
         Task EnsurePropertyLoadedAsync<TProperty>(TEntity entity, Expression<Func<TEntity, TProperty>> propertyExpression, CancellationToken cancellationToken) where TProperty : class;
 
-        Task<TEntity> FindAsync(TKey id, bool includeDetails = true, CancellationToken cancellationToken = default);
+        Task<TEntity> FindAsync(TKey id, CancellationToken cancellationToken = default);
 
-        Task<TEntity> GetAsync(TKey id, bool includeDetails = true, CancellationToken cancellationToken = default);
+        Task<TEntity> GetAsync(TKey id, CancellationToken cancellationToken = default);
     }
 }

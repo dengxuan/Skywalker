@@ -18,7 +18,7 @@ using System.Threading.Tasks;
 
 namespace Skywalker.Ddd.Infrastructure.Domain.Repositories
 {
-    public class SkywalkerRepository<TEntity> : RepositoryBase<TEntity>, ISkywalkerRepository<TEntity> where TEntity : class, IEntity
+    public class SkywalkerRepository<TEntity> : RepositoryBase<TEntity> where TEntity : class, IEntity
     {
         private readonly IClock _clock;
 
@@ -137,14 +137,15 @@ namespace Skywalker.Ddd.Infrastructure.Domain.Repositories
             hasConcurrencyStamp.ConcurrencyStamp = Guid.NewGuid().ToString("N");
         }
 
+
         protected override IQueryable<TEntity> GetQueryable()
         {
             return Database.Entities;
         }
 
-        public override Task<TEntity> FindAsync([NotNull] Expression<Func<TEntity, bool>> predicate, bool includeDetails = true, CancellationToken cancellationToken = default)
+        public override Task<TEntity> FindAsync([NotNull] Expression<Func<TEntity, bool>> predicate, CancellationToken cancellationToken = default)
         {
-            return Database.FindAsync(predicate, includeDetails, cancellationToken);
+            return Database.FindAsync(predicate, cancellationToken);
         }
 
         public override async Task DeleteAsync([NotNull] Expression<Func<TEntity, bool>> predicate, CancellationToken cancellationToken = default)
@@ -203,9 +204,9 @@ namespace Skywalker.Ddd.Infrastructure.Domain.Repositories
             await Database.DeleteAsync(entity, cancellationToken);
         }
 
-        public override Task<List<TEntity>> GetListAsync(bool includeDetails = false, CancellationToken cancellationToken = default)
+        public override Task<List<TEntity>> GetListAsync(CancellationToken cancellationToken = default)
         {
-            return Database.GetListAsync(includeDetails, cancellationToken);
+            return Database.GetListAsync(cancellationToken);
         }
 
         public override Task<long> GetCountAsync(CancellationToken cancellationToken = default)
@@ -214,9 +215,7 @@ namespace Skywalker.Ddd.Infrastructure.Domain.Repositories
         }
     }
 
-    public class SkywalkerRepository<TEntity, TKey> : SkywalkerRepository<TEntity>, ISkywalkerRepository<TEntity, TKey>, ISupportsExplicitLoading<TEntity, TKey>
-
-        where TEntity : class, IEntity<TKey>
+    public class SkywalkerRepository<TEntity, TKey> : SkywalkerRepository<TEntity>, ISupportsExplicitLoading<TEntity, TKey> where TEntity : class, IEntity<TKey>
     {
         public SkywalkerRepository(ISkywalkerDatabase<TEntity, TKey> database, IClock clock, IGuidGenerator guidGenerator)
             : base(database, clock, guidGenerator)
@@ -226,7 +225,7 @@ namespace Skywalker.Ddd.Infrastructure.Domain.Repositories
 
         public async Task DeleteAsync(TKey id, CancellationToken cancellationToken = default)
         {
-            var entity = await FindAsync(id, false, GetCancellationToken(cancellationToken));
+            var entity = await FindAsync(id, GetCancellationToken(cancellationToken));
             if (entity == null)
             {
                 return;
@@ -245,14 +244,14 @@ namespace Skywalker.Ddd.Infrastructure.Domain.Repositories
             throw new NotImplementedException();
         }
 
-        public Task<TEntity?> FindAsync(TKey id, bool includeDetails = true, CancellationToken cancellationToken = default)
+        public Task<TEntity?> FindAsync(TKey id, CancellationToken cancellationToken = default)
         {
             return Task.FromResult(Database.Entities.FirstOrDefault(predicate => predicate.Id!.Equals(id)));
         }
 
-        public async Task<TEntity> GetAsync(TKey id, bool includeDetails = true, CancellationToken cancellationToken = default)
+        public async Task<TEntity> GetAsync(TKey id, CancellationToken cancellationToken = default)
         {
-            TEntity? entity = await FindAsync(id, includeDetails, cancellationToken);
+            TEntity? entity = await FindAsync(id, cancellationToken);
             if (entity == null)
             {
                 throw new EntityNotFoundException();
