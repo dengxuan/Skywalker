@@ -10,35 +10,35 @@ namespace Simple.Domain.Users
 {
     public class UserManager : DomainService
     {
-        private readonly IRepository<MongoUser> _users;
+        private readonly IRepository<User> _users;
 
-        public UserManager(IRepository<MongoUser> users)
+        public UserManager(IRepository<User> users)
         {
             _users = users;
         }
 
-        public Task<List<MongoUser>> FindUsersAsync()
+        public Task<List<User>> FindUsersAsync()
         {
-            return Task.FromResult(_users.ToList());
+            return Task.FromResult(_users.WithDetails(propertySelector => propertySelector.UserValue).ToList());
         }
 
-        public Task<List<MongoUser>> FindUsersAsync([NotNull] string name)
+        public Task<List<User>> FindUsersAsync([NotNull] string name)
         {
             return Task.Run(() =>
             {
-                return _users.Where(predicate => name.IsEmptyOrWhiteSpace() || predicate.Name.Contains(name)).ToList();
+                return _users.WithDetails(propertySelector => propertySelector.UserValue).Where(predicate => name.IsEmptyOrWhiteSpace() || predicate.Name.Contains(name)).ToList();
             });
         }
 
-        public async Task<MongoUser> CreateUser(string name)
+        public async Task<User> CreateUser(string name)
         {
-            MongoUser user = await _users.InsertAsync(new MongoUser(name));
+            User user = await _users.InsertAsync(new User { Name = name, UserValue = new UserValue { Value = name } });
             return user;
         }
 
-        public async Task<MongoUser> CreateUser(MongoUser mongoUser)
+        public async Task<User> CreateUser(User mongoUser)
         {
-            MongoUser user = await _users.InsertAsync(mongoUser);
+            User user = await _users.InsertAsync(mongoUser);
             return user;
         }
     }

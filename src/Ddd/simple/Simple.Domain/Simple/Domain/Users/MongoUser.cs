@@ -1,9 +1,5 @@
 ﻿using Skywalker.Domain.Entities;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Simple.Domain.Users
 {
@@ -19,13 +15,8 @@ namespace Simple.Domain.Users
         }
     }
 
-    public class UserValue
+    public class UserValue : AggregateRoot<int>
     {
         public string Value { get; set; }
-
-        public UserValue(string value)
-        {
-            Value = value;
-        }
     }
 }

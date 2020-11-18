@@ -1,5 +1,4 @@
 ﻿using Skywalker.Domain.Entities;
-using System;
 
 namespace Simple.Domain.Users
 {
@@ -7,9 +6,6 @@ namespace Simple.Domain.Users
     {
         public string? Name { get; set; }
 
-        public User(short id)
-        {
-            Id = id;
-        }
+        public virtual UserValue UserValue { get; set; }
     }
 }

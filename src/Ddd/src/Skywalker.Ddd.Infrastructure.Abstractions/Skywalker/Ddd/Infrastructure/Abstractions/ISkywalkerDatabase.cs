@@ -13,6 +13,8 @@ namespace Skywalker.Ddd.Infrastructure.Abstractions
     {
         IQueryable<TEntity> Entities { get; }
 
+        IQueryable<TEntity> WithDetails(params Expression<Func<TEntity, object>>[] propertySelectors);
+
         Task<TEntity> FindAsync([NotNull] Expression<Func<TEntity, bool>> predicate, CancellationToken cancellationToken = default);
 
         Task DeleteAsync([NotNull] Expression<Func<TEntity, bool>> predicate, CancellationToken cancellationToken = default);

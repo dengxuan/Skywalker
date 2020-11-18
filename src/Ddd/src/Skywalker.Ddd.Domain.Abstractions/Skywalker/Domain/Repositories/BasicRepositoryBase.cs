@@ -47,6 +47,8 @@ namespace Skywalker.Domain.Repositories
 
         protected abstract IQueryable<TEntity> GetQueryable();
 
+        public abstract IQueryable<TEntity> WithDetails(params Expression<Func<TEntity, object>>[] propertySelectors);
+
         public abstract Task<TEntity> InsertAsync([NotNull] TEntity entity, CancellationToken cancellationToken = default);
 
         public abstract Task InsertAsync([NotNull] IEnumerable<TEntity> entities, CancellationToken cancellationToken = default);

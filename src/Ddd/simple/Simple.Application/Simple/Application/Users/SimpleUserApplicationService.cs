@@ -18,20 +18,20 @@ namespace Simple.Application
 
         public async Task<UserDto> CreateUserAsync([NotNull] string name)
         {
-            MongoUser user = await _userManager.CreateUser(new MongoUser(name) { Value = new UserValue("name") });
-            return ObjectMapper.Map<MongoUser, UserDto>(user);
+            User user = await _userManager.CreateUser(name);
+            return ObjectMapper.Map<User, UserDto>(user);
         }
 
         public async Task<List<UserDto>> FindUsersAsync()
         {
-            List<MongoUser> users = await _userManager.FindUsersAsync();
-            return ObjectMapper.Map<List<MongoUser>, List<UserDto>>(users);
+            List<User> users = await _userManager.FindUsersAsync();
+            return ObjectMapper.Map<List<User>, List<UserDto>>(users);
         }
 
         public async Task<List<UserDto>> FindUsersAsync([NotNull]string name)
         {
-            List<MongoUser> users = await _userManager.FindUsersAsync(name);
-            return ObjectMapper.Map<List<MongoUser>, List<UserDto>>(users);
+            List<User> users = await _userManager.FindUsersAsync(name);
+            return ObjectMapper.Map<List<User>, List<UserDto>>(users);
         }
     }
 }

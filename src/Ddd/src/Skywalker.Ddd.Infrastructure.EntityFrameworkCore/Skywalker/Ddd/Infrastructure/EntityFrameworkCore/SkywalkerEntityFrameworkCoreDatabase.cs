@@ -70,6 +70,19 @@ namespace Skywalker.Ddd.Infrastructure.EntityFrameworkCore
             await Database.SaveChangesAsync(cancellationToken);
             return entity;
         }
+
+        public IQueryable<TEntity> WithDetails(params Expression<Func<TEntity, object>>[] propertySelectors)
+        {
+            var query = Entities;
+            if (!propertySelectors.IsNullOrEmpty())
+            {
+                foreach (var propertySelector in propertySelectors)
+                {
+                    query = query.Include(propertySelector);
+                }
+            }
+            return query;
+        }
     }
 
     public class SkywalkerEntityFrameworkCoreDatabase<TDbContext, TEntity, TKey> : SkywalkerEntityFrameworkCoreDatabase<TDbContext, TEntity>, ISkywalkerDatabase<TEntity, TKey> where TEntity : class, IEntity<TKey> where TDbContext : SkywalkerDbContext<TDbContext>

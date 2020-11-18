@@ -1,14 +1,17 @@
 ﻿using Skywalker.Domain.Entities;
+using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Linq.Expressions;
 using System.Threading;
 using System.Threading.Tasks;
 
 namespace Skywalker.Domain.Repositories
 {
-    public interface IReadOnlyRepository<TEntity> : IRepository, IQueryable<TEntity>
-        where TEntity : class, IEntity
+    public interface IReadOnlyRepository<TEntity> : IRepository, IQueryable<TEntity> where TEntity : class, IEntity
     {
+        IQueryable<TEntity> WithDetails(params Expression<Func<TEntity, object>>[] propertySelectors);
+
         /// <summary>
         /// Gets a list of all the entities.
         /// </summary>
@@ -22,8 +25,7 @@ namespace Skywalker.Domain.Repositories
         Task<long> GetCountAsync(CancellationToken cancellationToken = default);
     }
 
-    public interface IReadOnlyRepository<TEntity, TKey> : IReadOnlyRepository<TEntity>
-        where TEntity : class, IEntity<TKey>
+    public interface IReadOnlyRepository<TEntity, TKey> : IReadOnlyRepository<TEntity> where TEntity : class, IEntity<TKey>
     {
         /// <summary>
         /// Gets an entity with given primary key.

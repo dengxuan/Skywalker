@@ -8,7 +8,7 @@ namespace Simple.Application.Abstractions
         [NotNull]
         public string Name { get; set; }
 
-        public UserValueDto Value { get; set; }
+        public UserValueDto UserValue { get; set; }
 
         public UserDto([NotNull] string name)
         {

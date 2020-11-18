@@ -27,6 +27,16 @@ namespace Simple.Infrastructure.EntityFrameworkCore
                 b.Property(x => x.Name).IsRequired();
 
             });
+
+            builder.Entity<UserValue>(b =>
+            {
+                b.ToTable(options.TablePrefix + "UserValues", options.Schema);
+
+                b.ConfigureByConvention();
+
+                b.Property(x => x.Value).IsRequired();
+
+            });
         }
     }
 }

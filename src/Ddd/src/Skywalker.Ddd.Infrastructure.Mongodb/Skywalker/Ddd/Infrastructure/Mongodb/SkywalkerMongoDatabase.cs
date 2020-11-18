@@ -132,6 +132,11 @@ namespace Skywalker.Ddd.Infrastructure.Mongodb
 
             return entity;
         }
+
+        public IQueryable<TEntity> WithDetails(params Expression<Func<TEntity, object>>[] propertySelectors)
+        {
+            return Entities;
+        }
     }
 
     public class SkywalkerMongoDatabase<TDbContext, TEntity, TKey> : SkywalkerMongoDatabase<TDbContext, TEntity>, ISkywalkerDatabase<TEntity, TKey> where TEntity : class, IEntity<TKey> where TDbContext : ISkywalkerContext

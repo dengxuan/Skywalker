@@ -36,7 +36,7 @@ namespace Simple.WebApi.Hosting
                 {
                     initializer.AddEntityFrameworkCore<SimpleDbContext>(options =>
                     {
-                        options.UseSqlServer();
+                        options.UseMySql();
                     });
                     initializer.AddMongodb<SimpleMongoContext>();
                 });
