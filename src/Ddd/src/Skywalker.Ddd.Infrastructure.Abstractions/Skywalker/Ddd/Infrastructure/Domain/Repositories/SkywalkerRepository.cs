@@ -18,7 +18,7 @@ using System.Threading.Tasks;
 
 namespace Skywalker.Ddd.Infrastructure.Domain.Repositories
 {
-    public class SkywalkerRepository<TEntity> : RepositoryBase<TEntity> where TEntity : class, IEntity
+    public class SkywalkerRepository<TEntity> : RepositoryBase<TEntity>, IRepository<TEntity> where TEntity : class, IEntity
     {
         private readonly IClock _clock;
 
@@ -220,7 +220,7 @@ namespace Skywalker.Ddd.Infrastructure.Domain.Repositories
         }
     }
 
-    public class SkywalkerRepository<TEntity, TKey> : SkywalkerRepository<TEntity>, ISupportsExplicitLoading<TEntity, TKey> where TEntity : class, IEntity<TKey>
+    public class SkywalkerRepository<TEntity, TKey> : SkywalkerRepository<TEntity>, IRepository<TEntity, TKey>, ISupportsExplicitLoading<TEntity, TKey> where TEntity : class, IEntity<TKey>
     {
         public SkywalkerRepository(ISkywalkerDatabase<TEntity, TKey> database, IClock clock, IGuidGenerator guidGenerator)
             : base(database, clock, guidGenerator)

@@ -12,62 +12,49 @@ namespace Microsoft.Extensions.DependencyInjection
         public static IServiceCollection AddDefaultRepository(this IServiceCollection services, Type entityType, Type repositoryImplementationType)
         {
 
-            //IReadOnlyBasicRepository<TEntity>
-            var readOnlyBasicRepositoryInterface = typeof(IReadOnlyRepository<>).MakeGenericType(entityType);
-            if (readOnlyBasicRepositoryInterface.IsAssignableFrom(repositoryImplementationType))
+            //IReadOnlyRepository<TEntity>
+            var readOnlyRepositoryInterface = typeof(IReadOnlyRepository<>).MakeGenericType(entityType);
+            if (readOnlyRepositoryInterface.IsAssignableFrom(repositoryImplementationType))
             {
-                services.TryAddTransient(readOnlyBasicRepositoryInterface, repositoryImplementationType);
+                services.TryAddTransient(readOnlyRepositoryInterface, repositoryImplementationType);
+            }
 
-                //IReadOnlyRepository<TEntity>
-                var readOnlyRepositoryInterface = typeof(IReadOnlyRepository<>).MakeGenericType(entityType);
-                if (readOnlyRepositoryInterface.IsAssignableFrom(repositoryImplementationType))
+            //IBasicRepository<TEntity>
+            var basicRepositoryInterface = typeof(IBasicRepository<>).MakeGenericType(entityType);
+            if (basicRepositoryInterface.IsAssignableFrom(repositoryImplementationType))
+            {
+                services.TryAddTransient(basicRepositoryInterface, repositoryImplementationType);
+
+                //IRepository<TEntity>
+                var repositoryInterface = typeof(IRepository<>).MakeGenericType(entityType);
+                if (repositoryInterface.IsAssignableFrom(repositoryImplementationType))
                 {
-                    services.TryAddTransient(readOnlyRepositoryInterface, repositoryImplementationType);
-                }
-
-                //IBasicRepository<TEntity>
-                var basicRepositoryInterface = typeof(IBasicRepository<>).MakeGenericType(entityType);
-                if (basicRepositoryInterface.IsAssignableFrom(repositoryImplementationType))
-                {
-                    services.TryAddTransient(basicRepositoryInterface, repositoryImplementationType);
-
-                    //IRepository<TEntity>
-                    var repositoryInterface = typeof(IRepository<>).MakeGenericType(entityType);
-                    if (repositoryInterface.IsAssignableFrom(repositoryImplementationType))
-                    {
-                        services.TryAddTransient(repositoryInterface, repositoryImplementationType);
-                    }
+                    services.TryAddTransient(repositoryInterface, repositoryImplementationType);
                 }
             }
 
             var primaryKeyType = EntityHelper.FindPrimaryKeyType(entityType);
             if (primaryKeyType != null)
             {
-                //IReadOnlyBasicRepository<TEntity, TKey>
-                var readOnlyBasicRepositoryInterfaceWithPk = typeof(IReadOnlyRepository<,>).MakeGenericType(entityType, primaryKeyType);
-                if (readOnlyBasicRepositoryInterfaceWithPk.IsAssignableFrom(repositoryImplementationType))
+
+                //IReadOnlyRepository<TEntity, TKey>
+                var readOnlyRepositoryInterfaceWithPk = typeof(IReadOnlyRepository<,>).MakeGenericType(entityType, primaryKeyType);
+                if (readOnlyRepositoryInterfaceWithPk.IsAssignableFrom(repositoryImplementationType))
                 {
-                    services.TryAddTransient(readOnlyBasicRepositoryInterfaceWithPk, repositoryImplementationType);
+                    services.TryAddTransient(readOnlyRepositoryInterfaceWithPk, repositoryImplementationType);
+                }
 
-                    //IReadOnlyRepository<TEntity, TKey>
-                    var readOnlyRepositoryInterfaceWithPk = typeof(IReadOnlyRepository<,>).MakeGenericType(entityType, primaryKeyType);
-                    if (readOnlyRepositoryInterfaceWithPk.IsAssignableFrom(repositoryImplementationType))
+                //IBasicRepository<TEntity, TKey>
+                var basicRepositoryInterfaceWithPk = typeof(IBasicRepository<,>).MakeGenericType(entityType, primaryKeyType);
+                if (basicRepositoryInterfaceWithPk.IsAssignableFrom(repositoryImplementationType))
+                {
+                    services.TryAddTransient(basicRepositoryInterfaceWithPk, repositoryImplementationType);
+
+                    //IRepository<TEntity, TKey>
+                    var repositoryInterfaceWithPk = typeof(IRepository<,>).MakeGenericType(entityType, primaryKeyType);
+                    if (repositoryInterfaceWithPk.IsAssignableFrom(repositoryImplementationType))
                     {
-                        services.TryAddTransient(readOnlyRepositoryInterfaceWithPk, repositoryImplementationType);
-                    }
-
-                    //IBasicRepository<TEntity, TKey>
-                    var basicRepositoryInterfaceWithPk = typeof(IBasicRepository<,>).MakeGenericType(entityType, primaryKeyType);
-                    if (basicRepositoryInterfaceWithPk.IsAssignableFrom(repositoryImplementationType))
-                    {
-                        services.TryAddTransient(basicRepositoryInterfaceWithPk, repositoryImplementationType);
-
-                        //IRepository<TEntity, TKey>
-                        var repositoryInterfaceWithPk = typeof(IRepository<,>).MakeGenericType(entityType, primaryKeyType);
-                        if (repositoryInterfaceWithPk.IsAssignableFrom(repositoryImplementationType))
-                        {
-                            services.TryAddTransient(repositoryInterfaceWithPk, repositoryImplementationType);
-                        }
+                        services.TryAddTransient(repositoryInterfaceWithPk, repositoryImplementationType);
                     }
                 }
             }

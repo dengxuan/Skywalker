@@ -10,9 +10,9 @@ namespace Simple.Domain.Users
 {
     public class UserManager : DomainService
     {
-        private readonly IRepository<User> _users;
+        private readonly IRepository<User, short> _users;
 
-        public UserManager(IRepository<User> users)
+        public UserManager(IRepository<User, short> users)
         {
             _users = users;
         }
