@@ -1,6 +1,7 @@
 ﻿using Skywalker;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Globalization;
 using System.Text.RegularExpressions;
 
@@ -464,7 +465,7 @@ namespace System
         /// Gets a substring of a string from beginning of the string if it exceeds maximum length.
         /// </summary>
         /// <exception cref="ArgumentNullException">Thrown if <paramref name="str"/> is null</exception>
-        public static string Truncate(this string str, int maxLength)
+        public static string? Truncate(this string str, int maxLength)
         {
             if (str == null)
             {
@@ -485,7 +486,7 @@ namespace System
         /// Returning string can not be longer than maxLength.
         /// </summary>
         /// <exception cref="ArgumentNullException">Thrown if <paramref name="str"/> is null</exception>
-        public static string TruncateWithPostfix(this string str, int maxLength)
+        public static string? TruncateWithPostfix(this string str, int maxLength)
         {
             return TruncateWithPostfix(str, maxLength, "...");
         }
@@ -496,7 +497,7 @@ namespace System
         /// Returning string can not be longer than maxLength.
         /// </summary>
         /// <exception cref="ArgumentNullException">Thrown if <paramref name="str"/> is null</exception>
-        public static string TruncateWithPostfix(this string str, int maxLength, string postfix)
+        public static string? TruncateWithPostfix(this string str, int maxLength, string postfix)
         {
             if (str == null)
             {
@@ -519,6 +520,18 @@ namespace System
             }
 
             return str.Left(maxLength - postfix.Length) + postfix;
+        }
+
+        [DebuggerStepThrough]
+        public static bool IsMissing(this string value)
+        {
+            return string.IsNullOrWhiteSpace(value);
+        }
+
+        [DebuggerStepThrough]
+        public static bool IsPresent(this string value)
+        {
+            return !string.IsNullOrWhiteSpace(value);
         }
     }
 }
