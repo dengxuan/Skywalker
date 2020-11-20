@@ -1,9 +1,8 @@
 <Project Sdk="Microsoft.NET.Sdk">
-
     <Import Project="..\..\..\..\skywalker.props" />
     <Import Project="..\..\..\..\version.props" />
     <ItemGroup>
-      <ProjectReference Include="..\Skywalker.IdentityServer.Application.Contracts\Skywalker.IdentityServer.Application.Contracts.csproj" />
+      <Folder Include="Skywalker\IdentityServer\AspNetCore\" />
     </ItemGroup>
 
 </Project>
