@@ -2,6 +2,7 @@
 // Licensed under the Apache License, Version 2.0. See LICENSE in the project root for license information.
 
 
+using Skywalker.Domain.Entities;
 using System;
 using System.Collections.Generic;
 using System.Security.Claims;
@@ -11,7 +12,7 @@ namespace Skywalker.IdentityServer.Models
     /// <summary>
     /// Represents data needed for device flow.
     /// </summary>
-    public class DeviceCode
+    public class DeviceCode : AggregateRoot<Guid>
     {
         /// <summary>
         /// Gets or sets the creation time.

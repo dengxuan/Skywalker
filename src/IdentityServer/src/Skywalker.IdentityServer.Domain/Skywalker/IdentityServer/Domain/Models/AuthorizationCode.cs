@@ -2,6 +2,7 @@
 // Licensed under the Apache License, Version 2.0. See LICENSE in the project root for license information.
 
 
+using Skywalker.Domain.Entities;
 using System;
 using System.Collections.Generic;
 using System.Security.Claims;
@@ -13,14 +14,6 @@ namespace Skywalker.IdentityServer.Models
     /// </summary>
     public class AuthorizationCode
     {
-        /// <summary>
-        /// Gets or sets the creation time.
-        /// </summary>
-        /// <value>
-        /// The creation time.
-        /// </value>
-        public DateTime CreationTime { get; set; }
-
         /// <summary>
         /// Gets or sets the life time in seconds.
         /// </summary>
@@ -52,7 +45,7 @@ namespace Skywalker.IdentityServer.Models
         /// <c>true</c> if this instance is open identifier; otherwise, <c>false</c>.
         /// </value>
         public bool IsOpenId { get; set; }
-        
+
         /// <summary>
         /// Gets or sets the requested scopes.
         /// </summary>

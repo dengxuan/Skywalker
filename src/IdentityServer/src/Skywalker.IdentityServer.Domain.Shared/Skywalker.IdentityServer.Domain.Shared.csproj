@@ -1,4 +1,4 @@
-﻿<Project Sdk="Microsoft.NET.Sdk">
+<Project Sdk="Microsoft.NET.Sdk">
 
     <Import Project="..\..\..\..\skywalker.props" />
     <Import Project="..\..\..\..\version.props" />
@@ -8,9 +8,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\..\Ddd\src\Skywalker.Ddd.Domain.Abstractions\Skywalker.Ddd.Domain.Abstractions.csproj" />
     <ProjectReference Include="..\..\..\Extensions\src\Skywalker.Extensions.Universal\Skywalker.Extensions.Universal.csproj" />
-    <ProjectReference Include="..\Skywalker.IdentityServer.Domain.Shared\Skywalker.IdentityServer.Domain.Shared.csproj" />
   </ItemGroup>
 
 </Project>

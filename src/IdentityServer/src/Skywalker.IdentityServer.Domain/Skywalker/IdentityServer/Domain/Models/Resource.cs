@@ -2,6 +2,8 @@
 // Licensed under the Apache License, Version 2.0. See LICENSE in the project root for license information.
 
 
+using Skywalker.Domain.Entities;
+using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 
@@ -11,7 +13,7 @@ namespace Skywalker.IdentityServer.Models
     /// Models the common data of API and identity resources.
     /// </summary>
     [DebuggerDisplay("{DebuggerDisplay,nq}")]
-    public abstract class Resource
+    public abstract class Resource : AggregateRoot<Guid>
     {
         private string DebuggerDisplay => Name ?? $"{{{typeof(Resource)}}}";
 
@@ -29,7 +31,7 @@ namespace Skywalker.IdentityServer.Models
         /// Display name of the resource.
         /// </summary>
         public string DisplayName { get; set; }
-        
+
         /// <summary>
         /// Description of the resource.
         /// </summary>

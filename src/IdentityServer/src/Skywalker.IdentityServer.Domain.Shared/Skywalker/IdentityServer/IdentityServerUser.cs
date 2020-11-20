@@ -3,7 +3,6 @@
 
 
 using IdentityModel;
-using Skywalker.IdentityServer.Extensions;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -24,12 +23,12 @@ namespace Skywalker.IdentityServer
         /// <summary>
         /// Display name (optional)
         /// </summary>
-        public string DisplayName { get; set; }
+        public string? DisplayName { get; set; }
 
         /// <summary>
         /// Identity provider (optional)
         /// </summary>
-        public string IdentityProvider { get; set; }
+        public string? IdentityProvider { get; set; }
 
         /// <summary>
         /// Authentication methods
@@ -67,14 +66,14 @@ namespace Skywalker.IdentityServer
             if (SubjectId.IsMissing()) throw new ArgumentException("SubjectId is mandatory", nameof(SubjectId));
             var claims = new List<Claim> { new Claim(JwtClaimTypes.Subject, SubjectId) };
 
-            if (DisplayName.IsPresent())
+            if (DisplayName!.IsPresent())
             {
-                claims.Add(new Claim(JwtClaimTypes.Name, DisplayName));
+                claims.Add(new Claim(JwtClaimTypes.Name, DisplayName!));
             }
 
-            if (IdentityProvider.IsPresent())
+            if (IdentityProvider!.IsPresent())
             {
-                claims.Add(new Claim(JwtClaimTypes.IdentityProvider, IdentityProvider));
+                claims.Add(new Claim(JwtClaimTypes.IdentityProvider, IdentityProvider!));
             }
 
             if (AuthenticationTime.HasValue)

@@ -115,9 +115,11 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Skywalker.IdentityServer.Ap
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Skywalker.IdentityServer.WebApi", "src\IdentityServer\src\Skywalker.IdentityServer.WebApi\Skywalker.IdentityServer.WebApi.csproj", "{84199BFF-E476-41A0-8276-ED6F97D865FD}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Skywalker.IdentityServer.AspNetCore", "src\IdentityServer\src\Skywalker.IdentityServer.AspNetCore\Skywalker.IdentityServer.AspNetCore.csproj", "{BB14D70B-9325-49B2-90B0-BDC8A548D90C}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Skywalker.IdentityServer.AspNetCore", "src\IdentityServer\src\Skywalker.IdentityServer.AspNetCore\Skywalker.IdentityServer.AspNetCore.csproj", "{BB14D70B-9325-49B2-90B0-BDC8A548D90C}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Skywalker.IdentityServer.AspNetCore.Abstractions", "src\IdentityServer\src\Skywalker.IdentityServer.AspNetCore.Abstractions\Skywalker.IdentityServer.AspNetCore.Abstractions.csproj", "{677F1AFA-DE3A-4041-9D95-5A607EDA297E}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Skywalker.IdentityServer.AspNetCore.Abstractions", "src\IdentityServer\src\Skywalker.IdentityServer.AspNetCore.Abstractions\Skywalker.IdentityServer.AspNetCore.Abstractions.csproj", "{677F1AFA-DE3A-4041-9D95-5A607EDA297E}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Skywalker.IdentityServer.Domain.Shared", "src\IdentityServer\src\Skywalker.IdentityServer.Domain.Shared\Skywalker.IdentityServer.Domain.Shared.csproj", "{B1DEDA9E-CA43-4BD6-9744-386FA7B7AD31}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -305,6 +307,10 @@ Global
 		{677F1AFA-DE3A-4041-9D95-5A607EDA297E}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{677F1AFA-DE3A-4041-9D95-5A607EDA297E}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{677F1AFA-DE3A-4041-9D95-5A607EDA297E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B1DEDA9E-CA43-4BD6-9744-386FA7B7AD31}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B1DEDA9E-CA43-4BD6-9744-386FA7B7AD31}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B1DEDA9E-CA43-4BD6-9744-386FA7B7AD31}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B1DEDA9E-CA43-4BD6-9744-386FA7B7AD31}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -363,6 +369,7 @@ Global
 		{84199BFF-E476-41A0-8276-ED6F97D865FD} = {DE1EFE75-198D-43EF-ADF7-D1AC2D3B7A78}
 		{BB14D70B-9325-49B2-90B0-BDC8A548D90C} = {DE1EFE75-198D-43EF-ADF7-D1AC2D3B7A78}
 		{677F1AFA-DE3A-4041-9D95-5A607EDA297E} = {DE1EFE75-198D-43EF-ADF7-D1AC2D3B7A78}
+		{B1DEDA9E-CA43-4BD6-9744-386FA7B7AD31} = {DE1EFE75-198D-43EF-ADF7-D1AC2D3B7A78}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {6D4EB88A-9A1A-446D-82B8-B52DD909FF15}

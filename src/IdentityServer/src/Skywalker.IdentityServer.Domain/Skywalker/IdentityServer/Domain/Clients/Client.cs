@@ -7,6 +7,7 @@ using System.Linq;
 using System;
 using System.Collections;
 using System.Diagnostics;
+using Skywalker.Domain.Entities;
 
 namespace Skywalker.IdentityServer.Models
 {
@@ -14,7 +15,7 @@ namespace Skywalker.IdentityServer.Models
     /// Models an OpenID Connect or OAuth2 client
     /// </summary>
     [DebuggerDisplay("{" + nameof(DebuggerDisplay) + ",nq}")]
-    public class Client
+    public class Client : AggregateRoot<string>
     {
         // setting grant types should be atomic
         private ICollection<string> _allowedGrantTypes = new GrantTypeValidatingHashSet();
@@ -106,7 +107,7 @@ namespace Skywalker.IdentityServer.Models
         /// Specifies whether the client must use a request object on authorize requests (defaults to <c>false</c>.)
         /// </summary>
         public bool RequireRequestObject { get; set; } = false;
-        
+
         /// <summary>
         /// Controls whether access tokens are transmitted via the browser for this client (defaults to <c>false</c>).
         /// This can prevent accidental leakage of access tokens when multiple response types are allowed.
