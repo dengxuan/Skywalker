@@ -1,6 +1,5 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Options;
-using Skywalker.DependencyInjection;
 using System;
 using System.Collections.Concurrent;
 using System.Collections.Generic;
@@ -23,28 +22,24 @@ namespace Skywalker.Data.Filtering
         public IDisposable Enable<TFilter>()
             where TFilter : class
         {
-            return GetFilter<TFilter>().Enable();
+            return GetFilter<TFilter>()!.Enable();
         }
 
         public IDisposable Disable<TFilter>()
             where TFilter : class
         {
-            return GetFilter<TFilter>().Disable();
+            return GetFilter<TFilter>()!.Disable();
         }
 
         public bool IsEnabled<TFilter>()
             where TFilter : class
         {
-            return GetFilter<TFilter>().IsEnabled;
+            return GetFilter<TFilter>()!.IsEnabled;
         }
 
-        private IDataFilter<TFilter> GetFilter<TFilter>()
-            where TFilter : class
+        private IDataFilter<TFilter>? GetFilter<TFilter>() where TFilter : class
         {
-            return _filters.GetOrAdd(
-                typeof(TFilter),
-                () => _serviceProvider.GetRequiredService<IDataFilter<TFilter>>()
-            ) as IDataFilter<TFilter>;
+            return _filters.GetOrAdd(typeof(TFilter), () => _serviceProvider.GetRequiredService<IDataFilter<TFilter>>()) as IDataFilter<TFilter>;
         }
     }
 
@@ -56,7 +51,7 @@ namespace Skywalker.Data.Filtering
             get
             {
                 EnsureInitialized();
-                return _filter.Value.IsEnabled;
+                return _filter.Value!.IsEnabled;
             }
         }
 
@@ -77,7 +72,7 @@ namespace Skywalker.Data.Filtering
                 return NullDisposable.Instance;
             }
 
-            _filter.Value.IsEnabled = true;
+            _filter.Value!.IsEnabled = true;
 
             return new DisposeAction(() => Disable());
         }
@@ -89,7 +84,7 @@ namespace Skywalker.Data.Filtering
                 return NullDisposable.Instance;
             }
 
-            _filter.Value.IsEnabled = false;
+            _filter.Value!.IsEnabled = false;
 
             return new DisposeAction(() => Enable());
         }

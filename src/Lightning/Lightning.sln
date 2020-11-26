@@ -21,9 +21,13 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "tests", "tests", "{1670F338
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "simple", "simple", "{7E964B47-4999-4467-A47A-B05D8098504D}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Skywalker.Lighting.Server", "simple\Skywalker.Lighting.Server\Skywalker.Lighting.Server.csproj", "{D8F63CC6-5A98-4729-9731-43441CF3ECD5}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Skywalker.Lighting.Server", "simple\Skywalker.Lighting.Server\Skywalker.Lighting.Server.csproj", "{D8F63CC6-5A98-4729-9731-43441CF3ECD5}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Skywalker.Lighting.Terminal", "simple\Skywalker.Lighting.Terminal\Skywalker.Lighting.Terminal.csproj", "{1A4CDB07-AD49-48E5-81A0-6F028C155EF9}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Skywalker.Lighting.Terminal", "simple\Skywalker.Lighting.Terminal\Skywalker.Lighting.Terminal.csproj", "{1A4CDB07-AD49-48E5-81A0-6F028C155EF9}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Skywalker.Lightning.Cluster.Abstractions", "src\Skywalker.Lightning.Cluster.Abstractions\Skywalker.Lightning.Cluster.Abstractions.csproj", "{5C551062-F5C7-4378-9CCB-40DF956FB039}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Skywalker.Lightning.Cluster", "src\Skywalker.Lightning.Cluster\Skywalker.Lightning.Cluster.csproj", "{46340D2C-390A-4CA9-8997-4D531CB61CB3}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -63,6 +67,14 @@ Global
 		{1A4CDB07-AD49-48E5-81A0-6F028C155EF9}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{1A4CDB07-AD49-48E5-81A0-6F028C155EF9}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{1A4CDB07-AD49-48E5-81A0-6F028C155EF9}.Release|Any CPU.Build.0 = Release|Any CPU
+		{5C551062-F5C7-4378-9CCB-40DF956FB039}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{5C551062-F5C7-4378-9CCB-40DF956FB039}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{5C551062-F5C7-4378-9CCB-40DF956FB039}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{5C551062-F5C7-4378-9CCB-40DF956FB039}.Release|Any CPU.Build.0 = Release|Any CPU
+		{46340D2C-390A-4CA9-8997-4D531CB61CB3}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{46340D2C-390A-4CA9-8997-4D531CB61CB3}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{46340D2C-390A-4CA9-8997-4D531CB61CB3}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{46340D2C-390A-4CA9-8997-4D531CB61CB3}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -76,6 +88,8 @@ Global
 		{08C36913-F97C-421C-AAD4-DEC26DC20B90} = {8D9E120F-648D-4B67-84A7-4BFD65E5F3EA}
 		{D8F63CC6-5A98-4729-9731-43441CF3ECD5} = {7E964B47-4999-4467-A47A-B05D8098504D}
 		{1A4CDB07-AD49-48E5-81A0-6F028C155EF9} = {7E964B47-4999-4467-A47A-B05D8098504D}
+		{5C551062-F5C7-4378-9CCB-40DF956FB039} = {8D9E120F-648D-4B67-84A7-4BFD65E5F3EA}
+		{46340D2C-390A-4CA9-8997-4D531CB61CB3} = {8D9E120F-648D-4B67-84A7-4BFD65E5F3EA}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {6C7AA1E6-487A-4D89-875C-7DA1A9056987}

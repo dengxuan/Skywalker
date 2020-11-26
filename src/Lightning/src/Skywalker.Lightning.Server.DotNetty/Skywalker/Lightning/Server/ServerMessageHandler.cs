@@ -14,11 +14,11 @@ namespace Skywalker.Lightning.Server
     public class ServerMessageHandler : ChannelHandlerAdapter
     {
         private readonly ILogger<ServerMessageHandler> _logger;
-        private readonly ILightningServiceFactory _LightningServiceFactory;
+        private readonly ILightningServiceFactory _lightningServiceFactory;
 
         public ServerMessageHandler(ILightningServiceFactory LightningServiceFactory, ILogger<ServerMessageHandler> logger)
         {
-            _LightningServiceFactory = LightningServiceFactory;
+            _lightningServiceFactory = LightningServiceFactory;
             _logger = logger;
         }
 
@@ -31,7 +31,7 @@ namespace Skywalker.Lightning.Server
                     try
                     {
                         _logger.LogTrace($"The server received the message:\nCurrent node:{0}\nRoute:{lightningMessage.Id}\nMessage id:{lightningMessage.Id}\nArgs:{lightningMessage.Body.Parameters?.JoinAsString("|")}");
-                        LightningServiceDescriptor descriptor = _LightningServiceFactory.GetLightningServiceDescriptor(lightningMessage.Body.ServiceName);
+                        LightningServiceDescriptor descriptor = _lightningServiceFactory.GetLightningServiceDescriptor(lightningMessage.Body.ServiceName);
                         var result = await descriptor.InvokeHandler(lightningMessage.Body.Parameters!);
                         await context.WriteAndFlushAsync(new LightningMessage<LightningResponse>(lightningMessage.Id, new LightningResponse(result)));
                     }

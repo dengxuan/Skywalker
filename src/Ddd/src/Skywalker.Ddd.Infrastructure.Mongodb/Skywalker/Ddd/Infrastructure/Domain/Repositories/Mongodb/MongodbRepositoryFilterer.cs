@@ -6,8 +6,7 @@ using System.Collections.Generic;
 
 namespace Skywalker.Ddd.Infrastructure.Domain.Repositories.MongoDB
 {
-    public class MongoDbRepositoryFilterer<TEntity> : IMongoDbRepositoryFilterer<TEntity>
-        where TEntity : class, IEntity
+    public class MongoDbRepositoryFilterer<TEntity> : IMongoDbRepositoryFilterer<TEntity> where TEntity : class, IEntity
     {
         protected IDataFilter DataFilter { get; }
 

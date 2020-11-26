@@ -75,5 +75,22 @@ namespace Skywalker.IdentityServer.Models
         /// The data.
         /// </value>
         public string Data { get; set; }
+
+#pragma warning disable CS8618 // Non-nullable field must contain a non-null value when exiting constructor. Consider declaring as nullable.
+        private PersistedGrant() { }
+#pragma warning restore CS8618 // Non-nullable field must contain a non-null value when exiting constructor. Consider declaring as nullable.
+
+        public PersistedGrant(string id, string type, string subjectId, string sessionId, string clientId, string description, DateTime? expiration, DateTime? consumedTime, string data)
+        {
+            Id = id;
+            Type = type;
+            SubjectId = subjectId;
+            SessionId = sessionId;
+            ClientId = clientId;
+            Description = description;
+            Expiration = expiration;
+            ConsumedTime = consumedTime;
+            Data = data;
+        }
     }
 }

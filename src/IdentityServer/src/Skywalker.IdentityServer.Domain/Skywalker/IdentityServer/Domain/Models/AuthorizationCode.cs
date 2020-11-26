@@ -126,5 +126,6 @@ namespace Skywalker.IdentityServer.Models
         /// The properties
         /// </value>
         public IDictionary<string, string> Properties { get; set; } = new Dictionary<string, string>();
+        public DateTime CreationTime { get; set; }
     }
 }

@@ -145,19 +145,7 @@ namespace Skywalker.IdentityServer.Stores
 
             var json = Serializer.Serialize(item);
 
-            var grant = new PersistedGrant
-            {
-                Key = key,
-                Type = GrantType,
-                ClientId = clientId,
-                SubjectId = subjectId,
-                SessionId = sessionId,
-                Description = description,
-                CreationTime = created,
-                Expiration = expiration,
-                ConsumedTime = consumedTime,
-                Data = json
-            };
+            var grant = new PersistedGrant(key, GrantType, subjectId, sessionId, clientId, description, expiration, consumedTime, json);
 
             await Store.StoreAsync(grant);
         }

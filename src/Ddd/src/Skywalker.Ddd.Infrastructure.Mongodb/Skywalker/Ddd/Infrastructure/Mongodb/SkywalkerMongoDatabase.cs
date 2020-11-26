@@ -2,6 +2,7 @@
 using MongoDB.Driver.Linq;
 using Skywalker.Data;
 using Skywalker.Ddd.Infrastructure.Abstractions;
+using Skywalker.Ddd.Infrastructure.Domain.Repositories.MongoDB;
 using Skywalker.Domain.Entities;
 using System;
 using System.Collections.Generic;
@@ -13,7 +14,7 @@ using System.Threading.Tasks;
 
 namespace Skywalker.Ddd.Infrastructure.Mongodb
 {
-    public class SkywalkerMongoDatabase<TDbContext, TEntity> : ISkywalkerDatabase<TEntity> where TEntity : IEntity where TDbContext : ISkywalkerContext
+    public class SkywalkerMongoDatabase<TDbContext, TEntity> : ISkywalkerDatabase<TEntity> where TEntity : class, IEntity where TDbContext : ISkywalkerContext
     {
         protected TDbContext Database { get; }
 
@@ -34,9 +35,7 @@ namespace Skywalker.Ddd.Infrastructure.Mongodb
 
         protected virtual FilterDefinition<TEntity> CreateEntityFilter(TEntity entity, bool withConcurrencyStamp = false, string? concurrencyStamp = null)
         {
-            throw new NotImplementedException(
-                $"{nameof(CreateEntityFilter)} is not implemented for MongoDB by default. It should be overriden and implemented by the deriving class!"
-            );
+            throw new NotImplementedException($"{nameof(CreateEntityFilter)} is not implemented for MongoDB by default. It should be overriden and implemented by the deriving class!");
         }
 
         /// <summary>
@@ -90,10 +89,13 @@ namespace Skywalker.Ddd.Infrastructure.Mongodb
             }
         }
 
-        public Task<TEntity> FindAsync([NotNull] Expression<Func<TEntity, bool>> predicate, CancellationToken cancellationToken = default)
+        public Task<TEntity?> FindAsync([NotNull] Expression<Func<TEntity, bool>> predicate, CancellationToken cancellationToken = default)
         {
-            TEntity entity = Entities.Where(predicate).FirstOrDefault();
-            return Task.FromResult(entity!);
+            return Task.Run(() =>
+            {
+                TEntity? entity = Entities.Where(predicate).FirstOrDefault();
+                return entity;
+            });
         }
 
         public async Task<long> GetCountAsync(CancellationToken cancellationToken = default)
@@ -141,13 +143,21 @@ namespace Skywalker.Ddd.Infrastructure.Mongodb
 
     public class SkywalkerMongoDatabase<TDbContext, TEntity, TKey> : SkywalkerMongoDatabase<TDbContext, TEntity>, ISkywalkerDatabase<TEntity, TKey> where TEntity : class, IEntity<TKey> where TDbContext : ISkywalkerContext
     {
-        public SkywalkerMongoDatabase(ISkywalkerContextProvider<TDbContext> dbContextProvider) : base(dbContextProvider)
+        private readonly IMongoDbRepositoryFilterer<TEntity, TKey> _repositoryFilterer;
+
+        public SkywalkerMongoDatabase(ISkywalkerContextProvider<TDbContext> dbContextProvider, IMongoDbRepositoryFilterer<TEntity, TKey> repositoryFilterer) : base(dbContextProvider)
         {
+            _repositoryFilterer = repositoryFilterer;
+        }
+
+        protected override FilterDefinition<TEntity> CreateEntityFilter(TEntity entity, bool withConcurrencyStamp = false, string? concurrencyStamp = null)
+        {
+            return _repositoryFilterer.CreateEntityFilter(entity, withConcurrencyStamp, concurrencyStamp);
         }
 
         public async Task DeleteAsync(TKey id, CancellationToken cancellationToken = default)
         {
-            TEntity entity = await FindAsync(predicate => predicate.Id!.Equals(id), cancellationToken);
+            TEntity? entity = await FindAsync(predicate => predicate.Id!.Equals(id), cancellationToken);
             if (entity == null)
             {
                 return;
@@ -165,14 +175,14 @@ namespace Skywalker.Ddd.Infrastructure.Mongodb
             throw new NotImplementedException();
         }
 
-        public Task<TEntity> FindAsync(TKey id, CancellationToken cancellationToken = default)
+        public Task<TEntity?> FindAsync(TKey id, CancellationToken cancellationToken = default)
         {
             return FindAsync(predicate => predicate.Id!.Equals(id), cancellationToken);
         }
 
         public async Task<TEntity> GetAsync(TKey id, CancellationToken cancellationToken = default)
         {
-            TEntity entity = await FindAsync(id, cancellationToken);
+            TEntity? entity = await FindAsync(id, cancellationToken);
             if (entity == null)
             {
                 throw new EntityNotFoundException();

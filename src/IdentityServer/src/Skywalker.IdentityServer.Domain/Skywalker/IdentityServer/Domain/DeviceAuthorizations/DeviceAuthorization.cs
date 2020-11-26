@@ -2,7 +2,7 @@
 using Skywalker.IdentityServer.Models;
 using System;
 
-namespace Skywalker.IdentityServer.Domain.DeviceCodes
+namespace Skywalker.IdentityServer.Domain.DeviceAuthorizations
 {
     public class DeviceAuthorization : AggregateRoot<Guid>
     {

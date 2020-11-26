@@ -15,7 +15,7 @@ namespace Skywalker.Ddd.Infrastructure.Abstractions
 
         IQueryable<TEntity> WithDetails(params Expression<Func<TEntity, object>>[] propertySelectors);
 
-        Task<TEntity> FindAsync([NotNull] Expression<Func<TEntity, bool>> predicate, CancellationToken cancellationToken = default);
+        Task<TEntity?> FindAsync([NotNull] Expression<Func<TEntity, bool>> predicate, CancellationToken cancellationToken = default);
 
         Task DeleteAsync([NotNull] Expression<Func<TEntity, bool>> predicate, CancellationToken cancellationToken = default);
 
@@ -47,7 +47,7 @@ namespace Skywalker.Ddd.Infrastructure.Abstractions
 
         Task EnsurePropertyLoadedAsync<TProperty>(TEntity entity, Expression<Func<TEntity, TProperty>> propertyExpression, CancellationToken cancellationToken) where TProperty : class;
 
-        Task<TEntity> FindAsync(TKey id, CancellationToken cancellationToken = default);
+        Task<TEntity?> FindAsync(TKey id, CancellationToken cancellationToken = default);
 
         Task<TEntity> GetAsync(TKey id, CancellationToken cancellationToken = default);
     }

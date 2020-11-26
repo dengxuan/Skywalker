@@ -11,6 +11,7 @@
 
     <ItemGroup>
     <ProjectReference Include="..\Skywalker.Lightning.Abstractions\Skywalker.Lightning.Abstractions.csproj" />
+    <ProjectReference Include="..\Skywalker.Lightning.Cluster.Abstractions\Skywalker.Lightning.Cluster.Abstractions.csproj" />
   </ItemGroup>
 
 </Project>

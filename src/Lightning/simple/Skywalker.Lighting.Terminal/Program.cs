@@ -24,11 +24,11 @@ namespace Skywalker.Lighting.Terminal
                 {
                 }).UseNetty().UseMessagePack();
             });
-            IServiceProvider sp = services.BuildServiceProvider();
-            ILightningTerminalFactory lightningTerminalFactory = sp.GetRequiredService<ILightningTerminalFactory>();
-            ILightningCluster lightningCluster = new LightningCluster("127.0.0.1", 30000, 10, false);
-            ILightningTerminal lightningTerminal = lightningTerminalFactory.CreateTerminalAsync(lightningCluster).GetAwaiter().GetResult();
-            LightningResponse lightningResponse = lightningTerminal.SendAsync(new LightningRequest("", new Dictionary<string, object>())).GetAwaiter().GetResult();
+            //IServiceProvider sp = services.BuildServiceProvider();
+            //ILightningTerminalFactory lightningTerminalFactory = sp.GetRequiredService<ILightningTerminalFactory>();
+            //ILightningCluster lightningCluster = new LightningCluster("127.0.0.1", 30000, 10, false);
+            //ILightningTerminal lightningTerminal = lightningTerminalFactory.CreateTerminalAsync(lightningCluster).GetAwaiter().GetResult();
+            //LightningResponse lightningResponse = lightningTerminal.SendAsync(new LightningRequest("", new Dictionary<string, object>())).GetAwaiter().GetResult();
         }
     }
 }

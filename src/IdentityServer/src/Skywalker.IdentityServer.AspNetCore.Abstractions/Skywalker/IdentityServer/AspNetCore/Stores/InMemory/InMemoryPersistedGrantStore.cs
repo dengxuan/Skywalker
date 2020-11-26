@@ -22,7 +22,7 @@ namespace Skywalker.IdentityServer.Stores
         /// <inheritdoc/>
         public Task StoreAsync(PersistedGrant grant)
         {
-            _repository[grant.Key] = grant;
+            _repository[grant.Id] = grant;
 
             return Task.CompletedTask;
         }
@@ -65,7 +65,7 @@ namespace Skywalker.IdentityServer.Stores
             
             foreach (var item in items)
             {
-                _repository.TryRemove(item.Key, out _);
+                _repository.TryRemove(item.Id, out _);
             }
 
             return Task.CompletedTask;

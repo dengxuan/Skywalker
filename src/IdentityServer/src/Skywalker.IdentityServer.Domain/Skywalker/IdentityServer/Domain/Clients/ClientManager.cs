@@ -21,7 +21,7 @@ namespace Skywalker.IdentityServer.Domain.Clients
         /// <returns>
         /// The client
         /// </returns>
-        public async Task<Client> FindClientByIdAsync(string clientId)
+        public async Task<Client?> FindClientByIdAsync(string clientId)
         {
             return await _clients.FindAsync(predicate => predicate.ClientId == clientId);
         }
