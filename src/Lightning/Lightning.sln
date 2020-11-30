@@ -25,9 +25,11 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Skywalker.Lighting.Server",
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Skywalker.Lighting.Terminal", "simple\Skywalker.Lighting.Terminal\Skywalker.Lighting.Terminal.csproj", "{1A4CDB07-AD49-48E5-81A0-6F028C155EF9}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Skywalker.Lightning.Cluster.Abstractions", "src\Skywalker.Lightning.Cluster.Abstractions\Skywalker.Lightning.Cluster.Abstractions.csproj", "{5C551062-F5C7-4378-9CCB-40DF956FB039}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Skywalker.Lightning.Cluster.Abstractions", "src\Skywalker.Lightning.Cluster.Abstractions\Skywalker.Lightning.Cluster.Abstractions.csproj", "{5C551062-F5C7-4378-9CCB-40DF956FB039}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Skywalker.Lightning.Cluster", "src\Skywalker.Lightning.Cluster\Skywalker.Lightning.Cluster.csproj", "{46340D2C-390A-4CA9-8997-4D531CB61CB3}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Skywalker.Lightning.Cluster", "src\Skywalker.Lightning.Cluster\Skywalker.Lightning.Cluster.csproj", "{46340D2C-390A-4CA9-8997-4D531CB61CB3}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Skywalker.Lightning.Cluster.Hosting", "src\Skywalker.Lightning.Cluster.Hosting\Skywalker.Lightning.Cluster.Hosting.csproj", "{7118CE55-1835-4BC2-BD71-43E69EBE204D}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -75,6 +77,10 @@ Global
 		{46340D2C-390A-4CA9-8997-4D531CB61CB3}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{46340D2C-390A-4CA9-8997-4D531CB61CB3}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{46340D2C-390A-4CA9-8997-4D531CB61CB3}.Release|Any CPU.Build.0 = Release|Any CPU
+		{7118CE55-1835-4BC2-BD71-43E69EBE204D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{7118CE55-1835-4BC2-BD71-43E69EBE204D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{7118CE55-1835-4BC2-BD71-43E69EBE204D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{7118CE55-1835-4BC2-BD71-43E69EBE204D}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -90,6 +96,7 @@ Global
 		{1A4CDB07-AD49-48E5-81A0-6F028C155EF9} = {7E964B47-4999-4467-A47A-B05D8098504D}
 		{5C551062-F5C7-4378-9CCB-40DF956FB039} = {8D9E120F-648D-4B67-84A7-4BFD65E5F3EA}
 		{46340D2C-390A-4CA9-8997-4D531CB61CB3} = {8D9E120F-648D-4B67-84A7-4BFD65E5F3EA}
+		{7118CE55-1835-4BC2-BD71-43E69EBE204D} = {8D9E120F-648D-4B67-84A7-4BFD65E5F3EA}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {6C7AA1E6-487A-4D89-875C-7DA1A9056987}

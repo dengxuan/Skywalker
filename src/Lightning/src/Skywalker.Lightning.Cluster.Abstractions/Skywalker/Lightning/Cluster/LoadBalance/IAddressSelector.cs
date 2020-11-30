@@ -1,4 +1,5 @@
 ﻿using Skywalker.Lightning.Cluster;
+using System.Threading.Tasks;
 
 namespace Skywalker.Lightning.LoadBalance
 {
@@ -11,6 +12,6 @@ namespace Skywalker.Lightning.LoadBalance
         ///     get server for specify route
         /// </summary>
         /// <returns></returns>
-        LightningAddress? GetAddressAsync(string serviceName);
+        Task<LightningAddress> GetAddressAsync(string serviceName);
     }
 }

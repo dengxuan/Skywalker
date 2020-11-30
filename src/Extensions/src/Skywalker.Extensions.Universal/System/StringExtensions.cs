@@ -1,10 +1,10 @@
 ﻿using Skywalker;
 using System;
 using System.Collections.Generic;
-using System.Collections.Specialized;
 using System.Diagnostics;
 using System.Globalization;
 using System.Linq;
+using System.Security.Cryptography;
 using System.Text;
 using System.Text.Encodings.Web;
 using System.Text.RegularExpressions;
@@ -16,6 +16,26 @@ namespace System
     /// </summary>
     public static class StringExtensions
     {
+
+        private static string ToHash(this string str, HashAlgorithm algorithm, Encoding encoding)
+        {
+            var inputBytes = encoding.GetBytes(str);
+            var hashBytes = algorithm.ComputeHash(inputBytes);
+
+            var sb = new StringBuilder();
+            foreach (var hashByte in hashBytes)
+            {
+                sb.Append(hashByte.ToString("X2"));
+            }
+
+            return sb.ToString();
+        }
+
+        private static bool VerifyHash(this string str, string hashedValue, HashAlgorithm algorithm, Encoding encoding)
+        {
+            return str.ToHash(algorithm, encoding).Equals(hashedValue);
+        }
+
         /// <summary>
         /// Adds a char to end of given string if it does not ends with the char.
         /// </summary>
@@ -765,6 +785,216 @@ namespace System
             }
 
             return "****" + last4Chars;
+        }
+
+        public static string ToMd5(this string str)
+        {
+            return str.ToMd5(Encoding.UTF8);
+        }
+
+        public static string ToMd5(this string str, Encoding encoding)
+        {
+            using var algorithm = MD5.Create();
+            return str.ToHash(algorithm, encoding);
+        }
+
+        public static bool VerifyMd5(this string str, string hashedValue)
+        {
+            return str.VerifyMd5(hashedValue);
+        }
+
+        public static bool VerifyMd5(this string str, string hashedValue, Encoding encoding)
+        {
+            using var algorithm = MD5.Create();
+            return str.VerifyHash(hashedValue, algorithm, encoding);
+        }
+
+        public static string ToSha1(this string str)
+        {
+            using var algorithm = SHA1.Create();
+            return str.ToHash(algorithm, Encoding.UTF8);
+        }
+
+        public static string ToSha1(this string str, Encoding encoding)
+        {
+            using var algorithm = SHA1.Create();
+            return str.ToHash(algorithm, encoding);
+        }
+
+        public static bool VerifySha1(this string str, string hashedValue)
+        {
+            return str.VerifyMd5(hashedValue);
+        }
+
+        public static bool VerifySha1(this string str, string hashedValue, Encoding encoding)
+        {
+            using var algorithm = SHA1.Create();
+            return str.VerifyHash(hashedValue, algorithm, encoding);
+        }
+
+        public static string ToSha256(this string str)
+        {
+            using var algorithm = SHA256.Create();
+            return str.ToHash(algorithm, Encoding.UTF8);
+        }
+
+        public static string ToSha256(this string str, Encoding encoding)
+        {
+            using var algorithm = SHA256.Create();
+            return str.ToHash(algorithm, encoding);
+        }
+
+        public static bool VerifySha256(this string str, string hashedValue)
+        {
+            return str.VerifyMd5(hashedValue);
+        }
+
+        public static bool VerifySha256(this string str, string hashedValue, Encoding encoding)
+        {
+            using var algorithm = SHA256.Create();
+            return str.VerifyHash(hashedValue, algorithm, encoding);
+        }
+
+        public static string ToSha384(this string str)
+        {
+            using var algorithm = SHA384.Create();
+            return str.ToHash(algorithm, Encoding.UTF8);
+        }
+
+        public static string ToSha384(this string str, Encoding encoding)
+        {
+            using var algorithm = SHA384.Create();
+            return str.ToHash(algorithm, encoding);
+        }
+
+        public static bool VerifySha384(this string str, string hashedValue)
+        {
+            return str.VerifyMd5(hashedValue);
+        }
+
+        public static bool VerifySha384(this string str, string hashedValue, Encoding encoding)
+        {
+            using var algorithm = SHA384.Create();
+            return str.VerifyHash(hashedValue, algorithm, encoding);
+        }
+
+        public static string ToSha512(this string str)
+        {
+            using var algorithm = SHA512.Create();
+            return str.ToHash(algorithm, Encoding.UTF8);
+        }
+
+        public static string ToSha512(this string str, Encoding encoding)
+        {
+            using var algorithm = SHA512.Create();
+            return str.ToHash(algorithm, encoding);
+        }
+
+        public static bool VerifySha512(this string str, string hashedValue)
+        {
+            return str.VerifyMd5(hashedValue);
+        }
+
+        public static bool VerifySha512(this string str, string hashedValue, Encoding encoding)
+        {
+            using var algorithm = SHA512.Create();
+            return str.VerifyHash(hashedValue, algorithm, encoding);
+        }
+
+        public static string ToHmac(this string str)
+        {
+            using var algorithm = HMAC.Create("HMACSHA1");
+            return str.ToHash(algorithm!, Encoding.UTF8);
+        }
+
+        public static string ToHmac(this string str, Encoding encoding)
+        {
+            using var algorithm = HMAC.Create("HMACSHA1");
+            return str.ToHash(algorithm!, encoding);
+        }
+
+        public static string ToHmacSha1(this string str)
+        {
+            using var algorithm = HMAC.Create("HMACSHA1");
+            return str.ToHash(algorithm!, Encoding.UTF8);
+        }
+
+        public static string ToHmacSha1(this string str, Encoding encoding)
+        {
+            using var algorithm = HMAC.Create("HMACSHA1");
+            return str.ToHash(algorithm!, encoding);
+        }
+
+        public static string ToHmacMd5(this string str)
+        {
+            using var algorithm = HMAC.Create("HMACMD5");
+            return str.ToHash(algorithm!, Encoding.UTF8);
+        }
+
+        public static string ToHmacMd5(this string str, Encoding encoding)
+        {
+            using var algorithm = HMAC.Create("HMACMD5");
+            return str.ToHash(algorithm!, encoding);
+        }
+
+        public static string ToHmacRipemd160(this string str)
+        {
+            using var algorithm = HMAC.Create("HMACRIPEMD160");
+            return str.ToHash(algorithm!, Encoding.UTF8);
+        }
+
+        public static string ToHmacRipemd160(this string str, Encoding encoding)
+        {
+            using var algorithm = HMAC.Create("HMACRIPEMD160");
+            return str.ToHash(algorithm!, encoding);
+        }
+
+        public static string ToHmacSha256(this string str)
+        {
+            using var algorithm = HMAC.Create("HMACSHA256");
+            return str.ToHash(algorithm!, Encoding.UTF8);
+        }
+
+        public static string ToHmacSha256(this string str, Encoding encoding)
+        {
+            using var algorithm = HMAC.Create("HMACSHA256");
+            return str.ToHash(algorithm!, encoding);
+        }
+
+        public static string ToHmacSha384(this string str)
+        {
+            using var algorithm = HMAC.Create("HMACSHA384");
+            return str.ToHash(algorithm!, Encoding.UTF8);
+        }
+
+        public static string ToHmacSha384(this string str, Encoding encoding)
+        {
+            using var algorithm = HMAC.Create("HMACSHA384");
+            return str.ToHash(algorithm!, encoding);
+        }
+
+        public static string ToHmacSha512(this string str)
+        {
+            using var algorithm = HMAC.Create("HMACSHA512");
+            return str.ToHash(algorithm!, Encoding.UTF8);
+        }
+
+        public static string ToHmacSha512(this string str, Encoding encoding)
+        {
+            using var algorithm = HMAC.Create("HMACSHA512");
+            return str.ToHash(algorithm!, encoding);
+        }
+
+        public static string ToMacTripleDES(this string str)
+        {
+            using var algorithm = HMAC.Create("MACTripleDES");
+            return str.ToHash(algorithm!, Encoding.UTF8);
+        }
+
+        public static string ToMacTripleDES(this string str, Encoding encoding)
+        {
+            using var algorithm = HMAC.Create("MACTripleDES");
+            return str.ToHash(algorithm!, encoding);
         }
     }
 }

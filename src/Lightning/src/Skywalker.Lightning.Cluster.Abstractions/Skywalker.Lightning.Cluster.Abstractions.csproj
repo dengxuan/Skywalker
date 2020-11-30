@@ -5,5 +5,9 @@
     <ItemGroup>
       <PackageReference Include="Microsoft.Extensions.Logging.Abstractions" Version="5.0.0" />
     </ItemGroup>
+    <ItemGroup>
+      <ProjectReference Include="..\Skywalker.Lightning.Abstractions\Skywalker.Lightning.Abstractions.csproj" />
+      <ProjectReference Include="..\Skywalker.Lightning.Server.Asbtractions\Skywalker.Lightning.Server.Asbtractions.csproj" />
+    </ItemGroup>
 
 </Project>

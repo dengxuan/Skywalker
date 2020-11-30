@@ -1,6 +1,6 @@
 ﻿using System.Net;
 
-namespace Skywalker.Lightning.Cluster
+namespace Skywalker.Lightning
 {
     public struct LightningAddress
     {

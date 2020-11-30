@@ -7,17 +7,16 @@ using DotNetty.Transport.Channels;
 using DotNetty.Transport.Channels.Sockets;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
-using Skywalker.Lightning.Terminal;
-using Skywalker.Lightning.Terminal.Abstractions;
-using Skywalker.Lightning.Cluster.Abstractions;
 using Skywalker.Lightning.Messaging;
 using Skywalker.Lightning.Serializer;
+using Skywalker.Lightning.Terminal;
+using Skywalker.Lightning.Terminal.Abstractions;
 using System;
 using System.Collections.Concurrent;
+using System.Net;
 using System.Net.Security;
 using System.Security.Cryptography.X509Certificates;
 using System.Threading.Tasks;
-using System.Net;
 
 namespace Skywalker.Lightning
 {
@@ -41,9 +40,11 @@ namespace Skywalker.Lightning
             //_x509Certificate2 = new X509Certificate2("./socialnetwork.pfx", "123456");
         }
 
-        public async Task<ILightningTerminal> CreateTerminalAsync(ILightningCluster cluster)
+        public async Task<ILightningTerminal> CreateTerminalAsync()
         {
-            ILightningTerminal LightningTerminal = await _lightningTerminals.GetOrAdd($"{cluster.Address}-{cluster.Port}", async key =>
+            IClusterNodeContainer nodeContainer = _serviceProvider.GetRequiredService<IClusterNodeContainer>();
+            IPEndPoint endPoint = nodeContainer.Get();
+            ILightningTerminal LightningTerminal = await _lightningTerminals.GetOrAdd($"cluster-node-{endPoint}", async key =>
             {
                 ILightningSerializer serializer = _serviceProvider.GetRequiredService<ILightningSerializer>();
                 var bootstrap = new Bootstrap();
@@ -68,12 +69,12 @@ namespace Skywalker.Lightning
 
                         pipeline.AddLast("echo", new TerminalMessageHandler(this));
                     }));
-                IChannel channel = await bootstrap.ConnectAsync(IPAddress.Parse(cluster.Address), cluster.Port);
+                IChannel channel = await bootstrap.ConnectAsync(endPoint);
 
                 var listener = new MessageListener();
                 channel.GetAttribute(MessageListenerAttributeKey).Set(listener);
                 ILogger<LightningTerminal> logger = _serviceProvider.GetRequiredService<ILogger<LightningTerminal>>();
-                return new LightningTerminal(channel, LoopGroup, listener, logger, $"{cluster.Address}:{cluster.Port}", serializer);
+                return new LightningTerminal(channel, LoopGroup, listener, logger, $"cluster-node-{endPoint}", serializer);
             });
             return LightningTerminal;
         }

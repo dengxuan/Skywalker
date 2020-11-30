@@ -1,5 +1,4 @@
 ﻿using DotNetty.Common.Utilities;
-using Skywalker.Lightning.Cluster.Abstractions;
 using System.Threading.Tasks;
 
 namespace Skywalker.Lightning.Terminal.Abstractions
@@ -8,7 +7,7 @@ namespace Skywalker.Lightning.Terminal.Abstractions
     {
         public AttributeKey<IMessageListener> MessageListenerAttributeKey { get; }
 
-        Task<ILightningTerminal> CreateTerminalAsync(ILightningCluster cluster);
+        Task<ILightningTerminal> CreateTerminalAsync();
 
         Task RemoveTerminal(string clusterId);
 
