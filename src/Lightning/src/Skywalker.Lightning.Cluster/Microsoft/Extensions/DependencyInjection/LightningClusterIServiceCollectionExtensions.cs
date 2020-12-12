@@ -1,5 +1,5 @@
-﻿using Skywalker.Lightning.Cluster;
-using Skywalker.Lightning.Cluster.Abstractions;
+﻿using Microsoft.Extensions.Hosting;
+using Skywalker.Lightning.Cluster;
 using Skywalker.Lightning.Cluster.Internal;
 using Skywalker.Lightning.LoadBalance;
 
@@ -13,7 +13,7 @@ namespace Microsoft.Extensions.DependencyInjection
             services.AddSingleton<ILightningDescriptorResolver>(descriptorContainer);
             services.AddSingleton<ILightningDescriptorContainer>(descriptorContainer);
 
-            services.AddSingleton<ILightningCluster, LightningCluster>();
+            services.AddSingleton<IHostedService, LightningCluster>();
             services.AddSingleton<IAddressSelector, PollingAddressSelector>();
             return services;
         }

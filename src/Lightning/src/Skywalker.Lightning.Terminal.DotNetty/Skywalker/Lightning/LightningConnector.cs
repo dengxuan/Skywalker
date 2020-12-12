@@ -1,10 +1,15 @@
 ﻿using DotNetty.Codecs;
 using DotNetty.Handlers.Logging;
+using DotNetty.Handlers.Timeout;
 using DotNetty.Handlers.Tls;
 using DotNetty.Transport.Bootstrapping;
 using DotNetty.Transport.Channels;
 using DotNetty.Transport.Channels.Sockets;
+using Skywalker.Lightning.Messaging;
 using Skywalker.Lightning.Terminal.Abstractions;
+using System;
+using System.Collections.Generic;
+using System.Net;
 using System.Net.Security;
 using System.Security.Cryptography.X509Certificates;
 using System.Threading.Tasks;
@@ -23,12 +28,13 @@ namespace Skywalker.Lightning
             _x509Certificate2 = null;
         }
 
-        public async Task Connect(string host, int port)
+        public async Task Connect(string ipAddress, int port)
         {
             var bootstrap = new Bootstrap();
             bootstrap
                 .Group(_loopGroup)
                 .Channel<TcpSocketChannel>()
+                .RemoteAddress(IPAddress.Parse(ipAddress), port)
                 .Option(ChannelOption.TcpNodelay, true)
                 .Handler(new ActionChannelInitializer<ISocketChannel>(channel =>
                 {
@@ -42,26 +48,12 @@ namespace Skywalker.Lightning
                     pipeline.AddLast(new LoggingHandler());
                     pipeline.AddLast("framing-enc", new LengthFieldPrepender(2));
                     pipeline.AddLast("framing-dec", new LengthFieldBasedFrameDecoder(ushort.MaxValue, 0, 2, 0, 2));
-
+                    pipeline.AddLast(new IdleStateHandler(0, 10, 0));
                     pipeline.AddLast("echo", new LightningConnectorMessageHandler());
                 }));
-            IChannel channel = await bootstrap.ConnectAsync(host, port);
-        }
-
-        internal class LightningConnectorMessageHandler : ChannelHandlerAdapter
-        {
-
-            public override void ChannelRead(IChannelHandlerContext context, object message)
-            {
-            }
-
-            public override void ChannelInactive(IChannelHandlerContext context)
-            {
-                //Logger.LogCritical("The status of Terminal {0} is unavailable,Please check the network and certificate!", context.Channel.RemoteAddress);
-                //var ctx = context.Channel.GetAttribute(TransportContextAttributeKey).Get();
-                //TerminalFactory.RemoveTerminal(ctx.Host, ctx.Port).GetAwaiter().GetResult();
-                base.ChannelInactive(context);
-            }
+            IChannel channel = await bootstrap.ConnectAsync();
+            await channel.WriteAndFlushAsync("123");
+            Console.Read();
         }
     }
 }

@@ -1,13 +1,12 @@
 ﻿using DotNetty.Codecs;
 using DotNetty.Handlers.Logging;
+using DotNetty.Handlers.Timeout;
 using DotNetty.Handlers.Tls;
 using DotNetty.Transport.Bootstrapping;
 using DotNetty.Transport.Channels;
 using DotNetty.Transport.Libuv;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
-using Skywalker.Lightning.Cluster.Abstractions;
-using Skywalker.Lightning.Cluster.Internal;
 using Skywalker.Lightning.Messaging;
 using Skywalker.Lightning.Serializer;
 using System;
@@ -18,7 +17,7 @@ using System.Threading.Tasks;
 
 namespace Skywalker.Lightning.Cluster
 {
-    public class LightningCluster : IHostedService, ILightningCluster
+    public class LightningCluster : IHostedService
     {
 
         protected IEventLoopGroup Boss { get; }
@@ -45,13 +44,13 @@ namespace Skywalker.Lightning.Cluster
         public void DeregisterAsync(string name, LightningAddress address)
         {
             _lightningDescriptorContainer.RemoveLightningAddress(name, address.IPEndPoint);
-            Console.WriteLine($"Remove {address.IPEndPoint}");
+            _logger.LogInformation($"Remove {address.IPEndPoint}");
         }
 
         public void RegisterAsync(string name, LightningAddress address)
         {
             _lightningDescriptorContainer.AddLightningAddress(name, address);
-            Console.WriteLine($"Add {address.IPEndPoint}");
+            _logger.LogInformation($"Add {address.IPEndPoint}");
         }
 
         public async Task StartAsync(CancellationToken cancellationToken)
@@ -73,6 +72,7 @@ namespace Skywalker.Lightning.Cluster
                          pipeline.AddLast("framing-dec", new LengthFieldBasedFrameDecoder(ushort.MaxValue, 0, 2, 0, 2));
                          pipeline.AddLast(new LightningMessageEncoder<LightningResponse>(_serializer));
                          pipeline.AddLast(new LightningMessageDecoder<LightningRequest>(_serializer));
+                         pipeline.AddLast(new IdleStateHandler(10, 0, 0));
                          pipeline.AddLast("Lightning-msg", new LightningServerMessageHandler(_descriptorResolver, _logger));
                      }));
 

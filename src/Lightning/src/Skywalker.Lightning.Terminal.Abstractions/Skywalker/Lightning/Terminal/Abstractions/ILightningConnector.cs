@@ -4,6 +4,6 @@ namespace Skywalker.Lightning.Terminal.Abstractions
 {
     public interface ILightningConnector
     {
-        Task Connect(string host, int port);
+        Task Connect(string ipAddress, int port);
     }
 }

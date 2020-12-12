@@ -9,5 +9,8 @@
       <ProjectReference Include="..\Skywalker.Lightning.Abstractions\Skywalker.Lightning.Abstractions.csproj" />
       <ProjectReference Include="..\Skywalker.Lightning.Server.Asbtractions\Skywalker.Lightning.Server.Asbtractions.csproj" />
     </ItemGroup>
+    <ItemGroup>
+      <Folder Include="Skywalker\Lightning\Cluster\Abstractions\" />
+    </ItemGroup>
 
 </Project>

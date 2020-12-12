@@ -44,7 +44,7 @@ namespace Skywalker.Lightning
         {
             IClusterNodeContainer nodeContainer = _serviceProvider.GetRequiredService<IClusterNodeContainer>();
             IPEndPoint endPoint = nodeContainer.Get();
-            ILightningTerminal LightningTerminal = await _lightningTerminals.GetOrAdd($"cluster-node-{endPoint}", async key =>
+            ILightningTerminal lightningTerminal = await _lightningTerminals.GetOrAdd($"cluster-node-{endPoint}", async key =>
             {
                 ILightningSerializer serializer = _serviceProvider.GetRequiredService<ILightningSerializer>();
                 var bootstrap = new Bootstrap();
@@ -76,7 +76,7 @@ namespace Skywalker.Lightning
                 ILogger<LightningTerminal> logger = _serviceProvider.GetRequiredService<ILogger<LightningTerminal>>();
                 return new LightningTerminal(channel, LoopGroup, listener, logger, $"cluster-node-{endPoint}", serializer);
             });
-            return LightningTerminal;
+            return lightningTerminal;
         }
 
         public async Task RemoveTerminal(string name)

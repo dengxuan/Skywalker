@@ -9,6 +9,7 @@ namespace Microsoft.Extensions.DependencyInjection
         {
             builder.Services.AddSingleton<ILightningTerminal, LightningTerminal>();
             builder.Services.AddSingleton<ILightningTerminalFactory, LightningTerminalFactory>();
+            builder.Services.AddSingleton<ILightningConnector, LightningConnector>();
             return builder;
         }
     }
