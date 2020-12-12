@@ -17,6 +17,10 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Skywalker.AspNetCore.Authen
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Skywalker.AspNetCore.Authentication", "src\Skywalker.AspNetCore.Authentication\Skywalker.AspNetCore.Authentication.csproj", "{4D05D3D8-886B-41B3-A8C9-4CECBBB8728C}"
 EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Skywalker.AspNetCore.Authentication.WebApi", "src\Skywalker.AspNetCore.Authentication.WebApi\Skywalker.AspNetCore.Authentication.WebApi.csproj", "{CD763566-94B8-4666-9FDE-88CC197CB79F}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Skywalker.AspNetCore.Authentication.Weixin", "src\Skywalker.AspNetCore.Authentication.Weixin\Skywalker.AspNetCore.Authentication.Weixin.csproj", "{6805BB30-3E58-411A-BD47-1CA0457C3F5B}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -47,6 +51,14 @@ Global
 		{4D05D3D8-886B-41B3-A8C9-4CECBBB8728C}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{4D05D3D8-886B-41B3-A8C9-4CECBBB8728C}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{4D05D3D8-886B-41B3-A8C9-4CECBBB8728C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{CD763566-94B8-4666-9FDE-88CC197CB79F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{CD763566-94B8-4666-9FDE-88CC197CB79F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{CD763566-94B8-4666-9FDE-88CC197CB79F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{CD763566-94B8-4666-9FDE-88CC197CB79F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{6805BB30-3E58-411A-BD47-1CA0457C3F5B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{6805BB30-3E58-411A-BD47-1CA0457C3F5B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{6805BB30-3E58-411A-BD47-1CA0457C3F5B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{6805BB30-3E58-411A-BD47-1CA0457C3F5B}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -58,6 +70,8 @@ Global
 		{20EA4CCD-0DDA-4A0F-87AA-C094CC708DD1} = {CED1BE47-3F8F-46A6-809E-2F0F3D82057B}
 		{387D6B83-1DDC-4809-B56A-FA179C2C8C9A} = {CED1BE47-3F8F-46A6-809E-2F0F3D82057B}
 		{4D05D3D8-886B-41B3-A8C9-4CECBBB8728C} = {CED1BE47-3F8F-46A6-809E-2F0F3D82057B}
+		{CD763566-94B8-4666-9FDE-88CC197CB79F} = {CED1BE47-3F8F-46A6-809E-2F0F3D82057B}
+		{6805BB30-3E58-411A-BD47-1CA0457C3F5B} = {CED1BE47-3F8F-46A6-809E-2F0F3D82057B}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {5146B914-D5DF-4972-880B-BA1C9AE0F90B}

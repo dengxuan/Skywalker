@@ -1,15 +1,9 @@
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using Microsoft.Extensions.Logging;
 using Microsoft.OpenApi.Models;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 
 namespace Skywalker.AspNetCore.Authentication.WebApi
 {
@@ -27,9 +21,7 @@ namespace Skywalker.AspNetCore.Authentication.WebApi
         {
 
             services.AddControllers();
-            services.AddAuthentication(SkywalkerAuthenticationDefaults.AuthenticationScheme).AddSkywalker(options=>
-            {
-            });
+            services.AddAuthentication(SkywalkerAuthenticationDefaults.AuthenticationScheme).AddSkywalker();
             services.AddSwaggerGen(c =>
             {
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "Skywalker.AspNetCore.Authentication.WebApi", Version = "v1" });
@@ -47,7 +39,7 @@ namespace Skywalker.AspNetCore.Authentication.WebApi
             }
 
             app.UseRouting();
-
+            app.UseAuthentication();
             app.UseAuthorization();
 
             app.UseEndpoints(endpoints =>

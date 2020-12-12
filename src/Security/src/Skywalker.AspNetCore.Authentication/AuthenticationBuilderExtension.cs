@@ -7,26 +7,25 @@ namespace Skywalker.AspNetCore.Authentication
 {
     public static class AuthenticationBuilderExtension
     {
-        public static AuthenticationBuilder AddAuthentication(this IServiceCollection services, string defaultScheme)
+        public static AuthenticationBuilder AddSkywalker(this AuthenticationBuilder builder)
         {
-            return services.AddAuthentication(defaultScheme, SkywalkerAuthenticationDefaults.AuthenticationScheme);
+            return builder.AddSkywalker(SkywalkerAuthenticationDefaults.AuthenticationScheme);
         }
 
-        public static AuthenticationBuilder AddAuthentication(this IServiceCollection services, string defaultScheme, string scheme)
+        public static AuthenticationBuilder AddSkywalker(this AuthenticationBuilder builder, string scheme)
         {
-            return services.AddAuthentication(scheme, defaultScheme, _ => { });
+            return builder.AddSkywalker(scheme, _ => { });
         }
 
-        public static AuthenticationBuilder AddAuthentication(this IServiceCollection services, string defaultScheme, Action<SkywalkerAuthenticationOptions> configureOptions)
+        public static AuthenticationBuilder AddSkywalker(this AuthenticationBuilder builder, Action<SkywalkerAuthenticationOptions> configureOptions)
         {
-            return services.AddAuthentication(SkywalkerAuthenticationDefaults.AuthenticationScheme, defaultScheme, configureOptions);
+            return builder.AddSkywalker(SkywalkerAuthenticationDefaults.AuthenticationScheme, configureOptions);
         }
 
-        public static AuthenticationBuilder AddAuthentication(this IServiceCollection services, string defaultScheme, string schema, Action<SkywalkerAuthenticationOptions> configureOptions)
+        public static AuthenticationBuilder AddSkywalker(this AuthenticationBuilder builder, string schema, Action<SkywalkerAuthenticationOptions> configureOptions)
         {
-            services.AddSingleton<ISkywalkerTokenValidator, SkywalkerTokenValidator>();
-            AuthenticationBuilder authenticationBuilder = services.AddAuthentication(defaultScheme);
-            return authenticationBuilder.AddScheme<SkywalkerAuthenticationOptions, SkywalkerAuthenticationHandler>(schema, configureOptions);
+            builder.Services.AddSingleton<ISkywalkerTokenValidator, SkywalkerTokenValidator>();
+            return builder.AddScheme<SkywalkerAuthenticationOptions, SkywalkerAuthenticationHandler>(schema, configureOptions);
         }
     }
 }

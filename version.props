@@ -1,6 +1,6 @@
 <Project>
     <PropertyGroup>
-        <VersionPrefix>1.0.8</VersionPrefix>
+        <VersionPrefix>1.0.9</VersionPrefix>
         <VersionSuffix></VersionSuffix>
         <BuildNumber Condition="'$(BuildNumber)' == ''">1</BuildNumber>
         <PackageVersion Condition="'$(IsFinalBuild)' == 'true' AND '$(VersionSuffix)' == 'rtm' ">$(VersionPrefix).$(BuildNumber)</PackageVersion>

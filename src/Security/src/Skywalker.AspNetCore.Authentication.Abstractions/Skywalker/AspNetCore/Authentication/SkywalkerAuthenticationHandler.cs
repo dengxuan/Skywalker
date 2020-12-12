@@ -1,13 +1,16 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IdentityModel.Tokens.Jwt;
 using System.Linq;
 using System.Security.Claims;
+using System.Text;
 using System.Text.Encodings.Web;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
+using Microsoft.IdentityModel.Tokens;
 using Microsoft.Net.Http.Headers;
 using Skywalker.AspNetCore.Authentication.Abstractions;
 
@@ -30,47 +33,30 @@ namespace Skywalker.AspNetCore.Authentication
 
         protected override Task<object> CreateEventsAsync() => Task.FromResult<object>(new SkywalkerAuthenticationEvents());
 
-        //protected override async Task HandleChallengeAsync(AuthenticationProperties properties)
-        //{
-        //    var authResult = await HandleAuthenticateOnceSafeAsync();
-        //    var eventContext = new SkywalkerChallengeContext(Context, Scheme, Options, properties)
-        //    {
-        //        AuthenticateFailure = authResult?.Failure
-        //    };
-        //                await Events.Challenge(eventContext!);
-        //    if (eventContext.Handled)
-        //    {
-        //        return;
-        //    }
-        //    Response.StatusCode = 401;
-        //    Response.Headers.Append(HeaderNames.WWWAuthenticate, Options.Challenge);
-        //}
-        protected override Task HandleForbiddenAsync(AuthenticationProperties properties)
+        protected override async Task HandleChallengeAsync(AuthenticationProperties properties)
         {
-            return base.HandleForbiddenAsync(properties);
+            var authResult = await HandleAuthenticateOnceSafeAsync();
+            var eventContext = new SkywalkerChallengeContext(Context, Scheme, Options, properties)
+            {
+                AuthenticateFailure = authResult?.Failure
+            };
+            await Events.Challenge(eventContext!);
+            if (eventContext.Handled)
+            {
+                return;
+            }
+            Response.StatusCode = 401;
+            Response.Headers.Append(HeaderNames.WWWAuthenticate, Options.Challenge);
         }
 
         protected override async Task<AuthenticateResult> HandleAuthenticateAsync()
         {
-            string? securityToken = null;
-
-            string authorization = Request.Headers[HeaderNames.Authorization];
-            if (string.IsNullOrEmpty(authorization))
+            string securityToken = Request.Headers[SkywalkerAuthenticationDefaults.AuthenticationScheme];
+            if (securityToken.IsNullOrEmpty())
             {
                 return AuthenticateResult.NoResult();
             }
-            if (authorization.StartsWith($"{SkywalkerAuthenticationDefaults.AuthenticationScheme} ", StringComparison.OrdinalIgnoreCase))
-            {
-                securityToken = authorization[$"{SkywalkerAuthenticationDefaults.AuthenticationScheme} ".Length..].Trim();
-            }
-
-            // If no token found, no further work possible
-            if (string.IsNullOrEmpty(securityToken))
-            {
-                return AuthenticateResult.NoResult();
-            }
-            ClaimsPrincipal claimsPrincipal = await _skywalkerTokenValidator.ValidateTokenAsync(securityToken!);
-            var ticket = new AuthenticationTicket(claimsPrincipal, Scheme.Name);
+            ClaimsPrincipal claimsPrincipal = await _skywalkerTokenValidator.ValidateTokenAsync(securityToken);
             var validatedContext = new SkywalkerTokenValidatedContext(Context, Scheme, Options)
             {
                 Principal = claimsPrincipal
@@ -79,16 +65,26 @@ namespace Skywalker.AspNetCore.Authentication
             return validatedContext.Result;
         }
 
-        public Task SignInAsync(ClaimsPrincipal user, AuthenticationProperties properties)
+        public Task SignInAsync(ClaimsPrincipal claimsPrincipal, AuthenticationProperties properties)
         {
-            AuthenticationProperties authenticationProperties = properties ?? new AuthenticationProperties();
-            string token = authenticationProperties.GetTokenValue("Auth");
-            throw new NotImplementedException();
+            var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes("secretKey123..jackyfei"));
+            var credentials = new SigningCredentials(key, SecurityAlgorithms.HmacSha256);
+
+            var token = new JwtSecurityToken(
+                "http://localhost:5000",
+                "http://localhost:5000",
+                claimsPrincipal.Claims,
+                null,
+                DateTime.Now.AddMinutes(120),
+                credentials
+            );
+            Response.WriteAsync(new JwtSecurityTokenHandler().WriteToken(token));
+            return Task.CompletedTask;
         }
 
         public Task SignOutAsync(AuthenticationProperties properties)
         {
-            throw new NotImplementedException();
+            return Task.CompletedTask;
         }
     }
 }
