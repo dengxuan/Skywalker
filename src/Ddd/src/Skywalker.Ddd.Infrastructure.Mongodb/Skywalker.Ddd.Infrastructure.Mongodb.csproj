@@ -1,12 +1,9 @@
-<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk">
 
     <Import Project="..\..\..\..\skywalker.props" />
     <Import Project="..\..\..\..\version.props" />
     <ItemGroup>
       <PackageReference Include="MongoDB.Driver" Version="2.11.4" />
-    </ItemGroup>
-    <ItemGroup>
-      <ProjectReference Include="..\Skywalker.Ddd.Infrastructure.Abstractions\Skywalker.Ddd.Infrastructure.Abstractions.csproj" />
     </ItemGroup>
 
 </Project>

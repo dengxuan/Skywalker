@@ -10,8 +10,6 @@ namespace Skywalker.Domain.Repositories
 {
     public interface IReadOnlyRepository<TEntity> : IRepository, IQueryable<TEntity> where TEntity : class, IEntity
     {
-        IQueryable<TEntity> WithDetails(params Expression<Func<TEntity, object>>[] propertySelectors);
-
         /// <summary>
         /// Gets a list of all the entities.
         /// </summary>
@@ -43,6 +41,6 @@ namespace Skywalker.Domain.Repositories
         /// <param name="id">Primary key of the entity to get</param>
         /// <param name="cancellationToken">A <see cref="T:System.Threading.CancellationToken" /> to observe while waiting for the task to complete.</param>
         /// <returns>Entity or null</returns>
-        Task<TEntity?> FindAsync(TKey id, CancellationToken cancellationToken = default);
+        Task<TEntity> FindAsync(TKey id, CancellationToken cancellationToken = default);
     }
 }

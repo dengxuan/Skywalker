@@ -29,15 +29,11 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Skywalker.Ddd.Application.C
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Skywalker.Ddd.Domain.Abstractions", "src\Ddd\src\Skywalker.Ddd.Domain.Abstractions\Skywalker.Ddd.Domain.Abstractions.csproj", "{1297888C-734A-4467-AA40-76DB501EB1FA}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Skywalker.Ddd.Infrastructure.Abstractions", "src\Ddd\src\Skywalker.Ddd.Infrastructure.Abstractions\Skywalker.Ddd.Infrastructure.Abstractions.csproj", "{EB7E5B6C-057E-4B45-965F-8EE87507A4C1}"
-EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Skywalker.Ddd.Infrastructure.EntityFrameworkCore", "src\Ddd\src\Skywalker.Ddd.Infrastructure.EntityFrameworkCore\Skywalker.Ddd.Infrastructure.EntityFrameworkCore.csproj", "{7A3A9638-F88B-44FA-9D14-A72E75BB0952}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Skywalker.Ddd.Infrastructure.EntityFrameworkCore.MySQL", "src\Ddd\src\Skywalker.Ddd.Infrastructure.EntityFrameworkCore.MySQL\Skywalker.Ddd.Infrastructure.EntityFrameworkCore.MySQL.csproj", "{8712F21F-B3D2-4C11-ABF3-ED68401F0530}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Skywalker.Ddd.Infrastructure.EntityFrameworkCore.SqlServer", "src\Ddd\src\Skywalker.Ddd.Infrastructure.EntityFrameworkCore.SqlServer\Skywalker.Ddd.Infrastructure.EntityFrameworkCore.SqlServer.csproj", "{B6403480-64C9-4954-9478-8F1EEEDE675A}"
-EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Skywalker.Ddd.Infrastructure.Mongodb", "src\Ddd\src\Skywalker.Ddd.Infrastructure.Mongodb\Skywalker.Ddd.Infrastructure.Mongodb.csproj", "{6EA653A4-8898-4968-855A-46B25B4D8884}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Skywalker.Ddd.Localization.Abstractions", "src\Ddd\src\Skywalker.Ddd.Localization.Abstractions\Skywalker.Ddd.Localization.Abstractions.csproj", "{1D3A8862-B168-402D-A885-3479C8CEEC3B}"
 EndProject
@@ -151,10 +147,6 @@ Global
 		{1297888C-734A-4467-AA40-76DB501EB1FA}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{1297888C-734A-4467-AA40-76DB501EB1FA}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{1297888C-734A-4467-AA40-76DB501EB1FA}.Release|Any CPU.Build.0 = Release|Any CPU
-		{EB7E5B6C-057E-4B45-965F-8EE87507A4C1}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{EB7E5B6C-057E-4B45-965F-8EE87507A4C1}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{EB7E5B6C-057E-4B45-965F-8EE87507A4C1}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{EB7E5B6C-057E-4B45-965F-8EE87507A4C1}.Release|Any CPU.Build.0 = Release|Any CPU
 		{7A3A9638-F88B-44FA-9D14-A72E75BB0952}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{7A3A9638-F88B-44FA-9D14-A72E75BB0952}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{7A3A9638-F88B-44FA-9D14-A72E75BB0952}.Release|Any CPU.ActiveCfg = Release|Any CPU
@@ -167,10 +159,6 @@ Global
 		{B6403480-64C9-4954-9478-8F1EEEDE675A}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{B6403480-64C9-4954-9478-8F1EEEDE675A}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{B6403480-64C9-4954-9478-8F1EEEDE675A}.Release|Any CPU.Build.0 = Release|Any CPU
-		{6EA653A4-8898-4968-855A-46B25B4D8884}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{6EA653A4-8898-4968-855A-46B25B4D8884}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{6EA653A4-8898-4968-855A-46B25B4D8884}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{6EA653A4-8898-4968-855A-46B25B4D8884}.Release|Any CPU.Build.0 = Release|Any CPU
 		{1D3A8862-B168-402D-A885-3479C8CEEC3B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{1D3A8862-B168-402D-A885-3479C8CEEC3B}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{1D3A8862-B168-402D-A885-3479C8CEEC3B}.Release|Any CPU.ActiveCfg = Release|Any CPU
@@ -324,11 +312,9 @@ Global
 		{2CB41281-1037-4C89-9A5E-D050BF21B432} = {19C431B6-A1FD-413A-9191-F207420DABA6}
 		{FF2E461B-804A-4D6C-9196-69E0EA960D4B} = {19C431B6-A1FD-413A-9191-F207420DABA6}
 		{1297888C-734A-4467-AA40-76DB501EB1FA} = {19C431B6-A1FD-413A-9191-F207420DABA6}
-		{EB7E5B6C-057E-4B45-965F-8EE87507A4C1} = {19C431B6-A1FD-413A-9191-F207420DABA6}
 		{7A3A9638-F88B-44FA-9D14-A72E75BB0952} = {19C431B6-A1FD-413A-9191-F207420DABA6}
 		{8712F21F-B3D2-4C11-ABF3-ED68401F0530} = {19C431B6-A1FD-413A-9191-F207420DABA6}
 		{B6403480-64C9-4954-9478-8F1EEEDE675A} = {19C431B6-A1FD-413A-9191-F207420DABA6}
-		{6EA653A4-8898-4968-855A-46B25B4D8884} = {19C431B6-A1FD-413A-9191-F207420DABA6}
 		{1D3A8862-B168-402D-A885-3479C8CEEC3B} = {19C431B6-A1FD-413A-9191-F207420DABA6}
 		{33FF6470-EF8D-459D-B81C-967A3EE09321} = {19C431B6-A1FD-413A-9191-F207420DABA6}
 		{2CD7849A-7DD3-42F9-A3F9-BB6D27DE65D8} = {19C431B6-A1FD-413A-9191-F207420DABA6}

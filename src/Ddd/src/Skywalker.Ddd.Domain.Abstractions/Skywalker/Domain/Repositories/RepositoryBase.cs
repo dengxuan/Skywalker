@@ -47,7 +47,7 @@ namespace Skywalker.Domain.Repositories
     {
         public abstract Task<TEntity> GetAsync(TKey id, CancellationToken cancellationToken = default);
 
-        public abstract Task<TEntity?> FindAsync(TKey id, CancellationToken cancellationToken = default);
+        public abstract Task<TEntity> FindAsync(TKey id, CancellationToken cancellationToken = default);
 
         public virtual async Task DeleteAsync(TKey id, CancellationToken cancellationToken = default)
         {

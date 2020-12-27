@@ -7,7 +7,7 @@
       <PackageReference Include="Microsoft.EntityFrameworkCore.Relational" Version="5.0.0" />
     </ItemGroup>
     <ItemGroup>
-      <ProjectReference Include="..\Skywalker.Ddd.Infrastructure.Abstractions\Skywalker.Ddd.Infrastructure.Abstractions.csproj" />
+      <ProjectReference Include="..\Skywalker.Ddd.Domain.Abstractions\Skywalker.Ddd.Domain.Abstractions.csproj" />
     </ItemGroup>
     
 </Project>

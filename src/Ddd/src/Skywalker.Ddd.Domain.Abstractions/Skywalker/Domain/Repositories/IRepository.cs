@@ -24,7 +24,7 @@ namespace Skywalker.Domain.Repositories
         /// </summary>
         /// <param name="predicate">A condition to find the entity</param>
         /// <param name="cancellationToken">A <see cref="T:System.Threading.CancellationToken" /> to observe while waiting for the task to complete.</param>
-        Task<TEntity?> FindAsync([NotNull] Expression<Func<TEntity, bool>> predicate, CancellationToken cancellationToken = default);
+        Task<TEntity> FindAsync([NotNull] Expression<Func<TEntity, bool>> predicate, CancellationToken cancellationToken = default);
 
         /// <summary>
         /// Get a single entity by the given <paramref name="predicate"/>.
