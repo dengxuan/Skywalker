@@ -16,7 +16,7 @@ namespace Skywalker.Domain.Repositories
     {
         public IDataFilter? DataFilter { get; set; }
 
-        public abstract Task<TEntity> FindAsync([NotNull] Expression<Func<TEntity, bool>> predicate, CancellationToken cancellationToken = default);
+        public abstract Task<TEntity?> FindAsync([NotNull] Expression<Func<TEntity, bool>> predicate, CancellationToken cancellationToken = default);
 
         public async Task<TEntity> GetAsync([NotNull] Expression<Func<TEntity, bool>> predicate, CancellationToken cancellationToken = default)
         {

@@ -148,7 +148,7 @@ namespace Skywalker.Ddd.Infrastructure.Domain.Repositories
             return Database.WithDetails(propertySelectors);
         }
 
-        public override Task<TEntity> FindAsync([NotNull] Expression<Func<TEntity, bool>> predicate, CancellationToken cancellationToken = default)
+        public override Task<TEntity?> FindAsync([NotNull] Expression<Func<TEntity, bool>> predicate, CancellationToken cancellationToken = default)
         {
             return Database.FindAsync(predicate, cancellationToken);
         }

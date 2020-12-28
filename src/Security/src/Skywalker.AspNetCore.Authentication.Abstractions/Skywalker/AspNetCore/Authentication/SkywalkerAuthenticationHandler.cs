@@ -1,10 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.IdentityModel.Tokens.Jwt;
+using System.IO;
 using System.Linq;
+using System.Runtime.Serialization.Formatters.Binary;
 using System.Security.Claims;
 using System.Text;
 using System.Text.Encodings.Web;
+using System.Text.Json;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Http;
@@ -51,12 +54,12 @@ namespace Skywalker.AspNetCore.Authentication
 
         protected override async Task<AuthenticateResult> HandleAuthenticateAsync()
         {
-            string securityToken = Request.Headers[SkywalkerAuthenticationDefaults.AuthenticationScheme];
-            if (securityToken.IsNullOrEmpty())
+            string skywalker = Request.Headers[SkywalkerAuthenticationDefaults.AuthenticationScheme];
+            if (string.IsNullOrEmpty(skywalker))
             {
                 return AuthenticateResult.NoResult();
             }
-            ClaimsPrincipal claimsPrincipal = await _skywalkerTokenValidator.ValidateTokenAsync(securityToken);
+            ClaimsPrincipal claimsPrincipal = await _skywalkerTokenValidator.ValidateTokenAsync(skywalker!);
             var validatedContext = new SkywalkerTokenValidatedContext(Context, Scheme, Options)
             {
                 Principal = claimsPrincipal
@@ -71,14 +74,14 @@ namespace Skywalker.AspNetCore.Authentication
             var credentials = new SigningCredentials(key, SecurityAlgorithms.HmacSha256);
 
             var token = new JwtSecurityToken(
-                "http://localhost:5000",
-                "http://localhost:5000",
+                Options.ClaimsIssuer,
+                Options.ClaimsIssuer,
                 claimsPrincipal.Claims,
                 null,
-                DateTime.Now.AddMinutes(120),
+                DateTime.MaxValue,
                 credentials
             );
-            Response.WriteAsync(new JwtSecurityTokenHandler().WriteToken(token));
+            Response.Headers.Append(SkywalkerAuthenticationDefaults.AuthenticationScheme, new JwtSecurityTokenHandler().WriteToken(token));
             return Task.CompletedTask;
         }
 

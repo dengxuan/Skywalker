@@ -37,7 +37,10 @@ namespace Skywalker.AspNetCore.Mvc.Models
             {
                 return CreateDetailedErrorInfoFromException(exception);
             }
-
+            if (exception is UserFriendlyException friendlyException)
+            {
+                return new Error(friendlyException.Code, friendlyException.Message);
+            }
             return new Error((int)HttpStatusCode.InternalServerError, "Internal Server Error");
         }
 
