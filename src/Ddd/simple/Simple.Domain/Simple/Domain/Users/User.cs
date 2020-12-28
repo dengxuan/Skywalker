@@ -1,4 +1,5 @@
 ﻿using Skywalker.Domain.Entities;
+using System.Collections.Generic;
 
 namespace Simple.Domain.Users
 {
@@ -6,6 +7,6 @@ namespace Simple.Domain.Users
     {
         public string? Name { get; set; }
 
-        public virtual UserValue UserValue { get; set; }
+        public List<UserOrder> UserOrders { get; set; }
     }
 }

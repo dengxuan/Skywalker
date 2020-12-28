@@ -1,16 +1,29 @@
-﻿using Skywalker;
+﻿using Microsoft.Extensions.DependencyInjection.Extensions;
+using Skywalker;
 using Skywalker.Ddd.Infrastructure;
+using Skywalker.Ddd.Infrastructure.EntityFrameworkCore;
+using Skywalker.Ddd.Infrastructure.EntityFrameworkCore.DbContextConfiguration;
+using Skywalker.EntityFrameworkCore;
 using System;
+using System.Collections.Generic;
 
 namespace Microsoft.Extensions.DependencyInjection
 {
     public static class InfrastructureSkywalkerBuilderExtensions
     {
-        public static SkywalkerBuilder AddInfrastructure(this SkywalkerBuilder builder, Action<SkywalkerRepositoryInitializer> optionsBuilder)
+        public static SkywalkerBuilder AddEntityFrameworkCore<TDbContext>(this SkywalkerBuilder skywalker, Action<SkywalkerDbContextOptions> optionsBuilder) where TDbContext : SkywalkerDbContext<TDbContext>
         {
-            SkywalkerRepositoryInitializer initializer = new SkywalkerRepositoryInitializer(builder.Services);
-            optionsBuilder?.Invoke(initializer);
-            return builder;
+            skywalker.Services.Configure(optionsBuilder);
+            skywalker.Services.AddMemoryCache();
+            skywalker.Services.TryAddTransient(SkywalkerDbContextOptionsFactory.Create<TDbContext>);
+            skywalker.Services.AddTransient(typeof(IDbContextProvider<>), typeof(DbContextProvider<>));
+            skywalker.Services.AddDbContext<TDbContext>();
+            skywalker.Services.AddDomainServices();
+            SkywalkerDbContextRegistrationOptions options = new SkywalkerDbContextRegistrationOptions(typeof(TDbContext), skywalker.Services);
+            SkywalkerRepositoryRegistrar repositoryRegistrar = new SkywalkerRepositoryRegistrar(options);
+            IEnumerable<Type> entityTypes = DbContextHelper.GetEntityTypes(typeof(TDbContext));
+            repositoryRegistrar.AddRepositories(entityTypes);
+            return skywalker;
         }
     }
 }

@@ -22,14 +22,11 @@ namespace ActivityCenter.DbMigrator
                            services.AddHostedService<DbMigratorHostedService>();
                            services.AddSkywalker(skywalker =>
                            {
-                               skywalker.AddInfrastructure(initializer =>
+                               skywalker.AddEntityFrameworkCore<SimpleMigrationsDbContext>(options =>
                                {
-                                   initializer.AddEntityFrameworkCore<SimpleMigrationsDbContext>(options =>
+                                   options.UseMySql(mysql =>
                                    {
-                                       options.UseMySql(mysql =>
-                                       {
-                                           mysql.MigrationsAssembly("Simple.EntityFrameworkCore.DbMigrations");
-                                       });
+                                       mysql.MigrationsAssembly("Simple.EntityFrameworkCore.DbMigrations");
                                    });
                                });
                            });

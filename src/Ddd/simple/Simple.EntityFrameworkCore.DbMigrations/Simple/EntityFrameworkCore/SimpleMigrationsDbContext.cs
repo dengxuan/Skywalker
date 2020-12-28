@@ -2,7 +2,6 @@
 using Simple.Domain.Users;
 using Simple.Infrastructure.EntityFrameworkCore;
 using Skywalker.Data;
-using Skywalker.Ddd.Infrastructure.Abstractions;
 using Skywalker.Ddd.Infrastructure.EntityFrameworkCore;
 
 namespace Simple.EntityFrameworkCore
@@ -16,7 +15,7 @@ namespace Simple.EntityFrameworkCore
 
         }
 
-        public IDataCollection<User>? Users { get => throw new System.NotImplementedException(); set => throw new System.NotImplementedException(); }
+        public DbSet<User>? Users { get => throw new System.NotImplementedException(); set => throw new System.NotImplementedException(); }
 
         protected override void OnModelCreating(ModelBuilder builder)
         {

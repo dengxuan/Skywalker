@@ -1,6 +1,7 @@
 using Microsoft.Extensions.DependencyInjection;
 using Skywalker.Domain.Entities;
 using System;
+using System.Diagnostics.CodeAnalysis;
 
 namespace Skywalker.DependencyInjection
 {
@@ -11,18 +12,21 @@ namespace Skywalker.DependencyInjection
     {
         public IServiceCollection Services { get; }
 
-        public Type DefaultRepositoryImplementationType { get; private set; }
+        public Type DefaultRepositoryDbContextType { get; protected set; }
 
-        public Type DefaultRepositoryImplementationTypeWithoutKey { get; private set; }
+        public Type? DefaultRepositoryImplementationType { get; private set; }
+
+        public Type? DefaultRepositoryImplementationTypeWithoutKey { get; private set; }
 
         public bool SpecifiedDefaultRepositoryTypes => DefaultRepositoryImplementationType != null && DefaultRepositoryImplementationTypeWithoutKey != null;
 
-        protected SkywalkerCommonDbContextRegistrationOptions(IServiceCollection services)
+        protected SkywalkerCommonDbContextRegistrationOptions(Type dbContextType, IServiceCollection services)
         {
             Services = services;
+            DefaultRepositoryDbContextType = dbContextType;
         }
 
-        public ISkywalkerCommonDbContextRegistrationOptionsBuilder SetDefaultRepositoryClasses(Type repositoryImplementationType, Type repositoryImplementationTypeWithoutKey)
+        public ISkywalkerCommonDbContextRegistrationOptionsBuilder SetDefaultRepositoryClasses([NotNull] Type repositoryImplementationType, [NotNull] Type repositoryImplementationTypeWithoutKey)
         {
             Check.NotNull(repositoryImplementationType, nameof(repositoryImplementationType));
             Check.NotNull(repositoryImplementationTypeWithoutKey, nameof(repositoryImplementationTypeWithoutKey));

@@ -210,9 +210,9 @@ namespace Skywalker.Ddd.Infrastructure.Domain.Repositories
                 await ApplySkywalkerConceptsForAddedEntityAsync(entity);
             }
 
-            await DbSet.AddRangeAsync(entities);
+            await DbSet.AddRangeAsync(entities, GetCancellationToken(cancellationToken));
 
-            return await DbContext.SaveChangesAsync();
+            return await DbContext.SaveChangesAsync(GetCancellationToken(cancellationToken));
         }
 
         public override async Task<TEntity> UpdateAsync([NotNull] TEntity entity, CancellationToken cancellationToken = default)
@@ -292,7 +292,7 @@ namespace Skywalker.Ddd.Infrastructure.Domain.Repositories
 
         public async Task<TEntity> FindAsync(TKey id, CancellationToken cancellationToken = default)
         {
-            return await DbSet.FindAsync(new object[] { id }, GetCancellationToken(cancellationToken));
+            return await DbSet.FindAsync(new object[] { id! }, GetCancellationToken(cancellationToken));
         }
 
         public async Task<TEntity> GetAsync(TKey id, CancellationToken cancellationToken = default)

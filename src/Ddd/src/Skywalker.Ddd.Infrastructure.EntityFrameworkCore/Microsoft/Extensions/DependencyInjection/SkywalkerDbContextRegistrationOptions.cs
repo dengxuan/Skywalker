@@ -10,7 +10,7 @@ namespace Microsoft.Extensions.DependencyInjection
     {
         public Dictionary<Type, object> EntityOptions { get; }
 
-        public SkywalkerDbContextRegistrationOptions(IServiceCollection services) : base(services)
+        public SkywalkerDbContextRegistrationOptions(Type dbContextType, IServiceCollection services) : base(dbContextType, services)
         {
             EntityOptions = new Dictionary<Type, object>();
         }

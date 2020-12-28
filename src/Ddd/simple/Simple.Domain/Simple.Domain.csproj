@@ -7,6 +7,10 @@
     <Import Project="..\..\..\..\skywalker.props" />
 
     <ItemGroup>
+      <PackageReference Include="Microsoft.EntityFrameworkCore" Version="5.0.1" />
+    </ItemGroup>
+
+    <ItemGroup>
       <ProjectReference Include="..\..\src\Skywalker.Ddd.Domain.Abstractions\Skywalker.Ddd.Domain.Abstractions.csproj" />
       <ProjectReference Include="..\Simple.Domain.Shared\Simple.Domain.Shared.csproj" />
     </ItemGroup>

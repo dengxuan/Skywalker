@@ -6,7 +6,6 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Simple.Application;
 using Simple.Infrastructure.EntityFrameworkCore;
-using Simple.Infrastructure.Mongodb;
 using Skywalker.Ddd.Infrastructure.EntityFrameworkCore;
 
 namespace Simple.WebApi.Hosting
@@ -32,13 +31,9 @@ namespace Simple.WebApi.Hosting
             });
             services.AddSkywalker(skywalker =>
             {
-                skywalker.AddInfrastructure(initializer =>
+                skywalker.AddEntityFrameworkCore<SimpleDbContext>(options =>
                 {
-                    initializer.AddEntityFrameworkCore<SimpleDbContext>(options =>
-                    {
-                        options.UseMySql();
-                    });
-                    initializer.AddMongodb<SimpleMongoContext>();
+                    options.UseMySql();
                 });
                 skywalker.AddAutoMapper(options =>
                 {

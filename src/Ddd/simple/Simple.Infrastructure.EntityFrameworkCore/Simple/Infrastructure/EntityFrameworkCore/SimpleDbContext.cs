@@ -2,7 +2,6 @@
 using Simple.Domain;
 using Simple.Domain.Users;
 using Skywalker.Data;
-using Skywalker.Ddd.Infrastructure.Abstractions;
 using Skywalker.Ddd.Infrastructure.EntityFrameworkCore;
 
 namespace Simple.Infrastructure.EntityFrameworkCore
@@ -21,7 +20,7 @@ namespace Simple.Infrastructure.EntityFrameworkCore
         /// <summary>
         /// 用户
         /// </summary>
-        public IDataCollection<User>? Users { get; set; }
+        public DbSet<User>? Users { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {

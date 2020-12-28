@@ -1,6 +1,7 @@
 ﻿using Skywalker.Domain.Entities;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using System.Linq.Expressions;
 using System.Threading;
@@ -10,6 +11,9 @@ namespace Skywalker.Domain.Repositories
 {
     public interface IReadOnlyRepository<TEntity> : IRepository, IQueryable<TEntity> where TEntity : class, IEntity
     {
+
+        IQueryable<TEntity> Include<TProperty>([NotNull] Expression<Func<TEntity, TProperty>> navigationPropertyPath);
+
         /// <summary>
         /// Gets a list of all the entities.
         /// </summary>

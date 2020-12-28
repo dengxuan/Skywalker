@@ -1,4 +1,5 @@
-﻿using Skywalker.Domain.Repositories;
+﻿using Microsoft.EntityFrameworkCore;
+using Skywalker.Domain.Repositories;
 using Skywalker.Domain.Services;
 using System;
 using System.Collections.Generic;
@@ -19,14 +20,14 @@ namespace Simple.Domain.Users
 
         public Task<List<User>> FindUsersAsync()
         {
-            return Task.FromResult(_users.WithDetails(propertySelector => propertySelector.UserValue).ToList());
+            return _users.Include(u => u.UserOrders).ThenInclude(prop=>prop.UserValue).ToListAsync();
         }
 
         public Task<List<User>> FindUsersAsync([NotNull] string name)
         {
             return Task.Run(() =>
             {
-                return _users.WithDetails(propertySelector => propertySelector.UserValue).Where(predicate => name.IsEmptyOrWhiteSpace() || predicate.Name.Contains(name)).ToList();
+                return _users.Where(predicate => name.IsEmptyOrWhiteSpace() || predicate.Name.Contains(name)).ToListAsync();
             });
         }
 
