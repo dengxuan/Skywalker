@@ -1,4 +1,4 @@
-using Skywalker.Ddd.Infrastructure.Abstractions;
+using Microsoft.EntityFrameworkCore;
 using Skywalker.Domain.Entities;
 using Skywalker.Reflection;
 using System;
@@ -14,7 +14,7 @@ namespace Skywalker.EntityFrameworkCore
         {
             return from property in dbContextType.GetTypeInfo().GetProperties(BindingFlags.Public | BindingFlags.Instance)
                    where
-                       ReflectionHelper.IsAssignableToGenericType(property.PropertyType,typeof(IDataCollection<>)) &&
+                       ReflectionHelper.IsAssignableToGenericType(property.PropertyType,typeof(DbSet<>)) &&
                        typeof(IEntity).IsAssignableFrom(property.PropertyType.GenericTypeArguments[0])
                    select property.PropertyType.GenericTypeArguments[0];
         }

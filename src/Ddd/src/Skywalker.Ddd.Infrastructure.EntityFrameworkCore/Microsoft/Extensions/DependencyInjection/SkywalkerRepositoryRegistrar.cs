@@ -15,12 +15,12 @@ namespace Microsoft.Extensions.DependencyInjection
 
         protected override Type GetRepositoryType(Type entityType)
         {
-            return typeof(SkywalkerRepository<>).MakeGenericType(entityType);
+            return typeof(SkywalkerRepository<,>).MakeGenericType(entityType);
         }
 
         protected override Type GetRepositoryType(Type entityType, Type primaryKeyType)
         {
-            return typeof(SkywalkerRepository<,>).MakeGenericType(entityType, primaryKeyType);
+            return typeof(SkywalkerRepository<,,>).MakeGenericType(entityType, primaryKeyType);
         }
     }
 }

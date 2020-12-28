@@ -3,11 +3,11 @@ using System;
 
 namespace Skywalker.Ddd.Infrastructure.EntityFrameworkCore
 {
-    public class SkywalkerDbContextProvider<TDbContext> : ISkywalkerDbContextProvider<TDbContext> where TDbContext : SkywalkerDbContext<TDbContext>
+    public class DbContextProvider<TDbContext> : IDbContextProvider<TDbContext> where TDbContext : ISkywalkerDbContext
     {
         private readonly IServiceProvider _serviceProvider;
 
-        public SkywalkerDbContextProvider(IServiceProvider serviceProvider)
+        public DbContextProvider(IServiceProvider serviceProvider)
         {
             _serviceProvider = serviceProvider;
         }

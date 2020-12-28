@@ -1,5 +1,6 @@
-﻿using Skywalker.Data;
-using Skywalker.Ddd.Infrastructure.Abstractions;
+﻿using Microsoft.EntityFrameworkCore;
+using Skywalker.Data;
+using Skywalker.Ddd.Infrastructure.EntityFrameworkCore;
 using Skywalker.Domain.Entities;
 using Skywalker.Domain.Entities.Events;
 using Skywalker.Domain.Repositories;
@@ -18,20 +19,29 @@ using System.Threading.Tasks;
 
 namespace Skywalker.Ddd.Infrastructure.Domain.Repositories
 {
-    public class SkywalkerRepository<TEntity> : RepositoryBase<TEntity>, IRepository<TEntity> where TEntity : class, IEntity
+    public class SkywalkerRepository<TDbContext, TEntity> : RepositoryBase<TEntity>, ISkywalkerRepository<TEntity>, IAsyncEnumerable<TEntity>
+        where TDbContext : ISkywalkerDbContext
+        where TEntity : class, IEntity
     {
         private readonly IClock _clock;
 
         private readonly IEventBus _eventBus;
 
         private readonly IGuidGenerator _guidGenerator;
-        protected ISkywalkerDatabase<TEntity> Database { get; }
+
+        private readonly IDbContextProvider<TDbContext> _dbContextProvider;
+
+        public virtual DbSet<TEntity> DbSet => DbContext.Set<TEntity>();
+
+        DbContext ISkywalkerRepository<TEntity>.DbContext => DbContext.As<DbContext>();
+
+        protected virtual TDbContext DbContext => _dbContextProvider.GetDbContext();
 
         protected IEntityChangeEventHelper EntityChangeEventHelper { get; set; }
 
-        public SkywalkerRepository(ISkywalkerDatabase<TEntity> database, IClock clock, IGuidGenerator guidGenerator)
+        public SkywalkerRepository(IDbContextProvider<TDbContext> dbContextProvider, IClock clock, IGuidGenerator guidGenerator)
         {
-            Database = database;
+            _dbContextProvider = dbContextProvider;
             _clock = clock;
             _guidGenerator = guidGenerator;
             _eventBus = NullEventBus.Instance;
@@ -140,22 +150,23 @@ namespace Skywalker.Ddd.Infrastructure.Domain.Repositories
 
         protected override IQueryable<TEntity> GetQueryable()
         {
-            return Database.Entities;
+            return DbSet.AsQueryable();
         }
 
-        public override IQueryable<TEntity> WithDetails(params Expression<Func<TEntity, object>>[] propertySelectors)
+        public override async Task<TEntity> FindAsync([NotNull] Expression<Func<TEntity, bool>> predicate, CancellationToken cancellationToken = default)
         {
-            return Database.WithDetails(propertySelectors);
-        }
-
-        public override Task<TEntity?> FindAsync([NotNull] Expression<Func<TEntity, bool>> predicate, CancellationToken cancellationToken = default)
-        {
-            return Database.FindAsync(predicate, cancellationToken);
+            return await DbSet.Where(predicate).SingleOrDefaultAsync(GetCancellationToken(cancellationToken));
         }
 
         public override async Task DeleteAsync([NotNull] Expression<Func<TEntity, bool>> predicate, CancellationToken cancellationToken = default)
         {
-            await Database.DeleteAsync(predicate, cancellationToken);
+            var entities = await GetQueryable().Where(predicate).ToListAsync(GetCancellationToken(cancellationToken));
+
+            foreach (var entity in entities)
+            {
+                DbSet.Remove(entity);
+            }
+            await DbContext.SaveChangesAsync(GetCancellationToken(cancellationToken));
         }
 
         public override async Task<TEntity> InsertAsync([NotNull] TEntity entity, CancellationToken cancellationToken = default)
@@ -174,7 +185,11 @@ namespace Skywalker.Ddd.Infrastructure.Domain.Repositories
 
             await ApplySkywalkerConceptsForAddedEntityAsync(entity);
 
-            return await Database.InsertAsync(entity, cancellationToken);
+            var savedEntity = DbSet.Add(entity).Entity;
+
+            await DbContext.SaveChangesAsync(GetCancellationToken(cancellationToken));
+
+            return savedEntity;
         }
 
         public override async Task<int> InsertAsync([NotNull] IEnumerable<TEntity> entities, CancellationToken cancellationToken = default)
@@ -194,36 +209,72 @@ namespace Skywalker.Ddd.Infrastructure.Domain.Repositories
                 SetConcurrencyStampIfNull(entity);
                 await ApplySkywalkerConceptsForAddedEntityAsync(entity);
             }
-            return await Database.InsertAsync(entities, cancellationToken);
+
+            await DbSet.AddRangeAsync(entities);
+
+            return await DbContext.SaveChangesAsync();
         }
 
         public override async Task<TEntity> UpdateAsync([NotNull] TEntity entity, CancellationToken cancellationToken = default)
         {
             await ApplySkywalkerConceptsForUpdatedEntityAsync(entity);
-            return await Database.UpdateAsync(entity, cancellationToken);
+
+            DbContext.Attach(entity);
+
+            var updatedEntity = DbContext.Update(entity).Entity;
+
+            await DbContext.SaveChangesAsync(GetCancellationToken(cancellationToken));
+
+            return updatedEntity;
         }
 
         public override async Task DeleteAsync([NotNull] TEntity entity, CancellationToken cancellationToken = default)
         {
             await ApplySkywalkerConceptsForDeletedEntityAsync(entity);
-            await Database.DeleteAsync(entity, cancellationToken);
+            DbSet.Remove(entity);
+            await DbContext.SaveChangesAsync(GetCancellationToken(cancellationToken));
         }
 
         public override Task<List<TEntity>> GetListAsync(CancellationToken cancellationToken = default)
         {
-            return Database.GetListAsync(cancellationToken);
+            return DbSet.ToListAsync(GetCancellationToken(cancellationToken));
         }
 
         public override Task<long> GetCountAsync(CancellationToken cancellationToken = default)
         {
-            return Database.GetCountAsync(cancellationToken);
+            return DbSet.LongCountAsync(GetCancellationToken(cancellationToken));
         }
+
+        public IAsyncEnumerator<TEntity> GetAsyncEnumerator(CancellationToken cancellationToken = default)
+        {
+            return DbSet.AsAsyncEnumerable().GetAsyncEnumerator(cancellationToken);
+        }
+
+
+        public async Task EnsureCollectionLoadedAsync<TProperty>(TEntity entity, Expression<Func<TEntity, IEnumerable<TProperty>>> propertyExpression, CancellationToken cancellationToken) where TProperty : class
+        {
+            await DbContext
+                .Entry(entity)
+                .Collection(propertyExpression)
+                .LoadAsync(GetCancellationToken(cancellationToken));
+        }
+
+        public async Task EnsurePropertyLoadedAsync<TProperty>(TEntity entity, Expression<Func<TEntity, TProperty>> propertyExpression, CancellationToken cancellationToken) where TProperty : class
+        {
+            await DbContext
+                .Entry(entity)
+                .Reference(propertyExpression)
+                .LoadAsync(GetCancellationToken(cancellationToken));
+        }
+
     }
 
-    public class SkywalkerRepository<TEntity, TKey> : SkywalkerRepository<TEntity>, IRepository<TEntity, TKey>, ISupportsExplicitLoading<TEntity, TKey> where TEntity : class, IEntity<TKey>
+    public class SkywalkerRepository<TDbContext, TEntity, TKey> : SkywalkerRepository<TDbContext, TEntity>, ISkywalkerRepository<TEntity, TKey>, ISupportsExplicitLoading<TEntity, TKey>
+        where TDbContext : ISkywalkerDbContext
+        where TEntity : class, IEntity<TKey>
     {
-        public SkywalkerRepository(ISkywalkerDatabase<TEntity, TKey> database, IClock clock, IGuidGenerator guidGenerator)
-            : base(database, clock, guidGenerator)
+        public SkywalkerRepository(IDbContextProvider<TDbContext> dbContextProvider, IClock clock, IGuidGenerator guidGenerator)
+            : base(dbContextProvider, clock, guidGenerator)
         {
 
         }
@@ -236,22 +287,12 @@ namespace Skywalker.Ddd.Infrastructure.Domain.Repositories
                 return;
             }
             await ApplySkywalkerConceptsForDeletedEntityAsync(entity);
-            await Database.DeleteAsync(entity, GetCancellationToken(cancellationToken));
+            await DeleteAsync(entity, GetCancellationToken(cancellationToken));
         }
 
-        public Task EnsureCollectionLoadedAsync<TProperty>(TEntity entity, Expression<Func<TEntity, IEnumerable<TProperty>>> propertyExpression, CancellationToken cancellationToken) where TProperty : class
+        public async Task<TEntity> FindAsync(TKey id, CancellationToken cancellationToken = default)
         {
-            throw new NotImplementedException();
-        }
-
-        public Task EnsurePropertyLoadedAsync<TProperty>(TEntity entity, Expression<Func<TEntity, TProperty>> propertyExpression, CancellationToken cancellationToken) where TProperty : class
-        {
-            throw new NotImplementedException();
-        }
-
-        public Task<TEntity?> FindAsync(TKey id, CancellationToken cancellationToken = default)
-        {
-            return Task.FromResult(Database.Entities.FirstOrDefault(predicate => predicate.Id!.Equals(id)));
+            return await DbSet.FindAsync(new object[] { id }, GetCancellationToken(cancellationToken));
         }
 
         public async Task<TEntity> GetAsync(TKey id, CancellationToken cancellationToken = default)

@@ -96,28 +96,18 @@ namespace Skywalker.Ddd.Infrastructure.EntityFrameworkCore
 
         protected virtual EntityFrameworkCoreDatabaseProvider? GetDatabaseProviderOrNull(ModelBuilder modelBuilder)
         {
-            switch (Database.ProviderName)
+            return Database.ProviderName switch
             {
-                case "Microsoft.EntityFrameworkCore.SqlServer":
-                    return EntityFrameworkCoreDatabaseProvider.SqlServer;
-                case "Npgsql.EntityFrameworkCore.PostgreSQL":
-                    return EntityFrameworkCoreDatabaseProvider.PostgreSql;
-                case "Pomelo.EntityFrameworkCore.MySql":
-                    return EntityFrameworkCoreDatabaseProvider.MySql;
-                case "Oracle.EntityFrameworkCore":
-                case "Devart.Data.Oracle.Entity.EFCore":
-                    return EntityFrameworkCoreDatabaseProvider.Oracle;
-                case "Microsoft.EntityFrameworkCore.Sqlite":
-                    return EntityFrameworkCoreDatabaseProvider.Sqlite;
-                case "Microsoft.EntityFrameworkCore.InMemory":
-                    return EntityFrameworkCoreDatabaseProvider.InMemory;
-                case "FirebirdSql.EntityFrameworkCore.Firebird":
-                    return EntityFrameworkCoreDatabaseProvider.Firebird;
-                case "Microsoft.EntityFrameworkCore.Cosmos":
-                    return EntityFrameworkCoreDatabaseProvider.Cosmos;
-                default:
-                    return null;
-            }
+                "Microsoft.EntityFrameworkCore.SqlServer" => EntityFrameworkCoreDatabaseProvider.SqlServer,
+                "Npgsql.EntityFrameworkCore.PostgreSQL" => EntityFrameworkCoreDatabaseProvider.PostgreSql,
+                "Pomelo.EntityFrameworkCore.MySql" => EntityFrameworkCoreDatabaseProvider.MySql,
+                "Oracle.EntityFrameworkCore" or "Devart.Data.Oracle.Entity.EFCore" => EntityFrameworkCoreDatabaseProvider.Oracle,
+                "Microsoft.EntityFrameworkCore.Sqlite" => EntityFrameworkCoreDatabaseProvider.Sqlite,
+                "Microsoft.EntityFrameworkCore.InMemory" => EntityFrameworkCoreDatabaseProvider.InMemory,
+                "FirebirdSql.EntityFrameworkCore.Firebird" => EntityFrameworkCoreDatabaseProvider.Firebird,
+                "Microsoft.EntityFrameworkCore.Cosmos" => EntityFrameworkCoreDatabaseProvider.Cosmos,
+                _ => null,
+            };
         }
 
         public override async Task<int> SaveChangesAsync(bool acceptAllChangesOnSuccess, CancellationToken cancellationToken = default)
@@ -125,7 +115,7 @@ namespace Skywalker.Ddd.Infrastructure.EntityFrameworkCore
             try
             {
 
-                var changeReport = ApplyAbpConcepts();
+                var changeReport = ApplySkywalkerConcepts();
 
                 var result = await base.SaveChangesAsync(acceptAllChangesOnSuccess, cancellationToken);
 
@@ -158,11 +148,11 @@ namespace Skywalker.Ddd.Infrastructure.EntityFrameworkCore
             ChangeTracker.Tracked += ChangeTracker_Tracked;
         }
 
-        protected virtual void ChangeTracker_Tracked(object sender, EntityTrackedEventArgs e)
+        protected virtual void ChangeTracker_Tracked(object? sender, EntityTrackedEventArgs e)
         {
         }
 
-        protected virtual EntityChangeReport ApplyAbpConcepts()
+        protected virtual EntityChangeReport ApplySkywalkerConcepts()
         {
             var changeReport = new EntityChangeReport();
 
@@ -228,7 +218,7 @@ namespace Skywalker.Ddd.Infrastructure.EntityFrameworkCore
 
         protected virtual void AddDomainEvents(EntityChangeReport changeReport, object entityAsObj)
         {
-            if (!(entityAsObj is IGeneratesDomainEvents generatesDomainEventsEntity))
+            if (entityAsObj is not IGeneratesDomainEvents generatesDomainEventsEntity)
             {
                 return;
             }
@@ -243,7 +233,7 @@ namespace Skywalker.Ddd.Infrastructure.EntityFrameworkCore
 
         protected virtual void UpdateConcurrencyStamp(EntityEntry entry)
         {
-            if (!(entry.Entity is IHasConcurrencyStamp entity))
+            if (entry.Entity is not IHasConcurrencyStamp entity)
             {
                 return;
             }
@@ -351,10 +341,10 @@ namespace Skywalker.Ddd.Infrastructure.EntityFrameworkCore
             return typeof(IDeleteable).IsAssignableFrom(typeof(TEntity));
         }
 
-        protected virtual Expression<Func<TEntity, bool>> CreateFilterExpression<TEntity>()
+        protected virtual Expression<Func<TEntity, bool>>? CreateFilterExpression<TEntity>()
             where TEntity : class
         {
-            Expression<Func<TEntity, bool>> expression = null;
+            Expression<Func<TEntity, bool>>? expression = null;
 
             if (typeof(IDeleteable).IsAssignableFrom(typeof(TEntity)))
             {
@@ -374,7 +364,7 @@ namespace Skywalker.Ddd.Infrastructure.EntityFrameworkCore
             var rightVisitor = new ReplaceExpressionVisitor(expression2.Parameters[0], parameter);
             var right = rightVisitor.Visit(expression2.Body);
 
-            return Expression.Lambda<Func<T, bool>>(Expression.AndAlso(left, right), parameter);
+            return Expression.Lambda<Func<T, bool>>(Expression.AndAlso(left!, right!), parameter);
         }
 
         class ReplaceExpressionVisitor : ExpressionVisitor
@@ -388,7 +378,7 @@ namespace Skywalker.Ddd.Infrastructure.EntityFrameworkCore
                 _newValue = newValue;
             }
 
-            public override Expression Visit(Expression node)
+            public override Expression? Visit(Expression? node)
             {
                 if (node == _oldValue)
                 {
