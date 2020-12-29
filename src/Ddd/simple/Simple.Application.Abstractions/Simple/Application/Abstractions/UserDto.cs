@@ -1,4 +1,5 @@
 ﻿using Skywalker.Application.Dtos.Contracts;
+using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 
 namespace Simple.Application.Abstractions
@@ -8,12 +9,20 @@ namespace Simple.Application.Abstractions
         [NotNull]
         public string Name { get; set; }
 
-        public UserValueDto UserValue { get; set; }
+        public List<UserOrderDto> UserOrders { get; set; }
 
         public UserDto([NotNull] string name)
         {
             Name = name;
         }
+    }
+
+    public class UserOrderDto:EntityDto<int>
+    {
+        public int Amount { get; set; }
+
+        public List<UserValueDto> UserValues { get; set; }
+
     }
 
     public class UserValueDto : EntityDto

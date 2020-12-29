@@ -2,6 +2,7 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Simple.EntityFrameworkCore;
 using Skywalker.Ddd.EntityFrameworkCore;
@@ -9,9 +10,10 @@ using Skywalker.Ddd.EntityFrameworkCore;
 namespace Simple.EntityFrameworkCore.DbMigrations.Migrations
 {
     [DbContext(typeof(SimpleMigrationsDbContext))]
-    partial class SimpleMigrationsDbContextModelSnapshot : ModelSnapshot
+    [Migration("20201229133213_V1")]
+    partial class V1
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -68,9 +70,14 @@ namespace Simple.EntityFrameworkCore.DbMigrations.Migrations
                     b.Property<short?>("UserId")
                         .HasColumnType("smallint");
 
+                    b.Property<int?>("UserValueId")
+                        .HasColumnType("int");
+
                     b.HasKey("Id");
 
                     b.HasIndex("UserId");
+
+                    b.HasIndex("UserValueId");
 
                     b.ToTable("UserOrder");
                 });
@@ -92,16 +99,11 @@ namespace Simple.EntityFrameworkCore.DbMigrations.Migrations
                         .HasColumnType("datetime(6)")
                         .HasColumnName("CreationTime");
 
-                    b.Property<int?>("UserOrderId")
-                        .HasColumnType("int");
-
                     b.Property<string>("Value")
                         .IsRequired()
                         .HasColumnType("longtext CHARACTER SET utf8mb4");
 
                     b.HasKey("Id");
-
-                    b.HasIndex("UserOrderId");
 
                     b.ToTable("SmpUserValues");
                 });
@@ -111,23 +113,17 @@ namespace Simple.EntityFrameworkCore.DbMigrations.Migrations
                     b.HasOne("Simple.Domain.Users.User", null)
                         .WithMany("UserOrders")
                         .HasForeignKey("UserId");
-                });
 
-            modelBuilder.Entity("Simple.Domain.Users.UserValue", b =>
-                {
-                    b.HasOne("Simple.Domain.Users.UserOrder", null)
-                        .WithMany("UserValues")
-                        .HasForeignKey("UserOrderId");
+                    b.HasOne("Simple.Domain.Users.UserValue", "UserValue")
+                        .WithMany()
+                        .HasForeignKey("UserValueId");
+
+                    b.Navigation("UserValue");
                 });
 
             modelBuilder.Entity("Simple.Domain.Users.User", b =>
                 {
                     b.Navigation("UserOrders");
-                });
-
-            modelBuilder.Entity("Simple.Domain.Users.UserOrder", b =>
-                {
-                    b.Navigation("UserValues");
                 });
 #pragma warning restore 612, 618
         }

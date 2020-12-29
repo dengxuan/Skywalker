@@ -14,7 +14,7 @@ namespace Simple.EntityFrameworkCore
 
         }
 
-        public DbSet<User>? Users { get => throw new System.NotImplementedException(); set => throw new System.NotImplementedException(); }
+        public DbSet<User>? Users { get; set; }
 
         protected override void OnModelCreating(ModelBuilder builder)
         {

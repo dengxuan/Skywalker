@@ -20,7 +20,7 @@ namespace Simple.Domain.Users
 
         public Task<List<User>> FindUsersAsync()
         {
-            return _users.Include(u => u.UserOrders.Where(predicate => predicate.Amount > 10)).ThenInclude(prop => prop.UserValue).AsSplitQuery().ToListAsync();
+            return _users.Include(prop => prop.UserOrders).ThenInclude(p=>p.UserValues).AsSplitQuery().ToListAsync();
         }
 
         public Task<List<User>> FindUsersAsync([NotNull] string name)

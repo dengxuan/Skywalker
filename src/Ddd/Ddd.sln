@@ -61,6 +61,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Skywalker.Ddd.UnitOfWork.Ab
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Skywalker.Aspects", "..\Aspects\src\Skywalker.Aspects\Skywalker.Aspects.csproj", "{2CE0B0A0-E589-4646-A5E5-00C261D17259}"
 EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Skywalker.Aspects.Abstractions", "..\Aspects\src\Skywalker.Aspects.Abstractions\Skywalker.Aspects.Abstractions.csproj", "{169DA238-C766-46DE-AE27-7EF0611D7366}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -395,6 +397,18 @@ Global
 		{2CE0B0A0-E589-4646-A5E5-00C261D17259}.Release|x64.Build.0 = Release|Any CPU
 		{2CE0B0A0-E589-4646-A5E5-00C261D17259}.Release|x86.ActiveCfg = Release|Any CPU
 		{2CE0B0A0-E589-4646-A5E5-00C261D17259}.Release|x86.Build.0 = Release|Any CPU
+		{169DA238-C766-46DE-AE27-7EF0611D7366}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{169DA238-C766-46DE-AE27-7EF0611D7366}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{169DA238-C766-46DE-AE27-7EF0611D7366}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{169DA238-C766-46DE-AE27-7EF0611D7366}.Debug|x64.Build.0 = Debug|Any CPU
+		{169DA238-C766-46DE-AE27-7EF0611D7366}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{169DA238-C766-46DE-AE27-7EF0611D7366}.Debug|x86.Build.0 = Debug|Any CPU
+		{169DA238-C766-46DE-AE27-7EF0611D7366}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{169DA238-C766-46DE-AE27-7EF0611D7366}.Release|Any CPU.Build.0 = Release|Any CPU
+		{169DA238-C766-46DE-AE27-7EF0611D7366}.Release|x64.ActiveCfg = Release|Any CPU
+		{169DA238-C766-46DE-AE27-7EF0611D7366}.Release|x64.Build.0 = Release|Any CPU
+		{169DA238-C766-46DE-AE27-7EF0611D7366}.Release|x86.ActiveCfg = Release|Any CPU
+		{169DA238-C766-46DE-AE27-7EF0611D7366}.Release|x86.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

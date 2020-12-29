@@ -1,5 +1,6 @@
 ﻿using Skywalker.Domain.Entities;
 using System;
+using System.Collections.Generic;
 
 namespace Simple.Domain.Users
 {
@@ -12,6 +13,6 @@ namespace Simple.Domain.Users
     {
         public int Amount { get; set; }
 
-        public UserValue UserValue { get; set; }
+        public List<UserValue> UserValues { get; set; }
     }
 }

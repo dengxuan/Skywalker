@@ -10,6 +10,7 @@ namespace Simple.Application
         {
             CreateMap<User, UserDto>();
             CreateMap<UserValue, UserValueDto>();
+            CreateMap<UserOrder, UserOrderDto>();
         }
     }
 }
