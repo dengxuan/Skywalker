@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
+using Skywalker.Aspects;
 
 namespace Simple.WebApi.Hosting
 {
@@ -14,6 +15,7 @@ namespace Simple.WebApi.Hosting
         public static IHostBuilder CreateHostBuilder(string[] args)
         {
             return Host.CreateDefaultBuilder(args)
+                       .UseServiceProviderFactory(new AspectsServiceProviderFactory())
                        .ConfigureWebHostDefaults(webBuilder =>
                        {
                            webBuilder.ConfigureLogging(configureLogging =>

@@ -10,7 +10,7 @@ namespace Simple.Application
 {
     public class SimpleUserApplicationService : SimpleApplicationService, ISimpleUserApplicationService
     {
-        private UserManager _userManager => LazyLoader.GetRequiredService<UserManager>();
+        private IUserManager _userManager => LazyLoader.GetRequiredService<IUserManager>();
 
         public SimpleUserApplicationService(ILazyLoader lazyLoader) : base(lazyLoader)
         {

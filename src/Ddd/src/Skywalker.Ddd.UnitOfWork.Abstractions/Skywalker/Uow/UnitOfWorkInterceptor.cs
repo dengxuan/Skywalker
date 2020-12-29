@@ -2,7 +2,6 @@
 using Microsoft.Extensions.Options;
 using Skywalker.Aspects.DynamicProxy;
 using Skywalker.Aspects.Interceptors;
-using Skywalker.DependencyInjection;
 using Skywalker.Uow.Abstractions;
 using System;
 using System.Diagnostics.CodeAnalysis;

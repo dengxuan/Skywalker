@@ -1,5 +1,5 @@
-﻿using Microsoft.Extensions.Options;
-using Skywalker.DependencyInjection;
+﻿using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Options;
 using Skywalker.Uow.Abstractions;
 using System;
 using System.Collections.Generic;

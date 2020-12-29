@@ -1,11 +1,6 @@
 ﻿using AutoMapper;
 using Simple.Application.Abstractions;
 using Simple.Domain.Users;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Simple.Application
 {
@@ -14,7 +9,6 @@ namespace Simple.Application
         public SimpleApplicationAutoMapperProfile()
         {
             CreateMap<User, UserDto>();
-            CreateMap<MongoUser, UserDto>();
             CreateMap<UserValue, UserValueDto>();
         }
     }

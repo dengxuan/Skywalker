@@ -1,4 +1,4 @@
-﻿using Skywalker.DependencyInjection;
+﻿using Microsoft.Extensions.DependencyInjection;
 using Skywalker.Uow.Abstractions;
 using System.Threading;
 

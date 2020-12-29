@@ -5,6 +5,7 @@
     <Import Project="..\..\..\..\skywalker.props" />
     <Import Project="..\..\..\..\version.props" />
     <ItemGroup>
+      <ProjectReference Include="..\..\..\Extensions\src\Skywalker.Extensions.ExceptionHandling\Skywalker.Extensions.ExceptionHandling.csproj" />
       <ProjectReference Include="..\Skywalker.Ddd\Skywalker.Ddd.csproj" />
     </ItemGroup>
 

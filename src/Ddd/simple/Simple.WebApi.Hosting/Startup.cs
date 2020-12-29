@@ -5,8 +5,10 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Simple.Application;
-using Simple.Infrastructure.EntityFrameworkCore;
-using Skywalker.Ddd.Infrastructure.EntityFrameworkCore;
+using Simple.EntityFrameworkCore;
+using Skywalker.Ddd.EntityFrameworkCore;
+using Skywalker.Uow;
+using System;
 
 namespace Simple.WebApi.Hosting
 {
@@ -40,8 +42,13 @@ namespace Simple.WebApi.Hosting
                     options.AddProfile<SimpleApplicationAutoMapperProfile>();
                 });
             });
+            services.AddAspects(options=>
+            {
+                options.Use(new UnitOfWorkProvider());
+            });
             services.AddWebApiResponseWrapper();
         }
+
 
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {

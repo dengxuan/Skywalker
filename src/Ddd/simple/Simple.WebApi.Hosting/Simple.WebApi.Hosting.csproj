@@ -25,8 +25,13 @@
     <ItemGroup>
         <ProjectReference Include="..\..\simple\Simple.Application\Simple.Application.csproj" />
         <ProjectReference Include="..\..\simple\Simple.WebApi\Simple.WebApi.csproj" />
-        <ProjectReference Include="..\..\src\Skywalker.Ddd.Infrastructure.EntityFrameworkCore.MySQL\Skywalker.Ddd.Infrastructure.EntityFrameworkCore.MySQL.csproj" />
-        <ProjectReference Include="..\Simple.Infrastructure.EntityFrameworkCore\Simple.Infrastructure.EntityFrameworkCore.csproj" />
+        <ProjectReference Include="..\..\src\Skywalker.Ddd.EntityFrameworkCore.MySQL\Skywalker.Ddd.EntityFrameworkCore.MySQL.csproj" />
+        <ProjectReference Include="..\..\src\Skywalker.Ddd.UnitOfWork.Abstractions\Skywalker.Ddd.UnitOfWork.Abstractions.csproj" />
+        <ProjectReference Include="..\Simple.EntityFrameworkCore\Simple.EntityFrameworkCore.csproj" />
+    </ItemGroup>
+
+    <ItemGroup>
+        <ProjectReference Include="..\..\..\Aspects\src\Skywalker.Aspects\Skywalker.Aspects.csproj" />
     </ItemGroup>
 
 </Project>

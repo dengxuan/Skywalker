@@ -8,8 +8,8 @@
     </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\src\Skywalker.Ddd.Infrastructure.EntityFrameworkCore.MySQL\Skywalker.Ddd.Infrastructure.EntityFrameworkCore.MySQL.csproj" />
-    <ProjectReference Include="..\Simple.Infrastructure.EntityFrameworkCore\Simple.Infrastructure.EntityFrameworkCore.csproj" />
+    <ProjectReference Include="..\..\src\Skywalker.Ddd.EntityFrameworkCore.MySQL\Skywalker.Ddd.EntityFrameworkCore.MySQL.csproj" />
+    <ProjectReference Include="..\Simple.EntityFrameworkCore\Simple.EntityFrameworkCore.csproj" />
   </ItemGroup>
 
 </Project>

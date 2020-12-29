@@ -29,11 +29,11 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Skywalker.Ddd.Application.C
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Skywalker.Ddd.Domain.Abstractions", "src\Ddd\src\Skywalker.Ddd.Domain.Abstractions\Skywalker.Ddd.Domain.Abstractions.csproj", "{1297888C-734A-4467-AA40-76DB501EB1FA}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Skywalker.Ddd.Infrastructure.EntityFrameworkCore", "src\Ddd\src\Skywalker.Ddd.Infrastructure.EntityFrameworkCore\Skywalker.Ddd.Infrastructure.EntityFrameworkCore.csproj", "{7A3A9638-F88B-44FA-9D14-A72E75BB0952}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Skywalker.Ddd.EntityFrameworkCore", "src\Ddd\src\Skywalker.Ddd.EntityFrameworkCore\Skywalker.Ddd.EntityFrameworkCore.csproj", "{7A3A9638-F88B-44FA-9D14-A72E75BB0952}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Skywalker.Ddd.Infrastructure.EntityFrameworkCore.MySQL", "src\Ddd\src\Skywalker.Ddd.Infrastructure.EntityFrameworkCore.MySQL\Skywalker.Ddd.Infrastructure.EntityFrameworkCore.MySQL.csproj", "{8712F21F-B3D2-4C11-ABF3-ED68401F0530}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Skywalker.Ddd.EntityFrameworkCore.MySQL", "src\Ddd\src\Skywalker.Ddd.EntityFrameworkCore.MySQL\Skywalker.Ddd.EntityFrameworkCore.MySQL.csproj", "{8712F21F-B3D2-4C11-ABF3-ED68401F0530}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Skywalker.Ddd.Infrastructure.EntityFrameworkCore.SqlServer", "src\Ddd\src\Skywalker.Ddd.Infrastructure.EntityFrameworkCore.SqlServer\Skywalker.Ddd.Infrastructure.EntityFrameworkCore.SqlServer.csproj", "{B6403480-64C9-4954-9478-8F1EEEDE675A}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Skywalker.Ddd.EntityFrameworkCore.SqlServer", "src\Ddd\src\Skywalker.Ddd.EntityFrameworkCore.SqlServer\Skywalker.Ddd.EntityFrameworkCore.SqlServer.csproj", "{B6403480-64C9-4954-9478-8F1EEEDE675A}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Skywalker.Ddd.Localization.Abstractions", "src\Ddd\src\Skywalker.Ddd.Localization.Abstractions\Skywalker.Ddd.Localization.Abstractions.csproj", "{1D3A8862-B168-402D-A885-3479C8CEEC3B}"
 EndProject
@@ -116,6 +116,14 @@ EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Skywalker.IdentityServer.AspNetCore.Abstractions", "src\IdentityServer\src\Skywalker.IdentityServer.AspNetCore.Abstractions\Skywalker.IdentityServer.AspNetCore.Abstractions.csproj", "{677F1AFA-DE3A-4041-9D95-5A607EDA297E}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Skywalker.IdentityServer.Domain.Shared", "src\IdentityServer\src\Skywalker.IdentityServer.Domain.Shared\Skywalker.IdentityServer.Domain.Shared.csproj", "{B1DEDA9E-CA43-4BD6-9744-386FA7B7AD31}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Aspects", "Aspects", "{4683F99A-E282-43DE-8B4F-C601A741650C}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Skywalker.Aspects.Abstractions", "src\Aspects\src\Skywalker.Aspects.Abstractions\Skywalker.Aspects.Abstractions.csproj", "{0AEB23E6-5F15-49A3-9ADA-1CF1A0CC5E2E}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Skywalker.Aspects", "src\Aspects\src\Skywalker.Aspects\Skywalker.Aspects.csproj", "{DCB71B82-2C9A-4BC2-BB5B-40A52070918A}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Skywalker.Ddd.UnitOfWork.Abstractions", "src\Ddd\src\Skywalker.Ddd.UnitOfWork.Abstractions\Skywalker.Ddd.UnitOfWork.Abstractions.csproj", "{5BF4A279-FCAF-4C11-BE18-21D5AF2ACF9C}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -299,6 +307,18 @@ Global
 		{B1DEDA9E-CA43-4BD6-9744-386FA7B7AD31}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{B1DEDA9E-CA43-4BD6-9744-386FA7B7AD31}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{B1DEDA9E-CA43-4BD6-9744-386FA7B7AD31}.Release|Any CPU.Build.0 = Release|Any CPU
+		{0AEB23E6-5F15-49A3-9ADA-1CF1A0CC5E2E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{0AEB23E6-5F15-49A3-9ADA-1CF1A0CC5E2E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{0AEB23E6-5F15-49A3-9ADA-1CF1A0CC5E2E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{0AEB23E6-5F15-49A3-9ADA-1CF1A0CC5E2E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{DCB71B82-2C9A-4BC2-BB5B-40A52070918A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{DCB71B82-2C9A-4BC2-BB5B-40A52070918A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{DCB71B82-2C9A-4BC2-BB5B-40A52070918A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{DCB71B82-2C9A-4BC2-BB5B-40A52070918A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{5BF4A279-FCAF-4C11-BE18-21D5AF2ACF9C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{5BF4A279-FCAF-4C11-BE18-21D5AF2ACF9C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{5BF4A279-FCAF-4C11-BE18-21D5AF2ACF9C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{5BF4A279-FCAF-4C11-BE18-21D5AF2ACF9C}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -356,6 +376,10 @@ Global
 		{BB14D70B-9325-49B2-90B0-BDC8A548D90C} = {DE1EFE75-198D-43EF-ADF7-D1AC2D3B7A78}
 		{677F1AFA-DE3A-4041-9D95-5A607EDA297E} = {DE1EFE75-198D-43EF-ADF7-D1AC2D3B7A78}
 		{B1DEDA9E-CA43-4BD6-9744-386FA7B7AD31} = {DE1EFE75-198D-43EF-ADF7-D1AC2D3B7A78}
+		{4683F99A-E282-43DE-8B4F-C601A741650C} = {9E861C23-5075-455D-A2DA-6DFB5D63D97F}
+		{0AEB23E6-5F15-49A3-9ADA-1CF1A0CC5E2E} = {4683F99A-E282-43DE-8B4F-C601A741650C}
+		{DCB71B82-2C9A-4BC2-BB5B-40A52070918A} = {4683F99A-E282-43DE-8B4F-C601A741650C}
+		{5BF4A279-FCAF-4C11-BE18-21D5AF2ACF9C} = {19C431B6-A1FD-413A-9191-F207420DABA6}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {6D4EB88A-9A1A-446D-82B8-B52DD909FF15}

@@ -1,5 +1,4 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
-using Skywalker.DependencyInjection;
 using Skywalker.Uow.Abstractions;
 
 namespace Skywalker.Uow

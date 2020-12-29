@@ -1,7 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 using Simple.Data;
-using Simple.Infrastructure.EntityFrameworkCore;
+using Simple.EntityFrameworkCore;
 using System;
 using System.Threading.Tasks;
 

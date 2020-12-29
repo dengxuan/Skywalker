@@ -79,7 +79,7 @@ namespace Skywalker.Domain.Entities
                     return false;
                 }
 
-                if (!entity1Key.Equals(entity2Key))
+                if (!entity1Key!.Equals(entity2Key))
                 {
                     return false;
                 }

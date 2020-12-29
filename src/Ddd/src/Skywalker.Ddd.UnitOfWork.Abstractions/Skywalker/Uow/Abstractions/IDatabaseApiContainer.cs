@@ -1,4 +1,4 @@
-﻿using Skywalker.DependencyInjection;
+﻿using Microsoft.Extensions.DependencyInjection;
 using System;
 using System.Diagnostics.CodeAnalysis;
 

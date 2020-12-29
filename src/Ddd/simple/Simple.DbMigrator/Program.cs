@@ -2,8 +2,7 @@
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Simple.EntityFrameworkCore;
-using Simple.Infrastructure.EntityFrameworkCore;
-using Skywalker.Ddd.Infrastructure.EntityFrameworkCore;
+using Skywalker.Ddd.EntityFrameworkCore;
 
 namespace ActivityCenter.DbMigrator
 {
