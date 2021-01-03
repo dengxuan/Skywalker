@@ -24,9 +24,9 @@ namespace Simple.Application
             return ObjectMapper.Map<User, UserDto>(user);
         }
 
-        public async Task<List<UserDto>> FindUsersAsync()
+        public async Task<List<UserDto>> GetUsersAsync()
         {
-            List<User> users = await _userManager.FindUsersAsync();
+            List<User> users = await _userManager.GetUsersAsync();
             return ObjectMapper.Map<List<User>, List<UserDto>>(users);
         }
 

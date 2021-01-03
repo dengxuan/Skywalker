@@ -135,12 +135,10 @@ namespace Skywalker.Ddd.EntityFrameworkCore
 
         public virtual void Initialize(SkywalkerEfCoreDbContextInitializationContext initializationContext)
         {
-            if (initializationContext.UnitOfWork.Options.Timeout.HasValue &&
-                Database.IsRelational() &&
-                !Database.GetCommandTimeout().HasValue)
+            if (initializationContext.UnitOfWork.Options.Timeout.HasValue && Database.IsRelational() && !Database.GetCommandTimeout().HasValue)
             {
                 //Todo: Configuration
-                Database.SetCommandTimeout(TimeSpan.FromMilliseconds(30 * 1000));
+                Database.SetCommandTimeout(initializationContext.UnitOfWork.Options.Timeout!.Value);
             }
 
             ChangeTracker.CascadeDeleteTiming = CascadeTiming.OnSaveChanges;

@@ -18,9 +18,9 @@ namespace Simple.Domain.Users
             _users = users;
         }
 
-        public Task<List<User>> FindUsersAsync()
+        public Task<List<User>> GetUsersAsync()
         {
-            return _users.Include(prop => prop.UserOrders).ThenInclude(p=>p.UserValues).AsSplitQuery().ToListAsync();
+            return _users.ToListAsync();
         }
 
         public Task<List<User>> FindUsersAsync([NotNull] string name)

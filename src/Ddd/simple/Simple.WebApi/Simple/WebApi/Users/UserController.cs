@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using Simple.Application.Abstractions;
+using Skywalker.Uow;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
@@ -8,6 +9,7 @@ namespace Simple.WebApi.Users
 {
     [ApiController]
     [Route("api/[Controller]")]
+    [UnitOfWork]
     public class UserController : SimpleController
     {
         private readonly ISimpleUserApplicationService _simpleUserApplicationService;
@@ -19,9 +21,16 @@ namespace Simple.WebApi.Users
 
         [HttpGet]
         [Route("all")]
-        public Task<List<UserDto>> GetUsersAsync()
+        public async Task<List<UserDto>> GetUsersAsync()
         {
-            return _simpleUserApplicationService.FindUsersAsync();
+            return await _simpleUserApplicationService.GetUsersAsync();
+        }
+
+        [HttpGet]
+        [Route("all-a")]
+        public async Task<UserDto> CreateUsersAsync()
+        {
+           return await _simpleUserApplicationService.CreateUserAsync("A");
         }
 
         [HttpGet]

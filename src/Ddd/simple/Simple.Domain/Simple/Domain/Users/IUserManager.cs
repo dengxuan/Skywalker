@@ -7,7 +7,7 @@ namespace Simple.Domain.Users
 {
     public interface IUserManager : IDomainService
     {
-        Task<List<User>> FindUsersAsync();
+        Task<List<User>> GetUsersAsync();
 
         Task<List<User>> FindUsersAsync([NotNull] string name);
 

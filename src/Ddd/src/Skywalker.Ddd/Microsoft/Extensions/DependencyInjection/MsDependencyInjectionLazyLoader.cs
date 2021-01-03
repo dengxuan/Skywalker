@@ -24,7 +24,7 @@ namespace Microsoft.Extensions.DependencyInjection
 
         public T GetRequiredService<T>() where T : notnull
         {
-            return new Lazy<T>(_serviceProvider.GetRequiredService<T>()).Value;
+            return _serviceProvider.GetRequiredService<T>();
         }
 
         public T? GetService<T>()

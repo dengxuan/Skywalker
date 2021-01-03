@@ -36,6 +36,7 @@ namespace Skywalker.Uow
             _logger.LogDebug($"Begin Unit of work:[{uow.Id}]");
             await _next(context);
             await uow.CompleteAsync();
+            uow.Dispose();
             _logger.LogDebug($"Complete Unit of work:[{uow.Id}]");
         }
 

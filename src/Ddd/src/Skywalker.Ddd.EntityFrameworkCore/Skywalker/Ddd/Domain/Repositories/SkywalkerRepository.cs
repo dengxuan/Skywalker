@@ -165,7 +165,6 @@ namespace Skywalker.Ddd.Domain.Repositories
             {
                 DbSet.Remove(entity);
             }
-            await DbContext.SaveChangesAsync(GetCancellationToken(cancellationToken));
         }
 
         public override async Task<TEntity> InsertAsync([NotNull] TEntity entity, CancellationToken cancellationToken = default)
@@ -185,8 +184,6 @@ namespace Skywalker.Ddd.Domain.Repositories
             await ApplySkywalkerConceptsForAddedEntityAsync(entity);
 
             var savedEntity = DbSet.Add(entity).Entity;
-
-            await DbContext.SaveChangesAsync(GetCancellationToken(cancellationToken));
 
             return savedEntity;
         }
@@ -211,7 +208,7 @@ namespace Skywalker.Ddd.Domain.Repositories
 
             await DbSet.AddRangeAsync(entities, GetCancellationToken(cancellationToken));
 
-            return await DbContext.SaveChangesAsync(GetCancellationToken(cancellationToken));
+            return entities.Count();
         }
 
         public override async Task<TEntity> UpdateAsync([NotNull] TEntity entity, CancellationToken cancellationToken = default)
@@ -222,8 +219,6 @@ namespace Skywalker.Ddd.Domain.Repositories
 
             var updatedEntity = DbContext.Update(entity).Entity;
 
-            await DbContext.SaveChangesAsync(GetCancellationToken(cancellationToken));
-
             return updatedEntity;
         }
 
@@ -231,7 +226,6 @@ namespace Skywalker.Ddd.Domain.Repositories
         {
             await ApplySkywalkerConceptsForDeletedEntityAsync(entity);
             DbSet.Remove(entity);
-            await DbContext.SaveChangesAsync(GetCancellationToken(cancellationToken));
         }
 
         public override Task<List<TEntity>> GetListAsync(CancellationToken cancellationToken = default)
