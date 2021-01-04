@@ -1,7 +1,7 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
 using Skywalker.Aspects;
-using Skywalker.Uow;
-using Skywalker.Uow.Abstractions;
+using Skywalker.Ddd.UnitOfWork;
+using Skywalker.Ddd.UnitOfWork.Abstractions;
 
 namespace Skywalker.Application.Services.Contracts
 {
@@ -9,7 +9,6 @@ namespace Skywalker.Application.Services.Contracts
     /// This interface must be implemented by all application services to register and identify them by convention.
     /// </summary>
     [Aspects]
-    [UnitOfWork]
     public interface IApplicationService : IAspects, IUnitOfWorkEnabled, ITransientDependency
     {
 

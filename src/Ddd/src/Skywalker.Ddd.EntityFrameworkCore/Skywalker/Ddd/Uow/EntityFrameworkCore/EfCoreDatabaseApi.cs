@@ -1,9 +1,9 @@
 using Skywalker.Ddd.EntityFrameworkCore;
-using Skywalker.Uow.Abstractions;
+using Skywalker.Ddd.UnitOfWork.Abstractions;
 using System.Threading;
 using System.Threading.Tasks;
 
-namespace Skywalker.Uow.EntityFrameworkCore
+namespace Skywalker.UnitOfWork.EntityFrameworkCore
 {
     public class EfCoreDatabaseApi<TDbContext> : IDatabaseApi, ISupportsSavingChanges
         where TDbContext : ISkywalkerDbContext

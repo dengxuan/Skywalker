@@ -1,12 +1,12 @@
-﻿using Skywalker.Aspects.Interceptors;
-using Microsoft.Extensions.Options;
+﻿using Microsoft.Extensions.Options;
+using Skywalker.Aspects.Interceptors;
 using System.Collections.Generic;
 
 namespace Skywalker.Aspects
 {
     public class AspectsOptions : IOptions<AspectsOptions>
     {
-        public List<IInterceptorProvider> Providers { get; } = new List<IInterceptorProvider>();
+        internal List<IInterceptorProvider> Providers { get; } = new List<IInterceptorProvider>();
 
         public AspectsOptions Value => this;
 

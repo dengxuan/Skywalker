@@ -1,13 +1,13 @@
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Storage;
 using Skywalker.Ddd.EntityFrameworkCore;
-using Skywalker.Uow.Abstractions;
+using Skywalker.Ddd.UnitOfWork.Abstractions;
 using System;
 using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
 
-namespace Skywalker.Uow.EntityFrameworkCore
+namespace Skywalker.UnitOfWork.EntityFrameworkCore
 {
     public class EfCoreTransactionApi : ITransactionApi, ISupportsRollback
     {

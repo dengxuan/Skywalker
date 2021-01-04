@@ -2,8 +2,8 @@
 using Microsoft.Extensions.Logging;
 using Skywalker.Aspects;
 using Skywalker.AspNetCore.Mvc.Models;
-using Skywalker.Uow;
-using Skywalker.Uow.Abstractions;
+using Skywalker.Ddd.UnitOfWork;
+using Skywalker.Ddd.UnitOfWork.Abstractions;
 
 namespace Simple.WebApi
 {

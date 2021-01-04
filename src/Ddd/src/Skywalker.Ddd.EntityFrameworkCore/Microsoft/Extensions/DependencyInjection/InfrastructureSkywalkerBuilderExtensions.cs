@@ -3,7 +3,7 @@ using Skywalker;
 using Skywalker.Ddd.EntityFrameworkCore;
 using Skywalker.Ddd.EntityFrameworkCore.DbContextConfiguration;
 using Skywalker.EntityFrameworkCore;
-using Skywalker.Uow.EntityFrameworkCore;
+using Skywalker.UnitOfWork.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 

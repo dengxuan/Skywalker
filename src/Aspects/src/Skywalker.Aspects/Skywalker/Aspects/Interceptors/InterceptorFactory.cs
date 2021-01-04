@@ -1,4 +1,5 @@
-﻿using Microsoft.Extensions.Options;
+﻿using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Options;
 using Skywalker.Aspects.DynamicProxy;
 using Skywalker.Reflection;
 using System;
@@ -13,8 +14,7 @@ namespace Skywalker.Aspects.Interceptors
     {
 
         private readonly IProxyGenerator _proxyGenerator;
-
-        private readonly IOptions<AspectsOptions> _aspectsOptions;
+        private readonly IServiceProvider _serviceProvider;
 
         private readonly ConcurrentDictionary<Type, Dictionary<MethodInfo, InterceptorDelegate>> _typedInterceptors = new ConcurrentDictionary<Type, Dictionary<MethodInfo, InterceptorDelegate>>();
 
@@ -23,11 +23,11 @@ namespace Skywalker.Aspects.Interceptors
         /// </summary>
         private readonly IInterceptorChainBuilder _chainBuilder;
 
-        public InterceptorFactory(IInterceptorChainBuilder chainBuilder, IProxyGenerator proxyGenerator, IOptions<AspectsOptions> aspectsOptions)
+        public InterceptorFactory(IInterceptorChainBuilder chainBuilder, IProxyGenerator proxyGenerator, IServiceProvider serviceProvider)
         {
             _chainBuilder = chainBuilder;
             _proxyGenerator = proxyGenerator;
-            _aspectsOptions = aspectsOptions;
+            _serviceProvider = serviceProvider;
         }
 
         /// <summary>
@@ -100,7 +100,8 @@ namespace Skywalker.Aspects.Interceptors
                 if (aspectsAttribute?.Disable != true)
                 {
                     var newBuilder = _chainBuilder.New();
-                    foreach (var provider in _aspectsOptions.Value.Providers)
+                    IEnumerable<IInterceptorProvider> interceptorProviders = _serviceProvider.GetServices<IInterceptorProvider>();
+                    foreach (var provider in interceptorProviders)
                     {
                         provider.Use(newBuilder);
                     }

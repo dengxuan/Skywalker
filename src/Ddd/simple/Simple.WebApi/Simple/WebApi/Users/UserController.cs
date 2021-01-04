@@ -1,7 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using Simple.Application.Abstractions;
-using Skywalker.Uow;
+using Skywalker.Ddd.UnitOfWork;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 

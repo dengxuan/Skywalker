@@ -1,4 +1,4 @@
-﻿using Skywalker.Uow.Abstractions;
+﻿using Skywalker.Ddd.UnitOfWork.Abstractions;
 
 namespace Skywalker.Ddd.EntityFrameworkCore
 {

@@ -6,9 +6,8 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Simple.Application;
 using Simple.EntityFrameworkCore;
+using Skywalker.Aspects;
 using Skywalker.Ddd.EntityFrameworkCore;
-using Skywalker.Uow;
-using System;
 
 namespace Simple.WebApi.Hosting
 {
@@ -23,6 +22,7 @@ namespace Simple.WebApi.Hosting
 
         public void ConfigureServices(IServiceCollection services)
         {
+            services.AddAspects();
             services.AddControllers().ConfigureApplicationPartManager(apm =>
             {
                 apm.ApplicationParts.Add(new AssemblyPart(typeof(SimpleController).Assembly));
@@ -42,10 +42,7 @@ namespace Simple.WebApi.Hosting
                     options.AddProfile<SimpleApplicationAutoMapperProfile>();
                 });
             });
-            services.AddAspects(options=>
-            {
-                options.Use(new UnitOfWorkProvider());
-            });
+            services.AddUnitOfWork();
             services.AddWebApiResponseWrapper();
         }
 

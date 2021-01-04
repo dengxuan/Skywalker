@@ -7,10 +7,8 @@ namespace Microsoft.Extensions.DependencyInjection
 {
     public static class AspectsServiceCollectionExtensions
     {
-        public static IServiceCollection AddAspects(this IServiceCollection services, Action<AspectsOptions> aspectsBuilder)
+        public static IServiceCollection AddAspects(this IServiceCollection services)
         {
-            services.AddOptions();
-            services.Configure(aspectsBuilder);
             services.AddSingleton<IProxyGenerator, ProxyGenerator>();
             services.AddSingleton<IInterceptorFactory, InterceptorFactory>();
             services.AddSingleton<IInterceptorChainBuilder, InterceptorChainBuilder>();

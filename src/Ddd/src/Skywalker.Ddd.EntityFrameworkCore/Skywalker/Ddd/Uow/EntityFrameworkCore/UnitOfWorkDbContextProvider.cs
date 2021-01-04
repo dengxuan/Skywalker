@@ -1,14 +1,13 @@
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Storage;
 using Microsoft.Extensions.DependencyInjection;
-using Skywalker;
 using Skywalker.Data;
 using Skywalker.Ddd.EntityFrameworkCore;
 using Skywalker.Ddd.EntityFrameworkCore.DbContextConfiguration;
-using Skywalker.Uow.Abstractions;
+using Skywalker.Ddd.UnitOfWork.Abstractions;
 using System;
 
-namespace Skywalker.Uow.EntityFrameworkCore
+namespace Skywalker.UnitOfWork.EntityFrameworkCore
 {
     //TODO: Implement logic in DefaultDbContextResolver.Resolve in old ABP.
 
