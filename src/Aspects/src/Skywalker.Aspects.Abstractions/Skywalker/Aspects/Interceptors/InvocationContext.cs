@@ -12,9 +12,9 @@ namespace Skywalker.Aspects.Interceptors
 
         public InvocationContext(IInvocation invocation) => Invocation = invocation;
 
-        public async Task ProceedAsync()
+        public Task ProceedAsync()
         {
-            await Task.Run(() => Invocation.Proceed());
+            Invocation.Proceed();
         }
     }
 }

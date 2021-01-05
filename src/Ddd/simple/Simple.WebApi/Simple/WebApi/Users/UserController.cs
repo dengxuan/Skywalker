@@ -9,7 +9,6 @@ namespace Simple.WebApi.Users
 {
     [ApiController]
     [Route("api/[Controller]")]
-    [UnitOfWork]
     public class UserController : SimpleController
     {
         private readonly ISimpleUserApplicationService _simpleUserApplicationService;
@@ -23,7 +22,8 @@ namespace Simple.WebApi.Users
         [Route("all")]
         public async Task<List<UserDto>> GetUsersAsync()
         {
-            return await _simpleUserApplicationService.GetUsersAsync();
+            List<UserDto> users= await _simpleUserApplicationService.GetUsersAsync();
+            return users;
         }
 
         [HttpGet]

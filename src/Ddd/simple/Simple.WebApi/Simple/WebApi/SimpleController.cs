@@ -1,16 +1,11 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
-using Skywalker.Aspects;
 using Skywalker.AspNetCore.Mvc.Models;
-using Skywalker.Ddd.UnitOfWork;
-using Skywalker.Ddd.UnitOfWork.Abstractions;
 
 namespace Simple.WebApi
 {
     [WrapResult]
-    [Aspects]
-    [UnitOfWork]
-    public abstract class SimpleController : ControllerBase, IAspects, IUnitOfWorkEnabled
+    public abstract class SimpleController : ControllerBase
     {
         protected ILogger<SimpleController> Logger { get; }
 

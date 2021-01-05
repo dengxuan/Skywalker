@@ -1,4 +1,5 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 using Skywalker.Aspects.DynamicProxy;
 using Skywalker.Reflection;
@@ -74,7 +75,8 @@ namespace Skywalker.Aspects.Interceptors
             {
                 return target;
             }
-            IDictionary<MethodInfo, IInterceptor> dic = initerceptors.ToDictionary(it => it.Key, it => (IInterceptor)new DynamicProxyInterceptor(it.Value));
+            ILoggerFactory loggerFactory = _serviceProvider.GetRequiredService<ILoggerFactory>();
+            IDictionary<MethodInfo, IInterceptor> dic = initerceptors.ToDictionary(it => it.Key, it => (IInterceptor)new DynamicProxyInterceptor(it.Value, loggerFactory.CreateLogger<DynamicProxyInterceptor>()));
             var selector = new DynamicProxyInterceptorSelector(dic);
             var options = new ProxyGenerationOptions { Selector = selector };
             if (typeToProxy.GetTypeInfo().IsInterface)

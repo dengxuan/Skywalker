@@ -31,12 +31,18 @@ namespace Skywalker.Ddd.UnitOfWork
                 await _next(context);
                 return;
             }
-
             using var uow = _unitOfWorkManager.Begin(CreateOptions(context.Invocation, unitOfWorkAttribute!));
-            _logger.LogDebug($"Begin Unit of work:[{uow.Id}]");
-            await _next(context);
-            await uow.CompleteAsync();
-            _logger.LogDebug($"Complete Unit of work:[{uow.Id}]");
+            try
+            {
+                _logger.LogInformation($"Begin Unit of work:[{uow.Id}]");
+                await _next(context);
+                await uow.CompleteAsync();
+                _logger.LogInformation($"Complete Unit of work:[{uow.Id}]");
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, $"Error Unit of work:[{uow.Id}] Exception:", uow.Id, ex.Message);
+            }
         }
 
         private AbpUnitOfWorkOptions CreateOptions(IInvocation invocation, [MaybeNull] UnitOfWorkAttribute unitOfWorkAttribute)
