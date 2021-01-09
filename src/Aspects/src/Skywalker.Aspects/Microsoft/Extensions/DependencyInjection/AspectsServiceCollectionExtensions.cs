@@ -12,7 +12,7 @@ namespace Microsoft.Extensions.DependencyInjection
             services.AddSingleton<IProxyGenerator, ProxyGenerator>();
             services.AddSingleton<IInterceptorFactory, InterceptorFactory>();
             services.AddSingleton<IInterceptorChainBuilder, InterceptorChainBuilder>();
-            services.AddSingleton<InvocationContext>();
+            services.AddSingleton<DynamicProxyInvocationContext>();
             return services;
         }
 

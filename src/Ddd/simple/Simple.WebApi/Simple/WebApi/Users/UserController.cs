@@ -22,7 +22,7 @@ namespace Simple.WebApi.Users
         [Route("all")]
         public async Task<List<UserDto>> GetUsersAsync()
         {
-            List<UserDto> users= await _simpleUserApplicationService.GetUsersAsync();
+            List<UserDto> users=  await _simpleUserApplicationService.FindUsersAsync();
             return users;
         }
 
@@ -30,7 +30,8 @@ namespace Simple.WebApi.Users
         [Route("all-a")]
         public async Task<UserDto> CreateUsersAsync()
         {
-           return await _simpleUserApplicationService.CreateUserAsync("A");
+            List<UserDto> users = await _simpleUserApplicationService.FindUsersAsync();
+            return await _simpleUserApplicationService.CreateUserAsync("A");
         }
 
         [HttpGet]

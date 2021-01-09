@@ -5,6 +5,8 @@ using Skywalker.Aspects.Interceptors;
 using Skywalker.Ddd.UnitOfWork.Abstractions;
 using System;
 using System.Diagnostics.CodeAnalysis;
+using System.Reflection;
+using System.Threading;
 using System.Threading.Tasks;
 
 namespace Skywalker.Ddd.UnitOfWork
@@ -26,18 +28,18 @@ namespace Skywalker.Ddd.UnitOfWork
 
         public async Task InvokeAsync(InvocationContext context)
         {
-            if (!UnitOfWorkHelper.IsUnitOfWorkMethod(context.Invocation.Method, out var unitOfWorkAttribute))
+            if (!UnitOfWorkHelper.IsUnitOfWorkMethod(context.Method, out var unitOfWorkAttribute))
             {
                 await _next(context);
                 return;
             }
-            using var uow = _unitOfWorkManager.Begin(CreateOptions(context.Invocation, unitOfWorkAttribute!));
+            using var uow = _unitOfWorkManager.Begin(CreateOptions(context.TargetMethod, unitOfWorkAttribute!));
             try
             {
-                _logger.LogInformation($"Begin Unit of work:[{uow.Id}]");
+                _logger.LogInformation("Begin Unit of work:[{0}]", uow.Id);
                 await _next(context);
                 await uow.CompleteAsync();
-                _logger.LogInformation($"Complete Unit of work:[{uow.Id}]");
+                _logger.LogInformation("Complete Unit of work:[{0}]", uow.Id);
             }
             catch (Exception ex)
             {
@@ -45,7 +47,7 @@ namespace Skywalker.Ddd.UnitOfWork
             }
         }
 
-        private AbpUnitOfWorkOptions CreateOptions(IInvocation invocation, [MaybeNull] UnitOfWorkAttribute unitOfWorkAttribute)
+        private AbpUnitOfWorkOptions CreateOptions(MethodInfo method, [MaybeNull] UnitOfWorkAttribute unitOfWorkAttribute)
         {
             var options = new AbpUnitOfWorkOptions();
 
@@ -54,7 +56,7 @@ namespace Skywalker.Ddd.UnitOfWork
             if (unitOfWorkAttribute?.IsTransactional == null)
             {
                 options.IsTransactional = _defaultOptions.CalculateIsTransactional(
-                    autoValue: !invocation.Method.Name.StartsWith("Find", StringComparison.InvariantCultureIgnoreCase)
+                    autoValue: !method.Name.StartsWith("Get", StringComparison.InvariantCultureIgnoreCase)
                 );
             }
 

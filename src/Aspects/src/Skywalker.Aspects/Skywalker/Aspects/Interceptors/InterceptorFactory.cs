@@ -76,7 +76,7 @@ namespace Skywalker.Aspects.Interceptors
                 return target;
             }
             ILoggerFactory loggerFactory = _serviceProvider.GetRequiredService<ILoggerFactory>();
-            IDictionary<MethodInfo, IInterceptor> dic = initerceptors.ToDictionary(it => it.Key, it => (IInterceptor)new DynamicProxyInterceptor(it.Value, loggerFactory.CreateLogger<DynamicProxyInterceptor>()));
+            IDictionary<MethodInfo, IInterceptor> dic = initerceptors.ToDictionary(it => it.Key, it => (IInterceptor)new DynamicProxyInterceptor(it.Value, loggerFactory.CreateLogger<DynamicProxyInterceptor>()).ToInterceptor());
             var selector = new DynamicProxyInterceptorSelector(dic);
             var options = new ProxyGenerationOptions { Selector = selector };
             if (typeToProxy.GetTypeInfo().IsInterface)

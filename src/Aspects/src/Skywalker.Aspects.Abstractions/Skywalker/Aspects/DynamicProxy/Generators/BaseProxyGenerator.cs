@@ -398,7 +398,7 @@ namespace Skywalker.Aspects.DynamicProxy.Generators
                 Logger.LogDebug("No cached proxy type was found for target type {0}.", targetType.FullName);
                 EnsureOptionsOverrideEqualsAndGetHashCode(ProxyGenerationOptions);
 
-                var name = Scope.NamingScope.GetUniqueName("Hermit.Proxies." + targetType.Name + "Proxy");
+                var name = Scope.NamingScope.GetUniqueName("Skywalker.Aspects.Proxies." + targetType.Name + "Proxy");
                 var proxyType = factory.Invoke(name, Scope.NamingScope.SafeSubScope());
 
                 // Upgrade the lock to a write lock. 
