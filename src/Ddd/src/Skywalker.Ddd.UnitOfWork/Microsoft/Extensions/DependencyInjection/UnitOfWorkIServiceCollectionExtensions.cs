@@ -1,4 +1,4 @@
-﻿using Skywalker.Aspects.Interceptors;
+﻿using Skywalker.Aspects.Abstractinons;
 using Skywalker.Ddd.UnitOfWork;
 
 namespace Microsoft.Extensions.DependencyInjection
@@ -7,7 +7,6 @@ namespace Microsoft.Extensions.DependencyInjection
     {
         public static IServiceCollection AddUnitOfWork(this IServiceCollection services)
         {
-            services.AddSingleton<IInterceptorProvider, UnitOfWorkProvider>();
             return services;
         }
     }

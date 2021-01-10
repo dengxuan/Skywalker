@@ -1,4 +1,5 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
+using Skywalker.Ddd.UnitOfWork.Abstractions;
 using Skywalker.Domain.Entities;
 using Skywalker.Extensions.Threading;
 using System;
@@ -33,6 +34,8 @@ namespace Skywalker.Domain.Repositories
         {
             return GetQueryable().GetEnumerator();
         }
+
+        public IUnitOfWorkManager? UnitOfWorkManager { get; set; }
 
         protected BasicRepositoryBase()
         {

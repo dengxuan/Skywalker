@@ -1,6 +1,7 @@
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Storage;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Logging;
 using Skywalker.Data;
 using Skywalker.Ddd.EntityFrameworkCore;
 using Skywalker.Ddd.EntityFrameworkCore.DbContextConfiguration;
@@ -16,13 +17,15 @@ namespace Skywalker.UnitOfWork.EntityFrameworkCore
     {
         private readonly IUnitOfWorkManager _unitOfWorkManager;
         private readonly IConnectionStringResolver _connectionStringResolver;
+        private readonly ILogger<UnitOfWorkDbContextProvider<TDbContext>> _logger;
 
         public UnitOfWorkDbContextProvider(
             IUnitOfWorkManager unitOfWorkManager,
-            IConnectionStringResolver connectionStringResolver)
+            IConnectionStringResolver connectionStringResolver, ILogger<UnitOfWorkDbContextProvider<TDbContext>> logger)
         {
             _unitOfWorkManager = unitOfWorkManager;
             _connectionStringResolver = connectionStringResolver;
+            _logger = logger;
         }
 
         public TDbContext GetDbContext()
@@ -35,9 +38,12 @@ namespace Skywalker.UnitOfWork.EntityFrameworkCore
 
             var connectionStringName = ConnectionStringNameAttribute.GetConnStringName<TDbContext>();
             var connectionString = _connectionStringResolver.Resolve(connectionStringName);
-
+            if (connectionString == null)
+            {
+                throw new SkywalkerException("ConnectionString Can't be null!");
+            }
             var dbContextKey = $"{typeof(TDbContext).FullName}_{connectionString}";
-
+            _logger.LogInformation("DbContext key is : {dbContextKey}", dbContextKey);
             var databaseApi = unitOfWork.GetOrAddDatabaseApi(
                 dbContextKey,
                 () => new EfCoreDatabaseApi<TDbContext>(
@@ -49,6 +55,7 @@ namespace Skywalker.UnitOfWork.EntityFrameworkCore
 
         private TDbContext CreateDbContext(IUnitOfWork unitOfWork, string connectionStringName, string connectionString)
         {
+            _logger.LogInformation("Create DbContext Use connectionStringName {0} Or connectionString: {1}", connectionStringName, connectionString);
             var creationContext = new SkywalkerDbContextCreationContext(connectionStringName, connectionString);
             using (SkywalkerDbContextCreationContext.Use(creationContext))
             {
@@ -69,22 +76,21 @@ namespace Skywalker.UnitOfWork.EntityFrameworkCore
 
         private TDbContext CreateDbContext(IUnitOfWork unitOfWork)
         {
-            return unitOfWork.Options.IsTransactional
+            return unitOfWork.Options!.IsTransactional
                 ? CreateDbContextWithTransaction(unitOfWork)
-                : unitOfWork.ServiceProvider.GetRequiredService<TDbContext>();
+                : unitOfWork.ServiceProvider!.GetRequiredService<TDbContext>();
         }
 
-        public TDbContext CreateDbContextWithTransaction(IUnitOfWork unitOfWork) 
+        public TDbContext CreateDbContextWithTransaction(IUnitOfWork unitOfWork)
         {
             var transactionApiKey = $"EntityFrameworkCore_{SkywalkerDbContextCreationContext.Current.ConnectionString}";
-            var activeTransaction = unitOfWork.FindTransactionApi(transactionApiKey) as EfCoreTransactionApi;
 
-            if (activeTransaction == null)
+            if (unitOfWork.FindTransactionApi(transactionApiKey) is not EfCoreTransactionApi activeTransaction)
             {
-                var dbContext = unitOfWork.ServiceProvider.GetRequiredService<TDbContext>();
+                var dbContext = unitOfWork.ServiceProvider!.GetRequiredService<TDbContext>();
 
-                var dbtransaction = unitOfWork.Options.IsolationLevel.HasValue
-                    ? dbContext.Database.BeginTransaction(unitOfWork.Options.IsolationLevel.Value)
+                var dbtransaction = unitOfWork.Options!.IsolationLevel.HasValue
+                    ? dbContext.Database.BeginTransaction(isolationLevel: unitOfWork.Options!.IsolationLevel.Value)
                     : dbContext.Database.BeginTransaction();
 
                 unitOfWork.AddTransactionApi(
@@ -101,7 +107,7 @@ namespace Skywalker.UnitOfWork.EntityFrameworkCore
             {
                 SkywalkerDbContextCreationContext.Current.ExistingConnection = activeTransaction.DbContextTransaction.GetDbTransaction().Connection;
 
-                var dbContext = unitOfWork.ServiceProvider.GetRequiredService<TDbContext>();
+                var dbContext = unitOfWork.ServiceProvider!.GetRequiredService<TDbContext>();
 
                 if (dbContext.As<DbContext>().HasRelationalTransactionManager())
                 {

@@ -63,7 +63,11 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Skywalker.Aspects", "..\Asp
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Skywalker.Aspects.Abstractions", "..\Aspects\src\Skywalker.Aspects.Abstractions\Skywalker.Aspects.Abstractions.csproj", "{169DA238-C766-46DE-AE27-7EF0611D7366}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Skywalker.Ddd.UnitOfWork", "src\Skywalker.Ddd.UnitOfWork\Skywalker.Ddd.UnitOfWork.csproj", "{54060E2B-AC47-412B-852D-7EFD80999F18}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Skywalker.Ddd.UnitOfWork", "src\Skywalker.Ddd.UnitOfWork\Skywalker.Ddd.UnitOfWork.csproj", "{54060E2B-AC47-412B-852D-7EFD80999F18}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Skywalker.Aspects.AspNetCore", "..\Aspects\src\Skywalker.Aspects.AspNetCore\Skywalker.Aspects.AspNetCore.csproj", "{72C7AADE-1703-47C8-BFA2-0DDA9B3E65A2}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Skywalker.Aspects.DynamicProxy", "..\Aspects\src\Skywalker.Aspects.DynamicProxy\Skywalker.Aspects.DynamicProxy.csproj", "{AD5EE5DA-07F8-46B9-86D9-15B25427CD39}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -423,6 +427,30 @@ Global
 		{54060E2B-AC47-412B-852D-7EFD80999F18}.Release|x64.Build.0 = Release|Any CPU
 		{54060E2B-AC47-412B-852D-7EFD80999F18}.Release|x86.ActiveCfg = Release|Any CPU
 		{54060E2B-AC47-412B-852D-7EFD80999F18}.Release|x86.Build.0 = Release|Any CPU
+		{72C7AADE-1703-47C8-BFA2-0DDA9B3E65A2}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{72C7AADE-1703-47C8-BFA2-0DDA9B3E65A2}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{72C7AADE-1703-47C8-BFA2-0DDA9B3E65A2}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{72C7AADE-1703-47C8-BFA2-0DDA9B3E65A2}.Debug|x64.Build.0 = Debug|Any CPU
+		{72C7AADE-1703-47C8-BFA2-0DDA9B3E65A2}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{72C7AADE-1703-47C8-BFA2-0DDA9B3E65A2}.Debug|x86.Build.0 = Debug|Any CPU
+		{72C7AADE-1703-47C8-BFA2-0DDA9B3E65A2}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{72C7AADE-1703-47C8-BFA2-0DDA9B3E65A2}.Release|Any CPU.Build.0 = Release|Any CPU
+		{72C7AADE-1703-47C8-BFA2-0DDA9B3E65A2}.Release|x64.ActiveCfg = Release|Any CPU
+		{72C7AADE-1703-47C8-BFA2-0DDA9B3E65A2}.Release|x64.Build.0 = Release|Any CPU
+		{72C7AADE-1703-47C8-BFA2-0DDA9B3E65A2}.Release|x86.ActiveCfg = Release|Any CPU
+		{72C7AADE-1703-47C8-BFA2-0DDA9B3E65A2}.Release|x86.Build.0 = Release|Any CPU
+		{AD5EE5DA-07F8-46B9-86D9-15B25427CD39}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{AD5EE5DA-07F8-46B9-86D9-15B25427CD39}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{AD5EE5DA-07F8-46B9-86D9-15B25427CD39}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{AD5EE5DA-07F8-46B9-86D9-15B25427CD39}.Debug|x64.Build.0 = Debug|Any CPU
+		{AD5EE5DA-07F8-46B9-86D9-15B25427CD39}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{AD5EE5DA-07F8-46B9-86D9-15B25427CD39}.Debug|x86.Build.0 = Debug|Any CPU
+		{AD5EE5DA-07F8-46B9-86D9-15B25427CD39}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{AD5EE5DA-07F8-46B9-86D9-15B25427CD39}.Release|Any CPU.Build.0 = Release|Any CPU
+		{AD5EE5DA-07F8-46B9-86D9-15B25427CD39}.Release|x64.ActiveCfg = Release|Any CPU
+		{AD5EE5DA-07F8-46B9-86D9-15B25427CD39}.Release|x64.Build.0 = Release|Any CPU
+		{AD5EE5DA-07F8-46B9-86D9-15B25427CD39}.Release|x86.ActiveCfg = Release|Any CPU
+		{AD5EE5DA-07F8-46B9-86D9-15B25427CD39}.Release|x86.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

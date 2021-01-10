@@ -1,4 +1,5 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Logging;
 using Skywalker.Ddd.UnitOfWork.Abstractions;
 using System.Diagnostics.CodeAnalysis;
 
@@ -11,9 +12,7 @@ namespace Skywalker.Ddd.UnitOfWork
         private readonly IHybridServiceScopeFactory _serviceScopeFactory;
         private readonly IAmbientUnitOfWork _ambientUnitOfWork;
 
-        public UnitOfWorkManager(
-            IAmbientUnitOfWork ambientUnitOfWork, 
-            IHybridServiceScopeFactory serviceScopeFactory)
+        public UnitOfWorkManager(IAmbientUnitOfWork ambientUnitOfWork, IHybridServiceScopeFactory serviceScopeFactory)
         {
             _ambientUnitOfWork = ambientUnitOfWork;
             _serviceScopeFactory = serviceScopeFactory;
@@ -39,7 +38,7 @@ namespace Skywalker.Ddd.UnitOfWork
         {
             Check.NotNull(reservationName, nameof(reservationName));
 
-            if (!requiresNew && 
+            if (!requiresNew &&
                 _ambientUnitOfWork.UnitOfWork != null &&
                 _ambientUnitOfWork.UnitOfWork.IsReservedFor(reservationName))
             {
