@@ -18,10 +18,7 @@ namespace Microsoft.Extensions.Hosting
         /// <param name="options">The default <see cref="IServiceProvider"/> based options.</param>
         /// <param name="configure">The <see cref="Action{InterceptionBuilder}"/> to perform further interception based service registrations.</param>
         /// <returns>The current <see cref="IHostBuilder"/>.</returns>
-        public static IHostBuilder UseInterceptableServiceProvider(
-            this IHostBuilder builder,
-            ServiceProviderOptions options = null,
-            Action<InterceptionBuilder> configure = null)
+        public static IHostBuilder UseInterceptableServiceProvider(this IHostBuilder builder, ServiceProviderOptions? options = null, Action<InterceptionBuilder>? configure = null)
         {
             Check.NotNull(builder, nameof(builder));
             return builder.UseServiceProviderFactory(new InterceptableServiceProviderFactory(options, configure));

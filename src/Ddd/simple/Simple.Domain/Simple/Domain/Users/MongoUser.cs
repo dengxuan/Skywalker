@@ -4,12 +4,12 @@ using System.Collections.Generic;
 
 namespace Simple.Domain.Users
 {
-    public class UserValue : AggregateRoot<int>
+    public class UserValue : AggregateRoot<Guid>
     {
         public string Value { get; set; }
     }
 
-    public class UserOrder : AggregateRoot<int>
+    public class UserOrder : AggregateRoot<Guid>
     {
         public int Amount { get; set; }
 

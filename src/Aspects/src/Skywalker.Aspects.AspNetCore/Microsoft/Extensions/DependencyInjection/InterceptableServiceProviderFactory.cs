@@ -33,7 +33,7 @@ namespace Skywalker.Aspects
         public IServiceCollection CreateBuilder(IServiceCollection services)
         {
             Check.NotNull(services, nameof(services));
-            services.TryAddInterception(_configure);
+            services.TryAddAspects(_configure);
 
             var provider = services.BuildServiceProvider();
             var factoryCache = provider.GetRequiredService<IInterceptableProxyFactoryCache>();

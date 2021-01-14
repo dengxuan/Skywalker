@@ -1,10 +1,11 @@
 ﻿using Skywalker.Application.Dtos.Contracts;
+using System;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 
 namespace Simple.Application.Abstractions
 {
-    public class UserDto : EntityDto
+    public class UserDto : EntityDto<Guid>
     {
         [NotNull]
         public string Name { get; set; }

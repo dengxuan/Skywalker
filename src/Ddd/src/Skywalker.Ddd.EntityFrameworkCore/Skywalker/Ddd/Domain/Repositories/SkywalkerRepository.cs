@@ -205,7 +205,6 @@ namespace Skywalker.Ddd.Domain.Repositories
                 SetConcurrencyStampIfNull(entity);
                 await ApplySkywalkerConceptsForAddedEntityAsync(entity);
             }
-
             await DbSet.AddRangeAsync(entities, GetCancellationToken(cancellationToken));
 
             return entities.Count();

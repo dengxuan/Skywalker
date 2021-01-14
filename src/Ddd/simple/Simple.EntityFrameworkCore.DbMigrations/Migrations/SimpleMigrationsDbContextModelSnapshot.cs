@@ -17,13 +17,12 @@ namespace Simple.EntityFrameworkCore.DbMigrations.Migrations
             modelBuilder
                 .HasAnnotation("_Skywalker_DatabaseProvider", EntityFrameworkCoreDatabaseProvider.MySql)
                 .HasAnnotation("Relational:MaxIdentifierLength", 64)
-                .HasAnnotation("ProductVersion", "5.0.1");
+                .HasAnnotation("ProductVersion", "5.0.2");
 
             modelBuilder.Entity("Simple.Domain.Users.User", b =>
                 {
-                    b.Property<short>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("smallint");
+                    b.Property<Guid>("Id")
+                        .HasColumnType("char(36)");
 
                     b.Property<string>("ConcurrencyStamp")
                         .IsConcurrencyToken()
@@ -47,9 +46,8 @@ namespace Simple.EntityFrameworkCore.DbMigrations.Migrations
 
             modelBuilder.Entity("Simple.Domain.Users.UserOrder", b =>
                 {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
+                    b.Property<Guid>("Id")
+                        .HasColumnType("char(36)");
 
                     b.Property<int>("Amount")
                         .HasColumnType("int");
@@ -65,8 +63,8 @@ namespace Simple.EntityFrameworkCore.DbMigrations.Migrations
                         .HasColumnType("datetime(6)")
                         .HasColumnName("CreationTime");
 
-                    b.Property<short?>("UserId")
-                        .HasColumnType("smallint");
+                    b.Property<Guid?>("UserId")
+                        .HasColumnType("char(36)");
 
                     b.HasKey("Id");
 
@@ -77,9 +75,8 @@ namespace Simple.EntityFrameworkCore.DbMigrations.Migrations
 
             modelBuilder.Entity("Simple.Domain.Users.UserValue", b =>
                 {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
+                    b.Property<Guid>("Id")
+                        .HasColumnType("char(36)");
 
                     b.Property<string>("ConcurrencyStamp")
                         .IsConcurrencyToken()
@@ -92,8 +89,8 @@ namespace Simple.EntityFrameworkCore.DbMigrations.Migrations
                         .HasColumnType("datetime(6)")
                         .HasColumnName("CreationTime");
 
-                    b.Property<int?>("UserOrderId")
-                        .HasColumnType("int");
+                    b.Property<Guid?>("UserOrderId")
+                        .HasColumnType("char(36)");
 
                     b.Property<string>("Value")
                         .IsRequired()

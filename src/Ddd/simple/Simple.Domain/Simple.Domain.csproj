@@ -7,7 +7,7 @@
     <Import Project="..\..\..\..\skywalker.props" />
 
     <ItemGroup>
-      <PackageReference Include="Microsoft.EntityFrameworkCore" Version="5.0.1" />
+      <PackageReference Include="Microsoft.EntityFrameworkCore" Version="5.0.2" />
     </ItemGroup>
 
     <ItemGroup>

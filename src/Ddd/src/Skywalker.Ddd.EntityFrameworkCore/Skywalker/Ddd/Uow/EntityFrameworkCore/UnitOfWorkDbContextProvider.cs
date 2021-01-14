@@ -43,7 +43,6 @@ namespace Skywalker.UnitOfWork.EntityFrameworkCore
                 throw new SkywalkerException("ConnectionString Can't be null!");
             }
             var dbContextKey = $"{typeof(TDbContext).FullName}_{connectionString}";
-            _logger.LogInformation("DbContext key is : {dbContextKey}", dbContextKey);
             var databaseApi = unitOfWork.GetOrAddDatabaseApi(
                 dbContextKey,
                 () => new EfCoreDatabaseApi<TDbContext>(
@@ -55,7 +54,6 @@ namespace Skywalker.UnitOfWork.EntityFrameworkCore
 
         private TDbContext CreateDbContext(IUnitOfWork unitOfWork, string connectionStringName, string connectionString)
         {
-            _logger.LogInformation("Create DbContext Use connectionStringName {0} Or connectionString: {1}", connectionStringName, connectionString);
             var creationContext = new SkywalkerDbContextCreationContext(connectionStringName, connectionString);
             using (SkywalkerDbContextCreationContext.Use(creationContext))
             {

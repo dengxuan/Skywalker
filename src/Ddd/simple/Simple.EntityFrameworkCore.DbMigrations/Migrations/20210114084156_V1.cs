@@ -1,5 +1,4 @@
 ﻿using System;
-using Microsoft.EntityFrameworkCore.Metadata;
 using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace Simple.EntityFrameworkCore.DbMigrations.Migrations
@@ -9,29 +8,26 @@ namespace Simple.EntityFrameworkCore.DbMigrations.Migrations
         protected override void Up(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.CreateTable(
-                name: "SmpUserValues",
+                name: "SmpUsers",
                 columns: table => new
                 {
-                    Id = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("MySql:ValueGenerationStrategy", MySqlValueGenerationStrategy.IdentityColumn),
-                    Value = table.Column<string>(type: "longtext CHARACTER SET utf8mb4", nullable: false),
+                    Id = table.Column<Guid>(type: "char(36)", nullable: false),
+                    Name = table.Column<string>(type: "longtext CHARACTER SET utf8mb4", nullable: false),
                     ConcurrencyStamp = table.Column<string>(type: "varchar(40) CHARACTER SET utf8mb4", maxLength: 40, nullable: false),
                     CreationTime = table.Column<DateTime>(type: "datetime(6)", nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_SmpUserValues", x => x.Id);
+                    table.PrimaryKey("PK_SmpUsers", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
                 name: "UserOrder",
                 columns: table => new
                 {
-                    Id = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("MySql:ValueGenerationStrategy", MySqlValueGenerationStrategy.IdentityColumn),
+                    Id = table.Column<Guid>(type: "char(36)", nullable: false),
                     Amount = table.Column<int>(type: "int", nullable: false),
-                    UserValueId = table.Column<int>(type: "int", nullable: true),
-                    UserId = table.Column<short>(type: "smallint", nullable: true),
+                    UserId = table.Column<Guid>(type: "char(36)", nullable: true),
                     ConcurrencyStamp = table.Column<string>(type: "varchar(40) CHARACTER SET utf8mb4", maxLength: 40, nullable: false),
                     CreationTime = table.Column<DateTime>(type: "datetime(6)", nullable: false)
                 },
@@ -44,32 +40,50 @@ namespace Simple.EntityFrameworkCore.DbMigrations.Migrations
                         principalTable: "SmpUsers",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Restrict);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "SmpUserValues",
+                columns: table => new
+                {
+                    Id = table.Column<Guid>(type: "char(36)", nullable: false),
+                    Value = table.Column<string>(type: "longtext CHARACTER SET utf8mb4", nullable: false),
+                    UserOrderId = table.Column<Guid>(type: "char(36)", nullable: true),
+                    ConcurrencyStamp = table.Column<string>(type: "varchar(40) CHARACTER SET utf8mb4", maxLength: 40, nullable: false),
+                    CreationTime = table.Column<DateTime>(type: "datetime(6)", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_SmpUserValues", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_UserOrder_SmpUserValues_UserValueId",
-                        column: x => x.UserValueId,
-                        principalTable: "SmpUserValues",
+                        name: "FK_SmpUserValues_UserOrder_UserOrderId",
+                        column: x => x.UserOrderId,
+                        principalTable: "UserOrder",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Restrict);
                 });
 
             migrationBuilder.CreateIndex(
+                name: "IX_SmpUserValues_UserOrderId",
+                table: "SmpUserValues",
+                column: "UserOrderId");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_UserOrder_UserId",
                 table: "UserOrder",
                 column: "UserId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_UserOrder_UserValueId",
-                table: "UserOrder",
-                column: "UserValueId");
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropTable(
+                name: "SmpUserValues");
+
+            migrationBuilder.DropTable(
                 name: "UserOrder");
 
             migrationBuilder.DropTable(
-                name: "SmpUserValues");
+                name: "SmpUsers");
         }
     }
 }

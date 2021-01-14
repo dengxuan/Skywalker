@@ -22,7 +22,7 @@ namespace Simple.WebApi.Hosting
 
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddInterception();
+            services.AddAspects();
             services.AddControllers().ConfigureApplicationPartManager(apm =>
             {
                 apm.ApplicationParts.Add(new AssemblyPart(typeof(SimpleController).Assembly));

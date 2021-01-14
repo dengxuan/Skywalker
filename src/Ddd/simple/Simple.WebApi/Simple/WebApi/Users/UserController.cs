@@ -36,9 +36,17 @@ namespace Simple.WebApi.Users
 
         [HttpGet]
         [Route("all-{name}")]
-        public Task<List<UserDto>> GetUsersAsync(string name)
+        public async Task<List<UserDto>> GetUsersAsync(string name)
         {
-            return _simpleUserApplicationService.FindUsersAsync(name);
+             await _simpleUserApplicationService.CreateUserAsync(name);
+            return await _simpleUserApplicationService.FindUsersAsync(name);
+        }
+
+        [HttpGet]
+        [Route("batch-crtete-{name}-{count}")]
+        public Task<List<UserDto>> BatchCreateUsersAsync(string name, int count)
+        {
+            return _simpleUserApplicationService.BatchCreateUsersAsync(name, count);
         }
     }
 }

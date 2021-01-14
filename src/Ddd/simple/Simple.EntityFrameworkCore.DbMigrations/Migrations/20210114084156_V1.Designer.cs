@@ -10,7 +10,7 @@ using Skywalker.Ddd.EntityFrameworkCore;
 namespace Simple.EntityFrameworkCore.DbMigrations.Migrations
 {
     [DbContext(typeof(SimpleMigrationsDbContext))]
-    [Migration("20201229133213_V1")]
+    [Migration("20210114084156_V1")]
     partial class V1
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -19,13 +19,12 @@ namespace Simple.EntityFrameworkCore.DbMigrations.Migrations
             modelBuilder
                 .HasAnnotation("_Skywalker_DatabaseProvider", EntityFrameworkCoreDatabaseProvider.MySql)
                 .HasAnnotation("Relational:MaxIdentifierLength", 64)
-                .HasAnnotation("ProductVersion", "5.0.1");
+                .HasAnnotation("ProductVersion", "5.0.2");
 
             modelBuilder.Entity("Simple.Domain.Users.User", b =>
                 {
-                    b.Property<short>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("smallint");
+                    b.Property<Guid>("Id")
+                        .HasColumnType("char(36)");
 
                     b.Property<string>("ConcurrencyStamp")
                         .IsConcurrencyToken()
@@ -49,9 +48,8 @@ namespace Simple.EntityFrameworkCore.DbMigrations.Migrations
 
             modelBuilder.Entity("Simple.Domain.Users.UserOrder", b =>
                 {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
+                    b.Property<Guid>("Id")
+                        .HasColumnType("char(36)");
 
                     b.Property<int>("Amount")
                         .HasColumnType("int");
@@ -67,26 +65,20 @@ namespace Simple.EntityFrameworkCore.DbMigrations.Migrations
                         .HasColumnType("datetime(6)")
                         .HasColumnName("CreationTime");
 
-                    b.Property<short?>("UserId")
-                        .HasColumnType("smallint");
-
-                    b.Property<int?>("UserValueId")
-                        .HasColumnType("int");
+                    b.Property<Guid?>("UserId")
+                        .HasColumnType("char(36)");
 
                     b.HasKey("Id");
 
                     b.HasIndex("UserId");
-
-                    b.HasIndex("UserValueId");
 
                     b.ToTable("UserOrder");
                 });
 
             modelBuilder.Entity("Simple.Domain.Users.UserValue", b =>
                 {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
+                    b.Property<Guid>("Id")
+                        .HasColumnType("char(36)");
 
                     b.Property<string>("ConcurrencyStamp")
                         .IsConcurrencyToken()
@@ -99,11 +91,16 @@ namespace Simple.EntityFrameworkCore.DbMigrations.Migrations
                         .HasColumnType("datetime(6)")
                         .HasColumnName("CreationTime");
 
+                    b.Property<Guid?>("UserOrderId")
+                        .HasColumnType("char(36)");
+
                     b.Property<string>("Value")
                         .IsRequired()
                         .HasColumnType("longtext CHARACTER SET utf8mb4");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("UserOrderId");
 
                     b.ToTable("SmpUserValues");
                 });
@@ -113,17 +110,23 @@ namespace Simple.EntityFrameworkCore.DbMigrations.Migrations
                     b.HasOne("Simple.Domain.Users.User", null)
                         .WithMany("UserOrders")
                         .HasForeignKey("UserId");
+                });
 
-                    b.HasOne("Simple.Domain.Users.UserValue", "UserValue")
-                        .WithMany()
-                        .HasForeignKey("UserValueId");
-
-                    b.Navigation("UserValue");
+            modelBuilder.Entity("Simple.Domain.Users.UserValue", b =>
+                {
+                    b.HasOne("Simple.Domain.Users.UserOrder", null)
+                        .WithMany("UserValues")
+                        .HasForeignKey("UserOrderId");
                 });
 
             modelBuilder.Entity("Simple.Domain.Users.User", b =>
                 {
                     b.Navigation("UserOrders");
+                });
+
+            modelBuilder.Entity("Simple.Domain.Users.UserOrder", b =>
+                {
+                    b.Navigation("UserValues");
                 });
 #pragma warning restore 612, 618
         }

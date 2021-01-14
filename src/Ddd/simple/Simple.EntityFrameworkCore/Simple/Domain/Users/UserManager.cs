@@ -11,16 +11,18 @@ namespace Simple.Domain.Users
 {
     public class UserManager : DomainService, IUserManager
     {
-        private readonly IRepository<User, short> _users;
+        private readonly IRepository<User, Guid> _users;
 
-        public UserManager(IRepository<User, short> users)
+        public UserManager(IRepository<User, Guid> users)
         {
             _users = users;
         }
 
         public Task<List<User>> GetUsersAsync()
         {
-            return _users.ToListAsync();
+            return _users.Include(u=>u.UserOrders)
+                            .ThenInclude(o=>o.UserValues.Where(predicate => predicate.Value != "")).AsSplitQuery().AsTracking()
+                         .ToListAsync();
         }
 
         public Task<List<User>> FindUsersAsync([NotNull] string name)
@@ -41,6 +43,17 @@ namespace Simple.Domain.Users
         {
             User user = await _users.InsertAsync(mongoUser);
             return user;
+        }
+
+        public async Task<List<User>> BatchCreateUser(string name, int count)
+        {
+            List<User> users = new List<User>();
+            for (int i = 0; i < count; i++)
+            {
+                users.Add( new User { Name = name });
+            }
+            await _users.InsertAsync(users);
+            return users;
         }
     }
 }
