@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace Skywalker.Extensions.Caching.Abstractions
+namespace Skywalker.Caching.Abstractions
 {
     /// <summary>
     /// Defines a cache that can be store and get items by keys.

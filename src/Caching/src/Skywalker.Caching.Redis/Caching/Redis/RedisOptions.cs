@@ -1,7 +1,7 @@
-﻿namespace Skywalker.Extensions.Caching.Redis
+﻿namespace Skywalker.Caching.Redis
 {
     public class RedisOptions
     {
-        public string ConnectionString { get; set; }
+        public string ConnectionString { get; set; } = "127.0.0.1:6379";
     }
 }

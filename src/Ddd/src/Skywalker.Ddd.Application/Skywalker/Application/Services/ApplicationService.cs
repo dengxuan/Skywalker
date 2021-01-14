@@ -23,8 +23,7 @@ namespace Skywalker.Application.Services
         private Type _localizationResource = typeof(DefaultResource);
         private readonly object _locker = new object();
 
-        protected TService LazyGetRequiredService<TService>(ref TService reference)
-            => LazyGetRequiredService(typeof(TService), ref reference);
+        protected TService LazyGetRequiredService<TService>(ref TService reference) => LazyGetRequiredService(typeof(TService), ref reference);
 
         protected TRef LazyGetRequiredService<TRef>(Type serviceType, ref TRef reference)
         {

@@ -1,6 +1,6 @@
 ﻿using System.Text;
 
-namespace Skywalker.Extensions.Caching
+namespace Skywalker.Caching
 {
     public class CachingOptions
     {

@@ -1,4 +1,5 @@
-﻿using Skywalker.Domain.Repositories;
+﻿using Skywalker.Caching.Abstractions;
+using Skywalker.Domain.Repositories;
 using Skywalker.Domain.Services;
 using Skywalker.IdentityServer.Models;
 using System;
@@ -12,7 +13,7 @@ namespace Skywalker.IdentityServer.Domain.IdentityResources
     {
         private readonly IRepository<IdentityResource> _identityResources;
 
-        public IdentityResourceManager(IRepository<IdentityResource> identityResources)
+        public IdentityResourceManager(IRepository<IdentityResource> identityResources, ICachingProvider cachingProvider) : base(cachingProvider)
         {
             _identityResources = identityResources;
         }

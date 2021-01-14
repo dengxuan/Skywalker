@@ -1,10 +1,11 @@
-﻿using Skywalker.Extensions.Caching.Abstractions;
-using Skywalker.Extensions.Caching.Redis.Abstractions;
+﻿using Skywalker.Caching.Abstractions;
+using Skywalker.Caching.Redis.Abstractions;
+using Skywalker.Extensions;
 using StackExchange.Redis;
 using System;
 using System.Threading;
 
-namespace Skywalker.Extensions.Caching.Redis
+namespace Skywalker.Caching.Redis
 {
     internal class RedisCaching : ICaching
     {

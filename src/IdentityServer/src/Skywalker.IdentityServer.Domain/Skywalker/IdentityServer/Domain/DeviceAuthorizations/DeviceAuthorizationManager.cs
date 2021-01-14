@@ -1,4 +1,5 @@
-﻿using Skywalker.Domain.Repositories;
+﻿using Skywalker.Caching.Abstractions;
+using Skywalker.Domain.Repositories;
 using Skywalker.Domain.Services;
 using Skywalker.IdentityServer.Models;
 using System.Threading.Tasks;
@@ -9,7 +10,7 @@ namespace Skywalker.IdentityServer.Domain.DeviceAuthorizations
     {
         private readonly IRepository<DeviceAuthorization> _deviceAuthorizations;
 
-        public DeviceAuthorizationManager(IRepository<DeviceAuthorization> deviceAuthorizations)
+        public DeviceAuthorizationManager(IRepository<DeviceAuthorization> deviceAuthorizations, ICachingProvider cachingProvider) : base(cachingProvider)
         {
             _deviceAuthorizations = deviceAuthorizations;
         }

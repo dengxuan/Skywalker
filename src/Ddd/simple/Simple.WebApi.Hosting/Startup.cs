@@ -6,7 +6,6 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Simple.Application;
 using Simple.EntityFrameworkCore;
-using Skywalker.Aspects;
 using Skywalker.Ddd.EntityFrameworkCore;
 
 namespace Simple.WebApi.Hosting
@@ -23,6 +22,10 @@ namespace Simple.WebApi.Hosting
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddAspects();
+            services.AddRedisCaching(configure =>
+            {
+                configure.ConnectionString = "127.0.0.1";
+            });
             services.AddControllers().ConfigureApplicationPartManager(apm =>
             {
                 apm.ApplicationParts.Add(new AssemblyPart(typeof(SimpleController).Assembly));

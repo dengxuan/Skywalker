@@ -1,4 +1,4 @@
-﻿using Microsoft.Extensions.DependencyInjection;
+﻿using Skywalker.Caching.Abstractions;
 using Skywalker.Domain.Repositories;
 using Skywalker.Domain.Services;
 using Skywalker.IdentityServer.Models;
@@ -13,7 +13,7 @@ namespace Skywalker.IdentityServer.Domain.ApiResources
     {
         private readonly IRepository<ApiResource> _apiResources;
 
-        public ApiResoueceManager(IRepository<ApiResource> apiResources)
+        public ApiResoueceManager(IRepository<ApiResource> apiResources, ICachingProvider cachingProvider) : base(cachingProvider)
         {
             _apiResources = apiResources;
         }

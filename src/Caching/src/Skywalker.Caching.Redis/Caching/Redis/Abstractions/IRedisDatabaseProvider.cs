@@ -1,6 +1,6 @@
 ﻿using StackExchange.Redis;
 
-namespace Skywalker.Extensions.Caching.Redis.Abstractions
+namespace Skywalker.Caching.Redis.Abstractions
 {
     public interface IRedisDatabaseProvider
     {

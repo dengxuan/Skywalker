@@ -1,4 +1,5 @@
-﻿using Skywalker.Domain.Repositories;
+﻿using Skywalker.Caching.Abstractions;
+using Skywalker.Domain.Repositories;
 using Skywalker.Domain.Services;
 using Skywalker.IdentityServer.Models;
 using System.Threading.Tasks;
@@ -9,7 +10,7 @@ namespace Skywalker.IdentityServer.Domain.Clients
     {
         private readonly IRepository<Client> _clients;
 
-        public ClientManager(IRepository<Client> clients)
+        public ClientManager(IRepository<Client> clients, ICachingProvider cachingProvider) : base(cachingProvider)
         {
             _clients = clients;
         }

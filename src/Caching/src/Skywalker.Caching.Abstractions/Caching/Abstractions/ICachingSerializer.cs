@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace Skywalker.Extensions.Caching.Abstractions
+namespace Skywalker.Caching.Abstractions
 {
     public interface ICachingSerializer
     {
@@ -18,6 +18,6 @@ namespace Skywalker.Extensions.Caching.Abstractions
         /// <param name="type">Type of the objec to deserialize</param>
         /// <param name="bytes">The data to deserialize</param>
         /// <returns>The deserialized object</returns>
-        object Deserialize(Type type, byte[] bytes);
+        object? Deserialize(Type type, byte[] bytes);
     }
 }

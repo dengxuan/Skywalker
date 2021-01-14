@@ -8,6 +8,7 @@
     <Import Project="..\..\..\..\version.props" />
 
   <ItemGroup>
+    <ProjectReference Include="..\..\..\Caching\src\Skywalker.Caching.Abstractions\Skywalker.Caching.Abstractions.csproj" />
     <ProjectReference Include="..\..\..\EventBus\src\Skywalker.EventBus.Abstractions\Skywalker.EventBus.Abstractions.csproj" />
     <ProjectReference Include="..\..\..\Extensions\src\Skywalker.Extensions.GuidGenerator\Skywalker.Extensions.GuidGenerator.csproj" />
     <ProjectReference Include="..\..\..\Extensions\src\Skywalker.Extensions.Threading\Skywalker.Extensions.Threading.csproj" />

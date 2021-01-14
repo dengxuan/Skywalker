@@ -1,11 +1,10 @@
-﻿using Microsoft.Extensions.DependencyInjection;
-using Skywalker.Extensions.Caching;
-using Skywalker.Extensions.Caching.Abstractions;
-using Skywalker.Extensions.Caching.Redis;
-using Skywalker.Extensions.Caching.Redis.Abstractions;
+﻿using Skywalker.Caching;
+using Skywalker.Caching.Abstractions;
+using Skywalker.Caching.Redis;
+using Skywalker.Caching.Redis.Abstractions;
 using System;
 
-namespace Skywalker.Extensions.DependencyInjection
+namespace Microsoft.Extensions.DependencyInjection
 {
     public static class RedisCachingIServiceCollectionExtensions
     {

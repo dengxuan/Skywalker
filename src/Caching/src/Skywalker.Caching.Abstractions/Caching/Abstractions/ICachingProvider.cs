@@ -1,4 +1,4 @@
-﻿namespace Skywalker.Extensions.Caching.Abstractions
+﻿namespace Skywalker.Caching.Abstractions
 {
     public interface ICachingProvider
     {

@@ -1,7 +1,6 @@
-﻿using StackExchange.Redis;
-using System;
+﻿using System;
 
-namespace Skywalker.Extensions
+namespace StackExchange.Redis
 {
     /// <summary>
     /// Extension methods for <see cref="IDatabase"/>.

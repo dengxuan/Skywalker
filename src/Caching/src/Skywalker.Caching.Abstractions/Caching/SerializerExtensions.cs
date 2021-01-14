@@ -1,7 +1,7 @@
-﻿using Skywalker.Extensions.Caching.Abstractions;
+﻿using Skywalker.Caching.Abstractions;
 using System;
 
-namespace Skywalker.Extensions.Caching
+namespace Skywalker.Caching
 {
     public static class SerializerExtensions
     {
@@ -12,9 +12,12 @@ namespace Skywalker.Extensions.Caching
         /// <param name="bytes">The data to deserialize</param>
         /// <typeparam name="T">The type to instantiate</typeparam>
         /// <returns>The deserialized object</returns>
-        public static T Deserialize<T>(this ICachingSerializer serializer, byte[] bytes)
+        public static T? Deserialize<T>(this ICachingSerializer serializer, byte[] bytes)
         {
-            if (serializer == null) throw new ArgumentNullException(nameof(serializer));
+            if (serializer == null)
+            {
+                throw new ArgumentNullException(nameof(serializer));
+            }
             return (T)serializer.Deserialize(typeof(T), bytes);
         }
     }

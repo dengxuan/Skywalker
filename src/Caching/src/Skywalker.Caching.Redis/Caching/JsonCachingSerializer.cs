@@ -1,8 +1,8 @@
 ﻿using Newtonsoft.Json;
-using Skywalker.Extensions.Caching.Abstractions;
+using Skywalker.Caching.Abstractions;
 using System;
 
-namespace Skywalker.Extensions.Caching
+namespace Skywalker.Caching
 {
     internal class JsonCachingSerializer: ICachingSerializer
     {
@@ -23,7 +23,7 @@ namespace Skywalker.Extensions.Caching
         }
 
         /// <inheritdoc />
-        public object Deserialize(Type type, byte[] bytes)
+        public object? Deserialize(Type type, byte[] bytes)
         {
             if (type == null) throw new ArgumentNullException(nameof(type));
             if (bytes == null) throw new ArgumentNullException(nameof(bytes));

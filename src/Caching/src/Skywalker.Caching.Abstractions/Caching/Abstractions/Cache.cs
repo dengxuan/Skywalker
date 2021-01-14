@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace Skywalker.Extensions.Caching.Abstractions
+namespace Skywalker.Caching.Abstractions
 {
     [AttributeUsage(AttributeTargets.Class, AllowMultiple = false, Inherited = false)]
     public class CacheAttribute : Attribute

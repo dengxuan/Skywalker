@@ -1,4 +1,5 @@
-﻿using Skywalker.Domain.Repositories;
+﻿using Skywalker.Caching.Abstractions;
+using Skywalker.Domain.Repositories;
 using Skywalker.Domain.Services;
 using Skywalker.IdentityServer.Models;
 using System;
@@ -13,7 +14,7 @@ namespace Skywalker.IdentityServer.Domain.ApiScopes
     {
         private readonly IRepository<ApiScope> _apiScopes;
 
-        public ApiScopeManager(IRepository<ApiScope> apiScopes)
+        public ApiScopeManager(IRepository<ApiScope> apiScopes, ICachingProvider cachingProvider) : base(cachingProvider)
         {
             _apiScopes = apiScopes;
         }

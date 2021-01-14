@@ -1,4 +1,5 @@
-﻿using Skywalker.Domain.Repositories;
+﻿using Skywalker.Caching.Abstractions;
+using Skywalker.Domain.Repositories;
 using Skywalker.Domain.Services;
 using Skywalker.IdentityServer.Extensions;
 using Skywalker.IdentityServer.Models;
@@ -6,7 +7,6 @@ using Skywalker.IdentityServer.Stores;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 
 namespace Skywalker.IdentityServer.Domain.PersistedGrants
@@ -15,7 +15,7 @@ namespace Skywalker.IdentityServer.Domain.PersistedGrants
     {
         private readonly IRepository<PersistedGrant, string> _persistedGrants;
 
-        public PersistedGrantManager(IRepository<PersistedGrant, string> persistedGrants)
+        public PersistedGrantManager(IRepository<PersistedGrant, string> persistedGrants, ICachingProvider cachingProvider) : base(cachingProvider)
         {
             _persistedGrants = persistedGrants;
         }

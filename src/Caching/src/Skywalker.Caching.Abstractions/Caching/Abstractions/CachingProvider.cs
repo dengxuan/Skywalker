@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Concurrent;
 
-namespace Skywalker.Extensions.Caching.Abstractions
+namespace Skywalker.Caching.Abstractions
 {
     public abstract class CachingProvider : ICachingProvider
     {

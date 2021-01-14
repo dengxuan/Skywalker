@@ -1,9 +1,9 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
-using Skywalker.Extensions.Caching.Abstractions;
-using Skywalker.Extensions.Caching.Redis.Abstractions;
+using Skywalker.Caching.Abstractions;
+using Skywalker.Caching.Redis.Abstractions;
 using System;
 
-namespace Skywalker.Extensions.Caching.Redis
+namespace Skywalker.Caching.Redis
 {
     public class RedisCachingProvider : CachingProvider
     {
