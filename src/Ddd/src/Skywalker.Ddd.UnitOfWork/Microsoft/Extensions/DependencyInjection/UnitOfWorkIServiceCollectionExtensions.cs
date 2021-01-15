@@ -5,7 +5,7 @@ namespace Microsoft.Extensions.DependencyInjection
 {
     public static class UnitOfWorkIServiceCollectionExtensions
     {
-        public static IServiceCollection AddUnitOfWork(this IServiceCollection services)
+        public static IServiceCollection UseUnitOfWork(this IServiceCollection services)
         {
             return services;
         }

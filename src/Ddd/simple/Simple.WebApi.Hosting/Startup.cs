@@ -45,7 +45,6 @@ namespace Simple.WebApi.Hosting
                     options.AddProfile<SimpleApplicationAutoMapperProfile>();
                 });
             });
-            services.AddUnitOfWork();
             services.AddWebApiResponseWrapper();
         }
 

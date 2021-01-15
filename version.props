@@ -1,8 +1,8 @@
 <Project>
     <PropertyGroup>
-        <VersionPrefix>1.0.10</VersionPrefix>
+        <VersionPrefix>2.0.1</VersionPrefix>
         <VersionSuffix></VersionSuffix>
-        <BuildNumber Condition="'$(BuildNumber)' == ''">1</BuildNumber>
+        <BuildNumber Condition="'$(BuildNumber)' == ''">0</BuildNumber>
         <PackageVersion Condition="'$(IsFinalBuild)' == 'true' AND '$(VersionSuffix)' == 'rtm' ">$(VersionPrefix).$(BuildNumber)</PackageVersion>
         <PackageVersion Condition="'$(IsFinalBuild)' == 'true' AND '$(VersionSuffix)' != 'rtm' ">$(VersionPrefix)-$(VersionSuffix)$(BuildNumber)</PackageVersion>
         <VersionSuffix Condition="'$(VersionSuffix)' != '' And '$(BuildNumber)' != ''">$(VersionSuffix)$(BuildNumber)</VersionSuffix>
