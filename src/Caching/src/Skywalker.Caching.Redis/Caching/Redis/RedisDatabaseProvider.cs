@@ -1,4 +1,5 @@
-﻿using Skywalker.Caching.Redis.Abstractions;
+﻿using Microsoft.Extensions.Options;
+using Skywalker.Caching.Redis.Abstractions;
 using StackExchange.Redis;
 using System;
 
@@ -9,9 +10,13 @@ namespace Skywalker.Caching.Redis
         private readonly RedisOptions _options;
         private readonly Lazy<ConnectionMultiplexer> _connectionMultiplexer;
 
-        public RedisDatabaseProvider(RedisOptions options)
+        public RedisDatabaseProvider(IOptionsMonitor<RedisOptions> options)
         {
-            _options = options;
+            _options = options.CurrentValue;
+            options.OnChange(listener =>
+            {
+                _options.ConnectionString = listener.ConnectionString;
+            });
             _connectionMultiplexer = new Lazy<ConnectionMultiplexer>(CreateConnectionMultiplexer);
         }
         /// <summary>

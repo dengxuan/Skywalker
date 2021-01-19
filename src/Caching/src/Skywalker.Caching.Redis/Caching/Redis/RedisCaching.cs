@@ -1,8 +1,8 @@
 ﻿using Skywalker.Caching.Abstractions;
 using Skywalker.Caching.Redis.Abstractions;
-using Skywalker.Extensions;
 using StackExchange.Redis;
 using System;
+using System.Diagnostics.CodeAnalysis;
 using System.Threading;
 
 namespace Skywalker.Caching.Redis
@@ -64,6 +64,41 @@ namespace Skywalker.Caching.Redis
         public void Dispose()
         {
             _locker.Dispose();
+        }
+
+        public TVaule? Get<TVaule>(string key)
+        {
+            byte[] bytes = Get(key);
+            if(bytes == null)
+            {
+                return default;
+            }
+            return _serializer.Deserialize<TVaule>(bytes);
+        }
+
+        public void Set<TVaule>(string key, TVaule value, TimeSpan? expireTime = null)
+        {
+            byte[] bytes = _serializer.Serialize(value);
+            Set(key, bytes, expireTime);
+        }
+
+        public TValue GetOrSet<TValue>(string key, [NotNull] Func<TValue> factory) where TValue : notnull
+        {
+            TValue value = Get<TValue>(key);
+            if (value == null)
+            {
+                try
+                {
+                    _locker.EnterWriteLock();
+                    value = factory();
+                    Set(key, value);
+                }
+                finally
+                {
+                    _locker.EnterWriteLock();
+                }
+            }
+            return value;
         }
     }
 }
