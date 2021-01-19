@@ -9,7 +9,7 @@ namespace Skywalker.Caching
     {
         private readonly CachingOptions _options;
 
-        public JsonCachingSerializer(IOptionsSnapshot<CachingOptions> options)
+        public JsonCachingSerializer(IOptions<CachingOptions> options)
         {
             _options = options.Value;
         }

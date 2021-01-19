@@ -19,7 +19,7 @@ namespace Skywalker.Data
             //Get module specific value if provided
             if (!connectionStringName!.IsNullOrEmpty())
             {
-                var moduleConnString = Options.ConnectionStrings.GetOrDefault(connectionStringName!);
+                var moduleConnString = Options.ConnectionStrings.GetOrDefault(connectionStringName);
                 if (!moduleConnString!.IsNullOrEmpty())
                 {
                     return moduleConnString;

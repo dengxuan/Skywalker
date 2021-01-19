@@ -95,7 +95,7 @@ namespace Skywalker.Caching.Redis
                 }
                 finally
                 {
-                    _locker.EnterWriteLock();
+                    _locker.ExitWriteLock();
                 }
             }
             return value;
