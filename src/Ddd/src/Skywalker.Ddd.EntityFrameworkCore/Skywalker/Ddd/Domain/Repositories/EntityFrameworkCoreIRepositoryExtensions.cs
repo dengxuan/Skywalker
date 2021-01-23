@@ -2,30 +2,32 @@
 using Skywalker.Domain.Entities;
 using Skywalker.Domain.Repositories;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Linq.Expressions;
 
 namespace Skywalker.Ddd.Domain.Repositories
 {
     public static class EntityFrameworkCoreIRepositoryExtensions
     {
-
-        public static IQueryable<TEntity> WithDetails<TEntity>(this IRepository<TEntity> repository, params Expression<Func<TEntity, object>>[] propertySelectors) where TEntity : class, IEntity
+        public static DbContext GetDbContext<TEntity>(this IReadOnlyRepository<TEntity> repository)
+            where TEntity : class, IEntity
         {
-            if (repository is not IQueryable<TEntity> query)
+            return repository.ToEfCoreRepository().DbContext;
+        }
+
+        public static DbSet<TEntity> GetDbSet<TEntity>(this IReadOnlyRepository<TEntity> repository)
+            where TEntity : class, IEntity
+        {
+            return repository.ToEfCoreRepository().DbSet;
+        }
+
+        public static ISkywalkerRepository<TEntity> ToEfCoreRepository<TEntity>(this IReadOnlyRepository<TEntity> repository)
+            where TEntity : class, IEntity
+        {
+            if (repository is ISkywalkerRepository<TEntity> efCoreRepository)
             {
-                throw new ArgumentException("Repository must be IReadOnlyRepository");
+                return efCoreRepository;
             }
 
-            if (!propertySelectors.IsNullOrEmpty())
-            {
-                foreach (var propertySelector in propertySelectors)
-                {
-                    query = query.Include(propertySelector);
-                }
-            }
-            return query;
+            throw new ArgumentException("Given repository does not implement " + typeof(ISkywalkerRepository<TEntity>).AssemblyQualifiedName, nameof(repository));
         }
     }
 }

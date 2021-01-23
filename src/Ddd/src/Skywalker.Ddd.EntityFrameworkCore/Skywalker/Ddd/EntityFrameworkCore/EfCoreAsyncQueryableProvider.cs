@@ -4,6 +4,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Skywalker.Extensions.Linq;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using System.Linq.Expressions;
 using System.Threading;
@@ -18,12 +19,12 @@ namespace Skywalker.Ddd.EntityFrameworkCore
             return queryable.Provider is EntityQueryProvider;
         }
 
-        public Task<bool> ContainsAsync<T>(IQueryable<T> queryable, T item, CancellationToken cancellationToken = default)
+        public Task<bool> ContainsAsync<T>([NotNull] IQueryable<T> queryable, T item, CancellationToken cancellationToken = default)
         {
             return queryable.ContainsAsync(item, cancellationToken);
         }
 
-        public Task<bool> AnyAsync<T>(IQueryable<T> queryable, Expression<Func<T, bool>> predicate, CancellationToken cancellationToken = default)
+        public Task<bool> AnyAsync<T>([NotNull] IQueryable<T> queryable, Expression<Func<T, bool>> predicate, CancellationToken cancellationToken = default)
         {
             return queryable.AnyAsync(predicate, cancellationToken);
         }

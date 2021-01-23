@@ -11,29 +11,29 @@ using System.Threading.Tasks;
 
 namespace Skywalker.Application.Services
 {
-    public abstract class AbstractKeyReadOnlyAppService<TEntity, TEntityDto, TKey>
-        : AbstractKeyReadOnlyAppService<TEntity, TEntityDto, TEntityDto, TKey, PagedAndSortedResultRequestDto>
+    public abstract class BasicReadOnlyAppService<TEntity, TEntityDto, TKey>
+        : BasicReadOnlyAppService<TEntity, TEntityDto, TEntityDto, TKey, PagedAndSortedResultRequestDto>
         where TEntity : class, IEntity
     {
-        protected AbstractKeyReadOnlyAppService(ILazyLoader lazyLoader, IReadOnlyRepository<TEntity> repository)
+        protected BasicReadOnlyAppService(ILazyLoader lazyLoader, IReadOnlyRepository<TEntity> repository)
             : base(lazyLoader, repository)
         {
 
         }
     }
 
-    public abstract class AbstractKeyReadOnlyAppService<TEntity, TEntityDto, TKey, TGetListInput>
-        : AbstractKeyReadOnlyAppService<TEntity, TEntityDto, TEntityDto, TKey, TGetListInput>
+    public abstract class BasicReadOnlyAppService<TEntity, TEntityDto, TKey, TGetListInput>
+        : BasicReadOnlyAppService<TEntity, TEntityDto, TEntityDto, TKey, TGetListInput>
         where TEntity : class, IEntity
     {
-        protected AbstractKeyReadOnlyAppService(ILazyLoader lazyLoader, IReadOnlyRepository<TEntity> repository)
+        protected BasicReadOnlyAppService(ILazyLoader lazyLoader, IReadOnlyRepository<TEntity> repository)
             : base(lazyLoader, repository)
         {
 
         }
     }
 
-    public abstract class AbstractKeyReadOnlyAppService<TEntity, TGetOutputDto, TGetListOutputDto, TKey, TGetListInput>
+    public abstract class BasicReadOnlyAppService<TEntity, TGetOutputDto, TGetListOutputDto, TKey, TGetListInput>
         : ApplicationService
         , IReadOnlyAppService<TGetOutputDto, TGetListOutputDto, TKey, TGetListInput>
         where TEntity : class, IEntity
@@ -44,7 +44,7 @@ namespace Skywalker.Application.Services
 
         protected virtual string GetListPolicyName { get; set; }
 
-        protected AbstractKeyReadOnlyAppService(ILazyLoader lazyLoader, IReadOnlyRepository<TEntity> repository) : base(lazyLoader)
+        protected BasicReadOnlyAppService(ILazyLoader lazyLoader, IReadOnlyRepository<TEntity> repository) : base(lazyLoader)
         {
             Repository = repository;
         }

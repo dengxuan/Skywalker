@@ -61,6 +61,8 @@ namespace Skywalker.Domain.Repositories
         public abstract Task<List<TEntity>> GetListAsync(CancellationToken cancellationToken = default);
 
         public abstract Task<long> GetCountAsync(CancellationToken cancellationToken = default);
+
+        public abstract Task<List<TEntity>> GetPagedListAsync(int skipCount, int maxResultCount, string sorting, CancellationToken cancellationToken = default);
     }
 
     public abstract class BasicRepositoryBase<TEntity, TKey> : BasicRepositoryBase<TEntity>, IBasicRepository<TEntity, TKey>

@@ -8,44 +8,44 @@ using System.Threading.Tasks;
 
 namespace Skywalker.Application.Services
 {
-    public abstract class AbstractKeyCrudAppService<TEntity, TEntityDto, TKey>
-        : AbstractKeyCrudAppService<TEntity, TEntityDto, TKey, PagedAndSortedResultRequestDto>
+    public abstract class BasicCrudAppService<TEntity, TEntityDto, TKey>
+        : BasicCrudAppService<TEntity, TEntityDto, TKey, PagedAndSortedResultRequestDto>
         where TEntity : class, IEntity
     {
-        protected AbstractKeyCrudAppService(ILazyLoader lazyLoader, IRepository<TEntity> repository)
+        protected BasicCrudAppService(ILazyLoader lazyLoader, IRepository<TEntity> repository)
             : base(lazyLoader, repository)
         {
 
         }
     }
 
-    public abstract class AbstractKeyCrudAppService<TEntity, TEntityDto, TKey, TGetListInput>
-        : AbstractKeyCrudAppService<TEntity, TEntityDto, TKey, TGetListInput, TEntityDto, TEntityDto>
+    public abstract class BasicCrudAppService<TEntity, TEntityDto, TKey, TGetListInput>
+        : BasicCrudAppService<TEntity, TEntityDto, TKey, TGetListInput, TEntityDto, TEntityDto>
         where TEntity : class, IEntity
     {
-        protected AbstractKeyCrudAppService(ILazyLoader lazyLoader, IRepository<TEntity> repository)
+        protected BasicCrudAppService(ILazyLoader lazyLoader, IRepository<TEntity> repository)
             : base(lazyLoader, repository)
         {
 
         }
     }
 
-    public abstract class AbstractKeyCrudAppService<TEntity, TEntityDto, TKey, TGetListInput, TCreateInput>
-        : AbstractKeyCrudAppService<TEntity, TEntityDto, TKey, TGetListInput, TCreateInput, TCreateInput>
+    public abstract class BasicCrudAppService<TEntity, TEntityDto, TKey, TGetListInput, TCreateInput>
+        : BasicCrudAppService<TEntity, TEntityDto, TKey, TGetListInput, TCreateInput, TCreateInput>
         where TEntity : class, IEntity
     {
-        protected AbstractKeyCrudAppService(ILazyLoader lazyLoader, IRepository<TEntity> repository)
+        protected BasicCrudAppService(ILazyLoader lazyLoader, IRepository<TEntity> repository)
             : base(lazyLoader, repository)
         {
 
         }
     }
 
-    public abstract class AbstractKeyCrudAppService<TEntity, TEntityDto, TKey, TGetListInput, TCreateInput, TUpdateInput>
-        : AbstractKeyCrudAppService<TEntity, TEntityDto, TEntityDto, TKey, TGetListInput, TCreateInput, TUpdateInput>
+    public abstract class BasicCrudAppService<TEntity, TEntityDto, TKey, TGetListInput, TCreateInput, TUpdateInput>
+        : BasicCrudAppService<TEntity, TEntityDto, TEntityDto, TKey, TGetListInput, TCreateInput, TUpdateInput>
         where TEntity : class, IEntity
     {
-        protected AbstractKeyCrudAppService(ILazyLoader lazyLoader, IRepository<TEntity> repository)
+        protected BasicCrudAppService(ILazyLoader lazyLoader, IRepository<TEntity> repository)
             : base(lazyLoader, repository)
         {
 
@@ -57,8 +57,8 @@ namespace Skywalker.Application.Services
         }
     }
 
-    public abstract class AbstractKeyCrudAppService<TEntity, TGetOutputDto, TGetListOutputDto, TKey, TGetListInput, TCreateInput, TUpdateInput>
-        : AbstractKeyReadOnlyAppService<TEntity, TGetOutputDto, TGetListOutputDto, TKey, TGetListInput>,
+    public abstract class BasicCrudAppService<TEntity, TGetOutputDto, TGetListOutputDto, TKey, TGetListInput, TCreateInput, TUpdateInput>
+        : BasicReadOnlyAppService<TEntity, TGetOutputDto, TGetListOutputDto, TKey, TGetListInput>,
             ICrudAppService<TGetOutputDto, TGetListOutputDto, TKey, TGetListInput, TCreateInput, TUpdateInput>
         where TEntity : class, IEntity
     {
@@ -70,7 +70,7 @@ namespace Skywalker.Application.Services
 
         protected virtual string DeletePolicyName { get; set; }
 
-        protected AbstractKeyCrudAppService(ILazyLoader lazyLoader, IRepository<TEntity> repository)
+        protected BasicCrudAppService(ILazyLoader lazyLoader, IRepository<TEntity> repository)
             : base(lazyLoader, repository)
         {
             Repository = repository;

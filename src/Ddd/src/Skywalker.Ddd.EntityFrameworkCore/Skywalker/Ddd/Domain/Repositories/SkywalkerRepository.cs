@@ -9,6 +9,7 @@ using Skywalker.EventBus.Distributed;
 using Skywalker.Extensions.Timing;
 using Skywalker.Reflection;
 using System;
+using System.Linq.Dynamic.Core;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Diagnostics.CodeAnalysis;
@@ -235,6 +236,13 @@ namespace Skywalker.Ddd.Domain.Repositories
         public override Task<long> GetCountAsync(CancellationToken cancellationToken = default)
         {
             return DbSet.LongCountAsync(GetCancellationToken(cancellationToken));
+        }
+
+        public async override Task<List<TEntity>> GetPagedListAsync(int skipCount, int maxResultCount, string sorting, CancellationToken cancellationToken = default)
+        {
+            return await DbSet.OrderBy(sorting)
+                              .Page(skipCount, maxResultCount)
+                              .ToListAsync(GetCancellationToken(cancellationToken));
         }
 
         public IAsyncEnumerator<TEntity> GetAsyncEnumerator(CancellationToken cancellationToken = default)

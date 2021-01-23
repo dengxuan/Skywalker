@@ -16,7 +16,7 @@ namespace Skywalker.Extensions.Linq
 
         Task<bool> ContainsAsync<T>(
             [NotNull] IQueryable<T> queryable,
-            [NotNull] T item,
+            T item,
             CancellationToken cancellationToken = default);
 
         #endregion

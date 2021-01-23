@@ -13,7 +13,7 @@ namespace System
 {
     public static class Converters
     {
-        
+
 
         private static readonly Type[] _simpleTypes =
         {
@@ -25,9 +25,9 @@ namespace System
             typeof(Guid)
         };
 
-        
 
-        
+
+
 
         /// <summary>
         /// Converts an object to a dictionary object without the properties which have a null value or a [DataMember( EmitDefaultValue = false )] applied.
@@ -37,43 +37,43 @@ namespace System
         /// <param name="addEmptyObjects">Objects which do not have any properties are also added to the dictionary. Default value is true.</param>
         /// <param name="forceCamelCase">Force to use CamelCase, even if a DataMember has another casing defined. Default value is true.</param>
         /// <returns>Dictionary</returns>
-        public static IDictionary<string, object> ToDictionary( object source, bool addEmptyObjects = true, bool forceCamelCase = true )
+        public static IDictionary<string, object> ToDictionary(object source, bool addEmptyObjects = true, bool forceCamelCase = true)
         {
-            if ( source == null )
+            if (source == null)
             {
                 return null;
             }
 
             var dictionary = new Dictionary<string, object>();
 
-            foreach ( PropertyDescriptor property in TypeDescriptor.GetProperties( source ) )
+            foreach (PropertyDescriptor property in TypeDescriptor.GetProperties(source))
             {
                 var dataMemberAttribute = property.Attributes.OfType<DataMemberAttribute>().FirstOrDefault();
                 var emitDefaultValue = dataMemberAttribute?.EmitDefaultValue ?? true;
 
-                var value = property.GetValue( source );
+                var value = property.GetValue(source);
 
-                if ( value != null && ( emitDefaultValue || !IsEqualToDefaultValue( value ) ) )
+                if (value != null && (emitDefaultValue || !IsEqualToDefaultValue(value)))
                 {
                     var type = value.GetType();
                     var propertyName = dataMemberAttribute?.Name ?? property.Name;
 
-                    if ( forceCamelCase )
+                    if (forceCamelCase)
                     {
                         propertyName = propertyName.ToCamelCase();
                     }
 
-                    if ( IsSimpleType( type ) )
+                    if (IsSimpleType(type))
                     {
-                        dictionary.Add( propertyName, value );
+                        dictionary.Add(propertyName, value);
                     }
                     else
                     {
-                        var dict = ToDictionary( value, addEmptyObjects );
+                        var dict = ToDictionary(value, addEmptyObjects);
 
-                        if ( addEmptyObjects || dict.Count > 0 )
+                        if (addEmptyObjects || dict.Count > 0)
                         {
-                            dictionary.Add( propertyName, dict );
+                            dictionary.Add(propertyName, dict);
                         }
                     }
                 }
@@ -83,28 +83,28 @@ namespace System
         }
 
         // https://stackoverflow.com/a/1107090/833106
-        public static TValue ChangeType<TValue>( object o )
+        public static TValue ChangeType<TValue>(object o)
         {
-            Type conversionType = Nullable.GetUnderlyingType( typeof( TValue ) ) ?? typeof( TValue );
+            Type conversionType = Nullable.GetUnderlyingType(typeof(TValue)) ?? typeof(TValue);
 
-            if ( conversionType.IsEnum && EnumTryParse( o?.ToString(), conversionType, out TValue value ) )
+            if (conversionType.IsEnum && EnumTryParse(o?.ToString(), conversionType, out TValue value))
                 return value;
 
-            return (TValue)Convert.ChangeType( o, conversionType );
+            return (TValue)Convert.ChangeType(o, conversionType);
         }
 
-        public static bool TryChangeType<TValue>( object value, out TValue result, CultureInfo? cultureInfo = null )
+        public static bool TryChangeType<TValue>(object value, out TValue result, CultureInfo? cultureInfo = null)
         {
             try
             {
-                Type conversionType = Nullable.GetUnderlyingType( typeof( TValue ) ) ?? typeof( TValue );
+                Type conversionType = Nullable.GetUnderlyingType(typeof(TValue)) ?? typeof(TValue);
 
-                if ( conversionType.IsEnum && EnumTryParse( value?.ToString(), conversionType, out TValue theEnum ) )
+                if (conversionType.IsEnum && EnumTryParse(value.ToString(), conversionType, out TValue theEnum))
                     result = theEnum;
-                else if ( conversionType == typeof( Guid ) )
-                    result = (TValue)Convert.ChangeType( Guid.Parse( value.ToString() ), conversionType );
+                else if (conversionType == typeof(Guid))
+                    result = (TValue)Convert.ChangeType(Guid.Parse(value.ToString()), conversionType);
                 else
-                    result = (TValue)Convert.ChangeType( value, conversionType, cultureInfo ?? CultureInfo.InvariantCulture );
+                    result = (TValue)Convert.ChangeType(value, conversionType, cultureInfo ?? CultureInfo.InvariantCulture);
 
                 return true;
             }
@@ -116,15 +116,15 @@ namespace System
         }
 
         // modified version of https://stackoverflow.com/a/11521834/833106
-        public static bool EnumTryParse<TValue>( string input, Type conversionType, out TValue theEnum )
+        public static bool EnumTryParse<TValue>(string input, Type conversionType, out TValue? theEnum)
         {
-            if ( input != null )
+            if (input != null)
             {
-                foreach ( string en in Enum.GetNames( conversionType ) )
+                foreach (string en in Enum.GetNames(conversionType))
                 {
-                    if ( en.Equals( input, StringComparison.InvariantCultureIgnoreCase ) )
+                    if (en.Equals(input, StringComparison.InvariantCultureIgnoreCase))
                     {
-                        theEnum = (TValue)Enum.Parse( conversionType, input, true );
+                        theEnum = (TValue)Enum.Parse(conversionType, input, true);
                         return true;
                     }
                 }
@@ -134,57 +134,57 @@ namespace System
             return false;
         }
 
-        public static string FormatValue( byte value, CultureInfo culture = null ) => value.ToString( culture ?? CultureInfo.CurrentCulture );
+        public static string FormatValue(byte value, CultureInfo culture = null) => value.ToString(culture ?? CultureInfo.CurrentCulture);
 
-        public static string FormatValue( byte? value, CultureInfo culture = null ) => value?.ToString( culture ?? CultureInfo.CurrentCulture );
+        public static string FormatValue(byte? value, CultureInfo culture = null) => value?.ToString(culture ?? CultureInfo.CurrentCulture);
 
-        public static string FormatValue( short value, CultureInfo culture = null ) => value.ToString( culture ?? CultureInfo.CurrentCulture );
+        public static string FormatValue(short value, CultureInfo culture = null) => value.ToString(culture ?? CultureInfo.CurrentCulture);
 
-        public static string FormatValue( short? value, CultureInfo culture = null ) => value?.ToString( culture ?? CultureInfo.CurrentCulture );
+        public static string FormatValue(short? value, CultureInfo culture = null) => value?.ToString(culture ?? CultureInfo.CurrentCulture);
 
-        public static string FormatValue( int value, CultureInfo culture = null ) => value.ToString( culture ?? CultureInfo.CurrentCulture );
+        public static string FormatValue(int value, CultureInfo culture = null) => value.ToString(culture ?? CultureInfo.CurrentCulture);
 
-        public static string FormatValue( int? value, CultureInfo culture = null ) => value?.ToString( culture ?? CultureInfo.CurrentCulture );
+        public static string FormatValue(int? value, CultureInfo culture = null) => value?.ToString(culture ?? CultureInfo.CurrentCulture);
 
-        public static string FormatValue( long value, CultureInfo culture = null ) => value.ToString( culture ?? CultureInfo.CurrentCulture );
+        public static string FormatValue(long value, CultureInfo culture = null) => value.ToString(culture ?? CultureInfo.CurrentCulture);
 
-        public static string FormatValue( long? value, CultureInfo culture = null ) => value?.ToString( culture ?? CultureInfo.CurrentCulture );
+        public static string FormatValue(long? value, CultureInfo culture = null) => value?.ToString(culture ?? CultureInfo.CurrentCulture);
 
-        public static string FormatValue( float value, CultureInfo culture = null ) => value.ToString( culture ?? CultureInfo.CurrentCulture );
+        public static string FormatValue(float value, CultureInfo culture = null) => value.ToString(culture ?? CultureInfo.CurrentCulture);
 
-        public static string FormatValue( float? value, CultureInfo culture = null ) => value?.ToString( culture ?? CultureInfo.CurrentCulture );
+        public static string FormatValue(float? value, CultureInfo culture = null) => value?.ToString(culture ?? CultureInfo.CurrentCulture);
 
-        public static string FormatValue( double value, CultureInfo culture = null ) => value.ToString( culture ?? CultureInfo.CurrentCulture );
+        public static string FormatValue(double value, CultureInfo culture = null) => value.ToString(culture ?? CultureInfo.CurrentCulture);
 
-        public static string FormatValue( double? value, CultureInfo culture = null ) => value?.ToString( culture ?? CultureInfo.CurrentCulture );
+        public static string FormatValue(double? value, CultureInfo culture = null) => value?.ToString(culture ?? CultureInfo.CurrentCulture);
 
-        public static string FormatValue( decimal value, CultureInfo culture = null ) => value.ToString( culture ?? CultureInfo.CurrentCulture );
+        public static string FormatValue(decimal value, CultureInfo culture = null) => value.ToString(culture ?? CultureInfo.CurrentCulture);
 
-        public static string FormatValue( decimal? value, CultureInfo culture = null ) => value?.ToString( culture ?? CultureInfo.CurrentCulture );
+        public static string FormatValue(decimal? value, CultureInfo culture = null) => value?.ToString(culture ?? CultureInfo.CurrentCulture);
 
-        public static string FormatValue( sbyte value, CultureInfo culture = null ) => value.ToString( culture ?? CultureInfo.CurrentCulture );
+        public static string FormatValue(sbyte value, CultureInfo culture = null) => value.ToString(culture ?? CultureInfo.CurrentCulture);
 
-        public static string FormatValue( sbyte? value, CultureInfo culture = null ) => value?.ToString( culture ?? CultureInfo.CurrentCulture );
+        public static string FormatValue(sbyte? value, CultureInfo culture = null) => value?.ToString(culture ?? CultureInfo.CurrentCulture);
 
-        public static string FormatValue( ushort value, CultureInfo culture = null ) => value.ToString( culture ?? CultureInfo.CurrentCulture );
+        public static string FormatValue(ushort value, CultureInfo culture = null) => value.ToString(culture ?? CultureInfo.CurrentCulture);
 
-        public static string FormatValue( ushort? value, CultureInfo culture = null ) => value?.ToString( culture ?? CultureInfo.CurrentCulture );
+        public static string FormatValue(ushort? value, CultureInfo culture = null) => value?.ToString(culture ?? CultureInfo.CurrentCulture);
 
-        public static string FormatValue( uint value, CultureInfo culture = null ) => value.ToString( culture ?? CultureInfo.CurrentCulture );
+        public static string FormatValue(uint value, CultureInfo culture = null) => value.ToString(culture ?? CultureInfo.CurrentCulture);
 
-        public static string FormatValue( uint? value, CultureInfo culture = null ) => value?.ToString( culture ?? CultureInfo.CurrentCulture );
+        public static string FormatValue(uint? value, CultureInfo culture = null) => value?.ToString(culture ?? CultureInfo.CurrentCulture);
 
-        public static string FormatValue( ulong value, CultureInfo culture = null ) => value.ToString( culture ?? CultureInfo.CurrentCulture );
+        public static string FormatValue(ulong value, CultureInfo culture = null) => value.ToString(culture ?? CultureInfo.CurrentCulture);
 
-        public static string FormatValue( ulong? value, CultureInfo culture = null ) => value?.ToString( culture ?? CultureInfo.CurrentCulture );
+        public static string FormatValue(ulong? value, CultureInfo culture = null) => value?.ToString(culture ?? CultureInfo.CurrentCulture);
 
-        public static string FormatValue( DateTime value, CultureInfo culture = null ) => value.ToString( culture ?? CultureInfo.CurrentCulture );
+        public static string FormatValue(DateTime value, CultureInfo culture = null) => value.ToString(culture ?? CultureInfo.CurrentCulture);
 
-        public static string FormatValue( DateTime? value, CultureInfo culture = null ) => value?.ToString( culture ?? CultureInfo.CurrentCulture );
+        public static string FormatValue(DateTime? value, CultureInfo culture = null) => value?.ToString(culture ?? CultureInfo.CurrentCulture);
 
-        public static string FormatValue( DateTimeOffset value, CultureInfo culture = null ) => value.ToString( culture ?? CultureInfo.CurrentCulture );
+        public static string FormatValue(DateTimeOffset value, CultureInfo culture = null) => value.ToString(culture ?? CultureInfo.CurrentCulture);
 
-        public static string FormatValue( DateTimeOffset? value, CultureInfo culture = null ) => value?.ToString( culture ?? CultureInfo.CurrentCulture );
+        public static string FormatValue(DateTimeOffset? value, CultureInfo culture = null) => value?.ToString(culture ?? CultureInfo.CurrentCulture);
 
         /// <summary>
         /// Gets the min and max possible value based on the supplied value type
@@ -194,67 +194,67 @@ namespace System
         /// <exception cref="System.InvalidOperationException">Throws when value type is unknown.</exception>
         public static (object, object) GetMinMaxValueOfType<TValue>()
         {
-            var type = typeof( TValue );
+            var type = typeof(TValue);
 
-            switch ( type )
+            switch (type)
             {
-                case Type byteType when byteType == typeof( byte ) || byteType == typeof( byte? ):
+                case Type byteType when byteType == typeof(byte) || byteType == typeof(byte?):
                     return (byte.MinValue, byte.MaxValue);
-                case Type shortType when shortType == typeof( short ) || shortType == typeof( short? ):
+                case Type shortType when shortType == typeof(short) || shortType == typeof(short?):
                     return (short.MinValue, short.MaxValue);
-                case Type intType when intType == typeof( int ) || intType == typeof( int? ):
+                case Type intType when intType == typeof(int) || intType == typeof(int?):
                     return (int.MinValue, int.MaxValue);
-                case Type longType when longType == typeof( long ) || longType == typeof( long? ):
+                case Type longType when longType == typeof(long) || longType == typeof(long?):
                     return (long.MinValue, long.MaxValue);
-                case Type floatType when floatType == typeof( float ) || floatType == typeof( float? ):
+                case Type floatType when floatType == typeof(float) || floatType == typeof(float?):
                     return (float.MinValue, float.MaxValue);
-                case Type doubleType when doubleType == typeof( double ) || doubleType == typeof( double? ):
+                case Type doubleType when doubleType == typeof(double) || doubleType == typeof(double?):
                     return (double.MinValue, double.MaxValue);
-                case Type decimalType when decimalType == typeof( decimal ) || decimalType == typeof( decimal? ):
+                case Type decimalType when decimalType == typeof(decimal) || decimalType == typeof(decimal?):
                     return (decimal.MinValue, decimal.MaxValue);
-                case Type sbyteType when sbyteType == typeof( sbyte ) || sbyteType == typeof( sbyte? ):
+                case Type sbyteType when sbyteType == typeof(sbyte) || sbyteType == typeof(sbyte?):
                     return (sbyte.MinValue, sbyte.MaxValue);
-                case Type ushortType when ushortType == typeof( ushort ) || ushortType == typeof( ushort? ):
+                case Type ushortType when ushortType == typeof(ushort) || ushortType == typeof(ushort?):
                     return (ushort.MinValue, ushort.MaxValue);
-                case Type uintType when uintType == typeof( uint ) || uintType == typeof( uint? ):
+                case Type uintType when uintType == typeof(uint) || uintType == typeof(uint?):
                     return (uint.MinValue, uint.MaxValue);
-                case Type ulongType when ulongType == typeof( ulong ) || ulongType == typeof( ulong? ):
+                case Type ulongType when ulongType == typeof(ulong) || ulongType == typeof(ulong?):
                     return (ulong.MinValue, ulong.MaxValue);
                 default:
-                    throw new InvalidOperationException( $"Unsupported type {type}" );
+                    throw new InvalidOperationException($"Unsupported type {type}");
             }
         }
 
-        private static bool IsSimpleType( Type type )
+        private static bool IsSimpleType(Type type)
         {
             return
                 type.IsPrimitive ||
                 type.IsEnum ||
-                _simpleTypes.Contains( type ) ||
-                Convert.GetTypeCode( type ) != TypeCode.Object ||
-                ( type.IsGenericType && type.GetGenericTypeDefinition() == typeof( Nullable<> ) && IsSimpleType( type.GetGenericArguments()[0] ) );
+                _simpleTypes.Contains(type) ||
+                Convert.GetTypeCode(type) != TypeCode.Object ||
+                (type.IsGenericType && type.GetGenericTypeDefinition() == typeof(Nullable<>) && IsSimpleType(type.GetGenericArguments()[0]));
         }
 
-        private static bool IsEqualToDefaultValue<T>( T argument )
+        private static bool IsEqualToDefaultValue<T>(T argument)
         {
             // deal with non-null nullables
-            Type methodType = typeof( T );
-            if ( Nullable.GetUnderlyingType( methodType ) != null )
+            Type methodType = typeof(T);
+            if (Nullable.GetUnderlyingType(methodType) != null)
             {
                 return false;
             }
 
             // deal with boxed value types
             Type argumentType = argument.GetType();
-            if ( argumentType.IsValueType && argumentType != methodType )
+            if (argumentType.IsValueType && argumentType != methodType)
             {
-                object obj = Activator.CreateInstance( argument.GetType() );
-                return obj.Equals( argument );
+                object obj = Activator.CreateInstance(argument.GetType());
+                return obj.Equals(argument);
             }
 
             return false;
         }
 
-        
+
     }
 }

@@ -19,6 +19,8 @@ namespace Skywalker.Domain.Repositories
         /// Gets total count of all entities.
         /// </summary>
         Task<long> GetCountAsync(CancellationToken cancellationToken = default);
+
+        Task<List<TEntity>> GetPagedListAsync(int skipCount, int maxResultCount, string sorting, CancellationToken cancellationToken = default);
     }
 
     public interface IReadOnlyRepository<TEntity, TKey> : IReadOnlyRepository<TEntity> where TEntity : class, IEntity<TKey>
@@ -28,7 +30,6 @@ namespace Skywalker.Domain.Repositories
         /// Throws <see cref="EntityNotFoundException"/> if can not find an entity with given id.
         /// </summary>
         /// <param name="id">Primary key of the entity to get</param>
-        /// <param name="includeDetails">Set true to include all children of this entity</param>
         /// <param name="cancellationToken">A <see cref="T:System.Threading.CancellationToken" /> to observe while waiting for the task to complete.</param>
         /// <returns>Entity</returns>
         Task<TEntity> GetAsync(TKey id, CancellationToken cancellationToken = default);

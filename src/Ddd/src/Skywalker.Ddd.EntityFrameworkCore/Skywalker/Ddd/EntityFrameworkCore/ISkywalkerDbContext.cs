@@ -10,6 +10,7 @@ using System.Threading.Tasks;
 
 namespace Skywalker.Ddd.EntityFrameworkCore
 {
+#pragma warning disable EF1001 // Internal EF Core API usage.
     public interface ISkywalkerDbContext : IDisposable, IInfrastructure<IServiceProvider>, IDbContextDependencies, IDbSetCache, IDbContextPoolable
     {
 
@@ -83,4 +84,5 @@ namespace Skywalker.Ddd.EntityFrameworkCore
 
         void UpdateRange([NotNull] IEnumerable<object> entities);
     }
+#pragma warning restore EF1001 // Internal EF Core API usage.
 }
