@@ -1,6 +1,6 @@
 ﻿namespace Microsoft.Extensions.DependencyInjection
 {
-    public class DefaultServiceScopeFactory : IHybridServiceScopeFactory, ITransientDependency
+    public class DefaultServiceScopeFactory : IHybridServiceScopeFactory, ISingletonDependency
     {
         protected IServiceScopeFactory Factory { get; }
 
@@ -11,7 +11,9 @@
 
         public IServiceScope CreateScope()
         {
-            return Factory.CreateScope();
+            IServiceScope serviceScope = Factory.CreateScope();
+            System.Console.WriteLine($"CreateScope:{serviceScope.GetHashCode()}");
+            return serviceScope;
         }
     }
 }

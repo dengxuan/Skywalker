@@ -13,8 +13,6 @@ namespace Microsoft.Extensions.DependencyInjection
     /// </summary>
     public static class AddInterceptionExtensions
     {
-        #region AddInterceptable
-
         /// <summary>
         /// Add interceptable <see cref="ServiceDescriptor"/>.
         /// </summary>
@@ -100,9 +98,6 @@ namespace Microsoft.Extensions.DependencyInjection
         public static IServiceCollection AddSingletonInterceptable<TService, TImplementation>(this IServiceCollection services)
            where TImplementation : TService
            => services.AddInterceptableCore(typeof(TService), typeof(TImplementation), ServiceLifetime.Singleton, AddKind.AlwaysAdd);
-        #endregion
-
-        #region TryAddInterceptable
 
         /// <summary>
         /// Try to add interceptable <see cref="ServiceDescriptor"/>.
@@ -189,9 +184,6 @@ namespace Microsoft.Extensions.DependencyInjection
         public static IServiceCollection TryAddSingletonInterceptable<TService, TImplementation>(this IServiceCollection services)
            where TImplementation : TService
            => services.AddInterceptableCore(typeof(TService), typeof(TImplementation), ServiceLifetime.Singleton, AddKind.TryAdd);
-        #endregion
-
-        #region TryAddEnumerableInterceptable
 
         /// <summary>
         /// Adds a interceptable <see cref="ServiceDescriptor"/> if an existing one with the same type and implementation that does not already exist in services.
@@ -215,10 +207,10 @@ namespace Microsoft.Extensions.DependencyInjection
         public static IServiceCollection TryAddEnumerableInterceptable<TService, TImplementation>(this IServiceCollection services, ServiceLifetime lifetime)
             where TImplementation : TService
             => services.AddInterceptableCore(typeof(TService), typeof(TImplementation), lifetime, AddKind.TryAddEnumerable);
-        #endregion
 
-        private static ICodeGeneratorFactory _codeGeneratorFactory;
-        private static IInterceptorResolver _interceptorResolver;
+
+        private static ICodeGeneratorFactory? _codeGeneratorFactory;
+        private static IInterceptorResolver? _interceptorResolver;
         private static IServiceCollection AddInterceptableCore(this IServiceCollection services, Type serviceType, Type implementationType, ServiceLifetime lifetime, AddKind kind)
         {
             Check.NotNull(services, nameof(services));
@@ -248,7 +240,7 @@ namespace Microsoft.Extensions.DependencyInjection
                     {
                         if (serviceType.IsGenericTypeDefinition)
                         {
-                            services.Add(new GenericInterceptableServiceDescriptor(_codeGeneratorFactory, _interceptorResolver, serviceType, implementationType, lifetime));
+                            services.Add(new GenericInterceptableServiceDescriptor(_codeGeneratorFactory!, _interceptorResolver!, serviceType, implementationType, lifetime));
                         }
                         else
                         {
@@ -260,7 +252,7 @@ namespace Microsoft.Extensions.DependencyInjection
                     {
                         if (serviceType.IsGenericTypeDefinition)
                         {
-                            services.TryAdd(new GenericInterceptableServiceDescriptor(_codeGeneratorFactory, _interceptorResolver, serviceType, implementationType, lifetime));
+                            services.TryAdd(new GenericInterceptableServiceDescriptor(_codeGeneratorFactory!, _interceptorResolver!, serviceType, implementationType, lifetime));
                         }
                         else
                         {
@@ -274,7 +266,7 @@ namespace Microsoft.Extensions.DependencyInjection
                         {
                             if (serviceType.IsGenericTypeDefinition)
                             {
-                                services.TryAddEnumerable(new GenericInterceptableServiceDescriptor(_codeGeneratorFactory, _interceptorResolver, serviceType, implementationType, lifetime));
+                                services.TryAddEnumerable(new GenericInterceptableServiceDescriptor(_codeGeneratorFactory!, _interceptorResolver!, serviceType, implementationType, lifetime));
                             }
                             else
                             {

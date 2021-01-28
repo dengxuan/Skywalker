@@ -12,16 +12,13 @@ namespace Skywalker.Aspects
     /// </summary>                                                   
     public class InterceptorResolver : IInterceptorResolver
     {
-        #region Fields
         private readonly Dictionary<Tuple<Type, Type>, IInterceptorRegistry> _instanceInteceptors;
         private readonly Dictionary<Type, IInterceptorRegistry> _typeInteceptors;
         private readonly ReaderWriterLockSlim _instanceLock;
         private readonly ReaderWriterLockSlim _typeLock;
         private readonly HashSet<Type> _nonInterceptableTypes = new HashSet<Type>();
         private readonly CompositeInterceptorProviderResolver _providerResolver;
-        #endregion
 
-        #region Properties
         /// <summary>
         /// Gets the builder.
         /// </summary>
@@ -29,9 +26,7 @@ namespace Skywalker.Aspects
         /// The builder.
         /// </value>
         public IInterceptorChainBuilder Builder { get; }
-        # endregion
 
-        #region Constructors
         /// <summary>
         /// Initializes a new instance of the <see cref="InterceptorResolver" /> class.
         /// </summary>
@@ -41,18 +36,15 @@ namespace Skywalker.Aspects
         {
             Check.NotNull(builder, nameof(builder));
             providerResolvers.NotNull(nameof(providerResolvers));
-
+            Builder = builder;
             _nonInterceptableTypes = new HashSet<Type>();
             _providerResolver = new CompositeInterceptorProviderResolver(providerResolvers);
-            Builder = builder;
             _instanceInteceptors = new Dictionary<Tuple<Type, Type>, IInterceptorRegistry>();
             _typeInteceptors = new Dictionary<Type, IInterceptorRegistry>();
             _instanceLock = new ReaderWriterLockSlim();
             _typeLock = new ReaderWriterLockSlim();
         }
-        #endregion
 
-        #region Public Methods
         /// <summary>
         /// Gets the interceptors decorated with the type of target instance.
         /// </summary>
@@ -111,7 +103,7 @@ namespace Skywalker.Aspects
                             mapping = new InterfaceMethodMapping(targetType.GetInterfaceMap(interfaceType));
                         }
                     }
-                    catch(Exception ex)
+                    catch (Exception ex)
                     {
                         Console.WriteLine(ex);
                         return InterceptorRegistry.Empty;
@@ -127,7 +119,6 @@ namespace Skywalker.Aspects
         /// </summary>
         /// <param name="typeToIntercept">The type to intercept.</param>
         /// <returns>
-        /// The <see cref="T:Dora.DynamicProxy.InterceptorDecoration" /> representing the type members decorated with interceptors.
         /// </returns>
         public IInterceptorRegistry GetInterceptors(Type typeToIntercept)
         {
@@ -161,9 +152,7 @@ namespace Skywalker.Aspects
                 _typeLock.ExitWriteLock();
             }
         }
-        #endregion
 
-        #region Private Methods
         private IInterceptorRegistry GetInterceptorsCore(Type typeToIntercept, Type targetType, InterfaceMethodMapping? interfaceMapping = null)
         {
             Check.NotNull(typeToIntercept, nameof(typeToIntercept));
@@ -192,7 +181,7 @@ namespace Skywalker.Aspects
             }
 
             //Filter based on AllowMultiple property
-            providersOfType = SelectEffectiveProviders(providersOfType);       
+            providersOfType = SelectEffectiveProviders(providersOfType);
 
             //Resolve method based interceptor providers
             var candidateMethods = GetCandidateMethods(typeToIntercept, isInterface);
@@ -206,9 +195,9 @@ namespace Skywalker.Aspects
                     if (_providerResolver.WillIntercept(targetType, targetMethod) == false)
                     {
                         continue;
-                    }                        
+                    }
 
-                    var providersOfMethod = _providerResolver.GetInterceptorProvidersForMethod(targetType,targetMethod, out var execluded4Method);
+                    var providersOfMethod = _providerResolver.GetInterceptorProvidersForMethod(targetType, targetMethod, out var execluded4Method);
                     foreach (var type in execluded4Method)
                     {
                         execludedProviderTypes.Add(type);
@@ -224,7 +213,7 @@ namespace Skywalker.Aspects
             }
 
             //Resolve prooerty based interceptor providers
-            var candidateProperties = GetCandidateProperties(typeToIntercept, isInterface);     
+            var candidateProperties = GetCandidateProperties(typeToIntercept, isInterface);
             for (int index = 0; index < candidateProperties.Length; index++)
             {
                 var property = candidateProperties[index];
@@ -241,7 +230,7 @@ namespace Skywalker.Aspects
                 //GET method
                 if (null != getMethod && (isInterface || getMethod.IsOverridable()))
                 {
-                    var providersOfProperty = _providerResolver.GetInterceptorProvidersForProperty(targetType,targetProperty, PropertyMethod.Get, out var execluded4Get);
+                    var providersOfProperty = _providerResolver.GetInterceptorProvidersForProperty(targetType, targetProperty, PropertyMethod.Get, out var execluded4Get);
                     foreach (var type in execluded4Get)
                     {
                         execludedProviderTypes.Add(type);
@@ -257,7 +246,7 @@ namespace Skywalker.Aspects
 
                 if (null != setMethod && (isInterface || setMethod.IsOverridable()))
                 {
-                    var providersOfProperty = _providerResolver.GetInterceptorProvidersForProperty(targetType,targetProperty, PropertyMethod.Set, out var execued4Set);
+                    var providersOfProperty = _providerResolver.GetInterceptorProvidersForProperty(targetType, targetProperty, PropertyMethod.Set, out var execued4Set);
                     foreach (var type in execued4Set)
                     {
                         execludedProviderTypes.Add(type);
@@ -294,7 +283,7 @@ namespace Skywalker.Aspects
              .Where(it => isInterface || it?.GetMethod?.IsOverridable() == true || it?.SetMethod?.IsOverridable() == true)
              .ToArray();
         }
-       
+
         private IInterceptorProvider[] SelectEffectiveProviders(IInterceptorProvider[] typeBasedProviders)
         {
             //For interceptor providers of the same type, only keep the last one if not AllowMultiple.
@@ -302,17 +291,6 @@ namespace Skywalker.Aspects
             var dictionary = typeBasedProviders
                 .GroupBy(it => it.GetType())
                 .ToDictionary(it => it.Key, it => it.ToArray());
-            foreach (var providerType in dictionary.Keys)
-            {
-                var providers = dictionary[providerType];
-                if (!providers[0].AllowMultiple && providers.Length > 1)
-                {
-                    for (int index = 0; index < providers.Length - 1; index++)
-                    {
-                        indicators[providers[index]] = false;
-                    }
-                }
-            }
 
             return typeBasedProviders
                 .Where(it => indicators[it])
@@ -330,19 +308,6 @@ namespace Skywalker.Aspects
             foreach (var providerType in specificDictionary.Keys)
             {
                 var providers = specificDictionary[providerType];
-                //Keep the latest one
-                if (!providers[0].AllowMultiple)
-                {
-                    for (int index = 0; index < providers.Length - 1; index++)
-                    {
-                        specificIndicators[providers[index]] = false;
-                    }
-
-                    if (globalDictionary.TryGetValue(providerType, out var typedProviders))
-                    {
-                        Array.ForEach(typedProviders, it => globalIndicators[it] = false);
-                    }
-                }
             }
 
             return Concat(globalProviders.Where(it => globalIndicators[it]).ToArray(), specificProviders.Where(it => specificIndicators[it]).ToArray())
@@ -408,6 +373,5 @@ namespace Skywalker.Aspects
 
             throw new InvalidOperationException();
         }
-        #endregion
     }
 }

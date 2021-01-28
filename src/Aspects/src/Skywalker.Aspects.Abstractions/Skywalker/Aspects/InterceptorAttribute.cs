@@ -8,32 +8,31 @@ namespace Skywalker.Aspects
     /// <summary>
     /// An attribute based interceptor provider.
     /// </summary>
-    [AttributeUsage(AttributeTargets.Class | AttributeTargets.Method | AttributeTargets.Property, AllowMultiple = false)]
-    public abstract class InterceptorAttribute : Attribute, IInterceptorProvider, IOrderedSequenceItem
+    [AttributeUsage(AttributeTargets.Class | AttributeTargets.Method | AttributeTargets.Property, AllowMultiple = true)]
+    public class InterceptorAttribute : Attribute, IInterceptorProvider, IOrderedSequenceItem
     {
-        private readonly ConcurrentBag<Attribute> _attributes = new ConcurrentBag<Attribute>();
-        private bool? _allowMultiple;
-
         /// <summary>
         /// The order for the registered interceptor in the interceptor chain.
         /// </summary>
         public int Order { get; set; }
 
         /// <summary>
-        /// Indicate whether multiple interceptors of the same type can be applied to a single one method.
+        /// The type for the registerd interceptor in the interceptor chain.
         /// </summary>
-        public bool AllowMultiple
+        public Type InterceptorType { get; set; }
+
+        public InterceptorAttribute(Type interceptorType)
         {
-            get
-            {
-                return _allowMultiple ?? (_allowMultiple = GetType().GetTypeInfo().GetCustomAttribute<AttributeUsageAttribute>().AllowMultiple).Value;
-            }
+            InterceptorType = interceptorType;
         }
 
         /// <summary>
         /// Register the provided interceptor to the specified interceptor chain builder.
         /// </summary>
         /// <param name="builder">The interceptor chain builder to which the provided interceptor is registered.</param>
-        public abstract void Use(IInterceptorChainBuilder builder);
+        public void Use(IInterceptorChainBuilder builder)
+        {
+            //builder.Use(InterceptorType, 1);
+        }
     }
 }

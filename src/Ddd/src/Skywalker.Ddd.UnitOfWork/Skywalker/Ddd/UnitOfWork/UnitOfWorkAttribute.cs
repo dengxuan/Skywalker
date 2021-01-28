@@ -1,6 +1,4 @@
-﻿using Skywalker.Aspects;
-using Skywalker.Aspects.Abstractinons;
-using System;
+﻿using System;
 using System.Data;
 
 namespace Skywalker.Ddd.UnitOfWork
@@ -12,7 +10,7 @@ namespace Skywalker.Ddd.UnitOfWork
     /// This attribute has no effect if there is already a unit of work before calling this method. It uses the ambient UOW in this case.
     /// </remarks>
     [AttributeUsage(AttributeTargets.Method | AttributeTargets.Class | AttributeTargets.Interface)]
-    public class UnitOfWorkAttribute : InterceptorAttribute
+    public class UnitOfWorkAttribute : Attribute
     {
         /// <summary>
         /// Is this UOW transactional?
@@ -80,11 +78,6 @@ namespace Skywalker.Ddd.UnitOfWork
             {
                 options.IsolationLevel = IsolationLevel;
             }
-        }
-
-        public override void Use(IInterceptorChainBuilder builder)
-        {
-            builder.Use<UnitOfWorkInterceptor>(this.Order);
         }
     }
 }

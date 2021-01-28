@@ -68,7 +68,7 @@ namespace Skywalker.Aspects
         /// <summary>
         /// Gets or sets the return value of the method.
         /// </summary>
-        public abstract object ReturnValue { get; set; }  
+        public abstract object? ReturnValue { get; set; }  
 
         /// <summary>
         /// Gets the extended properties.

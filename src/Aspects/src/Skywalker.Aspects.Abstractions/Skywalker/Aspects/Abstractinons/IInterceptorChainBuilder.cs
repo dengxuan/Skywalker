@@ -10,7 +10,7 @@ namespace Skywalker.Aspects.Abstractinons
         /// <summary>
         /// Gets the service provider to get dependency services.
         /// </summary>
-        IServiceProvider ServiceProvider { get; }
+        //IServiceProvider ServiceProvider { get; }
 
         /// <summary>
         /// Register specified interceptor.

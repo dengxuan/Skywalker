@@ -37,7 +37,7 @@ namespace Skywalker.Aspects
         /// <summary>
         /// Gets or sets the return value of the method.
         /// </summary>
-        public override object ReturnValue { get; set; }
+        public override object? ReturnValue { get; set; }
 
         /// <summary>
         /// Gets the extended properties.

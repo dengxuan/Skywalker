@@ -5,7 +5,7 @@ using System.Threading;
 
 namespace Skywalker.Ddd.UnitOfWork
 {
-    public class AmbientUnitOfWork : IAmbientUnitOfWork, ISingletonDependency
+    public class AmbientUnitOfWork : IAmbientUnitOfWork
     {
         public IUnitOfWork? UnitOfWork => _currentUow.Value;
 

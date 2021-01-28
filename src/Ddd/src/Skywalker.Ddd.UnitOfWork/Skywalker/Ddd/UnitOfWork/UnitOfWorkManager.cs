@@ -1,21 +1,23 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using Skywalker.Ddd.UnitOfWork.Abstractions;
+using System;
 using System.Diagnostics.CodeAnalysis;
 
 namespace Skywalker.Ddd.UnitOfWork
 {
-    public class UnitOfWorkManager : IUnitOfWorkManager, ISingletonDependency
+    public class UnitOfWorkManager : IUnitOfWorkManager
     {
         public IUnitOfWork? Current => GetCurrentUnitOfWork();
 
         private readonly IHybridServiceScopeFactory _serviceScopeFactory;
         private readonly IAmbientUnitOfWork _ambientUnitOfWork;
 
-        public UnitOfWorkManager(IAmbientUnitOfWork ambientUnitOfWork, IHybridServiceScopeFactory serviceScopeFactory)
+        public UnitOfWorkManager(IAmbientUnitOfWork ambientUnitOfWork, IHybridServiceScopeFactory  hybridServiceScopeFactory)
         {
             _ambientUnitOfWork = ambientUnitOfWork;
-            _serviceScopeFactory = serviceScopeFactory;
+            _serviceScopeFactory = hybridServiceScopeFactory;
+            System.Console.WriteLine("UnitOfWorkManager:{0}", hybridServiceScopeFactory.GetHashCode());
         }
 
         public IUnitOfWork Begin([NotNull] AbpUnitOfWorkOptions options, bool requiresNew = false)

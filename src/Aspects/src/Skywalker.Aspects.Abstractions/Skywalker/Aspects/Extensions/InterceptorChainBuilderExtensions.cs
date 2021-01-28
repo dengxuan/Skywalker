@@ -16,7 +16,7 @@ namespace Skywalker.Aspects
     public static class InterceptorChainBuilderExtensions
     {
         private delegate Task InvokeDelegate(object interceptor, InvocationContext context, IServiceProvider serviceProvider);
-        private static readonly MethodInfo _getServiceMethod = typeof(InterceptorChainBuilderExtensions).GetMethod("GetService", BindingFlags.Static| BindingFlags.NonPublic);
+        private static readonly MethodInfo _getServiceMethod = typeof(InterceptorChainBuilderExtensions).GetMethod("GetService", BindingFlags.Static | BindingFlags.NonPublic);
         private static readonly Dictionary<Type, InvokeDelegate> _invokers = new Dictionary<Type, InvokeDelegate>();
         private static readonly object _syncHelper = new object();
 
@@ -29,10 +29,10 @@ namespace Skywalker.Aspects
         /// <param name="arguments">The non-injected arguments passes to the constructor.</param>
         /// <returns>The interceptor chain builder with registered interceptor.</returns>
         /// <exception cref="ArgumentNullException">The argument <paramref name="builder"/> is null.</exception>
-        public static IInterceptorChainBuilder Use<TInterceptor>(this IInterceptorChainBuilder builder, int order, params object[] arguments)
+        public static IInterceptorChainBuilder Use<TInterceptor>(this IInterceptorChainBuilder builder, IServiceProvider serviceProvider, int order, params object[] arguments)
         {
             Check.NotNull(builder, nameof(builder));
-            return builder.Use(typeof(TInterceptor), order, arguments);
+            return builder.Use(typeof(TInterceptor), order, serviceProvider, arguments);
         }
 
         /// <summary>
@@ -45,11 +45,11 @@ namespace Skywalker.Aspects
         /// <returns>The interceptor chain builder with registered interceptor.</returns>
         /// <exception cref="ArgumentNullException">The argument <paramref name="builder"/> is null.</exception>
         /// <exception cref="ArgumentNullException">The argument <paramref name="interceptorType"/> is null.</exception>
-        public static IInterceptorChainBuilder Use(this IInterceptorChainBuilder builder, Type interceptorType, int order, params object[] arguments)
+        public static IInterceptorChainBuilder Use(this IInterceptorChainBuilder builder, Type interceptorType, int order, IServiceProvider serviceProvider, params object[] arguments)
         {
             Check.NotNull(interceptorType, nameof(interceptorType));
-            object interceptor = ActivatorUtilities.CreateInstance(builder.ServiceProvider, interceptorType, arguments);
-            return builder.Use(interceptor, order);
+            object interceptor = ActivatorUtilities.CreateInstance(serviceProvider, interceptorType, arguments);
+            return builder.Use(interceptor, order, serviceProvider);
         }
 
         /// <summary>
@@ -61,7 +61,7 @@ namespace Skywalker.Aspects
         /// <returns>The interceptor chain builder with registered interceptor.</returns>   
         /// <exception cref="ArgumentNullException">The argument <paramref name="builder"/> is null.</exception>
         /// <exception cref="ArgumentNullException">The argument <paramref name="interceptor"/> is null.</exception>
-        public static IInterceptorChainBuilder Use(this IInterceptorChainBuilder builder, object interceptor, int order)
+        public static IInterceptorChainBuilder Use(this IInterceptorChainBuilder builder, object interceptor, int order, IServiceProvider serviceProvider)
         {
             Check.NotNull(builder, nameof(builder));
             Check.NotNull(interceptor, nameof(interceptor));
@@ -73,7 +73,6 @@ namespace Skywalker.Aspects
                     context.Next = next;
                     if (TryGetInvoke(interceptor.GetType(), out var invoker))
                     {
-                        var serviceProvider = builder.ServiceProvider.GetService<IScopedServiceProviderAccesssor>()?.Current ?? builder.ServiceProvider;
                         await invoker!(interceptor, context, serviceProvider);
                     }
                     else

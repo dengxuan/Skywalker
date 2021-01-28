@@ -7,7 +7,7 @@ namespace Skywalker.Aspects
     internal sealed class ServiceDescriptorConverter
     {
         private readonly ServiceDescriptor _primaryDescriptor;
-        private readonly ServiceDescriptor _secondaryDescriptor = null;
+        private readonly ServiceDescriptor? _secondaryDescriptor = null;
         public ServiceDescriptorConverter(
             Type serviceType,
             Type implementationType,
@@ -35,6 +35,10 @@ namespace Skywalker.Aspects
             }
             var serviceType = serviceDescriptor.ServiceType;
             var implementationType = serviceDescriptor.ImplementationType;
+            if (implementationType == null)
+            {
+                throw new ArgumentException(nameof(serviceDescriptor.ServiceType), $"The implementation typeservice of service type '{serviceType}' can't be null!");
+            }
             var lifetime = serviceDescriptor.Lifetime;
 
             if (serviceType.IsInterface)
@@ -54,10 +58,11 @@ namespace Skywalker.Aspects
                 }
                 else
                 {
-                    _primaryDescriptor = new ServiceDescriptor(serviceType, CreateOrGet, lifetime);
-                    object CreateOrGet(IServiceProvider serviceProvider)
+                    _primaryDescriptor = new ServiceDescriptor(serviceType, Factory, lifetime);
+                    object Factory(IServiceProvider serviceProvider)
                     {
-                        var target = ActivatorUtilities.CreateInstance(serviceProvider, implementationType);
+                        Console.WriteLine("serviceProvider:{0}", serviceProvider.GetHashCode());
+                        var target = serviceProvider.GetRequiredService(implementationType);
                         return factoryCache.GetInstanceFactory(serviceType, implementationType).Invoke(target);
                     }
                 }
@@ -79,8 +84,13 @@ namespace Skywalker.Aspects
             }
         }
 
-        public ServiceDescriptor[] AsServiceDescriptors() => _secondaryDescriptor == null
-            ? new ServiceDescriptor[] { _primaryDescriptor }
-            : new ServiceDescriptor[] { _primaryDescriptor, _secondaryDescriptor };
+        public ServiceDescriptor[] AsServiceDescriptors()
+        {
+            if (_secondaryDescriptor == null)
+            {
+                return new ServiceDescriptor[] { _primaryDescriptor };
+            }
+            return new ServiceDescriptor[] { _primaryDescriptor, _secondaryDescriptor };
+        }
     }
 }

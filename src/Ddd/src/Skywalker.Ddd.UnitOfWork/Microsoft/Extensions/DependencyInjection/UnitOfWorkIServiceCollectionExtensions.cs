@@ -1,12 +1,16 @@
-﻿using Skywalker.Aspects.Abstractinons;
+﻿using Microsoft.Extensions.Hosting;
+using Skywalker.Aspects;
+using Skywalker.Aspects.Abstractinons;
 using Skywalker.Ddd.UnitOfWork;
+using System;
 
 namespace Microsoft.Extensions.DependencyInjection
 {
     public static class UnitOfWorkIServiceCollectionExtensions
     {
-        public static IServiceCollection UseUnitOfWork(this IServiceCollection services)
+        public static IServiceCollection AddUnitOfWork(this IServiceCollection services)
         {
+            services.AddSingleton<UnitOfWorkInterceptor>();
             return services;
         }
     }

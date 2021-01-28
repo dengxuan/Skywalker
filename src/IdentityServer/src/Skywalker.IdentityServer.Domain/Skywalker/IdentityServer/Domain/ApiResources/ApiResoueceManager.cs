@@ -13,7 +13,7 @@ namespace Skywalker.IdentityServer.Domain.ApiResources
     {
         private readonly IRepository<ApiResource> _apiResources;
 
-        public ApiResoueceManager(IRepository<ApiResource> apiResources, ICachingProvider cachingProvider) : base(cachingProvider)
+        public ApiResoueceManager(IRepository<ApiResource> apiResources, ICachingProvider cachingProvider) : base(apiResources, cachingProvider)
         {
             _apiResources = apiResources;
         }

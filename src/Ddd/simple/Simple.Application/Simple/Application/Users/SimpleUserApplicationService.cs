@@ -11,11 +11,10 @@ namespace Simple.Application
     [UnitOfWork]
     public class SimpleUserApplicationService : SimpleApplicationService, ISimpleUserApplicationService
     {
-        private readonly IUserManager _userManager;
+        private IUserManager _userManager => LazyLoader.GetRequiredService<IUserManager>();
 
-        public SimpleUserApplicationService(ILazyLoader lazyLoader, IUserManager userManager) : base(lazyLoader)
+        public SimpleUserApplicationService(ILazyLoader lazyLoader) : base(lazyLoader)
         {
-            _userManager = userManager;
         }
 
         public async Task<List<UserDto>> BatchCreateUsersAsync([NotNull] string name, int count)

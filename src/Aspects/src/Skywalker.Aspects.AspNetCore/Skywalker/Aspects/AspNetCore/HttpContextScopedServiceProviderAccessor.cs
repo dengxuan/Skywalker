@@ -24,6 +24,6 @@ namespace Skywalker.Aspects
         /// <summary>
         /// Gets current ambient scoped service provider.
         /// </summary>
-        public IServiceProvider Current => _httpContextAccessor?.HttpContext?.RequestServices;
+        public IServiceProvider Current => _httpContextAccessor.HttpContext.RequestServices;
     }
 }

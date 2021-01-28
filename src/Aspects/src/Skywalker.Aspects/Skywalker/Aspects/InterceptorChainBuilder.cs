@@ -16,18 +16,18 @@ namespace Skywalker.Aspects
         /// <summary>
         /// Gets the service provider to get dependency services.
         /// </summary>
-        public IServiceProvider ServiceProvider { get; }
+       // public IServiceProvider ServiceProvider { get; }
 
         /// <summary>
         /// Create a new <see cref="InterceptorChainBuilder"/>.
         /// </summary>
         /// <param name="serviceProvider">The service provider to get dependency services.</param>
         /// <exception cref="ArgumentNullException">The argument <paramref name="serviceProvider"/> is null.</exception>
-        public InterceptorChainBuilder(IServiceProvider serviceProvider)
+        public InterceptorChainBuilder(/*IServiceProvider serviceProvider*/)
         {
-            Check.NotNull(serviceProvider, nameof(serviceProvider));
-
-            ServiceProvider = serviceProvider;
+            //Check.NotNull(serviceProvider, nameof(serviceProvider));
+            //Console.WriteLine("InterceptorChainBuilder:{0}", serviceProvider.GetHashCode());
+            //ServiceProvider = serviceProvider;
             _interceptors = new List<Tuple<int, InterceptorDelegate>>();
         }
 
@@ -64,16 +64,17 @@ namespace Skywalker.Aspects
 
             var interceptors = _interceptors
                  .OrderBy(it => it.Item1)
-                 .Select(it=>it.Item2)
+                 .Select(it => it.Item2)
                  .Reverse()
-                 .ToArray(); 
+                 .ToArray();
 
-            return next => {
+            return next =>
+            {
                 var current = next;
                 for (int index = 0; index < interceptors.Length; index++)
                 {
                     current = interceptors[index](current);
-                }  
+                }
                 return current;
             };
         }
@@ -84,7 +85,7 @@ namespace Skywalker.Aspects
         /// <returns>The new interceptor to create.</returns>
         public IInterceptorChainBuilder New()
         {
-            return new InterceptorChainBuilder(ServiceProvider);
-        }  
+            return new InterceptorChainBuilder();
+        }
     }
 }

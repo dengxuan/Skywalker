@@ -1,8 +1,9 @@
+using Microsoft.Extensions.DependencyInjection;
 using System.Diagnostics.CodeAnalysis;
 
 namespace Skywalker.Ddd.UnitOfWork.Abstractions
 {
-    public interface IUnitOfWorkAccessor
+    public interface IUnitOfWorkAccessor : ISingletonDependency
     {
         [MaybeNull]
         IUnitOfWork? UnitOfWork { get; }

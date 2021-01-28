@@ -21,7 +21,6 @@ namespace Simple.WebApi.Hosting
 
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddAspects();
             services.AddRedisCaching(configure =>
             {
                 configure.ConnectionString = "127.0.0.1";

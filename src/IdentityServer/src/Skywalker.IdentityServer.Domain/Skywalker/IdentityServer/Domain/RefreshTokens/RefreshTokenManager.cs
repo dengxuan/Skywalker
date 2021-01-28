@@ -9,7 +9,7 @@ namespace Skywalker.IdentityServer.Domain.RefreshTokens
     {
         private readonly IRepository<RefreshToken> _refreshTokens;
 
-        public RefreshTokenManager(IRepository<RefreshToken> refreshTokens, ICachingProvider cachingProvider) : base(cachingProvider)
+        public RefreshTokenManager(IRepository<RefreshToken> refreshTokens, ICachingProvider cachingProvider) : base(refreshTokens, cachingProvider)
         {
             _refreshTokens = refreshTokens;
         }

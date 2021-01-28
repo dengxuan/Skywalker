@@ -10,7 +10,7 @@ namespace Skywalker.IdentityServer.Domain.Clients
     {
         private readonly IRepository<Client> _clients;
 
-        public ClientManager(IRepository<Client> clients, ICachingProvider cachingProvider) : base(cachingProvider)
+        public ClientManager(IRepository<Client> clients, ICachingProvider cachingProvider) : base(clients,cachingProvider)
         {
             _clients = clients;
         }

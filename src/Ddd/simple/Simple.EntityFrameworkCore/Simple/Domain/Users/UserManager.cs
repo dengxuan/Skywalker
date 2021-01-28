@@ -15,7 +15,7 @@ namespace Simple.Domain.Users
     {
         private readonly IRepository<User, Guid> _users;
 
-        public UserManager(IRepository<User, Guid> users, ICachingProvider cachingProvider) : base(cachingProvider)
+        public UserManager(IRepository<User, Guid> users, ICachingProvider cachingProvider) : base(users,cachingProvider)
         {
             _users = users;
         }

@@ -7,7 +7,7 @@ namespace Microsoft.Extensions.DependencyInjection
     {
         private readonly IServiceProvider _serviceProvider;
 
-        internal MsDependencyInjectionLazyLoader(IServiceProvider serviceProvider)
+        public MsDependencyInjectionLazyLoader(IServiceProvider serviceProvider)
         {
             _serviceProvider = serviceProvider;
         }

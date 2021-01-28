@@ -12,22 +12,24 @@ namespace Skywalker.Ddd.UnitOfWork
     public class UnitOfWorkInterceptor
     {
         private readonly AbpUnitOfWorkDefaultOptions _defaultOptions;
+        private readonly IUnitOfWorkManager _unitOfWorkManager;
         private readonly ILogger<UnitOfWorkInterceptor> _logger;
 
-        public UnitOfWorkInterceptor(IOptions<AbpUnitOfWorkDefaultOptions> options, ILogger<UnitOfWorkInterceptor> logger)
+        public UnitOfWorkInterceptor(IOptions<AbpUnitOfWorkDefaultOptions> options, IUnitOfWorkManager unitOfWorkManager, ILogger<UnitOfWorkInterceptor> logger)
         {
             _defaultOptions = options.Value;
+            _unitOfWorkManager = unitOfWorkManager;
             _logger = logger;
         }
 
-        public async Task InvokeAsync(InvocationContext context, IUnitOfWorkManager unitOfWorkManager)
+        public async Task InvokeAsync(InvocationContext context)
         {
             if (!UnitOfWorkHelper.IsUnitOfWorkMethod(context.Method, out var unitOfWorkAttribute))
             {
                 await context.ProceedAsync();
                 return;
             }
-            using var uow = unitOfWorkManager.Begin(CreateOptions(context.TargetMethod, unitOfWorkAttribute!));
+            using var uow = _unitOfWorkManager.Begin(CreateOptions(context.TargetMethod, unitOfWorkAttribute!));
             try
             {
                 _logger.LogInformation("Begin Unit of work:[{0}]", uow.Id);

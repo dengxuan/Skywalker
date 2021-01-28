@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace Skywalker.Aspects.Abstractinons
+﻿namespace Skywalker.Aspects.Abstractinons
 {
     /// <summary>
     /// Represents interceptor provider.
@@ -14,10 +10,5 @@ namespace Skywalker.Aspects.Abstractinons
         /// </summary>
         /// <param name="builder">The interceptor chain builder to which the provided interceptor is registered.</param>
         void Use(IInterceptorChainBuilder builder);
-
-        /// <summary>
-        /// Indicate whether multiple interceptors of the same type can be applied to a single one method.
-        /// </summary>
-        bool AllowMultiple { get; }
     }
 }

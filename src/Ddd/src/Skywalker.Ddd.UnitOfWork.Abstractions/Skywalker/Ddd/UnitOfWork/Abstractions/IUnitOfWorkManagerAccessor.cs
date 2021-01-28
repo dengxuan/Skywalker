@@ -1,6 +1,8 @@
-﻿namespace Skywalker.Ddd.UnitOfWork.Abstractions
+﻿using Microsoft.Extensions.DependencyInjection;
+
+namespace Skywalker.Ddd.UnitOfWork.Abstractions
 {
-    public interface IUnitOfWorkManagerAccessor
+    public interface IUnitOfWorkManagerAccessor: IScopedDependency
     {
         IUnitOfWorkManager? UnitOfWorkManager { get; }
     }

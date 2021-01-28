@@ -14,7 +14,7 @@ namespace Skywalker.IdentityServer.Domain.ApiScopes
     {
         private readonly IRepository<ApiScope> _apiScopes;
 
-        public ApiScopeManager(IRepository<ApiScope> apiScopes, ICachingProvider cachingProvider) : base(cachingProvider)
+        public ApiScopeManager(IRepository<ApiScope> apiScopes, ICachingProvider cachingProvider) : base(apiScopes,cachingProvider)
         {
             _apiScopes = apiScopes;
         }
