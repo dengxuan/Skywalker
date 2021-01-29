@@ -2,7 +2,7 @@
 
 namespace Skywalker.Ddd.UnitOfWork.Abstractions
 {
-    public interface IUnitOfWorkEnabled
+    public interface IUnitOfWorkEnabled: IAspects
     {
     }
 }

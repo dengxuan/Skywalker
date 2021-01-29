@@ -1,6 +1,7 @@
-﻿using Microsoft.Extensions.Logging;
+﻿using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
-using Skywalker.Aspects;
+using Skywalker.Aspects.Interceptors;
 using Skywalker.Ddd.UnitOfWork.Abstractions;
 using System;
 using System.Diagnostics.CodeAnalysis;
@@ -11,25 +12,25 @@ namespace Skywalker.Ddd.UnitOfWork
 {
     public class UnitOfWorkInterceptor
     {
-        private readonly AbpUnitOfWorkDefaultOptions _defaultOptions;
+        private readonly UnitOfWorkDefaultOptions _defaultOptions;
         private readonly IUnitOfWorkManager _unitOfWorkManager;
         private readonly ILogger<UnitOfWorkInterceptor> _logger;
 
-        public UnitOfWorkInterceptor(IOptions<AbpUnitOfWorkDefaultOptions> options, IUnitOfWorkManager unitOfWorkManager, ILogger<UnitOfWorkInterceptor> logger)
+        public UnitOfWorkInterceptor(IOptions<UnitOfWorkDefaultOptions> options, IUnitOfWorkManager unitOfWorkManager, ILogger<UnitOfWorkInterceptor> logger)
         {
+            _logger = logger;
             _defaultOptions = options.Value;
             _unitOfWorkManager = unitOfWorkManager;
-            _logger = logger;
         }
 
         public async Task InvokeAsync(InvocationContext context)
         {
-            if (!UnitOfWorkHelper.IsUnitOfWorkMethod(context.Method, out var unitOfWorkAttribute))
+            if (!UnitOfWorkHelper.IsUnitOfWorkMethod(context.Invocation.Method, out var unitOfWorkAttribute))
             {
                 await context.ProceedAsync();
                 return;
             }
-            using var uow = _unitOfWorkManager.Begin(CreateOptions(context.TargetMethod, unitOfWorkAttribute!));
+            using var uow = _unitOfWorkManager.Begin(CreateOptions(context.Invocation.Method, unitOfWorkAttribute!));
             try
             {
                 _logger.LogInformation("Begin Unit of work:[{0}]", uow.Id);

@@ -2,6 +2,7 @@
 using Microsoft.Extensions.Hosting;
 using Simple.Application.Abstractions;
 using Skywalker.Ddd.UnitOfWork;
+using Skywalker.DependencyInjection;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -13,17 +14,26 @@ namespace Simple.Application.Hosting
 {
     public class SimpleHostedService : IHostedService
     {
-        private readonly IServiceProvider _serviceProvider;
+        private readonly ISimpleUserApplicationService _simpleUserApplicationService;
 
-        public SimpleHostedService( IServiceProvider serviceProvider)
+        public SimpleHostedService(ISimpleUserApplicationService simpleUserApplicationService)
         {
-            _serviceProvider = serviceProvider;
+            _simpleUserApplicationService = simpleUserApplicationService;
         }
 
         public async Task StartAsync(CancellationToken cancellationToken)
         {
-            ISimpleUserApplicationService simpleUserApplicationService = _serviceProvider.GetRequiredService<ISimpleUserApplicationService>();
-           await simpleUserApplicationService.FindUsersAsync();
+            try
+            {
+                for (int i = 0; i < 1000; i++)
+                {
+                    _simpleUserApplicationService.FindUsersAsync();
+                }
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex);
+            }
             cancellationToken.WaitHandle.WaitOne();
         }
 

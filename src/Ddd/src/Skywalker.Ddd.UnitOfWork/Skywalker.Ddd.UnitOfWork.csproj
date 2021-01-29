@@ -6,6 +6,7 @@
       <PackageReference Include="Microsoft.AspNetCore.Http.Abstractions" Version="2.2.0" />
     </ItemGroup>
     <ItemGroup>
+      <ProjectReference Include="..\..\..\Aspects\src\Skywalker.Aspects\Skywalker.Aspects.csproj" />
       <ProjectReference Include="..\Skywalker.Ddd.UnitOfWork.Abstractions\Skywalker.Ddd.UnitOfWork.Abstractions.csproj" />
     </ItemGroup>
 

@@ -20,12 +20,12 @@ namespace Simple.Domain.Users
             _users = users;
         }
 
-        public Task<List<User>> GetUsersAsync()
+        public List<User> GetUsersAsync()
         {
             return _users.Include(u => u.UserOrders)
-                            .ThenInclude(o => o.UserValues.Where(predicate => predicate.Value != "")).AsSplitQuery().AsTracking()
+                            .ThenInclude(o => o.UserValues.Where(predicate => predicate.Value != "")).AsNoTracking().AsTracking()
                          .Take(10)
-                         .ToListAsync();
+                         .ToList();
         }
 
         public Task<List<User>> FindUsersAsync([NotNull] string name)
