@@ -23,4 +23,3 @@ namespace Skywalker.Aspects.Abstractinons
         IInterceptorRegistry GetInterceptors(Type targetType);
     }
 }
-                                                                                                       

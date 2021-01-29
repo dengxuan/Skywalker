@@ -40,7 +40,7 @@ namespace Skywalker.Aspects
             get
             {
                 return _constructorOfDefaultInvocationContext
-                ?? (_constructorOfDefaultInvocationContext = GetConstructor(() => new DefaultInvocationContext(null, null, null, null)));
+                ?? (_constructorOfDefaultInvocationContext = GetConstructor(() => new DefaultInvocationContext( null, null, null, null)));
             }
         }
         public static ConstructorInfo ConstructorOfInterceptDelegate
@@ -108,7 +108,7 @@ namespace Skywalker.Aspects
 
         public static InterfaceMethodMapping GetInterfaceMapForGenericTypeDefinition(Type @interface, Type targetType)
         {
-            var interfaceMethods = @interface.GetMethods(); 
+            var interfaceMethods = @interface.GetMethods();
             var targetMethods = new MethodInfo[interfaceMethods.Length];
             var implementedInterface = targetType.GetInterfaces().Single(it => it.IsGenericType && it.GetGenericTypeDefinition() == @interface.GetGenericTypeDefinition());
             var interfaceGenericParameters = ((TypeInfo)@interface).GenericTypeParameters;
@@ -145,7 +145,7 @@ namespace Skywalker.Aspects
             MethodInfo targetMethod,
             Dictionary<Type, Type> typeGenericParameterMap)
         {
-            
+
             if (!IsMethodNameMatched(@interface, interfaceMethod, targetMethod))
             {
                 return false;

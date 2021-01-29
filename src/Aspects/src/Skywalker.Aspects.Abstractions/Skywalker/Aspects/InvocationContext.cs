@@ -10,12 +10,9 @@ namespace Skywalker.Aspects
     /// </summary>
     public abstract class InvocationContext
     {
-        #region Fields
-        private MethodInfo _targetMethod;
-        private Type _targetType;
-        #endregion
+        private MethodInfo? _targetMethod;
+        private Type? _targetType;
 
-        #region Properties
         /// <summary>
         ///  Gets the <see cref="MethodInfo"/> representing the method of type to intercept.
         /// </summary>
@@ -35,7 +32,7 @@ namespace Skywalker.Aspects
                 {
                     return _targetMethod;
                 }
-                if (Method.DeclaringType.IsInterface)
+                if (Method.DeclaringType?.IsInterface == true)
                 {
                     _targetType = _targetType ?? Target.GetType();
                     var map = _targetType.GetTypeInfo().GetRuntimeInterfaceMap(Method.DeclaringType);
@@ -68,7 +65,7 @@ namespace Skywalker.Aspects
         /// <summary>
         /// Gets or sets the return value of the method.
         /// </summary>
-        public abstract object? ReturnValue { get; set; }  
+        public abstract object? ReturnValue { get; set; }
 
         /// <summary>
         /// Gets the extended properties.
@@ -81,16 +78,19 @@ namespace Skywalker.Aspects
         /// <summary>
         /// Gets or sets the <see cref="InterceptDelegate"/> to invoke the next interceptor or target method.
         /// </summary>
-        public InterceptDelegate Next { get; internal set; }
-        #endregion
+        public InterceptDelegate? Next { get; internal set; }
 
-        #region Public Methods
         /// <summary>
         /// Invoke the next interceptor or target method.
         /// </summary>
         /// <returns>The task to invoke the next interceptor or target method.</returns>
-        public Task ProceedAsync()=> Next.Invoke(this);
-
-        #endregion
-    }                             
+        public Task ProceedAsync()
+        {
+            if(Next == null)
+            {
+                return Task.CompletedTask;
+            }
+            return Next.Invoke(this);
+        }
+    }
 }

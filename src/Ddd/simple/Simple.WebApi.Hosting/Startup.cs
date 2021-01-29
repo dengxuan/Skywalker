@@ -7,6 +7,7 @@ using Microsoft.Extensions.Hosting;
 using Simple.Application;
 using Simple.EntityFrameworkCore;
 using Skywalker.Ddd.EntityFrameworkCore;
+using System.Collections.Generic;
 
 namespace Simple.WebApi.Hosting
 {

@@ -9,12 +9,13 @@ namespace Skywalker.Aspects
         public static bool IsInterceptable(this ServiceDescriptor serviceDescriptor)
         {
             Check.NotNull(serviceDescriptor, nameof(serviceDescriptor));
-            if (serviceDescriptor.ImplementationFactory?.Method?.DeclaringType?.Assembly == _assembly)
-            {
-                return true;
-            }
-            InterceptorAttribute? interceptorAttribute = serviceDescriptor.ServiceType.GetCustomAttribute<InterceptorAttribute>();
-            return interceptorAttribute == null;
+            return serviceDescriptor.ImplementationFactory?.Method?.DeclaringType?.Assembly == _assembly;
+            //if (serviceDescriptor.ImplementationFactory?.Method?.DeclaringType?.Assembly == _assembly)
+            //{
+            //    return true;
+            //}
+            //InterceptorAttribute? interceptorAttribute = serviceDescriptor.ServiceType.GetCustomAttribute<InterceptorAttribute>();
+            //return interceptorAttribute == null;
         }
     }
 }

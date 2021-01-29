@@ -33,11 +33,12 @@ namespace Microsoft.Extensions.DependencyInjection
             }
             services.TryAddSingleton(builder);
             services.TryAddSingleton<IDuplicate, Duplicate>();
+            services.TryAddSingleton<IInterceptorChainBuilder, InterceptorChainBuilder>();
             IInterceptorChainBuilder interceptorChainBuilder = new InterceptorChainBuilder();
             IInterceptorResolver interceptorResolver = new InterceptorResolver(interceptorChainBuilder, builder.InterceptorProviderResolvers);
             ICodeGeneratorFactory codeGeneratorFactory = new CodeGeneratorFactory();
             IInterceptableProxyFactoryCache interceptableProxyFactoryCache = new InterceptableProxyFactoryCache(codeGeneratorFactory, interceptorResolver);
-            services.TryAddSingleton(interceptorChainBuilder);
+            //services.TryAddSingleton(interceptorChainBuilder);
             services.TryAddSingleton(interceptorResolver);
             services.TryAddSingleton(codeGeneratorFactory);
             services.TryAddSingleton(interceptableProxyFactoryCache);

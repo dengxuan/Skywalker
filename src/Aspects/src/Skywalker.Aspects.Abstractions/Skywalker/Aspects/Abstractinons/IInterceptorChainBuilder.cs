@@ -21,6 +21,14 @@ namespace Skywalker.Aspects.Abstractinons
         IInterceptorChainBuilder Use(InterceptorDelegate interceptor, int order);
 
         /// <summary>
+        /// Register specified interceptor.
+        /// </summary>
+        /// <param name="interceptorType">The typeof interceptor to register.</param>
+        /// <param name="order">The order for the registered interceptor in the interceptor chain.</param>
+        /// <returns>The interceptor chain builder with registered intercetor.</returns>
+        IInterceptorChainBuilder Use(Type interceptorType, int order);
+
+        /// <summary>
         /// Build an interceptor chain using the registerd interceptors.
         /// </summary>
         /// <returns>A composite interceptor representing the interceptor chain.</returns>

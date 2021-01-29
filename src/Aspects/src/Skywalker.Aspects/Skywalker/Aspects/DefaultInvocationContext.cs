@@ -9,7 +9,6 @@ namespace Skywalker.Aspects
     /// </summary>   
     public sealed class DefaultInvocationContext : InvocationContext
     {
-        #region Properties
         /// <summary>
         /// Gets the <see cref="MethodInfo" /> representing the method being invoked on the proxy.
         /// </summary>
@@ -46,9 +45,7 @@ namespace Skywalker.Aspects
         /// The extended properties.
         /// </value>
         public override IDictionary<string, object> Properties { get; }
-        #endregion
 
-        #region Constructors
         /// <summary>
         /// Initializes a new instance of the <see cref="DefaultInvocationContext"/> class.
         /// </summary>
@@ -60,18 +57,13 @@ namespace Skywalker.Aspects
         /// <exception cref="ArgumentNullException">The specified<paramref name="proxy"/> is null.</exception>   
         /// <exception cref="ArgumentNullException">The specified<paramref name="target"/> is null.</exception>   
         /// <exception cref="ArgumentNullException">The specified<paramref name="arguments"/> is null.</exception>
-        public DefaultInvocationContext(
-             MethodInfo method,  
-             object proxy,
-             object target,
-             object[] arguments)
+        public DefaultInvocationContext(MethodInfo method, object proxy, object target, object[] arguments)
         {
             Method = Check.NotNull(method, nameof(method));
             Proxy = Check.NotNull(proxy, nameof(proxy));
             Target = Check.NotNull(target, nameof(target));
             Arguments = Check.NotNull(arguments, nameof(arguments));
-            Properties = new Dictionary<string, object>();  
+            Properties = new Dictionary<string, object>();
         }
-        #endregion
     }
 }

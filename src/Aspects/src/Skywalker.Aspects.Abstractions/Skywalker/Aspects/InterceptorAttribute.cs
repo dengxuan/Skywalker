@@ -1,10 +1,16 @@
 ﻿using Skywalker.Aspects.Abstractinons;
 using System;
 using System.Collections.Concurrent;
+using System.Collections.Generic;
+using System.Linq;
+using System.Linq.Expressions;
 using System.Reflection;
+using System.Threading.Tasks;
 
 namespace Skywalker.Aspects
 {
+    internal delegate Task InvokeDelegate(object interceptor, InvocationContext context, IServiceProvider serviceProvider);
+
     /// <summary>
     /// An attribute based interceptor provider.
     /// </summary>
@@ -32,7 +38,7 @@ namespace Skywalker.Aspects
         /// <param name="builder">The interceptor chain builder to which the provided interceptor is registered.</param>
         public void Use(IInterceptorChainBuilder builder)
         {
-            //builder.Use(InterceptorType, 1);
+            builder.Use(InterceptorType, Order);
         }
     }
 }
