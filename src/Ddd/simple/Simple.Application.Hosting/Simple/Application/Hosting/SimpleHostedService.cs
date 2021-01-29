@@ -23,7 +23,14 @@ namespace Simple.Application.Hosting
         public async Task StartAsync(CancellationToken cancellationToken)
         {
             ISimpleUserApplicationService simpleUserApplicationService = _serviceProvider.GetRequiredService<ISimpleUserApplicationService>();
-           await simpleUserApplicationService.FindUsersAsync();
+            try
+            {
+                await simpleUserApplicationService.FindUsersAsync();
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex);
+            }
             cancellationToken.WaitHandle.WaitOne();
         }
 

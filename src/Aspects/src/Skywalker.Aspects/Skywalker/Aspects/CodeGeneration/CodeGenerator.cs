@@ -25,7 +25,6 @@ namespace Skywalker.Aspects
         private TypeBuilder _typeBuilder;
         private FieldBuilder _targetField;
         private FieldBuilder _interceptorsField;
-        private FieldBuilder _serviceProviderField;
         private readonly MethodInfo _methodOfGetInterceptor = ReflectionUtility.GetMethod<IInterceptorRegistry>(_ => _.GetInterceptor(null));
         private readonly MethodInfo _getInterceptorsMethod4Interface = ReflectionUtility.GetMethod<IInterceptorResolver>(_ => _.GetInterceptors(null, null));
         private readonly MethodInfo _getInterceptorsMethod4Class = ReflectionUtility.GetMethod<IInterceptorResolver>(_ => _.GetInterceptors(null));
@@ -87,7 +86,6 @@ namespace Skywalker.Aspects
             }
 
             _interceptorsField = _typeBuilder.DefineField("_interceptors", typeof(IInterceptorRegistry), FieldAttributes.Private);
-            _serviceProviderField = _typeBuilder.DefineField("_serviceProvider", typeof(IServiceProvider), FieldAttributes.Private);
 
             if (_interfaceOrBaseType.IsInterface)
             {
@@ -179,20 +177,18 @@ namespace Skywalker.Aspects
                 var il = constructorBuilder.GetILGenerator();
 
                 il.Emit(OpCodes.Ldarg_0);
-                for (int index2 = 0; index2 < parameterTypes.Count -2; index2++)
+                for (int index2 = 0; index2 < parameterTypes.Count -1; index2++)
                 {
                     il.EmitLoadArgument(index2);
                 }                
                 il.Emit(OpCodes.Call, constructor);
 
                 il.Emit(OpCodes.Ldarg_0);
-                il.EmitLoadArgument(parameterTypes.Count - 2);
+                il.EmitLoadArgument(parameterTypes.Count - 1);
                 il.Emit(OpCodes.Ldtoken, _interfaceOrBaseType);
                 il.Emit(OpCodes.Callvirt, _getInterceptorsMethod4Class);
                 il.Emit(OpCodes.Stfld, _interceptorsField);
                 il.Emit(OpCodes.Ldarg_0);
-                il.EmitLoadArgument(parameterTypes.Count - 1);
-                il.Emit(OpCodes.Stfld, _serviceProviderField);
 
                 il.Emit(OpCodes.Ret);
             }

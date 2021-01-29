@@ -16,7 +16,7 @@ namespace Skywalker.Aspects
     public static class InterceptorChainBuilderExtensions
     {
         private delegate Task InvokeDelegate(object interceptor, InvocationContext context, IServiceProvider serviceProvider);
-        private static readonly MethodInfo _getServiceMethod = typeof(InterceptorChainBuilderExtensions).GetMethod("GetService", BindingFlags.Static | BindingFlags.NonPublic);
+        private static readonly MethodInfo? _getServiceMethod = typeof(IServiceProvider).GetMethod("GetService", BindingFlags.Static | BindingFlags.NonPublic);
         private static readonly Dictionary<Type, InvokeDelegate> _invokers = new Dictionary<Type, InvokeDelegate>();
         private static readonly object _syncHelper = new object();
 
@@ -48,7 +48,8 @@ namespace Skywalker.Aspects
         public static IInterceptorChainBuilder Use(this IInterceptorChainBuilder builder, Type interceptorType, int order, IServiceProvider serviceProvider, params object[] arguments)
         {
             Check.NotNull(interceptorType, nameof(interceptorType));
-            object interceptor = ActivatorUtilities.CreateInstance(serviceProvider, interceptorType, arguments);
+            object interceptor = serviceProvider.GetRequiredService(interceptorType);
+            //object interceptor = ActivatorUtilities.CreateInstance(serviceProvider, interceptorType, arguments);
             return builder.Use(interceptor, order, serviceProvider);
         }
 
@@ -128,13 +129,8 @@ namespace Skywalker.Aspects
                 return invocationContext;
             }
             Expression serviceType = Expression.Constant(parameterType, typeof(Type));
-            Expression callGetService = Expression.Call(_getServiceMethod, serviceProvider, serviceType);
+            Expression callGetService = Expression.Call(_getServiceMethod!, serviceProvider, serviceType);
             return Expression.Convert(callGetService, parameterType);
-        }
-
-        private static object? GetService(IServiceProvider serviceProvider, Type type)
-        {
-            return serviceProvider.GetService(type);
         }
     }
 }
