@@ -1,4 +1,4 @@
-// Copyright 2004-2011 Hermit Project - http://www.Hermitproject.org/
+// Copyright 2004-2011 Skywalker Project
 // 
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -181,12 +181,12 @@ namespace Skywalker.Aspects.DynamicProxy
         /// <returns></returns>
         public static byte[] GetKeyPair()
         {
-            using (var stream = typeof(ModuleScope).GetTypeInfo().Assembly.GetManifestResourceStream("Hermit.Aspects.DynamicProxy.DynProxy.snk"))
+            using (var stream = typeof(ModuleScope).GetTypeInfo().Assembly.GetManifestResourceStream("Skywalker.Aspects.DynamicProxy.DynProxy.snk"))
             {
                 if (stream == null)
                 {
                     throw new MissingManifestResourceException(
-                        "Should have a Hermit.Aspects.DynamicProxy.DynProxy.snk as an embedded resource, so Dynamic Proxy could sign generated assembly");
+                        "Should have a Skywalker.Aspects.DynamicProxy.DynProxy.snk as an embedded resource, so Dynamic Proxy could sign generated assembly");
                 }
 
                 var length = (int)stream.Length;

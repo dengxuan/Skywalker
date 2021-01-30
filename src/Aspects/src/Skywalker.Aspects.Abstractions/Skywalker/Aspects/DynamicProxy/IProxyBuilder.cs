@@ -1,4 +1,4 @@
-// Copyright 2004-2011 Hermit Project - http://www.Hermitproject.org/
+// Copyright 2004-2011 Skywalker Project
 // 
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -53,7 +53,7 @@ namespace Skywalker.Aspects.DynamicProxy
         ///    name = "additionalInterfacesToProxy" /> is not public.
         ///   Note that to avoid this exception, you can mark offending type internal, and define <see
         ///    cref = "InternalsVisibleToAttribute" /> 
-        ///   pointing to Hermit Dynamic Proxy assembly, in assembly containing that type, if this is appropriate.</exception>
+        ///   pointing to Skywalker Dynamic Proxy assembly, in assembly containing that type, if this is appropriate.</exception>
         /// <seealso cref = "ClassProxyGenerator" />
         Type CreateClassProxyType(Type classToProxy, Type[] additionalInterfacesToProxy, ProxyGenerationOptions options);
 
@@ -80,7 +80,7 @@ namespace Skywalker.Aspects.DynamicProxy
         ///    name = "additionalInterfacesToProxy" /> is not public.
         ///   Note that to avoid this exception, you can mark offending type internal, and define <see
         ///    cref = "InternalsVisibleToAttribute" /> 
-        ///   pointing to Hermit Dynamic Proxy assembly, in assembly containing that type, if this is appropriate.</exception>
+        ///   pointing to Skywalker Dynamic Proxy assembly, in assembly containing that type, if this is appropriate.</exception>
         /// <seealso cref = "InterfaceProxyWithTargetGenerator" />
         Type CreateInterfaceProxyTypeWithTarget(Type interfaceToProxy, Type[] additionalInterfacesToProxy, Type targetType, ProxyGenerationOptions options);
 
@@ -104,7 +104,7 @@ namespace Skywalker.Aspects.DynamicProxy
         ///    name = "additionalInterfacesToProxy" /> is not public.
         ///   Note that to avoid this exception, you can mark offending type internal, and define <see
         ///    cref = "InternalsVisibleToAttribute" /> 
-        ///   pointing to Hermit Dynamic Proxy assembly, in assembly containing that type, if this is appropriate.</exception>
+        ///   pointing to Skywalker Dynamic Proxy assembly, in assembly containing that type, if this is appropriate.</exception>
         /// <seealso cref = "InterfaceProxyWithTargetInterfaceGenerator" />
         Type CreateInterfaceProxyTypeWithTargetInterface(Type interfaceToProxy, Type[] additionalInterfacesToProxy, ProxyGenerationOptions options);
 
@@ -124,7 +124,7 @@ namespace Skywalker.Aspects.DynamicProxy
         ///    name = "additionalInterfacesToProxy" /> is not public.
         ///   Note that to avoid this exception, you can mark offending type internal, and define <see
         ///    cref = "InternalsVisibleToAttribute" /> 
-        ///   pointing to Hermit Dynamic Proxy assembly, in assembly containing that type, if this is appropriate.</exception>
+        ///   pointing to Skywalker Dynamic Proxy assembly, in assembly containing that type, if this is appropriate.</exception>
         /// <seealso cref = "InterfaceProxyWithoutTargetGenerator" />
         Type CreateInterfaceProxyTypeWithoutTarget(Type interfaceToProxy, Type[] additionalInterfacesToProxy, ProxyGenerationOptions options);
     }

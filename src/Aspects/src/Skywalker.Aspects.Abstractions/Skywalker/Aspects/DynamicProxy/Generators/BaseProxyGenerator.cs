@@ -1,4 +1,4 @@
-// Copyright 2004-2011 Hermit Project - http://www.Hermitproject.org/
+// Copyright 2004-2011 Skywalker Project
 // 
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -398,7 +398,7 @@ namespace Skywalker.Aspects.DynamicProxy.Generators
                 Logger.LogDebug("No cached proxy type was found for target type {0}.", targetType.FullName);
                 EnsureOptionsOverrideEqualsAndGetHashCode(ProxyGenerationOptions);
 
-                var name = Scope.NamingScope.GetUniqueName("Hermit.Proxies." + targetType.Name + "Proxy");
+                var name = Scope.NamingScope.GetUniqueName("Skywalker.Proxies." + targetType.Name + "Proxy");
                 var proxyType = factory.Invoke(name, Scope.NamingScope.SafeSubScope());
 
                 // Upgrade the lock to a write lock. 

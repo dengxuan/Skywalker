@@ -16,7 +16,7 @@ namespace Microsoft.Extensions.DependencyInjection
     {
 
         /// <summary>
-        /// Integrates Hermit to AspNet Core.
+        /// Integrates Skywalker to AspNet Core.
         /// </summary>
         /// <param name="services">Services.</param>
         /// <param name="optionsAction">An action to get/modify options</param>

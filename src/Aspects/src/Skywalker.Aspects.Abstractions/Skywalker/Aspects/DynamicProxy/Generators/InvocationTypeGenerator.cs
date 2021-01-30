@@ -1,4 +1,4 @@
-// Copyright 2004-2011 Hermit Project - http://www.Hermitproject.org/
+// Copyright 2004-2011 Skywalker Project
 // 
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -273,7 +273,7 @@ namespace Skywalker.Aspects.DynamicProxy.Generators
         private AbstractTypeEmitter GetEmitter(ClassEmitter @class, Type[] interfaces, INamingScope namingScope,
                                                MethodInfo methodInfo)
         {
-            var suggestedName = string.Format("Hermit.Proxies.Invocations.{0}_{1}", methodInfo.DeclaringType.Name,
+            var suggestedName = string.Format("Skywalker.Proxies.Invocations.{0}_{1}", methodInfo.DeclaringType.Name,
                                               methodInfo.Name);
             var uniqueName = namingScope.ParentScope.GetUniqueName(suggestedName);
             return new ClassEmitter(@class.ModuleScope, uniqueName, GetBaseType(), interfaces);

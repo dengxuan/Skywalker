@@ -1,4 +1,4 @@
-// Copyright 2004-2011 Hermit Project - http://www.Hermitproject.org/
+// Copyright 2004-2011 Skywalker Project
 // 
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -111,7 +111,7 @@ namespace Skywalker.Aspects.DynamicProxy.Internal
             if (targetAssembly.IsAssemblySigned())
             {
                 strongNamedOrNotIndicator = "";
-                assemblyToBeVisibleTo = ReferencesHermitCore(targetAssembly)
+                assemblyToBeVisibleTo = ReferencesSkywalkerCore(targetAssembly)
                     ? "InternalsVisible.ToDynamicProxyGenAssembly2"
                     : '"' + InternalsVisible.ToDynamicProxyGenAssembly2 + '"';
             }
@@ -133,7 +133,7 @@ namespace Skywalker.Aspects.DynamicProxy.Internal
             return targetAssembly.GetName().Name;
         }
 
-        private static bool ReferencesHermitCore(Assembly inspectedAssembly)
+        private static bool ReferencesSkywalkerCore(Assembly inspectedAssembly)
         {
 #if FEATURE_GET_REFERENCED_ASSEMBLIES
 			return inspectedAssembly.GetReferencedAssemblies()
