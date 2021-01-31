@@ -20,9 +20,9 @@ namespace Simple.WebApi.Users
 
         [HttpGet]
         [Route("all")]
-        public async Task<List<UserDto>> GetUsersAsync()
+        public List<UserDto> GetUsersAsync()
         {
-            var users= await  _simpleUserApplicationService.FindUsersAsync();
+            var users=  _simpleUserApplicationService.FindUsersAsync();
             return users;
         }
 

@@ -8,8 +8,7 @@ namespace Skywalker.Extensions.Json.Newtonsoft
     {
         private readonly SkywalkerJsonIsoDateTimeConverter _dateTimeConverter;
 
-        private static readonly CamelCaseExceptDictionaryKeysResolver SharedCamelCaseExceptDictionaryKeysResolver =
-            new CamelCaseExceptDictionaryKeysResolver();
+        private static readonly CamelCaseExceptDictionaryKeysResolver _sharedCamelCaseExceptDictionaryKeysResolver = new CamelCaseExceptDictionaryKeysResolver();
 
         public NewtonsoftJsonSerializer(SkywalkerJsonIsoDateTimeConverter dateTimeConverter)
         {
@@ -21,12 +20,12 @@ namespace Skywalker.Extensions.Json.Newtonsoft
             return JsonConvert.SerializeObject(obj, CreateSerializerSettings(camelCase, indented));
         }
 
-        public T Deserialize<T>(string jsonString, bool camelCase = true)
+        public T? Deserialize<T>(string jsonString, bool camelCase = true)
         {
             return JsonConvert.DeserializeObject<T>(jsonString, CreateSerializerSettings(camelCase));
         }
 
-        public object Deserialize(Type type, string jsonString, bool camelCase = true)
+        public object? Deserialize(Type type, string jsonString, bool camelCase = true)
         {
             return JsonConvert.DeserializeObject(jsonString, type, CreateSerializerSettings(camelCase));
         }
@@ -36,17 +35,17 @@ namespace Skywalker.Extensions.Json.Newtonsoft
             var settings = new JsonSerializerSettings();
 
             settings.Converters.Insert(0, _dateTimeConverter);
-            
+
             if (camelCase)
             {
-                settings.ContractResolver = SharedCamelCaseExceptDictionaryKeysResolver;
+                settings.ContractResolver = _sharedCamelCaseExceptDictionaryKeysResolver;
             }
 
             if (indented)
             {
                 settings.Formatting = Formatting.Indented;
             }
-            
+
             return settings;
         }
 

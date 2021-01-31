@@ -14,7 +14,7 @@ namespace Skywalker.Aspects.Interceptors
     public static class InterceptorChainBuilderExtensions
     {
         private delegate Task InvokeDelegate(object interceptor, InvocationContext context, IServiceProvider serviceProvider);
-        private static readonly MethodInfo _getServiceMethod = typeof(InterceptorChainBuilderExtensions).GetTypeInfo().GetMethod("GetService", BindingFlags.Static | BindingFlags.NonPublic);
+        private static readonly MethodInfo? _getServiceMethod = typeof(IServiceProvider).GetTypeInfo().GetMethod("GetService", BindingFlags.Static | BindingFlags.NonPublic);
         private static readonly Dictionary<Type, InvokeDelegate> _invokers = new Dictionary<Type, InvokeDelegate>();
         private static readonly object _syncHelper = new object();
 
@@ -65,14 +65,14 @@ namespace Skywalker.Aspects.Interceptors
 
         private static bool TryGetInvoke(Type interceptorType, out InvokeDelegate invoker)
         {
-            if (_invokers.TryGetValue(interceptorType, out invoker))
+            if (_invokers.TryGetValue(interceptorType, out invoker!))
             {
                 return true;
             }
 
             lock (_syncHelper)
             {
-                if (_invokers.TryGetValue(interceptorType, out invoker))
+                if (_invokers.TryGetValue(interceptorType, out invoker!))
                 {
                     return true;
                 }
@@ -81,7 +81,7 @@ namespace Skywalker.Aspects.Interceptors
                              let parameters = it.GetParameters()
                              where it.Name == "InvokeAsync" && it.ReturnType == typeof(Task) && parameters.FirstOrDefault()?.ParameterType == typeof(InvocationContext)
                              select it;
-                MethodInfo invokeAsyncMethod = search.FirstOrDefault();
+                MethodInfo? invokeAsyncMethod = search.FirstOrDefault();
                 if (null == invokeAsyncMethod)
                 {
                     return false;
@@ -107,13 +107,13 @@ namespace Skywalker.Aspects.Interceptors
                 return invocationContext;
             }
             Expression serviceType = Expression.Constant(parameterType, typeof(Type));
-            Expression callGetService = Expression.Call(_getServiceMethod, serviceProvider, serviceType);
+            Expression callGetService = Expression.Call(_getServiceMethod!, serviceProvider, serviceType);
             return Expression.Convert(callGetService, parameterType);
         }
 
-        private static object GetService(IServiceProvider serviceProvider, Type type)
-        {
-            return serviceProvider.GetService(type);
-        }
+        //private static object GetService(IServiceProvider serviceProvider, Type type)
+        //{
+        //    return serviceProvider.GetService(type);
+        //}
     }
 }

@@ -51,7 +51,8 @@ namespace Skywalker.Aspects
                 {
                     aspects.Add(ServiceDescriptor.Describe(service.ServiceType, sp =>
                     {
-                        object instance = ActivatorUtilities.CreateInstance(sp, service.ImplementationType);
+                        //object instance = ActivatorUtilities.CreateInstance(sp, service.ImplementationType);
+                        object instance = sp.GetRequiredService(service.ImplementationType);
                         return CreateInstance(sp, service.ServiceType, instance);
                     }, service.Lifetime));
                 }
