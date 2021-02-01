@@ -21,5 +21,8 @@
       <ProjectReference Include="..\..\..\Extensions\src\Skywalker.Extensions.Timing\Skywalker.Extensions.Timing.csproj" />
       <ProjectReference Include="..\..\..\Extensions\src\Skywalker.Extensions.Universal\Skywalker.Extensions.Universal.csproj" />
     </ItemGroup>
+    <ItemGroup>
+      <Folder Include="Skywalker\Ddd\" />
+    </ItemGroup>
 
 </Project>

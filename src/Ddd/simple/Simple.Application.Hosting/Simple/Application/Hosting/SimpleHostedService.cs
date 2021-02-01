@@ -1,13 +1,7 @@
-﻿using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.Hosting;
+﻿using Microsoft.Extensions.Hosting;
 using Simple.Application.Abstractions;
-using Simple.Application.Users;
-using Skywalker.Ddd.Queries.Abstractions;
-using Skywalker.Ddd.UnitOfWork;
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 
