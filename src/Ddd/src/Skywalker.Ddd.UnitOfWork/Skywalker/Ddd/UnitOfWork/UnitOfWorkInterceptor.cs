@@ -38,6 +38,8 @@ namespace Skywalker.Ddd.UnitOfWork
             catch (Exception ex)
             {
                 _logger.LogError(ex, $"Error Unit of work:[{uow.Id}] Exception:", uow.Id, ex.Message);
+                await uow.RollbackAsync();
+                ex.ReThrow();
             }
         }
 
