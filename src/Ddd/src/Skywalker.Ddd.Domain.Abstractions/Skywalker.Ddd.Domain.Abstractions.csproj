@@ -17,6 +17,7 @@
     <ProjectReference Include="..\Skywalker.Ddd.Localization.Abstractions\Skywalker.Ddd.Localization.Abstractions.csproj" />
     <ProjectReference Include="..\Skywalker.Ddd.UnitOfWork.Abstractions\Skywalker.Ddd.UnitOfWork.Abstractions.csproj" />
     <ProjectReference Include="..\Skywalker.Ddd.Validation.Abstractions\Skywalker.Ddd.Validation.Abstractions.csproj" />
+    <ProjectReference Include="..\Skywalker.Ddd\Skywalker.Ddd.csproj" />
   </ItemGroup>
 
 </Project>
