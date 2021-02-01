@@ -12,7 +12,6 @@ namespace Microsoft.Extensions.DependencyInjection
         public static IServiceCollection AddUnitOfWork(this IServiceCollection services)
         {
             services.AddSingleton<UnitOfWorkInterceptor>();
-            services.AddSingleton(typeof(ISearchingPipelineBehavior<,>), typeof(UniyOfWorkSearchingPipeline<,>));
             return services;
         }
     }

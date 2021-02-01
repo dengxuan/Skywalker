@@ -11,41 +11,41 @@ namespace Skywalker.Ddd.Queries
 
     public class DefaultQueryHandlerProvider<TOutput> : IQueryHandlerProvider<TOutput>
     {
-        private readonly IQueryHandler<TOutput> _queryHandler;
-        private readonly IEnumerable<ISearchingPipelineBehavior<TOutput>> _searchingPipelineBehaviors;
+        private readonly IServiceProvider _serviceProvider;
 
-        public DefaultQueryHandlerProvider(IQueryHandler<TOutput> queryHandler, IEnumerable<ISearchingPipelineBehavior<TOutput>> searchingPipelineBehaviors)
+        public DefaultQueryHandlerProvider(IServiceProvider serviceProvider)
         {
-            _queryHandler = queryHandler;
-            _searchingPipelineBehaviors = searchingPipelineBehaviors;
+            _serviceProvider = serviceProvider;
         }
 
         public Task<TOutput> HandleAsync(CancellationToken cancellationToken)
         {
-            Task<TOutput> Handler() => _queryHandler.HandleAsync(cancellationToken);
+            IQueryHandler<TOutput> queryHandler = _serviceProvider.GetRequiredService<IQueryHandler<TOutput>>();
+            Task<TOutput> Handler() => queryHandler.HandleAsync(cancellationToken);
 
-            return _searchingPipelineBehaviors.Reverse()
-                                              .Aggregate((QueryHandlerDelegate<TOutput>)Handler, (next, pipeline) => () => pipeline.HandleAsync(next, cancellationToken))();
+            return _serviceProvider.GetServices<ISearchingPipelineBehavior<TOutput>>()
+                                   .Reverse()
+                                   .Aggregate((QueryHandlerDelegate<TOutput>)Handler, (next, pipeline) => () => pipeline.HandleAsync(next, cancellationToken))();
         }
     }
 
     public class DefaultQueryHandlerProvider<TQuery, TOutput> : IQueryHandlerProvider<TQuery, TOutput> where TQuery : IQuery<TOutput>
     {
-        private readonly IQueryHandler<TQuery, TOutput> _queryHandler;
-        private readonly IEnumerable<ISearchingPipelineBehavior<TQuery, TOutput>> _searchingPipelineBehaviors;
+        private readonly IServiceProvider _serviceProvider;
 
-        public DefaultQueryHandlerProvider(IQueryHandler<TQuery, TOutput> queryHandler, IEnumerable<ISearchingPipelineBehavior<TQuery, TOutput>> searchingPipelineBehaviors)
+        public DefaultQueryHandlerProvider(IServiceProvider serviceProvider)
         {
-            _queryHandler = queryHandler;
-            _searchingPipelineBehaviors = searchingPipelineBehaviors;
+            _serviceProvider = serviceProvider;
         }
 
         public Task<TOutput> HandleAsync(TQuery querier, CancellationToken cancellationToken)
         {
-            Task<TOutput> Handler() => _queryHandler.HandleAsync(querier, cancellationToken);
+            IQueryHandler<TQuery, TOutput> queryHandler = _serviceProvider.GetRequiredService<IQueryHandler<TQuery, TOutput>>();
+            Task<TOutput> Handler() => queryHandler.HandleAsync(querier, cancellationToken);
 
-            return _searchingPipelineBehaviors.Reverse()
-                                              .Aggregate((QueryHandlerDelegate<TOutput>)Handler, (next, pipeline) => () => pipeline.HandleAsync(querier, next, cancellationToken))();
+            return _serviceProvider.GetServices<ISearchingPipelineBehavior<TQuery, TOutput>>()
+                                   .Reverse()
+                                   .Aggregate((QueryHandlerDelegate<TOutput>)Handler, (next, pipeline) => () => pipeline.HandleAsync(querier, next, cancellationToken))();
         }
     }
 }

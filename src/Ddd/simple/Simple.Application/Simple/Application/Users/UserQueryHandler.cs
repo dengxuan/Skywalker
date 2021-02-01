@@ -11,7 +11,7 @@ using System.Threading.Tasks;
 
 namespace Simple.Application.Users
 {
-    public class UserQueryHandler : IQueryHandler<UserQuery, List<UserDto>>
+    public class UserQueryHandler : IQueryHandler<List<UserDto>>, IQueryHandler<UserQuery, List<UserDto>>
     {
         private readonly IUserManager _userManager;
 

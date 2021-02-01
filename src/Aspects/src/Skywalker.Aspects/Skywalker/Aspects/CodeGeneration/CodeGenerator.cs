@@ -8,16 +8,14 @@ using System.Threading.Tasks;
 
 namespace Skywalker.Aspects
 {
+
     /// <summary>
     /// Default implementation of <see cref="ICodeGenerator"/>
     /// </summary>
     public class CodeGenerator : ICodeGenerator
     {
-        private const string ASSEMBLY_NAME = "Skywalker.Proxies";
 
-        private const string PROXY_SURFIX = "Proxy";
-
-        #region FieldsassemblyName
+        #region Fields
         private Type _targetType;
         private Type _interfaceOrBaseType;
         private IInterceptorRegistry _interceptors;
@@ -42,18 +40,18 @@ namespace Skywalker.Aspects
             _targetType = context.TargetType;
             _interceptors = context.Interceptors;
 
-            var assemblyName = new AssemblyName(ASSEMBLY_NAME);
+            var assemblyName = new AssemblyName($"AssemblyFor{_interfaceOrBaseType.Name}{GenerateSurfix()}");
             var assemblyBuilder = AssemblyBuilder.DefineDynamicAssembly(assemblyName, AssemblyBuilderAccess.Run);
             _moduleBuilder = assemblyBuilder.DefineDynamicModule($"{assemblyName}.dll");
 
             if (_interfaceOrBaseType.IsInterface)
             {
-                _typeBuilder = _moduleBuilder.DefineType($"{_interfaceOrBaseType.Name}{PROXY_SURFIX}", TypeAttributes.Public, typeof(object), new Type[] { _interfaceOrBaseType });
-                _targetField = _typeBuilder.DefineField("_target",  _interfaceOrBaseType, FieldAttributes.Private);
+                _typeBuilder = _moduleBuilder.DefineType($"{_interfaceOrBaseType.Name}{GenerateSurfix()}", TypeAttributes.Public, typeof(object), new Type[] { _interfaceOrBaseType });
+                _targetField = _typeBuilder.DefineField("_target", _interfaceOrBaseType, FieldAttributes.Private);
             }
             else
             {
-                _typeBuilder = _moduleBuilder.DefineType($"{_interfaceOrBaseType.Name}{PROXY_SURFIX}", TypeAttributes.Public, _interfaceOrBaseType);
+                _typeBuilder = _moduleBuilder.DefineType($"{_interfaceOrBaseType.Name}{GenerateSurfix()}", TypeAttributes.Public, _interfaceOrBaseType);
             }
 
             if (_interfaceOrBaseType.IsGenericType)
@@ -156,8 +154,7 @@ namespace Skywalker.Aspects
         /// {
         ///     private readonly IInterceptionRegistry _interceptors;
         ///     private InterceptorRegistry _interceptors;
-        ///     private IServiceProvider _serviceProvider;
-        ///     public (Foo foo, Bar bar, IInterceptorResolver resolver, IServiceProvider provider):base(foo, bar)
+        ///     public (Foo foo, Bar bar, IInterceptorResolver resolver):base(foo, bar)
         ///     {
         ///         _interceptors = resolver.GetInterceptors(typeof(Foobar));
         ///     }
@@ -172,15 +169,14 @@ namespace Skywalker.Aspects
                 var constructor = constructors[index1];
                 var parameterTypes = constructor.GetParameters().Select(it => it.ParameterType).ToList();
                 parameterTypes.Add(typeof(IInterceptorResolver));
-                parameterTypes.Add(typeof(IServiceProvider));
                 var constructorBuilder = constructorBuilders[index1] = _typeBuilder.DefineConstructor(constructor.Attributes, CallingConventions.HasThis, parameterTypes.ToArray());
                 var il = constructorBuilder.GetILGenerator();
 
                 il.Emit(OpCodes.Ldarg_0);
-                for (int index2 = 0; index2 < parameterTypes.Count -1; index2++)
+                for (int index2 = 0; index2 < parameterTypes.Count - 1; index2++)
                 {
                     il.EmitLoadArgument(index2);
-                }                
+                }
                 il.Emit(OpCodes.Call, constructor);
 
                 il.Emit(OpCodes.Ldarg_0);
@@ -188,7 +184,6 @@ namespace Skywalker.Aspects
                 il.Emit(OpCodes.Ldtoken, _interfaceOrBaseType);
                 il.Emit(OpCodes.Callvirt, _getInterceptorsMethod4Class);
                 il.Emit(OpCodes.Stfld, _interceptorsField);
-                il.Emit(OpCodes.Ldarg_0);
 
                 il.Emit(OpCodes.Ret);
             }
@@ -610,7 +605,7 @@ namespace Skywalker.Aspects
             var methodBuilder = _typeBuilder.DefineMethod($"Invoke{GenerateSurfix()}", MethodAttributes.Private | MethodAttributes.HideBySig, typeof(Task), new Type[] { typeof(InvocationContext) });
             var genericParameterTypeMap = methodInfo.IsGenericMethod
               ? DefineMethodGenericParameters(methodBuilder, methodInfo)
-              : new Dictionary<Type, Type>(); 
+              : new Dictionary<Type, Type>();
             var parameters = methodInfo.GetParameters();
             var parameterTypes = parameters.Select(it => it.ParameterType.GetNonByRefType()).ToArray();
 
@@ -773,7 +768,7 @@ namespace Skywalker.Aspects
 
         private static string GenerateSurfix()
         {
-            return Guid.NewGuid().ToString("N");
+            return Guid.NewGuid().ToString().Replace("-", "");
         }
 
         #endregion

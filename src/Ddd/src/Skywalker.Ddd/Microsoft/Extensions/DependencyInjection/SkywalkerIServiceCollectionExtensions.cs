@@ -1,6 +1,4 @@
 ﻿using Skywalker;
-using Skywalker.Ddd.Commands;
-using Skywalker.Ddd.Commands.Abstractions;
 using Skywalker.Ddd.Queries;
 using Skywalker.Ddd.Queries.Abstractions;
 using System;
@@ -14,8 +12,8 @@ namespace Microsoft.Extensions.DependencyInjection
             services.AddScoped<ILazyLoader, MsDependencyInjectionLazyLoader>();
             services.AddGuidGenerator();
             services.AddTiming();
-            services.AddCommands();
-            services.AddQueries();
+            //services.AddCommands();
+            //services.AddQueries();
             AddTransientServices(services);
             AddSingletonServices(services);
             AddScopedServices(services);
@@ -27,6 +25,7 @@ namespace Microsoft.Extensions.DependencyInjection
         public static IServiceCollection AddQueries(this IServiceCollection services)
         {
             services.AddScoped<ISearcher, DefaultSearcher>();
+            services.AddScoped(typeof(IQueryHandlerProvider<>), typeof(DefaultQueryHandlerProvider<>));
             services.AddScoped(typeof(IQueryHandlerProvider<,>), typeof(DefaultQueryHandlerProvider<,>));
             services.Scan(scanner =>
             {
@@ -37,24 +36,6 @@ namespace Microsoft.Extensions.DependencyInjection
                        })
                        .AsImplementedInterfaces()
                        .WithScopedLifetime();
-            });
-            return services;
-        }
-
-        public static IServiceCollection AddCommands(this IServiceCollection services)
-        {
-            services.AddSingleton<ICommander, DefaultCommander>();
-            services.AddSingleton(typeof(ICommandPublisher<>), typeof(DefaultCommandPublisher<>));
-            services.AddSingleton(typeof(ICommandHandlerProvider<,>), typeof(DefaultCommandHandlerProvider<,>));
-            services.Scan(scanner =>
-            {
-                scanner.FromApplicationDependencies()
-                       .AddClasses(filter =>
-                       {
-                           filter.AssignableTo(typeof(ICommandHandler<>));
-                       })
-                       .AsImplementedInterfaces()
-                       .WithSingletonLifetime();
             });
             return services;
         }
