@@ -135,6 +135,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Skywalker.Scheduler.Abstrac
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Skywalker.Scheduler", "src\Scheduler\src\Skywalker.Scheduler\Skywalker.Scheduler.csproj", "{D9F2AE9B-8260-4BEA-B739-299352A8C45D}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Skywalker.Ddd.Queriers.Abstractions", "src\Ddd\src\Skywalker.Ddd.Queriers.Abstractions\Skywalker.Ddd.Queriers.Abstractions.csproj", "{9B20525A-AF56-4625-8711-86AFF80C3CBC}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -345,6 +347,10 @@ Global
 		{D9F2AE9B-8260-4BEA-B739-299352A8C45D}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{D9F2AE9B-8260-4BEA-B739-299352A8C45D}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{D9F2AE9B-8260-4BEA-B739-299352A8C45D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{9B20525A-AF56-4625-8711-86AFF80C3CBC}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{9B20525A-AF56-4625-8711-86AFF80C3CBC}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{9B20525A-AF56-4625-8711-86AFF80C3CBC}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{9B20525A-AF56-4625-8711-86AFF80C3CBC}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -411,6 +417,7 @@ Global
 		{BEEC0FE0-4AA3-4B3C-B2C9-FFD35C2C675A} = {9E861C23-5075-455D-A2DA-6DFB5D63D97F}
 		{18A38DC1-6E50-4BE2-A282-FF2BEC1EE6FD} = {BEEC0FE0-4AA3-4B3C-B2C9-FFD35C2C675A}
 		{D9F2AE9B-8260-4BEA-B739-299352A8C45D} = {BEEC0FE0-4AA3-4B3C-B2C9-FFD35C2C675A}
+		{9B20525A-AF56-4625-8711-86AFF80C3CBC} = {19C431B6-A1FD-413A-9191-F207420DABA6}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {6D4EB88A-9A1A-446D-82B8-B52DD909FF15}
