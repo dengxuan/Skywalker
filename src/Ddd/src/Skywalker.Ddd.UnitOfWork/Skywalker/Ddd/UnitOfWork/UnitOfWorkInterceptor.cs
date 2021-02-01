@@ -33,14 +33,16 @@ namespace Skywalker.Ddd.UnitOfWork
             using var uow = _unitOfWorkManager.Begin(CreateOptions(context.Invocation.Method, unitOfWorkAttribute!));
             try
             {
-                _logger.LogInformation("Begin Unit of work:[{0}]", uow.Id);
+                _logger.LogInformation("开始事务:[{0}]", uow.Id);
                 await context.ProceedAsync();
                 await uow.CompleteAsync();
-                _logger.LogInformation("Complete Unit of work:[{0}]", uow.Id);
+                _logger.LogInformation("提交事务:[{0}]", uow.Id);
             }
             catch (Exception ex)
             {
-                _logger.LogError(ex, $"Error Unit of work:[{uow.Id}] Exception:", uow.Id, ex.Message);
+                _logger.LogError(ex, "事务异常:[{0}]", uow.Id);
+                await uow.RollbackAsync();
+                ex.ReThrow();
             }
         }
 
