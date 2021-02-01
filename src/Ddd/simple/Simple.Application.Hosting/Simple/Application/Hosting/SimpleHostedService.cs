@@ -1,6 +1,8 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Simple.Application.Abstractions;
+using Simple.Application.Users;
+using Skywalker.Ddd.Queries.Abstractions;
 using Skywalker.Ddd.UnitOfWork;
 using System;
 using System.Collections.Generic;
@@ -13,19 +15,18 @@ namespace Simple.Application.Hosting
 {
     public class SimpleHostedService : IHostedService
     {
-        private readonly IServiceProvider _serviceProvider;
+        private readonly ISearcher _searcher;
 
-        public SimpleHostedService( IServiceProvider serviceProvider)
+        public SimpleHostedService(ISearcher searcher)
         {
-            _serviceProvider = serviceProvider;
+            _searcher = searcher;
         }
 
         public async Task StartAsync(CancellationToken cancellationToken)
         {
-            ISimpleUserApplicationService simpleUserApplicationService = _serviceProvider.GetRequiredService<ISimpleUserApplicationService>();
             try
             {
-                await simpleUserApplicationService.FindUsersAsync();
+                List<UserDto> userDtos = await _searcher.SearchAsync<UserQuery, List<UserDto>>(new UserQuery { Name = "" });
             }
             catch (Exception ex)
             {

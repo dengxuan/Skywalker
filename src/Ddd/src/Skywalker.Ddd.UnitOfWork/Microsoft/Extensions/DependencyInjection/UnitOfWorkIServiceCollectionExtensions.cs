@@ -1,6 +1,7 @@
 ﻿using Microsoft.Extensions.Hosting;
 using Skywalker.Aspects;
 using Skywalker.Aspects.Abstractinons;
+using Skywalker.Ddd.Queries.Abstractions;
 using Skywalker.Ddd.UnitOfWork;
 using System;
 
@@ -11,6 +12,7 @@ namespace Microsoft.Extensions.DependencyInjection
         public static IServiceCollection AddUnitOfWork(this IServiceCollection services)
         {
             services.AddSingleton<UnitOfWorkInterceptor>();
+            services.AddSingleton(typeof(ISearchingPipelineBehavior<,>), typeof(UniyOfWorkSearchingPipeline<,>));
             return services;
         }
     }

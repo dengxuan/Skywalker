@@ -15,7 +15,7 @@ namespace Simple.Domain.Users
     {
         private readonly IRepository<User, Guid> _users;
 
-        public UserManager(IRepository<User, Guid> users, ICachingProvider cachingProvider) : base(users,cachingProvider)
+        public UserManager(IRepository<User, Guid> users, ICachingProvider cachingProvider) : base(users, cachingProvider)
         {
             _users = users;
         }
@@ -30,11 +30,7 @@ namespace Simple.Domain.Users
 
         public Task<List<User>> FindUsersAsync([NotNull] string name)
         {
-
-            return Task.Run(() =>
-            {
-                return _users.Where(predicate => name.IsEmptyOrWhiteSpace() || predicate.Name!.Contains(name)).ToListAsync();
-            });
+            return _users.Where(predicate => name.IsEmptyOrWhiteSpace() || predicate.Name!.Contains(name)).ToListAsync();
         }
 
         public async Task<User> CreateUser(string name)

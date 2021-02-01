@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using Simple.Application.Abstractions;
+using Skywalker.Ddd.Queries.Abstractions;
 using Skywalker.Ddd.UnitOfWork;
 using System.Collections.Generic;
 using System.Threading.Tasks;
@@ -11,10 +12,12 @@ namespace Simple.WebApi.Users
     [Route("api/[Controller]")]
     public class UserController : SimpleController
     {
+        private readonly ISearcher _searcher;
         private readonly ISimpleUserApplicationService _simpleUserApplicationService;
 
-        public UserController(ISimpleUserApplicationService simpleUserApplicationService, ILogger<SimpleController> logger) : base(logger)
+        public UserController(ISearcher searcher, ISimpleUserApplicationService simpleUserApplicationService, ILogger<SimpleController> logger) : base(logger)
         {
+            _searcher = searcher;
             _simpleUserApplicationService = simpleUserApplicationService;
         }
 
@@ -22,7 +25,8 @@ namespace Simple.WebApi.Users
         [Route("all")]
         public async Task<List<UserDto>> GetUsersAsync()
         {
-            var users= await  _simpleUserApplicationService.FindUsersAsync();
+            await _searcher.SearchAsync<List<UserDto>>();
+            var users = await _simpleUserApplicationService.FindUsersAsync();
             return users;
         }
 
@@ -38,7 +42,7 @@ namespace Simple.WebApi.Users
         [Route("all-{name}")]
         public async Task<List<UserDto>> GetUsersAsync(string name)
         {
-             await _simpleUserApplicationService.CreateUserAsync(name);
+            await _simpleUserApplicationService.CreateUserAsync(name);
             return await _simpleUserApplicationService.FindUsersAsync(name);
         }
 
