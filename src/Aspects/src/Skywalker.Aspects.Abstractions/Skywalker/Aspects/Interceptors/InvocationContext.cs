@@ -1,4 +1,6 @@
 ﻿using Skywalker.Aspects.DynamicProxy;
+using System.Diagnostics;
+using System.Reflection;
 using System.Threading.Tasks;
 
 namespace Skywalker.Aspects.Interceptors
@@ -12,9 +14,10 @@ namespace Skywalker.Aspects.Interceptors
 
         public InvocationContext(IInvocation invocation) => Invocation = invocation;
 
-        public async Task ProceedAsync()
+        public Task ProceedAsync()
         {
-            await Task.Run(() => Invocation.Proceed());
+            Invocation.Proceed();
+            return Task.CompletedTask;
         }
     }
 }

@@ -16,11 +16,11 @@ namespace Skywalker.Aspects.DynamicProxy
 
         public IInterceptor[] SelectInterceptors(Type type, MethodInfo method, IInterceptor[] interceptors)
         {
-            if (_interceptors.TryGetValue(method, out IInterceptor interceptor) && interceptors.Contains(interceptor))
+            if (_interceptors.TryGetValue(method, out IInterceptor? interceptor) && interceptors.Contains(interceptor))
             {
                 return new IInterceptor[] { interceptor };
             }
-            return new IInterceptor[0];
+            return Array.Empty<IInterceptor>();
         }
     }
 }
