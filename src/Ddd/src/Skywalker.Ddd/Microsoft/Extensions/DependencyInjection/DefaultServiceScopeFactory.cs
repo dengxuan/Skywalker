@@ -12,7 +12,6 @@
         public IServiceScope CreateScope()
         {
             IServiceScope serviceScope = Factory.CreateScope();
-            System.Console.WriteLine($"CreateScope:{serviceScope.GetHashCode()}");
             return serviceScope;
         }
     }

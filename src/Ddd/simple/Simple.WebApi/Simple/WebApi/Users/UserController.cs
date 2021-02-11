@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using Simple.Application.Abstractions;
+using Skywalker.Ddd.Queries.Abstractions;
 using Skywalker.Ddd.UnitOfWork;
 using System.Collections.Generic;
 using System.Threading.Tasks;
@@ -22,7 +23,7 @@ namespace Simple.WebApi.Users
         [Route("all")]
         public async Task<List<UserDto>> GetUsersAsync()
         {
-            var users= await  _simpleUserApplicationService.FindUsersAsync();
+            var users = await _simpleUserApplicationService.FindUsersAsync();
             return users;
         }
 
@@ -38,7 +39,7 @@ namespace Simple.WebApi.Users
         [Route("all-{name}")]
         public async Task<List<UserDto>> GetUsersAsync(string name)
         {
-             await _simpleUserApplicationService.CreateUserAsync(name);
+            await _simpleUserApplicationService.CreateUserAsync(name);
             return await _simpleUserApplicationService.FindUsersAsync(name);
         }
 

@@ -1,7 +1,5 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.Logging;
 using Skywalker.Ddd.UnitOfWork.Abstractions;
-using System;
 using System.Diagnostics.CodeAnalysis;
 
 namespace Skywalker.Ddd.UnitOfWork
@@ -17,7 +15,6 @@ namespace Skywalker.Ddd.UnitOfWork
         {
             _ambientUnitOfWork = ambientUnitOfWork;
             _serviceScopeFactory = hybridServiceScopeFactory;
-            System.Console.WriteLine("UnitOfWorkManager:{0}", hybridServiceScopeFactory.GetHashCode());
         }
 
         public IUnitOfWork Begin([NotNull] AbpUnitOfWorkOptions options, bool requiresNew = false)
