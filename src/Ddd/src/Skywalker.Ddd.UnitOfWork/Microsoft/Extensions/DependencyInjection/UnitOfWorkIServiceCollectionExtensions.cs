@@ -1,9 +1,4 @@
-﻿using Microsoft.Extensions.Hosting;
-using Skywalker.Aspects;
-using Skywalker.Aspects.Abstractinons;
-using Skywalker.Ddd.Queries.Abstractions;
-using Skywalker.Ddd.UnitOfWork;
-using System;
+﻿using Skywalker.Ddd.UnitOfWork;
 
 namespace Microsoft.Extensions.DependencyInjection
 {
