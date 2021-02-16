@@ -22,10 +22,11 @@ namespace Simple.Domain.Users
 
         public Task<List<User>> GetUsersAsync()
         {
-            return _users.Include(u => u.UserOrders)
+            var users= _users.Include(u => u.UserOrders)
                             .ThenInclude(o => o.UserValues.Where(predicate => predicate.Value != "")).AsSplitQuery().AsTracking()
                          .Take(10)
                          .ToListAsync();
+            return users;
         }
 
         public Task<List<User>> FindUsersAsync([NotNull] string name)

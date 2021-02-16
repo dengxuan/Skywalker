@@ -16,7 +16,7 @@ namespace Skywalker.Aspects
         /// <value>
         /// The <seealso cref="GetTaskOfResult"/> specific <see cref="MethodInfo"/>. 
         /// </value>
-        public static MethodInfo GetTaskOfResultMethodDefinition { get; }
+        public static MethodInfo? GetTaskOfResultMethodDefinition { get; }
 
         /// <summary>
         /// The <seealso cref="GetResult"/> specific <see cref="MethodInfo"/>. 
@@ -24,7 +24,7 @@ namespace Skywalker.Aspects
         /// <value>
         /// The <seealso cref="GetResult"/> specific <see cref="MethodInfo"/>. 
         /// </value>
-        public static MethodInfo GetResultMethodDefinition { get; }
+        public static MethodInfo? GetResultMethodDefinition { get; }
 
         #endregion
 
@@ -54,7 +54,7 @@ namespace Skywalker.Aspects
         public static Task<TResult> GetTaskOfResult<TResult>(Task intercept, InvocationContext invocationContext)
         {
             return intercept.ContinueWith(Continue);
-            TResult Continue(Task task)
+            TResult? Continue(Task task)
             {
                 TryRethrowException(task);
                 if (invocationContext.ReturnValue is Task task2)
@@ -63,7 +63,7 @@ namespace Skywalker.Aspects
                 }
                 return invocationContext.ReturnValue != null
                     ? ((Task<TResult>)invocationContext.ReturnValue).Result
-                    : default(TResult);             
+                    : default;             
             }
 
             void TryRethrowException(Task task)
