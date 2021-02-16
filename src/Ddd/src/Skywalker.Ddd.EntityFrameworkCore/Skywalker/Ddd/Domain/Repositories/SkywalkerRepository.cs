@@ -180,7 +180,7 @@ namespace Skywalker.Ddd.Domain.Repositories
                 TrySetGuidId(entityWithGuidId);
             }
 
-            SetConcurrencyStampIfNull(entity);
+            //SetConcurrencyStampIfNull(entity);
 
             await ApplySkywalkerConceptsForAddedEntityAsync(entity);
 
@@ -203,7 +203,7 @@ namespace Skywalker.Ddd.Domain.Repositories
                     TrySetGuidId(entityWithGuidId);
                 }
 
-                SetConcurrencyStampIfNull(entity);
+                //SetConcurrencyStampIfNull(entity);
                 await ApplySkywalkerConceptsForAddedEntityAsync(entity);
             }
             await DbSet.AddRangeAsync(entities, GetCancellationToken(cancellationToken));
