@@ -8,6 +8,6 @@ namespace Simple.Domain.Users
     {
         public string? Name { get; set; }
 
-       public List<UserOrder> UserOrders { get; set; }
+       public List<UserOrder>? UserOrders { get; set; }
     }
 }

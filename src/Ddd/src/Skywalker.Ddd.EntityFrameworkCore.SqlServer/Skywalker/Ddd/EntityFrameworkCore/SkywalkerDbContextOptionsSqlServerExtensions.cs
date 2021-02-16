@@ -10,7 +10,7 @@ namespace Skywalker.Ddd.EntityFrameworkCore
     {
         public static void UseSqlServer(
                 [NotNull] this SkywalkerDbContextOptions options,
-                [MaybeNull] Action<SqlServerDbContextOptionsBuilder> mySQLOptionsAction = null)
+                [MaybeNull] Action<SqlServerDbContextOptionsBuilder>? mySQLOptionsAction = null)
         {
             options.Configure(context =>
             {
@@ -20,7 +20,7 @@ namespace Skywalker.Ddd.EntityFrameworkCore
 
         public static void UseSqlServer<TDbContext>(
             [NotNull] this SkywalkerDbContextOptions options,
-            [MaybeNull] Action<SqlServerDbContextOptionsBuilder> mySQLOptionsAction = null)
+            [MaybeNull] Action<SqlServerDbContextOptionsBuilder>? mySQLOptionsAction = null)
             where TDbContext : SkywalkerDbContext<TDbContext>
         {
             //options.Services.AddMemoryCache();

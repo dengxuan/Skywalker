@@ -13,10 +13,12 @@ namespace Simple.WebApi.Users
     public class UserController : SimpleController
     {
         private readonly ISimpleUserApplicationService _simpleUserApplicationService;
+        private readonly ISearcher _searcher;
 
-        public UserController(ISimpleUserApplicationService simpleUserApplicationService, ILogger<SimpleController> logger) : base(logger)
+        public UserController(ISimpleUserApplicationService simpleUserApplicationService, ISearcher searcher, ILogger<SimpleController> logger) : base(logger)
         {
             _simpleUserApplicationService = simpleUserApplicationService;
+            _searcher = searcher;
         }
 
         [HttpGet]

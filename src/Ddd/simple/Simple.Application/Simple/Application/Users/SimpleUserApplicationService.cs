@@ -11,7 +11,7 @@ namespace Simple.Application
     [UnitOfWork]
     public class SimpleUserApplicationService : SimpleApplicationService, ISimpleUserApplicationService
     {
-        private IUserManager _userManager => LazyLoader.GetRequiredService<IUserManager>();
+        private IUserManager UserManager => LazyLoader.GetRequiredService<IUserManager>();
 
         public SimpleUserApplicationService(ILazyLoader lazyLoader) : base(lazyLoader)
         {
@@ -19,29 +19,29 @@ namespace Simple.Application
 
         public async Task<List<UserDto>> BatchCreateUsersAsync([NotNull] string name, int count)
         {
-            List<User> users = await _userManager.BatchCreateUser(name,count);
+            List<User> users = await UserManager.BatchCreateUser(name,count);
             return ObjectMapper.Map<List<User>, List<UserDto>>(users);
         }
 
         public async Task<UserDto> CreateUserAsync([NotNull] string name)
         {
-            User user = null;
+            User? user = null;
             for (int i = 0; i < 100; i++)
             {
-                user = await _userManager.CreateUser(name);
+                user = await UserManager.CreateUser(name);
             }
-            return ObjectMapper.Map<User, UserDto>(user);
+            return ObjectMapper.Map<User?, UserDto>(user);
         }
 
         public async Task<List<UserDto>> FindUsersAsync()
         {
-            List<User> users = await _userManager.GetUsersAsync();
+            List<User> users = await UserManager.GetUsersAsync();
             return ObjectMapper.Map<List<User>, List<UserDto>>(users);
         }
 
         public async Task<List<UserDto>> FindUsersAsync([NotNull]string name)
         {
-            List<User> users = await _userManager.FindUsersAsync(name);
+            List<User> users = await UserManager.FindUsersAsync(name);
             return ObjectMapper.Map<List<User>, List<UserDto>>(users);
         }
     }
