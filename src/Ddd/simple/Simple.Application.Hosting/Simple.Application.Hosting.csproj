@@ -12,7 +12,6 @@
     </ItemGroup>
 
     <ItemGroup>
-      <ProjectReference Include="..\..\..\Aspects\src\Skywalker.Aspects\Skywalker.Aspects.csproj" />
         <ProjectReference Include="..\..\..\Caching\src\Skywalker.Caching.Redis\Skywalker.Caching.Redis.csproj" />
       <ProjectReference Include="..\..\simple\Simple.Application\Simple.Application.csproj" />
       <ProjectReference Include="..\..\src\Skywalker.Ddd.EntityFrameworkCore.MySQL\Skywalker.Ddd.EntityFrameworkCore.MySQL.csproj" />

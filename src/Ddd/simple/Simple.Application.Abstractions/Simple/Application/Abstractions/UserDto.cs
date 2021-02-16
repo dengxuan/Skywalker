@@ -8,9 +8,9 @@ namespace Simple.Application.Abstractions
     public class UserDto : EntityDto<Guid>
     {
         [NotNull]
-        public string Name { get; set; }
+        public string? Name { get; set; }
 
-        public List<UserOrderDto> UserOrders { get; set; }
+        public List<UserOrderDto>? UserOrders { get; set; }
 
         public UserDto([NotNull] string name)
         {
@@ -20,15 +20,15 @@ namespace Simple.Application.Abstractions
 
     public class UserOrderDto:EntityDto<int>
     {
-        public int Amount { get; set; }
+        public int? Amount { get; set; }
 
-        public List<UserValueDto> UserValues { get; set; }
+        public List<UserValueDto>? UserValues { get; set; }
 
     }
 
     public class UserValueDto : EntityDto
     {
-        public string Value { get; set; }
+        public string? Value { get; set; }
 
     }
 }

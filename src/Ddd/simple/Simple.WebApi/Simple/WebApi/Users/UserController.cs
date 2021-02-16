@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using Simple.Application.Abstractions;
+using Simple.Application.Users;
 using Skywalker.Ddd.Queries.Abstractions;
 using Skywalker.Ddd.UnitOfWork;
 using System.Collections.Generic;
@@ -13,17 +14,19 @@ namespace Simple.WebApi.Users
     public class UserController : SimpleController
     {
         private readonly ISimpleUserApplicationService _simpleUserApplicationService;
+        private readonly ISearcher _searcher;
 
-        public UserController(ISimpleUserApplicationService simpleUserApplicationService, ILogger<SimpleController> logger) : base(logger)
+        public UserController(ISimpleUserApplicationService simpleUserApplicationService, ISearcher searcher, ILogger<SimpleController> logger) : base(logger)
         {
             _simpleUserApplicationService = simpleUserApplicationService;
+            _searcher = searcher;
         }
 
         [HttpGet]
         [Route("all")]
         public async Task<List<UserDto>> GetUsersAsync()
         {
-            var users = await _simpleUserApplicationService.FindUsersAsync();
+            var users = await _searcher.SearchAsync<UserQuery, List<UserDto>>(new UserQuery { Name = "123" });
             return users;
         }
 

@@ -10,6 +10,6 @@ namespace Simple.Application.Users
 {
     public class UserQuery : IQuery<List<UserDto>>
     {
-        public string Name { get; set; }
+        public string? Name { get; set; }
     }
 }

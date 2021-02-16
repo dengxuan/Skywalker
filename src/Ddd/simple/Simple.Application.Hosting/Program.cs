@@ -3,14 +3,11 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using Simple.Application;
-using Simple.Application.Abstractions;
 using Simple.Application.Hosting;
 using Simple.EntityFrameworkCore;
 using Skywalker;
-using Skywalker.Aspects.Abstractinons;
 using Skywalker.Ddd.EntityFrameworkCore;
 using Skywalker.Extensions.GuidGenerator;
-using System.Threading.Tasks;
 
 Host.CreateDefaultBuilder(args).ConfigureServices(configure =>
 {

@@ -23,7 +23,7 @@ namespace Simple.Domain.Users
         public Task<List<User>> GetUsersAsync()
         {
             return _users.Include(u => u.UserOrders)
-                            .ThenInclude(o => o.UserValues.Where(predicate => predicate.Value != "")).AsSplitQuery().AsTracking()
+                            .ThenInclude(o => o.UserValues!.Where(predicate => predicate.Value != "")).AsSplitQuery().AsTracking()
                          .Take(10)
                          .ToListAsync();
         }

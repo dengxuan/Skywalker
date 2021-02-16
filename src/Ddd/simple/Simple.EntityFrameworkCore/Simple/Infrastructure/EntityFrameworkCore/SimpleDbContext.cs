@@ -7,7 +7,7 @@ using Skywalker.Ddd.EntityFrameworkCore;
 namespace Simple.EntityFrameworkCore
 {
     [ConnectionStringName("Simple")]
-    public class SimpleDbContext : SkywalkerDbContext<SimpleDbContext>, ISimpleDbContext
+    public class SimpleDbContext : SkywalkerDbContext<SimpleDbContext>
     {
         public SimpleDbContext(DbContextOptions<SimpleDbContext> dbContextOptions) : base(dbContextOptions)
         {

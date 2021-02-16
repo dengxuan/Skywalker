@@ -32,7 +32,7 @@ namespace Simple.Application.Users
 
         public async Task<List<UserDto>> HandleAsync(UserQuery query, CancellationToken cancellationToken)
         {
-            List<User> users = await _userManager.FindUsersAsync(query.Name);
+            List<User> users = await _userManager.FindUsersAsync(query.Name!);
 
             return _objectMapper.Map<List<User>, List<UserDto>>(users);
         }
