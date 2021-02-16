@@ -15,7 +15,7 @@ namespace Skywalker.Ddd.EntityFrameworkCore.DbContextConfiguration
             var creationContext = GetCreationContext<TDbContext>(serviceProvider);
 
             var context = new SkywalkerDbContextConfigurationContext<TDbContext>(
-                creationContext.ConnectionString,
+                creationContext.ConnectionString!,
                 serviceProvider,
                 creationContext.ConnectionStringName,
                 creationContext.ExistingConnection
@@ -41,7 +41,7 @@ namespace Skywalker.Ddd.EntityFrameworkCore.DbContextConfiguration
             var preConfigureActions = options.PreConfigureActions.GetOrDefault(typeof(TDbContext));
             if (!preConfigureActions.IsNullOrEmpty())
             {
-                foreach (var preConfigureAction in preConfigureActions)
+                foreach (var preConfigureAction in preConfigureActions!)
                 {
                     ((Action<SkywalkerDbContextConfigurationContext<TDbContext>>)preConfigureAction).Invoke(context);
                 }

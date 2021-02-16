@@ -2,6 +2,6 @@
 {
     public interface IConnectionStringResolver
     {
-        string? Resolve(string? connectionStringName = null);
+        string Resolve(string connectionStringName);
     }
 }

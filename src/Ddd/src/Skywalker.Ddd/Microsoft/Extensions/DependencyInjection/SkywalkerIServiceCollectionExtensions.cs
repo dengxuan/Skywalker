@@ -12,8 +12,7 @@ namespace Microsoft.Extensions.DependencyInjection
             services.AddScoped<ILazyLoader, MsDependencyInjectionLazyLoader>();
             services.AddGuidGenerator();
             services.AddTiming();
-            //services.AddCommands();
-            //services.AddQueries();
+            services.AddQueries();
             AddTransientServices(services);
             AddSingletonServices(services);
             AddScopedServices(services);

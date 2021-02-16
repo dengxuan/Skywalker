@@ -10,7 +10,7 @@ namespace Skywalker.Data
         
         public string Default
         {
-            get => this.GetOrDefault(DefaultConnectionStringName);
+            get => this.GetOrDefault(DefaultConnectionStringName)!;
             set => this[DefaultConnectionStringName] = value;
         }
     }
