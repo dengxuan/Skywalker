@@ -22,7 +22,7 @@ namespace Simple.WebApi.Hosting
                        {
                            webBuilder.ConfigureLogging(configureLogging =>
                            {
-                               configureLogging.SetMinimumLevel(LogLevel.Information);
+                               configureLogging.SetMinimumLevel(LogLevel.Trace);
                                configureLogging.AddConsole();
                            });
                            webBuilder.UseStartup<Startup>();
