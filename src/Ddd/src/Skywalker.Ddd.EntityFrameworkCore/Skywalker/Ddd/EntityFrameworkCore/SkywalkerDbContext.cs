@@ -187,7 +187,7 @@ namespace Skywalker.Ddd.EntityFrameworkCore
 
         protected virtual void ApplySkywalkerConceptsForModifiedEntity(EntityEntry entry, EntityChangeReport changeReport)
         {
-            UpdateConcurrencyStamp(entry);
+            //UpdateConcurrencyStamp(entry);
 
             if (entry.Entity is IDeleteable && entry.Entity.As<IDeleteable>().IsDeleted)
             {
@@ -203,7 +203,7 @@ namespace Skywalker.Ddd.EntityFrameworkCore
         {
             if (TryCancelDeletionForSoftDelete(entry))
             {
-                UpdateConcurrencyStamp(entry);
+                //UpdateConcurrencyStamp(entry);
             }
 
             changeReport.ChangedEntities.Add(new EntityChangeEntry(entry.Entity, EntityChangeType.Deleted));
