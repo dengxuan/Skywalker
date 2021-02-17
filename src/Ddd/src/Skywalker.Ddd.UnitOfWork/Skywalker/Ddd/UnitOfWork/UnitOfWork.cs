@@ -14,7 +14,7 @@ namespace Skywalker.Ddd.UnitOfWork
     {
         public Guid Id { get; } = Guid.NewGuid();
 
-        public IAbpUnitOfWorkOptions? Options { get; private set; }
+        public IUnitOfWorkOptions? Options { get; private set; }
 
         public IUnitOfWork? Outer { get; private set; }
 
@@ -55,7 +55,7 @@ namespace Skywalker.Ddd.UnitOfWork
             Items = new Dictionary<string, object>();
         }
 
-        public virtual void Initialize([NotNull] AbpUnitOfWorkOptions options)
+        public virtual void Initialize([NotNull] UnitOfWorkOptions options)
         {
             Check.NotNull(options, nameof(options));
 

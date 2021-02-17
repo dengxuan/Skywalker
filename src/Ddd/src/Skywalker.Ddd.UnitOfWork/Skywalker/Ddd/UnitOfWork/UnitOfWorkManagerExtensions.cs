@@ -15,7 +15,7 @@ namespace Skywalker.Ddd.UnitOfWork
         {
             Check.NotNull(unitOfWorkManager, nameof(unitOfWorkManager));
 
-            return unitOfWorkManager.Begin(new AbpUnitOfWorkOptions
+            return unitOfWorkManager.Begin(new UnitOfWorkOptions
             {
                 IsTransactional = isTransactional,
                 IsolationLevel = isolationLevel,
@@ -28,7 +28,7 @@ namespace Skywalker.Ddd.UnitOfWork
             Check.NotNull(unitOfWorkManager, nameof(unitOfWorkManager));
             Check.NotNull(reservationName, nameof(reservationName));
 
-            unitOfWorkManager.BeginReserved(reservationName, new AbpUnitOfWorkOptions());
+            unitOfWorkManager.BeginReserved(reservationName, new UnitOfWorkOptions());
         }
 
         public static void TryBeginReserved([NotNull] this IUnitOfWorkManager unitOfWorkManager, [NotNull] string reservationName)
@@ -36,7 +36,7 @@ namespace Skywalker.Ddd.UnitOfWork
             Check.NotNull(unitOfWorkManager, nameof(unitOfWorkManager));
             Check.NotNull(reservationName, nameof(reservationName));
 
-            unitOfWorkManager.TryBeginReserved(reservationName, new AbpUnitOfWorkOptions());
+            unitOfWorkManager.TryBeginReserved(reservationName, new UnitOfWorkOptions());
         }
     }
 }

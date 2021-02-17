@@ -3,7 +3,7 @@ using System.Data;
 
 namespace Skywalker.Ddd.UnitOfWork
 {
-    public class AbpUnitOfWorkOptions : IAbpUnitOfWorkOptions
+    public class UnitOfWorkOptions : IUnitOfWorkOptions
     {
         /// <summary>
         /// Default: false.
@@ -17,21 +17,21 @@ namespace Skywalker.Ddd.UnitOfWork
         /// </summary>
         public int? Timeout { get; set; }
 
-        public AbpUnitOfWorkOptions()
+        public UnitOfWorkOptions()
         {
 
         }
 
-        public AbpUnitOfWorkOptions(bool isTransactional = false, IsolationLevel? isolationLevel = null, int? timeout = null)
+        public UnitOfWorkOptions(bool isTransactional = false, IsolationLevel? isolationLevel = null, int? timeout = null)
         {
             IsTransactional = isTransactional;
             IsolationLevel = isolationLevel;
             Timeout = timeout;
         }
 
-        public AbpUnitOfWorkOptions Clone()
+        public UnitOfWorkOptions Clone()
         {
-            return new AbpUnitOfWorkOptions
+            return new UnitOfWorkOptions
             {
                 IsTransactional = IsTransactional,
                 IsolationLevel = IsolationLevel,

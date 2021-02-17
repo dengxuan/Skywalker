@@ -12,21 +12,21 @@ namespace Skywalker.Scheduler
     public class Scheduler : Worker, IScheduler
     {
 
-        private TaskToken _token;
+        private TaskToken? _token;
         private readonly ConcurrentDictionary<ITrigger, ScheduleToken> _schedules;
         private readonly HashSet<IHandler> _handlers;
         private readonly TriggerCollection _triggers;
-        private IDictionary<string, object> _states;
+        private IDictionary<string, object>? _states;
         private IRetriever _retriever;
 
-        public event EventHandler<HandledEventArgs> Handled;
-        public event EventHandler<OccurredEventArgs> Occurred;
-        public event EventHandler<OccurringEventArgs> Occurring;
-        public event EventHandler<ScheduledEventArgs> Scheduled;
+        public event EventHandler<HandledEventArgs>? Handled;
+        public event EventHandler<OccurredEventArgs>? Occurred;
+        public event EventHandler<OccurringEventArgs>? Occurring;
+        public event EventHandler<ScheduledEventArgs>? Scheduled;
 
         public Scheduler()
         {
-            this.CanPauseAndContinue = true;
+            CanPauseAndContinue = true;
 
             _handlers = new HashSet<IHandler>();
             _schedules = new ConcurrentDictionary<ITrigger, ScheduleToken>(TriggerComparer.Instance);
@@ -54,11 +54,11 @@ namespace Skywalker.Scheduler
             {
                 if (value == null)
                 {
-                    throw new ArgumentNullException();
+                    throw new ArgumentNullException("Retriever");
                 }
 
                 //如果新值与原有值引用相等则忽略
-                if (object.ReferenceEquals(_retriever, value))
+                if (ReferenceEquals(_retriever, value))
                 {
                     return;
                 }
@@ -67,7 +67,7 @@ namespace Skywalker.Scheduler
                 var original = Interlocked.Exchange(ref _retriever, value);
 
                 //通知子类该属性值发生了改变
-                this.OnRetrieverChanged(value, original);
+                OnRetrieverChanged(value, original);
             }
         }
 
@@ -109,7 +109,9 @@ namespace Skywalker.Scheduler
             get
             {
                 if (_states == null)
+                {
                     Interlocked.CompareExchange(ref _states, new Dictionary<string, object>(StringComparer.OrdinalIgnoreCase), null);
+                }
 
                 return _states;
             }
@@ -128,16 +130,16 @@ namespace Skywalker.Scheduler
             }
             else
             {
-                return System.Linq.Enumerable.Empty<IHandler>();
+                return Enumerable.Empty<IHandler>();
             }
         }
 
         public bool Schedule(IHandler handler, ITrigger trigger)
         {
-            return this.Schedule(handler, trigger, null);
+            return Schedule(handler, trigger, null);
         }
 
-        public bool Schedule(IHandler handler, ITrigger trigger, Action<IHandlerContext> onTrigger)
+        public bool Schedule(IHandler handler, ITrigger trigger, Action<IHandlerContext>? onTrigger)
         {
             if (trigger == null)
             {
@@ -158,7 +160,7 @@ namespace Skywalker.Scheduler
             if (_handlers.Add(handler))
             {
                 //将该处理器加入到指定的触发器中的调度处理集
-                return this.ScheduleCore(handler, trigger);
+                return ScheduleCore(handler, trigger);
             }
 
             return false;
@@ -179,7 +181,7 @@ namespace Skywalker.Scheduler
             if (_handlers.Add(handler))
             {
                 //将该处理器加入到指定的触发器中的调度处理集
-                return this.ScheduleCore(handler, trigger);
+                return ScheduleCore(handler, trigger);
             }
 
             //定义找到的调度项变量（默认没有找到）
@@ -206,7 +208,7 @@ namespace Skywalker.Scheduler
                 if (found.Value.AddHandler(handler))
                 {
                     //尝试重新触发
-                    this.Refire(found.Value);
+                    Refire(found.Value);
 
                     //返回重新调度成功
                     return true;
@@ -217,7 +219,7 @@ namespace Skywalker.Scheduler
             }
 
             //将该处理器加入到指定的触发器中的调度处理集
-            return this.ScheduleCore(handler, trigger);
+            return ScheduleCore(handler, trigger);
         }
 
         public void Unschedule()
@@ -278,7 +280,7 @@ namespace Skywalker.Scheduler
         protected override void OnStart(string[] args)
         {
             //扫描调度集
-            this.Scan();
+            Scan();
 
             //启动失败重试队列
             _retriever.Run();
@@ -323,7 +325,7 @@ namespace Skywalker.Scheduler
         protected override void OnResume()
         {
             //扫描调度集
-            this.Scan();
+            Scan();
 
             //启动失败重试队列
             _retriever.Run();
@@ -381,28 +383,28 @@ namespace Skywalker.Scheduler
             //如果找到最早的触发时间，则将找到的排程项列表加入到调度进程中
             if (earliest.HasValue)
             {
-                this.Fire(earliest.Value, schedules);
+                Fire(earliest.Value, schedules);
             }
         }
 
         protected virtual void OnHandled(IHandler handler, IHandlerContext context, Exception exception)
         {
-            this.Handled?.Invoke(this, new HandledEventArgs(handler, context, exception));
+            Handled?.Invoke(this, new HandledEventArgs(handler, context, exception));
         }
 
         protected virtual void OnOccurred(string scheduleId, int count)
         {
-            this.Occurred?.Invoke(this, new OccurredEventArgs(scheduleId, count));
+            Occurred?.Invoke(this, new OccurredEventArgs(scheduleId, count));
         }
 
         protected virtual void OnOccurring(string scheduleId)
         {
-            this.Occurring?.Invoke(this, new OccurringEventArgs(scheduleId));
+            Occurring?.Invoke(this, new OccurringEventArgs(scheduleId));
         }
 
         protected virtual void OnScheduled(string scheduleId, int count, ITrigger[] triggers)
         {
-            this.Scheduled?.Invoke(this, new ScheduledEventArgs(scheduleId, count, triggers));
+            Scheduled?.Invoke(this, new ScheduledEventArgs(scheduleId, count, triggers));
         }
 
         private void Refire(ScheduleToken schedule)
@@ -425,7 +427,7 @@ namespace Skywalker.Scheduler
                 if (timestamp < token.Timestamp)
                 {
                     //如果新得到的触发时间小于待触发的时间，则尝试调度新的时间点
-                    this.Fire(timestamp.Value, new[] { schedule });
+                    Fire(timestamp.Value, new[] { schedule });
                 }
 
                 else if (timestamp == token.Timestamp)
@@ -434,7 +436,10 @@ namespace Skywalker.Scheduler
                     token.Append(schedule, (id, count, triggers) =>
                     {
                         //激发“Scheduled”事件
-                        this.OnScheduled(id, count, triggers);
+                        if(!triggers.IsNullOrEmpty())
+                        {
+                            OnScheduled(id, count, triggers!);
+                        }
                     });
                 }
             }
@@ -499,8 +504,10 @@ namespace Skywalker.Scheduler
             Task.Delay(duration).ContinueWith((task, state) =>
             {
                 //获取当前的任务调度凭证
-                var token = (TaskToken)state;
-
+                if (state is not TaskToken token)
+                {
+                    throw new ArgumentNullException(nameof(state));
+                }
                 //注意：防坑处理！！！
                 //任务线程可能没有延迟足够的时长就提前进入，所以必须防止这种提前进入导致的触发器的触发时间计算错误
                 if (Utility.Now() < token.Timestamp)
@@ -521,13 +528,13 @@ namespace Skywalker.Scheduler
                 _token = null;
 
                 //启动新一轮的调度扫描
-                this.Scan();
+                Scan();
 
                 //设置处理次数
                 int count = 0;
 
                 //激发“Occurring”事件
-                this.OnOccurring(token.Identity);
+                OnOccurring(token.Identity);
 
                 //遍历待执行的调度项集合（该集合内部确保了线程安全）
                 foreach (var schedule in token.Schedules)
@@ -541,24 +548,24 @@ namespace Skywalker.Scheduler
                         Task.Run(() =>
                         {
                             //异步调用处理器进行处理（该方法内会屏蔽异常，并对执行异常的处理器进行重发处理）
-                            return this.Handle(handler, context);
+                            return Handle(handler, context);
                         })
                         .ContinueWith(t =>
                         {
                             //异步调用处理器完成后，再激发“Handled”事件
-                            this.OnHandled(handler, context, t.Result);
+                            OnHandled(handler, context, t.Result);
                         });
                     }
                 }
 
                 //激发“Occurred”事件
-                this.OnOccurred(token.Identity, count);
+                OnOccurred(token.Identity, count);
             }, current, current.GetToken());
 
             try
             {
                 //激发“Scheduled”事件
-                this.OnScheduled(current.Identity, schedules.Sum(p => p.Count), schedules.Select(p => p.Trigger).ToArray());
+                OnScheduled(current.Identity, schedules.Sum(p => p.Count), schedules.Select(p => p.Trigger).ToArray());
             }
             catch (Exception ex)
             {
@@ -567,7 +574,7 @@ namespace Skywalker.Scheduler
             }
         }
 
-        private Exception Handle(IHandler handler, IHandlerContext context)
+        private Exception? Handle(IHandler handler, IHandlerContext context)
         {
             try
             {
@@ -597,7 +604,7 @@ namespace Skywalker.Scheduler
             if (schedule.AddHandler(handler))
             {
                 //尝试重新调度
-                this.Refire(schedule);
+                Refire(schedule);
 
                 //返回新增调度成功
                 return true;
@@ -617,8 +624,8 @@ namespace Skywalker.Scheduler
 
             public TaskToken(DateTime timestamp, IEnumerable<ScheduleToken> schedules)
             {
-                this.Timestamp = timestamp;
-                this.Identity = Randomizer.GenerateString();
+                Timestamp = timestamp;
+                Identity = Randomizer.GenerateString();
                 _schedules = new HashSet<ScheduleToken>(schedules);
                 _cancellation = new CancellationTokenSource();
             }
@@ -653,7 +660,7 @@ namespace Skywalker.Scheduler
                 }
             }
 
-            public bool Append(ScheduleToken token, Action<string, int, ITrigger[]> succeed)
+            public bool Append(ScheduleToken token, Action<string, int, ITrigger[]?> succeed)
             {
                 var schedules = _schedules;
 
@@ -664,7 +671,7 @@ namespace Skywalker.Scheduler
 
                 var result = false;
                 var count = 0;
-                ITrigger[] triggers = null;
+                ITrigger[]? triggers = null;
 
                 lock (schedules)
                 {
@@ -685,7 +692,7 @@ namespace Skywalker.Scheduler
                 //如果增加成功并且回调方法不为空，则回调成功方法
                 if (result && succeed != null)
                 {
-                    succeed(this.Identity, count, triggers);
+                    succeed(Identity, count, triggers);
                 }
 
                 return result;
@@ -727,8 +734,8 @@ namespace Skywalker.Scheduler
 
             public ScheduleToken(ITrigger trigger, ISet<IHandler> handlers)
             {
-                this.Trigger = trigger;
-                this._handlers = handlers;
+                Trigger = trigger;
+                _handlers = handlers;
                 _semaphore = new AutoResetEvent(true);
             }
 
@@ -831,24 +838,24 @@ namespace Skywalker.Scheduler
                 }
             }
 
-            public bool Equals(ITrigger trigger)
+            public bool Equals(ITrigger? trigger)
             {
-                return this.Trigger.Equals(trigger);
+                return Trigger.Equals(trigger);
             }
 
             public bool Equals(ScheduleToken other)
             {
-                return this.Trigger.Equals(other.Trigger);
+                return Trigger.Equals(other.Trigger);
             }
 
-            public override bool Equals(object obj)
+            public override bool Equals(object? @object)
             {
-                if (obj == null || obj.GetType() != this.GetType())
+                if (@object == null || @object.GetType() != GetType())
                 {
                     return false;
                 }
 
-                return base.Equals((ScheduleToken)obj);
+                return base.Equals((ScheduleToken)@object);
             }
 
             public override int GetHashCode()
@@ -858,7 +865,7 @@ namespace Skywalker.Scheduler
 
             public override string ToString()
             {
-                return this.Trigger.ToString() + " (" + _handlers.Count + ")";
+                return Trigger.ToString() + " (" + _handlers.Count + ")";
             }
         }
 
@@ -868,7 +875,7 @@ namespace Skywalker.Scheduler
 
             private TriggerComparer() { }
 
-            public bool Equals(ITrigger x, ITrigger y)
+            public bool Equals(ITrigger? x, ITrigger? y)
             {
                 if (x == null || y == null)
                 {
@@ -916,7 +923,7 @@ namespace Skywalker.Scheduler
 
             IEnumerator IEnumerable.GetEnumerator()
             {
-                return this.GetEnumerator();
+                return GetEnumerator();
             }
         }
     }

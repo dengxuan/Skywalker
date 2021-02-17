@@ -18,7 +18,7 @@ namespace Skywalker.Ddd.UnitOfWork
 
         public int? Timeout { get; set; }
 
-        internal AbpUnitOfWorkOptions Normalize(AbpUnitOfWorkOptions options)
+        internal UnitOfWorkOptions Normalize(UnitOfWorkOptions options)
         {
             if (options.IsolationLevel == null)
             {

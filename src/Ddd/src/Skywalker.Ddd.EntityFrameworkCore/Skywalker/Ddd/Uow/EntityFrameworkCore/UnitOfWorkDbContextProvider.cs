@@ -13,19 +13,15 @@ namespace Skywalker.UnitOfWork.EntityFrameworkCore
     //TODO: Implement logic in DefaultDbContextResolver.Resolve in old ABP.
 
     public class UnitOfWorkDbContextProvider<TDbContext> : IDbContextProvider<TDbContext>
-        where TDbContext : ISkywalkerDbContext
+        where TDbContext : DbContext
     {
         private readonly IUnitOfWorkManager _unitOfWorkManager;
         private readonly IConnectionStringResolver _connectionStringResolver;
-        private readonly ILogger<UnitOfWorkDbContextProvider<TDbContext>> _logger;
 
-        public UnitOfWorkDbContextProvider(
-            IUnitOfWorkManager unitOfWorkManager,
-            IConnectionStringResolver connectionStringResolver, ILogger<UnitOfWorkDbContextProvider<TDbContext>> logger)
+        public UnitOfWorkDbContextProvider(IUnitOfWorkManager unitOfWorkManager, IConnectionStringResolver connectionStringResolver)
         {
             _unitOfWorkManager = unitOfWorkManager;
             _connectionStringResolver = connectionStringResolver;
-            _logger = logger;
         }
 
         public TDbContext GetDbContext()

@@ -2,7 +2,7 @@
 
 namespace Skywalker.Ddd.UnitOfWork.Abstractions
 {
-    public interface IAbpUnitOfWorkOptions
+    public interface IUnitOfWorkOptions
     {
         bool IsTransactional { get; }
 

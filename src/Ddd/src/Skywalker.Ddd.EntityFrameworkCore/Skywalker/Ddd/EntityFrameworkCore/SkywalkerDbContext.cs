@@ -26,8 +26,6 @@ namespace Skywalker.Ddd.EntityFrameworkCore
 
         protected virtual bool IsSoftDeleteFilterEnabled => DataFilter?.IsEnabled<IDeleteable>() ?? false;
 
-        protected IGuidGenerator GuidGenerator { get; set; }
-
         protected IDataFilter DataFilter { get; set; }
 
         protected IEntityChangeEventHelper EntityChangeEventHelper { get; set; }
@@ -57,10 +55,12 @@ namespace Skywalker.Ddd.EntityFrameworkCore
                     BindingFlags.Instance | BindingFlags.NonPublic
                 )!;
 
-        protected SkywalkerDbContext(DbContextOptions<TDbContext> options) : base(options)
+        protected SkywalkerDbContext(DbContextOptions<TDbContext> options, IClock clock, IDataFilter dataFilter) : base(options)
         {
             EntityChangeEventHelper = NullEntityChangeEventHelper.Instance;
             Logger = NullLogger<SkywalkerDbContext<TDbContext>>.Instance;
+            Clock = clock;
+            DataFilter = dataFilter;
         }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
@@ -135,7 +135,7 @@ namespace Skywalker.Ddd.EntityFrameworkCore
 
         public virtual void Initialize(SkywalkerEfCoreDbContextInitializationContext initializationContext)
         {
-            if (initializationContext.UnitOfWork.Options.Timeout.HasValue && Database.IsRelational() && !Database.GetCommandTimeout().HasValue)
+            if (initializationContext.UnitOfWork.Options?.Timeout.HasValue == true && Database.IsRelational() && !Database.GetCommandTimeout().HasValue)
             {
                 //Todo: Configuration
                 Database.SetCommandTimeout(initializationContext.UnitOfWork.Options.Timeout!.Value);

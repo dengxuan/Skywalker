@@ -43,9 +43,9 @@ namespace Skywalker.Ddd.UnitOfWork
             }
         }
 
-        private AbpUnitOfWorkOptions CreateOptions(MethodInfo method, [MaybeNull] UnitOfWorkAttribute unitOfWorkAttribute)
+        private UnitOfWorkOptions CreateOptions(MethodInfo method, [MaybeNull] UnitOfWorkAttribute unitOfWorkAttribute)
         {
-            var options = new AbpUnitOfWorkOptions();
+            var options = new UnitOfWorkOptions();
 
             unitOfWorkAttribute?.SetOptions(options);
 

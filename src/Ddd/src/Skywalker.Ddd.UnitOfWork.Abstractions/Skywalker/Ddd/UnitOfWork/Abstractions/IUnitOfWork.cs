@@ -17,7 +17,7 @@ namespace Skywalker.Ddd.UnitOfWork.Abstractions
 
         event EventHandler<UnitOfWorkEventArgs> Disposed;
 
-        IAbpUnitOfWorkOptions? Options { get; }
+        IUnitOfWorkOptions? Options { get; }
 
         IUnitOfWork? Outer { get; }
 
@@ -31,7 +31,7 @@ namespace Skywalker.Ddd.UnitOfWork.Abstractions
 
         void SetOuter([MaybeNull] IUnitOfWork? outer);
 
-        void Initialize([NotNull] AbpUnitOfWorkOptions options);
+        void Initialize([NotNull] UnitOfWorkOptions options);
 
         void Reserve([NotNull] string reservationName);
 

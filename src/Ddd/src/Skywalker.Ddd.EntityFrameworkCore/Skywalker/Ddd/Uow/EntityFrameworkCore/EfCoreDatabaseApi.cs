@@ -1,4 +1,4 @@
-using Skywalker.Ddd.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore;
 using Skywalker.Ddd.UnitOfWork.Abstractions;
 using System.Threading;
 using System.Threading.Tasks;
@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 namespace Skywalker.UnitOfWork.EntityFrameworkCore
 {
     public class EfCoreDatabaseApi<TDbContext> : IDatabaseApi, ISupportsSavingChanges
-        where TDbContext : ISkywalkerDbContext
+        where TDbContext : DbContext
     {
         public TDbContext DbContext { get; }
 

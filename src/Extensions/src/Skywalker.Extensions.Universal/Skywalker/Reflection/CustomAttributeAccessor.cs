@@ -8,11 +8,11 @@ namespace Skywalker.Reflection
 {
     public static class CustomAttributeAccessor
     {
-        private static ConcurrentDictionary<object, Attribute[]> _attributes = new ConcurrentDictionary<object, Attribute[]>();
-        private static ConcurrentDictionary<object, Attribute[]> _ownAttributes = new ConcurrentDictionary<object, Attribute[]>();
+        private static readonly ConcurrentDictionary<object, Attribute[]> _attributes = new ConcurrentDictionary<object, Attribute[]>();
+        private static readonly ConcurrentDictionary<object, Attribute[]> _ownAttributes = new ConcurrentDictionary<object, Attribute[]>();
         public static IEnumerable<Attribute> GetCustomAttributes(MemberInfo memberInfo, bool inherit = true)
         {
-            Attribute[] attributes;
+            Attribute[]? attributes;
             if (inherit)
             {
                 return _attributes.TryGetValue(memberInfo, out attributes)
@@ -27,7 +27,7 @@ namespace Skywalker.Reflection
         public static IEnumerable<Attribute> GetCustomAttributes(Type type, bool inherit = true)
         {
             TypeInfo typeInfo = type.GetTypeInfo();
-            Attribute[] attributes;
+            Attribute[]? attributes;
             if (inherit)
             {
                 return _attributes.TryGetValue(typeInfo, out attributes)
@@ -47,11 +47,11 @@ namespace Skywalker.Reflection
         {
             return GetCustomAttributes(type, inherit).OfType<TAttribute>();
         }
-        public static TAttribute GetCustomAttribute<TAttribute>(MemberInfo memberInfo, bool inherit = true)
+        public static TAttribute? GetCustomAttribute<TAttribute>(MemberInfo memberInfo, bool inherit = true)
         {
             return GetCustomAttributes(memberInfo, inherit).OfType<TAttribute>().FirstOrDefault();
         }
-        public static TAttribute GetCustomAttribute<TAttribute>(Type type, bool inherit = true)
+        public static TAttribute? GetCustomAttribute<TAttribute>(Type type, bool inherit = true)
         {
             return GetCustomAttributes(type, inherit).OfType<TAttribute>().FirstOrDefault();
         }

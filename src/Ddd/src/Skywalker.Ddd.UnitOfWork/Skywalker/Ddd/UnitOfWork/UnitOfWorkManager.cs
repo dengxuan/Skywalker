@@ -18,7 +18,7 @@ namespace Skywalker.Ddd.UnitOfWork
             _serviceScopeFactory = serviceScopeFactory;
         }
 
-        public IUnitOfWork Begin([NotNull] AbpUnitOfWorkOptions options, bool requiresNew = false)
+        public IUnitOfWork Begin([NotNull] UnitOfWorkOptions options, bool requiresNew = false)
         {
             Check.NotNull(options, nameof(options));
 
@@ -51,7 +51,7 @@ namespace Skywalker.Ddd.UnitOfWork
             return unitOfWork;
         }
 
-        public void BeginReserved([NotNull] string reservationName, [NotNull] AbpUnitOfWorkOptions options)
+        public void BeginReserved([NotNull] string reservationName, [NotNull] UnitOfWorkOptions options)
         {
             if (!TryBeginReserved(reservationName, options))
             {
@@ -59,7 +59,7 @@ namespace Skywalker.Ddd.UnitOfWork
             }
         }
 
-        public bool TryBeginReserved([NotNull] string reservationName, [NotNull] AbpUnitOfWorkOptions options)
+        public bool TryBeginReserved([NotNull] string reservationName, [NotNull] UnitOfWorkOptions options)
         {
             Check.NotNull(reservationName, nameof(reservationName));
 

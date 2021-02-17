@@ -1,6 +1,8 @@
-﻿namespace Skywalker.Ddd.EntityFrameworkCore
+﻿using Microsoft.EntityFrameworkCore;
+
+namespace Skywalker.Ddd.EntityFrameworkCore
 {
-    public interface IDbContextProvider<TDbContext> where TDbContext : ISkywalkerDbContext
+    public interface IDbContextProvider<TDbContext> where TDbContext : DbContext
     {
         TDbContext GetDbContext();
     }

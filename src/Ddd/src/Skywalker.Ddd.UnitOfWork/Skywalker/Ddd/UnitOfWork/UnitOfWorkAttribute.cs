@@ -64,7 +64,7 @@ namespace Skywalker.Ddd.UnitOfWork
 
         //TODO: More constructors!
 
-        public virtual void SetOptions(AbpUnitOfWorkOptions options)
+        public virtual void SetOptions(UnitOfWorkOptions options)
         {
             if (IsTransactional.HasValue)
             {

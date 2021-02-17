@@ -1,12 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace Skywalker.Ddd.EntityFrameworkCore
+﻿namespace Skywalker.Ddd.EntityFrameworkCore
 {
-    public interface ISkywalkerEfCoreDbContext: ISkywalkerDbContext
+    public interface ISkywalkerEfCoreDbContext
     {
         void Initialize(SkywalkerEfCoreDbContextInitializationContext contextInitializationContext);
     }

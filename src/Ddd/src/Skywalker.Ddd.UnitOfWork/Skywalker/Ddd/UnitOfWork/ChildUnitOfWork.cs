@@ -11,9 +11,9 @@ namespace Skywalker.Ddd.UnitOfWork
     {
         public Guid Id => _parent.Id;
 
-        public IAbpUnitOfWorkOptions Options => _parent.Options;
+        public IUnitOfWorkOptions? Options => _parent.Options;
 
-        public IUnitOfWork Outer => _parent.Outer;
+        public IUnitOfWork? Outer => _parent.Outer;
 
         public bool IsReserved => _parent.IsReserved;
 
@@ -21,7 +21,7 @@ namespace Skywalker.Ddd.UnitOfWork
 
         public bool IsCompleted => _parent.IsCompleted;
 
-        public string ReservationName => _parent.ReservationName;
+        public string? ReservationName => _parent.ReservationName;
 
         public event EventHandler<UnitOfWorkFailedEventArgs>? Failed;
         public event EventHandler<UnitOfWorkEventArgs>? Disposed;
@@ -47,7 +47,7 @@ namespace Skywalker.Ddd.UnitOfWork
             _parent.SetOuter(outer);
         }
 
-        public void Initialize([NotNull]AbpUnitOfWorkOptions options)
+        public void Initialize([NotNull]UnitOfWorkOptions options)
         {
             _parent.Initialize(options);
         }
