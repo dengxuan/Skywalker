@@ -1,6 +1,5 @@
 ﻿using Skywalker.Data;
 using Skywalker.Data.Filtering;
-using Skywalker.Ddd.UnitOfWork.Abstractions;
 using Skywalker.Domain.Entities;
 using System;
 using System.Collections;
@@ -13,7 +12,7 @@ using System.Threading.Tasks;
 
 namespace Skywalker.Domain.Repositories
 {
-    public abstract class RepositoryBase<TEntity> : BasicRepositoryBase<TEntity>, IRepository<TEntity>, IUnitOfWorkManagerAccessor where TEntity : class, IEntity
+    public abstract class RepositoryBase<TEntity> : BasicRepositoryBase<TEntity>, IRepository<TEntity> where TEntity : class, IEntity
     {
         public IDataFilter? DataFilter { get; set; }
 

@@ -21,7 +21,7 @@ using System.Threading.Tasks;
 namespace Skywalker.Ddd.Domain.Repositories
 {
     public class SkywalkerRepository<TDbContext, TEntity> : RepositoryBase<TEntity>, ISkywalkerRepository<TEntity>, IAsyncEnumerable<TEntity>
-        where TDbContext : ISkywalkerDbContext
+        where TDbContext : DbContext
         where TEntity : class, IEntity
     {
         private readonly IClock _clock;
@@ -269,7 +269,7 @@ namespace Skywalker.Ddd.Domain.Repositories
     }
 
     public class SkywalkerRepository<TDbContext, TEntity, TKey> : SkywalkerRepository<TDbContext, TEntity>, ISkywalkerRepository<TEntity, TKey>, ISupportsExplicitLoading<TEntity, TKey>
-        where TDbContext : ISkywalkerDbContext
+        where TDbContext : DbContext
         where TEntity : class, IEntity<TKey>
     {
         public SkywalkerRepository(IDbContextProvider<TDbContext> dbContextProvider, IClock clock, IGuidGenerator guidGenerator)

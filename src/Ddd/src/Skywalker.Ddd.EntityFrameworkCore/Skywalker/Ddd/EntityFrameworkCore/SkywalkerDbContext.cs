@@ -21,20 +21,16 @@ using System.Threading.Tasks;
 
 namespace Skywalker.Ddd.EntityFrameworkCore
 {
-    public class SkywalkerDbContext<TDbContext> : DbContext, ISkywalkerEfCoreDbContext where TDbContext : DbContext
+    public class SkywalkerDbContext<TDbContext> : DbContext where TDbContext : DbContext
     {
 
         protected virtual bool IsSoftDeleteFilterEnabled => DataFilter?.IsEnabled<IDeleteable>() ?? false;
-
-        protected IGuidGenerator GuidGenerator { get; set; }
 
         protected IDataFilter DataFilter { get; set; }
 
         protected IEntityChangeEventHelper EntityChangeEventHelper { get; set; }
 
         protected IClock Clock { get; set; }
-
-        protected ILogger<SkywalkerDbContext<TDbContext>> Logger { get; set; }
 
         private static readonly MethodInfo _configureBasePropertiesMethodInfo
             = typeof(SkywalkerDbContext<TDbContext>)
@@ -60,7 +56,6 @@ namespace Skywalker.Ddd.EntityFrameworkCore
         protected SkywalkerDbContext(DbContextOptions<TDbContext> options) : base(options)
         {
             EntityChangeEventHelper = NullEntityChangeEventHelper.Instance;
-            Logger = NullLogger<SkywalkerDbContext<TDbContext>>.Instance;
         }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
@@ -131,23 +126,6 @@ namespace Skywalker.Ddd.EntityFrameworkCore
             {
                 ChangeTracker.AutoDetectChangesEnabled = true;
             }
-        }
-
-        public virtual void Initialize(SkywalkerEfCoreDbContextInitializationContext initializationContext)
-        {
-            if (initializationContext.UnitOfWork.Options.Timeout.HasValue && Database.IsRelational() && !Database.GetCommandTimeout().HasValue)
-            {
-                //Todo: Configuration
-                Database.SetCommandTimeout(initializationContext.UnitOfWork.Options.Timeout!.Value);
-            }
-
-            ChangeTracker.CascadeDeleteTiming = CascadeTiming.OnSaveChanges;
-
-            ChangeTracker.Tracked += ChangeTracker_Tracked;
-        }
-
-        protected virtual void ChangeTracker_Tracked(object? sender, EntityTrackedEventArgs e)
-        {
         }
 
         protected virtual EntityChangeReport ApplySkywalkerConcepts()

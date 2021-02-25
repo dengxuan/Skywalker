@@ -10,7 +10,6 @@
     <ItemGroup>
       <ProjectReference Include="..\Skywalker.Ddd.Domain.Abstractions\Skywalker.Ddd.Domain.Abstractions.csproj" />
       <ProjectReference Include="..\Skywalker.Ddd.Localization.Abstractions\Skywalker.Ddd.Localization.Abstractions.csproj" />
-      <ProjectReference Include="..\Skywalker.Ddd.UnitOfWork.Abstractions\Skywalker.Ddd.UnitOfWork.Abstractions.csproj" />
     </ItemGroup>
 
 </Project>

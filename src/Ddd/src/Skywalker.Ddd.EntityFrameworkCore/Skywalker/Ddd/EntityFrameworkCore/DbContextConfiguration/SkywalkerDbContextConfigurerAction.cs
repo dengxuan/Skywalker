@@ -1,4 +1,4 @@
-using Skywalker.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Diagnostics.CodeAnalysis;
 
@@ -22,7 +22,7 @@ namespace Skywalker.Ddd.EntityFrameworkCore.DbContextConfiguration
         }
     }
 
-    public class SkywalkerDbContextConfigurerAction<TDbContext> : SkywalkerDbContextConfigurerAction where TDbContext : ISkywalkerDbContext
+    public class SkywalkerDbContextConfigurerAction<TDbContext> : SkywalkerDbContextConfigurerAction where TDbContext : DbContext
     {
         public SkywalkerDbContextConfigurerAction([NotNull] Action<SkywalkerDbContextConfigurationContext> action)
             : base(action)
