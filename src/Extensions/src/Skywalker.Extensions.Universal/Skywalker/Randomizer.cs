@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Security.Cryptography;
 
 namespace Skywalker
@@ -6,7 +7,6 @@ namespace Skywalker
     public static class Randomizer
     {
         private const string _digits = "0123456789ABCDEFGHJKMNPRSTUVWXYZ";
-        private static readonly RandomNumberGenerator _random = RandomNumberGenerator.Create();
         public static byte[] Generate(int length)
         {
             if (length < 1)
@@ -15,22 +15,27 @@ namespace Skywalker
             }
 
             var bytes = new byte[length];
-            _random.GetBytes(bytes);
+            RandomNumberGenerator random = RandomNumberGenerator.Create();
+            random.GetBytes(bytes);
             return bytes;
         }
 
-        public static int GenerateInt32()
+        public static int GenerateInt32(int toExclusive = int.MaxValue)
         {
-            var bytes = new byte[4];
-            _random.GetBytes(bytes);
-            return BitConverter.ToInt32(bytes, 0);
+            return RandomNumberGenerator.GetInt32(0, toExclusive);
+        }
+
+        public static int GenerateInt32(int fromInclusive = 0, int toExclusive = int.MaxValue)
+        {
+            return RandomNumberGenerator.GetInt32(fromInclusive, toExclusive);
         }
 
         public static long GenerateInt64()
         {
             var bytes = new byte[8];
-            _random.GetBytes(bytes);
-            return BitConverter.ToInt64(bytes, 0);
+            RandomNumberGenerator random = RandomNumberGenerator.Create();
+            random.GetBytes(bytes);
+            return BitConverter.ToInt64(bytes);
         }
 
         public static string GenerateString()
@@ -47,8 +52,8 @@ namespace Skywalker
 
             var result = new char[length];
             var data = new byte[length];
-
-            _random.GetBytes(data);
+            RandomNumberGenerator random = RandomNumberGenerator.Create();
+            random.GetBytes(data);
 
             //确保首位字符始终为数字字符
             result[0] = _digits[data[0] % 10];
@@ -59,6 +64,31 @@ namespace Skywalker
             }
 
             return new string(result);
+        }
+
+        public static T? WeightRandom<T>(this IEnumerable<T> enumerable, Func<T, int> weighter)
+        {
+            // this stores sum of weights of all elements before current
+            int totalWeight = 0;
+            // currently selected element
+            T selected = default;
+            foreach (var data in enumerable)
+            {
+                // weight of current element
+                int weight = weighter(data);
+                int r = GenerateInt32(totalWeight + weight + 1);
+
+                // probability of this is weight/(totalWeight+weight)
+                if (r >= totalWeight)
+                {
+                    // it is the probability of discarding last selected element and selecting current one instead
+                    selected = data;
+                }
+                // increase weight sum
+                totalWeight += weight;
+            }
+            // when iterations end, selected is some element of sequence. 
+            return selected;
         }
     }
 }
