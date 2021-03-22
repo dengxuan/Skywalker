@@ -2,31 +2,48 @@
 using System;
 using System.Collections.Generic;
 using System.Security.Cryptography;
+using System.Security.Cryptography.X509Certificates;
 using System.Text;
 
 namespace Skywalker.Extensions.Security.Cryptography
 {
     public class CrypterFactory : ICrypterFactory
     {
-        public ICrypter Create(CrypterAlgorithms algorithm, CipherMode cipherMode, PaddingMode paddingMode)
+        public ICrypter CreateAsymmetricCrypter(AsymmetricCrypterAlgorithms algorithm, CipherMode cipherMode, PaddingMode paddingMode, X509Certificate2 x509Certificate2)
         {
-            switch (algorithm)
+            return algorithm switch
             {
-                case CrypterAlgorithms.AES: return new SymmetricCrypter(new AesCryptoServiceProvider());
-                case CrypterAlgorithms.DES: return new SymmetricCrypter(new DESCryptoServiceProvider());
-                case CrypterAlgorithms.TripleDES: return new SymmetricCrypter(new TripleDESCryptoServiceProvider());
-                case CrypterAlgorithms.RC2: return new SymmetricCrypter(new RC2CryptoServiceProvider());
-                case CrypterAlgorithms.Rijndeal: return new SymmetricCrypter(Rijndael.Create());
-                case CrypterAlgorithms.RSA: return new AsymmetricCrypter(new RSACryptoServiceProvider());
-                case CrypterAlgorithms.DSA: return new AsymmetricCrypter(new DSACryptoServiceProvider());
-                case CrypterAlgorithms.ECDsa: return new AsymmetricCrypter(ECDsa.Create());
-                default: throw new ArgumentOutOfRangeException(nameof(algorithm));
-            }
+                AsymmetricCrypterAlgorithms.RSA => new AsymmetricCrypter(new RSACryptoServiceProvider(), x509Certificate2),
+                AsymmetricCrypterAlgorithms.DSA => new AsymmetricCrypter(new DSACryptoServiceProvider(), x509Certificate2),
+                AsymmetricCrypterAlgorithms.ECDsa => new AsymmetricCrypter(ECDsa.Create(), x509Certificate2),
+                _ => throw new ArgumentOutOfRangeException(nameof(algorithm)),
+            };
         }
 
-        public ICrypter Create(CrypterAlgorithms algorithm, CipherMode cipherMode, PaddingMode paddingMode, string key, string iv)
+        public ICrypter CreateSymmetricCrypter(SymmetricCrypterAlgorithms algorithm, CipherMode cipherMode, PaddingMode paddingMode)
         {
-            throw new NotImplementedException();
+            return algorithm switch
+            {
+                SymmetricCrypterAlgorithms.AES => new SymmetricCrypter(new AesCryptoServiceProvider()),
+                SymmetricCrypterAlgorithms.DES => new SymmetricCrypter(new DESCryptoServiceProvider()),
+                SymmetricCrypterAlgorithms.TripleDES => new SymmetricCrypter(new TripleDESCryptoServiceProvider()),
+                SymmetricCrypterAlgorithms.RC2 => new SymmetricCrypter(new RC2CryptoServiceProvider()),
+                SymmetricCrypterAlgorithms.Rijndeal => new SymmetricCrypter(Rijndael.Create()),
+                _ => throw new ArgumentOutOfRangeException(nameof(algorithm)),
+            };
+        }
+
+        public ICrypter CreateSymmetricCrypter(SymmetricCrypterAlgorithms algorithm, CipherMode cipherMode, PaddingMode paddingMode, string key, string iv)
+        {
+            return algorithm switch
+            {
+                SymmetricCrypterAlgorithms.AES => new SymmetricCrypter(new AesCryptoServiceProvider()),
+                SymmetricCrypterAlgorithms.DES => new SymmetricCrypter(new DESCryptoServiceProvider()),
+                SymmetricCrypterAlgorithms.TripleDES => new SymmetricCrypter(new TripleDESCryptoServiceProvider()),
+                SymmetricCrypterAlgorithms.RC2 => new SymmetricCrypter(new RC2CryptoServiceProvider()),
+                SymmetricCrypterAlgorithms.Rijndeal => new SymmetricCrypter(Rijndael.Create()),
+                _ => throw new ArgumentOutOfRangeException(nameof(algorithm)),
+            };
         }
     }
 }

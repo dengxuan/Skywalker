@@ -25,16 +25,12 @@ namespace Skywalker.Extensions.Security.Cryptography.Abstractions
         /// <returns>解密后的数据流</returns>
         public byte[] Decrypt(byte[] bytes)
         {
-            using (MemoryStream mStream = new MemoryStream())
-            {
-                using (CryptoStream cStream = new CryptoStream(mStream, _symmetricAlgorithm.CreateDecryptor(), CryptoStreamMode.Read))
-                {
-                    byte[] fromEncrypt = new byte[bytes.Length];
-                    //将密文流读入内存流,用指定格式编码为字符串返回
-                    cStream.Read(fromEncrypt, 0, fromEncrypt.Length);
-                    return fromEncrypt;
-                }
-            }
+            using MemoryStream mStream = new();
+            using CryptoStream cStream = new(mStream, _symmetricAlgorithm.CreateDecryptor(), CryptoStreamMode.Read);
+            byte[] fromEncrypt = new byte[bytes.Length];
+            //将密文流读入内存流,用指定格式编码为字符串返回
+            cStream.Read(fromEncrypt, 0, fromEncrypt.Length);
+            return fromEncrypt;
         }
 
         /// <summary>
@@ -44,22 +40,18 @@ namespace Skywalker.Extensions.Security.Cryptography.Abstractions
         /// <returns>加密后的密文数据流</returns>
         public byte[] Encrypt(byte[] bytes)
         {
-            using (MemoryStream mStream = new MemoryStream())
-            {
-                using (CryptoStream cStream = new CryptoStream(mStream, _symmetricAlgorithm.CreateEncryptor(), CryptoStreamMode.Write))
-                {
-                    //将加密的数据流写入内存流
-                    cStream.Write(bytes, 0, bytes.Length);
-                    cStream.FlushFinalBlock();
+            using MemoryStream mStream = new();
+            using CryptoStream cStream = new(mStream, _symmetricAlgorithm.CreateEncryptor(), CryptoStreamMode.Write);
+            //将加密的数据流写入内存流
+            cStream.Write(bytes, 0, bytes.Length);
+            cStream.FlushFinalBlock();
 
-                    //从加密后的内存流中获取字节数组
-                    byte[] ret = mStream.ToArray();
-                    cStream.Close();
-                    mStream.Close();
-                    // 将加密数据转换为Base64字符串返回
-                    return ret;
-                }
-            }
+            //从加密后的内存流中获取字节数组
+            byte[] ret = mStream.ToArray();
+            cStream.Close();
+            mStream.Close();
+            // 将加密数据转换为Base64字符串返回
+            return ret;
         }
     }
 }

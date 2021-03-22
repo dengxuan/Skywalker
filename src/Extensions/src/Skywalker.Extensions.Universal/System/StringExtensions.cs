@@ -287,7 +287,7 @@ namespace System
         {
             if (str == null)
             {
-                throw new ArgumentNullException("str");
+                throw new ArgumentNullException(nameof(str));
             }
 
             if (str.Length < len)
@@ -348,7 +348,7 @@ namespace System
                 return invariantCulture ? str.ToLowerInvariant() : str.ToLower();
             }
 
-            return (invariantCulture ? char.ToLowerInvariant(str[0]) : char.ToLower(str[0])) + str.Substring(1);
+            return (invariantCulture ? char.ToLowerInvariant(str[0]) : char.ToLower(str[0])) + str[1..];
         }
 
         /// <summary>
@@ -369,7 +369,7 @@ namespace System
                 return str.ToLower(culture);
             }
 
-            return char.ToLower(str[0], culture) + str.Substring(1);
+            return char.ToLower(str[0], culture) + str[1..];
         }
 
         /// <summary>
@@ -461,7 +461,7 @@ namespace System
                 return invariantCulture ? str.ToUpperInvariant() : str.ToUpper();
             }
 
-            return (invariantCulture ? char.ToUpperInvariant(str[0]) : char.ToUpper(str[0])) + str.Substring(1);
+            return (invariantCulture ? char.ToUpperInvariant(str[0]) : char.ToUpper(str[0])) + str[1..];
         }
 
         /// <summary>
@@ -482,7 +482,7 @@ namespace System
                 return str.ToUpper(culture);
             }
 
-            return char.ToUpper(str[0], culture) + str.Substring(1);
+            return char.ToUpper(str[0], culture) + str[1..];
         }
 
         /// <summary>
@@ -785,6 +785,26 @@ namespace System
             }
 
             return "****" + last4Chars;
+        }
+
+        public static bool IsMatch(this string value, string pattern)
+        {
+            return Regex.IsMatch(value, pattern);
+        }
+
+        public static bool IsMatch(this string value, string pattern, RegexOptions regexOptions)
+        {
+            return Regex.IsMatch(value, pattern, regexOptions);
+        }
+
+        public static bool IsEmail(this string value)
+        {
+            return Regex.IsMatch(value, RegexConstants.Email.Any);
+        }
+
+        public static bool IsChineseMainlandMobileNumber(this string value)
+        {
+            return Regex.IsMatch(value, RegexConstants.MobileNumber.CN);
         }
 
         public static string ToMd5(this string str)

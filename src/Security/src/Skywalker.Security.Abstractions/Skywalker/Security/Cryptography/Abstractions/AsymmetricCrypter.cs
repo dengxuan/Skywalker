@@ -16,9 +16,12 @@ namespace Skywalker.Extensions.Security.Cryptography.Abstractions
         /// </summary>
         private readonly AsymmetricAlgorithm _asymmetricAlgorithm;
 
-        public AsymmetricCrypter(AsymmetricAlgorithm asymmetricAlgorithm)
+        private readonly X509Certificate2 _x509Certificate2;
+
+        public AsymmetricCrypter(AsymmetricAlgorithm asymmetricAlgorithm, X509Certificate2 x509Certificate2)
         {
             _asymmetricAlgorithm = asymmetricAlgorithm;
+            _x509Certificate2 = x509Certificate2;
         }
 
         public byte[] Decrypt(byte[] bytes)
@@ -26,12 +29,12 @@ namespace Skywalker.Extensions.Security.Cryptography.Abstractions
             string data = "I'm a programmer!";
 
             X509Certificate2 prvcrt = new X509Certificate2(@"D:\aaaa.pfx", "cqcca", X509KeyStorageFlags.Exportable);
-            if (prvcrt.PrivateKey == null)
+            if (_x509Certificate2.PrivateKey == null)
             {
                 throw new CryptographicException("Private key can't be loaded.");
             }
-            RSACryptoServiceProvider prvkey = (RSACryptoServiceProvider)prvcrt.PrivateKey;
-            RSACryptoServiceProvider pubkey = (RSACryptoServiceProvider)prvcrt.PublicKey.Key;
+            RSACryptoServiceProvider prvkey = (RSACryptoServiceProvider)_x509Certificate2.PrivateKey;
+            RSACryptoServiceProvider pubkey = (RSACryptoServiceProvider)_x509Certificate2.PublicKey.Key;
             try
             {
                 using RSACryptoServiceProvider rsa = new RSACryptoServiceProvider();

@@ -12,7 +12,7 @@ namespace Skywalker.Extensions.Security.Cryptography
 
         public Crypter(int algorithm)
         {
-            Algorithm = (0x01000000 & (int)CrypterAlgorithms.AES << 16) & ((int)CipherMode.CBC << 8) & ((int)PaddingMode.PKCS7);
+            Algorithm = (0x01000000 & (int)SymmetricCrypterAlgorithms.AES << 16) & ((int)CipherMode.CBC << 8) & ((int)PaddingMode.PKCS7);
             Key = null;
             IV = null;
         }
