@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace Skywalker.Extensions.Security.Cryptography
+namespace Skywalker.Security.Cryptography
 {
     public enum AsymmetricCrypterAlgorithms
     {

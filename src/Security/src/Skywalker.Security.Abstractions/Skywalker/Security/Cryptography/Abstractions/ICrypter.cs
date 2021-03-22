@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace Skywalker.Extensions.Security.Cryptography.Abstractions
+﻿namespace Skywalker.Security.Cryptography.Abstractions
 {
     public interface ICrypter
     {

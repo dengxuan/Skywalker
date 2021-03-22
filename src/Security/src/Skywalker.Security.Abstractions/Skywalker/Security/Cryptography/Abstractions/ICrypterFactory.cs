@@ -1,7 +1,7 @@
 ﻿using System.Security.Cryptography;
 using System.Security.Cryptography.X509Certificates;
 
-namespace Skywalker.Extensions.Security.Cryptography.Abstractions
+namespace Skywalker.Security.Cryptography.Abstractions
 {
     public interface ICrypterFactory
     {

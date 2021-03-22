@@ -1,6 +1,6 @@
 ﻿using System.Security.Cryptography;
 
-namespace Skywalker.Extensions.Security.Cryptography
+namespace Skywalker.Security.Cryptography
 {
     public struct Crypter
     {

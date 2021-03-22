@@ -1,4 +1,4 @@
-﻿namespace Skywalker.Extensions.Security.Cryptography
+﻿namespace Skywalker.Security.Cryptography
 {
     public enum SymmetricCrypterAlgorithms
     {

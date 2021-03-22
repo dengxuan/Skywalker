@@ -1,11 +1,9 @@
-﻿using Skywalker.Extensions.Security.Cryptography.Abstractions;
+﻿using Skywalker.Security.Cryptography.Abstractions;
 using System;
-using System.Collections.Generic;
 using System.Security.Cryptography;
 using System.Security.Cryptography.X509Certificates;
-using System.Text;
 
-namespace Skywalker.Extensions.Security.Cryptography
+namespace Skywalker.Security.Cryptography
 {
     public class CrypterFactory : ICrypterFactory
     {

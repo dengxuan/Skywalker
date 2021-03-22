@@ -1,7 +1,8 @@
-﻿using System.IO;
+﻿using Skywalker.Security.Cryptography.Abstractions;
+using System.IO;
 using System.Security.Cryptography;
 
-namespace Skywalker.Extensions.Security.Cryptography.Abstractions
+namespace Skywalker.Security.Cryptography
 {
     /// <summary>
     /// 对称加密算法加密器
