@@ -1,10 +1,11 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.DependencyInjection.Extensions;
+using Skywalker.Extensions.AspNetCore.Security;
 using Skywalker.Extensions.AspNetCore.Security.Abstractions;
-using Skywalker.Extensions.Security.Cryptography;
-using Skywalker.Extensions.Security.Cryptography.Abstractions;
+using Skywalker.Security.Cryptography;
+using Skywalker.Security.Cryptography.Abstractions;
 
-namespace Skywalker.Extensions.AspNetCore.Security.DependencyInjection
+namespace Skywalker.AspNetCore.Security.DependencyInjection
 {
     public static class SecurityIServiceCollectionExtensions
     {

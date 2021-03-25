@@ -9,6 +9,7 @@
 
     <ItemGroup>
       <ProjectReference Include="..\Skywalker.AspNetCore.Security.Abstractions\Skywalker.AspNetCore.Security.Abstractions.csproj" />
+      <ProjectReference Include="..\Skywalker.Security\Skywalker.Security.csproj" />
     </ItemGroup>
 
 </Project>
