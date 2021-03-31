@@ -27,8 +27,6 @@
         <ProjectReference Include="..\..\simple\Simple.Application\Simple.Application.csproj" />
         <ProjectReference Include="..\..\simple\Simple.WebApi\Simple.WebApi.csproj" />
         <ProjectReference Include="..\..\src\Skywalker.Ddd.EntityFrameworkCore.MySQL\Skywalker.Ddd.EntityFrameworkCore.MySQL.csproj" />
-        <ProjectReference Include="..\..\src\Skywalker.Ddd.UnitOfWork.Abstractions\Skywalker.Ddd.UnitOfWork.Abstractions.csproj" />
-        <ProjectReference Include="..\..\src\Skywalker.Ddd.UnitOfWork\Skywalker.Ddd.UnitOfWork.csproj" />
         <ProjectReference Include="..\Simple.EntityFrameworkCore\Simple.EntityFrameworkCore.csproj" />
     </ItemGroup>
 

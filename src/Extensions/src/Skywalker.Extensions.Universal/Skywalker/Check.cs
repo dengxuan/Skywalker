@@ -1,11 +1,43 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Diagnostics.CodeAnalysis;
+using System.Linq;
 
 namespace Skywalker
 {
+    [DebuggerStepThrough]
     public static class Check
     {
+
+        public static T Condition<T>(T value, [NotNull] Predicate<T> condition, [NotNull] string parameterName)
+        {
+            NotNull(condition, nameof(condition));
+
+            if (!condition(value))
+            {
+                NotNullOrEmpty(parameterName, nameof(parameterName));
+
+                throw new ArgumentOutOfRangeException(parameterName);
+            }
+
+            return value;
+        }
+
+        public static IList<T> HasNoNulls<T>(IList<T> value, [NotNull] string parameterName)
+            where T : class
+        {
+            NotNull(value, parameterName);
+
+            if (value.Any(e => e == null))
+            {
+                NotNullOrEmpty(parameterName, nameof(parameterName));
+
+                throw new ArgumentException(parameterName);
+            }
+
+            return value;
+        }
 
         public static Type AssignableTo<TBaseType>(Type type, [NotNull] string parameterName)
         {

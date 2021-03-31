@@ -6,7 +6,6 @@ using Skywalker.Domain.Entities;
 using Skywalker.Domain.Repositories;
 using System;
 using System.Linq;
-using System.Linq.Dynamic.Core;
 using System.Threading.Tasks;
 
 namespace Skywalker.Application.Services
@@ -62,7 +61,7 @@ namespace Skywalker.Application.Services
             await CheckGetListPolicyAsync();
 
             var query = CreateFilteredQuery(input);
-
+            query.Count();
             var totalCount = await AsyncExecuter.CountAsync(query);
 
             query = ApplySorting(query, input);
@@ -121,9 +120,9 @@ namespace Skywalker.Application.Services
         protected virtual IQueryable<TEntity> ApplyDefaultSorting(IQueryable<TEntity> query)
         {
             // Todo: 添加默认排序
-            if (typeof(TEntity).IsAssignableTo<IEntity<Guid>>())
+            if (typeof(TEntity).IsAssignableTo<IHasCreationTime>())
             {
-                return query.OrderByDescending(e => ((IEntity<Guid>)e).Id);
+                return query.OrderByDescending(e => ((IHasCreationTime)e).CreationTime);
             }
 
             throw new SkywalkerException("No sorting specified but this query requires sorting. Override the ApplyDefaultSorting method for your application service derived from AbstractKeyReadOnlyAppService!");
@@ -139,7 +138,7 @@ namespace Skywalker.Application.Services
             //Try to use paging if available
             if (input is IPagedResultRequest pagedInput)
             {
-                return query.Page(pagedInput);
+                return query.Skip(pagedInput.SkipCount).Take(pagedInput.MaxResultCount);
             }
 
             //Try to limit query result if available

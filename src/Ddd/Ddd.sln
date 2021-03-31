@@ -57,10 +57,6 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Simple.DbMigrator", "simple
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Skywalker.AspNetCore.Mvc.ResponseWrapper", "..\Mvc\src\Skywalker.AspNetCore.Mvc.ResponseWrapper\Skywalker.AspNetCore.Mvc.ResponseWrapper.csproj", "{9E82F614-70CA-4BEB-A316-6A2B6205B63D}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Skywalker.Ddd.UnitOfWork.Abstractions", "src\Skywalker.Ddd.UnitOfWork.Abstractions\Skywalker.Ddd.UnitOfWork.Abstractions.csproj", "{AEBEE03E-9C76-4975-9285-2F16F0640FF6}"
-EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Skywalker.Ddd.UnitOfWork", "src\Skywalker.Ddd.UnitOfWork\Skywalker.Ddd.UnitOfWork.csproj", "{54060E2B-AC47-412B-852D-7EFD80999F18}"
-EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -371,30 +367,6 @@ Global
 		{9E82F614-70CA-4BEB-A316-6A2B6205B63D}.Release|x64.Build.0 = Release|Any CPU
 		{9E82F614-70CA-4BEB-A316-6A2B6205B63D}.Release|x86.ActiveCfg = Release|Any CPU
 		{9E82F614-70CA-4BEB-A316-6A2B6205B63D}.Release|x86.Build.0 = Release|Any CPU
-		{AEBEE03E-9C76-4975-9285-2F16F0640FF6}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{AEBEE03E-9C76-4975-9285-2F16F0640FF6}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{AEBEE03E-9C76-4975-9285-2F16F0640FF6}.Debug|x64.ActiveCfg = Debug|Any CPU
-		{AEBEE03E-9C76-4975-9285-2F16F0640FF6}.Debug|x64.Build.0 = Debug|Any CPU
-		{AEBEE03E-9C76-4975-9285-2F16F0640FF6}.Debug|x86.ActiveCfg = Debug|Any CPU
-		{AEBEE03E-9C76-4975-9285-2F16F0640FF6}.Debug|x86.Build.0 = Debug|Any CPU
-		{AEBEE03E-9C76-4975-9285-2F16F0640FF6}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{AEBEE03E-9C76-4975-9285-2F16F0640FF6}.Release|Any CPU.Build.0 = Release|Any CPU
-		{AEBEE03E-9C76-4975-9285-2F16F0640FF6}.Release|x64.ActiveCfg = Release|Any CPU
-		{AEBEE03E-9C76-4975-9285-2F16F0640FF6}.Release|x64.Build.0 = Release|Any CPU
-		{AEBEE03E-9C76-4975-9285-2F16F0640FF6}.Release|x86.ActiveCfg = Release|Any CPU
-		{AEBEE03E-9C76-4975-9285-2F16F0640FF6}.Release|x86.Build.0 = Release|Any CPU
-		{54060E2B-AC47-412B-852D-7EFD80999F18}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{54060E2B-AC47-412B-852D-7EFD80999F18}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{54060E2B-AC47-412B-852D-7EFD80999F18}.Debug|x64.ActiveCfg = Debug|Any CPU
-		{54060E2B-AC47-412B-852D-7EFD80999F18}.Debug|x64.Build.0 = Debug|Any CPU
-		{54060E2B-AC47-412B-852D-7EFD80999F18}.Debug|x86.ActiveCfg = Debug|Any CPU
-		{54060E2B-AC47-412B-852D-7EFD80999F18}.Debug|x86.Build.0 = Debug|Any CPU
-		{54060E2B-AC47-412B-852D-7EFD80999F18}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{54060E2B-AC47-412B-852D-7EFD80999F18}.Release|Any CPU.Build.0 = Release|Any CPU
-		{54060E2B-AC47-412B-852D-7EFD80999F18}.Release|x64.ActiveCfg = Release|Any CPU
-		{54060E2B-AC47-412B-852D-7EFD80999F18}.Release|x64.Build.0 = Release|Any CPU
-		{54060E2B-AC47-412B-852D-7EFD80999F18}.Release|x86.ActiveCfg = Release|Any CPU
-		{54060E2B-AC47-412B-852D-7EFD80999F18}.Release|x86.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -424,8 +396,6 @@ Global
 		{B8D64120-2773-4760-8DB5-516E19199A8F} = {2BC91C47-B420-49C7-A554-D525E5D6E7D6}
 		{D3F5DC06-3E69-4E07-94BB-326A70B0E0FE} = {2BC91C47-B420-49C7-A554-D525E5D6E7D6}
 		{32E0DBDB-2459-456F-B501-785B2A6E7A25} = {2BC91C47-B420-49C7-A554-D525E5D6E7D6}
-		{AEBEE03E-9C76-4975-9285-2F16F0640FF6} = {623E3830-FD43-4AEB-8060-463C838AA5F3}
-		{54060E2B-AC47-412B-852D-7EFD80999F18} = {623E3830-FD43-4AEB-8060-463C838AA5F3}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {E59F1C2A-52A9-4954-9BF9-F3338EF8B185}

@@ -3,7 +3,6 @@ using Microsoft.Extensions.Logging;
 using Simple.Application.Abstractions;
 using Simple.Application.Users;
 using Skywalker.Ddd.Queries.Abstractions;
-using Skywalker.Ddd.UnitOfWork;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 

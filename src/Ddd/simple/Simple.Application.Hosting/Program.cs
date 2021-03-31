@@ -35,6 +35,5 @@ Host.CreateDefaultBuilder(args).ConfigureServices(configure =>
         });
     });
     configure.AddTransient<IHostedService, SimpleHostedService>();
-    configure.AddUnitOfWork();
 })
 .RunConsoleAsync();

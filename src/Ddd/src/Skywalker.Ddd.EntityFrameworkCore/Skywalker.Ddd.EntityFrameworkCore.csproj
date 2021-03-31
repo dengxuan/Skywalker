@@ -10,5 +10,8 @@
     <ItemGroup>
       <ProjectReference Include="..\Skywalker.Ddd.Domain.Abstractions\Skywalker.Ddd.Domain.Abstractions.csproj" />
     </ItemGroup>
+    <ItemGroup>
+      <Folder Include="System\Linq\" />
+    </ItemGroup>
     
 </Project>

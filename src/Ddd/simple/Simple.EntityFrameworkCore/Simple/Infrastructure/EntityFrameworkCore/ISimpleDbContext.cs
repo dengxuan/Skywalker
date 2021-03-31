@@ -1,10 +1,9 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Simple.Domain.Users;
-using Skywalker.Ddd.EntityFrameworkCore;
 
 namespace Simple.EntityFrameworkCore
 {
-    public interface ISimpleDbContext : ISkywalkerDbContext
+    public interface ISimpleDbContext
     {
         DbSet<User>? Users { get; set; }
     }

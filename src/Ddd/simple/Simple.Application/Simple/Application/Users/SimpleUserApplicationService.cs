@@ -1,14 +1,12 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
 using Simple.Application.Abstractions;
 using Simple.Domain.Users;
-using Skywalker.Ddd.UnitOfWork;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using System.Threading.Tasks;
 
 namespace Simple.Application
 {
-    [UnitOfWork]
     public class SimpleUserApplicationService : SimpleApplicationService, ISimpleUserApplicationService
     {
         private IUserManager UserManager => LazyLoader.GetRequiredService<IUserManager>();

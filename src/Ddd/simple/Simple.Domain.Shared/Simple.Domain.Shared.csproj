@@ -7,7 +7,9 @@
     <Import Project="..\..\..\..\skywalker.props" />
 
     <ItemGroup>
-      <Folder Include="Simple\Domain\" />
+      <Compile Remove="Simple\**" />
+      <EmbeddedResource Remove="Simple\**" />
+      <None Remove="Simple\**" />
     </ItemGroup>
     
 </Project>
