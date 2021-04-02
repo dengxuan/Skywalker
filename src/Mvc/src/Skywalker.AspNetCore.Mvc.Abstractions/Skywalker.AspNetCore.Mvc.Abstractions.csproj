@@ -1,11 +1,16 @@
 <Project Sdk="Microsoft.NET.Sdk">
 
-    <Import Project="..\..\skywalker.props" />
-
-  <ItemGroup>
-    <PackageReference Include="Microsoft.AspNetCore.Mvc.Core" Version="2.2.5" />
-    <PackageReference Include="Microsoft.AspNetCore.Mvc.Cors" Version="2.2.0" />
-    <PackageReference Include="Microsoft.AspNetCore.Mvc.Formatters.Json" Version="2.2.0" />
-  </ItemGroup>
+    <Import Project="..\..\..\..\skywalker.props" />
+    <Import Project="..\..\..\..\version.props" />
+    <ItemGroup>
+      <PackageReference Include="Microsoft.AspNetCore.Localization" Version="2.2.0" />
+      <PackageReference Include="Microsoft.AspNetCore.Mvc.Abstractions" Version="2.2.0" />
+      <PackageReference Include="Microsoft.AspNetCore.Mvc.Core" Version="2.2.5" />
+    </ItemGroup>
+    <ItemGroup>
+      <ProjectReference Include="..\..\..\AspNetCore\src\Skywalker.AspNetCore.Abstractions\Skywalker.AspNetCore.Abstractions.csproj" />
+      <ProjectReference Include="..\..\..\Ddd\src\Skywalker.Ddd.Localization.Abstractions\Skywalker.Ddd.Localization.Abstractions.csproj" />
+      <ProjectReference Include="..\..\..\Ddd\src\Skywalker.Ddd.Localization\Skywalker.Ddd.Localization.csproj" />
+    </ItemGroup>
 
 </Project>

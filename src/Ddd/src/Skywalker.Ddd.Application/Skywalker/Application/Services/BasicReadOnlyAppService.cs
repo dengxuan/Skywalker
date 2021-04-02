@@ -14,8 +14,8 @@ namespace Skywalker.Application.Services
         : BasicReadOnlyAppService<TEntity, TEntityDto, TEntityDto, TKey, PagedAndSortedResultRequestDto>
         where TEntity : class, IEntity
     {
-        protected BasicReadOnlyAppService(ILazyLoader lazyLoader, IReadOnlyRepository<TEntity> repository)
-            : base(lazyLoader, repository)
+        protected BasicReadOnlyAppService(IReadOnlyRepository<TEntity> repository)
+            : base(repository)
         {
 
         }
@@ -25,8 +25,8 @@ namespace Skywalker.Application.Services
         : BasicReadOnlyAppService<TEntity, TEntityDto, TEntityDto, TKey, TGetListInput>
         where TEntity : class, IEntity
     {
-        protected BasicReadOnlyAppService(ILazyLoader lazyLoader, IReadOnlyRepository<TEntity> repository)
-            : base(lazyLoader, repository)
+        protected BasicReadOnlyAppService(IReadOnlyRepository<TEntity> repository)
+            : base(repository)
         {
 
         }
@@ -43,7 +43,7 @@ namespace Skywalker.Application.Services
 
         protected virtual string GetListPolicyName { get; set; }
 
-        protected BasicReadOnlyAppService(ILazyLoader lazyLoader, IReadOnlyRepository<TEntity> repository) : base(lazyLoader)
+        protected BasicReadOnlyAppService(IReadOnlyRepository<TEntity> repository)
         {
             Repository = repository;
         }

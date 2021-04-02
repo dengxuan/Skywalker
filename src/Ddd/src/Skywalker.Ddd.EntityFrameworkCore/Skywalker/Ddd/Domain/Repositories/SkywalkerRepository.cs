@@ -9,7 +9,7 @@ using Skywalker.EventBus.Distributed;
 using Skywalker.Extensions.Timing;
 using Skywalker.Reflection;
 using System;
-using System.Linq.Dynamic.Core;
+using Skywalker.Extensions.Linq;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Diagnostics.CodeAnalysis;

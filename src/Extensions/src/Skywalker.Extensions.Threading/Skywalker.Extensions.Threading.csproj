@@ -9,7 +9,7 @@
     </ItemGroup>
 
     <ItemGroup>
-      <ProjectReference Include="..\Skywalker.Extensions.ExceptionHandling\Skywalker.Extensions.ExceptionHandling.csproj" />
+      <ProjectReference Include="..\Skywalker.Extensions.Universal\Skywalker.Extensions.Universal.csproj" />
     </ItemGroup>
 
 </Project>

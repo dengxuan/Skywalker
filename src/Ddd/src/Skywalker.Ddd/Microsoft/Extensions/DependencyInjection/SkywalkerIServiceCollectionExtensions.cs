@@ -9,7 +9,6 @@ namespace Microsoft.Extensions.DependencyInjection
     {
         public static IServiceCollection AddSkywalker(this IServiceCollection services, Action<SkywalkerBuilder> buildAction)
         {
-            services.AddScoped<ILazyLoader, MsDependencyInjectionLazyLoader>();
             services.AddGuidGenerator();
             services.AddTiming();
             services.AddQueries();

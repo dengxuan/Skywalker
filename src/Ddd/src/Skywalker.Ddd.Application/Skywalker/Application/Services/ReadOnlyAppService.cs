@@ -14,8 +14,8 @@ namespace Skywalker.Application.Services
         where TEntity : class, IEntity<TKey>
         where TEntityDto : IEntityDto<TKey>
     {
-        protected ReadOnlyAppService(ILazyLoader lazyLoader, IReadOnlyRepository<TEntity, TKey> repository)
-            : base(lazyLoader, repository)
+        protected ReadOnlyAppService(IReadOnlyRepository<TEntity, TKey> repository)
+            : base(repository)
         {
 
         }
@@ -26,8 +26,8 @@ namespace Skywalker.Application.Services
         where TEntity : class, IEntity<TKey>
         where TEntityDto : IEntityDto<TKey>
     {
-        protected ReadOnlyAppService(ILazyLoader lazyLoader, IReadOnlyRepository<TEntity, TKey> repository)
-            : base(lazyLoader, repository)
+        protected ReadOnlyAppService(IReadOnlyRepository<TEntity, TKey> repository)
+            : base(repository)
         {
 
         }
@@ -41,8 +41,8 @@ namespace Skywalker.Application.Services
     {
         protected new IReadOnlyRepository<TEntity, TKey> Repository { get; }
 
-        protected ReadOnlyAppService(ILazyLoader lazyLoader, IReadOnlyRepository<TEntity, TKey> repository)
-        : base(lazyLoader, repository)
+        protected ReadOnlyAppService(IReadOnlyRepository<TEntity, TKey> repository)
+        : base(repository)
         {
             Repository = repository;
         }

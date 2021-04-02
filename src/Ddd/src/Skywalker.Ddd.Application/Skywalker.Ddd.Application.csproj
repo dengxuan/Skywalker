@@ -1,4 +1,4 @@
-<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk">
 
     <PropertyGroup>
       <Platforms>AnyCPU;x64;x86</Platforms>
@@ -8,6 +8,7 @@
     <Import Project="..\..\..\..\version.props" />
 
     <ItemGroup>
+      <ProjectReference Include="..\..\..\Extensions\src\Skywalker.Extensions.Linq\Skywalker.Extensions.Linq.csproj" />
       <ProjectReference Include="..\..\..\Security\src\Skywalker.Security.Abstractions\Skywalker.Security.Abstractions.csproj" />
       <ProjectReference Include="..\Skywalker.Ddd.Application.Contracts\Skywalker.Ddd.Application.Contracts.csproj" />
       <ProjectReference Include="..\Skywalker.Ddd.Localization\Skywalker.Ddd.Localization.csproj" />

@@ -12,6 +12,7 @@
 
     <ItemGroup>
       <ProjectReference Include="..\..\..\Extensions\src\Skywalker.Extensions.Universal\Skywalker.Extensions.Universal.csproj" />
+      <ProjectReference Include="..\Skywalker.Ddd.ExceptionHandling\Skywalker.Ddd.ExceptionHandling.csproj" />
       <ProjectReference Include="..\Skywalker.Ddd\Skywalker.Ddd.csproj" />
     </ItemGroup>
 

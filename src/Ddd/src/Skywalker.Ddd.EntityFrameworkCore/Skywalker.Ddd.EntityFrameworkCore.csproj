@@ -5,9 +5,9 @@
     <ItemGroup>
       <PackageReference Include="Microsoft.EntityFrameworkCore" Version="5.0.3" />
       <PackageReference Include="Microsoft.EntityFrameworkCore.Relational" Version="5.0.3" />
-      <PackageReference Include="System.Linq.Dynamic.Core" Version="1.2.8" />
     </ItemGroup>
     <ItemGroup>
+      <ProjectReference Include="..\..\..\Extensions\src\Skywalker.Extensions.Linq\Skywalker.Extensions.Linq.csproj" />
       <ProjectReference Include="..\Skywalker.Ddd.Domain.Abstractions\Skywalker.Ddd.Domain.Abstractions.csproj" />
     </ItemGroup>
     <ItemGroup>
