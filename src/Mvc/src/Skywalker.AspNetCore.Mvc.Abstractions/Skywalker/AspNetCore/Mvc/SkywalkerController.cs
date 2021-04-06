@@ -1,17 +1,22 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Localization;
-using Skywalker;
+using Skywalker.AspNetCore.Mvc.Models;
 using Skywalker.Localization;
+using Skywalker.Localization.Resources.SkywalkerLocalization;
 using System;
 using System.Collections.Generic;
 
-namespace Volo.Abp.AspNetCore.Mvc
+namespace Skywalker.AspNetCore.Mvc
 {
-    public abstract class AbpController : ControllerBase
+    [Route("api/[controller]")]
+    [ApiController]
+    [WrapResult]
+    public abstract class SkywalkerController : ControllerBase
     {
 
-        protected IStringLocalizerFactory StringLocalizerFactory;
+        protected IStringLocalizerFactory StringLocalizerFactory => HttpContext.RequestServices.GetRequiredService<IStringLocalizerFactory>();
 
         protected IStringLocalizer L
         {
@@ -36,7 +41,7 @@ namespace Volo.Abp.AspNetCore.Mvc
                 _localizer = null;
             }
         }
-        private Type _localizationResource = typeof(DefaultResource);
+        private Type _localizationResource = typeof(SkywalkerLocalizationResource);
 
         protected virtual IStringLocalizer CreateLocalizer()
         {
@@ -52,11 +57,6 @@ namespace Volo.Abp.AspNetCore.Mvc
             }
 
             return localizer;
-        }
-
-        protected AbpController()
-        {
-            StringLocalizerFactory = HttpContext.RequestServices.GetRequiredService<IStringLocalizerFactory>();
         }
 
         protected virtual RedirectResult RedirectSafely(string returnUrl, string? returnUrlHash = null)

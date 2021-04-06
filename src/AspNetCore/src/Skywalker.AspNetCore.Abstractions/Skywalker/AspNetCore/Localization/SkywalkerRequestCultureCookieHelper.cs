@@ -4,7 +4,7 @@ using System;
 
 namespace Microsoft.AspNetCore.RequestLocalization
 {
-    public static class AbpRequestCultureCookieHelper
+    public static class SkywalkerRequestCultureCookieHelper
     {
         public static void SetCultureCookie(
             HttpContext httpContext,

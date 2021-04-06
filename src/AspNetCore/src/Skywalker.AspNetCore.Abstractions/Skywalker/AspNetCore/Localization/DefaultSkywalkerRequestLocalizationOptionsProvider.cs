@@ -13,14 +13,14 @@ using System.Threading.Tasks;
 
 namespace Microsoft.AspNetCore.RequestLocalization
 {
-    public class DefaultAbpRequestLocalizationOptionsProvider : IAbpRequestLocalizationOptionsProvider
+    public class DefaultSkywalkerRequestLocalizationOptionsProvider : ISkywalkerRequestLocalizationOptionsProvider
     {
         private readonly IServiceScopeFactory _serviceProviderFactory;
         private readonly SemaphoreSlim _syncSemaphore;
         private Action<RequestLocalizationOptions> _optionsAction;
         private RequestLocalizationOptions _requestLocalizationOptions;
 
-        public DefaultAbpRequestLocalizationOptionsProvider(IServiceScopeFactory serviceProviderFactory)
+        public DefaultSkywalkerRequestLocalizationOptionsProvider(IServiceScopeFactory serviceProviderFactory)
         {
             _serviceProviderFactory = serviceProviderFactory;
             _syncSemaphore = new SemaphoreSlim(1, 1);
@@ -65,7 +65,7 @@ namespace Microsoft.AspNetCore.RequestLocalization
                                 };
 
                             foreach (var configurator in serviceScope.ServiceProvider
-                                .GetRequiredService<IOptions<AbpRequestLocalizationOptions>>()
+                                .GetRequiredService<IOptions<SkywalkerRequestLocalizationOptions>>()
                                 .Value.RequestLocalizationOptionConfigurators)
                             {
                                 await configurator(serviceScope.ServiceProvider, options);
@@ -83,7 +83,7 @@ namespace Microsoft.AspNetCore.RequestLocalization
 
         private static RequestCulture DefaultGetRequestCulture(IReadOnlyList<LanguageInfo> languages)
         {
-            var firstLanguage = languages.First();
+            var firstLanguage = languages[0];
             return new RequestCulture(firstLanguage.CultureName, firstLanguage.UiCultureName);
         }
     }

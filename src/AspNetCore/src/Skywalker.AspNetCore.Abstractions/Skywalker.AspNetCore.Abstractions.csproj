@@ -9,6 +9,7 @@
 
     <ItemGroup>
         <ProjectReference Include="..\..\..\Ddd\src\Skywalker.Ddd.Localization\Skywalker.Ddd.Localization.csproj" />
+        <ProjectReference Include="..\..\..\Ddd\src\Skywalker.Ddd.Tracing\Skywalker.Ddd.Tracing.csproj" />
         <ProjectReference Include="..\..\..\Extensions\src\Skywalker.Extensions.Threading\Skywalker.Extensions.Threading.csproj" />
     </ItemGroup>
 

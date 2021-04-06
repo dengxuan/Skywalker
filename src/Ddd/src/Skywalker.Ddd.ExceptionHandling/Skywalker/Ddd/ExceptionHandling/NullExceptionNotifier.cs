@@ -1,4 +1,5 @@
-﻿using System.Threading.Tasks;
+﻿using System.Diagnostics.CodeAnalysis;
+using System.Threading.Tasks;
 
 namespace Skywalker.ExceptionHandling
 {
@@ -11,7 +12,7 @@ namespace Skywalker.ExceptionHandling
             
         }
 
-        public Task NotifyAsync(ExceptionNotificationContext context)
+        public Task NotifyAsync([NotNull] ExceptionNotificationContext context)
         {
             return Task.CompletedTask;
         }

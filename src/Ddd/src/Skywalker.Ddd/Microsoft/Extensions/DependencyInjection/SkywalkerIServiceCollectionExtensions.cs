@@ -9,6 +9,8 @@ namespace Microsoft.Extensions.DependencyInjection
     {
         public static IServiceCollection AddSkywalker(this IServiceCollection services, Action<SkywalkerBuilder> buildAction)
         {
+            services.AddSingleton(typeof(ObjectAccessor<>));
+            services.AddSingleton(typeof(IObjectAccessor<>),typeof(ObjectAccessor<>));
             services.AddGuidGenerator();
             services.AddTiming();
             services.AddQueries();

@@ -1,6 +1,7 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
 using Simple.Application.Abstractions;
 using Simple.Domain.Users;
+using System;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using System.Threading.Tasks;
@@ -9,9 +10,10 @@ namespace Simple.Application
 {
     public class SimpleUserApplicationService : SimpleApplicationService, ISimpleUserApplicationService
     {
-        private IUserManager UserManager => LazyLoader.GetRequiredService<IUserManager>();
+        private IUserManager? userManager;
+        private IUserManager UserManager => LazyGetRequiredService(ref userManager);
 
-        public SimpleUserApplicationService(ILazyLoader lazyLoader) : base(lazyLoader)
+        public SimpleUserApplicationService(IServiceProvider serviceProvider) : base(serviceProvider)
         {
         }
 

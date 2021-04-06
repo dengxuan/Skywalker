@@ -3,13 +3,13 @@ using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using System.Reflection;
 
-namespace Volo.Abp.AspNetCore.Mvc.Localization
+namespace Skywalker.AspNetCore.Mvc.Localization
 {
-    public class AbpMvcDataAnnotationsLocalizationOptions
+    public class SkywalkerMvcDataAnnotationsLocalizationOptions
     {
         public IDictionary<Assembly, Type> AssemblyResources { get; }
 
-        public AbpMvcDataAnnotationsLocalizationOptions()
+        public SkywalkerMvcDataAnnotationsLocalizationOptions()
         {
             AssemblyResources = new Dictionary<Assembly, Type>();
         }

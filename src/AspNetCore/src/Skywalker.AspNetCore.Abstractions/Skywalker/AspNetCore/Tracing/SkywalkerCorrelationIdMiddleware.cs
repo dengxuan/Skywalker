@@ -1,18 +1,17 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Options;
+using Skywalker.Ddd.Tracing;
 using System.Threading.Tasks;
-using Volo.Abp.DependencyInjection;
-using Volo.Abp.Tracing;
 
-namespace Volo.Abp.AspNetCore.Tracing
+namespace Skywalker.AspNetCore.Tracing
 {
-    public class AbpCorrelationIdMiddleware : IMiddleware, ITransientDependency
+    public class SkywalkerCorrelationIdMiddleware : IMiddleware, ITransientDependency
     {
-        private readonly AbpCorrelationIdOptions _options;
+        private readonly SkywalkerCorrelationIdOptions _options;
         private readonly ICorrelationIdProvider _correlationIdProvider;
 
-        public AbpCorrelationIdMiddleware(IOptions<AbpCorrelationIdOptions> options,
+        public SkywalkerCorrelationIdMiddleware(IOptions<SkywalkerCorrelationIdOptions> options,
             ICorrelationIdProvider correlationIdProvider)
         {
             _options = options.Value;
@@ -35,7 +34,7 @@ namespace Volo.Abp.AspNetCore.Tracing
 
         protected virtual void CheckAndSetCorrelationIdOnResponse(
             HttpContext httpContext,
-            AbpCorrelationIdOptions options,
+            SkywalkerCorrelationIdOptions options,
             string correlationId)
         {
             if (httpContext.Response.HasStarted)

@@ -97,8 +97,6 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Skywalker.AspNetCore.Authen
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Mvc", "Mvc", "{418C5597-8345-4F0B-B57E-C16F20F9A16C}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Skywalker.AspNetCore.Mvc.ResponseWrapper", "src\Mvc\src\Skywalker.AspNetCore.Mvc.ResponseWrapper\Skywalker.AspNetCore.Mvc.ResponseWrapper.csproj", "{BE5377A3-37E1-46FA-A5FC-A4B1EDDED43E}"
-EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "IdentityServer", "IdentityServer", "{DE1EFE75-198D-43EF-ADF7-D1AC2D3B7A78}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Skywalker.IdentityServer.Domain", "src\IdentityServer\src\Skywalker.IdentityServer.Domain\Skywalker.IdentityServer.Domain.csproj", "{4081A73A-6465-463A-832C-93A3272B0442}"
@@ -153,11 +151,11 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Skywalker.AspNetCore.Mvc.Ab
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "AspNetCore", "AspNetCore", "{D6B3DED3-3B2F-405F-A775-FB5CC2B15915}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Skywalker.AspNetCore.Abstractions", "src\AspNetCore\src\Skywalker.AspNetCore.Abstractions\Skywalker.AspNetCore.Abstractions.csproj", "{8E841814-848D-46A8-B746-70F583A13737}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Skywalker.AspNetCore.Abstractions", "src\AspNetCore\src\Skywalker.AspNetCore.Abstractions\Skywalker.AspNetCore.Abstractions.csproj", "{8E841814-848D-46A8-B746-70F583A13737}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Skywalker.Ddd.ExceptionHandling", "src\Ddd\src\Skywalker.Ddd.ExceptionHandling\Skywalker.Ddd.ExceptionHandling.csproj", "{4D3B569B-FA71-4292-925C-19342E79BB77}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Skywalker.Ddd.Tracing", "src\Ddd\src\Skywalker.Ddd.Tracing\Skywalker.Ddd.Tracing.csproj", "{6E247CDF-5800-44CA-8946-D01734629ACA}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Skywalker.Ddd.Tracing", "src\Ddd\src\Skywalker.Ddd.Tracing\Skywalker.Ddd.Tracing.csproj", "{6E247CDF-5800-44CA-8946-D01734629ACA}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -589,18 +587,6 @@ Global
 		{B6453C93-104F-4B41-8905-A86E0AFB91F6}.Release|x64.Build.0 = Release|Any CPU
 		{B6453C93-104F-4B41-8905-A86E0AFB91F6}.Release|x86.ActiveCfg = Release|Any CPU
 		{B6453C93-104F-4B41-8905-A86E0AFB91F6}.Release|x86.Build.0 = Release|Any CPU
-		{BE5377A3-37E1-46FA-A5FC-A4B1EDDED43E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{BE5377A3-37E1-46FA-A5FC-A4B1EDDED43E}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{BE5377A3-37E1-46FA-A5FC-A4B1EDDED43E}.Debug|x64.ActiveCfg = Debug|Any CPU
-		{BE5377A3-37E1-46FA-A5FC-A4B1EDDED43E}.Debug|x64.Build.0 = Debug|Any CPU
-		{BE5377A3-37E1-46FA-A5FC-A4B1EDDED43E}.Debug|x86.ActiveCfg = Debug|Any CPU
-		{BE5377A3-37E1-46FA-A5FC-A4B1EDDED43E}.Debug|x86.Build.0 = Debug|Any CPU
-		{BE5377A3-37E1-46FA-A5FC-A4B1EDDED43E}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{BE5377A3-37E1-46FA-A5FC-A4B1EDDED43E}.Release|Any CPU.Build.0 = Release|Any CPU
-		{BE5377A3-37E1-46FA-A5FC-A4B1EDDED43E}.Release|x64.ActiveCfg = Release|Any CPU
-		{BE5377A3-37E1-46FA-A5FC-A4B1EDDED43E}.Release|x64.Build.0 = Release|Any CPU
-		{BE5377A3-37E1-46FA-A5FC-A4B1EDDED43E}.Release|x86.ActiveCfg = Release|Any CPU
-		{BE5377A3-37E1-46FA-A5FC-A4B1EDDED43E}.Release|x86.Build.0 = Release|Any CPU
 		{4081A73A-6465-463A-832C-93A3272B0442}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{4081A73A-6465-463A-832C-93A3272B0442}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{4081A73A-6465-463A-832C-93A3272B0442}.Debug|x64.ActiveCfg = Debug|Any CPU
@@ -936,7 +922,6 @@ Global
 		{F6AE3E95-E103-4AC0-9C2A-D19D634687EC} = {958AB97D-616D-4704-ADEE-46CAC533B782}
 		{B6453C93-104F-4B41-8905-A86E0AFB91F6} = {958AB97D-616D-4704-ADEE-46CAC533B782}
 		{418C5597-8345-4F0B-B57E-C16F20F9A16C} = {9E861C23-5075-455D-A2DA-6DFB5D63D97F}
-		{BE5377A3-37E1-46FA-A5FC-A4B1EDDED43E} = {418C5597-8345-4F0B-B57E-C16F20F9A16C}
 		{DE1EFE75-198D-43EF-ADF7-D1AC2D3B7A78} = {9E861C23-5075-455D-A2DA-6DFB5D63D97F}
 		{4081A73A-6465-463A-832C-93A3272B0442} = {DE1EFE75-198D-43EF-ADF7-D1AC2D3B7A78}
 		{C72EE2BA-2327-4D12-981E-65A276F7A7D7} = {DE1EFE75-198D-43EF-ADF7-D1AC2D3B7A78}

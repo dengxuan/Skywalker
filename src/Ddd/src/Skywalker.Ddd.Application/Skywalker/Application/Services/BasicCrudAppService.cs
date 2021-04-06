@@ -12,8 +12,8 @@ namespace Skywalker.Application.Services
         : BasicCrudAppService<TEntity, TEntityDto, TKey, PagedAndSortedResultRequestDto>
         where TEntity : class, IEntity
     {
-        protected BasicCrudAppService(IRepository<TEntity> repository)
-            : base(repository)
+        protected BasicCrudAppService(IServiceProvider serviceProvider, IRepository<TEntity> repository)
+            : base(serviceProvider, repository)
         {
 
         }
@@ -23,8 +23,8 @@ namespace Skywalker.Application.Services
         : BasicCrudAppService<TEntity, TEntityDto, TKey, TGetListInput, TEntityDto, TEntityDto>
         where TEntity : class, IEntity
     {
-        protected BasicCrudAppService(IRepository<TEntity> repository)
-            : base(repository)
+        protected BasicCrudAppService(IServiceProvider serviceProvider, IRepository<TEntity> repository)
+            : base(serviceProvider, repository)
         {
 
         }
@@ -34,8 +34,8 @@ namespace Skywalker.Application.Services
         : BasicCrudAppService<TEntity, TEntityDto, TKey, TGetListInput, TCreateInput, TCreateInput>
         where TEntity : class, IEntity
     {
-        protected BasicCrudAppService(IRepository<TEntity> repository)
-            : base(repository)
+        protected BasicCrudAppService(IServiceProvider serviceProvider, IRepository<TEntity> repository)
+            : base(serviceProvider, repository)
         {
 
         }
@@ -45,8 +45,8 @@ namespace Skywalker.Application.Services
         : BasicCrudAppService<TEntity, TEntityDto, TEntityDto, TKey, TGetListInput, TCreateInput, TUpdateInput>
         where TEntity : class, IEntity
     {
-        protected BasicCrudAppService(IRepository<TEntity> repository)
-            : base(repository)
+        protected BasicCrudAppService(IServiceProvider serviceProvider, IRepository<TEntity> repository)
+            : base(serviceProvider,repository)
         {
 
         }
@@ -70,8 +70,8 @@ namespace Skywalker.Application.Services
 
         protected virtual string DeletePolicyName { get; set; }
 
-        protected BasicCrudAppService(IRepository<TEntity> repository)
-            : base(repository)
+        protected BasicCrudAppService(IServiceProvider serviceProvider, IRepository<TEntity> repository)
+            : base(serviceProvider, repository)
         {
             Repository = repository;
         }

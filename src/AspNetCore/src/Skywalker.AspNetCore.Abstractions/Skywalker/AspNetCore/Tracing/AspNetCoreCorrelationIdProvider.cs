@@ -1,19 +1,19 @@
-﻿using System;
-using Microsoft.AspNetCore.Http;
+﻿using Microsoft.AspNetCore.Http;
+using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Options;
-using Volo.Abp.DependencyInjection;
-using Volo.Abp.Tracing;
+using Skywalker.Ddd.Tracing;
+using System;
 
-namespace Volo.Abp.AspNetCore.Tracing
+namespace Skywalker.AspNetCore.Tracing
 {
     public class AspNetCoreCorrelationIdProvider : ICorrelationIdProvider, ITransientDependency
     {
         protected IHttpContextAccessor HttpContextAccessor { get; }
-        protected AbpCorrelationIdOptions Options { get; }
+        protected SkywalkerCorrelationIdOptions Options { get; }
 
         public AspNetCoreCorrelationIdProvider(
             IHttpContextAccessor httpContextAccessor,
-            IOptions<AbpCorrelationIdOptions> options)
+            IOptions<SkywalkerCorrelationIdOptions> options)
         {
             HttpContextAccessor = httpContextAccessor;
             Options = options.Value;

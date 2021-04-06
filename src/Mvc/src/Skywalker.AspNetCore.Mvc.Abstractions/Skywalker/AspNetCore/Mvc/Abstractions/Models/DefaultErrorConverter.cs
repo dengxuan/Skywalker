@@ -4,6 +4,7 @@ using System.Text;
 
 namespace Skywalker.AspNetCore.Mvc.Models
 {
+    //TODO@Gordon: Localizer later
     internal class DefaultErrorConverter : IExceptionToErrorConverter
     {
         private readonly SkywalkerResponseWrapperOptions _options;

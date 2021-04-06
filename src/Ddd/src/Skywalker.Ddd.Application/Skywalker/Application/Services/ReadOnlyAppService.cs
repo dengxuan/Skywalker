@@ -1,5 +1,4 @@
-﻿using Microsoft.Extensions.DependencyInjection;
-using Skywalker.Application.Dtos;
+﻿using Skywalker.Application.Dtos;
 using Skywalker.Application.Dtos.Contracts;
 using Skywalker.Domain.Entities;
 using Skywalker.Domain.Repositories;
@@ -14,8 +13,8 @@ namespace Skywalker.Application.Services
         where TEntity : class, IEntity<TKey>
         where TEntityDto : IEntityDto<TKey>
     {
-        protected ReadOnlyAppService(IReadOnlyRepository<TEntity, TKey> repository)
-            : base(repository)
+        protected ReadOnlyAppService(IServiceProvider serviceProvider, IReadOnlyRepository<TEntity, TKey> repository)
+            : base(serviceProvider, repository)
         {
 
         }
@@ -26,8 +25,8 @@ namespace Skywalker.Application.Services
         where TEntity : class, IEntity<TKey>
         where TEntityDto : IEntityDto<TKey>
     {
-        protected ReadOnlyAppService(IReadOnlyRepository<TEntity, TKey> repository)
-            : base(repository)
+        protected ReadOnlyAppService(IServiceProvider serviceProvider, IReadOnlyRepository<TEntity, TKey> repository)
+            : base(serviceProvider, repository)
         {
 
         }
@@ -41,8 +40,8 @@ namespace Skywalker.Application.Services
     {
         protected new IReadOnlyRepository<TEntity, TKey> Repository { get; }
 
-        protected ReadOnlyAppService(IReadOnlyRepository<TEntity, TKey> repository)
-        : base(repository)
+        protected ReadOnlyAppService(IServiceProvider serviceProvider, IReadOnlyRepository<TEntity, TKey> repository)
+        : base(serviceProvider, repository)
         {
             Repository = repository;
         }

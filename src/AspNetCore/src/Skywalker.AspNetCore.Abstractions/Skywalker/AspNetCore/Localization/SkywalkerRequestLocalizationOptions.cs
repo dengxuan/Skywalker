@@ -5,11 +5,11 @@ using Microsoft.AspNetCore.Builder;
 
 namespace Microsoft.AspNetCore.RequestLocalization
 {
-    public class AbpRequestLocalizationOptions
+    public class SkywalkerRequestLocalizationOptions
     {
         public List<Func<IServiceProvider, RequestLocalizationOptions, Task>> RequestLocalizationOptionConfigurators { get; }
 
-        public AbpRequestLocalizationOptions()
+        public SkywalkerRequestLocalizationOptions()
         {
             RequestLocalizationOptionConfigurators = new List<Func<IServiceProvider, RequestLocalizationOptions, Task>>();
         }

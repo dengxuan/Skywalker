@@ -3,7 +3,7 @@
     <Import Project="..\..\..\..\skywalker.props" />
     
     <ItemGroup>
-      <ProjectReference Include="..\..\..\Mvc\src\Skywalker.AspNetCore.Mvc.ResponseWrapper\Skywalker.AspNetCore.Mvc.ResponseWrapper.csproj" />
+      <ProjectReference Include="..\..\..\Mvc\src\Skywalker.AspNetCore.Mvc.Abstractions\Skywalker.AspNetCore.Mvc.Abstractions.csproj" />
       <ProjectReference Include="..\Simple.Application.Abstractions\Simple.Application.Abstractions.csproj" />
     </ItemGroup>
 

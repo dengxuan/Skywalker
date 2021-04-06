@@ -19,29 +19,30 @@ namespace Microsoft.AspNetCore.Builder
             this IApplicationBuilder app,
             Action<IEndpointRouteBuilder> additionalConfigurationAction = null)
         {
-            var options = app.ApplicationServices
-                .GetRequiredService<IOptions<AbpEndpointRouterOptions>>()
-                .Value;
+            //var options = app.ApplicationServices
+            //    .GetRequiredService<IOptions<SkywalkerEndpointRouterOptions>>()
+            //    .Value;
 
-            if (!options.EndpointConfigureActions.Any())
-            {
-                return app;
-            }
+            //if (!options.EndpointConfigureActions.Any())
+            //{
+            //    return app;
+            //}
 
-            return app.UseEndpoints(endpoints =>
-            {
-                using (var scope = app.ApplicationServices.CreateScope())
-                {
-                    var context = new EndpointRouteBuilderContext(endpoints, scope.ServiceProvider);
+            //return app.UseEndpoints(endpoints =>
+            //{
+            //    using (var scope = app.ApplicationServices.CreateScope())
+            //    {
+            //        var context = new EndpointRouteBuilderContext(endpoints, scope.ServiceProvider);
 
-                    foreach (var configureAction in options.EndpointConfigureActions)
-                    {
-                        configureAction(context);
-                    }
+            //        foreach (var configureAction in options.EndpointConfigureActions)
+            //        {
+            //            configureAction(context);
+            //        }
 
-                    additionalConfigurationAction?.Invoke(endpoints);
-                }
-            });
+            //        additionalConfigurationAction?.Invoke(endpoints);
+            //    }
+            //});
+            return app;
         }
     }
 }

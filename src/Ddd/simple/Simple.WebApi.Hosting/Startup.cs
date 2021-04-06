@@ -7,6 +7,8 @@ using Microsoft.Extensions.Hosting;
 using Simple.Application;
 using Simple.EntityFrameworkCore;
 using Skywalker.Ddd.EntityFrameworkCore;
+using Skywalker.Localization;
+using Skywalker.Localization.Resources.SkywalkerLocalization;
 using System.Collections.Generic;
 
 namespace Simple.WebApi.Hosting
@@ -22,6 +24,7 @@ namespace Simple.WebApi.Hosting
 
         public void ConfigureServices(IServiceCollection services)
         {
+            services.AddHttpContextAccessor();
             services.AddRedisCaching(configure =>
             {
                 configure.ConnectionString = "127.0.0.1";
@@ -45,7 +48,25 @@ namespace Simple.WebApi.Hosting
                     options.AddProfile<SimpleApplicationAutoMapperProfile>();
                 });
             });
+
+            services.Configure<SkywalkerLocalizationOptions>(options =>
+            {
+                options
+                    .Resources
+                    .Add<DefaultResource>("en");
+
+                options
+                    .Resources
+                    .Add<SkywalkerLocalizationResource>("en")
+                    .AddVirtualJson("/Localization/Resources/SkywalkerLocalization");
+            });
             services.AddWebApiResponseWrapper();
+            services.AddLocalization();
+            services.AddRequestLocalization(configureOptions =>
+            {
+                configureOptions.AddSupportedCultures();
+                configureOptions.AddSupportedUICultures();
+            });
         }
 
 

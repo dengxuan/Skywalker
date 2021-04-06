@@ -3,10 +3,8 @@ using Microsoft.Extensions.Localization;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Logging.Abstractions;
 using Skywalker.Application.Services.Contracts;
-using Skywalker.DependencyInjection;
-using Skywalker.Extensions.GuidGenerator;
-using Skywalker.Extensions.Linq;
 using Skywalker.Ddd.ObjectMapping;
+using Skywalker.Extensions.Linq;
 using Skywalker.Extensions.Timing;
 using Skywalker.Localization;
 using Skywalker.Users;
@@ -20,12 +18,14 @@ namespace Skywalker.Application.Services
 {
     public abstract class ApplicationService : IApplicationService, IValidationEnabled, ITransientDependency
     {
-        private Type _localizationResource = typeof(DefaultResource);
         private readonly object _locker = new object();
+        private readonly IServiceProvider _serviceProvider;
 
-        protected TService LazyGetRequiredService<TService>(ref TService reference) => LazyGetRequiredService(typeof(TService), ref reference);
+        private Type _localizationResource = typeof(DefaultResource);
 
-        protected TRef LazyGetRequiredService<TRef>(Type serviceType, ref TRef reference)
+        protected TService LazyGetRequiredService<TService>(ref TService? reference) => LazyGetRequiredService(typeof(TService), ref reference);
+
+        protected TRef LazyGetRequiredService<TRef>(Type serviceType, ref TRef? reference)
         {
             if (reference == null)
             {
@@ -33,7 +33,7 @@ namespace Skywalker.Application.Services
                 {
                     if (reference == null)
                     {
-                        reference = (TRef)LazyLoader.GetRequiredService(serviceType);
+                        reference = (TRef)_serviceProvider.GetRequiredService(serviceType);
                     }
                 }
             }
@@ -41,28 +41,57 @@ namespace Skywalker.Application.Services
             return reference;
         }
 
-        protected IAsyncQueryableExecuter AsyncExecuter => LazyGetRequiredService(ref _asyncExecuter);
-        private IAsyncQueryableExecuter _asyncExecuter;
+        private IAsyncQueryableExecuter? asyncExecuter;
+        protected IAsyncQueryableExecuter AsyncExecuter => LazyGetRequiredService(ref asyncExecuter);
+
+        private IClock? clock;
+        protected IClock Clock => LazyGetRequiredService(ref clock);
+
+        private IGuidGenerator? guidGenerator;
+
+        protected IGuidGenerator GuidGenerator => LazyGetRequiredService(ref guidGenerator);
+
+        private ICurrentUser? currentUser;
+        protected ICurrentUser CurrentUser => LazyGetRequiredService(ref currentUser);
+
+        private IObjectMapper? objectMapper;
+        protected IObjectMapper ObjectMapper => LazyGetRequiredService(ref objectMapper);
+
+        private ILoggerFactory? loggerFactory;
+        protected ILoggerFactory LoggerFactory => LazyGetRequiredService(ref loggerFactory);
 
         private Lazy<ILogger> _lazyLogger => new Lazy<ILogger>(() => LoggerFactory?.CreateLogger(GetType().FullName) ?? NullLogger.Instance, true);
+        protected ILogger Logger => _lazyLogger.Value;
+
+
+        private IStringLocalizerFactory? stringLocalizerFactory;
+        protected IStringLocalizerFactory StringLocalizerFactory => LazyGetRequiredService(ref stringLocalizerFactory);
 
         private IStringLocalizer? _localizer;
 
-        protected ILazyLoader LazyLoader { get; }
 
-        protected ILogger Logger => _lazyLogger.Value;
+        protected IStringLocalizer L
+        {
+            get
+            {
+                if (_localizer == null)
+                {
+                    _localizer = CreateLocalizer();
+                }
 
-        protected IClock Clock => LazyLoader.GetRequiredService<IClock>();
+                return _localizer;
+            }
+        }
 
-        protected ICurrentUser CurrentUser => LazyLoader.GetRequiredService<ICurrentUser>();
-
-        protected IObjectMapper ObjectMapper => LazyLoader.GetRequiredService<IObjectMapper>();
-
-        protected IGuidGenerator GuidGenerator => LazyLoader.GetRequiredService<IGuidGenerator>();
-
-        protected ILoggerFactory LoggerFactory => LazyLoader.GetRequiredService<ILoggerFactory>();
-
-        protected IStringLocalizerFactory StringLocalizerFactory => LazyLoader.GetRequiredService<IStringLocalizerFactory>();
+        protected Type LocalizationResource
+        {
+            get => _localizationResource;
+            set
+            {
+                _localizationResource = value;
+                _localizer = null;
+            }
+        }
 
 
         /// <summary>
@@ -96,36 +125,13 @@ namespace Skywalker.Application.Services
             return localizer;
         }
 
-        protected IStringLocalizer L
-        {
-            get
-            {
-                if (_localizer == null)
-                {
-                    _localizer = CreateLocalizer();
-                }
-
-                return _localizer;
-            }
-        }
-
-        protected Type LocalizationResource
-        {
-            get => _localizationResource;
-            set
-            {
-                _localizationResource = value;
-                _localizer = null;
-            }
-        }
-
         public List<string> AppliedCrossCuttingConcerns { get; } = new List<string>();
 
         public static string[] CommonPostfixes { get; set; } = { "AppService", "ApplicationService", "Service" };
 
-        protected ApplicationService(ILazyLoader lazyLoader)
+        protected ApplicationService(IServiceProvider serviceProvider)
         {
-            LazyLoader = lazyLoader;
+            _serviceProvider = serviceProvider;
         }
 
     }

@@ -7,13 +7,13 @@ using System.Threading.Tasks;
 
 namespace Microsoft.AspNetCore.RequestLocalization
 {
-    public class AbpRequestLocalizationMiddleware : IMiddleware
+    public class SkywalkerRequestLocalizationMiddleware : IMiddleware
     {
-        private readonly IAbpRequestLocalizationOptionsProvider _requestLocalizationOptionsProvider;
+        private readonly ISkywalkerRequestLocalizationOptionsProvider _requestLocalizationOptionsProvider;
         private readonly ILoggerFactory _loggerFactory;
 
-        public AbpRequestLocalizationMiddleware(
-            IAbpRequestLocalizationOptionsProvider requestLocalizationOptionsProvider,
+        public SkywalkerRequestLocalizationMiddleware(
+            ISkywalkerRequestLocalizationOptionsProvider requestLocalizationOptionsProvider,
             ILoggerFactory loggerFactory)
         {
             _requestLocalizationOptionsProvider = requestLocalizationOptionsProvider;

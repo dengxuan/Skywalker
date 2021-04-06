@@ -5,15 +5,15 @@ using System.Threading.Tasks;
 
 namespace Microsoft.AspNetCore.RequestLocalization
 {
-    public class AbpRequestLocalizationOptionsManager : SkywalkerDynamicOptionsManager<RequestLocalizationOptions>
+    public class SkywalkerRequestLocalizationOptionsManager : SkywalkerDynamicOptionsManager<RequestLocalizationOptions>
     {
         private RequestLocalizationOptions _options;
 
-        private readonly IAbpRequestLocalizationOptionsProvider _abpRequestLocalizationOptionsProvider;
+        private readonly ISkywalkerRequestLocalizationOptionsProvider _abpRequestLocalizationOptionsProvider;
 
-        public AbpRequestLocalizationOptionsManager(
+        public SkywalkerRequestLocalizationOptionsManager(
             IOptionsFactory<RequestLocalizationOptions> factory,
-            IAbpRequestLocalizationOptionsProvider abpRequestLocalizationOptionsProvider)
+            ISkywalkerRequestLocalizationOptionsProvider abpRequestLocalizationOptionsProvider)
             : base(factory)
         {
             _abpRequestLocalizationOptionsProvider = abpRequestLocalizationOptionsProvider;

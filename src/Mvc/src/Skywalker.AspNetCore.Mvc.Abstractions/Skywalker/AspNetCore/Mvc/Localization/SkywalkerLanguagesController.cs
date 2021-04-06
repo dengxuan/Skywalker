@@ -1,18 +1,19 @@
-﻿using Microsoft.AspNetCore.Localization;
+﻿using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Localization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.RequestLocalization;
-using Skywalker;
 using Skywalker.Localization;
 using System;
 
-namespace Volo.Abp.AspNetCore.Mvc.Localization
+namespace Skywalker.AspNetCore.Mvc.Localization
 {
-    [Area("Abp")]
-    [Route("Abp/Languages/[action]")]
-    [ApiExplorerSettings(IgnoreApi = true)]
-    public class AbpLanguagesController : AbpController
+    [Area("skywalker")]
+    [Route("skywalker/languages/[action]")]
+    public class SkywalkerLanguagesController : SkywalkerController
     {
+
         [HttpGet]
+        [Route("switch")]
         public IActionResult Switch(string culture, string uiCulture = "", string returnUrl = "")
         {
             if (!CultureHelper.IsValidCultureCode(culture))
@@ -20,7 +21,7 @@ namespace Volo.Abp.AspNetCore.Mvc.Localization
                 throw new SkywalkerException("Unknown language: " + culture + ". It must be a valid culture!");
             }
 
-            AbpRequestCultureCookieHelper.SetCultureCookie(
+            SkywalkerRequestCultureCookieHelper.SetCultureCookie(
                 HttpContext,
                 new RequestCulture(culture, uiCulture)
             );
