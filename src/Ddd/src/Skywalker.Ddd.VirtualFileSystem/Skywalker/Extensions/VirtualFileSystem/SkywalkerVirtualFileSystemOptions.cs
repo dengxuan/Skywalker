@@ -1,10 +1,10 @@
 ﻿namespace Skywalker.VirtualFileSystem
 {
-    public class AbpVirtualFileSystemOptions
+    public class SkywalkerVirtualFileSystemOptions
     {
         public VirtualFileSetList FileSets { get; }
         
-        public AbpVirtualFileSystemOptions()
+        public SkywalkerVirtualFileSystemOptions()
         {
             FileSets = new VirtualFileSetList();
         }

@@ -8,7 +8,7 @@ using Skywalker.VirtualFileSystem.Embedded;
 
 namespace Microsoft.Extensions.FileProviders
 {
-    public static class AbpFileInfoExtensions
+    public static class SkywalkerFileInfoExtensions
     {
         /// <summary>
         /// Reads file content as string using <see cref="Encoding.UTF8"/> encoding.

@@ -51,7 +51,7 @@ namespace Skywalker.VirtualFileSystem
 
             if (info == null)
             {
-                return new AbpEmbeddedFileProvider(assembly, baseNamespace);
+                return new SkywalkerEmbeddedFileProvider(assembly, baseNamespace);
             }
 
             if (baseFolder == null)

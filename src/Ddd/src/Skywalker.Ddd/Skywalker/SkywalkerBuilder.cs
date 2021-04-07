@@ -6,7 +6,7 @@ namespace Skywalker
     {
         public IServiceCollection Services { get; }
 
-        internal SkywalkerBuilder(IServiceCollection services)
+        public SkywalkerBuilder(IServiceCollection services)
         {
             Services = services;
         }

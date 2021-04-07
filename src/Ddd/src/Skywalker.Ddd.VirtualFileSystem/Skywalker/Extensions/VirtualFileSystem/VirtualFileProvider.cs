@@ -10,10 +10,10 @@ namespace Skywalker.VirtualFileSystem
     public class VirtualFileProvider : IVirtualFileProvider, ISingletonDependency
     {
         private readonly IFileProvider _hybridFileProvider;
-        private readonly AbpVirtualFileSystemOptions _options;
+        private readonly SkywalkerVirtualFileSystemOptions _options;
 
         public VirtualFileProvider(
-            IOptions<AbpVirtualFileSystemOptions> options,
+            IOptions<SkywalkerVirtualFileSystemOptions> options,
             IDynamicFileProvider dynamicFileProvider)
         {
             _options = options.Value;

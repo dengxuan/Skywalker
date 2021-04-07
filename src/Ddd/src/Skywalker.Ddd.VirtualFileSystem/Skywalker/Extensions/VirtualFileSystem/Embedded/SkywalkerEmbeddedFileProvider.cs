@@ -8,7 +8,7 @@ using System.Reflection;
 
 namespace Skywalker.VirtualFileSystem.Embedded
 {
-    public class AbpEmbeddedFileProvider : DictionaryBasedFileProvider
+    public class SkywalkerEmbeddedFileProvider : DictionaryBasedFileProvider
     {
         [NotNull]
         public Assembly Assembly { get; }
@@ -19,7 +19,7 @@ namespace Skywalker.VirtualFileSystem.Embedded
         protected override IDictionary<string, IFileInfo> Files => _files.Value;
         private readonly Lazy<Dictionary<string, IFileInfo>> _files;
 
-        public AbpEmbeddedFileProvider(
+        public SkywalkerEmbeddedFileProvider(
             [NotNull] Assembly assembly, 
             [MaybeNull] string baseNamespace = null)
         {

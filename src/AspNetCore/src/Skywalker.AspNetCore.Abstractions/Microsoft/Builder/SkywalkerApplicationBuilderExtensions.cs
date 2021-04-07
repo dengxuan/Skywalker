@@ -33,7 +33,7 @@ namespace Microsoft.AspNetCore.Builder
                 .UseMiddleware<SkywalkerCorrelationIdMiddleware>();
         }
 
-        public static IApplicationBuilder UseAbpRequestLocalization(this IApplicationBuilder app,
+        public static IApplicationBuilder UseSkywalkerRequestLocalization(this IApplicationBuilder app,
             Action<RequestLocalizationOptions> optionsAction = null)
         {
             app.ApplicationServices
