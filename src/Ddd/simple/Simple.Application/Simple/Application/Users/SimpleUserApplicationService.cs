@@ -1,6 +1,7 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
 using Simple.Application.Abstractions;
 using Simple.Domain.Users;
+using Skywalker.Application.Services;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
@@ -8,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace Simple.Application
 {
-    public class SimpleUserApplicationService : SimpleApplicationService, ISimpleUserApplicationService
+    public class SimpleUserApplicationService : ApplicationService, ISimpleUserApplicationService
     {
         private IUserManager? userManager;
         private IUserManager UserManager => LazyGetRequiredService(ref userManager);

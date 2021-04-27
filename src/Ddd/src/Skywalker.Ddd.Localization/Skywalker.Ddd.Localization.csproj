@@ -12,7 +12,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\..\..\Extensions\src\Skywalker.Extensions.Universal\Skywalker.Extensions.Universal.csproj" />
-    <ProjectReference Include="..\Skywalker.Ddd.VirtualFileSystem\Skywalker.Ddd.VirtualFileSystem.csproj" />
+    <ProjectReference Include="..\..\..\Extensions\src\Skywalker.Extensions.VirtualFileSystem\Skywalker.Extensions.VirtualFileSystem.csproj" />
     <ProjectReference Include="..\Skywalker.Ddd.Localization.Abstractions\Skywalker.Ddd.Localization.Abstractions.csproj" />
   </ItemGroup>
 

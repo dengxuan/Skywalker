@@ -4,7 +4,7 @@
 //using Skywalker.Localization;
 //using Skywalker.Modularity;
 //using Skywalker.Validation.Localization;
-//using Skywalker.VirtualFileSystem;
+//using Skywalker.Extensions.VirtualFileSystem;
 
 //namespace Skywalker.Validation
 //{

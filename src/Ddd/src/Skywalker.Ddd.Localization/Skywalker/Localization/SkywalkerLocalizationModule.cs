@@ -1,7 +1,7 @@
 ﻿//using Skywalker.Localization.Resources.AbpLocalization;
 //using Skywalker.Modularity;
 //using Skywalker.Settings;
-//using Skywalker.VirtualFileSystem;
+//using Skywalker.Extensions.VirtualFileSystem;
 
 //namespace Skywalker.Localization
 //{
