@@ -95,7 +95,7 @@ namespace Skywalker
             return argument;
         }
 
-        public static int Positive(this int number, string argumentName)
+        public static int Positive(this int number, [NotNull] string argumentName)
         {
             if (number <= 0)
             {
@@ -104,11 +104,29 @@ namespace Skywalker
             return number;
         }
 
-        public static long Positive(this long number, string argumentName)
+        public static long Positive(this long number, [NotNull] string argumentName)
         {
             if (number <= 0)
             {
                 throw new ArgumentOutOfRangeException(argumentName, $"{argumentName} should be positive.");
+            }
+            return number;
+        }
+
+        public static decimal Positive(this decimal number, [NotNull] string argumentName)
+        {
+            if (number <= 0)
+            {
+                throw new ArgumentOutOfRangeException(argumentName, $"{argumentName} should be positive.");
+            }
+            return number;
+        }
+
+        public static int Nonnegative(this int number, [NotNull] string argumentName)
+        {
+            if (number < 0)
+            {
+                throw new ArgumentOutOfRangeException(argumentName, argumentName + " should be non negative.");
             }
             return number;
         }
@@ -122,7 +140,7 @@ namespace Skywalker
             return number;
         }
 
-        public static int Nonnegative(this int number, string argumentName)
+        public static decimal Nonnegative(this decimal number, [NotNull] string argumentName)
         {
             if (number < 0)
             {

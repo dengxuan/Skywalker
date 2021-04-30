@@ -1,6 +1,7 @@
 ﻿using Skywalker.Domain.Entities;
 using Skywalker.Transfer.Domain.Enumerations;
 using Skywalker.Transfer.Domain.Merchants;
+using Skywalker.Transfer.Domain.TradeUsers;
 using System;
 using System.Diagnostics.CodeAnalysis;
 
@@ -9,7 +10,7 @@ namespace Skywalker.Transfer.Domain.TradeOrders
     /// <summary>
     /// 交易订单
     /// </summary>
-    public class TradeOrder<TUser> : Entity<Guid> where TUser : class, IEntity
+    public class TradeOrder<TUser> : Entity<Guid> where TUser : class, ITrader
     {
         /// <summary>
         /// 订单所属商户

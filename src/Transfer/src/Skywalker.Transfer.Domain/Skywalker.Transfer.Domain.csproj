@@ -1,6 +1,9 @@
-<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk">
     <Import Project="..\..\..\..\skywalker.props" />
     <Import Project="..\..\..\..\version.props" />
+    <PropertyGroup>
+      <AppDesignerFolder>Properties</AppDesignerFolder>
+    </PropertyGroup>
     <ItemGroup>
       <ProjectReference Include="..\..\..\Ddd\src\Skywalker.Ddd.Domain.Abstractions\Skywalker.Ddd.Domain.Abstractions.csproj" />
       <ProjectReference Include="..\Skywalker.Transfer.Domain.Shared\Skywalker.Transfer.Domain.Shared.csproj" />

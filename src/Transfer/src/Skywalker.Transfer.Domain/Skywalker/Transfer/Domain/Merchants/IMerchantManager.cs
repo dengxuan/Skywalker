@@ -1,15 +1,13 @@
-﻿using Skywalker.Domain.Services;
-using Skywalker.Domain.Entities;
+﻿using Skywalker.Domain.Entities;
+using Skywalker.Domain.Services;
 using Skywalker.Transfer.Domain.Enumerations;
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 
 namespace Skywalker.Transfer.Domain.Merchants
 {
-    public interface IMerchantManager : IDomainService
+    public interface IMerchantManager : IDomainService<Merchant>
     {
         /// <summary>
         /// 创建商户,
@@ -28,26 +26,12 @@ namespace Skywalker.Transfer.Domain.Merchants
         Task<Merchant> CreateAsync(string scheme, string name, string description, string key, string cipherKey, string address, string notifyAddress, MerchantTypes merchantType = MerchantTypes.Entire);
 
         /// <summary>
-        /// 根据Id查询商户,若不存在，则抛出异常<see cref="EntityNotFoundException"/>
-        /// </summary>
-        /// <param name="id">主键</param>
-        /// <returns>商户<see cref="Merchant"/></returns>
-        Task<Merchant> GetAsync(Guid id);
-
-        /// <summary>
-        /// 根据Id查询商户，不存在时返回null
-        /// </summary>
-        /// <param name="id">主键</param>
-        /// <returns>商户<see cref="Merchant"/></returns>
-        Task<Merchant?> FindAsync(Guid id);
-
-        /// <summary>
         /// 通过商户标识查询商户列表
         /// </summary>
         /// <param name="scheme">商户标识</param>
         /// <exception cref="ArgumentNullException">scheme为空时抛出</exception>
         /// <returns>与此标识相关的所有商户<see cref="Merchant"/></returns>
-        Task<IList<Merchant>> FindAsync(string scheme);
+        Task<List<Merchant>> FindAsync(string scheme);
 
         /// <summary>
         /// 通过商户类型查询商户列表
@@ -55,7 +39,7 @@ namespace Skywalker.Transfer.Domain.Merchants
         /// <param name="scheme">商户标识</param>
         /// <exception cref="ArgumentNullException">scheme为空时抛出</exception>
         /// <returns>与此标识相关的所有商户<see cref="Merchant"/></returns>
-        Task<IList<Merchant>> FindAsync(MerchantTypes merchantType);
+        Task<List<Merchant>> FindAsync(MerchantTypes merchantType);
 
         /// <summary>
         /// 更新商户信息

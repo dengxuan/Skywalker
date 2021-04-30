@@ -1,11 +1,9 @@
 ﻿using Skywalker.Domain.Entities;
 using Skywalker.Transfer.Domain.Enumerations;
 using Skywalker.Transfer.Domain.TradeOrders;
+using Skywalker.Transfer.Domain.TradeUsers;
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Skywalker.Transfer.Domain.Merchants
 {
@@ -57,7 +55,14 @@ namespace Skywalker.Transfer.Domain.Merchants
         /// <summary>
         /// 商户交易订单
         /// </summary>
-        public ICollection<TradeOrder<Entity>> TradeOrders { get; set; }
+        public ICollection<TradeOrder<ITrader>> TradeOrders { get; set; }
+
+        /// <summary>
+        /// Just for ORM and ObjectMapper
+        /// </summary>
+#pragma warning disable CS8618 // Non-nullable field must contain a non-null value when exiting constructor. Consider declaring as nullable.
+        private Merchant() { }
+#pragma warning restore CS8618 // Non-nullable field must contain a non-null value when exiting constructor. Consider declaring as nullable.
 
         /// <summary>
         /// 构造一个商户
@@ -70,9 +75,8 @@ namespace Skywalker.Transfer.Domain.Merchants
         /// <param name="cipherKey">商户密钥，可为空</param>
         /// <param name="address">商户下单地址</param>
         /// <param name="notifyAddress">商户通知(回调)地址</param>
-        internal Merchant(Guid id, string scheme, string name, string description, string key, string cipherKey, string address, string notifyAddress, MerchantTypes merchantType = MerchantTypes.Entire)
+        internal Merchant(string scheme, string name, string description, string key, string cipherKey, string address, string notifyAddress, MerchantTypes merchantType = MerchantTypes.Entire)
         {
-            Id = id;
             Scheme = scheme.NotNullOrEmpty(nameof(scheme));
             Name = name.NotNullOrEmpty(nameof(name));
             Description = description;
@@ -81,7 +85,24 @@ namespace Skywalker.Transfer.Domain.Merchants
             Address = address.NotNullOrEmpty(nameof(address));
             NotifyAddress = notifyAddress.NotNullOrEmpty(notifyAddress);
             MerchantType = merchantType;
-            TradeOrders = new List<TradeOrder<Entity>>();
+            TradeOrders = new List<TradeOrder<ITrader>>();
+        }
+
+        /// <summary>
+        /// 构造一个商户
+        /// </summary>
+        /// <param name="id">Id <see cref="Entity{TKey}.Id"/></param>
+        /// <param name="scheme">商户标识</param>
+        /// <param name="name">商户名称</param>
+        /// <param name="description">商户描述</param>
+        /// <param name="key">商户Key，可为空</param>
+        /// <param name="cipherKey">商户密钥，可为空</param>
+        /// <param name="address">商户下单地址</param>
+        /// <param name="notifyAddress">商户通知(回调)地址</param>
+        internal Merchant(Guid id, string scheme, string name, string description, string key, string cipherKey, string address, string notifyAddress, MerchantTypes merchantType = MerchantTypes.Entire) :
+            this(scheme, name, description, key, cipherKey, address, notifyAddress, merchantType)
+        {
+            Id = id;
         }
     }
 }

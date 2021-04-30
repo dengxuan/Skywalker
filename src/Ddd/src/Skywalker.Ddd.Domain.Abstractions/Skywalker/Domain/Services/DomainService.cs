@@ -1,6 +1,8 @@
 using Skywalker.Caching.Abstractions;
 using Skywalker.Domain.Entities;
 using Skywalker.Domain.Repositories;
+using System;
+using System.Threading.Tasks;
 
 namespace Skywalker.Domain.Services
 {
@@ -8,26 +10,37 @@ namespace Skywalker.Domain.Services
     {
         protected ICachingProvider CachingProvider { get; }
 
-        protected IRepository Repository { get; }
-
-        protected DomainService(IRepository repository, ICachingProvider cachingProvider)
+        protected DomainService(ICachingProvider cachingProvider)
         {
-            Repository = repository;
             CachingProvider = cachingProvider;
         }
     }
 
-    public abstract class DomainService<TEntity> : DomainService, IDomainService<TEntity> where TEntity : class, IEntity
+    public abstract class DomainService<TEntity> : DomainService<TEntity, Guid>, IDomainService<TEntity, Guid> where TEntity : class, IEntity<Guid>
     {
-        protected DomainService(IRepository repository, ICachingProvider cachingProvider) : base(repository, cachingProvider)
+        protected DomainService(IRepository<TEntity, Guid> repository, ICachingProvider cachingProvider) : base(repository, cachingProvider)
         {
         }
     }
 
-    public abstract class DomainService<TEntity, TKey> : DomainService<TEntity> where TEntity : class, IEntity<TKey>
+    public abstract class DomainService<TEntity, TKey> : DomainService where TEntity : class, IEntity<TKey>
     {
-        protected DomainService(IRepository repository, ICachingProvider cachingProvider) : base(repository, cachingProvider)
+
+        protected IRepository<TEntity, TKey> Repository { get; }
+
+        protected DomainService(IRepository<TEntity, TKey> repository, ICachingProvider cachingProvider) : base(cachingProvider)
         {
+            Repository = repository;
+        }
+
+        public Task<TEntity> GetAsync(TKey id)
+        {
+            return Repository.GetAsync(predicate => predicate.Id!.Equals(id));
+        }
+
+        public Task<TEntity?> FindAsync(TKey id)
+        {
+            return Repository.FindAsync(predicate => predicate.Id!.Equals(id));
         }
     }
 }
