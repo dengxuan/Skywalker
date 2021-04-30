@@ -10,21 +10,16 @@ namespace Skywalker.Transfer.Domain.TradeUsers
 {
     public class Trader : AggregateRoot<Guid>, ITrader
     {
+        ///<inheritdoc/>
         public decimal Balance { get; set; }
 
-        /// <summary>
-        /// 资金类型
-        /// </summary>
+        ///<inheritdoc/>
         public TraderTypes TraderType { get; set; }
 
-        /// <summary>
-        /// 交易订单
-        /// </summary>
+        ///<inheritdoc/>
         public ICollection<TradeOrder<ITrader>> TradeOrders { get; set; }
 
-        /// <summary>
-        /// 转账明细
-        /// </summary>
+        ///<inheritdoc/>
         public ICollection<TransferDetails> TransferDetails { get; set; }
 
         ///<inheritdoc/>
@@ -37,8 +32,8 @@ namespace Skywalker.Transfer.Domain.TradeUsers
         ///<inheritdoc/>
         internal Trader(ICollection<TradeOrder<ITrader>>? tradeOrders = null, ICollection<TransferDetails>? transferDetails = null)
         {
-            TradeOrders = tradeOrders?? new List<TradeOrder<ITrader>>();
-            TransferDetails = transferDetails ??  new List<TransferDetails>();
+            TradeOrders = tradeOrders ?? new List<TradeOrder<ITrader>>();
+            TransferDetails = transferDetails ?? new List<TransferDetails>();
         }
 
         ///<inheritdoc/>
@@ -56,7 +51,7 @@ namespace Skywalker.Transfer.Domain.TradeUsers
                     TransferTypes.Withdraw or TransferTypes.Payment or TransferTypes.Out => Balance - amount.Positive(nameof(amount)),
                     _ => amount.Positive(nameof(amount)),
                 };
-                TransferDetails.Add(new TransferDetails(transferType, amount, Balance, message));
+                TransferDetails.Add(new TransferDetails(this, transferType, amount, Balance, message));
                 return Balance;
             });
         }

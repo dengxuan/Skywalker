@@ -1,5 +1,6 @@
 ﻿using Skywalker.Domain.Entities;
 using Skywalker.Transfer.Domain.Enumerations;
+using Skywalker.Transfer.Domain.TradeOrders;
 using Skywalker.Transfer.Domain.UserFundings;
 using System;
 using System.Collections.Generic;
@@ -18,6 +19,11 @@ namespace Skywalker.Transfer.Domain.TradeUsers
         /// 交易账户状态
         /// </summary>
         TraderTypes TraderType { get; set; }
+
+        /// <summary>
+        /// 交易订单
+        /// </summary>
+        ICollection<TradeOrder<ITrader>> TradeOrders { get; set; }
 
         /// <summary>
         /// 转账明细
