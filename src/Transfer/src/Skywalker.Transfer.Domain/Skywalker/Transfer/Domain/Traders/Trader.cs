@@ -1,39 +1,47 @@
 ﻿using Skywalker.Domain.Entities;
 using Skywalker.Transfer.Domain.Enumerations;
 using Skywalker.Transfer.Domain.TradeOrders;
-using Skywalker.Transfer.Domain.UserFundings;
+using Skywalker.Transfer.Domain.TransferDetails;
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
 namespace Skywalker.Transfer.Domain.TradeUsers
 {
-    public class Trader : AggregateRoot<Guid>, ITrader
+    public class Trader : AggregateRoot<Guid>
     {
-        ///<inheritdoc/>
+        /// <summary>
+        /// 余额
+        /// </summary>
         public decimal Balance { get; set; }
 
-        ///<inheritdoc/>
+        /// <summary>
+        /// 交易账户状态
+        /// </summary>
         public TraderTypes TraderType { get; set; }
 
-        ///<inheritdoc/>
-        public ICollection<TradeOrder<ITrader>> TradeOrders { get; set; }
+        /// <summary>
+        /// 交易订单
+        /// </summary>
+        public ICollection<TradeOrder> TradeOrders { get; set; }
 
-        ///<inheritdoc/>
-        public ICollection<TransferDetails> TransferDetails { get; set; }
+        /// <summary>
+        /// 转账明细
+        /// </summary>
+        public ICollection<TransferDetails.TransferDetail> TransferDetails { get; set; }
 
         ///<inheritdoc/>
         internal Trader()
         {
-            TradeOrders = new List<TradeOrder<ITrader>>();
-            TransferDetails = new List<TransferDetails>();
+            TradeOrders = new List<TradeOrder>();
+            TransferDetails = new List<TransferDetails.TransferDetail>();
         }
 
         ///<inheritdoc/>
-        internal Trader(ICollection<TradeOrder<ITrader>>? tradeOrders = null, ICollection<TransferDetails>? transferDetails = null)
+        internal Trader(ICollection<TradeOrder>? tradeOrders = null, ICollection<TransferDetails.TransferDetail>? transferDetails = null)
         {
-            TradeOrders = tradeOrders ?? new List<TradeOrder<ITrader>>();
-            TransferDetails = transferDetails ?? new List<TransferDetails>();
+            TradeOrders = tradeOrders ?? new List<TradeOrder>();
+            TransferDetails = transferDetails ?? new List<TransferDetails.TransferDetail>();
         }
 
         ///<inheritdoc/>
@@ -51,7 +59,7 @@ namespace Skywalker.Transfer.Domain.TradeUsers
                     TransferTypes.Withdraw or TransferTypes.Payment or TransferTypes.Out => Balance - amount.Positive(nameof(amount)),
                     _ => amount.Positive(nameof(amount)),
                 };
-                TransferDetails.Add(new TransferDetails(this, transferType, amount, Balance, message));
+                TransferDetails.Add(new TransferDetails.TransferDetail(this, transferType, amount, Balance, message));
                 return Balance;
             });
         }

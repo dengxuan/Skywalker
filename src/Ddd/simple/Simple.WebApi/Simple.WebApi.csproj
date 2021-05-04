@@ -4,6 +4,7 @@
     
     <ItemGroup>
       <ProjectReference Include="..\..\..\Mvc\src\Skywalker.AspNetCore.Mvc.Abstractions\Skywalker.AspNetCore.Mvc.Abstractions.csproj" />
+      <ProjectReference Include="..\..\src\Skywalker.Ddd.Queries.Abstractions\Skywalker.Ddd.Queries.Abstractions.csproj" />
       <ProjectReference Include="..\Simple.Application.Abstractions\Simple.Application.Abstractions.csproj" />
     </ItemGroup>
 

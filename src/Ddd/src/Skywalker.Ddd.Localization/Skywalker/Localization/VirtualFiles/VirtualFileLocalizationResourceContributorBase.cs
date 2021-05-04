@@ -15,7 +15,7 @@ namespace Skywalker.Localization.VirtualFiles
         private IVirtualFileProvider _virtualFileProvider;
         private Dictionary<string, ILocalizationDictionary> _dictionaries;
         private bool _subscribedForChanges;
-        private readonly object _syncObj = new object();
+        private readonly object _locker = new();
 
         protected VirtualFileLocalizationResourceContributorBase(string virtualPath)
         {
@@ -45,7 +45,7 @@ namespace Skywalker.Localization.VirtualFiles
                 return dictionaries;
             }
 
-            lock (_syncObj)
+            lock (_locker)
             {
                 dictionaries = _dictionaries;
                 if (dictionaries != null)

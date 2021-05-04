@@ -12,8 +12,7 @@ namespace Skywalker.EventBus
         /// <typeparam name="TEvent">Event type</typeparam>
         /// <param name="eventData">Related data for the event</param>
         /// <returns>The task to handle async operation</returns>
-        Task PublishAsync<TEvent>(TEvent eventData)
-            where TEvent : class;
+        Task PublishAsync<TEvent>(TEvent eventData) where TEvent : class;
 
         /// <summary>
         /// Triggers an event.
@@ -21,7 +20,7 @@ namespace Skywalker.EventBus
         /// <param name="eventType">Event type</param>
         /// <param name="eventData">Related data for the event</param>
         /// <returns>The task to handle async operation</returns>
-        Task PublishAsync(Type eventType, object eventData);
+        Task PublishAsync(Type eventType, object? eventData);
 
         /// <summary>
         /// Registers to an event.
@@ -29,8 +28,7 @@ namespace Skywalker.EventBus
         /// </summary>
         /// <param name="action">Action to handle events</param>
         /// <typeparam name="TEvent">Event type</typeparam>
-        IDisposable Subscribe<TEvent>(Func<TEvent, Task> action)
-            where TEvent : class;
+        IDisposable Subscribe<TEvent>(Func<TEvent, Task> action) where TEvent : class;
 
         /// <summary>
         /// Registers to an event.
@@ -38,9 +36,7 @@ namespace Skywalker.EventBus
         /// </summary>
         /// <typeparam name="TEvent">Event type</typeparam>
         /// <typeparam name="THandler">Type of the event handler</typeparam>
-        IDisposable Subscribe<TEvent, THandler>()
-            where TEvent : class
-            where THandler : IEventHandler, new();
+        IDisposable Subscribe<TEvent, THandler>() where TEvent : class where THandler : IEventHandler, new();
 
         /// <summary>
         /// Registers to an event.
@@ -56,8 +52,7 @@ namespace Skywalker.EventBus
         /// </summary>
         /// <typeparam name="TEvent">Event type</typeparam>
         /// <param name="factory">A factory to create/release handlers</param>
-        IDisposable Subscribe<TEvent>(IEventHandlerFactory factory)
-            where TEvent : class;
+        IDisposable Subscribe<TEvent>(IEventHandlerFactory factory) where TEvent : class;
 
         /// <summary>
         /// Registers to an event.
@@ -72,24 +67,21 @@ namespace Skywalker.EventBus
         /// </summary>
         /// <typeparam name="TEvent">Event type</typeparam>
         /// <param name="handler">Object to handle the event</param>
-        IDisposable Subscribe<TEvent>(IEventHandler<TEvent> handler)
-            where TEvent : class;
+        IDisposable Subscribe<TEvent>(IEventHandler<TEvent> handler) where TEvent : class;
 
         /// <summary>
         /// Unregisters from an event.
         /// </summary>
         /// <typeparam name="TEvent">Event type</typeparam>
         /// <param name="action"></param>
-        void Unsubscribe<TEvent>(Func<TEvent, Task> action)
-            where TEvent : class;
+        void Unsubscribe<TEvent>(Func<TEvent, Task> action) where TEvent : class;
 
         /// <summary>
         /// Unregisters from an event.
         /// </summary>
         /// <typeparam name="TEvent">Event type</typeparam>
         /// <param name="handler">Handler object that is registered before</param>
-        void Unsubscribe<TEvent>(IEventHandler<TEvent> handler)
-            where TEvent : class;
+        void Unsubscribe<TEvent>(IEventHandler<TEvent> handler) where TEvent : class;
 
         /// <summary>
         /// Unregisters from an event.
@@ -103,8 +95,7 @@ namespace Skywalker.EventBus
         /// </summary>
         /// <typeparam name="TEvent">Event type</typeparam>
         /// <param name="factory">Factory object that is registered before</param>
-        void Unsubscribe<TEvent>(IEventHandlerFactory factory)
-            where TEvent : class;
+        void Unsubscribe<TEvent>(IEventHandlerFactory factory) where TEvent : class;
 
         /// <summary>
         /// Unregisters from an event.
@@ -117,8 +108,7 @@ namespace Skywalker.EventBus
         /// Unregisters all event handlers of given event type.
         /// </summary>
         /// <typeparam name="TEvent">Event type</typeparam>
-        void UnsubscribeAll<TEvent>()
-            where TEvent : class;
+        void UnsubscribeAll<TEvent>() where TEvent : class;
 
         /// <summary>
         /// Unregisters all event handlers of given event type.

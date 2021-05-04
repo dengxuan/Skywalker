@@ -10,7 +10,7 @@ namespace Skywalker.IdentityServer.Domain.DeviceAuthorizations
     {
         private readonly IRepository<DeviceAuthorization> _deviceAuthorizations;
 
-        public DeviceAuthorizationManager(IRepository<DeviceAuthorization> deviceAuthorizations, ICachingProvider cachingProvider) : base(deviceAuthorizations,cachingProvider)
+        public DeviceAuthorizationManager(IRepository<DeviceAuthorization> deviceAuthorizations)
         {
             _deviceAuthorizations = deviceAuthorizations;
         }

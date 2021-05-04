@@ -10,7 +10,6 @@ namespace Skywalker.Domain.Services
     /// </summary>
     public interface IDomainService : ITransientDependency
     {
-
     }
 
     /// <summary>

@@ -1,25 +1,25 @@
-﻿using AutoMapper;
-using Microsoft.Extensions.DependencyInjection.Extensions;
-using Microsoft.Extensions.Options;
-using Skywalker;
-using Skywalker.Ddd.ObjectMapping.AutoMapper;
+﻿using Microsoft.Extensions.DependencyInjection.Extensions;
 using Skywalker.Ddd.ObjectMapping;
+using Skywalker.Ddd.ObjectMapping.AutoMapper;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Microsoft.Extensions.DependencyInjection
 {
     public static class AutoMapperSkywalkerBuilderExtensions
     {
-        public static SkywalkerBuilder AddAutoMapper(this SkywalkerBuilder builder, Action<SkywalkerAutoMapperOptions> optionsBuilder)
+        public static IServiceCollection AddAutoMapper(this IServiceCollection services, Action<SkywalkerAutoMapperOptions> optionsBuilder)
         {
-            builder.Services.Configure(optionsBuilder);
-            builder.Services.TryAddSingleton(SkywalkerAutoMapperOptionsFactory.Create);
+            services.Configure(optionsBuilder);
+            services.AddTransient<IObjectMapper, DefaultObjectMapper>();
+            services.AddTransient(typeof(IObjectMapper<>), typeof(DefaultObjectMapper<>));
+            services.TryAddSingleton<IAutoObjectMappingProvider, AutoMapperAutoObjectMappingProvider>();
+            services.TryAddSingleton(typeof(IAutoObjectMappingProvider<>), typeof(AutoMapperAutoObjectMappingProvider<>));
 
-            return builder;
+            services.AddSingleton<IMapperAccessor, MapperAccessor>();
+
+            services.TryAddSingleton(SkywalkerAutoMapperOptionsFactory.Create);
+
+            return services;
         }
     }
 }

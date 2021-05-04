@@ -11,7 +11,7 @@ namespace Skywalker.Ddd.ObjectMapping
         }
     }
 
-    public class DefaultObjectMapper : IObjectMapper, IServiceProviderAccessor, ITransientDependency
+    public class DefaultObjectMapper : IObjectMapper
     {
         public IAutoObjectMappingProvider AutoObjectMappingProvider { get; }
 
@@ -53,7 +53,7 @@ namespace Skywalker.Ddd.ObjectMapping
                     //TODO: Check if TDestination has a proper constructor which takes TSource
                     //TODO: Check if TDestination has an empty constructor (in this case, use MapFrom)
 
-                    return (TDestination)Activator.CreateInstance(typeof(TDestination), source);
+                    return (TDestination?)Activator.CreateInstance(typeof(TDestination), source);
                 }
                 catch
                 {

@@ -1,6 +1,4 @@
 ﻿using Skywalker;
-using Skywalker.Ddd.Queries;
-using Skywalker.Ddd.Queries.Abstractions;
 using System;
 
 namespace Microsoft.Extensions.DependencyInjection
@@ -13,30 +11,13 @@ namespace Microsoft.Extensions.DependencyInjection
             services.AddSingleton(typeof(IObjectAccessor<>),typeof(ObjectAccessor<>));
             services.AddGuidGenerator();
             services.AddTiming();
-            services.AddQueries();
+            //services.AddCommands();
+            //services.AddQueries();
             AddTransientServices(services);
             AddSingletonServices(services);
             AddScopedServices(services);
             SkywalkerBuilder builder = new SkywalkerBuilder(services);
             buildAction?.Invoke(builder);
-            return services;
-        }
-
-        public static IServiceCollection AddQueries(this IServiceCollection services)
-        {
-            services.AddScoped<ISearcher, DefaultSearcher>();
-            services.AddScoped(typeof(IQueryHandlerProvider<>), typeof(DefaultQueryHandlerProvider<>));
-            services.AddScoped(typeof(IQueryHandlerProvider<,>), typeof(DefaultQueryHandlerProvider<,>));
-            services.Scan(scanner =>
-            {
-                scanner.FromApplicationDependencies()
-                       .AddClasses(filter =>
-                       {
-                           filter.AssignableTo(typeof(IQueryHandler<,>));
-                       })
-                       .AsImplementedInterfaces()
-                       .WithScopedLifetime();
-            });
             return services;
         }
 

@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Skywalker.Transfer.Domain.UserFundings
+namespace Skywalker.Transfer.Domain.TransferDetails
 {
     public class InsufficientBalanceException : SkywalkerException
     {

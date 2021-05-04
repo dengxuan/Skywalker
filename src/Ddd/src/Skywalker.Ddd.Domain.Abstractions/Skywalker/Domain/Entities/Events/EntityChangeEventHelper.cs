@@ -245,11 +245,7 @@ namespace Skywalker.Domain.Entities.Events
 
             if (triggerInCurrentUnitOfWork)
             {
-                await eventPublisher.PublishAsync(
-                    eventType,
-                    Activator.CreateInstance(eventType, entityOrEto)
-                );
-
+                await eventPublisher.PublishAsync(eventType, Activator.CreateInstance(eventType, entityOrEto));
                 return;
             }
 
@@ -267,77 +263,74 @@ namespace Skywalker.Domain.Entities.Events
                 {
                     try
                     {
-                        await eventPublisher.PublishAsync(
-                            eventEntry.EventType,
-                            Activator.CreateInstance(eventEntry.EventType, eventEntry.EntityOrEto)
-                        );
+                        await eventPublisher.PublishAsync(eventEntry.EventType, Activator.CreateInstance(eventEntry.EventType, eventEntry.EntityOrEto));
                     }
                     catch (Exception ex)
                     {
                         Logger.LogError(ex, $"Caught an exception while publishing the event '{eventType.FullName}' for the entity '{entityOrEto}'");
                     }
                 }
+            }
         }
-    }
 
-    private EntityChangeEventList GetEventList()
-    {
+        private EntityChangeEventList GetEventList()
+        {
             return new EntityChangeEventList();
-    }
+        }
 
-    private class EntityChangeEventList : List<EntityChangeEventEntry>
-    {
-        public void AddUniqueEvent(IEventBus eventBus, Type eventType, object entityOrEto, object originalEntity)
+        private class EntityChangeEventList : List<EntityChangeEventEntry>
         {
-            var newEntry = new EntityChangeEventEntry(eventBus, eventType, entityOrEto, originalEntity);
-
-            //Latest "same" event overrides the previous events.
-            for (var i = 0; i < Count; i++)
+            public void AddUniqueEvent(IEventBus eventBus, Type eventType, object entityOrEto, object originalEntity)
             {
-                if (this[i].IsSameEvent(newEntry))
+                var newEntry = new EntityChangeEventEntry(eventBus, eventType, entityOrEto, originalEntity);
+
+                //Latest "same" event overrides the previous events.
+                for (var i = 0; i < Count; i++)
                 {
-                    this[i] = newEntry;
-                    return;
+                    if (this[i].IsSameEvent(newEntry))
+                    {
+                        this[i] = newEntry;
+                        return;
+                    }
                 }
+
+                //If this is a "new" event, add to the end
+                Add(newEntry);
+            }
+        }
+
+        private class EntityChangeEventEntry
+        {
+            public IEventBus EventBus { get; }
+
+            public Type EventType { get; }
+
+            public object EntityOrEto { get; }
+
+            public object OriginalEntity { get; }
+
+            public EntityChangeEventEntry(IEventBus eventBus, Type eventType, object entityOrEto, object originalEntity)
+            {
+                EventType = eventType;
+                EntityOrEto = entityOrEto;
+                OriginalEntity = originalEntity;
+                EventBus = eventBus;
             }
 
-            //If this is a "new" event, add to the end
-            Add(newEntry);
+            public bool IsSameEvent(EntityChangeEventEntry otherEntry)
+            {
+                if (EventBus != otherEntry.EventBus || EventType != otherEntry.EventType)
+                {
+                    return false;
+                }
+
+                if (OriginalEntity is not IEntity originalEntityRef || otherEntry.OriginalEntity is not IEntity otherOriginalEntityRef)
+                {
+                    return false;
+                }
+
+                return EntityHelper.EntityEquals(originalEntityRef, otherOriginalEntityRef);
+            }
         }
     }
-
-    private class EntityChangeEventEntry
-    {
-        public IEventBus EventBus { get; }
-
-        public Type EventType { get; }
-
-        public object EntityOrEto { get; }
-
-        public object OriginalEntity { get; }
-
-        public EntityChangeEventEntry(IEventBus eventBus, Type eventType, object entityOrEto, object originalEntity)
-        {
-            EventType = eventType;
-            EntityOrEto = entityOrEto;
-            OriginalEntity = originalEntity;
-            EventBus = eventBus;
-        }
-
-        public bool IsSameEvent(EntityChangeEventEntry otherEntry)
-        {
-            if (EventBus != otherEntry.EventBus || EventType != otherEntry.EventType)
-            {
-                return false;
-            }
-
-            if (!(OriginalEntity is IEntity originalEntityRef) || !(otherEntry.OriginalEntity is IEntity otherOriginalEntityRef))
-            {
-                return false;
-            }
-
-            return EntityHelper.EntityEquals(originalEntityRef, otherOriginalEntityRef);
-        }
-    }
-}
 }

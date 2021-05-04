@@ -1,14 +1,8 @@
-﻿using Simple.Application.Abstractions;
-using Skywalker.Ddd.Queries.Abstractions;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using Skywalker.Application.Dtos.Contracts;
 
 namespace Simple.Application.Users
 {
-    public class UserQuery : IQuery<List<UserDto>>
+    public class UserQuery : IEntityDto
     {
         public string? Name { get; set; }
     }

@@ -4,6 +4,7 @@ using Skywalker.Transfer.Domain.TradeOrders;
 using Skywalker.Transfer.Domain.TradeUsers;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 
 namespace Skywalker.Transfer.Domain.Merchants
 {
@@ -15,37 +16,38 @@ namespace Skywalker.Transfer.Domain.Merchants
         /// <summary>
         /// 商户标识
         /// </summary>
+        [MaxLength(TransferConsts.Validations.MaxMerchantSchemeLength)]
         public string Scheme { get; set; }
 
         /// <summary>
-        /// 商户Key
+        /// 商户号
         /// </summary>
-        public string Key { get; set; }
+        [MaxLength(TransferConsts.Validations.MaxMerchantNumberLength)]
+        public string Number { get; set; }
 
         /// <summary>
         /// 名称
         /// </summary>
+        [MaxLength(TransferConsts.Validations.MaxMerchantNameLength)]
         public string Name { get; set; }
 
         /// <summary>
         /// 描述
         /// </summary>
+        [MaxLength(TransferConsts.Validations.MaxMerchantDescriptionLength)]
         public string Description { get; set; }
 
         /// <summary>
         /// 商户密钥
         /// </summary>
+        [MaxLength(TransferConsts.Validations.MaxMerchantCipherKeyLength)]
         public string CipherKey { get; set; }
 
         /// <summary>
         /// 下单地址
         /// </summary>
+        [MaxLength(TransferConsts.Validations.MaxMerchantAddressLength)]
         public string Address { get; set; }
-
-        /// <summary>
-        /// 通知地址
-        /// </summary>
-        public string NotifyAddress { get; set; }
 
         /// <summary>
         /// 渠道类型 <see cref="MerchantTypes"/>
@@ -55,7 +57,7 @@ namespace Skywalker.Transfer.Domain.Merchants
         /// <summary>
         /// 商户交易订单
         /// </summary>
-        public ICollection<TradeOrder<ITrader>> TradeOrders { get; set; }
+        public ICollection<TradeOrder> TradeOrders { get; set; }
 
         /// <summary>
         /// Just for ORM and ObjectMapper
@@ -74,18 +76,16 @@ namespace Skywalker.Transfer.Domain.Merchants
         /// <param name="key">商户Key，可为空</param>
         /// <param name="cipherKey">商户密钥，可为空</param>
         /// <param name="address">商户下单地址</param>
-        /// <param name="notifyAddress">商户通知(回调)地址</param>
-        internal Merchant(string scheme, string name, string description, string key, string cipherKey, string address, string notifyAddress, MerchantTypes merchantType = MerchantTypes.Entire)
+        internal Merchant(string scheme, string name, string description, string key, string cipherKey, string address, MerchantTypes merchantType = MerchantTypes.Entire)
         {
             Scheme = scheme.NotNullOrEmpty(nameof(scheme));
             Name = name.NotNullOrEmpty(nameof(name));
             Description = description;
-            Key = key;
+            Number = key;
             CipherKey = cipherKey;
             Address = address.NotNullOrEmpty(nameof(address));
-            NotifyAddress = notifyAddress.NotNullOrEmpty(notifyAddress);
             MerchantType = merchantType;
-            TradeOrders = new List<TradeOrder<ITrader>>();
+            TradeOrders = new List<TradeOrder>();
         }
 
         /// <summary>
@@ -98,9 +98,8 @@ namespace Skywalker.Transfer.Domain.Merchants
         /// <param name="key">商户Key，可为空</param>
         /// <param name="cipherKey">商户密钥，可为空</param>
         /// <param name="address">商户下单地址</param>
-        /// <param name="notifyAddress">商户通知(回调)地址</param>
-        internal Merchant(Guid id, string scheme, string name, string description, string key, string cipherKey, string address, string notifyAddress, MerchantTypes merchantType = MerchantTypes.Entire) :
-            this(scheme, name, description, key, cipherKey, address, notifyAddress, merchantType)
+        internal Merchant(Guid id, string scheme, string name, string description, string key, string cipherKey, string address, MerchantTypes merchantType = MerchantTypes.Entire) :
+            this(scheme, name, description, key, cipherKey, address, merchantType)
         {
             Id = id;
         }

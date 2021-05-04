@@ -15,7 +15,7 @@ namespace Simple.Domain.Users
     {
         private readonly IRepository<User, Guid> _users;
 
-        public UserManager(IRepository<User, Guid> users, ICachingProvider cachingProvider) : base(users, cachingProvider)
+        public UserManager(IRepository<User, Guid> users)
         {
             _users = users;
         }
@@ -35,8 +35,6 @@ namespace Simple.Domain.Users
 
         public async Task<User> CreateUser(string name)
         {
-            ICaching caching = CachingProvider.GetCaching(name);
-            caching.Get(name);
             User user = await _users.InsertAsync(new User { Name = name });
             return user;
         }
@@ -49,7 +47,7 @@ namespace Simple.Domain.Users
 
         public async Task<List<User>> BatchCreateUser(string name, int count)
         {
-            List<User> users = new List<User>();
+            List<User> users = new();
             for (int i = 0; i < count; i++)
             {
                 users.Add(new User { Name = name });

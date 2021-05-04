@@ -35,15 +35,15 @@ namespace Simple.WebApi.Hosting
             {
                 options.LowercaseUrls = true;
             });
+            services.AddAutoMapper(options =>
+            {
+                options.AddProfile<SimpleApplicationAutoMapperProfile>();
+            });
             services.AddSkywalker(skywalker =>
             {
                 skywalker.AddEntityFrameworkCore<SimpleDbContext>(options =>
                 {
                     options.UseMySql();
-                });
-                skywalker.AddAutoMapper(options =>
-                {
-                    options.AddProfile<SimpleApplicationAutoMapperProfile>();
                 });
                 skywalker.AddAspNetCore();
             });

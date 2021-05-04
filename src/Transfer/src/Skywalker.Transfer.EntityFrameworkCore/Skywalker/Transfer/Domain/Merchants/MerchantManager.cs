@@ -13,13 +13,13 @@ namespace Skywalker.Transfer.Domain.Merchants
     public class MerchantManager : DomainService<Merchant>, IMerchantManager
     {
 
-        public MerchantManager(IRepository<Merchant, Guid> merchants, ICachingProvider cachingProvider) : base(merchants, cachingProvider)
+        public MerchantManager(IRepository<Merchant, Guid> merchants) : base(merchants)
         {
         }
 
-        public Task<Merchant> CreateAsync(string scheme, string name, string description, string key, string cipherKey, string address, string notifyAddress, MerchantTypes merchantType = MerchantTypes.Entire)
+        public Task<Merchant> CreateAsync(string scheme, string name, string description, string key, string cipherKey, string address, MerchantTypes merchantType = MerchantTypes.Entire)
         {
-            Merchant merchant = new(Guid.NewGuid(), scheme, name, description, key, cipherKey, address, notifyAddress, merchantType);
+            Merchant merchant = new(Guid.NewGuid(), scheme, name, description, key, cipherKey, address, merchantType);
             return Repository.InsertAsync(merchant);
         }
 
@@ -53,7 +53,7 @@ namespace Skywalker.Transfer.Domain.Merchants
             Merchant merchant = await GetAsync(id);
             merchant.Name = name.NotNullOrEmpty(nameof(name));
             merchant.Description = description;
-            merchant.Key = key.NotNullOrEmpty(nameof(key));
+            merchant.Number = key.NotNullOrEmpty(nameof(key));
             return await Repository.UpdateAsync(merchant);
         }
 
@@ -62,7 +62,7 @@ namespace Skywalker.Transfer.Domain.Merchants
             Merchant merchant = await GetAsync(id);
             merchant.Name = name.NotNullOrEmpty(nameof(name));
             merchant.Description = description;
-            merchant.Key = key.NotNullOrEmpty(nameof(key));
+            merchant.Number = key.NotNullOrEmpty(nameof(key));
             merchant.CipherKey = chipherKey.NotNullOrEmpty(nameof(chipherKey));
             return await Repository.UpdateAsync(merchant);
         }
@@ -72,33 +72,20 @@ namespace Skywalker.Transfer.Domain.Merchants
             Merchant merchant = await GetAsync(id);
             merchant.Name = name.NotNullOrEmpty(nameof(name));
             merchant.Description = description;
-            merchant.Key = key.NotNullOrEmpty(nameof(key));
+            merchant.Number = key.NotNullOrEmpty(nameof(key));
             merchant.CipherKey = chipherKey.NotNullOrEmpty(nameof(chipherKey));
             merchant.Address = address.NotNullOrEmpty(nameof(address));
             return await Repository.UpdateAsync(merchant);
         }
 
-        public async Task<Merchant> ModifyAsync(Guid id, string name, string description, string key, string chipherKey, string address, string notifyAddress)
+        public async Task<Merchant> ModifyAsync(Guid id, string name, string description, string key, string chipherKey, string address, MerchantTypes merchantType)
         {
             Merchant merchant = await GetAsync(id);
             merchant.Name = name.NotNullOrEmpty(nameof(name));
             merchant.Description = description;
-            merchant.Key = key.NotNullOrEmpty(nameof(key));
+            merchant.Number = key.NotNullOrEmpty(nameof(key));
             merchant.CipherKey = chipherKey.NotNullOrEmpty(nameof(chipherKey));
             merchant.Address = address.NotNullOrEmpty(nameof(address));
-            merchant.NotifyAddress = notifyAddress.NotNullOrEmpty(nameof(notifyAddress));
-            return await Repository.UpdateAsync(merchant);
-        }
-
-        public async Task<Merchant> ModifyAsync(Guid id, string name, string description, string key, string chipherKey, string address, string notifyAddress, MerchantTypes merchantType)
-        {
-            Merchant merchant = await GetAsync(id);
-            merchant.Name = name.NotNullOrEmpty(nameof(name));
-            merchant.Description = description;
-            merchant.Key = key.NotNullOrEmpty(nameof(key));
-            merchant.CipherKey = chipherKey.NotNullOrEmpty(nameof(chipherKey));
-            merchant.Address = address.NotNullOrEmpty(nameof(address));
-            merchant.NotifyAddress = notifyAddress.NotNullOrEmpty(nameof(notifyAddress));
             merchant.MerchantType = merchantType;
             return await Repository.UpdateAsync(merchant);
         }
@@ -107,14 +94,6 @@ namespace Skywalker.Transfer.Domain.Merchants
         {
             Merchant merchant = await GetAsync(id);
             merchant.Address = address.NotNullOrEmpty(nameof(address));
-            return await Repository.UpdateAsync(merchant);
-        }
-
-        public async Task<Merchant> ModityAddressAsync(Guid id, string address, string notifyAddress)
-        {
-            Merchant merchant = await GetAsync(id);
-            merchant.Address = address.NotNullOrEmpty(nameof(address));
-            merchant.NotifyAddress = notifyAddress.NotNullOrEmpty(nameof(notifyAddress));
             return await Repository.UpdateAsync(merchant);
         }
 
@@ -128,14 +107,14 @@ namespace Skywalker.Transfer.Domain.Merchants
         public async Task<Merchant> ModityKeyAsync(Guid id, string key)
         {
             Merchant merchant = await GetAsync(id);
-            merchant.Key = key.NotNullOrEmpty(nameof(key));
+            merchant.Number = key.NotNullOrEmpty(nameof(key));
             return await Repository.UpdateAsync(merchant);
         }
 
         public async Task<Merchant> ModityKeyAsync(Guid id, string key, string chipherKey)
         {
             Merchant merchant = await GetAsync(id);
-            merchant.Key = key.NotNullOrEmpty(nameof(key));
+            merchant.Number = key.NotNullOrEmpty(nameof(key));
             merchant.CipherKey = chipherKey.NotNullOrEmpty(nameof(chipherKey));
             return await Repository.UpdateAsync(merchant);
         }
@@ -144,13 +123,6 @@ namespace Skywalker.Transfer.Domain.Merchants
         {
             Merchant merchant = await GetAsync(id);
             merchant.MerchantType = merchantType;
-            return await Repository.UpdateAsync(merchant);
-        }
-
-        public async Task<Merchant> ModityNotifyAddressAsync(Guid id, string notifyAddress)
-        {
-            Merchant merchant = await GetAsync(id);
-            merchant.NotifyAddress = notifyAddress.NotNullOrEmpty(nameof(notifyAddress));
             return await Repository.UpdateAsync(merchant);
         }
     }

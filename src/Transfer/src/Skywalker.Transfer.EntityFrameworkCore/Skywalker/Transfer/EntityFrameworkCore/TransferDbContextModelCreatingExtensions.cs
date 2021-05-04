@@ -1,8 +1,10 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Skywalker.Ddd.EntityFrameworkCore.Modeling;
+using Skywalker.Transfer.Domain;
 using Skywalker.Transfer.Domain.Merchants;
 using Skywalker.Transfer.Domain.TradeOrders;
 using Skywalker.Transfer.Domain.TradeUsers;
+using Skywalker.Transfer.Domain.TransferDetails;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -29,48 +31,65 @@ namespace Skywalker.Transfer.EntityFrameworkCore
 
                 b.ConfigureByConvention();
 
-                b.Property(x => x.Scheme).IsRequired();
-                b.Property(x => x.Key).IsRequired();
-                b.Property(x => x.Name).IsRequired();
-                b.Property(x => x.Description).IsRequired();
-                b.Property(x => x.CipherKey).IsRequired();
-                b.Property(x => x.Address).IsRequired();
-                b.Property(x => x.NotifyAddress).IsRequired();
+                b.Property(x => x.Scheme).HasMaxLength(TransferConsts.Validations.MaxMerchantSchemeLength).IsRequired();
+                b.Property(x => x.Number).HasMaxLength(TransferConsts.Validations.MaxMerchantNumberLength).IsRequired();
+                b.Property(x => x.Name).HasMaxLength(TransferConsts.Validations.MaxMerchantNameLength).IsRequired();
+                b.Property(x => x.Description).HasMaxLength(TransferConsts.Validations.MaxMerchantDescriptionLength).IsRequired();
+                b.Property(x => x.CipherKey).HasMaxLength(TransferConsts.Validations.MaxMerchantCipherKeyLength).IsRequired();
+                b.Property(x => x.Address).HasMaxLength(TransferConsts.Validations.MaxMerchantAddressLength).IsRequired();
                 b.Property(x => x.MerchantType).IsRequired();
 
                 b.HasMany(x => x.TradeOrders).WithOne(x => x.Merchant);
+
+                b.HasKey(x => new { x.Id, x.Scheme, x.Number });
             });
 
-            builder.Entity<TradeOrder<ITrader>>(b =>
+            builder.Entity<TradeOrder>(b =>
             {
                 b.ToTable(options.TablePrefix + "TradeOrders", options.Schema);
 
                 b.ConfigureByConvention();
 
-                b.Property(x => x.Amount).IsRequired();
-                b.Property(x => x.HandlingFee).IsRequired();
-                b.Property(x => x.Withholding).IsRequired();
+                b.Property(x => x.Amount).HasPrecision(18, 4).IsRequired();
+                b.Property(x => x.HandlingFee).HasPrecision(18, 4).IsRequired();
+                b.Property(x => x.Withholding).HasPrecision(18, 4).IsRequired();
                 b.Property(x => x.TradeOrderType).IsRequired();
-                b.Property(x => x.TradeAuditedTypes).IsRequired();
+                b.Property(x => x.TradeAuditedType).IsRequired();
                 b.Property(x => x.RevokeTime);
-                b.Property(x => x.RevokeReason);
+                b.Property(x => x.RevokeReason).HasMaxLength(TransferConsts.Validations.MaxTradeOrderRevokeReasonLength);
 
                 b.HasOne(x => x.Merchant).WithMany(x => x.TradeOrders);
-                b.HasOne(x => x.User).WithMany(x => x.TradeOrders);
+                b.HasOne(x => x.Trader).WithMany(x => x.TradeOrders);
 
             });
 
-            builder.Entity<ITrader>(b =>
+            builder.Entity<Trader>(b =>
             {
                 b.ToTable(options.TablePrefix + "Traders", options.Schema);
 
                 b.ConfigureByConvention();
 
-                b.Property(x => x.Balance).IsRequired();
+                b.Property(x => x.Balance).HasPrecision(18, 4).IsRequired();
                 b.Property(x => x.TraderType).IsRequired();
 
-                b.HasMany(x => x.TradeOrders).WithOne(x => x.User);
+                b.HasMany(x => x.TradeOrders).WithOne(x => x.Trader);
                 b.HasMany(x => x.TransferDetails).WithOne(x => x.Trader);
+
+            });
+
+
+            builder.Entity<TransferDetail>(b =>
+            {
+                b.ToTable(options.TablePrefix + "TransferDetails", options.Schema);
+
+                b.ConfigureByConvention();
+
+                b.Property(x => x.Amount).HasPrecision(18, 4).IsRequired();
+                b.Property(x => x.Balance).HasPrecision(18, 4).IsRequired();
+                b.Property(x => x.TransferType).IsRequired();
+                b.Property(x => x.Message).HasMaxLength(TransferConsts.Validations.MaxTransferDetailMessageLength).IsRequired();
+
+                b.HasOne(x => x.Trader).WithMany(x => x.TransferDetails);
 
             });
         }

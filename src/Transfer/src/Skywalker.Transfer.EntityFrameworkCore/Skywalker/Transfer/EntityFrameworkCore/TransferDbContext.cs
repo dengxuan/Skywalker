@@ -1,4 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using Skywalker.Data;
 using Skywalker.Ddd.EntityFrameworkCore;
 using Skywalker.Transfer.Domain;
 using Skywalker.Transfer.Domain.Merchants;
@@ -7,6 +8,7 @@ using Skywalker.Transfer.Domain.TradeUsers;
 
 namespace Skywalker.Transfer.EntityFrameworkCore
 {
+    [ConnectionStringName("Transfer")]
     public class TransferDbContext : SkywalkerDbContext<TransferDbContext>
     {
         public static string TablePrefix { get; set; } = TransferConsts.DefaultDbTablePrefix;
@@ -15,11 +17,11 @@ namespace Skywalker.Transfer.EntityFrameworkCore
 
         public DbSet<Merchant>? Merchants { get; set; }
 
-        public DbSet<TradeOrder<ITrader>>? TradeOrders { get; set; }
+        public DbSet<TradeOrder>? TradeOrders { get; set; }
 
         public DbSet<Trader>? Traders { get; set; }
 
-        protected TransferDbContext(DbContextOptions<TransferDbContext> options) : base(options)
+        public TransferDbContext(DbContextOptions<TransferDbContext> options) : base(options)
         {
         }
 
