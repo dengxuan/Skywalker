@@ -5,10 +5,16 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Simple.Application;
+using Simple.Application.Abstractions;
+using Simple.Application.Users;
+using Simple.Domain.Users;
 using Simple.EntityFrameworkCore;
+using Skywalker.Ddd.Application;
+using Skywalker.Ddd.Application.Abstractions;
 using Skywalker.Ddd.EntityFrameworkCore;
 using Skywalker.Localization;
 using Skywalker.Localization.Resources.SkywalkerLocalization;
+using System;
 
 namespace Simple.WebApi.Hosting
 {
@@ -39,6 +45,7 @@ namespace Simple.WebApi.Hosting
             {
                 options.AddProfile<SimpleApplicationAutoMapperProfile>();
             });
+            services.AddApplication();
             services.AddSkywalker(skywalker =>
             {
                 skywalker.AddEntityFrameworkCore<SimpleDbContext>(options =>
@@ -76,9 +83,9 @@ namespace Simple.WebApi.Hosting
                 app.UseDeveloperExceptionPage();
             }
 
-            app.UseSkywalkerRequestLocalization(options =>
-            {
-            });
+            //app.UseSkywalkerRequestLocalization(options =>
+            //{
+            //});
 
             app.UseRouting();
 

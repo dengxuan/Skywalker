@@ -5,14 +5,14 @@ using System.Diagnostics.CodeAnalysis;
 
 namespace Simple.Application.Abstractions
 {
-    public class UserDto : EntityDto<Guid>
+    public class UserOutputDto : EntityDto<Guid>
     {
         [NotNull]
         public string? Name { get; set; }
 
         public List<UserOrderDto>? UserOrders { get; set; }
 
-        public UserDto([NotNull] string name)
+        public UserOutputDto([NotNull] string name)
         {
             Name = name;
         }

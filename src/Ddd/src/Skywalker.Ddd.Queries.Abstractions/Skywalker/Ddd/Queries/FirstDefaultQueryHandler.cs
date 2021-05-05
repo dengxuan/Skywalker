@@ -9,19 +9,19 @@ using System.Threading.Tasks;
 
 namespace Skywalker.Ddd.Queries
 {
-    public class SingleOrDefaultQueryHandler<TQuery, TEntity, TOutput> : SingleOrDefaultQueryHandler<TQuery, TEntity, Guid, TOutput>, IQueryHandler<TQuery, TOutput> where TQuery : IEntityDto<Guid> where TEntity : class, IEntity<Guid>
+    public class FirstDefaultQueryHandler<TQuery, TEntity, TOutput> : FirstDefaultQueryHandler<TQuery, TEntity, Guid, TOutput>, IQueryHandler<TQuery, TOutput> where TQuery : IEntityDto<Guid> where TEntity : class, IEntity<Guid>
     {
-        public SingleOrDefaultQueryHandler(IDomainService<TEntity> domainService, IObjectMapper objectMapper) : base(domainService, objectMapper)
+        public FirstDefaultQueryHandler(IDomainService<TEntity> domainService, IObjectMapper objectMapper) : base(domainService, objectMapper)
         {
         }
     }
 
-    public class SingleOrDefaultQueryHandler<TQuery, TEntity, TKey, TOutput> : IQueryHandler<TQuery, TOutput> where TQuery : IEntityDto<TKey> where TEntity : class, IEntity<TKey>
+    public class FirstDefaultQueryHandler<TQuery, TEntity, TKey, TOutput> : IQueryHandler<TQuery, TOutput> where TQuery : IEntityDto<TKey> where TEntity : class, IEntity<TKey>
     {
         private readonly IObjectMapper _objectMapper;
         private readonly IDomainService<TEntity, TKey> _domainService;
 
-        public SingleOrDefaultQueryHandler(IDomainService<TEntity, TKey> domainService, IObjectMapper objectMapper)
+        public FirstDefaultQueryHandler(IDomainService<TEntity, TKey> domainService, IObjectMapper objectMapper)
         {
             _domainService = domainService;
             _objectMapper = objectMapper;
