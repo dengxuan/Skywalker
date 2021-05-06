@@ -25,7 +25,7 @@ namespace Skywalker.Ddd.ObjectMapping
 
         //TODO: It can be slow to always check if service is available. Test it and optimize if necessary.
 
-        public virtual TDestination? Map<TSource, TDestination>(TSource source)
+        public virtual TDestination? Map<TSource, TDestination>(TSource? source)
         {
             if (source == null)
             {
@@ -64,7 +64,7 @@ namespace Skywalker.Ddd.ObjectMapping
             return AutoMap<TSource, TDestination>(source);
         }
 
-        public virtual TDestination? Map<TSource, TDestination>(TSource source, TDestination destination)
+        public virtual TDestination? Map<TSource, TDestination>(TSource? source, TDestination destination)
         {
             if (source == null)
             {

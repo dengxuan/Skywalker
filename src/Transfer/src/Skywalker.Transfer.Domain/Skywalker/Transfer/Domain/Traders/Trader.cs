@@ -28,20 +28,20 @@ namespace Skywalker.Transfer.Domain.TradeUsers
         /// <summary>
         /// 转账明细
         /// </summary>
-        public ICollection<TransferDetails.TransferDetail> TransferDetails { get; set; }
+        public ICollection<TransferDetail> TransferDetails { get; set; }
 
         ///<inheritdoc/>
         internal Trader()
         {
             TradeOrders = new List<TradeOrder>();
-            TransferDetails = new List<TransferDetails.TransferDetail>();
+            TransferDetails = new List<TransferDetail>();
         }
 
         ///<inheritdoc/>
-        internal Trader(ICollection<TradeOrder>? tradeOrders = null, ICollection<TransferDetails.TransferDetail>? transferDetails = null)
+        internal Trader(ICollection<TradeOrder>? tradeOrders = null, ICollection<TransferDetail>? transferDetails = null)
         {
             TradeOrders = tradeOrders ?? new List<TradeOrder>();
-            TransferDetails = transferDetails ?? new List<TransferDetails.TransferDetail>();
+            TransferDetails = transferDetails ?? new List<TransferDetail>();
         }
 
         ///<inheritdoc/>
@@ -59,7 +59,7 @@ namespace Skywalker.Transfer.Domain.TradeUsers
                     TransferTypes.Withdraw or TransferTypes.Payment or TransferTypes.Out => Balance - amount.Positive(nameof(amount)),
                     _ => amount.Positive(nameof(amount)),
                 };
-                TransferDetails.Add(new TransferDetails.TransferDetail(this, transferType, amount, Balance, message));
+                TransferDetails.Add(new TransferDetail(this, transferType, amount, Balance, message));
                 return Balance;
             });
         }

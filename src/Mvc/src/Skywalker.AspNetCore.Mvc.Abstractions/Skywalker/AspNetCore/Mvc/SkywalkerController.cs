@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Localization;
 using Skywalker.AspNetCore.Mvc.Models;
+using Skywalker.Ddd.Application.Abstractions;
 using Skywalker.Localization;
 using Skywalker.Localization.Resources.SkywalkerLocalization;
 using System;
@@ -15,6 +16,7 @@ namespace Skywalker.AspNetCore.Mvc
     [WrapResult]
     public abstract class SkywalkerController : ControllerBase
     {
+        protected IApplication Application => HttpContext.RequestServices.GetRequiredService<IApplication>();
 
         protected IStringLocalizerFactory StringLocalizerFactory => HttpContext.RequestServices.GetRequiredService<IStringLocalizerFactory>();
 
@@ -64,7 +66,7 @@ namespace Skywalker.AspNetCore.Mvc
             return Redirect(GetRedirectUrl(returnUrl, returnUrlHash));
         }
 
-        protected virtual string GetRedirectUrl(string returnUrl, string? returnUrlHash = null)
+        protected virtual string? GetRedirectUrl(string? returnUrl, string? returnUrlHash = null)
         {
             returnUrl = NormalizeReturnUrl(returnUrl);
 
@@ -76,7 +78,7 @@ namespace Skywalker.AspNetCore.Mvc
             return returnUrl;
         }
 
-        protected virtual string NormalizeReturnUrl(string returnUrl)
+        protected virtual string? NormalizeReturnUrl(string? returnUrl)
         {
             if (returnUrl.IsNullOrEmpty())
             {
@@ -91,7 +93,7 @@ namespace Skywalker.AspNetCore.Mvc
             return GetAppHomeUrl();
         }
 
-        protected virtual string GetAppHomeUrl()
+        protected virtual string? GetAppHomeUrl()
         {
             return Url.Content("~/");
         }

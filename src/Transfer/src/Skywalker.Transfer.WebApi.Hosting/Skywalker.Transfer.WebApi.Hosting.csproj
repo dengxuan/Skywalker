@@ -17,7 +17,9 @@
 
   <ItemGroup>
     <ProjectReference Include="..\..\..\Caching\src\Skywalker.Caching.Redis\Skywalker.Caching.Redis.csproj" />
+    <ProjectReference Include="..\..\..\Ddd\src\Skywalker.Ddd.Application\Skywalker.Ddd.Application.csproj" />
     <ProjectReference Include="..\..\..\Ddd\src\Skywalker.Ddd.EntityFrameworkCore.MySQL\Skywalker.Ddd.EntityFrameworkCore.MySQL.csproj" />
+    <ProjectReference Include="..\..\..\Ddd\src\Skywalker.Ddd.ObjectMapping.AutoMapper\Skywalker.Ddd.ObjectMapping.AutoMapper.csproj" />
     <ProjectReference Include="..\Skywalker.Transfer.Application\Skywalker.Transfer.Application.csproj" />
     <ProjectReference Include="..\Skywalker.Transfer.EntityFrameworkCore\Skywalker.Transfer.EntityFrameworkCore.csproj" />
     <ProjectReference Include="..\Skywalker.Transfer.WebApi\Skywalker.Transfer.WebApi.csproj" />

@@ -8,11 +8,11 @@ using System;
 namespace Skywalker.AspNetCore.Mvc.Localization
 {
     [Area("skywalker")]
-    [Route("skywalker/languages/[action]")]
-    public class SkywalkerLanguagesController : SkywalkerController
+    [Route("skywalker/[controller]")]
+    public class LanguagesController : SkywalkerController
     {
 
-        [HttpGet]
+        [HttpPut]
         [Route("switch")]
         public IActionResult Switch(string culture, string uiCulture = "", string returnUrl = "")
         {

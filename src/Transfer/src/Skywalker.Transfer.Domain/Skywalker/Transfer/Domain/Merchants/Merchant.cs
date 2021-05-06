@@ -1,10 +1,9 @@
-﻿using Skywalker.Domain.Entities;
-using Skywalker.Transfer.Domain.Enumerations;
-using Skywalker.Transfer.Domain.TradeOrders;
-using Skywalker.Transfer.Domain.TradeUsers;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using Skywalker.Domain.Entities;
+using Skywalker.Transfer.Domain.Enumerations;
+using Skywalker.Transfer.Domain.TradeOrders;
 
 namespace Skywalker.Transfer.Domain.Merchants
 {

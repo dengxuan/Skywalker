@@ -1,21 +1,16 @@
-using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.HttpsPolicy;
-using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.ApplicationParts;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using Microsoft.Extensions.Logging;
 using Microsoft.Identity.Web;
 using Microsoft.OpenApi.Models;
 using Skywalker.Ddd.EntityFrameworkCore;
+using Skywalker.Transfer.Application;
 using Skywalker.Transfer.EntityFrameworkCore;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+using System.Reflection;
 
 namespace Skywalker.Transfer.WebApi.Hosting
 {
@@ -38,7 +33,11 @@ namespace Skywalker.Transfer.WebApi.Hosting
             //{
 
             //});
-
+            services.AddApplication();
+            services.AddAutoMapper(options=>
+            {
+                options.AddProfile<TransferApplicationAutoMapperProfile>();
+            });
             services.AddSkywalker(skywalker =>
             {
                 skywalker.AddEntityFrameworkCore<TransferDbContext>(options =>
@@ -50,11 +49,20 @@ namespace Skywalker.Transfer.WebApi.Hosting
                 });
             });
 
-            services.AddControllers();
+            services.AddRouting(options =>
+            {
+                options.LowercaseUrls = true;
+            });
+
+            services.AddControllers().ConfigureApplicationPartManager(apm =>
+            {
+                apm.ApplicationParts.Add(new AssemblyPart(Assembly.Load("Skywalker.Transfer.WebApi")));
+            });
             services.AddSwaggerGen(c =>
             {
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "Skywalker.Transfer.WebApi.Hosting", Version = "v1" });
             });
+            services.AddWebApiResponseWrapper();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

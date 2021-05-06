@@ -1,6 +1,12 @@
-<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk">
     <Import Project="..\..\..\..\skywalker.props" />
     <Import Project="..\..\..\..\version.props" />
+    <ItemGroup>
+      <ProjectReference Include="..\..\..\Ddd\src\Skywalker.Ddd.Application.Contracts\Skywalker.Ddd.Application.Contracts.csproj" />
+    </ItemGroup>
+    <ItemGroup>
+      <Folder Include="Skywalker\Transfer\Application\Merchants\" />
+    </ItemGroup>
 
 
 </Project>

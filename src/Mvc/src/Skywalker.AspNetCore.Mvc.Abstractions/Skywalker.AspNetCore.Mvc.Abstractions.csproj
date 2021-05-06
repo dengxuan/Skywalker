@@ -9,6 +9,7 @@
     </ItemGroup>
     <ItemGroup>
       <ProjectReference Include="..\..\..\AspNetCore\src\Skywalker.AspNetCore.Abstractions\Skywalker.AspNetCore.Abstractions.csproj" />
+      <ProjectReference Include="..\..\..\Ddd\src\Skywalker.Ddd.Application.Contracts\Skywalker.Ddd.Application.Contracts.csproj" />
       <ProjectReference Include="..\..\..\Ddd\src\Skywalker.Ddd.Localization.Abstractions\Skywalker.Ddd.Localization.Abstractions.csproj" />
       <ProjectReference Include="..\..\..\Ddd\src\Skywalker.Ddd.Localization\Skywalker.Ddd.Localization.csproj" />
       <ProjectReference Include="..\..\..\Extensions\src\Skywalker.Extensions.Universal\Skywalker.Extensions.Universal.csproj" />

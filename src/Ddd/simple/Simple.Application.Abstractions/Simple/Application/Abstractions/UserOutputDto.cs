@@ -1,4 +1,4 @@
-﻿using Skywalker.Application.Dtos.Contracts;
+﻿using Skywalker.Application.Dtos;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
@@ -18,7 +18,7 @@ namespace Simple.Application.Abstractions
         }
     }
 
-    public class UserOrderDto:EntityDto<int>
+    public class UserOrderDto : EntityDto<int>
     {
         public int? Amount { get; set; }
 
