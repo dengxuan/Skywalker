@@ -4,9 +4,6 @@
     <ItemGroup>
       <ProjectReference Include="..\..\..\Ddd\src\Skywalker.Ddd.Application.Contracts\Skywalker.Ddd.Application.Contracts.csproj" />
     </ItemGroup>
-    <ItemGroup>
-      <Folder Include="Skywalker\Transfer\Application\Merchants\" />
-    </ItemGroup>
 
 
 </Project>

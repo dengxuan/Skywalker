@@ -4,6 +4,7 @@
     <ItemGroup>
       <ProjectReference Include="..\..\..\Ddd\src\Skywalker.Ddd.Application.Contracts\Skywalker.Ddd.Application.Contracts.csproj" />
       <ProjectReference Include="..\..\..\Ddd\src\Skywalker.Ddd.ObjectMapping.AutoMapper\Skywalker.Ddd.ObjectMapping.AutoMapper.csproj" />
+      <ProjectReference Include="..\Skywalker.Transfer.Application.Contracts\Skywalker.Transfer.Application.Contracts.csproj" />
       <ProjectReference Include="..\Skywalker.Transfer.Domain\Skywalker.Transfer.Domain.csproj" />
     </ItemGroup>
 
