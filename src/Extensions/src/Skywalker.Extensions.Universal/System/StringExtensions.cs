@@ -33,7 +33,7 @@ namespace System
 
         private static bool VerifyHash(this string str, string hashedValue, HashAlgorithm algorithm, Encoding encoding)
         {
-            return str.ToHash(algorithm, encoding).Equals(hashedValue);
+            return str.ToHash(algorithm, encoding).Equals(hashedValue,StringComparison.OrdinalIgnoreCase);
         }
 
         /// <summary>
@@ -820,7 +820,7 @@ namespace System
 
         public static bool VerifyMd5(this string str, string hashedValue)
         {
-            return str.VerifyMd5(hashedValue);
+            return str.VerifyMd5(hashedValue, Encoding.Default);
         }
 
         public static bool VerifyMd5(this string str, string hashedValue, Encoding encoding)
