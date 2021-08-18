@@ -89,5 +89,17 @@ namespace System.Collections.Generic
             }
             return false;
         }
+
+        public static IEnumerable<TResult> SelectNonNull<T, TResult>(this IEnumerable<T> source, Func<T, TResult> selector)
+        {
+            foreach (var item in source)
+            {
+                var value = selector(item);
+                if (value != null)
+                {
+                    yield return value;
+                }
+            }
+        }
     }
 }

@@ -1,0 +1,21 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+	<Import Project="..\..\..\..\skywalker.props" />
+	<Import Project="..\..\..\..\version.props" />
+	<ItemGroup>
+	  <PackageReference Include="HtmlAgilityPack" Version="1.11.36" />
+	  <PackageReference Include="Microsoft.Extensions.Logging.Abstractions" Version="5.0.0" />
+	  <PackageReference Include="Newtonsoft.Json" Version="12.0.3" />
+	</ItemGroup>
+	<ItemGroup>
+	  <ProjectReference Include="..\Skywalker.Splider.Abstractions\Skywalker.Splider.Abstractions.csproj" />
+	  <ProjectReference Include="..\Skywalker.Splider.Http\Skywalker.Splider.Http.csproj" />
+	  <ProjectReference Include="..\Skywalker.Splider.Pipelines\Skywalker.Splider.Pipelines.csproj" />
+	  <ProjectReference Include="..\Skywalker.Splider.Selector.Abstractions\Skywalker.Splider.Selector.Abstractions.csproj" />
+	</ItemGroup>
+	<ItemGroup>
+	  <Folder Include="Skywalker\Splider\Resolver\Abstractions\" />
+	  <Folder Include="Skywalker\Splider\Resolver\Selector\Abstractions\" />
+	</ItemGroup>
+
+</Project>
