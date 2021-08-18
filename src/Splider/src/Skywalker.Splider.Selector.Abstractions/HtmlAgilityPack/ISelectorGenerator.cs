@@ -51,7 +51,7 @@
         /// which is an alternative <see cref="AttributeIncludes"/> when 
         /// representing the <c>class</c> attribute. 
         /// </summary>
-        void Class(string clazz);
+        void Class(string @class);
 
         //
         // Attribute selectors

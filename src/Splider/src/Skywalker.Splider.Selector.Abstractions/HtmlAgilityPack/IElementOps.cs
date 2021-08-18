@@ -35,7 +35,7 @@
         /// which is an alternative <see cref="AttributeIncludes"/> when 
         /// representing the <c>class</c> attribute. 
         /// </summary>
-        Selector<TElement> Class(string clazz);
+        Selector<TElement> Class(string @class);
 
         //
         // Attribute selectors

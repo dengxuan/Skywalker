@@ -74,9 +74,9 @@ namespace HtmlAgilityPack
             Add(Ops.Id(id));
         }
 
-        public virtual void Class(string clazz)
+        public virtual void Class(string @class)
         {
-            Add(Ops.Class(clazz));
+            Add(Ops.Class(@class));
         }
 
         public virtual void Type(NamespacePrefix prefix, string type)

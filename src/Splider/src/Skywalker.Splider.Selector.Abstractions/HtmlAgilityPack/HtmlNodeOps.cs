@@ -35,11 +35,11 @@ namespace HtmlAgilityPack
             };
         }
 
-        public virtual Selector<HtmlNode> Class(string clazz)
+        public virtual Selector<HtmlNode> Class(string @class)
         {
             return nodes => nodes.Elements().Where(n => n.GetAttributeValue("class", string.Empty)
                                                          .Split(' ')
-                                                         .Contains(clazz));
+                                                         .Contains(@class));
         }
 
         public virtual Selector<HtmlNode> AttributeExists(NamespacePrefix prefix, string name)
