@@ -15,7 +15,7 @@ namespace Skywalker.IdentityServer.Domain.PersistedGrants
     {
         private readonly IRepository<PersistedGrant, string> _persistedGrants;
 
-        public PersistedGrantManager(IRepository<PersistedGrant, string> persistedGrants, ICachingProvider cachingProvider) : base(persistedGrants,cachingProvider)
+        public PersistedGrantManager(IRepository<PersistedGrant, string> persistedGrants)
         {
             _persistedGrants = persistedGrants;
         }

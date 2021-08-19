@@ -23,15 +23,15 @@ Host.CreateDefaultBuilder(args).ConfigureServices(configure =>
     {
         option.DefaultSequentialGuidType = SequentialGuidType.SequentialAsString;
     });
+    configure.AddAutoMapper(options =>
+    {
+        options.AddProfile<SimpleApplicationAutoMapperProfile>();
+    });
     configure.AddSkywalker(builder =>
     {
         builder.AddEntityFrameworkCore<SimpleDbContext>(options =>
         {
             options.UseMySql();
-        });
-        builder.AddAutoMapper(options =>
-        {
-            options.AddProfile<SimpleApplicationAutoMapperProfile>();
         });
     });
     configure.AddTransient<IHostedService, SimpleHostedService>();

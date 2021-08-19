@@ -35,9 +35,9 @@ namespace Microsoft.Extensions.DependencyInjection
 
         private static void AddAspNetCoreServices(IServiceCollection services)
         {
-            IMvcCoreBuilder builder = services.AddMvcCore(setupAction =>
+            IMvcCoreBuilder builder = services.AddMvcCore(options =>
             {
-                setupAction.RespectBrowserAcceptHeader = true;
+                options.RespectBrowserAcceptHeader = true;
             });
 
             services.AddSingleton(c => c.GetRequiredService<IOptions<SkywalkerResponseWrapperOptions>>().Value);

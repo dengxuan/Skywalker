@@ -1,6 +1,8 @@
-<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk">
     <Import Project="..\..\..\..\skywalker.props" />
     <Import Project="..\..\..\..\version.props" />
-
-
+    <ItemGroup>
+      <ProjectReference Include="..\..\..\Ddd\src\Skywalker.Ddd.EntityFrameworkCore\Skywalker.Ddd.EntityFrameworkCore.csproj" />
+      <ProjectReference Include="..\Skywalker.Transfer.Domain\Skywalker.Transfer.Domain.csproj" />
+    </ItemGroup>
 </Project>

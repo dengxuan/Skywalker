@@ -1,9 +1,8 @@
 ﻿using AutoMapper;
-using Microsoft.Extensions.DependencyInjection;
 
 namespace Skywalker.Ddd.ObjectMapping.AutoMapper
 {
-    internal interface IMapperAccessor : ISingletonDependency
+    internal interface IMapperAccessor
     {
         IMapper? Mapper { get; set; }
     }

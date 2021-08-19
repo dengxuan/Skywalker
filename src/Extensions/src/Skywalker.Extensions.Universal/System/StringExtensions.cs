@@ -33,7 +33,7 @@ namespace System
 
         private static bool VerifyHash(this string str, string hashedValue, HashAlgorithm algorithm, Encoding encoding)
         {
-            return str.ToHash(algorithm, encoding).Equals(hashedValue);
+            return str.ToHash(algorithm, encoding).Equals(hashedValue,StringComparison.OrdinalIgnoreCase);
         }
 
         /// <summary>
@@ -820,7 +820,7 @@ namespace System
 
         public static bool VerifyMd5(this string str, string hashedValue)
         {
-            return str.VerifyMd5(hashedValue);
+            return str.VerifyMd5(hashedValue, Encoding.Default);
         }
 
         public static bool VerifyMd5(this string str, string hashedValue, Encoding encoding)
@@ -832,7 +832,7 @@ namespace System
         public static string ToSha1(this string str)
         {
             using var algorithm = SHA1.Create();
-            return str.ToHash(algorithm, Encoding.UTF8);
+            return str.ToHash(algorithm, Encoding.Default);
         }
 
         public static string ToSha1(this string str, Encoding encoding)
@@ -843,7 +843,7 @@ namespace System
 
         public static bool VerifySha1(this string str, string hashedValue)
         {
-            return str.VerifyMd5(hashedValue);
+            return str.VerifySha1(hashedValue, Encoding.Default);
         }
 
         public static bool VerifySha1(this string str, string hashedValue, Encoding encoding)
@@ -855,7 +855,7 @@ namespace System
         public static string ToSha256(this string str)
         {
             using var algorithm = SHA256.Create();
-            return str.ToHash(algorithm, Encoding.UTF8);
+            return str.ToHash(algorithm, Encoding.Default);
         }
 
         public static string ToSha256(this string str, Encoding encoding)
@@ -866,7 +866,7 @@ namespace System
 
         public static bool VerifySha256(this string str, string hashedValue)
         {
-            return str.VerifyMd5(hashedValue);
+            return str.VerifySha256(hashedValue, Encoding.Default);
         }
 
         public static bool VerifySha256(this string str, string hashedValue, Encoding encoding)
@@ -878,7 +878,7 @@ namespace System
         public static string ToSha384(this string str)
         {
             using var algorithm = SHA384.Create();
-            return str.ToHash(algorithm, Encoding.UTF8);
+            return str.ToHash(algorithm, Encoding.Default);
         }
 
         public static string ToSha384(this string str, Encoding encoding)
@@ -889,7 +889,7 @@ namespace System
 
         public static bool VerifySha384(this string str, string hashedValue)
         {
-            return str.VerifyMd5(hashedValue);
+            return str.VerifySha384(hashedValue, Encoding.Default);
         }
 
         public static bool VerifySha384(this string str, string hashedValue, Encoding encoding)
@@ -901,7 +901,7 @@ namespace System
         public static string ToSha512(this string str)
         {
             using var algorithm = SHA512.Create();
-            return str.ToHash(algorithm, Encoding.UTF8);
+            return str.ToHash(algorithm, Encoding.Default);
         }
 
         public static string ToSha512(this string str, Encoding encoding)
@@ -912,7 +912,7 @@ namespace System
 
         public static bool VerifySha512(this string str, string hashedValue)
         {
-            return str.VerifyMd5(hashedValue);
+            return str.VerifySha512(hashedValue, Encoding.Default);
         }
 
         public static bool VerifySha512(this string str, string hashedValue, Encoding encoding)
@@ -924,7 +924,7 @@ namespace System
         public static string ToHmac(this string str)
         {
             using var algorithm = HMAC.Create("HMACSHA1");
-            return str.ToHash(algorithm!, Encoding.UTF8);
+            return str.ToHash(algorithm!, Encoding.Default);
         }
 
         public static string ToHmac(this string str, Encoding encoding)
@@ -936,7 +936,7 @@ namespace System
         public static string ToHmacSha1(this string str)
         {
             using var algorithm = HMAC.Create("HMACSHA1");
-            return str.ToHash(algorithm!, Encoding.UTF8);
+            return str.ToHash(algorithm!, Encoding.Default);
         }
 
         public static string ToHmacSha1(this string str, Encoding encoding)
@@ -948,7 +948,7 @@ namespace System
         public static string ToHmacMd5(this string str)
         {
             using var algorithm = HMAC.Create("HMACMD5");
-            return str.ToHash(algorithm!, Encoding.UTF8);
+            return str.ToHash(algorithm!, Encoding.Default);
         }
 
         public static string ToHmacMd5(this string str, Encoding encoding)
@@ -960,7 +960,7 @@ namespace System
         public static string ToHmacRipemd160(this string str)
         {
             using var algorithm = HMAC.Create("HMACRIPEMD160");
-            return str.ToHash(algorithm!, Encoding.UTF8);
+            return str.ToHash(algorithm!, Encoding.Default);
         }
 
         public static string ToHmacRipemd160(this string str, Encoding encoding)
@@ -972,7 +972,7 @@ namespace System
         public static string ToHmacSha256(this string str)
         {
             using var algorithm = HMAC.Create("HMACSHA256");
-            return str.ToHash(algorithm!, Encoding.UTF8);
+            return str.ToHash(algorithm!, Encoding.Default);
         }
 
         public static string ToHmacSha256(this string str, Encoding encoding)
@@ -984,7 +984,7 @@ namespace System
         public static string ToHmacSha384(this string str)
         {
             using var algorithm = HMAC.Create("HMACSHA384");
-            return str.ToHash(algorithm!, Encoding.UTF8);
+            return str.ToHash(algorithm!, Encoding.Default);
         }
 
         public static string ToHmacSha384(this string str, Encoding encoding)
@@ -996,7 +996,7 @@ namespace System
         public static string ToHmacSha512(this string str)
         {
             using var algorithm = HMAC.Create("HMACSHA512");
-            return str.ToHash(algorithm!, Encoding.UTF8);
+            return str.ToHash(algorithm!, Encoding.Default);
         }
 
         public static string ToHmacSha512(this string str, Encoding encoding)
@@ -1008,7 +1008,7 @@ namespace System
         public static string ToMacTripleDES(this string str)
         {
             using var algorithm = HMAC.Create("MACTripleDES");
-            return str.ToHash(algorithm!, Encoding.UTF8);
+            return str.ToHash(algorithm!, Encoding.Default);
         }
 
         public static string ToMacTripleDES(this string str, Encoding encoding)

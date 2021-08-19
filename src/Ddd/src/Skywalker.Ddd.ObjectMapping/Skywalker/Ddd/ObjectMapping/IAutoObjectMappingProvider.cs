@@ -1,8 +1,6 @@
-using Microsoft.Extensions.DependencyInjection;
-
 namespace Skywalker.Ddd.ObjectMapping
 {
-    public interface IAutoObjectMappingProvider : ISingletonDependency
+    public interface IAutoObjectMappingProvider
     {
         TDestination Map<TSource, TDestination>(object source);
 

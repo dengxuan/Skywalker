@@ -1,7 +1,8 @@
 ﻿using Microsoft.Extensions.Hosting;
 using Simple.Application.Abstractions;
 using Simple.Application.Users;
-using Skywalker.Ddd.Queries.Abstractions;
+using Skywalker.Application.Dtos;
+using Skywalker.Ddd.Application.Abstractions;
 using System;
 using System.Collections.Generic;
 using System.Threading;
@@ -11,9 +12,9 @@ namespace Simple.Application.Hosting
 {
     public class SimpleHostedService : IHostedService
     {
-        private readonly ISearcher _searcher;
+        private readonly IApplication _searcher;
 
-        public SimpleHostedService(ISearcher searcher)
+        public SimpleHostedService(IApplication searcher)
         {
             _searcher = searcher;
         }
@@ -22,7 +23,7 @@ namespace Simple.Application.Hosting
         {
             try
             {
-                List<UserDto> userDtos = await _searcher.SearchAsync<UserQuery, List<UserDto>>(new UserQuery { Name = "" });
+                PagedResultDto<UserOutputDto>? userDtos = await _searcher.ExecuteAsync<UserInputDto, PagedResultDto<UserOutputDto>>(new UserInputDto { Name = "" });
             }
             catch (Exception ex)
             {

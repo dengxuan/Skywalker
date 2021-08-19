@@ -8,7 +8,7 @@ namespace Simple.Application
     {
         public SimpleApplicationAutoMapperProfile()
         {
-            CreateMap<User, UserDto>();
+            CreateMap<User, UserOutputDto>();
             CreateMap<UserValue, UserValueDto>();
             CreateMap<UserOrder, UserOrderDto>();
         }

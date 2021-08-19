@@ -9,7 +9,7 @@ namespace Skywalker.Application.Dtos
     /// </summary>
     /// <typeparam name="T">Type of the items in the <see cref="ListResultDto{T}.Items"/> list</typeparam>
     [Serializable]
-    public class PagedResultDto<T> : ListResultDto<T>, IPagedResult<T>
+    public class PagedResultDto<T> : ListResultDto<T>, IPagedResult<T>, IEntityDto
     {
         /// <inheritdoc />
         public int TotalCount { get; set; }

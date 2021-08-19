@@ -1,0 +1,11 @@
+<Project Sdk="Microsoft.NET.Sdk">
+    <Import Project="..\..\..\..\skywalker.props" />
+    <Import Project="..\..\..\..\version.props" />
+    <ItemGroup>
+      <PackageReference Include="Microsoft.Extensions.Options" Version="5.0.0" />
+    </ItemGroup>
+    <ItemGroup>
+      <ProjectReference Include="..\Skywalker.AspNetCore.Transfer.Abstractions\Skywalker.AspNetCore.Transfer.Abstractions.csproj" />
+    </ItemGroup>
+
+</Project>

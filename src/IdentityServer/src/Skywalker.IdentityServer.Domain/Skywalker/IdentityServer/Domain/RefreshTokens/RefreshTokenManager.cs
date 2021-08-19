@@ -1,5 +1,4 @@
-﻿using Skywalker.Caching.Abstractions;
-using Skywalker.Domain.Repositories;
+﻿using Skywalker.Domain.Repositories;
 using Skywalker.Domain.Services;
 using Skywalker.IdentityServer.Models;
 
@@ -9,7 +8,7 @@ namespace Skywalker.IdentityServer.Domain.RefreshTokens
     {
         private readonly IRepository<RefreshToken> _refreshTokens;
 
-        public RefreshTokenManager(IRepository<RefreshToken> refreshTokens, ICachingProvider cachingProvider) : base(refreshTokens, cachingProvider)
+        public RefreshTokenManager(IRepository<RefreshToken> refreshTokens)
         {
             _refreshTokens = refreshTokens;
         }

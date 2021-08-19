@@ -1,17 +1,15 @@
 ﻿using Simple.Application.Abstractions;
 using Simple.Domain.Users;
+using Skywalker.Application.Dtos;
+using Skywalker.Ddd.Application.Abstractions;
 using Skywalker.Ddd.ObjectMapping;
-using Skywalker.Ddd.Queries.Abstractions;
-using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 
 namespace Simple.Application.Users
 {
-    public class UserQueryHandler : IQueryHandler<List<UserDto>>, IQueryHandler<UserQuery, List<UserDto>>
+    public class UserQueryHandler : IApplicationHandler<PagedResultDto<UserOutputDto>>, IApplicationHandler<UserInputDto, PagedResultDto<UserOutputDto>>
     {
         private readonly IUserManager _userManager;
 
@@ -23,18 +21,19 @@ namespace Simple.Application.Users
             _objectMapper = objectMapper;
         }
 
-        public async Task<List<UserDto>> HandleAsync(CancellationToken cancellationToken)
+        public async Task<PagedResultDto<UserOutputDto>?> HandleAsync(CancellationToken cancellationToken)
         {
             List<User> users = await _userManager.FindUsersAsync("");
 
-            return _objectMapper.Map<List<User>, List<UserDto>>(users);
+            List<UserOutputDto> result = _objectMapper.Map<List<User>, List<UserOutputDto>>(users);
+            return new PagedResultDto<UserOutputDto>(100, result);
         }
 
-        public async Task<List<UserDto>> HandleAsync(UserQuery query, CancellationToken cancellationToken)
+        public async Task<PagedResultDto<UserOutputDto>?> HandleAsync(UserInputDto inputDto, CancellationToken cancellationToken)
         {
-            List<User> users = await _userManager.FindUsersAsync(query.Name!);
-
-            return _objectMapper.Map<List<User>, List<UserDto>>(users);
+            List<User> users = await _userManager.FindUsersAsync(inputDto.Name!);
+            List<UserOutputDto> result = _objectMapper.Map<List<User>, List<UserOutputDto>>(users);
+            return new PagedResultDto<UserOutputDto>(100, result);
         }
     }
 }

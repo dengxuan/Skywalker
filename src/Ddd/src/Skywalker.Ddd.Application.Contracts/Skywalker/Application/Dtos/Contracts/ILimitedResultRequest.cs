@@ -3,7 +3,7 @@ namespace Skywalker.Application.Dtos.Contracts
     /// <summary>
     /// This interface is defined to standardize to request a limited result.
     /// </summary>
-    public interface ILimitedResultRequest
+    public interface ILimitedResultRequest : IEntityDto
     {
         /// <summary>
         /// Maximum result count should be returned.

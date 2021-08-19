@@ -6,7 +6,7 @@ using Skywalker.Ddd.EntityFrameworkCore;
 namespace Simple.EntityFrameworkCore
 {
 
-    [ConnectionStringName("MySQL.Simple")]
+    [ConnectionStringName("Simple")]
     public class SimpleMigrationsDbContext : SkywalkerDbContext<SimpleMigrationsDbContext>
     {
         public SimpleMigrationsDbContext(DbContextOptions<SimpleMigrationsDbContext> options) : base(options)

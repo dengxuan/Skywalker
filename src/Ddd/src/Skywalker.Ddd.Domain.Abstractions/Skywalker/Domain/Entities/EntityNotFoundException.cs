@@ -10,12 +10,12 @@ namespace Skywalker.Domain.Entities
         /// <summary>
         /// Type of the entity.
         /// </summary>
-        public Type EntityType { get; set; }
+        public Type? EntityType { get; set; }
 
         /// <summary>
         /// Id of the Entity.
         /// </summary>
-        public object Id { get; set; }
+        public object? Id { get; set; }
 
         /// <summary>
         /// Creates a new <see cref="EntityNotFoundException"/> object.
@@ -28,8 +28,7 @@ namespace Skywalker.Domain.Entities
         /// <summary>
         /// Creates a new <see cref="EntityNotFoundException"/> object.
         /// </summary>
-        public EntityNotFoundException(Type entityType)
-            : this(entityType, null, null)
+        public EntityNotFoundException(Type entityType) : this(entityType, null, null)
         {
 
         }
@@ -37,8 +36,7 @@ namespace Skywalker.Domain.Entities
         /// <summary>
         /// Creates a new <see cref="EntityNotFoundException"/> object.
         /// </summary>
-        public EntityNotFoundException(Type entityType, object id)
-            : this(entityType, id, null)
+        public EntityNotFoundException(Type entityType, object? id) : this(entityType, id, null)
         {
 
         }
@@ -46,8 +44,7 @@ namespace Skywalker.Domain.Entities
         /// <summary>
         /// Creates a new <see cref="EntityNotFoundException"/> object.
         /// </summary>
-        public EntityNotFoundException(Type entityType, object id, Exception innerException)
-            : base(
+        public EntityNotFoundException(Type entityType, object? id, Exception? innerException) : base(
                 id == null
                     ? $"There is no such an entity given given id. Entity type: {entityType.FullName}"
                     : $"There is no such an entity. Entity type: {entityType.FullName}, id: {id}",
@@ -72,7 +69,7 @@ namespace Skywalker.Domain.Entities
         /// </summary>
         /// <param name="message">Exception message</param>
         /// <param name="innerException">Inner exception</param>
-        public EntityNotFoundException(string message, Exception innerException)
+        public EntityNotFoundException(string message, Exception? innerException)
             : base(message, innerException)
         {
 

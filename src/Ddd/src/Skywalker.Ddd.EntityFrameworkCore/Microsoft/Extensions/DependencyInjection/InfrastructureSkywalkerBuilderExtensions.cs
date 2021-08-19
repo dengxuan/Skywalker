@@ -18,8 +18,8 @@ namespace Microsoft.Extensions.DependencyInjection
             skywalker.Services.AddTransient(typeof(IDbContextProvider<>), typeof(DbContextProvider<>));
             skywalker.Services.AddDbContext<TDbContext>();
             skywalker.Services.AddDomainServices();
-            SkywalkerDbContextRegistrationOptions options = new SkywalkerDbContextRegistrationOptions(typeof(TDbContext), skywalker.Services);
-            SkywalkerRepositoryRegistrar repositoryRegistrar = new SkywalkerRepositoryRegistrar(options);
+            SkywalkerDbContextRegistrationOptions options = new(typeof(TDbContext), skywalker.Services);
+            SkywalkerRepositoryRegistrar repositoryRegistrar = new(options);
             IEnumerable<Type> entityTypes = DbContextHelper.GetEntityTypes(typeof(TDbContext));
             repositoryRegistrar.AddRepositories(entityTypes);
             return skywalker;

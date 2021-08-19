@@ -6,8 +6,10 @@
     <Import Project="..\..\..\..\version.props" />
     <ItemGroup>
       <PackageReference Include="AutoMapper" Version="10.1.1" />
+      <PackageReference Include="Microsoft.Extensions.Options" Version="5.0.0" />
     </ItemGroup>
     <ItemGroup>
+      <ProjectReference Include="..\..\..\Extensions\src\Skywalker.Extensions.Collections\Skywalker.Extensions.Collections.csproj" />
       <ProjectReference Include="..\Skywalker.Ddd.ObjectMapping\Skywalker.Ddd.ObjectMapping.csproj" />
     </ItemGroup>
 

@@ -20,8 +20,7 @@ namespace Skywalker
         /// <summary>
         /// Creates a new <see cref="SkywalkerException"/> object.
         /// </summary>
-        public SkywalkerException(SerializationInfo serializationInfo, StreamingContext context)
-            : base(serializationInfo, context)
+        public SkywalkerException(SerializationInfo serializationInfo, StreamingContext context) : base(serializationInfo, context)
         {
 
         }
@@ -30,8 +29,7 @@ namespace Skywalker
         /// Creates a new <see cref="SkywalkerException"/> object.
         /// </summary>
         /// <param name="message">Exception message</param>
-        public SkywalkerException(string message)
-            : base(message)
+        public SkywalkerException(string message) : base(message)
         {
 
         }
@@ -41,8 +39,7 @@ namespace Skywalker
         /// </summary>
         /// <param name="message">Exception message</param>
         /// <param name="innerException">Inner exception</param>
-        public SkywalkerException(string message, Exception innerException)
-            : base(message, innerException)
+        public SkywalkerException(string message, Exception? innerException) : base(message, innerException)
         {
 
         }
