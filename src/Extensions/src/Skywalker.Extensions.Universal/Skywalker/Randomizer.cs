@@ -71,7 +71,7 @@ namespace Skywalker
             // this stores sum of weights of all elements before current
             int totalWeight = 0;
             // currently selected element
-            T selected = default;
+            T? selected = default;
             foreach (var data in enumerable)
             {
                 // weight of current element

@@ -3,5 +3,5 @@
 
 using System.Runtime.CompilerServices;
 
-[assembly: InternalsVisibleTo("Skywalker.Splider.Pipelines")]
-[assembly: InternalsVisibleTo("Skywalker.Splider.Resolver.Abstractions")]
+[assembly: InternalsVisibleTo("Skywalker.Splider.Pipeline.Abstractions")]
+[assembly: InternalsVisibleTo("Skywalker.Splider.Pipeline.DataResolver")]

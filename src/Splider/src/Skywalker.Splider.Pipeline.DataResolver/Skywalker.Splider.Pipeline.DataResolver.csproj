@@ -1,4 +1,4 @@
-<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk">
 
 	<Import Project="..\..\..\..\skywalker.props" />
 	<Import Project="..\..\..\..\version.props" />
@@ -10,12 +10,7 @@
 	<ItemGroup>
 	  <ProjectReference Include="..\Skywalker.Splider.Abstractions\Skywalker.Splider.Abstractions.csproj" />
 	  <ProjectReference Include="..\Skywalker.Splider.Http\Skywalker.Splider.Http.csproj" />
-	  <ProjectReference Include="..\Skywalker.Splider.Pipelines\Skywalker.Splider.Pipelines.csproj" />
-	  <ProjectReference Include="..\Skywalker.Splider.Selector.Abstractions\Skywalker.Splider.Selector.Abstractions.csproj" />
-	</ItemGroup>
-	<ItemGroup>
-	  <Folder Include="Skywalker\Splider\Resolver\Abstractions\" />
-	  <Folder Include="Skywalker\Splider\Resolver\Selector\Abstractions\" />
+	  <ProjectReference Include="..\Skywalker.Splider.Pipeline.Abstractions\Skywalker.Splider.Pipeline.Abstractions.csproj" />
 	</ItemGroup>
 
 </Project>

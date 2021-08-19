@@ -1,4 +1,4 @@
-﻿namespace HtmlAgilityPack
+﻿namespace Skywalker.Splider.Resolver.Selector.Abstractions
 {
     /// <summary>
     /// Represent an implementation that is responsible for generating

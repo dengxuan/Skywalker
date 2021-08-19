@@ -4,9 +4,6 @@
 	<Import Project="..\..\..\..\version.props" />
 	<ItemGroup>
 	  <ProjectReference Include="..\..\..\Extensions\src\Skywalker.Extensions.Universal\Skywalker.Extensions.Universal.csproj" />
-	  <ProjectReference Include="..\Skywalker.Splider.Http\Skywalker.Splider.Http.csproj" />
-	  <ProjectReference Include="..\Skywalker.Splider.Messaging.Abstractions\Skywalker.Splider.Messaging.Abstractions.csproj" />
 	</ItemGroup>
-
 
 </Project>

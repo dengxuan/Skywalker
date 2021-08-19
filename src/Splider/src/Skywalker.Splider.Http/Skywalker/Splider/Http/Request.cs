@@ -118,7 +118,7 @@ namespace Skywalker.Splider.Http
 
 		public RequestHeaders Headers => _headers ??= new RequestHeaders();
 
-		public IDictionary<string, object> Properties => _properties ??= new Dictionary<string, object>();
+		public IDictionary<string, object?> Properties => _properties ??= new Dictionary<string, object?>();
 
 		[JsonIgnore]
 		// ReSharper disable once InconsistentNaming
