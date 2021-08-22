@@ -1,0 +1,10 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+	<Import Project="..\..\..\..\skywalker.props" />
+	<Import Project="..\..\..\..\version.props" />
+	<ItemGroup>
+	  <ProjectReference Include="..\..\..\Extensions\src\Skywalker.Extensions.MessagePack\Skywalker.Extensions.MessagePack.csproj" />
+	  <ProjectReference Include="..\..\..\Extensions\src\Skywalker.Extensions.Universal\Skywalker.Extensions.Universal.csproj" />
+	</ItemGroup>
+
+</Project>

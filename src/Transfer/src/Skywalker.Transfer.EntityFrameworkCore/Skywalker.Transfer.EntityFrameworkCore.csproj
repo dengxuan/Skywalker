@@ -3,6 +3,5 @@
     <Import Project="..\..\..\..\version.props" />
     <ItemGroup>
       <ProjectReference Include="..\..\..\Ddd\src\Skywalker.Ddd.EntityFrameworkCore\Skywalker.Ddd.EntityFrameworkCore.csproj" />
-      <ProjectReference Include="..\Skywalker.Transfer.Domain\Skywalker.Transfer.Domain.csproj" />
     </ItemGroup>
 </Project>

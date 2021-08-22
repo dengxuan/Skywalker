@@ -8,7 +8,5 @@
     <ItemGroup>
         <ProjectReference Include="..\..\..\Ddd\src\Skywalker.Ddd.EntityFrameworkCore.MySQL\Skywalker.Ddd.EntityFrameworkCore.MySQL.csproj" />
         <ProjectReference Include="..\..\..\Ddd\src\Skywalker.Ddd.EntityFrameworkCore\Skywalker.Ddd.EntityFrameworkCore.csproj" />
-        <ProjectReference Include="..\Skywalker.Transfer.Domain\Skywalker.Transfer.Domain.csproj" />
-        <ProjectReference Include="..\Skywalker.Transfer.EntityFrameworkCore\Skywalker.Transfer.EntityFrameworkCore.csproj" />
     </ItemGroup>
 </Project>

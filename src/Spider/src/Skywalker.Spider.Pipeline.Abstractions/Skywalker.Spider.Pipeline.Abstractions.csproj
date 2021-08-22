@@ -1,0 +1,13 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+	<Import Project="..\..\..\..\skywalker.props" />
+	<Import Project="..\..\..\..\version.props" />
+	<ItemGroup>
+	  <PackageReference Include="Microsoft.Extensions.Logging.Abstractions" Version="5.0.0" />
+	</ItemGroup>
+	<ItemGroup>
+	  <ProjectReference Include="..\Skywalker.Spider.Abstractions\Skywalker.Spider.Abstractions.csproj" />
+	  <ProjectReference Include="..\Skywalker.Spider.Http\Skywalker.Spider.Http.csproj" />
+	</ItemGroup>
+
+</Project>

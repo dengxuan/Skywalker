@@ -3,7 +3,6 @@
     <Import Project="..\..\..\..\version.props" />
     <ItemGroup>
       <ProjectReference Include="..\..\..\Mvc\src\Skywalker.AspNetCore.Mvc.Abstractions\Skywalker.AspNetCore.Mvc.Abstractions.csproj" />
-      <ProjectReference Include="..\Skywalker.Transfer.Application\Skywalker.Transfer.Application.csproj" />
     </ItemGroup>
 
 </Project>

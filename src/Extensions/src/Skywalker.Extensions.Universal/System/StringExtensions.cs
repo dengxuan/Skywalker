@@ -19,21 +19,16 @@ namespace System
 
         private static string ToHash(this string str, HashAlgorithm algorithm, Encoding encoding)
         {
-            var inputBytes = encoding.GetBytes(str);
-            var hashBytes = algorithm.ComputeHash(inputBytes);
-
-            var sb = new StringBuilder();
-            foreach (var hashByte in hashBytes)
-            {
-                sb.Append(hashByte.ToString("X2"));
-            }
-
-            return sb.ToString();
+            var bytes = encoding.GetBytes(str);
+            var hashedBytes = algorithm.ComputeHash(bytes);
+            return hashedBytes.ToHex();
         }
 
         private static bool VerifyHash(this string str, string hashedValue, HashAlgorithm algorithm, Encoding encoding)
         {
-            return str.ToHash(algorithm, encoding).Equals(hashedValue,StringComparison.OrdinalIgnoreCase);
+            var bytes = encoding.GetBytes(str);
+            var hashedBytes = encoding.GetBytes(hashedValue);
+            return bytes.VerifyHash(hashedBytes, algorithm);
         }
 
         /// <summary>

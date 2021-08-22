@@ -1,4 +1,5 @@
-﻿using Skywalker.Application.Dtos.Contracts;
+﻿using Skywalker.Application.Dtos;
+using Skywalker.Application.Dtos.Contracts;
 using System;
 
 namespace Simple.Application.Users

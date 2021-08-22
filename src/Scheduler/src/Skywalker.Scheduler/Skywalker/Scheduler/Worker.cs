@@ -339,7 +339,7 @@ namespace Skywalker.Scheduler
             }
         }
 
-        protected virtual void OnStateChanged(string actionName, WorkerState state, Exception exception = null)
+        protected virtual void OnStateChanged(string actionName, WorkerState state, Exception? exception = null)
         {
             this.StateChanged?.Invoke(this, new WorkerStateChangedEventArgs(actionName, state, exception));
         }
