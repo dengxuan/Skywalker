@@ -3,6 +3,7 @@
 	<Import Project="..\..\..\..\skywalker.props" />
 	<Import Project="..\..\..\..\version.props" />
 	<ItemGroup>
+	  <ProjectReference Include="..\..\..\EventBus\src\Skywalker.EventBus.Abstractions\Skywalker.EventBus.Abstractions.csproj" />
 	  <ProjectReference Include="..\Skywalker.Spider.Downloader.Abstractions\Skywalker.Spider.Downloader.Abstractions.csproj" />
 	</ItemGroup>
 

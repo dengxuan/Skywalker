@@ -13,7 +13,6 @@ namespace Skywalker.Spider.Http
     [Serializable]
 	public class Request : IDisposable
 	{
-		private const string PPPOE_PATTERN= "PPPoE_Pattern";
 		private static readonly HashSet<string> _hashBodyMethods = new() { "DELETE", "POST", "PATCH", "PUT" };
 
 		private bool _disposed;
@@ -119,24 +118,6 @@ namespace Skywalker.Spider.Http
 		public RequestHeaders Headers => _headers ??= new RequestHeaders();
 
 		public IDictionary<string, object?> Properties => _properties ??= new Dictionary<string, object?>();
-
-		[JsonIgnore]
-		// ReSharper disable once InconsistentNaming
-		public string? PPPoERegex
-		{
-			get => _properties.ContainsKey(PPPOE_PATTERN) ? _properties[PPPOE_PATTERN]?.ToString() : null;
-			set
-			{
-				if (_properties.ContainsKey(PPPOE_PATTERN))
-				{
-					_properties[PPPOE_PATTERN] = value;
-				}
-				else
-				{
-					_properties.Add(PPPOE_PATTERN, value);
-				}
-			}
-		}
 
 		/// <summary>
 		/// 设置 Cookie

@@ -9,16 +9,16 @@ namespace Skywalker.Spider.Http
     public class RequestHasher : IRequestHasher
 	{
 
-		public void ComputeHash(Request request)
+		public async void ComputeHash(Request request)
 		{
-			var bytes = new
+			var bytes = await new
 			{
 				request.Owner,
 				request.RequestUri!.AbsoluteUri,
 				request.Method,
 				request.RequestedTimes,
 				request.Content
-			}.ToBytes();
+			}.ToBytesAsync();
 			request.Hash = bytes.ToMd5().ToHex();
 		}
 	}

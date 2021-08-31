@@ -19,26 +19,19 @@ public class DefaultMessager : IMessager
 
     public async Task ConsumeAsync(MessageConsumer<byte[]> consumer, CancellationToken cancellationToken)
     {
-        if (consumer.Registered)
-        {
-            throw new ApplicationException("This consumer is already registered");
-        }
-
         var channel = _channels.GetOrAdd(consumer.Queue, _ => Channel.CreateUnbounded<byte[]>());
-        consumer.Register();
         consumer.OnClosing += x => CloseQueue(x.Queue);
 
-        await Task.Factory.StartNew(async () =>
+        await Task.Run(async () =>
         {
             while (await channel.Reader.WaitToReadAsync(cancellationToken))
             {
                 var bytes = await channel.Reader.ReadAsync(cancellationToken);
-                Task.Factory.StartNew(async () =>
+                await Task.Factory.StartNew(async () =>
                 {
                     await consumer.InvokeAsync(bytes);
                 }, cancellationToken)
-                .ConfigureAwait(false)
-                .GetAwaiter();
+                .ConfigureAwait(false);
             }
         }, cancellationToken);
     }

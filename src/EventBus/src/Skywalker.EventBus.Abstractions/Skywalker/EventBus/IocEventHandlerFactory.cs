@@ -1,69 +1,69 @@
 using Microsoft.Extensions.DependencyInjection;
+using Skywalker.EventBus.Abstractions;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 
-namespace Skywalker.EventBus
+namespace Skywalker.EventBus;
+
+/// <summary>
+/// This <see cref="IEventHandlerFactory"/> implementation is used to get/release
+/// handlers using Ioc.
+/// </summary>
+public class IocEventHandlerFactory : IEventHandlerFactory, IDisposable
 {
-    /// <summary>
-    /// This <see cref="IEventHandlerFactory"/> implementation is used to get/release
-    /// handlers using Ioc.
-    /// </summary>
-    public class IocEventHandlerFactory : IEventHandlerFactory, IDisposable
+    private bool disposedValue;
+
+    public Type HandlerType { get; }
+
+    protected IServiceScopeFactory ScopeFactory { get; }
+
+    public IocEventHandlerFactory(IServiceScopeFactory scopeFactory, Type handlerType)
     {
-        private bool disposedValue;
+        ScopeFactory = scopeFactory;
+        HandlerType = handlerType;
+    }
 
-        public Type HandlerType { get; }
+    /// <summary>
+    /// Resolves handler object from Ioc container.
+    /// </summary>
+    /// <returns>Resolved handler object</returns>
+    public IEventHandlerDisposeWrapper GetHandler()
+    {
+        var scope = ScopeFactory.CreateScope();
+        return new EventHandlerDisposeWrapper(
+            (IEventHandler)scope.ServiceProvider.GetRequiredService(HandlerType),
+            () => scope.Dispose()
+        );
+    }
 
-        protected IServiceScopeFactory ScopeFactory { get; }
+    public bool IsInFactories(List<IEventHandlerFactory> handlerFactories)
+    {
+        return handlerFactories
+            .OfType<IocEventHandlerFactory>()
+            .Any(f => f.HandlerType == HandlerType);
+    }
 
-        public IocEventHandlerFactory(IServiceScopeFactory scopeFactory, Type handlerType)
+    protected virtual void Dispose(bool disposing)
+    {
+        if (!disposedValue)
         {
-            ScopeFactory = scopeFactory;
-            HandlerType = handlerType;
-        }
-
-        /// <summary>
-        /// Resolves handler object from Ioc container.
-        /// </summary>
-        /// <returns>Resolved handler object</returns>
-        public IEventHandlerDisposeWrapper GetHandler()
-        {
-            var scope = ScopeFactory.CreateScope();
-            return new EventHandlerDisposeWrapper(
-                (IEventHandler) scope.ServiceProvider.GetRequiredService(HandlerType),
-                () => scope.Dispose()
-            );
-        }
-
-        public bool IsInFactories(List<IEventHandlerFactory> handlerFactories)
-        {
-            return handlerFactories
-                .OfType<IocEventHandlerFactory>()
-                .Any(f => f.HandlerType == HandlerType);
-        }
-
-        protected virtual void Dispose(bool disposing)
-        {
-            if (!disposedValue)
+            if (disposing)
             {
-                if (disposing)
-                {
-                }
-
-                disposedValue = true;
             }
-        }
 
-        ~IocEventHandlerFactory()
-        {
-            Dispose(disposing: false);
+            disposedValue = true;
         }
+    }
 
-        public void Dispose()
-        {
-            Dispose(disposing: true);
-            GC.SuppressFinalize(this);
-        }
+    ~IocEventHandlerFactory()
+    {
+        Dispose(disposing: false);
+    }
+
+    public void Dispose()
+    {
+        Dispose(disposing: true);
+        GC.SuppressFinalize(this);
     }
 }

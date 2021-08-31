@@ -4,7 +4,7 @@
         <Authors>Gordon</Authors>
         <Company></Company>
         <Copyright>Copyright 2017 Gordon</Copyright>
-        <RepositoryUrl>https://dengxuan.visualstudio.com/Skywalker/_git/Skywalker</RepositoryUrl>
+        <RepositoryUrl>http://47.108.173.4:8081/nexus/repository/nuget-hosted/</RepositoryUrl>
         <RepositoryType>git</RepositoryType>
 
         <TargetFramework>net5.0</TargetFramework>
@@ -17,8 +17,8 @@
         <PackageRequireLicenseAcceptance>false</PackageRequireLicenseAcceptance>
 
         <RestoreAdditionalProjectSources>
-            http://nexus.douyinwanghong.com.cn/repository/nuget-skywalkers/index.json;
-        </RestoreAdditionalProjectSources>
+			http://47.108.173.4:8081/nexus/repository/nuget-hosted/index.json;
+		</RestoreAdditionalProjectSources>
         <IncludeSymbols>true</IncludeSymbols>
         <SymbolPackageFormat>snupkg</SymbolPackageFormat>
         <RootNamespace />

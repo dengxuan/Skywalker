@@ -1,9 +1,12 @@
-﻿
-namespace Skywalker.Spider
+﻿namespace Skywalker.Spider
 {
 
     public class SpiderOptions
     {
+        /// <summary>
+        /// 蜘蛛编号
+        /// </summary>
+        public string SpiderId { get; set; }
 
         /// <summary>
         /// 请求队列数限制
@@ -23,7 +26,7 @@ namespace Skywalker.Spider
         /// <summary>
         /// 当队列中无链接超时后退出爬虫
         /// </summary>
-        public int EmptySleepTime { get; set; } = 60;
+        public int EmptySleepTime { get; set; } = 1000;
 
         /// <summary>
         /// 爬虫采集速度，1 表示 1 秒钟一个请求，0.5 表示 1 秒钟 0.5 个请求，5 表示 1 秒钟 5 个请求
@@ -33,7 +36,7 @@ namespace Skywalker.Spider
         /// <summary>
         /// 一次请求队列获取多少个请求
         /// </summary>
-        public uint Batch { get; set; } = 4;
+        public int Batch { get; set; } = 4;
 
         /// <summary>
         /// 是否去除外链
@@ -49,5 +52,10 @@ namespace Skywalker.Spider
         /// 刷新代理的时间间隔，单位毫秒
         /// </summary>
         public int RefreshProxy { get; set; } = 30000;
+
+        public SpiderOptions()
+        {
+            SpiderId = ObjectId.CreateId().ToString();
+        }
     }
 }

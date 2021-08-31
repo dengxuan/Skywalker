@@ -2,14 +2,13 @@
 using Skywalker.Spider.Http;
 using Skywalker.Spider.Scheduler.Abstractions;
 using System.Collections.Generic;
-using System.Threading;
 using System.Threading.Tasks;
 
 namespace Skywalker.Spider.Scheduler;
 
 public abstract class SchedulerBase : IScheduler
 {
-    private SpinLock _spinLocker;
+    //private SpinLock _spinLocker;
     private bool disposedValue;
     private readonly IRequestHasher _requestHasher;
 
@@ -17,8 +16,8 @@ public abstract class SchedulerBase : IScheduler
 
     protected SchedulerBase(IDuplicateRemover duplicateRemover, IRequestHasher requestHasher)
     {
-        DuplicateRemover = duplicateRemover;
         _requestHasher = requestHasher;
+        DuplicateRemover = duplicateRemover;
     }
 
     /// <summary>
@@ -63,28 +62,29 @@ public abstract class SchedulerBase : IScheduler
     public virtual async Task InitializeAsync(string spiderId)
     {
         await DuplicateRemover.InitializeAsync(spiderId);
+
     }
 
     public async Task<IEnumerable<Request>> DequeueAsync(int count = 1)
     {
-        var locker = false;
+        return await SafeDequeueAsync(count);
+        //var locker = false;
 
-        try
-        {
-            //申请获取锁
-            _spinLocker.Enter(ref locker);
+        //try
+        //{
+        //    //申请获取锁
+        //    //_spinLocker.Enter(ref locker);
 
-            return await SafeDequeueAsync(count);
-        }
-        finally
-        {
-            //工作完毕，或者发生异常时，检测一下当前线程是否占有锁，如果咱有了锁释放它
-            //以避免出现死锁的情况
-            if (locker)
-            {
-                _spinLocker.Exit();
-            }
-        }
+        //}
+        //finally
+        //{
+        //    //工作完毕，或者发生异常时，检测一下当前线程是否占有锁，如果咱有了锁释放它
+        //    //以避免出现死锁的情况
+        //    //if (locker)
+        //    //{
+        //    //    _spinLocker.Exit();
+        //    //}
+        //}
     }
 
     /// <summary>

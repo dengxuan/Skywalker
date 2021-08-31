@@ -3,10 +3,12 @@
 	<Import Project="..\..\..\..\skywalker.props" />
 	<Import Project="..\..\..\..\version.props" />
 	<ItemGroup>
+	  <ProjectReference Include="..\..\..\EventBus\src\Skywalker.EventBus.Abstractions\Skywalker.EventBus.Abstractions.csproj" />
+	  <ProjectReference Include="..\..\..\Extensions\src\Skywalker.Extensions.RateLimiters\Skywalker.Extensions.RateLimiters.csproj" />
 	  <ProjectReference Include="..\Skywalker.Spider.Abstractions\Skywalker.Spider.Abstractions.csproj" />
 	  <ProjectReference Include="..\Skywalker.Spider.Downloader.Abstractions\Skywalker.Spider.Downloader.Abstractions.csproj" />
-	  <ProjectReference Include="..\Skywalker.Spider.Messaging.Abstractions\Skywalker.Spider.Messaging.Abstractions.csproj" />
 	  <ProjectReference Include="..\Skywalker.Spider.Pipeline.Abstractions\Skywalker.Spider.Pipeline.Abstractions.csproj" />
+	  <ProjectReference Include="..\Skywalker.Spider.Pipeline.DataResolver\Skywalker.Spider.Pipeline.DataResolver.csproj" />
 	  <ProjectReference Include="..\Skywalker.Spider.Proxies.Abstractions\Skywalker.Spider.Proxies.Abstractions.csproj" />
 	  <ProjectReference Include="..\Skywalker.Spider.Scheduler.Abstractions\Skywalker.Spider.Scheduler.Abstractions.csproj" />
 	</ItemGroup>

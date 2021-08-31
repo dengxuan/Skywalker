@@ -1,5 +1,5 @@
-dotnet build -c Release
+dotnet msbuild -property:Configuration=Release
 
 dotnet pack Skywalker.sln -c Release -p:IncludeSymbols=true -p:SymbolPackageFormat=snupkg --output nupkgs
 
-dotnet nuget push nupkgs\* -k 13456e84-367c-3678-b7bf-67eea84d9804 -s http://nexus.letggame.com/repository/nuget-skywalkers/
+dotnet nuget push nupkgs\* -k 75ab86cf-c3b0-331e-ba67-a4d6a7a061a5 -s http://47.108.173.4:8081/nexus/repository/nuget-hosted/

@@ -1,16 +1,20 @@
+using Microsoft.Extensions.DependencyInjection;
 using Skywalker.Collections;
+using Skywalker.EventBus.Abstractions;
 
-namespace Skywalker.EventBus
+namespace Skywalker.EventBus;
+
+public class SkywalkerEventBusOptions
 {
-    public class SkywalkerEventBusOptions
-    {
-        public ITypeList<IEventHandler> Handlers { get; }
-        public EtoMappingDictionary EtoMappings { get; set; }
+    public IServiceCollection Services { get; set; }
 
-        public SkywalkerEventBusOptions()
-        {
-            Handlers = new TypeList<IEventHandler>();
-            EtoMappings = new EtoMappingDictionary();
-        }
+    public ITypeList<IEventHandler> Handlers { get; }
+
+    public EtoMappingDictionary EtoMappings { get; set; }
+
+    public SkywalkerEventBusOptions()
+    {
+        Handlers = new TypeList<IEventHandler>();
+        EtoMappings = new EtoMappingDictionary();
     }
 }

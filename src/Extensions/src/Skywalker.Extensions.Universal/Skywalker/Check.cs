@@ -185,24 +185,24 @@ namespace Skywalker
             return value;
         }
 
-        public static string Length([MaybeNull] string value, [NotNull] string argumentName, int maxLength, int minLength = 0)
+        public static string LengthOf([MaybeNull] this string value, [NotNull] string argumentName, int maxLength, int minLength = 0)
         {
             if (minLength > 0)
             {
                 if (string.IsNullOrEmpty(value))
                 {
-                    throw new ArgumentException($"{argumentName} can not be null or empty!", argumentName);
+                    throw new ArgumentOutOfRangeException($"{argumentName} can not be null or empty!", argumentName);
                 }
 
                 if (value.Length < minLength)
                 {
-                    throw new ArgumentException($"{argumentName} length must be equal to or bigger than {minLength}!", argumentName);
+                    throw new ArgumentOutOfRangeException($"{argumentName} length must be equal to or bigger than {minLength}!", argumentName);
                 }
             }
 
             if (value != null && value.Length > maxLength)
             {
-                throw new ArgumentException($"{argumentName} length must be equal to or lower than {maxLength}!", argumentName);
+                throw new ArgumentOutOfRangeException($"{argumentName} length must be equal to or lower than {maxLength}!", argumentName);
             }
 
             return value!;

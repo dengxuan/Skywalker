@@ -1,6 +1,5 @@
 ﻿using Skywalker.Spider.DuplicateRemover.Abstractions;
 using Skywalker.Spider.Http;
-using System;
 using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Linq;
@@ -55,10 +54,11 @@ namespace Skywalker.Spider.Scheduler
                 List<Request> result = new();
                 for (int i = 0; i < count; i++)
                 {
-                    if (_requests.TryDequeue(out Request? request))
+                    if (!_requests.TryDequeue(out Request? request))
                     {
-                        result.Add(request);
+                        break;
                     }
+                    result.Add(request);
                 }
                 return result.Select(x => x.Clone());
             });

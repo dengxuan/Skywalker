@@ -5,13 +5,12 @@ namespace Skywalker.Spider.Messaging;
 
 public class MessageConsumer<TMessage>
 {
-    public bool Registered { get; private set; }
 
     public string Queue { get; }
 
-    public event MessageHandler<TMessage> Received;
+    public event MessageHandler<TMessage>? Received;
 
-    public event Action<MessageConsumer<TMessage>> OnClosing;
+    public event Action<MessageConsumer<TMessage>>? OnClosing;
 
     public MessageConsumer(string queue)
     {
@@ -21,11 +20,6 @@ public class MessageConsumer<TMessage>
         }
 
         Queue = queue;
-    }
-
-    public void Register()
-    {
-        Registered = true;
     }
 
     public async Task InvokeAsync(TMessage message)

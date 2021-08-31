@@ -20,11 +20,6 @@ public class PipelineContext : IDisposable
     public Response Response { get; }
 
     /// <summary>
-    /// 消息队列回传的内容
-    /// </summary>
-    public byte[]? MessageBytes { get; internal set; }
-
-    /// <summary>
     /// 下载的请求
     /// </summary>
     public Request Request { get; }
@@ -43,7 +38,7 @@ public class PipelineContext : IDisposable
     /// <param name="response">下载器返回的结果</param>
     /// <param name="options"></param>
     /// <param name="serviceProvider"></param>
-    public PipelineContext(IServiceProvider serviceProvider, SpiderOptions options, Request request, Response response)
+    internal PipelineContext(IServiceProvider serviceProvider, SpiderOptions options, Request request, Response response)
     {
         Request = request;
         Response = response;
@@ -188,7 +183,6 @@ public class PipelineContext : IDisposable
         {
             if (disposing)
             {
-                MessageBytes = null;
                 _properties.Clear();
                 _data.Clear();
                 Request.Dispose();
