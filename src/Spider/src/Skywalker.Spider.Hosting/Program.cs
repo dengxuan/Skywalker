@@ -9,12 +9,12 @@ using Skywalker.Spider.Http;
 IHost host = Host.CreateDefaultBuilder(args)
     .ConfigureServices((context, services) =>
     {
+        services.AddLogging();
         services.AddSpider();
         services.AddMemoryChannels();
         services.AddHttpDownloader();
     })
     .Build();
-
 IEventBus eventBus = host.Services.GetRequiredService<IEventBus>();
 IServiceScopeFactory serviceScopeFactory = host.Services.GetRequiredService<IServiceScopeFactory>();
 eventBus.Subscribe<Request>(new IocEventHandlerFactory(serviceScopeFactory, typeof(IEventHandler<Request>)));

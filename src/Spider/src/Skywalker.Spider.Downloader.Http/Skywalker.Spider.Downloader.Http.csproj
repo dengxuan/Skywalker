@@ -3,6 +3,9 @@
 	<Import Project="..\..\..\..\skywalker.props" />
 	<Import Project="..\..\..\..\version.props" />
 	<ItemGroup>
+	  <PackageReference Include="Microsoft.Extensions.Http" Version="5.0.0" />
+	</ItemGroup>
+	<ItemGroup>
 	  <ProjectReference Include="..\..\..\EventBus\src\Skywalker.EventBus.Abstractions\Skywalker.EventBus.Abstractions.csproj" />
 	  <ProjectReference Include="..\Skywalker.Spider.Downloader.Abstractions\Skywalker.Spider.Downloader.Abstractions.csproj" />
 	</ItemGroup>

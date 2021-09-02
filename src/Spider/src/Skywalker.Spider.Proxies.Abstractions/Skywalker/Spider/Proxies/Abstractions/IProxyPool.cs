@@ -27,6 +27,4 @@ public interface IProxyPool
     /// <param name="proxy">待回收代理</param>
     /// <returns></returns>
     Task RecycleAsync(Uri proxy);
-
-
 }
