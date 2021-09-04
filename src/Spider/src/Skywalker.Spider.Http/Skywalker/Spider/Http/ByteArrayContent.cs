@@ -4,15 +4,15 @@ namespace Skywalker.Spider.Http
 {
     public class ByteArrayContent : IHttpContent
 	{
-		private ContentHeaders? _headers;
+		private readonly ContentHeaders _headers = new();
 		private bool _disposed;
 
-		public ContentHeaders Headers => _headers ??= new ContentHeaders();
+		public ContentHeaders Headers => _headers;
 
 		/// <summary>
 		/// 内容
 		/// </summary>
-		public byte[]? Bytes { get; private set; }
+		public byte[] Bytes { get; private set; }
 
 		public ByteArrayContent(byte[] bytes)
 		{
@@ -48,11 +48,7 @@ namespace Skywalker.Spider.Http
 			if (_headers != null)
 			{
 				_headers.Clear();
-				_headers = null;
 			}
-
-
-			Bytes = null;
 		}
 
 		public void Dispose()

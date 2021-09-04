@@ -8,12 +8,12 @@ namespace Skywalker.Spider.Http
 	[Serializable]
 	public class Response : IDisposable
 	{
-		private ResponseHeaders _headers;
+		private ResponseHeaders _headers = new();
 		private Version _version;
 		private ResponseHeaders _trailingHeaders;
 		private bool _disposed;
 
-		public ResponseHeaders Headers => _headers ??= new ResponseHeaders();
+		public ResponseHeaders Headers => _headers;
 
 		public ResponseHeaders TrailingHeaders => _trailingHeaders ??= new ResponseHeaders();
 
@@ -29,12 +29,7 @@ namespace Skywalker.Spider.Http
 			get => _version;
 			set
 			{
-				if (value == null)
-				{
-					throw new ArgumentNullException(nameof(value));
-				}
-
-				_version = value;
+                _version = value.NotNull(nameof(value));
 			}
 		}
 
@@ -43,12 +38,12 @@ namespace Skywalker.Spider.Http
 		/// </summary>
 		public HttpStatusCode StatusCode { get; set; }
 
-		public string ReasonPhrase { get; set; }
+		public string? ReasonPhrase { get; set; }
 
 		/// <summary>
 		/// 下载内容
 		/// </summary>
-		public ByteArrayContent Content { get; set; }
+		public ByteArrayContent? Content { get; set; }
 
 		/// <summary>
 		/// 下载消耗的时间
@@ -58,10 +53,20 @@ namespace Skywalker.Spider.Http
 		/// <summary>
 		/// 最终地址
 		/// </summary>
-		public string TargetUrl { get; set; }
+		public string? TargetUrl { get; set; }
 
-		public bool IsSuccessStatusCode =>
-			StatusCode >= HttpStatusCode.OK && StatusCode <= (HttpStatusCode)299;
+		public bool IsSuccessStatusCode => StatusCode >= HttpStatusCode.OK && StatusCode <= (HttpStatusCode)299;
+
+
+		public string ReadAsString()
+		{
+			if (Content == null)
+			{
+				return string.Empty;
+			}
+			// todo: 推测编码
+			return Encoding.UTF8.GetString(Content.Bytes);
+		}
 
 		public Response EnsureSuccessStatusCode()
 		{
@@ -71,12 +76,6 @@ namespace Skywalker.Spider.Http
 			}
 
 			return this;
-		}
-
-		public string ReadAsString()
-		{
-			// todo: 推测编码
-			return Encoding.UTF8.GetString(Content.Bytes);
 		}
 
 		protected virtual void Dispose(bool disposing)
@@ -89,10 +88,8 @@ namespace Skywalker.Spider.Http
 			_disposed = true;
 
 			_headers?.Clear();
-			_headers = null;
 
 			_trailingHeaders?.Clear();
-			_trailingHeaders = null;
 
 			Content?.Dispose();
 		}
@@ -115,7 +112,7 @@ namespace Skywalker.Spider.Http
 			sb.Append(", Content: ");
 			sb.Append(Content == null ? "<null>" : Content.GetType().ToString());
 			sb.AppendLine(", Headers:");
-			HeaderUtilities.DumpHeaders(sb, _headers, Content?.Headers);
+			HeaderUtilities.DumpHeaders(sb, _headers, Content?.Headers!);
 
 			if (_trailingHeaders == null)
 			{

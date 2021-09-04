@@ -3,12 +3,16 @@ using System.Text;
 
 namespace Skywalker.Spider.Http
 {
-    public class HeaderUtilities
+	public class HeaderUtilities
 	{
 		internal static void DumpHeaders(StringBuilder sb, params Dictionary<string, dynamic>[] headers)
 		{
+            if (headers.IsNullOrEmpty())
+            {
+				return;
+            }
 			sb.AppendLine("{");
-			foreach (var t in headers)
+			foreach (var t in headers!)
 			{
 				if (t == null)
 				{

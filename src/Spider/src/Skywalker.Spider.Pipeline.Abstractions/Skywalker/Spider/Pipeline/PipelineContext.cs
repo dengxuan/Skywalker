@@ -134,7 +134,6 @@ public class PipelineContext : IDisposable
         {
             _data[name] = data;
         }
-
         else
         {
             _data.Add(name, data);

@@ -9,7 +9,6 @@ using Skywalker.Spider.Http;
 IHost host = Host.CreateDefaultBuilder(args)
     .ConfigureServices((context, services) =>
     {
-        services.AddLogging();
         services.AddSpider();
         services.AddMemoryChannels();
         services.AddHttpDownloader();

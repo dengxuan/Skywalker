@@ -11,12 +11,10 @@ public static class HttpResponseMessageExtensions
 
         foreach (var header in httpResponseMessage.Headers)
         {
-            response.Headers.Add(header.Key, header.Value?.ToString());
+            response.Headers.Add(header.Key, header.Value);
         }
 
-        response.Version = httpResponseMessage.Version == null
-            ? HttpVersion.Version11
-            : httpResponseMessage.Version;
+        response.Version = httpResponseMessage.Version ?? HttpVersion.Version11;
 
         response.Headers.TransferEncodingChunked = httpResponseMessage.Headers.TransferEncodingChunked;
 

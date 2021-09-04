@@ -68,7 +68,6 @@ namespace Skywalker.Spider.Abstractions
         /// <returns></returns>
         protected async Task InitializeAsync(CancellationToken stoppingToken = default)
         {
-            //SpiderId = GenerateSpiderId();
             Logger.LogInformation($"Initialize spider {Options.SpiderId}");
             await _scheduler.InitializeAsync(Options.SpiderId);
             await LoadRequestFromSuppliers(stoppingToken);
@@ -242,7 +241,7 @@ namespace Skywalker.Spider.Abstractions
 
             base.Dispose();
 
-            GC.Collect();
+            GC.SuppressFinalize(this);
         }
     }
 }

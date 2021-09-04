@@ -4,6 +4,7 @@ using Microsoft.Extensions.Options;
 using Skywalker.EventBus.Abstractions;
 using Skywalker.Spider.Http;
 using Skywalker.Spider.Pipeline;
+using Skywalker.Spider.Pipeline.Abstractions;
 using Skywalker.Spider.Scheduler.Abstractions;
 using System;
 using System.Threading.Tasks;
@@ -30,7 +31,6 @@ public class ResponseEventHandler : IEventHandler<Response>
 
     public async Task HandleEventAsync(Response response)
     {
-        PipelineContext? context = null;
         Request? request = _inProgressRequests.Dequeue(response.RequestHash);
         if (request == null)
         {
@@ -40,12 +40,12 @@ public class ResponseEventHandler : IEventHandler<Response>
         {
             using var scope = _serviceScopeFactory.CreateScope();
             SpiderOptions options = scope.ServiceProvider.GetRequiredService<IOptions<SpiderOptions>>().Value;
-            context = new PipelineContext(scope.ServiceProvider, options, request, response);
-
-            //foreach (var dataFlow in _dataFlows)
-            //{
-            //    await dataFlow.HandleAsync(context);
-            //}
+            using var context = new PipelineContext(scope.ServiceProvider, options, request, response);
+            var pipelines = scope.ServiceProvider.GetServices<IPipeline>();
+            foreach (var pipeline in pipelines)
+            {
+                await pipeline.HandleAsync(context);
+            }
 
             var count = await _scheduler.EnqueueAsync(context.FollowRequests);
             await _scheduler.SuccessAsync(request);
@@ -59,10 +59,6 @@ public class ResponseEventHandler : IEventHandler<Response>
         {
             await _scheduler.FailAsync(request);
             _logger.LogError($" handle {System.Text.Json.JsonSerializer.Serialize(request)} failed: {e}");
-        }
-        finally
-        {
-            context?.Dispose();
         }
     }
 }
