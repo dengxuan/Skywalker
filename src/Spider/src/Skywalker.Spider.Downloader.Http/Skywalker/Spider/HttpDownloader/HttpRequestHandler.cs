@@ -1,23 +1,27 @@
-﻿using Microsoft.Extensions.Logging;
+﻿using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Logging;
+using Skywalker.EventBus;
 using Skywalker.EventBus.Abstractions;
 using Skywalker.Spider.Downloader.Abstractions;
 using Skywalker.Spider.Http;
+using System.Runtime.CompilerServices;
 using System.Threading.Tasks;
 
 namespace Skywalker.Spider.HttpDownloader
 {
     public class HttpRequestHandler : IEventHandler<Request>
     {
-        private readonly IDownloader _downloader;
 
         private readonly IEventBus _eventBus;
+
+        private readonly IDownloader _downloader;
 
         private readonly ILogger<HttpRequestHandler> _logger;
 
         public HttpRequestHandler(IDownloader downloader, IEventBus eventBus, ILogger<HttpRequestHandler> logger)
         {
-            _downloader = downloader;
             _eventBus = eventBus;
+            _downloader = downloader;
             _logger = logger;
         }
 

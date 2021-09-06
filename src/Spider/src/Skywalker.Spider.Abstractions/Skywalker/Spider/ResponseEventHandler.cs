@@ -1,6 +1,5 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
-using Microsoft.Extensions.Options;
 using Skywalker.EventBus.Abstractions;
 using Skywalker.Spider.Http;
 using Skywalker.Spider.Pipeline;
@@ -11,7 +10,7 @@ using System.Threading.Tasks;
 
 namespace Skywalker.Spider;
 
-public class ResponseEventHandler : IEventHandler<Response>
+internal class ResponseEventHandler : IEventHandler<Response>
 {
     private readonly IScheduler _scheduler;
 
@@ -39,9 +38,8 @@ public class ResponseEventHandler : IEventHandler<Response>
         try
         {
             using var scope = _serviceScopeFactory.CreateScope();
-            SpiderOptions options = scope.ServiceProvider.GetRequiredService<IOptions<SpiderOptions>>().Value;
-            using var context = new PipelineContext(scope.ServiceProvider, options, request, response);
             var pipelines = scope.ServiceProvider.GetServices<IPipeline>();
+            using var context = new PipelineContext(request, response);
             foreach (var pipeline in pipelines)
             {
                 await pipeline.HandleAsync(context);

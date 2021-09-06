@@ -6,11 +6,11 @@ using System.Threading.Tasks;
 
 namespace Skywalker.Spider;
 
-public class InProgressRequests : IDisposable
+internal class InProgressRequests : IDisposable
 {
     private readonly ConcurrentDictionary<string, Request> _requests;
     private readonly HashedWheelTimer _timer;
-    private ConcurrentBag<Request> _timeoutRequests;
+    private readonly ConcurrentBag<Request> _timeoutRequests;
 
     public InProgressRequests()
     {

@@ -3,4 +3,4 @@
 
 using System.Runtime.CompilerServices;
 
-[assembly: InternalsVisibleTo("Skywalker.Spider")]
+[assembly: InternalsVisibleTo("Skywalker.Spider.Abstractions")]

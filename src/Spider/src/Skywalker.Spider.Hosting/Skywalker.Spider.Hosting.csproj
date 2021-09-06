@@ -1,4 +1,4 @@
-<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk">
 
 	<Import Project="..\..\..\..\skywalker.props" />
 	<Import Project="..\..\..\..\version.props" />
@@ -11,8 +11,8 @@
 	</ItemGroup>
 	<ItemGroup>
 	  <ProjectReference Include="..\..\..\EventBus\src\Skywalker.EventBus.MemoryChannels\Skywalker.EventBus.MemoryChannels.csproj" />
+	  <ProjectReference Include="..\Skywalker.Spider.Abstractions\Skywalker.Spider.Abstractions.csproj" />
 	  <ProjectReference Include="..\Skywalker.Spider.Downloader.Http\Skywalker.Spider.Downloader.Http.csproj" />
-	  <ProjectReference Include="..\Skywalker.Spider\Skywalker.Spider.csproj" />
 	</ItemGroup>
 	<ItemGroup>
 	  <None Update="appsettings.json">

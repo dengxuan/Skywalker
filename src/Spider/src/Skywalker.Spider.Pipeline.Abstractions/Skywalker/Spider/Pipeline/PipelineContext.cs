@@ -12,8 +12,6 @@ public class PipelineContext : IDisposable
     private readonly Dictionary<string, dynamic?> _properties = new();
     private readonly Dictionary<object, dynamic?> _data = new();
 
-    public SpiderOptions Options { get; }
-
     /// <summary>
     /// 下载器返回的结果
     /// </summary>
@@ -29,8 +27,6 @@ public class PipelineContext : IDisposable
     /// </summary>
     internal List<Request> FollowRequests { get; }
 
-    public IServiceProvider ServiceProvider { get; }
-
     /// <summary>
     /// 构造方法
     /// </summary>
@@ -38,12 +34,10 @@ public class PipelineContext : IDisposable
     /// <param name="response">下载器返回的结果</param>
     /// <param name="options"></param>
     /// <param name="serviceProvider"></param>
-    internal PipelineContext(IServiceProvider serviceProvider, SpiderOptions options, Request request, Response response)
+    internal PipelineContext(Request request, Response response)
     {
         Request = request;
         Response = response;
-        Options = options;
-        ServiceProvider = serviceProvider;
         FollowRequests = new List<Request>();
     }
 
