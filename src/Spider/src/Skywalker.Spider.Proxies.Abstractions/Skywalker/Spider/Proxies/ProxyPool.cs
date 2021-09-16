@@ -16,16 +16,39 @@ public class ProxyPool : IProxyPool
     private readonly ConcurrentQueue<ProxyEntry> _queue = new();
     private readonly ConcurrentDictionary<Uri, ProxyEntry> _proxies = new();
     private readonly IProxyValidator _proxyValidator;
+    private readonly IProxyStorage _proxyStorage;
     private readonly ILogger<ProxyPool> _logger;
     private readonly ProxyOptions _options;
 
     private readonly HashedWheelTimer _timer = new(TimeSpan.FromSeconds(1), 100000);
 
-    public ProxyPool(IProxyValidator proxyValidator, IOptions<ProxyOptions> options, ILogger<ProxyPool> logger)
+    public ProxyPool(IProxyValidator proxyValidator, IProxyStorage proxyStorage, IOptions<ProxyOptions> options, ILogger<ProxyPool> logger)
     {
         _proxyValidator = proxyValidator;
+        _proxyStorage = proxyStorage;
         _logger = logger;
         _options = options.Value;
+    }
+
+    private bool TryAdd(ProxyEntry entry)
+    {
+        if (_proxies.TryAdd(entry.Uri, entry))
+        {
+            _logger.LogInformation($"proxy {entry.Uri} is available");
+            _timer.NewTimeout(new RecycleProxyTask(this, entry.Uri), entry.ExpireTime - DateTime.Now);
+            _queue.Enqueue(_proxies[entry.Uri]);
+            return true;
+        }
+        return false;
+    }
+
+    public async Task InitializeAsync()
+    {
+        var entries = await _proxyStorage.GetAvailablesAsync();
+        foreach (var entry in entries)
+        {
+            TryAdd(entry);
+        }
     }
 
     public async Task BackAsync(Uri proxy, HttpStatusCode statusCode)
@@ -75,11 +98,9 @@ public class ProxyPool : IProxyPool
             {
                 continue;
             }
-            if (_proxies.TryAdd(entry.Uri, entry))
+            await _proxyStorage.CreateAsync(entry);
+            if (TryAdd(entry))
             {
-                _logger.LogInformation($"proxy {entry.Uri} is available");
-                _timer.NewTimeout(new RecycleProxyTask(this, entry.Uri), entry.Limited);
-                _queue.Enqueue(_proxies[entry.Uri]);
                 cnt++;
             }
         }

@@ -11,7 +11,8 @@ namespace Skywalker.Spider.Hosting
     {
         public Task<IEnumerable<Request>> GetAllListAsync(CancellationToken cancellationToken)
         {
-            return Task.FromResult(Enumerable.Repeat(new Request("http://www.baidu.com/"), 1));
+            string requestUri = "https://www.ti.com.cn/productmodel/{OrderablePartNumber}/orderables?locale=zh-CN&orderable={GoodsNumber}";
+            return Task.FromResult(Enumerable.Repeat(new Request(requestUri), 1));
         }
     }
 }

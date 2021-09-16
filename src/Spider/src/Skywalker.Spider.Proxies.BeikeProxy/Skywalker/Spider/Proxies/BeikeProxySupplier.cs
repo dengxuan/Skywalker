@@ -48,7 +48,7 @@ namespace Skywalker.Spider.Proxies
                 {
                     UriBuilder uriBuilder = new("http", item.Ip, item.Port);
 
-                    entries.Add(new(uriBuilder.Uri, DateTime.Parse(item.ExpireTime) - DateTime.Now));
+                    entries.Add(new(uriBuilder.Uri, DateTime.Parse(item.ExpireTime)));
                 }
                 return entries;
             }

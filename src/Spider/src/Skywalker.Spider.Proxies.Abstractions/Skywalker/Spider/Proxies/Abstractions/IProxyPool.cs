@@ -7,6 +7,8 @@ namespace Skywalker.Spider.Proxies.Abstractions;
 
 public interface IProxyPool
 {
+    Task InitializeAsync();
+
     Task<Uri?> GetAsync(int seconds);
 
     Task<int> SetAsync(IEnumerable<ProxyEntry> proxies);

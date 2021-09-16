@@ -15,12 +15,18 @@ namespace Skywalker.Spider.Proxies
         private readonly IProxyPool _pool;
         private readonly IProxySupplier _proxySupplier;
         private readonly ILogger<ProxyBackgroundService> _logger;
-        public ProxyBackgroundService(IProxyPool pool, IOptions<ProxyOptions> options, IProxySupplier proxySupplier, ILogger<ProxyBackgroundService> logger)
+        public ProxyBackgroundService(IProxyPool pool, IProxySupplier proxySupplier, IOptions<ProxyOptions> options, ILogger<ProxyBackgroundService> logger)
         {
             _pool = pool;
-            _options = options.Value;
             _proxySupplier = proxySupplier;
+            _options = options.Value;
             _logger = logger;
+        }
+
+        public override async Task StartAsync(CancellationToken cancellationToken)
+        {
+            await _pool.InitializeAsync();
+            await base.StartAsync(cancellationToken);
         }
 
         protected override async Task ExecuteAsync(CancellationToken stoppingToken)

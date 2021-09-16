@@ -12,7 +12,7 @@ public class ProxyEntry
     /// <summary>
     /// 到期时间
     /// </summary>
-    public TimeSpan Limited { get; set; }
+    public DateTime ExpireTime { get; set; }
 
     /// <summary>
     /// 使用此代理下载数据的失败次数
@@ -24,9 +24,9 @@ public class ProxyEntry
     /// </summary>
     internal int SuccessCount { get; set; }
 
-    public ProxyEntry(Uri uri, TimeSpan? limited = null)
+    public ProxyEntry(Uri uri, DateTime? expireTime = null)
     {
         Uri = uri;
-        Limited = limited ?? TimeSpan.MaxValue;
+        ExpireTime = expireTime ?? DateTime.MaxValue;
     }
 }

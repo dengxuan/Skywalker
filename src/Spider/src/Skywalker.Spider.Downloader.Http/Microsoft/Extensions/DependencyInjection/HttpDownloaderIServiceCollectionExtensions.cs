@@ -11,6 +11,7 @@ public static class HttpDownloaderIServiceCollectionExtensions
     {
         services.AddSingleton<IDownloader, HttpClientDownloader>();
         services.AddSingleton<IEventHandler<Request>, HttpRequestHandler>();
+        services.AddHostedService<HttpDownloaderBackgroundService>();
         return services;
     }
 }
