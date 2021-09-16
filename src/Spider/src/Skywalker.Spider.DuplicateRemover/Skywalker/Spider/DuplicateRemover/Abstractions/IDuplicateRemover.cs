@@ -14,12 +14,6 @@ public interface IDuplicateRemover : IDisposable
     Task<bool> IsDuplicateAsync(Request request);
 
     /// <summary>
-    /// 初始化
-    /// </summary>
-    /// <param name="spiderId"></param>
-    Task InitializeAsync(string spiderId);
-
-    /// <summary>
     /// 获取总数
     /// </summary>
     Task<long> GetTotalAsync();

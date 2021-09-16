@@ -1,10 +1,7 @@
-﻿using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.Logging;
-using Skywalker.EventBus;
+﻿using Microsoft.Extensions.Logging;
 using Skywalker.EventBus.Abstractions;
 using Skywalker.Spider.Downloader.Abstractions;
 using Skywalker.Spider.Http;
-using System.Runtime.CompilerServices;
 using System.Threading.Tasks;
 
 namespace Skywalker.Spider.HttpDownloader

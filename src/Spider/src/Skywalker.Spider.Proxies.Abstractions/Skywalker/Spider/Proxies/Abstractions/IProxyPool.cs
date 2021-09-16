@@ -9,7 +9,7 @@ public interface IProxyPool
 {
     Task<Uri?> GetAsync(int seconds);
 
-    Task<int> SetAsync(IEnumerable<Uri> proxies);
+    Task<int> SetAsync(IEnumerable<ProxyEntry> proxies);
 
     Uri? Get();
 

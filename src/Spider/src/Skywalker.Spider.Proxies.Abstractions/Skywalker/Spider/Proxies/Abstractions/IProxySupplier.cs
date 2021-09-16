@@ -6,5 +6,5 @@ namespace Skywalker.Spider.Proxies.Abstractions;
 
 public interface IProxySupplier
 {
-    Task<IEnumerable<Uri>> GetProxiesAsync();
+    Task<IEnumerable<ProxyEntry>> GetProxiesAsync();
 }

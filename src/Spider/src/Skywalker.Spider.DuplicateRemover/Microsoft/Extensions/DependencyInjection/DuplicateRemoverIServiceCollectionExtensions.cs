@@ -1,5 +1,4 @@
 ﻿using Microsoft.Extensions.DependencyInjection.Extensions;
-//using Skywalker.Spider.Abstractions;
 using Skywalker.Spider.DuplicateRemover;
 using Skywalker.Spider.DuplicateRemover.Abstractions;
 
@@ -7,21 +6,21 @@ namespace Microsoft.Extensions.DependencyInjection;
 
 public static class DuplicateRemoverIServiceCollectionExtensions
 {
-    //public static ISpiderBuilder AddBloomFilterDuplicateRemover(this ISpiderBuilder builder)
-    //{
-    //    builder.Services.AddSingleton<IDuplicateRemover, BloomFilterDuplicateRemover>();
-    //    return builder;
-    //}
+    public static IServiceCollection AddBloomFilterDuplicateRemover(this IServiceCollection services)
+    {
+        services.AddSingleton<IDuplicateRemover, BloomFilterDuplicateRemover>();
+        return services;
+    }
 
-    //public static ISpiderBuilder AddHashSetDuplicateRemover(this ISpiderBuilder builder)
-    //{
-    //    builder.Services.AddSingleton<IDuplicateRemover, HashSetDuplicateRemover>();
-    //    return builder;
-    //}
+    public static IServiceCollection AddHashSetDuplicateRemover(this IServiceCollection services)
+    {
+        services.AddSingleton<IDuplicateRemover, HashSetDuplicateRemover>();
+        return services;
+    }
 
-    //public static ISpiderBuilder AddDuplicateRemover(this ISpiderBuilder builder)
-    //{
-    //    builder.Services.TryAddSingleton<IDuplicateRemover, NoneDuplicateRemover>();
-    //    return builder;
-    //}
+    public static IServiceCollection AddDuplicateRemover(this IServiceCollection services)
+    {
+        services.TryAddSingleton<IDuplicateRemover, NoneDuplicateRemover>();
+        return services;
+    }
 }

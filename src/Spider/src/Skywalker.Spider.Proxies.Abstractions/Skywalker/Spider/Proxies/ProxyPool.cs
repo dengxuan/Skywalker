@@ -1,4 +1,5 @@
 ﻿using Microsoft.Extensions.Logging;
+using Microsoft.Extensions.Options;
 using Skywalker.Extensions.WheelTimer;
 using Skywalker.Spider.Proxies.Abstractions;
 using System;
@@ -12,29 +13,24 @@ namespace Skywalker.Spider.Proxies;
 public class ProxyPool : IProxyPool
 {
 
-    private readonly ConcurrentQueue<ProxyEntry> _queue;
-    private readonly ConcurrentDictionary<Uri, ProxyEntry> _dict;
+    private readonly ConcurrentQueue<ProxyEntry> _queue = new();
+    private readonly ConcurrentDictionary<Uri, ProxyEntry> _proxies = new();
     private readonly IProxyValidator _proxyValidator;
     private readonly ILogger<ProxyPool> _logger;
+    private readonly ProxyOptions _options;
 
     private readonly HashedWheelTimer _timer = new(TimeSpan.FromSeconds(1), 100000);
 
-    private readonly int _ignoreCount;
-    private readonly int _reDetectCount;
-
-    public ProxyPool(IProxyValidator proxyValidator, ILogger<ProxyPool> logger)
+    public ProxyPool(IProxyValidator proxyValidator, IOptions<ProxyOptions> options, ILogger<ProxyPool> logger)
     {
         _proxyValidator = proxyValidator;
         _logger = logger;
-        _queue = new ConcurrentQueue<ProxyEntry>();
-        _dict = new ConcurrentDictionary<Uri, ProxyEntry>();
-        _ignoreCount = 6;
-        _reDetectCount = _ignoreCount / 2;
+        _options = options.Value;
     }
 
     public async Task BackAsync(Uri proxy, HttpStatusCode statusCode)
     {
-        if (_dict.TryGetValue(proxy, out var p))
+        if (_proxies.TryGetValue(proxy, out var p))
         {
             // 若是返回成功，则直接把失败次数至为 0
             if (statusCode.IsSuccessStatusCode())
@@ -48,14 +44,14 @@ public class ProxyPool : IProxyPool
             }
 
             // 若是失败次数大于 ignoreCount，则把此代理从缓存中删除，不再使用
-            if (p.FailureCount > _ignoreCount)
+            if (p.FailureCount > _options.IgnoreCount)
             {
-                _dict.TryRemove(p.Uri, out _);
+                _proxies.TryRemove(p.Uri, out _);
                 return;
             }
 
             // 若是失败次数为 reDetectCount 的倍数则尝试重新测试此代理是否正常，若是测试不成功，则把此代理从缓存中删除，不再使用
-            if (p.FailureCount == 0 || p.FailureCount % _reDetectCount != 0)
+            if (p.FailureCount == 0 || p.FailureCount % _options.RedetectCount != 0)
             {
                 _queue.Enqueue(p);
                 return;
@@ -64,27 +60,26 @@ public class ProxyPool : IProxyPool
 
             if (!isAvaliable)
             {
-                _dict.TryRemove(p.Uri, out _);
+                _proxies.TryRemove(p.Uri, out _);
             }
         }
     }
 
-    public async Task<int> SetAsync(IEnumerable<Uri> proxies)
+    public async Task<int> SetAsync(IEnumerable<ProxyEntry> proxies)
     {
         var cnt = 0;
-        foreach (var proxy in proxies)
+        foreach (var entry in proxies)
         {
-            var isAvailable = await _proxyValidator.IsAvailable(proxy);
+            var isAvailable = await _proxyValidator.IsAvailable(entry.Uri);
             if (!isAvailable)
             {
                 continue;
             }
-            ProxyEntry entry = new(proxy, TimeSpan.FromSeconds(10000));
-            if (_dict.TryAdd(proxy, entry))
+            if (_proxies.TryAdd(entry.Uri, entry))
             {
-                _logger.LogInformation($"proxy {proxy} is available");
-                _timer.NewTimeout(new RecycleProxyTask(this, proxy), entry.Limited);
-                _queue.Enqueue(_dict[proxy]);
+                _logger.LogInformation($"proxy {entry.Uri} is available");
+                _timer.NewTimeout(new RecycleProxyTask(this, entry.Uri), entry.Limited);
+                _queue.Enqueue(_proxies[entry.Uri]);
                 cnt++;
             }
         }
@@ -124,7 +119,7 @@ public class ProxyPool : IProxyPool
 
     public Task RecycleAsync(Uri proxy)
     {
-        _dict.TryRemove(proxy, out ProxyEntry _);
+        _proxies.TryRemove(proxy, out ProxyEntry _);
         return Task.CompletedTask;
     }
 }

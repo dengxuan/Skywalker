@@ -10,6 +10,7 @@ using Skywalker.Spider.Http;
 using Skywalker.Spider.Scheduler.Abstractions;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 
@@ -35,11 +36,11 @@ namespace Skywalker.Spider
         /// </summary>
         protected ILogger Logger { get; }
 
-        public Spider(IEventBus eventBus, IScheduler scheduler, InProgressRequests inProgressRequests, IList<IRequestSupplier> requestSuppliers, IServiceScopeFactory serviceScopeFactory, IOptions<SpiderOptions> options, ILogger<Spider> logger)
+        public Spider(IEventBus eventBus, IScheduler scheduler, InProgressRequests inProgressRequests, IServiceProvider serviceProvider, IServiceScopeFactory serviceScopeFactory, IOptions<SpiderOptions> options, ILogger<Spider> logger)
         {
             _eventBus = eventBus;
             _scheduler = scheduler;
-            _requestSuppliers = requestSuppliers;
+            _requestSuppliers = serviceProvider.GetServices<IRequestSupplier>().ToList();
             _inProgressRequests = inProgressRequests;
             _serviceScopeFactory = serviceScopeFactory;
             Logger = logger;
@@ -91,8 +92,6 @@ namespace Skywalker.Spider
             Logger.LogInformation($"Initialize spider {Options.SpiderId}");
 
             _eventBus.Subscribe<Response>(new IocEventHandlerFactory(_serviceScopeFactory, typeof(IEventHandler<Response>)));
-
-            await _scheduler.InitializeAsync(Options.SpiderId);
 
             // 通过供应接口添加请求
             foreach (var requestSupplier in _requestSuppliers)

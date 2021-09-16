@@ -25,14 +25,22 @@ namespace Simple.Application.Users
         {
             List<User> users = await _userManager.FindUsersAsync("");
 
-            List<UserOutputDto> result = _objectMapper.Map<List<User>, List<UserOutputDto>>(users);
+            List<UserOutputDto>? result = _objectMapper.Map<List<User>, List<UserOutputDto>>(users);
+            if(result == null)
+            {
+               return new PagedResultDto<UserOutputDto>();
+            }
             return new PagedResultDto<UserOutputDto>(100, result);
         }
 
         public async Task<PagedResultDto<UserOutputDto>?> HandleAsync(UserInputDto inputDto, CancellationToken cancellationToken)
         {
             List<User> users = await _userManager.FindUsersAsync(inputDto.Name!);
-            List<UserOutputDto> result = _objectMapper.Map<List<User>, List<UserOutputDto>>(users);
+            List<UserOutputDto>? result = _objectMapper.Map<List<User>, List<UserOutputDto>>(users);
+            if (result == null)
+            {
+                return new PagedResultDto<UserOutputDto>();
+            }
             return new PagedResultDto<UserOutputDto>(100, result);
         }
     }

@@ -31,10 +31,8 @@ public class IocEventHandlerFactory : IEventHandlerFactory, IDisposable
     public IEventHandlerDisposeWrapper GetHandler()
     {
         var scope = ScopeFactory.CreateScope();
-        return new EventHandlerDisposeWrapper(
-            (IEventHandler)scope.ServiceProvider.GetRequiredService(HandlerType),
-            () => scope.Dispose()
-        );
+        IEventHandler eventHandler = (IEventHandler)scope.ServiceProvider.GetRequiredService(HandlerType);
+        return new EventHandlerDisposeWrapper(eventHandler, () => scope.Dispose());
     }
 
     public bool IsInFactories(List<IEventHandlerFactory> handlerFactories)

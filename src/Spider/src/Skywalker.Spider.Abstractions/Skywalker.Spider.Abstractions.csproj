@@ -10,7 +10,6 @@
 	  <ProjectReference Include="..\..\..\EventBus\src\Skywalker.EventBus.Abstractions\Skywalker.EventBus.Abstractions.csproj" />
 	  <ProjectReference Include="..\..\..\Extensions\src\Skywalker.Extensions.HashedWheelTimer\Skywalker.Extensions.HashedWheelTimer.csproj" />
 	  <ProjectReference Include="..\..\..\Extensions\src\Skywalker.Extensions.RateLimiters\Skywalker.Extensions.RateLimiters.csproj" />
-	  <ProjectReference Include="..\..\..\Extensions\src\Skywalker.Extensions.Universal\Skywalker.Extensions.Universal.csproj" />
 	  <ProjectReference Include="..\Skywalker.Spider.Pipeline.Abstractions\Skywalker.Spider.Pipeline.Abstractions.csproj" />
 	  <ProjectReference Include="..\Skywalker.Spider.Scheduler.Abstractions\Skywalker.Spider.Scheduler.Abstractions.csproj" />
 	</ItemGroup>

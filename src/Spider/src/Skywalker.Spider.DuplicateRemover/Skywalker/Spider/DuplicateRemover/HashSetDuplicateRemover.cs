@@ -12,7 +12,6 @@ namespace Skywalker.Spider.DuplicateRemover;
 public class HashSetDuplicateRemover : IDuplicateRemover
 {
     private bool disposedValue = false;
-    private string _spiderId = string.Empty;
     private readonly HashSet<string> _sets = new();
 
     /// <summary>
@@ -25,12 +24,7 @@ public class HashSetDuplicateRemover : IDuplicateRemover
         return Task.Run(() =>
         {
             request.NotNull(nameof(request));
-            request.Owner.NotNullOrWhiteSpace(nameof(request.Owner));
 
-            if (request.Owner != _spiderId)
-            {
-                throw new ArgumentException("请求所属爬虫的标识与去重器所属的爬虫标识不一致", request.Owner);
-            }
             lock (this)
             {
                 bool isDuplicate = _sets.Add(request.Hash);
@@ -38,15 +32,6 @@ public class HashSetDuplicateRemover : IDuplicateRemover
             }
         });
 
-    }
-
-    public Task InitializeAsync(string spiderId)
-    {
-        return Task.Run(() =>
-        {
-            spiderId.NotNullOrWhiteSpace(nameof(spiderId));
-            _spiderId = spiderId;
-        });
     }
 
     public Task<long> GetTotalAsync()

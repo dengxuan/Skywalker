@@ -10,6 +10,7 @@ public abstract class SchedulerBase : IScheduler
 {
     //private SpinLock _spinLocker;
     private bool disposedValue;
+
     private readonly IRequestHasher _requestHasher;
 
     protected readonly IDuplicateRemover DuplicateRemover;
@@ -59,12 +60,6 @@ public abstract class SchedulerBase : IScheduler
     /// <returns>请求</returns>
     protected abstract Task<IEnumerable<Request>> SafeDequeueAsync(int count = 1);
 
-    public virtual async Task InitializeAsync(string spiderId)
-    {
-        await DuplicateRemover.InitializeAsync(spiderId);
-
-    }
-
     public async Task<IEnumerable<Request>> DequeueAsync(int count = 1)
     {
         return await SafeDequeueAsync(count);
@@ -90,6 +85,7 @@ public abstract class SchedulerBase : IScheduler
     /// <summary>
     /// 请求入队
     /// </summary>
+    /// <param name="spiderId"></param>
     /// <param name="requests">请求</param>
     /// <returns>入队个数</returns>
     public async Task<int> EnqueueAsync(IEnumerable<Request> requests)

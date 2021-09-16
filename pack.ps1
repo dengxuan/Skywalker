@@ -1,4 +1,4 @@
-dotnet msbuild -property:Configuration=Release
+dotnet build -c Release
 
 dotnet pack Skywalker.sln -c Release -p:IncludeSymbols=true -p:SymbolPackageFormat=snupkg --output nupkgs
 

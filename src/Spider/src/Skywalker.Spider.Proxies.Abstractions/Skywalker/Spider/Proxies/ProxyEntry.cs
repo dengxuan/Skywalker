@@ -17,12 +17,12 @@ public class ProxyEntry
     /// <summary>
     /// 使用此代理下载数据的失败次数
     /// </summary>
-    public int FailureCount { get; set; }
+    internal int FailureCount { get; set; }
 
     /// <summary>
     /// 使用此代理下载数据的成功次数
     /// </summary>
-    public int SuccessCount { get; set; }
+    internal int SuccessCount { get; set; }
 
     public ProxyEntry(Uri uri, TimeSpan? limited = null)
     {

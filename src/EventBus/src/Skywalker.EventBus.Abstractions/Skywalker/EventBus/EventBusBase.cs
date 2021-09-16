@@ -82,19 +82,19 @@ public abstract class EventBusBase : IEventBus
     public abstract void UnsubscribeAll(Type eventType);
 
     /// <inheritdoc/>
-    public virtual Task PublishAsync<TEvent>(TEvent @event) where TEvent : class
+    public virtual Task PublishAsync<TEvent>(TEvent eventArgs) where TEvent : class
     {
-        return PublishAsync(typeof(TEvent), @event);
+        return PublishAsync(typeof(TEvent), eventArgs);
     }
 
     /// <inheritdoc/>
-    public abstract Task PublishAsync(Type eventType, object @event);
+    public abstract Task PublishAsync(Type eventType, object eventArgs);
 
-    public virtual async Task TriggerHandlersAsync(Type eventType, object eventData)
+    public virtual async Task TriggerHandlersAsync(Type eventType, object eventArgs)
     {
         var exceptions = new List<Exception>();
 
-        await TriggerHandlersAsync(eventType, eventData, exceptions);
+        await TriggerHandlersAsync(eventType, eventArgs, exceptions);
 
         if (exceptions.Any())
         {
@@ -107,7 +107,7 @@ public abstract class EventBusBase : IEventBus
         }
     }
 
-    protected virtual async Task TriggerHandlersAsync(Type eventType, object eventData, List<Exception> exceptions)
+    protected virtual async Task TriggerHandlersAsync(Type eventType, object eventArgs, List<Exception> exceptions)
     {
         await new SynchronizationContextRemover();
 
@@ -115,7 +115,7 @@ public abstract class EventBusBase : IEventBus
         {
             foreach (var handlerFactory in handlerFactories.EventHandlerFactories)
             {
-                await TriggerHandlerAsync(handlerFactory, handlerFactories.EventType, eventData, exceptions);
+                await TriggerHandlerAsync(handlerFactory, handlerFactories.EventType, eventArgs, exceptions);
             }
         }
 
@@ -129,7 +129,7 @@ public abstract class EventBusBase : IEventBus
             if (baseArg != null)
             {
                 var baseEventType = eventType.GetGenericTypeDefinition().MakeGenericType(baseArg);
-                var constructorArgs = ((IEventDataWithInheritableGenericArgument)eventData).GetConstructorArgs();
+                var constructorArgs = ((IEventDataWithInheritableGenericArgument)eventArgs).GetConstructorArgs();
                 var baseEventData = Activator.CreateInstance(baseEventType, constructorArgs);
                 await PublishAsync(baseEventType, baseEventData!);
             }

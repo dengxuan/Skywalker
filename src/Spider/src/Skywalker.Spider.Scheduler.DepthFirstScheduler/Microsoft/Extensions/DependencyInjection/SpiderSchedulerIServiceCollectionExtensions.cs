@@ -1,15 +1,14 @@
-﻿using Skywalker.Spider.Abstractions;
-using Skywalker.Spider.Scheduler;
+﻿using Skywalker.Spider.Scheduler;
 using Skywalker.Spider.Scheduler.Abstractions;
 
 namespace Microsoft.Extensions.DependencyInjection;
 
 public static class SpiderSchedulerIServiceCollectionExtensions
 {
-    public static ISpiderBuilder DepthFirstScheduler(this ISpiderBuilder builder)
+    public static IServiceCollection DepthFirstScheduler(this IServiceCollection services)
     {
-        builder.AddDuplicateRemover();
-        builder.Services.AddSingleton<IScheduler, QueueDepthFirstScheduler>();
-        return builder;
+        services.AddDuplicateRemover();
+        services.AddSingleton<IScheduler, QueueDepthFirstScheduler>();
+        return services;
     }
 }

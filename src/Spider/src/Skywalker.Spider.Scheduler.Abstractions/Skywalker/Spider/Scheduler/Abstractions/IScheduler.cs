@@ -11,12 +11,6 @@ namespace Skywalker.Spider.Scheduler.Abstractions
     public interface IScheduler : IDisposable
 	{
 		/// <summary>
-		/// 初始化
-		/// </summary>
-		/// <param name="spiderId"></param>
-		Task InitializeAsync(string spiderId);
-
-		/// <summary>
 		/// 从队列中取出指定爬虫的指定个数请求
 		/// </summary>
 		/// <param name="count">出队数</param>

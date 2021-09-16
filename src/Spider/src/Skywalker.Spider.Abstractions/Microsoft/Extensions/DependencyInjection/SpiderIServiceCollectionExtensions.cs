@@ -11,6 +11,8 @@ namespace Microsoft.Extensions.DependencyInjection
 
         private static IServiceCollection AddSpiderServices(IServiceCollection services)
         {
+            services.AddDuplicateRemover();
+            services.AddScheduler();
             services.AddSingleton<IRequestHasher, RequestHasher>();
             services.AddSingleton<InProgressRequests>();
             services.AddSingleton<IEventHandler<Response>, ResponseEventHandler>();

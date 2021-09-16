@@ -38,11 +38,6 @@ public class BloomFilterDuplicateRemover : IDuplicateRemover
         _counter = 0;
     }
 
-    public Task InitializeAsync(string spiderId)
-    {
-        return Task.CompletedTask;
-    }
-
     /// <summary>
     /// Check whether the request is duplicate.
     /// </summary>

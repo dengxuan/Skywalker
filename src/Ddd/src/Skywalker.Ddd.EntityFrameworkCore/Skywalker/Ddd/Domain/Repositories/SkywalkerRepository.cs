@@ -5,11 +5,10 @@ using Skywalker.Domain.Entities;
 using Skywalker.Domain.Entities.Events;
 using Skywalker.Domain.Repositories;
 using Skywalker.EventBus;
-using Skywalker.EventBus.Distributed;
+using Skywalker.EventBus.Abstractions;
 using Skywalker.Extensions.Timing;
 using Skywalker.Reflection;
 using System;
-using Skywalker.Extensions.Linq;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Diagnostics.CodeAnalysis;
@@ -153,7 +152,7 @@ namespace Skywalker.Ddd.Domain.Repositories
             return DbSet.AsQueryable();
         }
 
-        public override async Task<TEntity> FindAsync([NotNull] Expression<Func<TEntity, bool>> predicate, CancellationToken cancellationToken = default)
+        public override async Task<TEntity?> FindAsync([NotNull] Expression<Func<TEntity, bool>> predicate, CancellationToken cancellationToken = default)
         {
             return await DbSet.Where(predicate).SingleOrDefaultAsync(GetCancellationToken(cancellationToken));
         }

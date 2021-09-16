@@ -1,29 +1,31 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
 using Skywalker.EventBus.Abstractions;
+using Skywalker.Messaging.Abstractions;
 using Skywalker.Threading;
 using System;
 using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading;
 using System.Threading.Tasks;
 
 namespace Skywalker.EventBus.MemoryChannels;
 
-public class MemoryChannelEventBus : EventBusBase, IEventBus
+public class ChannelEventBus : EventBusBase, IEventBus
 {
 
-    private readonly ConcurrentDictionary<Type, List<IEventHandlerFactory>> _handlerFactories = new();
     private readonly ConcurrentDictionary<string, Type> _eventTypes = new();
 
-    private readonly IConnection _connection;
+    private readonly ConcurrentDictionary<Type, List<IEventHandlerFactory>> _handlerFactories = new();
 
-    private readonly IChannelMessageConsumer _messageConsumer;
+    private readonly IMessagePublisher _messagePublisher;
 
-    public MemoryChannelEventBus(IServiceScopeFactory serviceScopeFactory, IConnectionFactory connectionFactory, IChannelMessageConsumer messageConsumer) : base(serviceScopeFactory)
+    private readonly IMessageSubscriber _messageSubscriber;
+
+    public ChannelEventBus(IServiceScopeFactory serviceScopeFactory, IMessagePublisher messagePublisher, IMessageSubscriber messageSubscriber) : base(serviceScopeFactory)
     {
-        _connection = connectionFactory.CreateChannel();
-        _messageConsumer = messageConsumer;
-        _messageConsumer.OnMessageReceived(ProcessEventAsync);
+        _messagePublisher = messagePublisher;
+        _messageSubscriber = messageSubscriber;
     }
 
     private List<IEventHandlerFactory> GetOrCreateHandlerFactories(Type eventType)
@@ -32,26 +34,26 @@ public class MemoryChannelEventBus : EventBusBase, IEventBus
         {
             var eventName = EventNameAttribute.GetNameOrDefault(type);
             _eventTypes[eventName] = type;
-            return new List<IEventHandlerFactory>(); 
+            return new List<IEventHandlerFactory>();
         });
     }
 
-    private async Task ProcessEventAsync(string routingKey, ReadOnlyMemory<byte> bytes)
+    public async Task HandleAsync(string routingKey, ReadOnlyMemory<byte> bytes, CancellationToken cancellationToken)
     {
         var eventType = _eventTypes.GetOrDefault(routingKey);
         if (eventType == null)
         {
             return;
         }
-        var eventData = await bytes.FromBytesAsync(eventType);
-        await TriggerHandlersAsync(eventType, eventData!);
+        var eventArgs = await bytes.FromBytesAsync(eventType, cancellationToken);
+        await TriggerHandlersAsync(eventType, eventArgs!);
     }
 
-    public override async Task PublishAsync(Type eventType, object eventData)
+    public override async Task PublishAsync(Type eventType, object eventArgs)
     {
-        string name = EventNameAttribute.GetNameOrDefault(eventType);
-        byte[] bytes = await eventData.ToBytesAsync(eventType);
-        await _connection.SendAsync(name, bytes);
+        string routingKey = EventNameAttribute.GetNameOrDefault(eventType);
+        byte[] bytes = await eventArgs.ToBytesAsync(eventType);
+        await _messagePublisher.PublishAsync(routingKey, bytes);
     }
 
     public override IDisposable Subscribe(Type eventType, IEventHandlerFactory factory)
@@ -61,6 +63,9 @@ public class MemoryChannelEventBus : EventBusBase, IEventBus
         {
             if (!factory.IsInFactories(factories))
             {
+                string routingKey = EventNameAttribute.GetNameOrDefault(eventType);
+                _messageSubscriber.SubscribeAsync(routingKey, HandleAsync, default);
+
                 factories.Add(factory);
             }
         });

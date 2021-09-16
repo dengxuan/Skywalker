@@ -21,7 +21,6 @@ internal class NoneDuplicateRemover : IDuplicateRemover
     public Task<bool> IsDuplicateAsync(Request request)
     {
         request.NotNull(nameof(request));
-        request.Owner.NotNullOrWhiteSpace(nameof(request.Owner));
         Interlocked.Increment(ref _counter);
         return Task.FromResult(false);
     }
@@ -32,11 +31,6 @@ internal class NoneDuplicateRemover : IDuplicateRemover
     }
 
     public Task ResetDuplicateCheckAsync()
-    {
-        return Task.CompletedTask;
-    }
-
-    public Task InitializeAsync(string spiderId)
     {
         return Task.CompletedTask;
     }

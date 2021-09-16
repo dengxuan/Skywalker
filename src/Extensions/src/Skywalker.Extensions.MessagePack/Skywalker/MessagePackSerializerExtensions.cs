@@ -10,7 +10,7 @@ public static class MessagePackSerializerExtensions
 {
     private static readonly MessagePackSerializerOptions _serializerOptions = MessagePackSerializer.Typeless.DefaultOptions.WithCompression(MessagePackCompression.Lz4Block);
 
-    public static Task<byte[]> ToBytesAsync<T>(this T message) where T : class
+    public static Task<byte[]> ToBytesAsync<T>(this T message) where T : notnull
     {
         return message.ToBytesAsync(typeof(T));
     }
