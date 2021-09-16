@@ -43,16 +43,12 @@ public class HttpClientDownloader : IDownloader
     {
         try
         {
-            var proxy = await _proxies.GetAsync(request.Timeout/1000);
-            if (proxy == null)
-            {
-                throw new Exception("获取代理失败");
-            }
             using var httpClient = await CreateClientAsync(request.Timeout);
             using var httpRequest = request.ToHttpRequestMessage();
             var stopwatch = Stopwatch.StartNew();
             using var httpResponse = await httpClient.SendAsync(httpRequest);
             stopwatch.Stop();
+            _logger.LogInformation("Request[{0}] {1} {2}ms download completed!", httpRequest.RequestUri, httpResponse.StatusCode, stopwatch.ElapsedMilliseconds);
             var response = await httpResponse.ToResponseAsync();
             response.ElapsedMilliseconds = (int)stopwatch.ElapsedMilliseconds;
             response.RequestHash = request.Hash;

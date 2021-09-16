@@ -44,7 +44,7 @@ namespace Skywalker.Spider.Proxies
             if (result?.Code == 1)
             {
                 List<ProxyEntry> entries = new();
-                foreach (var item in result.Data)
+                foreach (var item in result.Data!)
                 {
                     UriBuilder uriBuilder = new("http", item.Ip, item.Port);
 

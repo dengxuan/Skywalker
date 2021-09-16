@@ -26,12 +26,12 @@ namespace Skywalker.Spider.Proxies
             try
             {
                 using MySqlConnection connection = new(_proxyOptions.ConnectionString);
-                string cmdText = "INSERT INTO `SpiderProxies`(`Scheme`, `Host`, `Prot`, `ExpireTime`, `CreationTime`) VALUES(@Scheme, @Host, @Prot, @ExpireTime, @CreationTime);";
+                string cmdText = "INSERT INTO `SpiderProxies`(`Scheme`, `Host`, `Port`, `ExpireTime`, `CreationTime`) VALUES(@Scheme, @Host, @Port, @ExpireTime, @CreationTime);";
                 await connection.OpenAsync();
                 using var cmd = new MySqlCommand(cmdText, connection);
                 cmd.Parameters.AddWithValue("@Scheme", proxy.Uri.Scheme);
                 cmd.Parameters.AddWithValue("@Host", proxy.Uri.Host);
-                cmd.Parameters.AddWithValue("@Prot", proxy.Uri.Port);
+                cmd.Parameters.AddWithValue("@Port", proxy.Uri.Port);
                 cmd.Parameters.AddWithValue("@ExpireTime", proxy.ExpireTime);
                 cmd.Parameters.AddWithValue("@CreationTime", DateTime.Now);
                 await cmd.ExecuteNonQueryAsync();
@@ -47,9 +47,10 @@ namespace Skywalker.Spider.Proxies
             try
             {
                 using MySqlConnection connection = new(_proxyOptions.ConnectionString);
-                var cmdText = "SELECT `Scheme`, `Host`, `Prot`, `ExpireTime`, `CreationTime` FROM `SpiderProxies` WHERE `ExpireTime` < @NOW;";
+                var cmdText = "SELECT `Scheme`, `Host`, `Port`, `ExpireTime`, `CreationTime` FROM `SpiderProxies` WHERE `ExpireTime` > @NOW;";
                 await connection.OpenAsync();
                 using var cmd = new MySqlCommand(cmdText, connection);
+                cmd.Parameters.AddWithValue("@NOW", DateTime.Now.AddSeconds(10));
                 using var reader = await cmd.ExecuteReaderAsync();
                 var entries = new List<ProxyEntry>();
                 while (reader.Read())

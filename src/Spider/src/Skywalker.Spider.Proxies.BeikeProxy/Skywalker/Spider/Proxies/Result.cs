@@ -12,7 +12,7 @@ namespace Skywalker.Spider.Proxies
 
         public int Code { get; set; }
 
-        public List<Data> Data { get; set; }
+        public List<Data>? Data { get; set; }
     }
 
     public class Data

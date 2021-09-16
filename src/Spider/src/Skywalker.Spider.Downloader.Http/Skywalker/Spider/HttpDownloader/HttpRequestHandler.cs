@@ -1,5 +1,4 @@
-﻿using Microsoft.Extensions.Logging;
-using Skywalker.EventBus.Abstractions;
+﻿using Skywalker.EventBus.Abstractions;
 using Skywalker.Spider.Downloader.Abstractions;
 using Skywalker.Spider.Http;
 using System.Threading.Tasks;
@@ -13,19 +12,15 @@ namespace Skywalker.Spider.HttpDownloader
 
         private readonly IDownloader _downloader;
 
-        private readonly ILogger<HttpRequestHandler> _logger;
-
-        public HttpRequestHandler(IDownloader downloader, IEventBus eventBus, ILogger<HttpRequestHandler> logger)
+        public HttpRequestHandler(IDownloader downloader, IEventBus eventBus)
         {
             _eventBus = eventBus;
             _downloader = downloader;
-            _logger = logger;
         }
 
         public async Task HandleEventAsync(Request request)
         {
             Response response = await _downloader.DownloadAsync(request);
-            _logger.LogInformation(response.ToString());
             await _eventBus.PublishAsync(response);
         }
     }

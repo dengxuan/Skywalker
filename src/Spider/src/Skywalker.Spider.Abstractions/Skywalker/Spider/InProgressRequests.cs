@@ -16,7 +16,7 @@ internal class InProgressRequests : IDisposable
     {
         _requests = new ConcurrentDictionary<string, Request>();
         _timeoutRequests = new ConcurrentBag<Request>();
-        _timer = new HashedWheelTimer(TimeSpan.FromSeconds(1), 100000);
+        _timer = new HashedWheelTimer(TimeSpan.FromSeconds(1), 100);
     }
 
     public int Count => _requests.Count;

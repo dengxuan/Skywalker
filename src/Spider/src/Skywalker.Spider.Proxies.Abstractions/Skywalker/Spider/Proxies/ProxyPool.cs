@@ -20,7 +20,7 @@ public class ProxyPool : IProxyPool
     private readonly ILogger<ProxyPool> _logger;
     private readonly ProxyOptions _options;
 
-    private readonly HashedWheelTimer _timer = new(TimeSpan.FromSeconds(1), 100000);
+    private readonly HashedWheelTimer _timer = new(TimeSpan.FromSeconds(1), 100);
 
     public ProxyPool(IProxyValidator proxyValidator, IProxyStorage proxyStorage, IOptions<ProxyOptions> options, ILogger<ProxyPool> logger)
     {

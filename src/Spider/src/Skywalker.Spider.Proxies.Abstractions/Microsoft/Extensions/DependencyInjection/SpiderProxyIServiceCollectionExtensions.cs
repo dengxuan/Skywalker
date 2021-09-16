@@ -11,11 +11,13 @@ namespace Microsoft.Extensions.DependencyInjection
         private static IServiceCollection AddProxyServices(this IServiceCollection services)
         {
             services.AddSingleton<IProxyPool, ProxyPool>();
+            services.AddSingleton<IProxyStorage, MysqlProxyStorage>();
             services.AddSingleton<IProxyValidator, DefaultProxyValidator>();
             services.AddTransient<HttpMessageHandlerBuilder, ProxiedHttpMessageHandlerBuilder>();
             services.AddHostedService<ProxyBackgroundService>();
             return services;
         }
+
         public static IServiceCollection AddProxyCore(this IServiceCollection services, Action<ProxyOptions> options)
         {
             services.Configure(options);

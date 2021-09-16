@@ -4,7 +4,6 @@ using System;
 using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 
@@ -12,14 +11,14 @@ namespace Skywalker.Extensions.WheelTimer
 {
     public class HashedWheelTimer : IWheelTimer
     {
-        private readonly ILogger _logger;
+        private readonly ILogger<HashedWheelTimer> _logger;
         private static volatile AtomicInteger _instanceCounter = new();
         private static volatile int _instanceCountLimit = 64;
         private readonly long _tickDuration;
         private readonly HashedWheelBucket[] _wheel;
         private readonly int _mask;
         private readonly ManualResetEvent _startTimeInitialized = new(false);
-        private ManualResetEvent _workStopped;
+        private ManualResetEvent? _workStopped;
         private readonly ConcurrentQueue<HashedWheelTimeout> _timeouts = new();
 
         private readonly ConcurrentQueue<HashedWheelTimeout> _cancelledTimeouts = new();
@@ -28,7 +27,7 @@ namespace Skywalker.Extensions.WheelTimer
         private readonly AtomicLong _pendingTimeouts = new AtomicLong();
         private readonly long _maxPendingTimeouts;
         private int _workerStarted;
-        private CancellationTokenSource _cancellationTokenSource;
+        private CancellationTokenSource? _cancellationTokenSource;
         private long _tick;
 
         public long StartTime { get; private set; }
@@ -49,26 +48,18 @@ namespace Skywalker.Extensions.WheelTimer
         {
         }
 
-        public HashedWheelTimer(TimeSpan span,
-            int ticksPerWheel = 512,
-            long maxPendingTimeouts = 0) : this(null, span, ticksPerWheel,
-            maxPendingTimeouts)
+        public HashedWheelTimer(TimeSpan span, int ticksPerWheel = 512, long maxPendingTimeouts = 0) : this(null, span, ticksPerWheel, maxPendingTimeouts)
         {
         }
 
-        public HashedWheelTimer(ILogger<HashedWheelTimer>? logger, TimeSpan span,
-            int ticksPerWheel = 512,
-            long maxPendingTimeouts = 0)
+        public HashedWheelTimer(ILogger<HashedWheelTimer>? logger, TimeSpan span, int ticksPerWheel = 512, long maxPendingTimeouts = 0)
         {
             if (ticksPerWheel <= 0)
             {
                 throw new ArgumentOutOfRangeException(nameof(ticksPerWheel), "must be greater than 0: ");
             }
 
-            if (logger == null)
-            {
-                _logger = NullLogger.Instance;
-            }
+            _logger = logger ?? NullLogger<HashedWheelTimer>.Instance;
 
             // Normalize ticksPerWheel to power of two and initialize the wheel.
             _wheel = CreateWheel(ticksPerWheel);
@@ -206,7 +197,7 @@ namespace Skywalker.Extensions.WheelTimer
                 _workStopped = new ManualResetEvent(false);
                 Task.Factory.StartNew(async state =>
                 {
-                    var cancellationToken = (CancellationToken)state;
+                    var cancellationToken = (CancellationToken)state!;
                     StartTime = DateTimeHelper.TotalMilliseconds;
                     if (StartTime == 0)
                     {
@@ -302,7 +293,7 @@ namespace Skywalker.Extensions.WheelTimer
 
         private void ProcessCancelledTasks()
         {
-            for (; ; )
+            while(true)
             {
                 if (!_cancelledTimeouts.TryDequeue(out var timeout) || timeout == null)
                 {
@@ -325,7 +316,7 @@ namespace Skywalker.Extensions.WheelTimer
         {
             var deadline = _tickDuration * (_tick + 1);
 
-            for (; ; )
+            while(true)
             {
                 var currentTime = DateTimeHelper.TotalMilliseconds - StartTime;
                 var sleepTimeMs = (int)Math.Truncate(deadline - currentTime + 1M);
