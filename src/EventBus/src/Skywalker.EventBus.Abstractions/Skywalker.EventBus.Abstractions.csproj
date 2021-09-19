@@ -5,7 +5,6 @@
       <PackageReference Include="Microsoft.Extensions.DependencyInjection.Abstractions" Version="5.0.0" />
     </ItemGroup>
     <ItemGroup>
-      <ProjectReference Include="..\..\..\Extensions\src\Skywalker.Extensions.Collections\Skywalker.Extensions.Collections.csproj" />
       <ProjectReference Include="..\..\..\Extensions\src\Skywalker.Extensions.Universal\Skywalker.Extensions.Universal.csproj" />
     </ItemGroup>
 

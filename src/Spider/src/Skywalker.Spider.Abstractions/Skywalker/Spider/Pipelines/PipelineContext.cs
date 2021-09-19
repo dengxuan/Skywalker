@@ -4,13 +4,14 @@ using System.Collections.Generic;
 using System.Collections.Immutable;
 using System.Linq;
 
-namespace Skywalker.Spider.Pipeline;
+namespace Skywalker.Spider.Pipelines;
 
 public class PipelineContext : IDisposable
 {
     private bool disposedValue = false;
     private readonly Dictionary<string, dynamic?> _properties = new();
     private readonly Dictionary<object, dynamic?> _data = new();
+    public IServiceProvider PipelineServices { get; set; }
 
     /// <summary>
     /// 下载器返回的结果

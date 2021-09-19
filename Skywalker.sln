@@ -64,8 +64,6 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Skywalker.Extensions.GuidGe
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Skywalker.Extensions.Universal", "src\Extensions\src\Skywalker.Extensions.Universal\Skywalker.Extensions.Universal.csproj", "{47E72896-D481-4DC8-B53B-610D81E0055E}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Skywalker.Extensions.Collections", "src\Extensions\src\Skywalker.Extensions.Collections\Skywalker.Extensions.Collections.csproj", "{A5FBC5E5-A3E4-44DD-BA82-01DA12BEFD79}"
-EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Lightning", "Lightning", "{C2930EA9-C3FA-4C68-ACA5-2A99A9D268A8}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Skywalker.Lightning.Abstractions", "src\Lightning\src\Skywalker.Lightning.Abstractions\Skywalker.Lightning.Abstractions.csproj", "{2B011E0E-FED1-4BB7-B946-2A4B067BCF01}"
@@ -170,8 +168,6 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Skywalker.Spider.Scheduler.
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Skywalker.Spider.Http", "src\Spider\src\Skywalker.Spider.Http\Skywalker.Spider.Http.csproj", "{A4BCA563-80BC-452C-8821-10DD0AC1F27A}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Skywalker.Spider.Pipeline.Abstractions", "src\Spider\src\Skywalker.Spider.Pipeline.Abstractions\Skywalker.Spider.Pipeline.Abstractions.csproj", "{425B8861-0872-4673-94EC-81DDBB307C3C}"
-EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Skywalker.Spider.Proxies.Abstractions", "src\Spider\src\Skywalker.Spider.Proxies.Abstractions\Skywalker.Spider.Proxies.Abstractions.csproj", "{C779BA7B-A7D7-46C7-A5EB-2FB14840B703}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Skywalker.Extensions.HashedWheelTimer", "src\Extensions\src\Skywalker.Extensions.HashedWheelTimer\Skywalker.Extensions.HashedWheelTimer.csproj", "{B1224C72-7CD9-4BE0-AAA6-FF2A663BE85E}"
@@ -198,17 +194,17 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Skywalker.EventBus.Channels
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Skywalker.Extensions.HtmlAgilityPack", "src\Extensions\src\Skywalker.Extensions.HtmlAgilityPack\Skywalker.Extensions.HtmlAgilityPack.csproj", "{644CDB10-01AA-4564-B9F2-E573C9756ED6}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Skywalker.Extensions.Channels", "src\Extensions\src\Skywalker.Extensions.Channels\Skywalker.Extensions.Channels.csproj", "{66952F9B-23F3-46AC-A837-50139C6C02EE}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Skywalker.Extensions.Channels", "src\Extensions\src\Skywalker.Extensions.Channels\Skywalker.Extensions.Channels.csproj", "{66952F9B-23F3-46AC-A837-50139C6C02EE}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Messaging", "Messaging", "{6782C0D4-60D1-4962-9D7D-0A796516BCE3}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Skywalker.Messaging.Abstractions", "src\Messaging\src\Skywalker.Messaging.Abstractions\Skywalker.Messaging.Abstractions.csproj", "{33333A7E-6FED-49FB-A1AA-F023B50E2BB2}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Skywalker.Messaging.Abstractions", "src\Messaging\src\Skywalker.Messaging.Abstractions\Skywalker.Messaging.Abstractions.csproj", "{33333A7E-6FED-49FB-A1AA-F023B50E2BB2}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Skywalker.Messaging.Channels", "src\Messaging\src\Skywalker.Messaging.Channels\Skywalker.Messaging.Channels.csproj", "{AC743C1A-D247-43EA-A4BB-D9BBBD78E176}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Skywalker.Messaging.Channels", "src\Messaging\src\Skywalker.Messaging.Channels\Skywalker.Messaging.Channels.csproj", "{AC743C1A-D247-43EA-A4BB-D9BBBD78E176}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Skywalker.Messaging.Redis", "src\Messaging\src\Skywalker.Messaging.Redis\Skywalker.Messaging.Redis.csproj", "{9CF7A8C2-821B-4B0F-9AF6-84D2C062AD92}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Skywalker.Messaging.Redis", "src\Messaging\src\Skywalker.Messaging.Redis\Skywalker.Messaging.Redis.csproj", "{9CF7A8C2-821B-4B0F-9AF6-84D2C062AD92}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Skywalker.Spider.Proxies.BeikeProxy", "src\Spider\src\Skywalker.Spider.Proxies.BeikeProxy\Skywalker.Spider.Proxies.BeikeProxy.csproj", "{A9D04392-E6BF-4FA9-975C-E8B82574C9D6}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Skywalker.Spider.Proxies.BeikeProxy", "src\Spider\src\Skywalker.Spider.Proxies.BeikeProxy\Skywalker.Spider.Proxies.BeikeProxy.csproj", "{A9D04392-E6BF-4FA9-975C-E8B82574C9D6}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -472,18 +468,6 @@ Global
 		{47E72896-D481-4DC8-B53B-610D81E0055E}.Release|x64.Build.0 = Release|Any CPU
 		{47E72896-D481-4DC8-B53B-610D81E0055E}.Release|x86.ActiveCfg = Release|Any CPU
 		{47E72896-D481-4DC8-B53B-610D81E0055E}.Release|x86.Build.0 = Release|Any CPU
-		{A5FBC5E5-A3E4-44DD-BA82-01DA12BEFD79}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{A5FBC5E5-A3E4-44DD-BA82-01DA12BEFD79}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{A5FBC5E5-A3E4-44DD-BA82-01DA12BEFD79}.Debug|x64.ActiveCfg = Debug|Any CPU
-		{A5FBC5E5-A3E4-44DD-BA82-01DA12BEFD79}.Debug|x64.Build.0 = Debug|Any CPU
-		{A5FBC5E5-A3E4-44DD-BA82-01DA12BEFD79}.Debug|x86.ActiveCfg = Debug|Any CPU
-		{A5FBC5E5-A3E4-44DD-BA82-01DA12BEFD79}.Debug|x86.Build.0 = Debug|Any CPU
-		{A5FBC5E5-A3E4-44DD-BA82-01DA12BEFD79}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{A5FBC5E5-A3E4-44DD-BA82-01DA12BEFD79}.Release|Any CPU.Build.0 = Release|Any CPU
-		{A5FBC5E5-A3E4-44DD-BA82-01DA12BEFD79}.Release|x64.ActiveCfg = Release|Any CPU
-		{A5FBC5E5-A3E4-44DD-BA82-01DA12BEFD79}.Release|x64.Build.0 = Release|Any CPU
-		{A5FBC5E5-A3E4-44DD-BA82-01DA12BEFD79}.Release|x86.ActiveCfg = Release|Any CPU
-		{A5FBC5E5-A3E4-44DD-BA82-01DA12BEFD79}.Release|x86.Build.0 = Release|Any CPU
 		{2B011E0E-FED1-4BB7-B946-2A4B067BCF01}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{2B011E0E-FED1-4BB7-B946-2A4B067BCF01}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{2B011E0E-FED1-4BB7-B946-2A4B067BCF01}.Debug|x64.ActiveCfg = Debug|Any CPU
@@ -964,18 +948,6 @@ Global
 		{A4BCA563-80BC-452C-8821-10DD0AC1F27A}.Release|x64.Build.0 = Release|Any CPU
 		{A4BCA563-80BC-452C-8821-10DD0AC1F27A}.Release|x86.ActiveCfg = Release|Any CPU
 		{A4BCA563-80BC-452C-8821-10DD0AC1F27A}.Release|x86.Build.0 = Release|Any CPU
-		{425B8861-0872-4673-94EC-81DDBB307C3C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{425B8861-0872-4673-94EC-81DDBB307C3C}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{425B8861-0872-4673-94EC-81DDBB307C3C}.Debug|x64.ActiveCfg = Debug|Any CPU
-		{425B8861-0872-4673-94EC-81DDBB307C3C}.Debug|x64.Build.0 = Debug|Any CPU
-		{425B8861-0872-4673-94EC-81DDBB307C3C}.Debug|x86.ActiveCfg = Debug|Any CPU
-		{425B8861-0872-4673-94EC-81DDBB307C3C}.Debug|x86.Build.0 = Debug|Any CPU
-		{425B8861-0872-4673-94EC-81DDBB307C3C}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{425B8861-0872-4673-94EC-81DDBB307C3C}.Release|Any CPU.Build.0 = Release|Any CPU
-		{425B8861-0872-4673-94EC-81DDBB307C3C}.Release|x64.ActiveCfg = Release|Any CPU
-		{425B8861-0872-4673-94EC-81DDBB307C3C}.Release|x64.Build.0 = Release|Any CPU
-		{425B8861-0872-4673-94EC-81DDBB307C3C}.Release|x86.ActiveCfg = Release|Any CPU
-		{425B8861-0872-4673-94EC-81DDBB307C3C}.Release|x86.Build.0 = Release|Any CPU
 		{C779BA7B-A7D7-46C7-A5EB-2FB14840B703}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{C779BA7B-A7D7-46C7-A5EB-2FB14840B703}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{C779BA7B-A7D7-46C7-A5EB-2FB14840B703}.Debug|x64.ActiveCfg = Debug|Any CPU
@@ -1222,7 +1194,6 @@ Global
 		{DE9AA054-89D8-4EF4-A8ED-366BFCCD0274} = {0C87D203-3C2C-45D1-89B1-AD85563FBE6F}
 		{BC04724B-EF6A-4842-AABE-C2B8AE4EBD13} = {0C87D203-3C2C-45D1-89B1-AD85563FBE6F}
 		{47E72896-D481-4DC8-B53B-610D81E0055E} = {0C87D203-3C2C-45D1-89B1-AD85563FBE6F}
-		{A5FBC5E5-A3E4-44DD-BA82-01DA12BEFD79} = {0C87D203-3C2C-45D1-89B1-AD85563FBE6F}
 		{C2930EA9-C3FA-4C68-ACA5-2A99A9D268A8} = {9E861C23-5075-455D-A2DA-6DFB5D63D97F}
 		{2B011E0E-FED1-4BB7-B946-2A4B067BCF01} = {C2930EA9-C3FA-4C68-ACA5-2A99A9D268A8}
 		{91B79AC3-2B79-4ABA-9EBE-0A67A5E24EDE} = {C2930EA9-C3FA-4C68-ACA5-2A99A9D268A8}
@@ -1275,7 +1246,6 @@ Global
 		{0265A915-4452-4883-ADB2-84992E2F0730} = {82018F11-12C0-4A15-B7F8-F7795ABE5946}
 		{7068EB8F-5AF5-420E-9A87-A56098ECE2EE} = {82018F11-12C0-4A15-B7F8-F7795ABE5946}
 		{A4BCA563-80BC-452C-8821-10DD0AC1F27A} = {82018F11-12C0-4A15-B7F8-F7795ABE5946}
-		{425B8861-0872-4673-94EC-81DDBB307C3C} = {82018F11-12C0-4A15-B7F8-F7795ABE5946}
 		{C779BA7B-A7D7-46C7-A5EB-2FB14840B703} = {82018F11-12C0-4A15-B7F8-F7795ABE5946}
 		{B1224C72-7CD9-4BE0-AAA6-FF2A663BE85E} = {0C87D203-3C2C-45D1-89B1-AD85563FBE6F}
 		{50BADDE8-D7BF-4B5B-A53F-DC5767ED95E6} = {82018F11-12C0-4A15-B7F8-F7795ABE5946}

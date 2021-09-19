@@ -141,6 +141,7 @@ public class ProxyPool : IProxyPool
     public Task RecycleAsync(Uri proxy)
     {
         _proxies.TryRemove(proxy, out ProxyEntry _);
+        _logger.LogWarning("The Proxy {0} timeout!", proxy);
         return Task.CompletedTask;
     }
 }

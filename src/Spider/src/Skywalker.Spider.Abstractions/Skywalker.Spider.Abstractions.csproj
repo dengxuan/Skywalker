@@ -7,10 +7,9 @@
 	  <PackageReference Include="Microsoft.Extensions.Options.ConfigurationExtensions" Version="5.0.0" />
 	</ItemGroup>
 	<ItemGroup>
-	  <ProjectReference Include="..\..\..\EventBus\src\Skywalker.EventBus.Abstractions\Skywalker.EventBus.Abstractions.csproj" />
 	  <ProjectReference Include="..\..\..\Extensions\src\Skywalker.Extensions.HashedWheelTimer\Skywalker.Extensions.HashedWheelTimer.csproj" />
 	  <ProjectReference Include="..\..\..\Extensions\src\Skywalker.Extensions.RateLimiters\Skywalker.Extensions.RateLimiters.csproj" />
-	  <ProjectReference Include="..\Skywalker.Spider.Pipeline.Abstractions\Skywalker.Spider.Pipeline.Abstractions.csproj" />
+	  <ProjectReference Include="..\..\..\Messaging\src\Skywalker.Messaging.Abstractions\Skywalker.Messaging.Abstractions.csproj" />
 	  <ProjectReference Include="..\Skywalker.Spider.Scheduler.Abstractions\Skywalker.Spider.Scheduler.Abstractions.csproj" />
 	</ItemGroup>
 

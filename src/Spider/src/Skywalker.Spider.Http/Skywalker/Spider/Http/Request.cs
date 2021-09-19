@@ -20,8 +20,8 @@ namespace Skywalker.Spider.Http
         private Uri? _requestUri;
         private Version _version;
         private object? _content;
-        private RequestHeaders _headers;
-        private IDictionary<string, object?> _properties;
+        private RequestHeaders _headers = new();
+        private IDictionary<string, object?> _properties = new Dictionary<string, object?>();
 
         /// <summary>
         /// 请求的哈希
@@ -37,11 +37,6 @@ namespace Skywalker.Spider.Http
         /// 请求的 Timeout 时间
         /// </summary>
         public int Timeout { get; set; } = 30000;
-
-        /// <summary>
-        /// 下载代理标识
-        /// </summary>
-        public string Agent { get; set; }
 
         /// <summary>
         /// 下载代理类型
@@ -101,18 +96,13 @@ namespace Skywalker.Spider.Http
             get => _requestUri;
             set
             {
-                /*if (value != null && value.IsAbsoluteUri && !UriUtilities.IsHttpUri(value))
-				{
-					throw new ArgumentException($"http base address required: {value}");
-				}*/
-
                 _requestUri = value;
             }
         }
 
-        public RequestHeaders Headers => _headers ??= new RequestHeaders();
+        public RequestHeaders Headers => _headers;
 
-        public IDictionary<string, object?> Properties => _properties ??= new Dictionary<string, object?>();
+        public IDictionary<string, object?> Properties => _properties;
 
         /// <summary>
         /// 设置 Cookie
@@ -124,31 +114,29 @@ namespace Skywalker.Spider.Http
             set => Headers.Cookie = value;
         }
 
-        public Request()
-            : this(null)
+        public Request() : this(null)
         {
         }
 
-        public Request(string? requestUri)
-            : this(requestUri, null)
+        public Request(string? requestUri) : this(requestUri, null)
         {
         }
 
-        public Request(string? requestUri, Dictionary<string, object>? properties = null)
-            : this("Get", requestUri, properties)
+        public Request(string? requestUri, Dictionary<string, object>? properties = null) : this("Get", requestUri, properties)
         {
         }
 
-        public Request(string method = "GET", string? requestUri = null,
-            Dictionary<string, object>? properties = null) : this(method,
-            string.IsNullOrEmpty(requestUri) ? null : new Uri(requestUri, UriKind.RelativeOrAbsolute), properties)
+        public Request(string method = "GET", string? requestUri = null, Dictionary<string, object>? properties = null) : this(method, string.IsNullOrEmpty(requestUri) ? null : new Uri(requestUri, UriKind.RelativeOrAbsolute), properties)
         {
         }
 
 
         public Request(string method = "GET", Uri? requestUri = null, Dictionary<string, object>? properties = null)
         {
-            InitializeValues(method, requestUri);
+            _properties = new Dictionary<string, object?>();
+            _method = method.NotNullOrWhiteSpace(nameof(method));
+            _requestUri = requestUri;
+            _version = HttpVersion.Version11;
 
             if (properties != null)
             {
@@ -234,7 +222,6 @@ namespace Skywalker.Spider.Http
             var request = new Request
             {
                 Owner = Owner,
-                Agent = Agent,
                 Downloader = Downloader,
                 Depth = Depth,
                 RequestUri = RequestUri,
@@ -280,25 +267,6 @@ namespace Skywalker.Spider.Http
         {
             Dispose(true);
             GC.SuppressFinalize(this);
-        }
-
-        private void InitializeValues(
-            string method, Uri? requestUri)
-        {
-            if (string.IsNullOrWhiteSpace(method))
-            {
-                throw new ArgumentNullException(nameof(method));
-            }
-
-            /*if (requestUri != null && requestUri.IsAbsoluteUri && !UriUtilities.IsHttpUri(requestUri))
-			{
-				throw new ArgumentException("http base address is required", nameof(requestUri));
-			}*/
-
-            _properties = new Dictionary<string, object?>();
-            _method = method;
-            _requestUri = requestUri;
-            _version = HttpVersion.Version11;
         }
     }
 }

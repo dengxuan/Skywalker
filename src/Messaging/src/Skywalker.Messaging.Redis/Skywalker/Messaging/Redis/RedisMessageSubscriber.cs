@@ -37,5 +37,10 @@ namespace Skywalker.Messaging.Redis
 
             return _subscriber.SubscribeAsync(routingKey, HandleRedisMessage);
         }
+
+        public Task UnsubscribeAsync(string routingKey, CancellationToken cancellationToken = default)
+        {
+            return _subscriber.UnsubscribeAsync(routingKey);
+        }
     }
 }

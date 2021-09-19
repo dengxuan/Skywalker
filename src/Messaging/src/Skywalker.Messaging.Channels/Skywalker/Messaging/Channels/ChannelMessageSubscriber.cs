@@ -19,5 +19,10 @@ namespace Skywalker.Messaging.Channels
         {
             return _subscriber.SubscribeAsync(routingKey, handler, cancellationToken);
         }
+
+        public Task UnsubscribeAsync(string routingKey, CancellationToken cancellationToken = default)
+        {
+            return _subscriber.UnsubscribeAsync(routingKey, cancellationToken);
+        }
     }
 }

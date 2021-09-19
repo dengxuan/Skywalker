@@ -2,15 +2,26 @@
 
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using Skywalker.Spider.Abstractions;
 using Skywalker.Spider.Hosting;
+using Skywalker.Spider.Pipelines.Extensions;
+
 
 await Host.CreateDefaultBuilder(args).ConfigureServices((context, services) =>
 {
-    services.AddSpider();
+    services.AddSpider(builder =>
+    {
+        builder.UseSpider<RequestSupplier>(pipeline =>
+        {
+            pipeline.UseMiddleware<Middleware>();
+            pipeline.Use((context, next) =>
+            {
+                System.Console.WriteLine("Inline");
+                return next(context);
+            });
+        });
+    });
     services.AddChannelEventBus();
     services.AddHttpDownloader();
     services.AddBeikeProxy();
-    services.AddSingleton<IRequestSupplier, RequestSupplier>();
 })
 .RunConsoleAsync();

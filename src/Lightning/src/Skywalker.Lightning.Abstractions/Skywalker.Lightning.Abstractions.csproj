@@ -9,8 +9,4 @@
       <PackageReference Include="Microsoft.Extensions.Logging.Abstractions" Version="5.0.0" />
     </ItemGroup>
 
-    <ItemGroup>
-      <ProjectReference Include="..\..\..\Extensions\src\Skywalker.Extensions.Collections\Skywalker.Extensions.Collections.csproj" />
-    </ItemGroup>
-
 </Project>

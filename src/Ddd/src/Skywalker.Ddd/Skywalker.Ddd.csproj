@@ -13,7 +13,6 @@
         <PackageReference Include="System.ComponentModel.Annotations" Version="5.0.0" />
     </ItemGroup>
     <ItemGroup>
-      <ProjectReference Include="..\..\..\Extensions\src\Skywalker.Extensions.Collections\Skywalker.Extensions.Collections.csproj" />
       <ProjectReference Include="..\..\..\Extensions\src\Skywalker.Extensions.GuidGenerator\Skywalker.Extensions.GuidGenerator.csproj" />
       <ProjectReference Include="..\..\..\Extensions\src\Skywalker.Extensions.Json\Skywalker.Extensions.Json.csproj" />
       <ProjectReference Include="..\..\..\Extensions\src\Skywalker.Extensions.Threading\Skywalker.Extensions.Threading.csproj" />

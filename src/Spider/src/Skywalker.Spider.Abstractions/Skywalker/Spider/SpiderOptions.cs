@@ -4,9 +4,9 @@
     public class SpiderOptions
     {
         /// <summary>
-        /// 蜘蛛编号
+        /// 蜘蛛名称
         /// </summary>
-        public string SpiderId { get; set; }
+        public string SpiderName { get; set; } = "Spider";
 
         /// <summary>
         /// 请求队列数限制
@@ -52,10 +52,5 @@
         /// 刷新代理的时间间隔，单位毫秒
         /// </summary>
         public int RefreshProxy { get; set; } = 30000;
-
-        public SpiderOptions()
-        {
-            SpiderId = ObjectId.CreateId().ToString();
-        }
     }
 }
