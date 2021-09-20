@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using Skywalker.Collections;
+using Skywalker.Collections.Generic;
 
 namespace Skywalker.Validation
 {

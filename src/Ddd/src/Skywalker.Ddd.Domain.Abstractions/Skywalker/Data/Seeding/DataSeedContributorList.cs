@@ -1,4 +1,4 @@
-﻿using Skywalker.Collections;
+﻿using Skywalker.Collections.Generic;
 
 namespace Skywalker.Data.Seeding
 {

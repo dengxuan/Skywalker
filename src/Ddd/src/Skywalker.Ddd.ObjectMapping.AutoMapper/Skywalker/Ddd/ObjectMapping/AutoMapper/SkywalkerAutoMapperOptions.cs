@@ -1,5 +1,5 @@
 ﻿using AutoMapper;
-using Skywalker.Collections;
+using Skywalker.Collections.Generic;
 using System;
 using System.Collections.Generic;
 using System.Linq;

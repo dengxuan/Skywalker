@@ -1,6 +1,6 @@
-﻿using System;
+﻿using Skywalker.Collections.Generic;
+using System;
 using System.Collections.Generic;
-using Skywalker.Collections;
 
 namespace Skywalker.Localization
 {

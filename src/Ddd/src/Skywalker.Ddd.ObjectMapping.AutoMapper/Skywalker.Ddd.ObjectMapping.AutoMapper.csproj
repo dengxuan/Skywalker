@@ -9,6 +9,7 @@
       <PackageReference Include="Microsoft.Extensions.Options" Version="5.0.0" />
     </ItemGroup>
     <ItemGroup>
+      <ProjectReference Include="..\..\..\Extensions\src\Skywalker.Extensions.Universal\Skywalker.Extensions.Universal.csproj" />
       <ProjectReference Include="..\Skywalker.Ddd.ObjectMapping\Skywalker.Ddd.ObjectMapping.csproj" />
     </ItemGroup>
 
