@@ -3,7 +3,7 @@ using System.Threading.Tasks;
 
 namespace Skywalker.Spider.Abstractions;
 
-public interface ISpider<out TRequestSupplier> where TRequestSupplier : IRequestSupplier
+public interface ISpider
 {
     Task InitializeAsync(CancellationToken cancellationToken);
 

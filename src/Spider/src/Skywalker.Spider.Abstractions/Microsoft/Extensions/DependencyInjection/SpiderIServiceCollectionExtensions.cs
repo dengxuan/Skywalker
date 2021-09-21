@@ -15,7 +15,6 @@ namespace Microsoft.Extensions.DependencyInjection
         {
             services.AddDuplicateRemover();
             services.AddScheduler();
-            services.AddTransient<IPipelineChainBuilder,PipelineChainBuilder>();
             services.AddSingleton<IRequestHasher, RequestHasher>();
             services.AddSingleton<ISpiderBuilder>(new SpiderBuilder(services));
             services.AddHostedService<HostedSpiderService>();

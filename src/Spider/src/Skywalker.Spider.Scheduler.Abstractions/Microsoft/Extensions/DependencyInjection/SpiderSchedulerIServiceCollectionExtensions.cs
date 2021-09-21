@@ -8,7 +8,7 @@ public static class SpiderSchedulerIServiceCollectionExtensions
 {
     public static IServiceCollection AddScheduler(this IServiceCollection services)
     {
-        services.TryAddSingleton<IScheduler, DefaultScheduler>();
+        services.TryAddTransient<IScheduler, DefaultScheduler>();
         return services;
     }
 }

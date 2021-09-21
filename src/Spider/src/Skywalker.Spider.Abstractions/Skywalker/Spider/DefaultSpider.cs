@@ -4,8 +4,6 @@ using Skywalker.Extensions.RateLimiters;
 using Skywalker.Messaging.Abstractions;
 using Skywalker.Spider.Abstractions;
 using Skywalker.Spider.Http;
-using Skywalker.Spider.Pipelines;
-using Skywalker.Spider.Pipelines.Abstractions;
 using Skywalker.Spider.Scheduler.Abstractions;
 using System;
 using System.Collections.Concurrent;
@@ -13,147 +11,152 @@ using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
 
-namespace Skywalker.Spider
+namespace Skywalker.Spider;
+
+internal class DefaultSpider<TRequestSupplier, TResponseHandler> : ISpider where TRequestSupplier : class, IRequestSupplier where TResponseHandler : class, IResponseHandler
 {
-    internal class DefaultSpider<TRequestSupplier> : ISpider<TRequestSupplier> where TRequestSupplier : IRequestSupplier
+
+    private readonly ConcurrentDictionary<string, Request> _requests = new();
+
+    /// <summary>
+    /// 日志接口
+    /// </summary>
+    private readonly ILogger _logger;
+
+    private readonly SpiderId _spiderId;
+
+    private readonly SpiderOptions _options;
+
+    private readonly IScheduler _scheduler;
+
+    private readonly IMessagePublisher _messagePublisher;
+
+    private readonly IMessageSubscriber _messageSubscriber;
+
+    private readonly TRequestSupplier _requestSupplier;
+
+    private readonly TResponseHandler _responseHandler;
+
+    private readonly IThrottleStrategy _strategy;
+
+    public DefaultSpider(IScheduler scheduler, IMessagePublisher messagePublisher, IMessageSubscriber messageSubscriber, TRequestSupplier requestSupplier, TResponseHandler responseHandler, IOptions<SpiderOptions> options, ILogger<DefaultSpider<TRequestSupplier, TResponseHandler>> logger)
     {
+        _scheduler = scheduler;
+        _messagePublisher = messagePublisher;
+        _messageSubscriber = messageSubscriber;
+        _requestSupplier = requestSupplier;
+        _responseHandler = responseHandler;
+        _logger = logger;
+        _options = options.Value;
+        _spiderId = new SpiderId(ObjectId.CreateId().ToString().ToUpper(), _options.SpiderName);
+        _strategy = CreateBucket(_options.Speed);
+    }
 
-        /// <summary>
-        /// 日志接口
-        /// </summary>
-        private readonly ILogger _logger;
-
-        private readonly SpiderId _spiderId;
-
-        private readonly SpiderOptions _options;
-
-        private readonly IScheduler _scheduler;
-
-        private readonly IMessagePublisher _messagePublisher;
-
-        private readonly IMessageSubscriber _messageSubscriber;
-
-        private readonly TRequestSupplier _requestSupplier;
-
-        private readonly PipelineDelegate _pipeline;
-
-        private readonly ConcurrentDictionary<string, Request> _requests = new();
-
-        public DefaultSpider(IScheduler scheduler, IMessagePublisher messagePublisher, IMessageSubscriber messageSubscriber, TRequestSupplier requestSupplier, IPipelineChainBuilder pipelineChainBuilder, IOptions<SpiderOptions> options, ILogger<DefaultSpider<TRequestSupplier>> logger)
+    private static FixedTokenBucket CreateBucket(double speed)
+    {
+        if (speed >= 1)
         {
-            _scheduler = scheduler;
-            _messagePublisher = messagePublisher;
-            _messageSubscriber = messageSubscriber;
-            _requestSupplier = requestSupplier;
-            _logger = logger;
-            _options = options.Value;
-            _pipeline = pipelineChainBuilder.Build();
-            _spiderId = new SpiderId(ObjectId.CreateId().ToString(), _options.SpiderName);
+            var defaultTimeUnit = (int)(1000 / speed);
+            return new FixedTokenBucket(1, 1, defaultTimeUnit);
         }
-
-        private static FixedTokenBucket CreateBucket(double speed)
+        else
         {
-            if (speed >= 1)
-            {
-                var defaultTimeUnit = (int)(1000 / speed);
-                return new FixedTokenBucket(1, 1, defaultTimeUnit);
-            }
-            else
-            {
-                var defaultTimeUnit = (int)(1 / speed * 1000);
-                return new FixedTokenBucket(1, 1, defaultTimeUnit);
-            }
+            var defaultTimeUnit = (int)(1 / speed * 1000);
+            return new FixedTokenBucket(1, 1, defaultTimeUnit);
         }
+    }
 
-        private async Task PublishRequestMessagesAsync(Request request)
+    private async Task PublishRequestMessagesAsync(Request request)
+    {
+        request.Owner = _spiderId.Id;
+        if (_requests.TryAdd(request.Hash, request))
         {
-            request.Owner = _spiderId.Id;
-            if (_requests.TryAdd(request.Hash, request))
+            request.Timestamp = DateTimeOffset.Now.ToUnixTimeMilliseconds();
+            byte[] bytes = await request.ToBytesAsync();
+            await _messagePublisher.PublishAsync(request.Downloader, bytes);
+        }
+        //else
+        //{
+        //    _logger.LogWarning($"{_options.SpiderName} enqueue request: {request.RequestUri}, {request.Hash} failed");
+        //}
+    }
+
+    protected async Task HandleAsync(string routingKey, ReadOnlyMemory<byte> bytes, CancellationToken cancellationToken)
+    {
+        Response? response = await bytes.FromBytesAsync<Response>(cancellationToken);
+        if (_requests.TryRemove(response!.RequestHash, out var request))
+        {
+
+            try
             {
-                request.Timestamp = DateTimeOffset.Now.ToUnixTimeMilliseconds();
-                byte[] bytes = await request.ToBytesAsync();
-                await _messagePublisher.PublishAsync(request.Downloader, bytes);
+                await _responseHandler.HandleAsync(request, response, cancellationToken);
+                await _scheduler.SuccessAsync(request);
             }
-            else
+            catch (Exception ex)
             {
-                _logger.LogWarning($"{_options.SpiderName} enqueue request: {request.RequestUri}, {request.Hash} failed");
+                await _scheduler.FailAsync(request);
+                _logger.LogError(ex, "Handle {0} failed: {1}", JsonSerializer.Serialize(request), ex.Message);
             }
         }
+    }
 
-        protected async Task HandleAsync(string routingKey, ReadOnlyMemory<byte> bytes, CancellationToken cancellationToken)
+    /// <summary>
+    /// 初始化爬虫数据
+    /// </summary>
+    /// <param name="stoppingToken"></param>
+    /// <returns></returns>
+    public async Task InitializeAsync(CancellationToken stoppingToken = default)
+    {
+        _logger.LogInformation($"Initialize spider {_options.SpiderName}-{_spiderId.Id}");
+        await _messageSubscriber.SubscribeAsync(_spiderId.Id, HandleAsync, stoppingToken);
+
+        // 通过供应接口添加请求
+        var requests = await _requestSupplier.GetAllListAsync(stoppingToken);
+        await _scheduler.EnqueueAsync(requests);
+
+        _logger.LogInformation($"{_options.SpiderName} load request from {_requestSupplier.GetType().Name}");
+    }
+
+    public async Task ExecuteAsync(CancellationToken stoppingToken)
+    {
+        while (!stoppingToken.IsCancellationRequested)
         {
-            Response? response = await bytes.FromBytesAsync<Response>(cancellationToken);
-            if (_requests.TryRemove(response!.RequestHash, out var request))
+            try
             {
-
-                try
+                var isEmpty = await _scheduler.IsEmpty();
+                if (isEmpty)
                 {
-                    using var context = new PipelineContext(request, response);
-                    await _pipeline(context);
-                    var count = await _scheduler.EnqueueAsync(context.FollowRequests);
-                    await _scheduler.SuccessAsync(request!);
+                    await _scheduler.ResetDuplicateCheckAsync();
+                    var requests = await _requestSupplier.GetAllListAsync(stoppingToken);
+                    await _scheduler.EnqueueAsync(requests);
                 }
-                catch (Exception ex)
+                while (_requests.Count > _options.RequestedQueueCount)
                 {
-                    await _scheduler.FailAsync(request!);
-                    _logger.LogError(ex, "Handle {0} failed: {1}", JsonSerializer.Serialize(request), ex.Message);
+                    await Task.Delay(10, stoppingToken);
                 }
-            }
-        }
 
-        /// <summary>
-        /// 初始化爬虫数据
-        /// </summary>
-        /// <param name="stoppingToken"></param>
-        /// <returns></returns>
-        public async Task InitializeAsync(CancellationToken stoppingToken = default)
-        {
-            _logger.LogInformation($"Initialize spider {_options.SpiderName}");
-            await _messageSubscriber.SubscribeAsync(_spiderId.Id, HandleAsync, stoppingToken);
-
-            // 通过供应接口添加请求
-            var requests = await _requestSupplier.GetAllListAsync(stoppingToken);
-            await _scheduler.EnqueueAsync(requests);
-
-            _logger.LogInformation($"{_options.SpiderName} load request from {_requestSupplier.GetType().Name}");
-        }
-
-        public async Task ExecuteAsync(CancellationToken stoppingToken)
-        {
-            while (!stoppingToken.IsCancellationRequested)
-            {
-                try
+                while (_strategy.ShouldThrottle(1, out var waitTimeMillis))
                 {
-                    var bucket = CreateBucket(_options.Speed);
-
-                    while (_requests.Count > _options.RequestedQueueCount)
-                    {
-                        await Task.Delay(10, stoppingToken);
-                    }
-
-                    while (bucket.ShouldThrottle(1, out var waitTimeMillis))
-                    {
-                        await Task.Delay(waitTimeMillis, stoppingToken);
-                    }
-
-                    var requests = await _scheduler.DequeueAsync(_options.Batch);
-
-                    foreach (var request in requests)
-                    {
-                        await PublishRequestMessagesAsync(request);
-                    }
+                    await Task.Delay(waitTimeMillis, stoppingToken);
                 }
-                catch (Exception e)
+
+                var request = await _scheduler.DequeueAsync();
+                if (request != null)
                 {
-                    _logger.LogError(e, $"{_options.SpiderName}");
+                    await PublishRequestMessagesAsync(request);
+                    continue;
                 }
             }
+            catch (Exception e)
+            {
+                _logger.LogError(e, $"{_options.SpiderName}");
+            }
         }
+    }
 
-        public async Task UnInitializeAsync(CancellationToken cancellationToken)
-        {
-            await _messageSubscriber.UnsubscribeAsync(_spiderId.Id, cancellationToken);
-            _logger.LogInformation($"{_options.SpiderName} stopped");
-        }
+    public async Task UnInitializeAsync(CancellationToken cancellationToken)
+    {
+        await _messageSubscriber.UnsubscribeAsync(_spiderId.Id, cancellationToken);
+        _logger.LogInformation($"{_options.SpiderName} stopped");
     }
 }

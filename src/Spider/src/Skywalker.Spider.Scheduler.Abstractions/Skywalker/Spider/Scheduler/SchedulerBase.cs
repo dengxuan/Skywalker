@@ -29,6 +29,8 @@ public abstract class SchedulerBase : IScheduler
         await DuplicateRemover.ResetDuplicateCheckAsync();
     }
 
+    public abstract Task<bool> IsEmpty();
+
     public virtual Task SuccessAsync(Request request)
     {
         return Task.CompletedTask;
@@ -58,28 +60,11 @@ public abstract class SchedulerBase : IScheduler
     /// </summary>
     /// <param name="count">出队数</param>
     /// <returns>请求</returns>
-    protected abstract Task<IEnumerable<Request>> SafeDequeueAsync(int count = 1);
+    protected abstract Task<Request?> SafeDequeueAsync();
 
-    public async Task<IEnumerable<Request>> DequeueAsync(int count = 1)
+    public async Task<Request?> DequeueAsync()
     {
-        return await SafeDequeueAsync(count);
-        //var locker = false;
-
-        //try
-        //{
-        //    //申请获取锁
-        //    //_spinLocker.Enter(ref locker);
-
-        //}
-        //finally
-        //{
-        //    //工作完毕，或者发生异常时，检测一下当前线程是否占有锁，如果咱有了锁释放它
-        //    //以避免出现死锁的情况
-        //    //if (locker)
-        //    //{
-        //    //    _spinLocker.Exit();
-        //    //}
-        //}
+        return await SafeDequeueAsync();
     }
 
     /// <summary>

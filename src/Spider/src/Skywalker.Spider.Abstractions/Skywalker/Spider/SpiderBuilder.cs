@@ -1,15 +1,10 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
 using Skywalker.Spider.Abstractions;
-using Skywalker.Spider.Pipelines.Abstractions;
-using System;
-using System.Collections.Generic;
 
 namespace Skywalker.Spider
 {
     internal class SpiderBuilder : ISpiderBuilder
     {
-        private readonly Dictionary<Type, Action<IPipelineChainBuilder>> _spiders = new();
-
         private readonly IServiceCollection _services;
 
         public SpiderBuilder(IServiceCollection services)
@@ -17,29 +12,22 @@ namespace Skywalker.Spider
             _services = services;
         }
 
-        public ISpiderBuilder UseSpider<TRequestSupplier>(Action<IPipelineChainBuilder> pipeline) where TRequestSupplier : class, IRequestSupplier
+        public ISpiderBuilder UseSpider<TRequestSupplier, TResponseHandler>()
+            where TRequestSupplier : class, IRequestSupplier
+            where TResponseHandler : class, IResponseHandler
         {
-            return UseSpider<DefaultSpider<TRequestSupplier>, TRequestSupplier>(pipeline);
+            return UseSpider<DefaultSpider<TRequestSupplier, TResponseHandler>, TRequestSupplier, TResponseHandler>();
         }
 
-        public ISpiderBuilder UseSpider<TSpider, TRequestSupplier>(Action<IPipelineChainBuilder> pipeline) where TSpider : class, ISpider<TRequestSupplier> where TRequestSupplier : class, IRequestSupplier
+        public ISpiderBuilder UseSpider<TSpider, TRequestSupplier, TResponseHandler>()
+            where TSpider : class, ISpider
+            where TRequestSupplier : class, IRequestSupplier
+            where TResponseHandler : class, IResponseHandler
         {
             _services.AddSingleton<TRequestSupplier>();
-            _spiders.Add(typeof(TSpider), pipeline);
+            _services.AddSingleton<TResponseHandler>();
+            _services.AddSingleton<ISpider, TSpider>();
             return this;
-        }
-
-        public IEnumerable<ISpider<IRequestSupplier>> CreateSpider(IServiceProvider serviceProvider)
-        {
-            var spiders = new List<ISpider<IRequestSupplier>>();
-            foreach (var item in _spiders)
-            {
-                var pipelineChainBuilder = serviceProvider.GetRequiredService<IPipelineChainBuilder>();
-                item.Value(pipelineChainBuilder);
-                ISpider<IRequestSupplier> spider = (ISpider<IRequestSupplier>)ActivatorUtilities.CreateInstance(serviceProvider, item.Key, new[] { pipelineChainBuilder });
-                spiders.Add(spider);
-            }
-            return spiders;
         }
     }
 }

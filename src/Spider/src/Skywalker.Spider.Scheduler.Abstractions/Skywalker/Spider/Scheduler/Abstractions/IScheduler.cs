@@ -11,11 +11,10 @@ namespace Skywalker.Spider.Scheduler.Abstractions
     public interface IScheduler : IDisposable
 	{
 		/// <summary>
-		/// 从队列中取出指定爬虫的指定个数请求
+		/// 从队列中取出请求
 		/// </summary>
-		/// <param name="count">出队数</param>
 		/// <returns>请求</returns>
-		Task<IEnumerable<Request>> DequeueAsync(int count = 1);
+		Task<Request?> DequeueAsync();
 
 		/// <summary>
 		/// 请求入队
@@ -28,6 +27,12 @@ namespace Skywalker.Spider.Scheduler.Abstractions
 		/// 队列中的总请求个数
 		/// </summary>
 		Task<long> GetTotalAsync();
+
+		/// <summary>
+		/// 队列是否空了
+		/// </summary>
+		/// <returns></returns>
+		Task<bool> IsEmpty();
 
 		/// <summary>
 		/// 重置

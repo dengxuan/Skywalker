@@ -206,6 +206,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Skywalker.Messaging.Redis",
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Skywalker.Spider.Proxies.BeikeProxy", "src\Spider\src\Skywalker.Spider.Proxies.BeikeProxy\Skywalker.Spider.Proxies.BeikeProxy.csproj", "{A9D04392-E6BF-4FA9-975C-E8B82574C9D6}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Skywalker.Extensions.Logging.File", "src\Extensions\src\Skywalker.Extensions.Logging.File\Skywalker.Extensions.Logging.File.csproj", "{CAE2296F-B598-4629-B858-7449061B689C}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -1164,6 +1166,18 @@ Global
 		{A9D04392-E6BF-4FA9-975C-E8B82574C9D6}.Release|x64.Build.0 = Release|Any CPU
 		{A9D04392-E6BF-4FA9-975C-E8B82574C9D6}.Release|x86.ActiveCfg = Release|Any CPU
 		{A9D04392-E6BF-4FA9-975C-E8B82574C9D6}.Release|x86.Build.0 = Release|Any CPU
+		{CAE2296F-B598-4629-B858-7449061B689C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{CAE2296F-B598-4629-B858-7449061B689C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{CAE2296F-B598-4629-B858-7449061B689C}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{CAE2296F-B598-4629-B858-7449061B689C}.Debug|x64.Build.0 = Debug|Any CPU
+		{CAE2296F-B598-4629-B858-7449061B689C}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{CAE2296F-B598-4629-B858-7449061B689C}.Debug|x86.Build.0 = Debug|Any CPU
+		{CAE2296F-B598-4629-B858-7449061B689C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{CAE2296F-B598-4629-B858-7449061B689C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{CAE2296F-B598-4629-B858-7449061B689C}.Release|x64.ActiveCfg = Release|Any CPU
+		{CAE2296F-B598-4629-B858-7449061B689C}.Release|x64.Build.0 = Release|Any CPU
+		{CAE2296F-B598-4629-B858-7449061B689C}.Release|x86.ActiveCfg = Release|Any CPU
+		{CAE2296F-B598-4629-B858-7449061B689C}.Release|x86.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -1265,6 +1279,7 @@ Global
 		{AC743C1A-D247-43EA-A4BB-D9BBBD78E176} = {6782C0D4-60D1-4962-9D7D-0A796516BCE3}
 		{9CF7A8C2-821B-4B0F-9AF6-84D2C062AD92} = {6782C0D4-60D1-4962-9D7D-0A796516BCE3}
 		{A9D04392-E6BF-4FA9-975C-E8B82574C9D6} = {82018F11-12C0-4A15-B7F8-F7795ABE5946}
+		{CAE2296F-B598-4629-B858-7449061B689C} = {0C87D203-3C2C-45D1-89B1-AD85563FBE6F}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {6D4EB88A-9A1A-446D-82B8-B52DD909FF15}

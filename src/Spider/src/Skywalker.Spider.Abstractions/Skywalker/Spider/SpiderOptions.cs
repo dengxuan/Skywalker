@@ -34,19 +34,9 @@
         public double Speed { get; set; } = 1;
 
         /// <summary>
-        /// 一次请求队列获取多少个请求
-        /// </summary>
-        public int Batch { get; set; } = 4;
-
-        /// <summary>
         /// 是否去除外链
         /// </summary>
         public bool RemoveOutboundLinks { get; set; } = false;
-
-        /// <summary>
-        /// 存储器类型: FullTypeName, AssemblyName
-        /// </summary>
-        public string StorageType { get; set; } = "DotnetSpider.MySql.MySqlEntityStorage, DotnetSpider.MySql";
 
         /// <summary>
         /// 刷新代理的时间间隔，单位毫秒

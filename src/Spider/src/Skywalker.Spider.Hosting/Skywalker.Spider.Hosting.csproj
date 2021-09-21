@@ -12,6 +12,7 @@
 	<ItemGroup>
 	  <ProjectReference Include="..\..\..\EventBus\src\Skywalker.EventBus.MemoryChannels\Skywalker.EventBus.Channels.csproj" />
 	  <ProjectReference Include="..\..\..\Extensions\src\Skywalker.Extensions.HtmlAgilityPack\Skywalker.Extensions.HtmlAgilityPack.csproj" />
+	  <ProjectReference Include="..\..\..\Extensions\src\Skywalker.Extensions.Logging.File\Skywalker.Extensions.Logging.File.csproj" />
 	  <ProjectReference Include="..\Skywalker.Spider.Abstractions\Skywalker.Spider.Abstractions.csproj" />
 	  <ProjectReference Include="..\Skywalker.Spider.Downloader.Http\Skywalker.Spider.Downloader.Http.csproj" />
 	  <ProjectReference Include="..\Skywalker.Spider.Proxies.BeikeProxy\Skywalker.Spider.Proxies.BeikeProxy.csproj" />

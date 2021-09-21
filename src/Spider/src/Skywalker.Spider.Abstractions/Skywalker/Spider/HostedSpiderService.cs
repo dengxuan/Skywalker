@@ -10,11 +10,11 @@ namespace Skywalker.Spider;
 
 internal class HostedSpiderService : BackgroundService
 {
-    private readonly IEnumerable<ISpider<IRequestSupplier>> _spiders;
+    private readonly IEnumerable<ISpider> _spiders;
 
     public HostedSpiderService(IServiceProvider serviceProvider)
     {
-        _spiders = serviceProvider.GetRequiredService<ISpiderBuilder>().CreateSpider(serviceProvider);
+        _spiders = serviceProvider.GetServices<ISpider>();
     }
 
     protected override Task ExecuteAsync(CancellationToken stoppingToken)

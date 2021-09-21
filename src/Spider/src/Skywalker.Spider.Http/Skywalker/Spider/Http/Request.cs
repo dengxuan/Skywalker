@@ -21,7 +21,7 @@ namespace Skywalker.Spider.Http
         private Version _version;
         private object? _content;
         private RequestHeaders _headers = new();
-        private IDictionary<string, object?> _properties = new Dictionary<string, object?>();
+        private IDictionary<string, object> _properties = new Dictionary<string, object>();
 
         /// <summary>
         /// 请求的哈希
@@ -102,7 +102,7 @@ namespace Skywalker.Spider.Http
 
         public RequestHeaders Headers => _headers;
 
-        public IDictionary<string, object?> Properties => _properties;
+        public IDictionary<string, object> Properties => _properties;
 
         /// <summary>
         /// 设置 Cookie
@@ -133,7 +133,7 @@ namespace Skywalker.Spider.Http
 
         public Request(string method = "GET", Uri? requestUri = null, Dictionary<string, object>? properties = null)
         {
-            _properties = new Dictionary<string, object?>();
+            _properties = new Dictionary<string, object>();
             _method = method.NotNullOrWhiteSpace(nameof(method));
             _requestUri = requestUri;
             _version = HttpVersion.Version11;
