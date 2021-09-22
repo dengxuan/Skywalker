@@ -33,7 +33,7 @@ public class JiguangProxySupplier : IProxySupplier
         }
 
         Result? result = await httpResponse.Content.ReadFromJsonAsync<Result>();
-        if (result?.Code == 1)
+        if (result?.Code == 0)
         {
             List<ProxyEntry> entries = new();
             foreach (var item in result.Data!)
