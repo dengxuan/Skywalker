@@ -1,4 +1,5 @@
-﻿using Skywalker.Spider.Proxies.Abstractions;
+﻿using Microsoft.Extensions.Options;
+using Skywalker.Spider.Proxies.Abstractions;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -11,28 +12,20 @@ namespace Skywalker.Spider.Proxies
 {
     public class BeikeProxySupplier : IProxySupplier
     {
+        private readonly ProxyOptions _options;
         private readonly IHttpClientFactory _httpClientFactory;
 
-        public BeikeProxySupplier(IHttpClientFactory httpClientFactory)
+        public BeikeProxySupplier(IOptions<ProxyOptions> proxyOptions, IHttpClientFactory httpClientFactory)
         {
+            _options = proxyOptions.Value;
             _httpClientFactory = httpClientFactory;
 
         }
         public async Task<IEnumerable<ProxyEntry>> GetProxiesAsync()
         {
             HttpClient client = _httpClientFactory.CreateClient();
-            Dictionary<string, string> keyValuePairs = new()
-            {
-                { "server_id", "15143" },
-                { "user_id", "20210804000102648756" },
-                { "token", "w2mQEnktl5DjBr61" },
-                { "num", "1" },
-                { "format", "json" },
-                { "protocol", "1" },
-                { "jsonexpiretime", "1" }
-            };
-            string query = keyValuePairs.Select(selector => $"{selector.Key}={selector.Value}").JoinAsString("&");
-            HttpRequestMessage httpRequest = new(HttpMethod.Get, $"http://getip.beikeruanjian.com/getip/?{query}");
+            var apiAddress = _options.ApiAddresses?["Beike"];
+            HttpRequestMessage httpRequest = new(HttpMethod.Get, apiAddress);
             HttpResponseMessage httpResponse = await client.SendAsync(httpRequest);
 
             if (!httpResponse.IsSuccessStatusCode)
