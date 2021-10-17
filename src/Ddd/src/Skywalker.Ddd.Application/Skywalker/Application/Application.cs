@@ -1,36 +1,41 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
+using Skywalker.Application.Abstractions;
 using Skywalker.Application.Dtos.Contracts;
-using Skywalker.Ddd.Application.Abstractions;
 using System;
 using System.Threading;
 using System.Threading.Tasks;
 
-namespace Skywalker.Ddd.Application
+namespace Skywalker.Application;
+
+public class Application : IApplication
 {
-    public class Application : IApplication
+    private readonly IServiceProvider _iocResolver;
+
+    public Application(IServiceProvider iocResolver)
     {
-        private readonly IServiceProvider _iocResolver;
+        _iocResolver = iocResolver;
+    }
 
-        public Application(IServiceProvider iocResolver)
+    public Task ExecuteNonQueryAsync<TInputDto>(TInputDto inputDto, CancellationToken cancellationToken = default) where TInputDto : IEntityDto
+    {
+        var handler = _iocResolver.GetRequiredService<IExecuteNonQueryHandlerProvider<TInputDto>>();
+        return handler.HandleAsync(inputDto,cancellationToken);
+    }
+
+    public Task<TOutputDto?> ExecuteQueryAsync<TOutputDto>(CancellationToken cancellationToken = default) where TOutputDto : IEntityDto
+    {
+        var handler = _iocResolver.GetRequiredService<IExecuteQueryHandlerProvider<TOutputDto>>();
+        return handler.HandleAsync(cancellationToken);
+    }
+
+    public Task<TOutputDto?> ExecuteQueryAsync<TInputDto, TOutputDto>(TInputDto inputDto, CancellationToken cancellationToken = default) where TInputDto : IEntityDto where TOutputDto : IEntityDto
+    {
+        if (inputDto == null)
         {
-            _iocResolver = iocResolver;
+            throw new ArgumentNullException(nameof(inputDto));
         }
 
-        public Task<TOutputDto?> ExecuteAsync<TOutputDto>(CancellationToken cancellationToken = default) where TOutputDto : IEntityDto
-        {
-            var handler = _iocResolver.GetRequiredService<IApplicationHandlerProvider<TOutputDto>>();
-            return handler.HandleAsync(cancellationToken);
-        }
-
-        public Task<TOutputDto?> ExecuteAsync<TInputDto, TOutputDto>(TInputDto inputDto, CancellationToken cancellationToken = default) where TInputDto : IEntityDto where TOutputDto : IEntityDto
-        {
-            if (inputDto == null)
-            {
-                throw new ArgumentNullException(nameof(inputDto));
-            }
-
-            var handler = _iocResolver.GetRequiredService<IApplicationHandlerProvider<TInputDto, TOutputDto>>();
-            return handler.HandleAsync(inputDto, cancellationToken);
-        }
+        var handler = _iocResolver.GetRequiredService<IExecuteQueryHandlerProvider<TInputDto, TOutputDto>>();
+        return handler.HandleAsync(inputDto, cancellationToken);
     }
 }

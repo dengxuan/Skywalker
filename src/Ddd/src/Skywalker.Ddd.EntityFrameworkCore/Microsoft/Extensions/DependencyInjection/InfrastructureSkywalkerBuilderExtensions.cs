@@ -20,7 +20,7 @@ namespace Microsoft.Extensions.DependencyInjection
             skywalker.Services.AddDomainServices();
             SkywalkerDbContextRegistrationOptions options = new(typeof(TDbContext), skywalker.Services);
             SkywalkerRepositoryRegistrar repositoryRegistrar = new(options);
-            IEnumerable<Type> entityTypes = DbContextHelper.GetEntityTypes(typeof(TDbContext));
+            IEnumerable<Type> entityTypes = DbContextHelper.GetEntityTypes<TDbContext>();
             repositoryRegistrar.AddRepositories(entityTypes);
             return skywalker;
         }

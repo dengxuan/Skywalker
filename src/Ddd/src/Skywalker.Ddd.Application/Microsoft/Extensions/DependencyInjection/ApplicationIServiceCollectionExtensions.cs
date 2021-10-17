@@ -1,5 +1,5 @@
-﻿using Skywalker.Ddd.Application;
-using Skywalker.Ddd.Application.Abstractions;
+﻿using Skywalker.Application;
+using Skywalker.Application.Abstractions;
 
 namespace Microsoft.Extensions.DependencyInjection
 {
@@ -8,18 +8,23 @@ namespace Microsoft.Extensions.DependencyInjection
         public static IServiceCollection AddApplication(this IServiceCollection services)
         {
             services.AddScoped<IApplication, Application>();
-            services.AddScoped(typeof(IApplicationHandlerProvider<>), typeof(ApplicationHandlerProvider<>));
-            services.AddScoped(typeof(IApplicationHandlerProvider<,>), typeof(DefaultApplicationHandlerProvider<,>));
+            services.AddScoped(typeof(IExecuteQueryHandlerProvider<>), typeof(ExecuteQueryHandlerProvider<>));
+            services.AddScoped(typeof(IExecuteQueryHandlerProvider<,>), typeof(ExecuteQueryHandlerProvider<,>));
+            services.AddScoped(typeof(IExecuteNonQueryHandlerProvider<>), typeof(ExecuteNonQueryHandlerProvider<>));
             services.Scan(scanner =>
             {
                 scanner.FromApplicationDependencies()
                        .AddClasses(filter =>
                        {
-                           filter.AssignableTo(typeof(IApplicationHandler<>));
+                           filter.AssignableTo(typeof(IExecuteQueryHandler<>));
                        })
                        .AddClasses(filter =>
                        {
-                           filter.AssignableTo(typeof(IApplicationHandler<,>));
+                           filter.AssignableTo(typeof(IExecuteQueryHandler<,>));
+                       })
+                       .AddClasses(filter =>
+                       {
+                           filter.AssignableTo(typeof(IExecuteNonQueryHandler<>));
                        })
                        .AsImplementedInterfaces()
                        .WithScopedLifetime();

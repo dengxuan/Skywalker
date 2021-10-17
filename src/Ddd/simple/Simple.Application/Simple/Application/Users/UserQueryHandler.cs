@@ -1,15 +1,14 @@
-﻿using Simple.Application.Abstractions;
-using Simple.Domain.Users;
+﻿using Simple.Domain.Users;
+using Skywalker.Application.Abstractions;
 using Skywalker.Application.Dtos;
-using Skywalker.Ddd.Application.Abstractions;
 using Skywalker.Ddd.ObjectMapping;
 using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
 
-namespace Simple.Application.Users
+namespace Simple.Application.Abstractions
 {
-    public class UserQueryHandler : IApplicationHandler<PagedResultDto<UserOutputDto>>, IApplicationHandler<UserInputDto, PagedResultDto<UserOutputDto>>
+    public class UserQueryHandler : IExecuteQueryHandler<PagedResultDto<UserOutputDto>>, IExecuteQueryHandler<UserInputDto, PagedResultDto<UserOutputDto>>, IExecuteNonQueryHandler<UserInputDto>
     {
         private readonly IUserManager _userManager;
 
@@ -35,13 +34,18 @@ namespace Simple.Application.Users
 
         public async Task<PagedResultDto<UserOutputDto>?> HandleAsync(UserInputDto inputDto, CancellationToken cancellationToken)
         {
-            List<User> users = await _userManager.FindUsersAsync(inputDto.Name!);
+            List<User> users = await _userManager.FindUsersAsync(inputDto.Name);
             List<UserOutputDto>? result = _objectMapper.Map<List<User>, List<UserOutputDto>>(users);
             if (result == null)
             {
                 return new PagedResultDto<UserOutputDto>();
             }
             return new PagedResultDto<UserOutputDto>(100, result);
+        }
+
+        async Task IExecuteNonQueryHandler<UserInputDto>.HandleAsync(UserInputDto inputDto, CancellationToken cancellationToken)
+        {
+            await _userManager.CreateUser(inputDto.Name);
         }
     }
 }

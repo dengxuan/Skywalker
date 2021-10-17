@@ -16,11 +16,6 @@ namespace Simple.WebApi.Hosting
             return Host.CreateDefaultBuilder(args)
                        .ConfigureWebHostDefaults(webBuilder =>
                        {
-                           webBuilder.ConfigureLogging(configureLogging =>
-                           {
-                               configureLogging.SetMinimumLevel(LogLevel.Information);
-                               configureLogging.AddConsole();
-                           });
                            webBuilder.UseStartup<Startup>();
                        });
         }

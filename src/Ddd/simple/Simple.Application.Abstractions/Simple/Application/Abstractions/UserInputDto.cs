@@ -1,11 +1,13 @@
 ﻿using Skywalker.Application.Dtos;
-using Skywalker.Application.Dtos.Contracts;
-using System;
 
-namespace Simple.Application.Users
+namespace Simple.Application.Abstractions;
+
+public class UserInputDto : EntityDto
 {
-    public class UserInputDto : EntityDto
+    public string Name { get; set; }
+
+    public UserInputDto(string name)
     {
-        public string? Name { get; set; }
+        Name = name;
     }
 }

@@ -21,6 +21,9 @@
             <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
         </None>
     </ItemGroup>
+    <ItemGroup>
+      <PackageReference Include="Swashbuckle.AspNetCore" Version="6.2.2" />
+    </ItemGroup>
 
     <ItemGroup>
         <ProjectReference Include="..\..\..\Caching\src\Skywalker.Caching.Redis\Skywalker.Caching.Redis.csproj" />

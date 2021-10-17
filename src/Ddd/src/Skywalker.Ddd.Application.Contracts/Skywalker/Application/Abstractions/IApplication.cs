@@ -1,10 +1,11 @@
-﻿using Skywalker.Application.Dtos.Contracts;
+﻿using Microsoft.Extensions.DependencyInjection;
+using Skywalker.Application.Dtos.Contracts;
 using System.Threading;
 using System.Threading.Tasks;
 
-namespace Skywalker.Ddd.Application.Abstractions
+namespace Skywalker.Application.Abstractions
 {
-    public interface IApplication
+    public interface IApplication : IScopedDependency
     {
         /// <summary>
         /// 异步发送无查询参数的查询到一个查询处理器
@@ -12,7 +13,7 @@ namespace Skywalker.Ddd.Application.Abstractions
         /// <typeparam name="TOutputDto">查询结果</typeparam>
         /// <param name="cancellationToken">Optional cancellation token</param>
         /// <returns>一个发送操作的任务. 任务结果包含查询处理器处理的结果</returns>
-        Task<TOutputDto?> ExecuteAsync<TOutputDto>(CancellationToken cancellationToken = default) where TOutputDto : IEntityDto;
+        Task<TOutputDto?> ExecuteQueryAsync<TOutputDto>(CancellationToken cancellationToken = default) where TOutputDto : IEntityDto;
 
         /// <summary>
         /// 异步发送查询到一个查询Handler
@@ -22,6 +23,15 @@ namespace Skywalker.Ddd.Application.Abstractions
         /// <param name="inputDto">查询参数</param>
         /// <param name="cancellationToken">CancellationToken</param>
         /// <returns>一个发送操作的任务. 任务结果包含查询处理器处理的结果</returns>
-        Task<TOutputDto?> ExecuteAsync<TInputDto, TOutputDto>(TInputDto inputDto, CancellationToken cancellationToken = default) where TInputDto : IEntityDto where TOutputDto : IEntityDto;
+        Task<TOutputDto?> ExecuteQueryAsync<TInputDto, TOutputDto>(TInputDto inputDto, CancellationToken cancellationToken = default) where TInputDto : IEntityDto where TOutputDto : IEntityDto;
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <typeparam name="TInputDto"></typeparam>
+        /// <param name="inputDto"></param>
+        /// <param name="cancellationToken"></param>
+        /// <returns></returns>
+        Task ExecuteNonQueryAsync<TInputDto>(TInputDto inputDto, CancellationToken cancellationToken = default) where TInputDto : IEntityDto;
     }
 }

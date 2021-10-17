@@ -162,7 +162,7 @@ namespace System
                 throw new ArgumentException("len argument can not be bigger than given string's length!");
             }
 
-            return str.Substring(0, len);
+            return str[..len];
         }
 
         /// <summary>

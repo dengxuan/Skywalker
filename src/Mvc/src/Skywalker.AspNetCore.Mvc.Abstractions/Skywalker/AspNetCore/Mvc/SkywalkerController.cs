@@ -2,8 +2,8 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Localization;
+using Skywalker.Application.Abstractions;
 using Skywalker.AspNetCore.Mvc.Models;
-using Skywalker.Ddd.Application.Abstractions;
 using Skywalker.Localization;
 using Skywalker.Localization.Resources.SkywalkerLocalization;
 using System;

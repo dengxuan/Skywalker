@@ -1,10 +1,8 @@
 ﻿using Microsoft.Extensions.Hosting;
 using Simple.Application.Abstractions;
-using Simple.Application.Users;
+using Skywalker.Application.Abstractions;
 using Skywalker.Application.Dtos;
-using Skywalker.Ddd.Application.Abstractions;
 using System;
-using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
 
@@ -23,7 +21,7 @@ namespace Simple.Application.Hosting
         {
             try
             {
-                PagedResultDto<UserOutputDto>? userDtos = await _searcher.ExecuteAsync<UserInputDto, PagedResultDto<UserOutputDto>>(new UserInputDto { Name = "" });
+                PagedResultDto<UserOutputDto>? userDtos = await _searcher.ExecuteQueryAsync<UserInputDto, PagedResultDto<UserOutputDto>>(new UserInputDto(""), cancellationToken);
             }
             catch (Exception ex)
             {

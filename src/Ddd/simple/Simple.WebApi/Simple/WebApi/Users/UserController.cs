@@ -1,9 +1,8 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using Simple.Application.Abstractions;
-using Simple.Application.Users;
+using Skywalker.Application.Abstractions;
 using Skywalker.Application.Dtos;
-using Skywalker.Ddd.Application.Abstractions;
 using System.Threading.Tasks;
 
 namespace Simple.WebApi.Users
@@ -20,11 +19,17 @@ namespace Simple.WebApi.Users
         }
 
         [HttpGet]
-        [Route("all")]
-        public async Task<PagedResultDto<UserOutputDto>?> GetUsersAsync()
+        public async Task<PagedResultDto<UserOutputDto>?> GetAsync()
         {
-            var users = await _searcher.ExecuteAsync<PagedResultDto<UserOutputDto>>();
+            var users = await _searcher.ExecuteQueryAsync<UserInputDto,PagedResultDto<UserOutputDto>>(new UserInputDto("张三"));
             return users;
+        }
+
+
+        [HttpPost]
+        public async Task PostAsync(UserInputDto inputDto)
+        {
+            await _searcher.ExecuteNonQueryAsync(inputDto);
         }
     }
 }
