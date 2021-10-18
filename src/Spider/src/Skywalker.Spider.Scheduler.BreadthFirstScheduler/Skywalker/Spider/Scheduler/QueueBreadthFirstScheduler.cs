@@ -1,10 +1,5 @@
 ﻿using Skywalker.Spider.DuplicateRemover.Abstractions;
 using Skywalker.Spider.Http;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Skywalker.Spider.Scheduler
 {
@@ -17,6 +12,11 @@ namespace Skywalker.Spider.Scheduler
         /// </summary>
         public QueueBreadthFirstScheduler(IDuplicateRemover duplicateRemover, IRequestHasher requestHasher) : base(duplicateRemover, requestHasher)
         {
+        }
+
+        public override Task<bool> IsEmpty()
+        {
+            return Task.FromResult(_requests.IsNullOrEmpty());
         }
 
         protected override void Dispose(bool disposing)
@@ -48,15 +48,14 @@ namespace Skywalker.Spider.Scheduler
         /// </summary>
         /// <param name="count">出队数</param>
         /// <returns>请求</returns>
-        protected override Task<IEnumerable<Request>> SafeDequeueAsync(int count = 1)
+        protected override Task<Request?> SafeDequeueAsync()
         {
-            var requests = _requests.Take(count).ToArray();
-            if (requests.Length > 0)
+            var request = _requests.FirstOrDefault();
+            if(request != null)
             {
-                _requests.RemoveRange(0, count);
+                _requests.Remove(request);
             }
-
-            return Task.FromResult(requests.Select(x => x.Clone()));
+            return Task.FromResult(request?.Clone());
         }
     }
 }

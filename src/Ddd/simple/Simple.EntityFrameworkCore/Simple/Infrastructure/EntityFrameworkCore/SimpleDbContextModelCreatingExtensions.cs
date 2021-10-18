@@ -1,8 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using Simple.Domain.Users;
 using Skywalker;
-using Skywalker.Ddd.EntityFrameworkCore.Modeling;
-using System;
 
 namespace Simple.EntityFrameworkCore
 {

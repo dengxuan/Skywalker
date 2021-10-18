@@ -1,4 +1,5 @@
-﻿using Microsoft.Extensions.Options;
+﻿using Microsoft.Extensions.Logging;
+using Microsoft.Extensions.Options;
 using Skywalker.Spider.Proxies.Abstractions;
 using System;
 using System.Collections.Generic;
@@ -14,26 +15,29 @@ namespace Skywalker.Spider.Proxies
     {
         private readonly ProxyOptions _options;
         private readonly IHttpClientFactory _httpClientFactory;
+        private readonly ILogger<BeikeProxySupplier> _logger;
 
-        public BeikeProxySupplier(IOptions<ProxyOptions> proxyOptions, IHttpClientFactory httpClientFactory)
+        public BeikeProxySupplier(IOptions<ProxyOptions> proxyOptions, IHttpClientFactory httpClientFactory, ILogger<BeikeProxySupplier> logger)
         {
             _options = proxyOptions.Value;
             _httpClientFactory = httpClientFactory;
+            _logger = logger;
 
         }
         public async Task<IEnumerable<ProxyEntry>> GetProxiesAsync()
         {
             HttpClient client = _httpClientFactory.CreateClient();
             var apiAddress = _options.ApiAddresses?["Beike"];
-            HttpRequestMessage httpRequest = new(HttpMethod.Get, apiAddress);
-            HttpResponseMessage httpResponse = await client.SendAsync(httpRequest);
+            _logger.LogInformation("Get Proxies: {apiAddress}", apiAddress);
+            HttpResponseMessage httpResponse = await client.GetAsync(apiAddress);
 
             if (!httpResponse.IsSuccessStatusCode)
             {
                 return Enumerable.Empty<ProxyEntry>();
             }
-
-            Result? result = await httpResponse.Content.ReadFromJsonAsync<Result>();
+            var jsonContent = await httpResponse.Content.ReadAsStringAsync();
+            _logger.LogInformation("Get Proxies: {apiAddress} {jsonContent}", apiAddress, jsonContent);
+            Result? result = JsonSerializer.Deserialize<Result>(jsonContent);
             if (result?.Code == 1)
             {
                 List<ProxyEntry> entries = new();

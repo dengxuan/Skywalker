@@ -36,11 +36,11 @@ public class QueueDepthFirstScheduler : SchedulerBase
     /// </summary>
     /// <param name="count">出队数</param>
     /// <returns>请求</returns>
-    protected override Task<IEnumerable<Request>> SafeDequeueAsync(int count = 1)
+    protected override Task<Request?> SafeDequeueAsync()
     {
-        var dequeueCount = count;
+        var dequeueCount = 1;
         int start;
-        if (_requests.Count < count)
+        if (_requests.Count < 1)
         {
             dequeueCount = _requests.Count;
             start = 0;
@@ -61,7 +61,7 @@ public class QueueDepthFirstScheduler : SchedulerBase
             _requests.RemoveRange(start, dequeueCount);
         }
 
-        return Task.FromResult(requests.Select(x => x.Clone()));
+        return Task.FromResult(requests.Select(x => x.Clone()).FirstOrDefault());
     }
 
     protected override void Dispose(bool disposing)
@@ -71,5 +71,10 @@ public class QueueDepthFirstScheduler : SchedulerBase
         {
             _requests.Clear();
         }
+    }
+
+    public override Task<bool> IsEmpty()
+    {
+        return Task.FromResult(_requests.IsNullOrEmpty());
     }
 }

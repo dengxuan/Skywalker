@@ -1,23 +1,25 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
-    <Import Project="..\..\..\..\skywalker.props" />
-    <Import Project="..\..\..\..\version.props" />
 
-    <ItemGroup>
-        <PackageReference Include="IdentityModel" Version="5.0.0" />
-        <PackageReference Include="Microsoft.AspNetCore.Authentication" Version="2.2.0" />
-        <PackageReference Include="Microsoft.AspNetCore.Authentication.Cookies" Version="2.2.0" />
-        <PackageReference Include="Microsoft.AspNetCore.Authentication.OpenIdConnect" Version="5.0.2" />
-        <PackageReference Include="Microsoft.AspNetCore.Cors" Version="2.2.0" />
-        <PackageReference Include="Microsoft.AspNetCore.Http.Abstractions" Version="2.2.0" />
-        <PackageReference Include="Microsoft.Extensions.Caching.Abstractions" Version="5.0.0" />
-        <PackageReference Include="Microsoft.Extensions.Logging.Abstractions" Version="5.0.0" />
-        <PackageReference Include="System.IdentityModel.Tokens.Jwt" Version="6.8.0" />
-    </ItemGroup>
+	<PropertyGroup>
+		<RootNamespace></RootNamespace>
+	</PropertyGroup>
 
-    <ItemGroup>
-      <ProjectReference Include="..\Skywalker.IdentityServer.Application.Contracts\Skywalker.IdentityServer.Application.Contracts.csproj" />
-      <ProjectReference Include="..\Skywalker.IdentityServer.Domain\Skywalker.IdentityServer.Domain.csproj" />
-    </ItemGroup>
+	<ItemGroup>
+		<PackageReference Include="IdentityModel" Version="5.0.0" />
+		<PackageReference Include="Microsoft.AspNetCore.Authentication" Version="2.2.0" />
+		<PackageReference Include="Microsoft.AspNetCore.Authentication.Cookies" Version="2.2.0" />
+		<PackageReference Include="Microsoft.AspNetCore.Authentication.OpenIdConnect" Version="5.0.2" />
+		<PackageReference Include="Microsoft.AspNetCore.Cors" Version="2.2.0" />
+		<PackageReference Include="Microsoft.AspNetCore.Http.Abstractions" Version="2.2.0" />
+		<PackageReference Include="Microsoft.Extensions.Caching.Abstractions" Version="5.0.0" />
+		<PackageReference Include="Microsoft.Extensions.Logging.Abstractions" Version="5.0.0" />
+		<PackageReference Include="System.IdentityModel.Tokens.Jwt" Version="6.8.0" />
+	</ItemGroup>
+
+	<ItemGroup>
+		<ProjectReference Include="..\Skywalker.IdentityServer.Application.Contracts\Skywalker.IdentityServer.Application.Contracts.csproj" />
+		<ProjectReference Include="..\Skywalker.IdentityServer.Domain\Skywalker.IdentityServer.Domain.csproj" />
+	</ItemGroup>
 
 
 </Project>

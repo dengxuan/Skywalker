@@ -37,7 +37,7 @@ namespace System.Collections.Generic
         /// <returns>Value if found, default if can not found.</returns>
         public static TValue? GetOrDefault<TKey, TValue>(this Dictionary<TKey, TValue> dictionary, TKey key) where TKey : notnull
         {
-            return dictionary.TryGetValue(key, out TValue value) ? value : default;
+            return dictionary.TryGetValue(key, out TValue? value) ? value : default;
         }
 
         /// <summary>
@@ -50,7 +50,7 @@ namespace System.Collections.Generic
         /// <returns>Value if found, default if can not found.</returns>
         public static TValue? GetOrDefault<TKey, TValue>(this IDictionary<TKey, TValue> dictionary, TKey key) where TKey : notnull
         {
-            return dictionary.TryGetValue(key, out TValue value) ? value : default;
+            return dictionary.TryGetValue(key, out TValue? value) ? value : default;
         }
 
         /// <summary>
@@ -90,9 +90,9 @@ namespace System.Collections.Generic
         /// <returns>Value if found, default if can not found.</returns>
         public static TValue GetOrAdd<TKey, TValue>(this IDictionary<TKey, TValue> dictionary, TKey key, Func<TKey, TValue> factory)
         {
-            if (dictionary.TryGetValue(key, out TValue obj))
+            if (dictionary.TryGetValue(key, out TValue? value))
             {
-                return obj;
+                return value;
             }
 
             return dictionary[key] = factory(key);

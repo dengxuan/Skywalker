@@ -1,10 +1,6 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
 using Skywalker.Application.Abstractions;
 using Skywalker.Application.Dtos.Contracts;
-using System;
-using System.Linq;
-using System.Threading;
-using System.Threading.Tasks;
 
 namespace Skywalker.Application;
 
@@ -15,12 +11,6 @@ public class ExecuteNonQueryHandlerProvider<TInputDto> : IExecuteNonQueryHandler
     public ExecuteNonQueryHandlerProvider(IServiceProvider serviceProvider)
     {
         _serviceProvider = serviceProvider;
-    }
-
-    private Task SeedAsync(TInputDto inputDto, CancellationToken cancellationToken)
-    {
-        IExecuteNonQueryHandler<TInputDto> handler = _serviceProvider.GetRequiredService<IExecuteNonQueryHandler<TInputDto>>();
-        return handler.HandleAsync(inputDto, cancellationToken);
     }
 
     private ExecuteNonQueryHandlerDelegate<TInputDto> Pipeline(ExecuteNonQueryHandlerDelegate<TInputDto> next, IExecuteNonQueryPipelineBehavior<TInputDto> behavior)
@@ -35,8 +25,9 @@ public class ExecuteNonQueryHandlerProvider<TInputDto> : IExecuteNonQueryHandler
     {
         var behaviors = _serviceProvider.GetServices<IExecuteNonQueryPipelineBehavior<TInputDto>>().Reverse();
 
+        IExecuteNonQueryHandler<TInputDto> handler = _serviceProvider.GetRequiredService<IExecuteNonQueryHandler<TInputDto>>();
 
-        var executeDelegate = behaviors.Aggregate((ExecuteNonQueryHandlerDelegate<TInputDto>)SeedAsync, Pipeline);
+        var executeDelegate = behaviors.Aggregate((ExecuteNonQueryHandlerDelegate<TInputDto>)handler.HandleAsync, Pipeline);
         return executeDelegate(inputDto, cancellationToken);
     }
 

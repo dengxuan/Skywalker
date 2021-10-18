@@ -439,11 +439,11 @@ public struct ObjectId : IComparable<ObjectId>, IEquatable<ObjectId>, IConvertib
     /// <summary>
     /// Compares this ObjectId to another object.
     /// </summary>
-    /// <param name="obj">The other object.</param>
+    /// <param name="other">The other object.</param>
     /// <returns>True if the other object is an ObjectId and equal to this one.</returns>
-    public override bool Equals(object obj)
+    public override bool Equals(object? other)
     {
-        if (obj is ObjectId id)
+        if (other is ObjectId id)
         {
             return Equals(id);
         }
@@ -500,7 +500,7 @@ public struct ObjectId : IComparable<ObjectId>, IEquatable<ObjectId>, IConvertib
     /// <returns>True if the hex string was successfully parsed.</returns>
     private static bool TryParseHexString(string s, out byte[] bytes)
     {
-        bytes = null;
+        bytes = Array.Empty<byte>();
 
         if (s == null)
         {
@@ -648,67 +648,67 @@ public struct ObjectId : IComparable<ObjectId>, IEquatable<ObjectId>, IConvertib
         return TypeCode.Object;
     }
 
-    bool IConvertible.ToBoolean(IFormatProvider provider)
+    bool IConvertible.ToBoolean(IFormatProvider? provider)
     {
         throw new InvalidCastException();
     }
 
-    byte IConvertible.ToByte(IFormatProvider provider)
+    byte IConvertible.ToByte(IFormatProvider? provider)
     {
         throw new InvalidCastException();
     }
 
-    char IConvertible.ToChar(IFormatProvider provider)
+    char IConvertible.ToChar(IFormatProvider? provider)
     {
         throw new InvalidCastException();
     }
 
-    DateTime IConvertible.ToDateTime(IFormatProvider provider)
+    DateTime IConvertible.ToDateTime(IFormatProvider? provider)
     {
         throw new InvalidCastException();
     }
 
-    decimal IConvertible.ToDecimal(IFormatProvider provider)
+    decimal IConvertible.ToDecimal(IFormatProvider? provider)
     {
         throw new InvalidCastException();
     }
 
-    double IConvertible.ToDouble(IFormatProvider provider)
+    double IConvertible.ToDouble(IFormatProvider? provider)
     {
         throw new InvalidCastException();
     }
 
-    short IConvertible.ToInt16(IFormatProvider provider)
+    short IConvertible.ToInt16(IFormatProvider? provider)
     {
         throw new InvalidCastException();
     }
 
-    int IConvertible.ToInt32(IFormatProvider provider)
+    int IConvertible.ToInt32(IFormatProvider? provider)
     {
         throw new InvalidCastException();
     }
 
-    long IConvertible.ToInt64(IFormatProvider provider)
+    long IConvertible.ToInt64(IFormatProvider? provider)
     {
         throw new InvalidCastException();
     }
 
-    sbyte IConvertible.ToSByte(IFormatProvider provider)
+    sbyte IConvertible.ToSByte(IFormatProvider? provider)
     {
         throw new InvalidCastException();
     }
 
-    float IConvertible.ToSingle(IFormatProvider provider)
+    float IConvertible.ToSingle(IFormatProvider? provider)
     {
         throw new InvalidCastException();
     }
 
-    string IConvertible.ToString(IFormatProvider provider)
+    string IConvertible.ToString(IFormatProvider? provider)
     {
         return ToString();
     }
 
-    object IConvertible.ToType(Type conversionType, IFormatProvider provider)
+    object IConvertible.ToType(Type conversionType, IFormatProvider? provider)
     {
         switch (Type.GetTypeCode(conversionType))
         {
@@ -726,17 +726,17 @@ public struct ObjectId : IComparable<ObjectId>, IEquatable<ObjectId>, IConvertib
         throw new InvalidCastException();
     }
 
-    ushort IConvertible.ToUInt16(IFormatProvider provider)
+    ushort IConvertible.ToUInt16(IFormatProvider? provider)
     {
         throw new InvalidCastException();
     }
 
-    uint IConvertible.ToUInt32(IFormatProvider provider)
+    uint IConvertible.ToUInt32(IFormatProvider? provider)
     {
         throw new InvalidCastException();
     }
 
-    ulong IConvertible.ToUInt64(IFormatProvider provider)
+    ulong IConvertible.ToUInt64(IFormatProvider? provider)
     {
         throw new InvalidCastException();
     }

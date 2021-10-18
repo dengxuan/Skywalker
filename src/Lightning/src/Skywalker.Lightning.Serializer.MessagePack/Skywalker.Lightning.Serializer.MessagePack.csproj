@@ -1,14 +1,15 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
-    <Import Project="..\..\..\..\skywalker.props" />
-    <Import Project="..\..\..\..\version.props" />
+	<PropertyGroup>
+		<RootNamespace></RootNamespace>
+	</PropertyGroup>
 
-    <ItemGroup>
-      <PackageReference Include="MessagePack" Version="2.2.85" />
-    </ItemGroup>
+	<ItemGroup>
+		<PackageReference Include="MessagePack" Version="2.2.85" />
+	</ItemGroup>
 
-    <ItemGroup>
-      <ProjectReference Include="..\Skywalker.Lightning.Abstractions\Skywalker.Lightning.Abstractions.csproj" />
-    </ItemGroup>
+	<ItemGroup>
+		<ProjectReference Include="..\Skywalker.Lightning.Abstractions\Skywalker.Lightning.Abstractions.csproj" />
+	</ItemGroup>
 
 </Project>

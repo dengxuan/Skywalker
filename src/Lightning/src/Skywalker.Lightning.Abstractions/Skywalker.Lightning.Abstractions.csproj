@@ -1,16 +1,17 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
-    <Import Project="..\..\..\..\skywalker.props" />
-    <Import Project="..\..\..\..\version.props" />
+	<PropertyGroup>
+		<RootNamespace></RootNamespace>
+	</PropertyGroup>
 
-    <ItemGroup>
-      <PackageReference Include="DotNetty.Handlers" Version="0.6.0" />
-      <PackageReference Include="DotNetty.Transport.Libuv" Version="0.6.0" />
-      <PackageReference Include="Microsoft.Extensions.Logging.Abstractions" Version="5.0.0" />
-    </ItemGroup>
+	<ItemGroup>
+		<PackageReference Include="DotNetty.Handlers" Version="0.6.0" />
+		<PackageReference Include="DotNetty.Transport.Libuv" Version="0.6.0" />
+		<PackageReference Include="Microsoft.Extensions.Logging.Abstractions" Version="5.0.0" />
+	</ItemGroup>
 
-    <ItemGroup>
-      <ProjectReference Include="..\..\..\Extensions\src\Skywalker.Extensions.Universal\Skywalker.Extensions.Universal.csproj" />
-    </ItemGroup>
+	<ItemGroup>
+		<ProjectReference Include="..\..\..\Extensions\src\Skywalker.Extensions.Universal\Skywalker.Extensions.Universal.csproj" />
+	</ItemGroup>
 
 </Project>

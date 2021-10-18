@@ -21,6 +21,11 @@ namespace Skywalker.Spider.Schrduler
             return base.FailAsync(request);
         }
 
+        public override Task<bool> IsEmpty()
+        {
+            return Task.FromResult(_requests.IsEmpty);
+        }
+
         public override Task SuccessAsync(Request request)
         {
             return base.SuccessAsync(request);
@@ -41,20 +46,15 @@ namespace Skywalker.Spider.Schrduler
             return Task.CompletedTask;
         }
 
-        protected override Task<IEnumerable<Request>> SafeDequeueAsync(int count = 1)
+        protected override Task<Request?> SafeDequeueAsync()
         {
             return Task.Run(() =>
             {
-                List<Request> result = new();
-                for (int i = 0; i < count; i++)
+                if (_requests.TryDequeue(out Request? request))
                 {
-                    if (_requests.TryDequeue(out Request? request))
-                    {
-                        result.Add(request);
-                        _requests.Enqueue(request);
-                    }
+                    return request.Clone();
                 }
-                return result.Select(selector => selector.Clone());
+                return null;
             });
         }
     }

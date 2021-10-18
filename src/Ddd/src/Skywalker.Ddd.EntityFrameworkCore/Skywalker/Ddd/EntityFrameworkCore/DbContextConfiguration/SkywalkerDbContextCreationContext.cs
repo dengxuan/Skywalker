@@ -8,7 +8,7 @@ namespace Skywalker.Ddd.EntityFrameworkCore.DbContextConfiguration
     {
         public static SkywalkerDbContextCreationContext Current => _current.Value!;
 
-        private static readonly AsyncLocal<SkywalkerDbContextCreationContext> _current = new AsyncLocal<SkywalkerDbContextCreationContext>();
+        private static readonly AsyncLocal<SkywalkerDbContextCreationContext> _current = new();
 
         public string ConnectionStringName { get; }
 

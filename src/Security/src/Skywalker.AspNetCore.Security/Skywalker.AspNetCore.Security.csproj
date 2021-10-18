@@ -1,15 +1,16 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
-    <Import Project="..\..\..\..\skywalker.props" />
-    <Import Project="..\..\..\..\version.props" />
+	<PropertyGroup>
+		<RootNamespace></RootNamespace>
+	</PropertyGroup>
 
-    <ItemGroup>
-      <PackageReference Include="Microsoft.Extensions.DependencyInjection.Abstractions" Version="5.0.0" />
-    </ItemGroup>
+	<ItemGroup>
+		<PackageReference Include="Microsoft.Extensions.DependencyInjection.Abstractions" Version="5.0.0" />
+	</ItemGroup>
 
-    <ItemGroup>
-      <ProjectReference Include="..\Skywalker.AspNetCore.Security.Abstractions\Skywalker.AspNetCore.Security.Abstractions.csproj" />
-      <ProjectReference Include="..\Skywalker.Security\Skywalker.Security.csproj" />
-    </ItemGroup>
+	<ItemGroup>
+		<ProjectReference Include="..\Skywalker.AspNetCore.Security.Abstractions\Skywalker.AspNetCore.Security.Abstractions.csproj" />
+		<ProjectReference Include="..\Skywalker.Security\Skywalker.Security.csproj" />
+	</ItemGroup>
 
 </Project>

@@ -1,7 +1,5 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
 using Skywalker.Application.Dtos.Contracts;
-using System.Threading;
-using System.Threading.Tasks;
 
 namespace Skywalker.Application.Abstractions;
 

@@ -1,15 +1,13 @@
 <Project Sdk="Microsoft.NET.Sdk">
 
-    <PropertyGroup>
-      <Platforms>AnyCPU;x64;x86</Platforms>
-    </PropertyGroup>
+	<PropertyGroup>
+		<RootNamespace></RootNamespace>
+	</PropertyGroup>
 
-    <Import Project="..\..\..\..\skywalker.props" />
+	<ItemGroup>
+		<Compile Remove="Simple\**" />
+		<EmbeddedResource Remove="Simple\**" />
+		<None Remove="Simple\**" />
+	</ItemGroup>
 
-    <ItemGroup>
-      <Compile Remove="Simple\**" />
-      <EmbeddedResource Remove="Simple\**" />
-      <None Remove="Simple\**" />
-    </ItemGroup>
-    
 </Project>

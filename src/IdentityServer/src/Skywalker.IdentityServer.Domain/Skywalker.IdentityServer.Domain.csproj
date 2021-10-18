@@ -1,16 +1,17 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
-    <Import Project="..\..\..\..\skywalker.props" />
-    <Import Project="..\..\..\..\version.props" />
+	<PropertyGroup>
+		<RootNamespace></RootNamespace>
+	</PropertyGroup>
 
-  <ItemGroup>
-    <PackageReference Include="IdentityModel" Version="5.0.0" />
-  </ItemGroup>
+	<ItemGroup>
+		<PackageReference Include="IdentityModel" Version="5.0.0" />
+	</ItemGroup>
 
-  <ItemGroup>
-    <ProjectReference Include="..\..\..\Ddd\src\Skywalker.Ddd.Domain.Abstractions\Skywalker.Ddd.Domain.Abstractions.csproj" />
-    <ProjectReference Include="..\..\..\Extensions\src\Skywalker.Extensions.Universal\Skywalker.Extensions.Universal.csproj" />
-    <ProjectReference Include="..\Skywalker.IdentityServer.Domain.Shared\Skywalker.IdentityServer.Domain.Shared.csproj" />
-  </ItemGroup>
+	<ItemGroup>
+		<ProjectReference Include="..\..\..\Ddd\src\Skywalker.Ddd.Domain.Abstractions\Skywalker.Ddd.Domain.Abstractions.csproj" />
+		<ProjectReference Include="..\..\..\Extensions\src\Skywalker.Extensions.Universal\Skywalker.Extensions.Universal.csproj" />
+		<ProjectReference Include="..\Skywalker.IdentityServer.Domain.Shared\Skywalker.IdentityServer.Domain.Shared.csproj" />
+	</ItemGroup>
 
 </Project>

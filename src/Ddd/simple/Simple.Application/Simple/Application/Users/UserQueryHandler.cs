@@ -2,6 +2,7 @@
 using Skywalker.Application.Abstractions;
 using Skywalker.Application.Dtos;
 using Skywalker.Ddd.ObjectMapping;
+using Skywalker.Ddd.Uow;
 using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
@@ -43,6 +44,7 @@ namespace Simple.Application.Abstractions
             return new PagedResultDto<UserOutputDto>(100, result);
         }
 
+        [UnitOfWork(IsDisabled = true)]
         async Task IExecuteNonQueryHandler<UserInputDto>.HandleAsync(UserInputDto inputDto, CancellationToken cancellationToken)
         {
             await _userManager.CreateUser(inputDto.Name);

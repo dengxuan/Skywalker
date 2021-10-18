@@ -1,12 +1,11 @@
 <Project Sdk="Microsoft.NET.Sdk">
-    <PropertyGroup>
-      <Platforms>AnyCPU;x64;x86</Platforms>
-    </PropertyGroup>
-    <Import Project="..\..\..\..\skywalker.props" />
-    <Import Project="..\..\..\..\version.props" />
-    <ItemGroup>
-      <ProjectReference Include="..\Skywalker.Ddd.ExceptionHandling\Skywalker.Ddd.ExceptionHandling.csproj" />
-      <ProjectReference Include="..\Skywalker.Ddd\Skywalker.Ddd.csproj" />
-    </ItemGroup>
+
+	<PropertyGroup>
+		<RootNamespace></RootNamespace>
+	</PropertyGroup>
+
+	<ItemGroup>
+		<ProjectReference Include="..\Skywalker.Ddd\Skywalker.Ddd.csproj" />
+	</ItemGroup>
 
 </Project>

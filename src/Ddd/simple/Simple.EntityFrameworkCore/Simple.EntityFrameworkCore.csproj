@@ -1,14 +1,12 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
-    <PropertyGroup>
-      <Platforms>AnyCPU;x64;x86</Platforms>
-    </PropertyGroup>
+	<PropertyGroup>
+		<RootNamespace></RootNamespace>
+	</PropertyGroup>
 
-    <Import Project="..\..\..\..\skywalker.props" />
-
-    <ItemGroup>
-      <ProjectReference Include="..\..\simple\Simple.Domain\Simple.Domain.csproj" />
-      <ProjectReference Include="..\..\src\Skywalker.Ddd.EntityFrameworkCore\Skywalker.Ddd.EntityFrameworkCore.csproj" />
-    </ItemGroup>
+	<ItemGroup>
+		<ProjectReference Include="..\..\simple\Simple.Domain\Simple.Domain.csproj" />
+		<ProjectReference Include="..\..\src\Skywalker.Ddd.EntityFrameworkCore\Skywalker.Ddd.EntityFrameworkCore.csproj" />
+	</ItemGroup>
 
 </Project>

@@ -1,8 +1,11 @@
-<Project Sdk="Microsoft.NET.Sdk">
-	<Import Project="..\..\..\..\skywalker.props" />
-	<Import Project="..\..\..\..\version.props" />
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+	<PropertyGroup>
+		<RootNamespace></RootNamespace>
+	</PropertyGroup>
+
 	<ItemGroup>
-	  <ProjectReference Include="..\Skywalker.Spider.Scheduler.Abstractions\Skywalker.Spider.Scheduler.Abstractions.csproj" />
+		<ProjectReference Include="..\Skywalker.Spider.Scheduler.Abstractions\Skywalker.Spider.Scheduler.Abstractions.csproj" />
 	</ItemGroup>
 
 </Project>

@@ -1,19 +1,17 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
-    <Import Project="..\..\..\..\skywalker.props" />
-    <Import Project="..\..\..\..\version.props" />
-    <ItemGroup>
-      <Compile Remove="System\**" />
-      <EmbeddedResource Remove="System\**" />
-      <None Remove="System\**" />
-    </ItemGroup>
-    <ItemGroup>
-      <PackageReference Include="Microsoft.EntityFrameworkCore" Version="5.0.3" />
-      <PackageReference Include="Microsoft.EntityFrameworkCore.Relational" Version="5.0.3" />
-    </ItemGroup>
-    <ItemGroup>
-      <ProjectReference Include="..\..\..\Extensions\src\Skywalker.Extensions.Linq\Skywalker.Extensions.Linq.csproj" />
-      <ProjectReference Include="..\Skywalker.Ddd.Domain.Abstractions\Skywalker.Ddd.Domain.Abstractions.csproj" />
-    </ItemGroup>
-    
+	<PropertyGroup>
+		<RootNamespace></RootNamespace>
+	</PropertyGroup>
+
+	<ItemGroup>
+		<PackageReference Include="Microsoft.EntityFrameworkCore" Version="5.0.3" />
+		<PackageReference Include="Microsoft.EntityFrameworkCore.Relational" Version="5.0.3" />
+	</ItemGroup>
+	<ItemGroup>
+		<ProjectReference Include="..\..\..\Extensions\src\Skywalker.Extensions.Linq\Skywalker.Extensions.Linq.csproj" />
+		<ProjectReference Include="..\Skywalker.Ddd.Domain.Abstractions\Skywalker.Ddd.Domain.Abstractions.csproj" />
+		<ProjectReference Include="..\Skywalker.Ddd.UnitOfWork.Abstractions\Skywalker.Ddd.UnitOfWork.Abstractions.csproj" />
+	</ItemGroup>
+
 </Project>

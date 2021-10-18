@@ -1,16 +1,14 @@
 <Project Sdk="Microsoft.NET.Sdk">
 
-    <PropertyGroup>
-      <Platforms>AnyCPU;x64;x86</Platforms>
-    </PropertyGroup>
+	<PropertyGroup>
+		<RootNamespace></RootNamespace>
+	</PropertyGroup>
 
-    <Import Project="..\..\..\..\skywalker.props" />
-
-    <ItemGroup>
-      <ProjectReference Include="..\..\src\Skywalker.Ddd.Application\Skywalker.Ddd.Application.csproj" />
-      <ProjectReference Include="..\..\src\Skywalker.Ddd.ObjectMapping.AutoMapper\Skywalker.Ddd.ObjectMapping.AutoMapper.csproj" />
-      <ProjectReference Include="..\Simple.Application.Abstractions\Simple.Application.Abstractions.csproj" />
-      <ProjectReference Include="..\Simple.Domain\Simple.Domain.csproj" />
-    </ItemGroup>
+	<ItemGroup>
+		<ProjectReference Include="..\..\src\Skywalker.Ddd.Application\Skywalker.Ddd.Application.csproj" />
+		<ProjectReference Include="..\..\src\Skywalker.Ddd.ObjectMapping.AutoMapper\Skywalker.Ddd.ObjectMapping.AutoMapper.csproj" />
+		<ProjectReference Include="..\Simple.Application.Abstractions\Simple.Application.Abstractions.csproj" />
+		<ProjectReference Include="..\Simple.Domain\Simple.Domain.csproj" />
+	</ItemGroup>
 
 </Project>

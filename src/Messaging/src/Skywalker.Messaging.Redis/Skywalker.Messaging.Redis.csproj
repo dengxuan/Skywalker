@@ -1,12 +1,14 @@
-<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk">
 
-	<Import Project="..\..\..\..\skywalker.props" />
-	<Import Project="..\..\..\..\version.props" />
+	<PropertyGroup>
+		<RootNamespace></RootNamespace>
+	</PropertyGroup>
+
 	<ItemGroup>
-	  <PackageReference Include="StackExchange.Redis" Version="2.2.4" />
+		<PackageReference Include="StackExchange.Redis" Version="2.2.4" />
 	</ItemGroup>
 	<ItemGroup>
-	  <ProjectReference Include="..\Skywalker.Messaging.Abstractions\Skywalker.Messaging.Abstractions.csproj" />
+		<ProjectReference Include="..\Skywalker.Messaging.Abstractions\Skywalker.Messaging.Abstractions.csproj" />
 	</ItemGroup>
 
 </Project>

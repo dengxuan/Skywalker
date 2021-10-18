@@ -1,10 +1,11 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
-    <Import Project="..\..\..\..\skywalker.props" />
-    <Import Project="..\..\..\..\version.props" />
+	<PropertyGroup>
+		<RootNamespace></RootNamespace>
+	</PropertyGroup>
 
-    <ItemGroup>
-      <ProjectReference Include="..\Skywalker.Security.Abstractions\Skywalker.Security.Abstractions.csproj" />
-    </ItemGroup>
+	<ItemGroup>
+		<ProjectReference Include="..\Skywalker.Security.Abstractions\Skywalker.Security.Abstractions.csproj" />
+	</ItemGroup>
 
 </Project>

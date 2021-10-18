@@ -1,14 +1,12 @@
 <Project Sdk="Microsoft.NET.Sdk">
 
-    <PropertyGroup>
-      <Platforms>AnyCPU;x64;x86</Platforms>
-    </PropertyGroup>
+	<PropertyGroup>
+		<RootNamespace></RootNamespace>
+	</PropertyGroup>
 
-    <Import Project="..\..\..\..\skywalker.props" />
-
-    <ItemGroup>
-      <ProjectReference Include="..\..\simple\Simple.Domain.Shared\Simple.Domain.Shared.csproj" />
-      <ProjectReference Include="..\..\src\Skywalker.Ddd.Application.Contracts\Skywalker.Ddd.Application.Contracts.csproj" />
-    </ItemGroup>
+	<ItemGroup>
+		<ProjectReference Include="..\..\simple\Simple.Domain.Shared\Simple.Domain.Shared.csproj" />
+		<ProjectReference Include="..\..\src\Skywalker.Ddd.Application.Contracts\Skywalker.Ddd.Application.Contracts.csproj" />
+	</ItemGroup>
 
 </Project>

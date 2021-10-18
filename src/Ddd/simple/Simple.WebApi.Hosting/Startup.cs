@@ -46,6 +46,7 @@ public class Startup
             {
                 options.UseMySql();
             });
+            skywalker.AddUnitOfWork();
             skywalker.AddAspNetCore();
         });
 

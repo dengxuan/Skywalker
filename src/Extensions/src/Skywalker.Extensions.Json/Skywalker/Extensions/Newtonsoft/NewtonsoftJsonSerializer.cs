@@ -1,6 +1,5 @@
 using Newtonsoft.Json;
 using Newtonsoft.Json.Serialization;
-using System;
 
 namespace Skywalker.Extensions.Json.Newtonsoft
 {
@@ -21,12 +20,12 @@ namespace Skywalker.Extensions.Json.Newtonsoft
             return JsonConvert.SerializeObject(obj, CreateSerializerSettings(camelCase, indented));
         }
 
-        public T Deserialize<T>(string jsonString, bool camelCase = true)
+        public T? Deserialize<T>(string jsonString, bool camelCase = true)
         {
             return JsonConvert.DeserializeObject<T>(jsonString, CreateSerializerSettings(camelCase));
         }
 
-        public object Deserialize(Type type, string jsonString, bool camelCase = true)
+        public object? Deserialize(Type type, string jsonString, bool camelCase = true)
         {
             return JsonConvert.DeserializeObject(jsonString, type, CreateSerializerSettings(camelCase));
         }

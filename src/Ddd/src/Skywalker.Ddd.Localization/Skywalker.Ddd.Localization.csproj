@@ -1,19 +1,17 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
+	
+	<PropertyGroup>
+	  <RootNamespace></RootNamespace>
+	</PropertyGroup>
 
-    <PropertyGroup>
-      <Platforms>AnyCPU;x64;x86</Platforms>
-    </PropertyGroup>
+	<ItemGroup>
+		<PackageReference Include="Microsoft.Extensions.Localization" Version="5.0.3" />
+	</ItemGroup>
 
-    <Import Project="..\..\..\..\skywalker.props" />
-    <Import Project="..\..\..\..\version.props" />
-    <ItemGroup>
-      <PackageReference Include="Microsoft.Extensions.Localization" Version="5.0.3" />
-    </ItemGroup>
-
-  <ItemGroup>
-    <ProjectReference Include="..\..\..\Extensions\src\Skywalker.Extensions.Universal\Skywalker.Extensions.Universal.csproj" />
-    <ProjectReference Include="..\..\..\Extensions\src\Skywalker.Extensions.VirtualFileSystem\Skywalker.Extensions.VirtualFileSystem.csproj" />
-    <ProjectReference Include="..\Skywalker.Ddd.Localization.Abstractions\Skywalker.Ddd.Localization.Abstractions.csproj" />
-  </ItemGroup>
+	<ItemGroup>
+		<ProjectReference Include="..\..\..\Extensions\src\Skywalker.Extensions.Universal\Skywalker.Extensions.Universal.csproj" />
+		<ProjectReference Include="..\..\..\Extensions\src\Skywalker.Extensions.VirtualFileSystem\Skywalker.Extensions.VirtualFileSystem.csproj" />
+		<ProjectReference Include="..\Skywalker.Ddd.Localization.Abstractions\Skywalker.Ddd.Localization.Abstractions.csproj" />
+	</ItemGroup>
 
 </Project>
