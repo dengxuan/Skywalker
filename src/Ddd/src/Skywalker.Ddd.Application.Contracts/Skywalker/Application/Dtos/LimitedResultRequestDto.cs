@@ -43,7 +43,7 @@ namespace Skywalker.Application.Dtos
                         "MaxResultCountExceededExceptionMessage", 
                         nameof(MaxResultCount),
                         MaxMaxResultCount, 
-                        typeof(LimitedResultRequestDto).FullName, 
+                        typeof(LimitedResultRequestDto).FullName!, 
                         nameof(MaxMaxResultCount)
                     ],
                     new[] { nameof(MaxResultCount) });

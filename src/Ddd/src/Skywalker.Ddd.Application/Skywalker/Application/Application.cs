@@ -16,12 +16,6 @@ public class Application : IApplication
         _iocResolver = iocResolver;
     }
 
-    public Task ExecuteNonQueryAsync<TInputDto>(TInputDto inputDto, CancellationToken cancellationToken = default) where TInputDto : IEntityDto
-    {
-        var handler = _iocResolver.GetRequiredService<IExecuteNonQueryHandlerProvider<TInputDto>>();
-        return handler.HandleAsync(inputDto,cancellationToken);
-    }
-
     public Task<TOutputDto?> ExecuteQueryAsync<TOutputDto>(CancellationToken cancellationToken = default) where TOutputDto : IEntityDto
     {
         var handler = _iocResolver.GetRequiredService<IExecuteQueryHandlerProvider<TOutputDto>>();

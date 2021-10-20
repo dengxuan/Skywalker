@@ -21,7 +21,7 @@ namespace Simple.WebApi.Users
         [HttpGet]
         public async Task<PagedResultDto<UserOutputDto>?> GetAsync()
         {
-            var users = await _searcher.ExecuteQueryAsync<UserInputDto,PagedResultDto<UserOutputDto>>(new UserInputDto("张三"));
+            var users = await _searcher.ExecuteQueryAsync<UserInputDto, PagedResultDto<UserOutputDto>>(new UserInputDto("张三"));
             return users;
         }
 
@@ -29,7 +29,7 @@ namespace Simple.WebApi.Users
         [HttpPost]
         public async Task PostAsync(UserInputDto inputDto)
         {
-            await _searcher.ExecuteNonQueryAsync(inputDto);
+            await _searcher.ExecuteQueryAsync<UserInputDto, UserInputDto>(inputDto);
         }
     }
 }

@@ -1,7 +1,5 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
 using Skywalker.Application.Dtos.Contracts;
-using System.Threading;
-using System.Threading.Tasks;
 
 namespace Skywalker.Application.Abstractions
 {
@@ -24,14 +22,5 @@ namespace Skywalker.Application.Abstractions
         /// <param name="cancellationToken">CancellationToken</param>
         /// <returns>一个发送操作的任务. 任务结果包含查询处理器处理的结果</returns>
         Task<TOutputDto?> ExecuteQueryAsync<TInputDto, TOutputDto>(TInputDto inputDto, CancellationToken cancellationToken = default) where TInputDto : IEntityDto where TOutputDto : IEntityDto;
-
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <typeparam name="TInputDto"></typeparam>
-        /// <param name="inputDto"></param>
-        /// <param name="cancellationToken"></param>
-        /// <returns></returns>
-        Task ExecuteNonQueryAsync<TInputDto>(TInputDto inputDto, CancellationToken cancellationToken = default) where TInputDto : IEntityDto;
     }
 }

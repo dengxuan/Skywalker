@@ -1,10 +1,6 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
 using Skywalker.Application.Abstractions;
 using Skywalker.Application.Dtos.Contracts;
-using System;
-using System.Linq;
-using System.Threading;
-using System.Threading.Tasks;
 
 namespace Skywalker.Application;
 
@@ -17,13 +13,7 @@ public class ExecuteQueryHandlerProvider<TOutputDto> : IExecuteQueryHandlerProvi
         _serviceProvider = serviceProvider;
     }
 
-    private Task<TOutputDto?> SeedAsync(CancellationToken cancellationToken)
-    {
-        IExecuteQueryHandler<TOutputDto> queryHandler = _serviceProvider.GetRequiredService<IExecuteQueryHandler<TOutputDto>>();
-        return queryHandler.HandleAsync(cancellationToken);
-    }
-
-    private ExecuteQueryHandlerDelegate<TOutputDto> Pipeline(ExecuteQueryHandlerDelegate<TOutputDto> next, IExecuteQueryPipelineBehavior<TOutputDto> behavior)
+    private ExecuteHandlerDelegate<TOutputDto> Pipeline(ExecuteHandlerDelegate<TOutputDto> next, IExecutePipelineBehavior<TOutputDto> behavior)
     {
         return (CancellationToken cancellationToken) =>
         {
@@ -33,9 +23,15 @@ public class ExecuteQueryHandlerProvider<TOutputDto> : IExecuteQueryHandlerProvi
 
     public Task<TOutputDto?> HandleAsync(CancellationToken cancellationToken)
     {
-        var behaviors = _serviceProvider.GetServices<IExecuteQueryPipelineBehavior<TOutputDto>>().Reverse();
-        var executeDelegate = behaviors.Aggregate((ExecuteQueryHandlerDelegate<TOutputDto>)SeedAsync, Pipeline);
+        var behaviors = _serviceProvider.GetServices<IExecutePipelineBehavior<TOutputDto>>().Reverse();
+
+        var executeDelegate = behaviors.Aggregate((ExecuteHandlerDelegate<TOutputDto>)SeedAsync, Pipeline);
         return executeDelegate(cancellationToken);
+        Task<TOutputDto?> SeedAsync(CancellationToken cancellationToken)
+        {
+            IExecuteQueryHandler<TOutputDto> queryHandler = _serviceProvider.GetRequiredService<IExecuteQueryHandler<TOutputDto>>();
+            return queryHandler.HandleAsync(cancellationToken);
+        }
     }
 }
 
@@ -50,24 +46,24 @@ public class ExecuteQueryHandlerProvider<TInputDto, TOutputDto> : IExecuteQueryH
         _serviceProvider = serviceProvider;
     }
 
-    private Task<TOutputDto?> SeedAsync(TInputDto inputDto, CancellationToken cancellationToken)
+    private ExecuteHandlerDelegate<TOutputDto> Pipeline(ExecuteHandlerDelegate<TOutputDto> next, IExecutePipelineBehavior<TOutputDto> behavior)
     {
-        IExecuteQueryHandler<TInputDto, TOutputDto> queryHandler = _serviceProvider.GetRequiredService<IExecuteQueryHandler<TInputDto, TOutputDto>>();
-        return queryHandler.HandleAsync(inputDto, cancellationToken);
-    }
-
-    private ExecuteQueryHandlerDelegate<TInputDto, TOutputDto> Pipeline(ExecuteQueryHandlerDelegate<TInputDto, TOutputDto> next, IExecuteQueryPipelineBehavior<TInputDto, TOutputDto> behavior)
-    {
-        return (TInputDto inputDto, CancellationToken cancellationToken) =>
+        return (CancellationToken cancellationToken) =>
         {
-            return behavior.HandleAsync(inputDto, next, cancellationToken);
+            return behavior.HandleAsync(next, cancellationToken);
         };
     }
 
     public Task<TOutputDto?> HandleAsync(TInputDto inputDto, CancellationToken cancellationToken)
     {
-        var behaviors = _serviceProvider.GetServices<IExecuteQueryPipelineBehavior<TInputDto, TOutputDto>>().Reverse();
-        var executeDelegate = behaviors.Aggregate((ExecuteQueryHandlerDelegate<TInputDto, TOutputDto>)SeedAsync, Pipeline);
-        return executeDelegate(inputDto, cancellationToken);
+        var behaviors = _serviceProvider.GetServices<IExecutePipelineBehavior<TOutputDto>>().Reverse();
+        var executeDelegate = behaviors.Aggregate((ExecuteHandlerDelegate<TOutputDto>)SeedAsync, Pipeline);
+        return  executeDelegate(cancellationToken);
+
+        Task<TOutputDto?> SeedAsync(CancellationToken cancellationToken)
+        {
+            IExecuteQueryHandler<TInputDto, TOutputDto> queryHandler = _serviceProvider.GetRequiredService<IExecuteQueryHandler<TInputDto, TOutputDto>>();
+            return queryHandler.HandleAsync(inputDto, cancellationToken);
+        }
     }
 }
