@@ -9,7 +9,7 @@
 		<ProjectReference Include="..\Skywalker.Scheduler.Abstractions\Skywalker.Scheduler.Abstractions.csproj" />
 	</ItemGroup>
 	<ItemGroup>
-		<PackageReference Include="Cronos" Version="0.7.0" />
+		<PackageReference Include="Cronos" Version="0.7.1" />
 	</ItemGroup>
 
 </Project>
