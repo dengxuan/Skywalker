@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Skywalker.AspNetCore.Tracing
 {
-    public class SkywalkerCorrelationIdMiddleware : IMiddleware, ITransientDependency
+    public class SkywalkerCorrelationIdMiddleware : IMiddleware/*, ITransientDependency*/
     {
         private readonly SkywalkerCorrelationIdOptions _options;
         private readonly ICorrelationIdProvider _correlationIdProvider;

@@ -6,7 +6,7 @@ using System;
 
 namespace Skywalker.AspNetCore.Tracing
 {
-    public class AspNetCoreCorrelationIdProvider : ICorrelationIdProvider, ITransientDependency
+    public class AspNetCoreCorrelationIdProvider : ICorrelationIdProvider/*, ITransientDependency*/
     {
         protected IHttpContextAccessor HttpContextAccessor { get; }
         protected SkywalkerCorrelationIdOptions Options { get; }

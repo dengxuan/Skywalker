@@ -2,11 +2,11 @@
 
 namespace Skywalker
 {
-    public class SkywalkerBuilder
+    public class SkywalkerDddBuilder
     {
         public IServiceCollection Services { get; }
 
-        public SkywalkerBuilder(IServiceCollection services)
+        public SkywalkerDddBuilder(IServiceCollection services)
         {
             Services = services;
         }

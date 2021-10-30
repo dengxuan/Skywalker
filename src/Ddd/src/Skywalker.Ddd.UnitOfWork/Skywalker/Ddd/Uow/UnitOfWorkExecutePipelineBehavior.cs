@@ -9,13 +9,13 @@ using System.Diagnostics.CodeAnalysis;
 
 namespace Skywalker.Uow
 {
-    public class UnitOfWorkExecuteQueryPipelineBehavior<TOutputDto> : IExecutePipelineBehavior<TOutputDto> where TOutputDto : IEntityDto
+    public class UnitOfWorkExecutePipelineBehavior<TOutputDto> : IExecutePipelineBehavior<TOutputDto> where TOutputDto : IEntityDto
     {
         private readonly IUnitOfWorkManager _unitOfWorkManager;
         private readonly AbpUnitOfWorkDefaultOptions _defaultOptions;
-        private readonly ILogger<UnitOfWorkExecuteQueryPipelineBehavior<TOutputDto>> _logger;
+        private readonly ILogger<UnitOfWorkExecutePipelineBehavior<TOutputDto>> _logger;
 
-        public UnitOfWorkExecuteQueryPipelineBehavior(IUnitOfWorkManager unitOfWorkManager, IOptions<AbpUnitOfWorkDefaultOptions> options, ILogger<UnitOfWorkExecuteQueryPipelineBehavior<TOutputDto>> logger)
+        public UnitOfWorkExecutePipelineBehavior(IUnitOfWorkManager unitOfWorkManager, IOptions<AbpUnitOfWorkDefaultOptions> options, ILogger<UnitOfWorkExecutePipelineBehavior<TOutputDto>> logger)
         {
             _unitOfWorkManager = unitOfWorkManager;
             _defaultOptions = options.Value;

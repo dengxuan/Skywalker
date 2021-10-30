@@ -7,7 +7,7 @@ namespace Skywalker.Application.Abstractions;
 /// Pipeline behavior to surround the inner handler.
 /// Implementations add additional behavior and await the next delegate.
 /// </summary>
-public interface IExecutePipelineBehavior<TOutputDto> : IScopedDependency where TOutputDto : IEntityDto
+public interface IExecutePipelineBehavior<TOutputDto> /*: IScopedDependency*/ where TOutputDto : IEntityDto
 {
     /// <summary>
     /// Pipeline handler. Perform any additional behavior and await the <paramref name="next"/> delegate as necessary

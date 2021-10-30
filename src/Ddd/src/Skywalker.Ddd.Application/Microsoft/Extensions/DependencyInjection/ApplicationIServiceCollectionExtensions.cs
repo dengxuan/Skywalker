@@ -8,8 +8,8 @@ namespace Microsoft.Extensions.DependencyInjection
         public static IServiceCollection AddApplication(this IServiceCollection services)
         {
             services.AddScoped<IApplication, Application>();
-            services.AddScoped(typeof(IExecuteQueryHandlerProvider<>), typeof(ExecuteQueryHandlerProvider<>));
-            services.AddScoped(typeof(IExecuteQueryHandlerProvider<,>), typeof(ExecuteQueryHandlerProvider<,>));
+            services.AddScoped(typeof(IExecuteHandlerProvider<>), typeof(ExecuteHandlerProvider<>));
+            services.AddScoped(typeof(IExecuteHandlerProvider<,>), typeof(ExecuteQueryHandlerProvider<,>));
             return services;
         }
     }

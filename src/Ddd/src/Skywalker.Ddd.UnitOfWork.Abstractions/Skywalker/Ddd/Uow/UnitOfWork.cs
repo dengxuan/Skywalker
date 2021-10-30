@@ -6,7 +6,7 @@ using System.Collections.Immutable;
 
 namespace Skywalker.Ddd.Uow;
 
-public class UnitOfWork : IUnitOfWork, ITransientDependency
+public class UnitOfWork : IUnitOfWork/*, ITransientDependency*/
 {
     public Guid Id { get; } = Guid.NewGuid();
 

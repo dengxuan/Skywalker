@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 namespace Skywalker.Data.Seeding.Seeding
 {
     //TODO: Create a Skywalker.Data.Seeding namespace?
-    public class DataSeeder : IDataSeeder, ITransientDependency
+    public class DataSeeder : IDataSeeder/*, ITransientDependency*/
     {
         protected IHybridServiceScopeFactory ServiceScopeFactory { get; }
         protected SkywalkerDataSeedOptions Options { get; }

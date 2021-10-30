@@ -3,7 +3,7 @@ using Skywalker.Ddd.Uow.Abstractions;
 
 namespace Skywalker.Ddd.Uow;
 
-public class UnitOfWorkManager : IUnitOfWorkManager, ISingletonDependency
+public class UnitOfWorkManager : IUnitOfWorkManager/*, ISingletonDependency*/
 {
     public IUnitOfWork? Current => GetCurrentUnitOfWork();
 

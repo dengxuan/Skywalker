@@ -15,7 +15,7 @@ namespace Simple.EntityFrameworkCore
             var configuration = BuildConfiguration();
 
             var builder = new DbContextOptionsBuilder<SimpleMigrationsDbContext>()
-                .UseMySql(configuration.GetConnectionString("Simple"));
+                .UseMySql(configuration.GetConnectionString("Simple"), ServerVersion.AutoDetect(configuration.GetConnectionString("Simple")));
 
             return new SimpleMigrationsDbContext(builder.Options);
         }

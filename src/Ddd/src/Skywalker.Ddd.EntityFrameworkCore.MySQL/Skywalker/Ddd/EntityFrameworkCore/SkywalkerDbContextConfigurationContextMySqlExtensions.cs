@@ -1,7 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Skywalker.Ddd.EntityFrameworkCore.DbContextConfiguration;
-using System;
 using System.Diagnostics.CodeAnalysis;
 
 namespace Skywalker.Ddd.EntityFrameworkCore
@@ -12,11 +11,11 @@ namespace Skywalker.Ddd.EntityFrameworkCore
         {
             if (context.ExistingConnection != null)
             {
-                return context.DbContextOptions.UseMySql(context.ExistingConnection, mySQLOptionsAction);
+                return context.DbContextOptions.UseMySql(context.ExistingConnection, ServerVersion.AutoDetect(context.ExistingConnection.ConnectionString), mySQLOptionsAction);
             }
             else
             {
-                return context.DbContextOptions.UseMySql(context.ConnectionString, mySQLOptionsAction);
+                return context.DbContextOptions.UseMySql(context.ConnectionString, ServerVersion.AutoDetect(context.ConnectionString), mySQLOptionsAction);
             }
         }
     }

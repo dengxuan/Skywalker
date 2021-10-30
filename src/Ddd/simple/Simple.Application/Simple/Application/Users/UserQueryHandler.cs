@@ -5,7 +5,7 @@ using Skywalker.Ddd.ObjectMapping;
 
 namespace Simple.Application.Abstractions
 {
-    public class UserQueryHandler : IExecuteQueryHandler<PagedResultDto<UserOutputDto>>, IExecuteQueryHandler<UserInputDto, PagedResultDto<UserOutputDto>>
+    public class UserQueryHandler : IExecuteHandler<PagedResultDto<UserOutputDto>>, IExecuteHandler<UserInputDto, PagedResultDto<UserOutputDto>>
     {
         private readonly IUserManager _userManager;
 

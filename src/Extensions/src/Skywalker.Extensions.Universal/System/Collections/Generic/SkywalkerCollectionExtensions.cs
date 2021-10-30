@@ -140,16 +140,6 @@ namespace System.Collections.Generic
         }
 
         /// <summary>
-        ///   Checks whether or not collection is null or empty. Assumes colleciton can be safely enumerated multiple times.
-        /// </summary>
-        /// <param name = "this"></param>
-        /// <returns></returns>
-        public static bool IsNullOrEmpty(this IEnumerable @this)
-        {
-            return @this == null || @this.GetEnumerator().MoveNext() == false;
-        }
-
-        /// <summary>
         ///   Generates a HashCode for the contents for the list. Order of items does not matter.
         /// </summary>
         /// <typeparam name="T">The type of object contained within the list.</typeparam>

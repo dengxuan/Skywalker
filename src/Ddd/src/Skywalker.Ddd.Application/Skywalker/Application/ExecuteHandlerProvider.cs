@@ -4,11 +4,11 @@ using Skywalker.Application.Dtos.Contracts;
 
 namespace Skywalker.Application;
 
-public class ExecuteQueryHandlerProvider<TOutputDto> : IExecuteQueryHandlerProvider<TOutputDto> where TOutputDto : IEntityDto
+public class ExecuteHandlerProvider<TOutputDto> : IExecuteHandlerProvider<TOutputDto> where TOutputDto : IEntityDto
 {
     private readonly IServiceProvider _serviceProvider;
 
-    public ExecuteQueryHandlerProvider(IServiceProvider serviceProvider)
+    public ExecuteHandlerProvider(IServiceProvider serviceProvider)
     {
         _serviceProvider = serviceProvider;
     }
@@ -29,13 +29,13 @@ public class ExecuteQueryHandlerProvider<TOutputDto> : IExecuteQueryHandlerProvi
         return executeDelegate(cancellationToken);
         Task<TOutputDto?> SeedAsync(CancellationToken cancellationToken)
         {
-            IExecuteQueryHandler<TOutputDto> queryHandler = _serviceProvider.GetRequiredService<IExecuteQueryHandler<TOutputDto>>();
-            return queryHandler.HandleAsync(cancellationToken);
+            IExecuteHandler<TOutputDto> handler = _serviceProvider.GetRequiredService<IExecuteHandler<TOutputDto>>();
+            return handler.HandleAsync(cancellationToken);
         }
     }
 }
 
-public class ExecuteQueryHandlerProvider<TInputDto, TOutputDto> : IExecuteQueryHandlerProvider<TInputDto, TOutputDto>
+public class ExecuteQueryHandlerProvider<TInputDto, TOutputDto> : IExecuteHandlerProvider<TInputDto, TOutputDto>
     where TInputDto : IEntityDto
     where TOutputDto : IEntityDto
 {
@@ -62,8 +62,8 @@ public class ExecuteQueryHandlerProvider<TInputDto, TOutputDto> : IExecuteQueryH
 
         Task<TOutputDto?> SeedAsync(CancellationToken cancellationToken)
         {
-            IExecuteQueryHandler<TInputDto, TOutputDto> queryHandler = _serviceProvider.GetRequiredService<IExecuteQueryHandler<TInputDto, TOutputDto>>();
-            return queryHandler.HandleAsync(inputDto, cancellationToken);
+            IExecuteHandler<TInputDto, TOutputDto> handler = _serviceProvider.GetRequiredService<IExecuteHandler<TInputDto, TOutputDto>>();
+            return handler.HandleAsync(inputDto, cancellationToken);
         }
     }
 }

@@ -12,7 +12,7 @@ using System.Threading.Tasks;
 
 namespace Skywalker.Ddd.EntityFrameworkCore
 {
-    public class EfCoreAsyncQueryableProvider : IAsyncQueryableProvider, ITransientDependency
+    public class EfCoreAsyncQueryableProvider : IAsyncQueryableProvider/*, ITransientDependency*/
     {
         public bool CanExecute<T>(IQueryable<T> queryable)
         {

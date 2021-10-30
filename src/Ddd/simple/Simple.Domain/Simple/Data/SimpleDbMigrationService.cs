@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Simple.Data
 {
-    public class SimpleDbMigrationService : ITransientDependency
+    public class SimpleDbMigrationService/* : ITransientDependency*/
     {
         protected readonly ILogger<SimpleDbMigrationService> Logger;
 

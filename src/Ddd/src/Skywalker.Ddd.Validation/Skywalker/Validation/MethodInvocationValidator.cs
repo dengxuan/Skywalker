@@ -8,7 +8,7 @@ using Volo.Abp.Validation;
 
 namespace Skywalker.Validation
 {
-    public class MethodInvocationValidator : IMethodInvocationValidator, ITransientDependency
+    public class MethodInvocationValidator : IMethodInvocationValidator/*, ITransientDependency*/
     {
         private readonly IObjectValidator _objectValidator;
 

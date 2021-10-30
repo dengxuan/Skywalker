@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace Simple.EntityFrameworkCore
 {
-    public class EntityFrameworkCoreActivityCenterDbSchemaMigrator : ISimpleDbSchemaMigrator, ITransientDependency
+    public class EntityFrameworkCoreActivityCenterDbSchemaMigrator : ISimpleDbSchemaMigrator/*, ITransientDependency*/
     {
         private readonly IServiceProvider _serviceProvider;
 

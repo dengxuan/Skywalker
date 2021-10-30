@@ -6,7 +6,7 @@ using System.Collections.Generic;
 
 namespace Skywalker.Domain.Entities.Events.Distributed
 {
-    public class EntityToEtoMapper : IEntityToEtoMapper, ITransientDependency
+    public class EntityToEtoMapper : IEntityToEtoMapper/*, ITransientDependency*/
     {
         protected IHybridServiceScopeFactory HybridServiceScopeFactory { get; }
         

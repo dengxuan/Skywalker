@@ -61,20 +61,15 @@ namespace System.Collections.Generic
                 : source;
         }
 
+        /// <summary>
+        ///   Checks whether or not collection is null or empty. Assumes colleciton can be safely enumerated multiple times.
+        /// </summary>
+        /// <param name = "this"></param>
+        /// <returns></returns>
         [DebuggerStepThrough]
-        public static bool IsNullOrEmpty<T>(this IEnumerable<T> list)
+        public static bool IsNullOrEmpty(this IEnumerable @this)
         {
-            if (list == null)
-            {
-                return true;
-            }
-
-            if (!list.Any())
-            {
-                return true;
-            }
-
-            return false;
+            return @this == null || @this.GetEnumerator().MoveNext() == false;
         }
 
         public static bool HasDuplicates<T, TProp>(this IEnumerable<T> list, Func<T, TProp> selector)

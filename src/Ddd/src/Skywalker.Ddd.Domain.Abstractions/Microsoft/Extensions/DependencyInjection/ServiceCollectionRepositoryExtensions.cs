@@ -1,9 +1,11 @@
 ﻿using Microsoft.Extensions.DependencyInjection.Extensions;
 using Skywalker.Data;
 using Skywalker.Data.Filtering;
+using Skywalker.Data.Seeding;
+using Skywalker.Data.Seeding.Seeding;
 using Skywalker.Domain.Entities;
+using Skywalker.Domain.Entities.Events.Distributed;
 using Skywalker.Domain.Repositories;
-using System;
 
 namespace Microsoft.Extensions.DependencyInjection
 {
@@ -68,6 +70,9 @@ namespace Microsoft.Extensions.DependencyInjection
             services.Configure<SkywalkerDbConnectionOptions>(configuration);
 
             services.AddSingleton(typeof(IDataFilter<>), typeof(DataFilter<>));
+            services.AddSingleton<IDataSeeder, DataSeeder>();
+            services.AddTransient<IConnectionStringResolver, DefaultConnectionStringResolver>();
+            services.AddTransient<IEntityToEtoMapper, EntityToEtoMapper>();
             return services;
         }
     }

@@ -1,126 +1,121 @@
-using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Options;
 using Skywalker.Reflection;
-using System;
 using System.Collections;
-using System.Collections.Generic;
 using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
-using System.Linq;
 
-namespace Skywalker.Validation
+namespace Skywalker.Validation;
+
+public class DataAnnotationObjectValidationContributor : IObjectValidationContributor/*, ITransientDependency*/
 {
-    public class DataAnnotationObjectValidationContributor : IObjectValidationContributor, ITransientDependency
+    public const int MaxRecursiveParameterValidationDepth = 8;
+
+    protected IServiceProvider ServiceProvider { get; }
+    protected AbpValidationOptions Options { get; }
+
+    public DataAnnotationObjectValidationContributor(
+        IOptions<AbpValidationOptions> options,
+        IServiceProvider serviceProvider)
     {
-        public const int MaxRecursiveParameterValidationDepth = 8;
+        ServiceProvider = serviceProvider;
+        Options = options.Value;
+    }
 
-        protected IServiceProvider ServiceProvider { get; }
-        protected AbpValidationOptions Options { get; }
+    public void AddErrors(ObjectValidationContext context)
+    {
+        ValidateObjectRecursively(context.Errors, context.ValidatingObject, currentDepth: 1);
+    }
 
-        public DataAnnotationObjectValidationContributor(
-            IOptions<AbpValidationOptions> options,
-            IServiceProvider serviceProvider)
+    protected virtual void ValidateObjectRecursively(List<ValidationResult> errors, object validatingObject, int currentDepth)
+    {
+        if (currentDepth > MaxRecursiveParameterValidationDepth)
         {
-            ServiceProvider = serviceProvider;
-            Options = options.Value;
+            return;
         }
 
-        public void AddErrors(ObjectValidationContext context)
+        if (validatingObject == null)
         {
-            ValidateObjectRecursively(context.Errors, context.ValidatingObject, currentDepth: 1);
+            return;
         }
 
-        protected virtual void ValidateObjectRecursively(List<ValidationResult> errors, object validatingObject, int currentDepth)
+        AddErrors(errors, validatingObject);
+
+        //Validate items of enumerable
+        if (validatingObject is IEnumerable)
         {
-            if (currentDepth > MaxRecursiveParameterValidationDepth)
+            if (!(validatingObject is IQueryable))
             {
-                return;
-            }
-
-            if (validatingObject == null)
-            {
-                return;
-            }
-
-            AddErrors(errors, validatingObject);
-
-            //Validate items of enumerable
-            if (validatingObject is IEnumerable)
-            {
-                if (!(validatingObject is IQueryable))
+                foreach (var item in (validatingObject as IEnumerable))
                 {
-                    foreach (var item in (validatingObject as IEnumerable))
-                    {
-                        ValidateObjectRecursively(errors, item, currentDepth + 1);
-                    }
+                    ValidateObjectRecursively(errors, item, currentDepth + 1);
                 }
-
-                return;
             }
 
-            var validatingObjectType = validatingObject.GetType();
-
-            //Do not recursively validate for primitive objects
-            if (TypeHelper.IsPrimitiveExtended(validatingObjectType))
-            {
-                return;
-            }
-
-            if (Options.IgnoredTypes.Any(t => t.IsInstanceOfType(validatingObject)))
-            {
-                return;
-            }
-
-            var properties = TypeDescriptor.GetProperties(validatingObject).Cast<PropertyDescriptor>();
-            foreach (var property in properties)
-            {
-                if (property.Attributes.OfType<DisableValidationAttribute>().Any())
-                {
-                    continue;
-                }
-
-                ValidateObjectRecursively(errors, property.GetValue(validatingObject), currentDepth + 1);
-            }
+            return;
         }
 
-        public void AddErrors(List<ValidationResult> errors, object validatingObject)
+        var validatingObjectType = validatingObject.GetType();
+
+        //Do not recursively validate for primitive objects
+        if (TypeHelper.IsPrimitiveExtended(validatingObjectType))
         {
-            var properties = TypeDescriptor.GetProperties(validatingObject).Cast<PropertyDescriptor>();
-
-            foreach (var property in properties)
-            {
-                AddPropertyErrors(validatingObject, property, errors);
-            }
-
-            if (validatingObject is IValidatableObject validatableObject)
-            {
-                errors.AddRange(
-                    validatableObject.Validate(new ValidationContext(validatableObject, ServiceProvider, null))
-                );
-            }
+            return;
         }
 
-        protected virtual void AddPropertyErrors(object validatingObject, PropertyDescriptor property, List<ValidationResult> errors)
+        if (Options.IgnoredTypes.Any(t => t.IsInstanceOfType(validatingObject)))
         {
-            var validationAttributes = property.Attributes.OfType<ValidationAttribute>().ToArray();
-            if (validationAttributes.IsNullOrEmpty())
+            return;
+        }
+
+        var properties = TypeDescriptor.GetProperties(validatingObject).Cast<PropertyDescriptor>();
+        foreach (var property in properties)
+        {
+            if (property.Attributes.OfType<DisableValidationAttribute>().Any())
             {
-                return;
+                continue;
             }
 
-            var validationContext = new ValidationContext(validatingObject, ServiceProvider, null)
-            {
-                DisplayName = property.DisplayName,
-                MemberName = property.Name
-            };
+            ValidateObjectRecursively(errors, property.GetValue(validatingObject), currentDepth + 1);
+        }
+    }
 
-            foreach (var attribute in validationAttributes)
+    public void AddErrors(List<ValidationResult> errors, object validatingObject)
+    {
+        var properties = TypeDescriptor.GetProperties(validatingObject).Cast<PropertyDescriptor>();
+
+        foreach (var property in properties)
+        {
+            AddPropertyErrors(validatingObject, property, errors);
+        }
+
+        if (validatingObject is IValidatableObject validatableObject)
+        {
+            errors.AddRange(
+                validatableObject.Validate(new ValidationContext(validatableObject, ServiceProvider, null))
+            );
+        }
+    }
+
+    protected virtual void AddPropertyErrors(object validatingObject, PropertyDescriptor property, List<ValidationResult> errors)
+    {
+        var validationAttributes = property.Attributes.OfType<ValidationAttribute>().ToArray();
+        if (validationAttributes.IsNullOrEmpty())
+        {
+            return;
+        }
+
+        var validationContext = new ValidationContext(validatingObject, ServiceProvider, null)
+        {
+            DisplayName = property.DisplayName,
+            MemberName = property.Name
+        };
+
+        foreach (var attribute in validationAttributes)
+        {
+            var result = attribute.GetValidationResult(property.GetValue(validatingObject), validationContext);
+            if (result != null)
             {
-                var result = attribute.GetValidationResult(property.GetValue(validatingObject), validationContext);
-                if (result != null)
-                {
-                    errors.Add(result);
-                }
+                errors.Add(result);
             }
         }
     }
