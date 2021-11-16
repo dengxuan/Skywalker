@@ -1,6 +1,6 @@
 ﻿using System.Diagnostics.CodeAnalysis;
 
-namespace Microsoft.Extensions.DependencyInjection
+namespace Skywalker.Ddd.DependencyInjection
 {
     public interface IObjectAccessor<out T>
     {

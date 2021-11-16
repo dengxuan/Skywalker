@@ -3,25 +3,25 @@
 
 
 using IdentityModel;
-using Skywalker.IdentityServer.Configuration;
-using Skywalker.IdentityServer.Extensions;
-using Skywalker.IdentityServer.Services;
-using Skywalker.IdentityServer.Stores;
-using Skywalker.IdentityServer.Validation;
 using Microsoft.Extensions.Logging;
 using Microsoft.IdentityModel.Tokens;
-using System;
-using System.Collections.Generic;
-using System.Linq;
+using Skywalker;
+using Skywalker.IdentityServer.AspNetCore.Configuration;
+using Skywalker.IdentityServer.AspNetCore.Configuration.DependencyInjection.Options;
+using Skywalker.IdentityServer.AspNetCore.Extensions;
+using Skywalker.IdentityServer.AspNetCore.Models;
+using Skywalker.IdentityServer.AspNetCore.Services;
+using Skywalker.IdentityServer.AspNetCore.Validation;
+using Skywalker.IdentityServer.AspNetCore.Validation.Default;
+using Skywalker.IdentityServer.Domain.Stores;
 using System.Security.Cryptography;
-using System.Threading.Tasks;
 
-namespace Skywalker.IdentityServer.ResponseHandling
+namespace Skywalker.IdentityServer.AspNetCore.ResponseHandling.Default
 {
     /// <summary>
     /// Default implementation of the discovery endpoint response generator
     /// </summary>
-    /// <seealso cref="Skywalker.IdentityServer.ResponseHandling.IDiscoveryResponseGenerator" />
+    /// <seealso cref="IDiscoveryResponseGenerator" />
     public class DiscoveryResponseGenerator : IDiscoveryResponseGenerator
     {
         /// <summary>
@@ -364,9 +364,9 @@ namespace Skywalker.IdentityServer.ResponseHandling
         /// <summary>
         /// Creates the JWK document.
         /// </summary>
-        public virtual async Task<IEnumerable<Models.JsonWebKey>> CreateJwkDocumentAsync()
+        public virtual async Task<IEnumerable<AspNetCore.Models.JsonWebKey>> CreateJwkDocumentAsync()
         {
-            var webKeys = new List<Models.JsonWebKey>();
+            var webKeys = new List<AspNetCore.Models.JsonWebKey>();
 
             foreach (var key in await Keys.GetValidationKeysAsync())
             {
@@ -381,7 +381,7 @@ namespace Skywalker.IdentityServer.ResponseHandling
                         var exponent = Base64Url.Encode(parameters.Exponent);
                         var modulus = Base64Url.Encode(parameters.Modulus);
 
-                        var rsaJsonWebKey = new Models.JsonWebKey
+                        var rsaJsonWebKey = new AspNetCore.Models.JsonWebKey
                         {
                             kty = "RSA",
                             use = "sig",
@@ -400,7 +400,7 @@ namespace Skywalker.IdentityServer.ResponseHandling
                         var x = Base64Url.Encode(parameters.Q.X);
                         var y = Base64Url.Encode(parameters.Q.Y);
 
-                        var ecdsaJsonWebKey = new Models.JsonWebKey
+                        var ecdsaJsonWebKey = new AspNetCore.Models.JsonWebKey
                         {
                             kty = "EC",
                             use = "sig",
@@ -425,7 +425,7 @@ namespace Skywalker.IdentityServer.ResponseHandling
                     var exponent = Base64Url.Encode(parameters.Exponent);
                     var modulus = Base64Url.Encode(parameters.Modulus);
 
-                    var webKey = new Models.JsonWebKey
+                    var webKey = new AspNetCore.Models.JsonWebKey
                     {
                         kty = "RSA",
                         use = "sig",
@@ -443,7 +443,7 @@ namespace Skywalker.IdentityServer.ResponseHandling
                     var x = Base64Url.Encode(parameters.Q.X);
                     var y = Base64Url.Encode(parameters.Q.Y);
 
-                    var ecdsaJsonWebKey = new Models.JsonWebKey
+                    var ecdsaJsonWebKey = new AspNetCore.Models.JsonWebKey
                     {
                         kty = "EC",
                         use = "sig",
@@ -455,9 +455,9 @@ namespace Skywalker.IdentityServer.ResponseHandling
                     };
                     webKeys.Add(ecdsaJsonWebKey);
                 }
-                else if (key.Key is JsonWebKey jsonWebKey)
+                else if (key.Key is Microsoft.IdentityModel.Tokens.JsonWebKey jsonWebKey)
                 {
-                    var webKey = new Models.JsonWebKey
+                    var webKey = new AspNetCore.Models.JsonWebKey
                     {
                         kty = jsonWebKey.Kty,
                         use = jsonWebKey.Use ?? "sig",

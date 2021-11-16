@@ -4,15 +4,15 @@
 
 using System.Threading.Tasks;
 using System.Net;
-using Skywalker.IdentityServer.Hosting;
 using Microsoft.AspNetCore.Http;
+using Skywalker.IdentityServer.AspNetCore.Hosting;
 
-namespace Skywalker.IdentityServer.Endpoints.Results
+namespace Skywalker.IdentityServer.AspNetCore.Endpoints.Results
 {
     /// <summary>
     /// Result for a raw HTTP status code
     /// </summary>
-    /// <seealso cref="Skywalker.IdentityServer.Hosting.IEndpointResult" />
+    /// <seealso cref="IEndpointResult" />
     public class StatusCodeResult : IEndpointResult
     {
         /// <summary>

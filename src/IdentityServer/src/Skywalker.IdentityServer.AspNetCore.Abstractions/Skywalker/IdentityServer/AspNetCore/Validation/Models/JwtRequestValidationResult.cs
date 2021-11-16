@@ -4,7 +4,7 @@
 
 using System.Collections.Generic;
 
-namespace Skywalker.IdentityServer.Validation
+namespace Skywalker.IdentityServer.AspNetCore.Validation.Models
 {
     /// <summary>
     /// Models the result of JWT request validation.

@@ -1,7 +1,7 @@
 ﻿using System.Diagnostics.CodeAnalysis;
 using System.Threading.Tasks;
 
-namespace Skywalker.ExceptionHandling
+namespace Skywalker.Ddd.ExceptionHandling
 {
     public abstract class ExceptionSubscriber : IExceptionSubscriber
     {

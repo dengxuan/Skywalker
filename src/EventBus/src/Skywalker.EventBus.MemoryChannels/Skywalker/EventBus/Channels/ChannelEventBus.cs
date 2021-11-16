@@ -1,7 +1,7 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
 using Skywalker.EventBus.Abstractions;
+using Skywalker.Extensions.Threading;
 using Skywalker.Messaging.Abstractions;
-using Skywalker.Threading;
 using System;
 using System.Collections.Concurrent;
 using System.Collections.Generic;
@@ -9,7 +9,7 @@ using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 
-namespace Skywalker.EventBus.MemoryChannels;
+namespace Skywalker.EventBus.Channels;
 
 public class ChannelEventBus : EventBusBase, IEventBus
 {

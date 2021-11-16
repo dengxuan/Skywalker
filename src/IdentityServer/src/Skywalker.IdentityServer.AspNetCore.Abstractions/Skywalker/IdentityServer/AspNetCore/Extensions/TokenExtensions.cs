@@ -3,7 +3,6 @@
 
 
 using IdentityModel;
-using Skywalker.IdentityServer.Models;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.Extensions.Logging;
 using Newtonsoft.Json.Linq;
@@ -12,9 +11,10 @@ using System.Collections.Generic;
 using System.IdentityModel.Tokens.Jwt;
 using System.Linq;
 using System.Security.Claims;
-using Skywalker.IdentityServer.Configuration;
+using Skywalker.IdentityServer.AspNetCore.Configuration.DependencyInjection.Options;
+using Skywalker.IdentityServer.Domain.RefreshTokens;
 
-namespace Skywalker.IdentityServer.Extensions
+namespace Skywalker.IdentityServer.AspNetCore.Extensions
 {
     /// <summary>
     /// Extensions for Token
@@ -48,7 +48,7 @@ namespace Skywalker.IdentityServer.Extensions
             var amrClaims = token.Claims.Where(x => x.Type == JwtClaimTypes.AuthenticationMethod).ToArray();
             var scopeClaims = token.Claims.Where(x => x.Type == JwtClaimTypes.Scope).ToArray();
             var jsonClaims = token.Claims.Where(x => x.ValueType == IdentityServerConstants.ClaimValueTypes.Json).ToList();
-            
+
             // add confirmation claim if present (it's JSON valued)
             if (token.Confirmation.IsPresent())
             {
@@ -83,13 +83,13 @@ namespace Skywalker.IdentityServer.Extensions
                 var amrValues = amrClaims.Select(x => x.Value).Distinct().ToArray();
                 payload.Add(JwtClaimTypes.AuthenticationMethod, amrValues);
             }
-            
+
             // deal with json types
             // calling ToArray() to trigger JSON parsing once and so later 
             // collection identity comparisons work for the anonymous type
             try
             {
-                var jsonTokens = jsonClaims.Select(x => new { x.Type, JsonValue = JRaw.Parse(x.Value) }).ToArray();
+                var jsonTokens = jsonClaims.Select(x => new { x.Type, JsonValue = JToken.Parse(x.Value) }).ToArray();
 
                 var jsonObjects = jsonTokens.Where(x => x.JsonValue.Type == JTokenType.Object).ToArray();
                 var jsonObjectGroups = jsonObjects.GroupBy(x => x.Type).ToArray();

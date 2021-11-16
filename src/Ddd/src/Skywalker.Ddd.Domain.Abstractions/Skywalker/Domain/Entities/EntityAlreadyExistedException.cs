@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Skywalker.Ddd.ExceptionHandling;
+using System;
 
 namespace Skywalker.Domain.Entities
 {

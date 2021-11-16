@@ -1,13 +1,7 @@
-﻿using Skywalker.Caching.Abstractions;
-using Skywalker.Domain.Repositories;
+﻿using Skywalker.Domain.Repositories;
 using Skywalker.Domain.Services;
-using Skywalker.IdentityServer.Extensions;
-using Skywalker.IdentityServer.Models;
-using Skywalker.IdentityServer.Stores;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+using Skywalker.IdentityServer.Domain.Extensions;
+using Skywalker.IdentityServer.Domain.Stores;
 
 namespace Skywalker.IdentityServer.Domain.PersistedGrants
 {

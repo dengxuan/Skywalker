@@ -9,7 +9,7 @@ using System.Linq;
 using System.Security.Claims;
 using System.Text.Json;
 
-namespace Skywalker.IdentityServer.Extensions
+namespace Skywalker.IdentityServer.AspNetCore.Extensions
 {
     internal static class ClaimsExtensions
     {
@@ -54,7 +54,7 @@ namespace Skywalker.IdentityServer.Extensions
             if (claim.ValueType == ClaimValueTypes.Integer ||
                 claim.ValueType == ClaimValueTypes.Integer32)
             {
-                if (Int32.TryParse(claim.Value, out int value))
+                if (int.TryParse(claim.Value, out int value))
                 {
                     return value;
                 }
@@ -62,7 +62,7 @@ namespace Skywalker.IdentityServer.Extensions
 
             if (claim.ValueType == ClaimValueTypes.Integer64)
             {
-                if (Int64.TryParse(claim.Value, out long value))
+                if (long.TryParse(claim.Value, out long value))
                 {
                     return value;
                 }
@@ -80,7 +80,7 @@ namespace Skywalker.IdentityServer.Extensions
             {
                 try
                 {
-                    return System.Text.Json.JsonSerializer.Deserialize<JsonElement>(claim.Value);
+                    return JsonSerializer.Deserialize<JsonElement>(claim.Value);
                 }
                 catch { }
             }

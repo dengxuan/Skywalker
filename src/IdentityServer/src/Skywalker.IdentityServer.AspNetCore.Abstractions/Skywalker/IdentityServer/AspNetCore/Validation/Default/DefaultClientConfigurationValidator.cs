@@ -1,15 +1,16 @@
-using Skywalker.IdentityServer.Configuration;
-using Skywalker.IdentityServer.Models;
+using Skywalker.IdentityServer.AspNetCore.Configuration.DependencyInjection.Options;
+using Skywalker.IdentityServer.AspNetCore.Validation.Contexts;
+using Skywalker.IdentityServer.Domain.Models;
 using System;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace Skywalker.IdentityServer.Validation
+namespace Skywalker.IdentityServer.AspNetCore.Validation.Default
 {
     /// <summary>
     /// Default client configuration validator
     /// </summary>
-    /// <seealso cref="Skywalker.IdentityServer.Validation.IClientConfigurationValidator" />
+    /// <seealso cref="IClientConfigurationValidator" />
     public class DefaultClientConfigurationValidator : IClientConfigurationValidator
     {
         private readonly IdentityServerOptions _options;

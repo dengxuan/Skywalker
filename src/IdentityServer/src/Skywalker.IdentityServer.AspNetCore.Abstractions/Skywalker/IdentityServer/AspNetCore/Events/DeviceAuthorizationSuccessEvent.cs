@@ -2,17 +2,16 @@
 // Licensed under the Apache License, Version 2.0. See LICENSE in the project root for license information.
 
 
-using Skywalker.IdentityServer.Extensions;
-using Skywalker.IdentityServer.ResponseHandling;
-using Skywalker.IdentityServer.Validation;
-using System;
+using Skywalker.IdentityServer.AspNetCore.Events.Infrastructure;
+using Skywalker.IdentityServer.AspNetCore.ResponseHandling.Models;
+using Skywalker.IdentityServer.AspNetCore.Validation.Models;
 
-namespace Skywalker.IdentityServer.Events
+namespace Skywalker.IdentityServer.AspNetCore.Events
 {
     /// <summary>
     /// Event for device authorization failure
     /// </summary>
-    /// <seealso cref="Skywalker.IdentityServer.Events.Event" />
+    /// <seealso cref="Event" />
     public class DeviceAuthorizationSuccessEvent : Event
     {
         /// <summary>

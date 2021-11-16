@@ -1,4 +1,4 @@
-﻿namespace Skywalker.Caching.Redis
+﻿namespace Caching.Redis
 {
     public class RedisOptions
     {

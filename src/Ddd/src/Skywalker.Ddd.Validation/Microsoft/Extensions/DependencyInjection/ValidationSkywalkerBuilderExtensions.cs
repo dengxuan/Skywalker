@@ -1,4 +1,4 @@
-﻿using Skywalker;
+﻿using Skywalker.Ddd;
 using Skywalker.Validation;
 
 namespace Microsoft.Extensions.DependencyInjection;

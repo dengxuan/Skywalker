@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Skywalker.Extensions.WheelTimer.Abstractions;
+using System;
 using System.Collections.Generic;
 
 namespace Skywalker.Extensions.WheelTimer

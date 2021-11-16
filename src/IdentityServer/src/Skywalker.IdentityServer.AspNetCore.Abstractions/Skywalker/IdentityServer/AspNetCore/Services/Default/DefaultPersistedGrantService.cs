@@ -2,16 +2,14 @@
 // Licensed under the Apache License, Version 2.0. See LICENSE in the project root for license information.
 
 
-using Skywalker.IdentityServer.Models;
 using Microsoft.Extensions.Logging;
-using System.Threading.Tasks;
-using Skywalker.IdentityServer.Stores;
-using Skywalker.IdentityServer.Stores.Serialization;
-using System.Collections.Generic;
-using System.Linq;
-using System;
+using Skywalker.IdentityServer.AspNetCore.Models;
+using Skywalker.IdentityServer.Domain.Models;
+using Skywalker.IdentityServer.Domain.RefreshTokens;
+using Skywalker.IdentityServer.Domain.Stores;
+using Skywalker.IdentityServer.Domain.Stores.Serialization;
 
-namespace Skywalker.IdentityServer.Services
+namespace Skywalker.IdentityServer.AspNetCore.Services.Default
 {
     /// <summary>
     /// Default persisted grant service
@@ -28,7 +26,7 @@ namespace Skywalker.IdentityServer.Services
         /// <param name="store">The store.</param>
         /// <param name="serializer">The serializer.</param>
         /// <param name="logger">The logger.</param>
-        public DefaultPersistedGrantService(IPersistedGrantStore store, 
+        public DefaultPersistedGrantService(IPersistedGrantStore store,
             IPersistentGrantSerializer serializer,
             ILogger<DefaultPersistedGrantService> logger)
         {
@@ -40,15 +38,15 @@ namespace Skywalker.IdentityServer.Services
         /// <inheritdoc/>
         public async Task<IEnumerable<Grant>> GetAllGrantsAsync(string subjectId)
         {
-            if (String.IsNullOrWhiteSpace(subjectId)) throw new ArgumentNullException(nameof(subjectId));
-            
+            if (string.IsNullOrWhiteSpace(subjectId)) throw new ArgumentNullException(nameof(subjectId));
+
             var grants = (await _store.GetAllAsync(new PersistedGrantFilter { SubjectId = subjectId })).ToArray();
 
             try
             {
                 var consents = grants.Where(x => x.Type == IdentityServerConstants.PersistedGrantTypes.UserConsent)
                     .Select(x => _serializer.Deserialize<Consent>(x.Data))
-                    .Select(x => new Grant 
+                    .Select(x => new Grant
                     {
                         ClientId = x.ClientId,
                         SubjectId = subjectId,
@@ -111,7 +109,7 @@ namespace Skywalker.IdentityServer.Services
         {
             var list = first.ToList();
 
-            foreach(var other in second)
+            foreach (var other in second)
             {
                 var match = list.FirstOrDefault(x => x.ClientId == other.ClientId);
                 if (match != null)
@@ -149,9 +147,10 @@ namespace Skywalker.IdentityServer.Services
         /// <inheritdoc/>
         public Task RemoveAllGrantsAsync(string subjectId, string clientId = null, string sessionId = null)
         {
-            if (String.IsNullOrWhiteSpace(subjectId)) throw new ArgumentNullException(nameof(subjectId));
+            if (string.IsNullOrWhiteSpace(subjectId)) throw new ArgumentNullException(nameof(subjectId));
 
-            return _store.RemoveAllAsync(new PersistedGrantFilter {
+            return _store.RemoveAllAsync(new PersistedGrantFilter
+            {
                 SubjectId = subjectId,
                 ClientId = clientId,
                 SessionId = sessionId

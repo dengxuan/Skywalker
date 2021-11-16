@@ -2,17 +2,15 @@
 // Licensed under the Apache License, Version 2.0. See LICENSE in the project root for license information.
 
 
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Skywalker.IdentityServer.Models;
+using Skywalker.IdentityServer.Domain.DeviceAuthorizations;
+using Skywalker.IdentityServer.Domain.Stores;
 
-namespace Skywalker.IdentityServer.Stores
+namespace Skywalker.IdentityServer.AspNetCore.Stores.InMemory
 {
     /// <summary>
     /// In-memory device flow store
     /// </summary>
-    /// <seealso cref="Skywalker.IdentityServer.Stores.IDeviceFlowStore" />
+    /// <seealso cref="IDeviceFlowStore" />
     public class InMemoryDeviceFlowStore : IDeviceFlowStore
     {
         private readonly List<InMemoryDeviceAuthorization> _repository = new List<InMemoryDeviceAuthorization>();
@@ -30,7 +28,7 @@ namespace Skywalker.IdentityServer.Stores
             {
                 _repository.Add(new InMemoryDeviceAuthorization(deviceCode, userCode, data));
             }
-            
+
             return Task.CompletedTask;
         }
 

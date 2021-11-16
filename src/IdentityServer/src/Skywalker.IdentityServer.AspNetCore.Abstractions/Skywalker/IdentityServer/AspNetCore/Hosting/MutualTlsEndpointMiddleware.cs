@@ -1,12 +1,9 @@
-using System;
-using System.Threading.Tasks;
-using Skywalker.IdentityServer.Configuration;
-using Skywalker.IdentityServer.Extensions;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Logging;
+using Skywalker.IdentityServer.AspNetCore.Configuration.DependencyInjection.Options;
 
-namespace Skywalker.IdentityServer.Hosting
+namespace Skywalker.IdentityServer.AspNetCore.Hosting
 {
     /// <summary>
     ///     Middleware for re-writing the MTLS enabled endpoints to the standard protocol endpoints
@@ -86,7 +83,7 @@ namespace Skywalker.IdentityServer.Hosting
                     }
                 }
             }
-            
+
             await _next(context);
         }
 

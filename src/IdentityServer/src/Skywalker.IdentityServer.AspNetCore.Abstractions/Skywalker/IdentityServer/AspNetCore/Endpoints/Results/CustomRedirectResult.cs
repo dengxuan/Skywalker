@@ -4,19 +4,20 @@
 
 using System;
 using System.Threading.Tasks;
-using Skywalker.IdentityServer.Hosting;
-using Skywalker.IdentityServer.Validation;
 using Microsoft.AspNetCore.Http;
-using Skywalker.IdentityServer.Extensions;
-using Skywalker.IdentityServer.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Skywalker.IdentityServer.AspNetCore.Configuration.DependencyInjection.Options;
+using Skywalker.IdentityServer.AspNetCore.Extensions;
+using Skywalker.IdentityServer.AspNetCore;
+using Skywalker.IdentityServer.AspNetCore.Validation.Models;
+using Skywalker.IdentityServer.AspNetCore.Hosting;
 
-namespace Skywalker.IdentityServer.Endpoints.Results
+namespace Skywalker.IdentityServer.AspNetCore.Endpoints.Results
 {
     /// <summary>
     /// Result for a custom redirect
     /// </summary>
-    /// <seealso cref="Skywalker.IdentityServer.Hosting.IEndpointResult" />
+    /// <seealso cref="IEndpointResult" />
     public class CustomRedirectResult : IEndpointResult
     {
         private readonly ValidatedAuthorizeRequest _request;
@@ -27,7 +28,7 @@ namespace Skywalker.IdentityServer.Endpoints.Results
         /// </summary>
         /// <param name="request">The request.</param>
         /// <param name="url">The URL.</param>
-        /// <exception cref="System.ArgumentNullException">
+        /// <exception cref="ArgumentNullException">
         /// request
         /// or
         /// url
@@ -44,7 +45,7 @@ namespace Skywalker.IdentityServer.Endpoints.Results
         internal CustomRedirectResult(
             ValidatedAuthorizeRequest request,
             string url,
-            IdentityServerOptions options) 
+            IdentityServerOptions options)
             : this(request, url)
         {
             _options = options;

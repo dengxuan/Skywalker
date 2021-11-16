@@ -3,10 +3,13 @@
 
 
 using Microsoft.Extensions.Logging;
+using Skywalker;
+using Skywalker.IdentityServer.AspNetCore.Validation;
+using Skywalker.IdentityServer.AspNetCore.Validation.Models;
 using System;
 using System.Collections.Generic;
 
-namespace Skywalker.IdentityServer.Validation
+namespace Skywalker.IdentityServer.AspNetCore.Validation.Default
 {
     /// <summary>
     /// Default implementation of IScopeParser.
@@ -35,7 +38,7 @@ namespace Skywalker.IdentityServer.Validation
             {
                 var ctx = new ParseScopeContext(scopeValue);
                 ParseScopeValue(ctx);
-                
+
                 if (ctx.Succeeded)
                 {
                     var parsedScope = ctx.ParsedName != null ?
@@ -91,7 +94,7 @@ namespace Skywalker.IdentityServer.Validation
             /// The error encountered parsing the scope.
             /// </summary>
             public string Error { get; private set; }
-            
+
             /// <summary>
             /// Indicates if the scope should be excluded from the parsed results.
             /// </summary>
@@ -118,11 +121,11 @@ namespace Skywalker.IdentityServer.Validation
             /// <param name="parsedParameter"></param>
             public void SetParsedValues(string parsedName, string parsedParameter)
             {
-                if (String.IsNullOrWhiteSpace(parsedName))
+                if (string.IsNullOrWhiteSpace(parsedName))
                 {
                     throw new ArgumentNullException(nameof(parsedName));
                 }
-                if (String.IsNullOrWhiteSpace(parsedParameter))
+                if (string.IsNullOrWhiteSpace(parsedParameter))
                 {
                     throw new ArgumentNullException(nameof(parsedParameter));
                 }

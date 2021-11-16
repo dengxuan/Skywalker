@@ -2,11 +2,11 @@
 // Licensed under the Apache License, Version 2.0. See LICENSE in the project root for license information.
 
 
-using Skywalker.IdentityServer.Models;
+using Skywalker.IdentityServer.AspNetCore.Models;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
-namespace Skywalker.IdentityServer.ResponseHandling
+namespace Skywalker.IdentityServer.AspNetCore.ResponseHandling
 {
     /// <summary>
     /// Interface for discovery endpoint response generator

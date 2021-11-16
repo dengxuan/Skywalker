@@ -2,18 +2,19 @@
 // Licensed under the Apache License, Version 2.0. See LICENSE in the project root for license information.
 
 
-using Skywalker.IdentityServer.Extensions;
-using Skywalker.IdentityServer.Models;
-using Skywalker.IdentityServer.Stores;
-using Microsoft.Extensions.Logging;
-using System.Security.Claims;
-using System.Threading.Tasks;
 using IdentityModel;
-using Skywalker.IdentityServer.Logging.Models;
-using Skywalker.IdentityServer.Validation;
 using Microsoft.AspNetCore.Authentication;
+using Microsoft.Extensions.Logging;
+using Skywalker.IdentityServer.AspNetCore.Extensions;
+using Skywalker.IdentityServer.AspNetCore.Models.Contexts;
+using Skywalker.IdentityServer.AspNetCore.Validation.Models;
+using Skywalker.IdentityServer.Domain.Clients;
+using Skywalker.IdentityServer.Domain.Models;
+using Skywalker.IdentityServer.Domain.RefreshTokens;
+using Skywalker.IdentityServer.Domain.Stores;
+using System.Security.Claims;
 
-namespace Skywalker.IdentityServer.Services
+namespace Skywalker.IdentityServer.AspNetCore.Services.Default
 {
     /// <summary>
     /// Default refresh token service
@@ -68,7 +69,8 @@ namespace Skywalker.IdentityServer.Services
         {
             var invalidGrant = new TokenValidationResult
             {
-                IsError = true, Error = OidcConstants.TokenErrors.InvalidGrant
+                IsError = true,
+                Error = OidcConstants.TokenErrors.InvalidGrant
             };
 
             Logger.LogTrace("Start refresh token validation");
@@ -91,7 +93,7 @@ namespace Skywalker.IdentityServer.Services
                 Logger.LogWarning("Refresh token has expired.");
                 return invalidGrant;
             }
-            
+
             /////////////////////////////////////////////
             // check if client belongs to requested refresh token
             /////////////////////////////////////////////
@@ -109,19 +111,19 @@ namespace Skywalker.IdentityServer.Services
                 Logger.LogError("{clientId} does not have access to offline_access scope anymore", client.ClientId);
                 return invalidGrant;
             }
-            
+
             /////////////////////////////////////////////
             // check if refresh token has been consumed
             /////////////////////////////////////////////
             if (refreshToken.ConsumedTime.HasValue)
             {
-                if ((await AcceptConsumedTokenAsync(refreshToken)) == false)
+                if (await AcceptConsumedTokenAsync(refreshToken) == false)
                 {
                     Logger.LogWarning("Rejecting refresh token because it has been consumed already.");
                     return invalidGrant;
                 }
             }
-            
+
             /////////////////////////////////////////////
             // make sure user is enabled
             /////////////////////////////////////////////
@@ -137,11 +139,11 @@ namespace Skywalker.IdentityServer.Services
                 Logger.LogError("{subjectId} has been disabled", refreshToken.Subject.GetSubjectId());
                 return invalidGrant;
             }
-            
+
             return new TokenValidationResult
             {
-                IsError = false, 
-                RefreshToken = refreshToken, 
+                IsError = false,
+                RefreshToken = refreshToken,
                 Client = client
             };
         }
@@ -198,7 +200,9 @@ namespace Skywalker.IdentityServer.Services
 
             var refreshToken = new RefreshToken
             {
-                CreationTime = Clock.UtcNow.UtcDateTime, Lifetime = lifetime, AccessToken = accessToken
+                CreationTime = Clock.UtcNow.UtcDateTime,
+                Lifetime = lifetime,
+                AccessToken = accessToken
             };
 
             var handle = await RefreshTokenStore.StoreRefreshTokenAsync(refreshToken);

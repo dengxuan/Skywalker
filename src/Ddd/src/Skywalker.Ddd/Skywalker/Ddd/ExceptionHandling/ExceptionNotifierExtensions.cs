@@ -3,7 +3,7 @@ using System;
 using System.Diagnostics.CodeAnalysis;
 using System.Threading.Tasks;
 
-namespace Skywalker.ExceptionHandling
+namespace Skywalker.Ddd.ExceptionHandling
 {
     public static class ExceptionNotifierExtensions
     {

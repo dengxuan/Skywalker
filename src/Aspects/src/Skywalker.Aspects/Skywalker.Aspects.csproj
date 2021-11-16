@@ -1,0 +1,11 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+	  <RootNamespace></RootNamespace>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Skywalker.Aspects.Abstractions\Skywalker.Aspects.Abstractions.csproj" />
+  </ItemGroup>
+
+</Project>

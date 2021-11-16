@@ -3,16 +3,13 @@
 
 
 using IdentityModel;
-using Skywalker.IdentityServer.Extensions;
-using System;
-using System.Collections.Generic;
-using System.Linq;
+using Skywalker.IdentityServer.AspNetCore.Validation.Models;
 using System.Security.Cryptography;
 using System.Text;
 
 #pragma warning disable 1591
 
-namespace Skywalker.IdentityServer.Validation
+namespace Skywalker.IdentityServer.AspNetCore.Extensions
 {
     public static class ValidatedAuthorizeRequestExtensions
     {
@@ -89,7 +86,7 @@ namespace Skywalker.IdentityServer.Validation
 
         public static void AddAcrValue(this ValidatedAuthorizeRequest request, string value)
         {
-            if (String.IsNullOrWhiteSpace(value)) throw new ArgumentNullException(nameof(value));
+            if (string.IsNullOrWhiteSpace(value)) throw new ArgumentNullException(nameof(value));
 
             request.AuthenticationContextReferenceClasses.Add(value);
             var acr_values = request.AuthenticationContextReferenceClasses.ToSpaceSeparatedString();
@@ -100,7 +97,7 @@ namespace Skywalker.IdentityServer.Validation
         {
             if (request == null) return null;
             if (!request.IsOpenIdRequest) return null;
-            
+
             if (request.SessionId == null) return null;
 
             if (request.ClientId.IsMissing()) return null;

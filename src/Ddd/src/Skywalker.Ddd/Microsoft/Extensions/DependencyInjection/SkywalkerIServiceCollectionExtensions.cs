@@ -1,6 +1,6 @@
-﻿using Skywalker;
+﻿using Skywalker.Ddd;
 using Skywalker.Ddd.DependencyInjection;
-using Skywalker.ExceptionHandling;
+using Skywalker.Ddd.ExceptionHandling;
 
 namespace Microsoft.Extensions.DependencyInjection;
 

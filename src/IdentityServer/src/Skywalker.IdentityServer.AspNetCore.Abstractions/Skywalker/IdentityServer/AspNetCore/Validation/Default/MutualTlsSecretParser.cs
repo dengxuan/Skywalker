@@ -4,13 +4,14 @@
 using System;
 using System.Linq;
 using System.Threading.Tasks;
-using Skywalker.IdentityServer.Configuration;
-using Skywalker.IdentityServer.Extensions;
-using Skywalker.IdentityServer.Models;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Logging;
+using Skywalker.IdentityServer.AspNetCore.Validation;
+using Skywalker.IdentityServer.AspNetCore.Configuration.DependencyInjection.Options;
+using Skywalker.IdentityServer.AspNetCore.Models;
+using Skywalker.IdentityServer.AspNetCore.Extensions;
 
-namespace Skywalker.IdentityServer.Validation
+namespace Skywalker.IdentityServer.AspNetCore.Validation.Default
 {
     /// <summary>
     /// Parses secret according to MTLS spec
@@ -34,7 +35,7 @@ namespace Skywalker.IdentityServer.Validation
         /// <summary>
         /// Name of authentication method (blank to suppress in discovery since we do special handling)
         /// </summary>
-        public string AuthenticationMethod => String.Empty;
+        public string AuthenticationMethod => string.Empty;
 
         /// <summary>
         /// Parses the HTTP context
@@ -58,22 +59,22 @@ namespace Skywalker.IdentityServer.Validation
                 var id = body["client_id"].FirstOrDefault();
 
                 // client id must be present
-                if (!String.IsNullOrWhiteSpace(id))
+                if (!string.IsNullOrWhiteSpace(id))
                 {
                     if (id.Length > _options.InputLengthRestrictions.ClientId)
                     {
                         _logger.LogError("Client ID exceeds maximum length.");
                         return null;
                     }
-                    
+
                     var clientCertificate = await context.Connection.GetClientCertificateAsync();
-                    
+
                     if (clientCertificate is null)
                     {
                         _logger.LogDebug("Client certificate not present");
                         return null;
                     }
-                    
+
                     return new ParsedSecret
                     {
                         Id = id,

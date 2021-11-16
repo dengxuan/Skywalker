@@ -5,7 +5,7 @@
 using Skywalker.Domain.Entities;
 using System;
 
-namespace Skywalker.IdentityServer.Models
+namespace Skywalker.IdentityServer.Domain.PersistedGrants
 {
     /// <summary>
     /// A model for a persisted grant

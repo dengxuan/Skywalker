@@ -4,9 +4,10 @@
 
 using System.Collections.Specialized;
 using System.Threading.Tasks;
-using Skywalker.IdentityServer.Models;
+using Skywalker.IdentityServer.AspNetCore.Validation.Models;
+using Skywalker.IdentityServer.Domain.Clients;
 
-namespace Skywalker.IdentityServer.Validation
+namespace Skywalker.IdentityServer.AspNetCore.Validation
 {
     /// <summary>
     /// Interface for the token revocation request validator

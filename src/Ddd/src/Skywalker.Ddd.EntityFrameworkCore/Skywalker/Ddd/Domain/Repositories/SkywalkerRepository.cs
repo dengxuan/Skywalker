@@ -6,6 +6,7 @@ using Skywalker.Domain.Entities.Events;
 using Skywalker.Domain.Repositories;
 using Skywalker.EventBus;
 using Skywalker.EventBus.Abstractions;
+using Skywalker.Extensions.GuidGenerator;
 using Skywalker.Extensions.Timing;
 using Skywalker.Reflection;
 using System.ComponentModel.DataAnnotations.Schema;

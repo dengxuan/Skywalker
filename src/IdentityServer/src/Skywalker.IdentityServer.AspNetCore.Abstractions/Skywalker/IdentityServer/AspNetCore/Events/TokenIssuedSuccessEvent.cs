@@ -3,19 +3,20 @@
 
 
 using IdentityModel;
-using Skywalker.IdentityServer.Extensions;
-using Skywalker.IdentityServer.ResponseHandling;
-using Skywalker.IdentityServer.Validation;
+using Skywalker.IdentityServer.AspNetCore.Events.Infrastructure;
+using Skywalker.IdentityServer.AspNetCore.Extensions;
+using Skywalker.IdentityServer.AspNetCore.ResponseHandling.Models;
+using Skywalker.IdentityServer.AspNetCore.Validation.Models;
 using System;
 using System.Collections.Generic;
-using static Skywalker.IdentityServer.Constants;
+using static Skywalker.IdentityServer.AspNetCore.Constants;
 
-namespace Skywalker.IdentityServer.Events
+namespace Skywalker.IdentityServer.AspNetCore.Events
 {
     /// <summary>
     /// Event for successful token issuance
     /// </summary>
-    /// <seealso cref="Skywalker.IdentityServer.Events.Event" />
+    /// <seealso cref="Event" />
     public class TokenIssuedSuccessEvent : Event
     {
         /// <summary>

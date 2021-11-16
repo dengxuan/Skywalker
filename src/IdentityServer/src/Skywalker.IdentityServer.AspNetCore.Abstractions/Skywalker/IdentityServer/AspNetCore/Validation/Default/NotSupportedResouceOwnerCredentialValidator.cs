@@ -3,15 +3,16 @@
 
 
 using Microsoft.Extensions.Logging;
-using System.Threading.Tasks;
-using Skywalker.IdentityServer.Models;
+using Skywalker.IdentityServer.AspNetCore.Models;
+using Skywalker.IdentityServer.AspNetCore.Validation.Contexts;
+using Skywalker.IdentityServer.AspNetCore.Validation.Models;
 
-namespace Skywalker.IdentityServer.Validation
+namespace Skywalker.IdentityServer.AspNetCore.Validation.Default
 {
     /// <summary>
     /// Default resource owner password validator (no implementation == not supported)
     /// </summary>
-    /// <seealso cref="Skywalker.IdentityServer.Validation.IResourceOwnerPasswordValidator" />
+    /// <seealso cref="IResourceOwnerPasswordValidator" />
     public class NotSupportedResourceOwnerPasswordValidator : IResourceOwnerPasswordValidator
     {
         private readonly ILogger _logger;

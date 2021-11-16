@@ -3,7 +3,6 @@
 
 
 using IdentityModel;
-using Skywalker.IdentityServer.Validation;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
@@ -11,8 +10,10 @@ using System;
 using System.Security.Claims;
 using System.Text.Encodings.Web;
 using System.Threading.Tasks;
+using Skywalker.IdentityServer.AspNetCore.Validation;
+using Skywalker.IdentityServer.AspNetCore.Validation.Models;
 
-namespace Skywalker.IdentityServer.Hosting.LocalApiAuthentication
+namespace Skywalker.IdentityServer.AspNetCore.Hosting.LocalApiAuthentication
 {
     /// <summary>
     /// Authentication handler for validating access token from the local IdentityServer

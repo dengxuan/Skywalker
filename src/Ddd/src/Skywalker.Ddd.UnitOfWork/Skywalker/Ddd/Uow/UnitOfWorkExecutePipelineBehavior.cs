@@ -3,11 +3,10 @@ using Microsoft.Extensions.Options;
 using Skywalker.Application;
 using Skywalker.Application.Abstractions;
 using Skywalker.Application.Dtos.Contracts;
-using Skywalker.Ddd.Uow;
 using Skywalker.Ddd.Uow.Abstractions;
 using System.Diagnostics.CodeAnalysis;
 
-namespace Skywalker.Uow
+namespace Skywalker.Ddd.Uow
 {
     public class UnitOfWorkExecutePipelineBehavior<TOutputDto> : IExecutePipelineBehavior<TOutputDto> where TOutputDto : IEntityDto
     {

@@ -1,5 +1,5 @@
 ﻿using Skywalker.EventBus.Abstractions;
-using Skywalker.EventBus.MemoryChannels;
+using Skywalker.EventBus.Channels;
 
 namespace Microsoft.Extensions.DependencyInjection;
 

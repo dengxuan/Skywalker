@@ -7,8 +7,9 @@ using System.Collections.Generic;
 using System.Net.Http;
 using System.Threading.Tasks;
 using Microsoft.Extensions.Logging;
+using Skywalker.IdentityServer.AspNetCore.Services;
 
-namespace Skywalker.IdentityServer.Services
+namespace Skywalker.IdentityServer.AspNetCore.Services.Default
 {
     /// <summary>
     /// Models making HTTP requests for back-channel logout notification.

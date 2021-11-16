@@ -1,6 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Filters;
-using Skywalker.AspNetCore.Mvc.Models;
+using Skywalker.AspNetCore.Mvc.Abstractions.Models;
 
 namespace Skywalker.AspNetCore.Mvc.Response.Wrapping
 {

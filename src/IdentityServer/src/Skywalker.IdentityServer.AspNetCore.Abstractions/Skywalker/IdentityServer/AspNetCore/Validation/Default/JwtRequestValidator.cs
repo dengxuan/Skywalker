@@ -8,16 +8,17 @@ using System.IdentityModel.Tokens.Jwt;
 using System.Linq;
 using System.Threading.Tasks;
 using IdentityModel;
-using Skywalker.IdentityServer.Configuration;
-using Skywalker.IdentityServer.Extensions;
-using Skywalker.IdentityServer.Models;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Logging;
 using Microsoft.IdentityModel.Tokens;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
+using Skywalker.IdentityServer.AspNetCore.Configuration.DependencyInjection.Options;
+using Skywalker.IdentityServer.AspNetCore.Extensions;
+using Skywalker.IdentityServer.AspNetCore.Validation.Models;
+using Skywalker.IdentityServer.Domain.Clients;
 
-namespace Skywalker.IdentityServer.Validation
+namespace Skywalker.IdentityServer.AspNetCore.Validation.Default
 {
     /// <summary>
     /// Validates JWT authorization request objects
@@ -26,7 +27,7 @@ namespace Skywalker.IdentityServer.Validation
     {
         private readonly string _audienceUri;
         private readonly IHttpContextAccessor _httpContextAccessor;
-        
+
         /// <summary>
         /// JWT handler
         /// </summary>
@@ -55,7 +56,7 @@ namespace Skywalker.IdentityServer.Validation
         /// The logger
         /// </summary>
         protected readonly ILogger Logger;
-        
+
         /// <summary>
         /// The optione
         /// </summary>
@@ -67,7 +68,7 @@ namespace Skywalker.IdentityServer.Validation
         public JwtRequestValidator(IHttpContextAccessor contextAccessor, IdentityServerOptions options, ILogger<JwtRequestValidator> logger)
         {
             _httpContextAccessor = contextAccessor;
-            
+
             Options = options;
             Logger = logger;
         }
@@ -90,7 +91,7 @@ namespace Skywalker.IdentityServer.Validation
         public virtual async Task<JwtRequestValidationResult> ValidateAsync(Client client, string jwtTokenString)
         {
             if (client == null) throw new ArgumentNullException(nameof(client));
-            if (String.IsNullOrWhiteSpace(jwtTokenString)) throw new ArgumentNullException(nameof(jwtTokenString));
+            if (string.IsNullOrWhiteSpace(jwtTokenString)) throw new ArgumentNullException(nameof(jwtTokenString));
 
             var fail = new JwtRequestValidationResult { IsError = true };
 
@@ -181,7 +182,7 @@ namespace Skywalker.IdentityServer.Validation
             }
 
             Handler.ValidateToken(jwtTokenString, tokenValidationParameters, out var token);
-            
+
             return Task.FromResult((JwtSecurityToken)token);
         }
 

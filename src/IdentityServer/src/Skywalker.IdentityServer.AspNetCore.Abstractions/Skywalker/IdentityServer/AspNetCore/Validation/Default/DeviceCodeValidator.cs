@@ -2,16 +2,15 @@
 // Licensed under the Apache License, Version 2.0. See LICENSE in the project root for license information.
 
 
-using System.Linq;
-using System.Threading.Tasks;
 using IdentityModel;
-using Skywalker.IdentityServer.Extensions;
-using Skywalker.IdentityServer.Models;
-using Skywalker.IdentityServer.Services;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.Extensions.Logging;
+using Skywalker.IdentityServer.AspNetCore.Extensions;
+using Skywalker.IdentityServer.AspNetCore.Models.Contexts;
+using Skywalker.IdentityServer.AspNetCore.Services;
+using Skywalker.IdentityServer.AspNetCore.Validation.Models;
 
-namespace Skywalker.IdentityServer.Validation
+namespace Skywalker.IdentityServer.AspNetCore.Validation.Default
 {
     /// <summary>
     /// Validates an incoming token request using the device flow
@@ -61,7 +60,7 @@ namespace Skywalker.IdentityServer.Validation
                 context.Result = new TokenRequestValidationResult(context.Request, OidcConstants.TokenErrors.InvalidGrant);
                 return;
             }
-            
+
             // validate client binding
             if (deviceCode.ClientId != context.Request.Client.ClientId)
             {

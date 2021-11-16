@@ -2,12 +2,14 @@
 // Licensed under the Apache License, Version 2.0. See LICENSE in the project root for license information.
 
 
-namespace Skywalker.IdentityServer.Events
+using Skywalker.IdentityServer.AspNetCore.Events.Infrastructure;
+
+namespace Skywalker.IdentityServer.AspNetCore.Events
 {
     /// <summary>
     /// Event for successful client authentication
     /// </summary>
-    /// <seealso cref="Skywalker.IdentityServer.Events.Event" />
+    /// <seealso cref="Event" />
     public class ClientAuthenticationSuccessEvent : Event
     {
         /// <summary>
@@ -16,9 +18,9 @@ namespace Skywalker.IdentityServer.Events
         /// <param name="clientId">The client identifier.</param>
         /// <param name="authenticationMethod">The authentication method.</param>
         public ClientAuthenticationSuccessEvent(string clientId, string authenticationMethod)
-            : base(EventCategories.Authentication, 
+            : base(EventCategories.Authentication,
                   "Client Authentication Success",
-                  EventTypes.Success, 
+                  EventTypes.Success,
                   EventIds.ClientAuthenticationSuccess)
         {
             ClientId = clientId;

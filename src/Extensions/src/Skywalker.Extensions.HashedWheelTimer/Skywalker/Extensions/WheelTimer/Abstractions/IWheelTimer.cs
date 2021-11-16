@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Skywalker.Extensions.WheelTimer
+namespace Skywalker.Extensions.WheelTimer.Abstractions
 {
     public interface IWheelTimer : IDisposable
     {

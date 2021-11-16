@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace Skywalker.AspNetCore.Mvc.Models
+namespace Skywalker.AspNetCore.Mvc.Abstractions.Models
 {
     /// <summary>
     /// A shortcut for <see cref="WrapResultAttribute"/> to disable wrapping by default.

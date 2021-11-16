@@ -2,17 +2,17 @@
 // Licensed under the Apache License, Version 2.0. See LICENSE in the project root for license information.
 
 
-using Skywalker.IdentityServer.Models;
+using Skywalker.IdentityServer.AspNetCore.Models;
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
-namespace Skywalker.IdentityServer.Stores
+namespace Skywalker.IdentityServer.AspNetCore.Stores.InMemory
 {
     /// <summary>
     /// The default validation key store
     /// </summary>
-    /// <seealso cref="Skywalker.IdentityServer.Stores.IValidationKeysStore" />
+    /// <seealso cref="IValidationKeysStore" />
     public class InMemoryValidationKeysStore : IValidationKeysStore
     {
         private readonly IEnumerable<SecurityKeyInfo> _keys;
@@ -21,7 +21,7 @@ namespace Skywalker.IdentityServer.Stores
         /// Initializes a new instance of the <see cref="InMemoryValidationKeysStore"/> class.
         /// </summary>
         /// <param name="keys">The keys.</param>
-        /// <exception cref="System.ArgumentNullException">keys</exception>
+        /// <exception cref="ArgumentNullException">keys</exception>
         public InMemoryValidationKeysStore(IEnumerable<SecurityKeyInfo> keys)
         {
             _keys = keys ?? throw new ArgumentNullException(nameof(keys));

@@ -2,14 +2,15 @@
 // Licensed under the Apache License, Version 2.0. See LICENSE in the project root for license information.
 
 
-using static Skywalker.IdentityServer.Constants;
+using Skywalker.IdentityServer.AspNetCore.Events.Infrastructure;
+using static Skywalker.IdentityServer.AspNetCore.Constants;
 
-namespace Skywalker.IdentityServer.Events
+namespace Skywalker.IdentityServer.AspNetCore.Events
 {
     /// <summary>
     /// Event for successful user authentication
     /// </summary>
-    /// <seealso cref="Skywalker.IdentityServer.Events.Event" />
+    /// <seealso cref="Event" />
     public class UserLoginSuccessEvent : Event
     {
         // todo: consolidate ctors in 3.0
@@ -125,7 +126,7 @@ namespace Skywalker.IdentityServer.Events
         /// The endpoint.
         /// </value>
         public string Endpoint { get; set; }
-        
+
         /// <summary>
         /// Gets or sets the client id.
         /// </summary>

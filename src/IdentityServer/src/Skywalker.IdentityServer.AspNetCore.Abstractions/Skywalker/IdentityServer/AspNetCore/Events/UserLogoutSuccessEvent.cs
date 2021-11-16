@@ -2,12 +2,14 @@
 // Licensed under the Apache License, Version 2.0. See LICENSE in the project root for license information.
 
 
-namespace Skywalker.IdentityServer.Events
+using Skywalker.IdentityServer.AspNetCore.Events.Infrastructure;
+
+namespace Skywalker.IdentityServer.AspNetCore.Events
 {
     /// <summary>
     /// Event for successful user logout
     /// </summary>
-    /// <seealso cref="Skywalker.IdentityServer.Events.Event" />
+    /// <seealso cref="Event" />
     public class UserLogoutSuccessEvent : Event
     {
         /// <summary>
@@ -16,9 +18,9 @@ namespace Skywalker.IdentityServer.Events
         /// <param name="subjectId">The subject identifier.</param>
         /// <param name="name">The name.</param>
         public UserLogoutSuccessEvent(string subjectId, string name)
-            : base(EventCategories.Authentication, 
+            : base(EventCategories.Authentication,
                   "User Logout Success",
-                  EventTypes.Success, 
+                  EventTypes.Success,
                   EventIds.UserLogoutSuccess)
         {
             SubjectId = subjectId;

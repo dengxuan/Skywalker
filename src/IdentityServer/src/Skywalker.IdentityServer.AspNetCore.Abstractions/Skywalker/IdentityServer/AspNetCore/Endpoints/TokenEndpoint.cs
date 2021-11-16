@@ -3,24 +3,24 @@
 
 
 using IdentityModel;
-using Skywalker.IdentityServer.Endpoints.Results;
-using Skywalker.IdentityServer.Events;
-using Skywalker.IdentityServer.Extensions;
-using Skywalker.IdentityServer.Hosting;
-using Skywalker.IdentityServer.ResponseHandling;
-using Skywalker.IdentityServer.Services;
-using Skywalker.IdentityServer.Validation;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Logging;
-using System.Collections.Generic;
-using System.Threading.Tasks;
+using Skywalker.IdentityServer.AspNetCore.Endpoints.Results;
+using Skywalker.IdentityServer.AspNetCore.Events;
+using Skywalker.IdentityServer.AspNetCore.Extensions;
+using Skywalker.IdentityServer.AspNetCore.Hosting;
+using Skywalker.IdentityServer.AspNetCore.ResponseHandling;
+using Skywalker.IdentityServer.AspNetCore.ResponseHandling.Models;
+using Skywalker.IdentityServer.AspNetCore.Services;
+using Skywalker.IdentityServer.AspNetCore.Validation;
+using Skywalker.IdentityServer.AspNetCore.Validation.Models;
 
-namespace Skywalker.IdentityServer.Endpoints
+namespace Skywalker.IdentityServer.AspNetCore.Endpoints
 {
     /// <summary>
     /// The token endpoint
     /// </summary>
-    /// <seealso cref="Skywalker.IdentityServer.Hosting.IEndpointHandler" />
+    /// <seealso cref="IEndpointHandler" />
     internal class TokenEndpoint : IEndpointHandler
     {
         private readonly IClientSecretValidator _clientValidator;
@@ -38,10 +38,10 @@ namespace Skywalker.IdentityServer.Endpoints
         /// <param name="events">The events.</param>
         /// <param name="logger">The logger.</param>
         public TokenEndpoint(
-            IClientSecretValidator clientValidator, 
-            ITokenRequestValidator requestValidator, 
-            ITokenResponseGenerator responseGenerator, 
-            IEventService events, 
+            IClientSecretValidator clientValidator,
+            ITokenRequestValidator requestValidator,
+            ITokenResponseGenerator responseGenerator,
+            IEventService events,
             ILogger<TokenEndpoint> logger)
         {
             _clientValidator = clientValidator;

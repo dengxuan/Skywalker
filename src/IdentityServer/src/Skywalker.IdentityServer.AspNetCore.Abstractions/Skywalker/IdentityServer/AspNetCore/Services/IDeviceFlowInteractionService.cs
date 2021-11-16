@@ -3,9 +3,10 @@
 
 
 using System.Threading.Tasks;
-using Skywalker.IdentityServer.Models;
+using Skywalker.IdentityServer.AspNetCore.Models;
+using Skywalker.IdentityServer.AspNetCore.Models.Messages;
 
-namespace Skywalker.IdentityServer.Services
+namespace Skywalker.IdentityServer.AspNetCore.Services
 {
     /// <summary>
     ///  Provide services be used by the user interface to communicate with IdentityServer.

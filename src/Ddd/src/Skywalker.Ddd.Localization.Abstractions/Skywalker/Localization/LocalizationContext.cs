@@ -1,5 +1,6 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Localization;
+using Skywalker.Ddd.DependencyInjection;
 using System;
 
 namespace Skywalker.Localization

@@ -6,7 +6,6 @@ using DotNetty.Transport.Channels;
 using DotNetty.Transport.Libuv;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
-using Skywalker.Lightning.Server;
 using Skywalker.Lightning.Messaging;
 using Skywalker.Lightning.Serializer;
 using Skywalker.Lightning.Server.Abstractions;
@@ -16,7 +15,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using System.Net;
 
-namespace Skywalker.Lightning
+namespace Skywalker.Lightning.Server
 {
     public class LightningServer : ILightningServer
     {

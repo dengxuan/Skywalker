@@ -1,11 +1,11 @@
 ﻿// Copyright (c) Brock Allen & Dominick Baier. All rights reserved.
 // Licensed under the Apache License, Version 2.0. See LICENSE in the project root for license information.
 
-using Skywalker.IdentityServer.Models;
+using Skywalker.IdentityServer.AspNetCore.Models.Contexts;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
-namespace Skywalker.IdentityServer.Services
+namespace Skywalker.IdentityServer.AspNetCore.Services
 {
     /// <summary>
     /// Provides features for OIDC signout notifications.

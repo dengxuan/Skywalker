@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc.ModelBinding;
+using Skywalker.AspNetCore.Mvc.Abstractions.Models;
 using System.Collections.Generic;
 using System.Net;
 

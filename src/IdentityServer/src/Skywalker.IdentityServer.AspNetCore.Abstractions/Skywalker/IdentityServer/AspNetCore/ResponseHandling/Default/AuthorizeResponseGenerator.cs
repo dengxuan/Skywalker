@@ -3,24 +3,23 @@
 
 
 using IdentityModel;
-using Skywalker.IdentityServer.Extensions;
-using Skywalker.IdentityServer.Models;
-using Skywalker.IdentityServer.Services;
-using Skywalker.IdentityServer.Stores;
-using Skywalker.IdentityServer.Validation;
-using Microsoft.Extensions.Logging;
-using System;
-using System.Linq;
-using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authentication;
-using Skywalker.IdentityServer.Configuration;
+using Microsoft.Extensions.Logging;
+using Skywalker.IdentityServer.AspNetCore.Configuration;
+using Skywalker.IdentityServer.AspNetCore.Extensions;
+using Skywalker.IdentityServer.AspNetCore.Models;
+using Skywalker.IdentityServer.AspNetCore.ResponseHandling.Models;
+using Skywalker.IdentityServer.AspNetCore.Services;
+using Skywalker.IdentityServer.AspNetCore.Validation.Models;
+using Skywalker.IdentityServer.Domain.Models;
+using Skywalker.IdentityServer.Domain.Stores;
 
-namespace Skywalker.IdentityServer.ResponseHandling
+namespace Skywalker.IdentityServer.AspNetCore.ResponseHandling.Default
 {
     /// <summary>
     /// The authorize response generator
     /// </summary>
-    /// <seealso cref="Skywalker.IdentityServer.ResponseHandling.IAuthorizeResponseGenerator" />
+    /// <seealso cref="IAuthorizeResponseGenerator" />
     public class AuthorizeResponseGenerator : IAuthorizeResponseGenerator
     {
         /// <summary>
@@ -83,7 +82,7 @@ namespace Skywalker.IdentityServer.ResponseHandling
         /// </summary>
         /// <param name="request">The request.</param>
         /// <returns></returns>
-        /// <exception cref="System.InvalidOperationException">invalid grant type: " + request.GrantType</exception>
+        /// <exception cref="InvalidOperationException">invalid grant type: " + request.GrantType</exception>
         public virtual async Task<AuthorizeResponse> CreateResponseAsync(ValidatedAuthorizeRequest request)
         {
             if (request.GrantType == GrantType.AuthorizationCode)

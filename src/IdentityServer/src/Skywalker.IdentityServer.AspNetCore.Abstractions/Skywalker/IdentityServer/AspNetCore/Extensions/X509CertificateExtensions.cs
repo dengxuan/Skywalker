@@ -4,7 +4,7 @@ using System.Security.Cryptography.X509Certificates;
 using System.Text.Json;
 using IdentityModel;
 
-namespace Skywalker.IdentityServer.Extensions
+namespace Skywalker.IdentityServer.AspNetCore.Extensions
 {
     /// <summary>
     /// Extensions methods for X509Certificate2
@@ -19,7 +19,7 @@ namespace Skywalker.IdentityServer.Extensions
         public static string CreateThumbprintCnf(this X509Certificate2 certificate)
         {
             var hash = certificate.GetCertHash(HashAlgorithmName.SHA256);
-                            
+
             var values = new Dictionary<string, string>
             {
                 { "x5t#S256", Base64Url.Encode(hash) }

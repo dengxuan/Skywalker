@@ -1,12 +1,8 @@
-﻿using Microsoft.EntityFrameworkCore;
-using Skywalker.Caching.Abstractions;
+﻿using Caching.Abstractions;
+using Microsoft.EntityFrameworkCore;
 using Skywalker.Domain.Repositories;
 using Skywalker.Domain.Services;
-using System;
-using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
-using System.Linq;
-using System.Threading.Tasks;
 
 namespace Simple.Domain.Users
 {

@@ -2,14 +2,15 @@
 // Licensed under the Apache License, Version 2.0. See LICENSE in the project root for license information.
 
 
+using Skywalker.IdentityServer.AspNetCore.Events.Infrastructure;
 using System.Collections.Generic;
 
-namespace Skywalker.IdentityServer.Events
+namespace Skywalker.IdentityServer.AspNetCore.Events
 {
     /// <summary>
     /// Event for granted consent.
     /// </summary>
-    /// <seealso cref="Skywalker.IdentityServer.Events.Event" />
+    /// <seealso cref="Event" />
     public class ConsentGrantedEvent : Event
     {
         /// <summary>

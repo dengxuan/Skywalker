@@ -1,22 +1,20 @@
-﻿using Microsoft.Extensions.DependencyInjection;
-using Skywalker.Caching.Abstractions;
-using Skywalker.Caching.Redis.Abstractions;
-using System;
+﻿using Caching.Abstractions;
+using Caching.Redis.Abstractions;
+using Microsoft.Extensions.DependencyInjection;
 
-namespace Skywalker.Caching.Redis
+namespace Caching.Redis;
+
+public class RedisCachingProvider : CachingProvider
 {
-    public class RedisCachingProvider : CachingProvider
+    private readonly IServiceProvider _iocResolver;
+
+    public RedisCachingProvider(IServiceProvider iocResolver)
     {
-        private readonly IServiceProvider _iocResolver;
+        _iocResolver = iocResolver;
+    }
 
-        public RedisCachingProvider(IServiceProvider iocResolver)
-        {
-            _iocResolver = iocResolver;
-        }
-
-        protected override ICaching CreateCacheImplementation(string name)
-        {
-            return new RedisCaching(name, _iocResolver.GetRequiredService<IRedisDatabaseProvider>(), _iocResolver.GetRequiredService<ICachingSerializer>());
-        }
+    protected override ICaching CreateCacheImplementation(string name)
+    {
+        return new RedisCaching(name, _iocResolver.GetRequiredService<IRedisDatabaseProvider>(), _iocResolver.GetRequiredService<ICachingSerializer>());
     }
 }

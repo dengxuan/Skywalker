@@ -2,11 +2,11 @@
 // Licensed under the Apache License, Version 2.0. See LICENSE in the project root for license information.
 
 
-using Skywalker.IdentityServer.Configuration;
-using Skywalker.IdentityServer.Hosting;
-using static Skywalker.IdentityServer.Constants;
+using Skywalker.IdentityServer.AspNetCore.Configuration.DependencyInjection.Options;
+using Skywalker.IdentityServer.AspNetCore.Hosting;
+using static Skywalker.IdentityServer.AspNetCore.Constants;
 
-namespace Skywalker.IdentityServer.Extensions
+namespace Skywalker.IdentityServer.AspNetCore.Extensions
 {
     internal static class EndpointOptionsExtensions
     {

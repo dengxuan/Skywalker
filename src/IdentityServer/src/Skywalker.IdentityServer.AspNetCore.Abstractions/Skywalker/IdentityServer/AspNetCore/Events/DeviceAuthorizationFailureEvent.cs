@@ -2,16 +2,15 @@
 // Licensed under the Apache License, Version 2.0. See LICENSE in the project root for license information.
 
 
-using Skywalker.IdentityServer.Extensions;
-using Skywalker.IdentityServer.Validation;
-using System;
+using Skywalker.IdentityServer.AspNetCore.Events.Infrastructure;
+using Skywalker.IdentityServer.AspNetCore.Validation.Models;
 
-namespace Skywalker.IdentityServer.Events
+namespace Skywalker.IdentityServer.AspNetCore.Events
 {
     /// <summary>
     /// Event for device authorization failure
     /// </summary>
-    /// <seealso cref="Skywalker.IdentityServer.Events.Event" />
+    /// <seealso cref="Event" />
     public class DeviceAuthorizationFailureEvent : Event
     {
         /// <summary>
@@ -26,7 +25,7 @@ namespace Skywalker.IdentityServer.Events
                 ClientId = result.ValidatedRequest.Client?.ClientId;
                 ClientName = result.ValidatedRequest.Client?.ClientName;
                 Scopes = result.ValidatedRequest.RequestedScopes?.ToSpaceSeparatedString();
-                
+
             }
 
             Endpoint = Constants.EndpointNames.DeviceAuthorization;
@@ -76,7 +75,7 @@ namespace Skywalker.IdentityServer.Events
         /// The scopes.
         /// </value>
         public string Scopes { get; set; }
-        
+
         /// <summary>
         /// Gets or sets the error.
         /// </summary>

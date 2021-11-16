@@ -2,14 +2,12 @@
 // Licensed under the Apache License, Version 2.0. See LICENSE in the project root for license information.
 
 
-using System;
-using System.Linq;
-using Skywalker.IdentityServer.Infrastructure;
 using Microsoft.AspNetCore.Authentication.OpenIdConnect;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Options;
+using Skywalker.IdentityServer.AspNetCore.Infrastructure;
 
-namespace Skywalker.IdentityServer.Configuration
+namespace Skywalker.IdentityServer.AspNetCore.Configuration.DependencyInjection
 {
     internal class ConfigureOpenIdConnectOptions : IPostConfigureOptions<OpenIdConnectOptions>
     {

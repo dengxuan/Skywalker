@@ -2,11 +2,10 @@
 // Licensed under the Apache License, Version 2.0. See LICENSE in the project root for license information.
 
 
-using Skywalker.IdentityServer.Extensions;
-using System;
+using Skywalker.IdentityServer.Domain.Clients;
 using System.Security.Claims;
 
-namespace Skywalker.IdentityServer.Models
+namespace Skywalker.IdentityServer.AspNetCore.Models.Contexts
 {
     /// <summary>
     /// Context describing the is-active check
@@ -25,7 +24,7 @@ namespace Skywalker.IdentityServer.Models
             Subject = subject;
             Client = client;
             Caller = caller;
-            
+
             IsActive = true;
         }
 

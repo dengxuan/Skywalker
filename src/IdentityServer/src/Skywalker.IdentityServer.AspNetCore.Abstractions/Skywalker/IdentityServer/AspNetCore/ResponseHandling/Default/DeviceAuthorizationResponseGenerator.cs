@@ -2,22 +2,20 @@
 // Licensed under the Apache License, Version 2.0. See LICENSE in the project root for license information.
 
 
-using System;
-using System.Threading.Tasks;
-using Skywalker.IdentityServer.Configuration;
-using Skywalker.IdentityServer.Extensions;
-using Skywalker.IdentityServer.Models;
-using Skywalker.IdentityServer.Services;
-using Skywalker.IdentityServer.Validation;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.Extensions.Logging;
+using Skywalker.IdentityServer.AspNetCore.Configuration.DependencyInjection.Options;
+using Skywalker.IdentityServer.AspNetCore.ResponseHandling.Models;
+using Skywalker.IdentityServer.AspNetCore.Services;
+using Skywalker.IdentityServer.AspNetCore.Validation.Models;
+using Skywalker.IdentityServer.Domain.DeviceAuthorizations;
 
-namespace Skywalker.IdentityServer.ResponseHandling
+namespace Skywalker.IdentityServer.AspNetCore.ResponseHandling.Default
 {
     /// <summary>
     /// The device authorizaiton response generator
     /// </summary>
-    /// <seealso cref="Skywalker.IdentityServer.ResponseHandling.IDeviceAuthorizationResponseGenerator" />
+    /// <seealso cref="IDeviceAuthorizationResponseGenerator" />
     public class DeviceAuthorizationResponseGenerator : IDeviceAuthorizationResponseGenerator
     {
         /// <summary>
@@ -79,18 +77,18 @@ namespace Skywalker.IdentityServer.ResponseHandling
             Logger.LogTrace("Creating response for device authorization request");
 
             var response = new DeviceAuthorizationResponse();
-            
+
             // generate user_code
             var userCodeGenerator = await UserCodeService.GetGenerator(
                 validationResult.ValidatedRequest.Client.UserCodeType ??
                 Options.DeviceFlow.DefaultUserCodeType);
-            
+
             var retryCount = 0;
 
             while (retryCount < userCodeGenerator.RetryLimit)
             {
                 var userCode = await userCodeGenerator.GenerateAsync();
-                
+
                 var deviceCode = await DeviceFlowCodeService.FindByUserCodeAsync(userCode);
                 if (deviceCode == null)
                 {
@@ -113,7 +111,7 @@ namespace Skywalker.IdentityServer.ResponseHandling
                 // if url is relative, parse absolute URL
                 response.VerificationUri = baseUrl.RemoveTrailingSlash() + Options.UserInteraction.DeviceVerificationUrl;
             }
-            
+
             if (!string.IsNullOrWhiteSpace(Options.UserInteraction.DeviceVerificationUserCodeParameter))
             {
                 response.VerificationUriComplete =

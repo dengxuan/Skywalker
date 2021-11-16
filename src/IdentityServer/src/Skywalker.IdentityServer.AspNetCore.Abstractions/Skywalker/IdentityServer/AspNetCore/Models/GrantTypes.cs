@@ -2,11 +2,12 @@
 // Licensed under the Apache License, Version 2.0. See LICENSE in the project root for license information.
 
 
+using Skywalker.IdentityServer.Domain.Models;
 using System.Collections.Generic;
 
 #pragma warning disable 1591
 
-namespace Skywalker.IdentityServer.Models
+namespace Skywalker.IdentityServer.AspNetCore.Models
 {
     public class GrantTypes
     {
@@ -14,7 +15,7 @@ namespace Skywalker.IdentityServer.Models
             new[] { GrantType.Implicit };
 
         public static ICollection<string> ImplicitAndClientCredentials =>
-            new[]  { GrantType.Implicit, GrantType.ClientCredentials };
+            new[] { GrantType.Implicit, GrantType.ClientCredentials };
 
         public static ICollection<string> Code =>
             new[] { GrantType.AuthorizationCode };

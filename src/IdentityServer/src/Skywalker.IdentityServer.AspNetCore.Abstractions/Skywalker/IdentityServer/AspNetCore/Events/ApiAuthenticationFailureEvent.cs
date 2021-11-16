@@ -2,12 +2,14 @@
 // Licensed under the Apache License, Version 2.0. See LICENSE in the project root for license information.
 
 
-namespace Skywalker.IdentityServer.Events
+using Skywalker.IdentityServer.AspNetCore.Events.Infrastructure;
+
+namespace Skywalker.IdentityServer.AspNetCore.Events
 {
     /// <summary>
     /// Event for failed API authentication
     /// </summary>
-    /// <seealso cref="Skywalker.IdentityServer.Events.Event" />
+    /// <seealso cref="Event" />
     public class ApiAuthenticationFailureEvent : Event
     {
         /// <summary>
@@ -16,10 +18,10 @@ namespace Skywalker.IdentityServer.Events
         /// <param name="apiName">Name of the API.</param>
         /// <param name="message">The message.</param>
         public ApiAuthenticationFailureEvent(string apiName, string message)
-            : base(EventCategories.Authentication, 
+            : base(EventCategories.Authentication,
                   "API Authentication Failure",
-                  EventTypes.Failure, 
-                  EventIds.ApiAuthenticationFailure, 
+                  EventTypes.Failure,
+                  EventIds.ApiAuthenticationFailure,
                   message)
         {
             ApiName = apiName;

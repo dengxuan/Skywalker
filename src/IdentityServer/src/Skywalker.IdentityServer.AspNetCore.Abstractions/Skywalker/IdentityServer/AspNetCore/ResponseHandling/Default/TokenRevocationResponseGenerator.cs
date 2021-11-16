@@ -2,17 +2,17 @@
 // Licensed under the Apache License, Version 2.0. See LICENSE in the project root for license information.
 
 
-using System.Threading.Tasks;
-using Skywalker.IdentityServer.Validation;
-using Skywalker.IdentityServer.Stores;
 using Microsoft.Extensions.Logging;
+using Skywalker.IdentityServer.AspNetCore.ResponseHandling.Models;
+using Skywalker.IdentityServer.AspNetCore.Validation.Models;
+using Skywalker.IdentityServer.Domain.Stores;
 
-namespace Skywalker.IdentityServer.ResponseHandling
+namespace Skywalker.IdentityServer.AspNetCore.ResponseHandling.Default
 {
     /// <summary>
     /// Default revocation response generator
     /// </summary>
-    /// <seealso cref="Skywalker.IdentityServer.ResponseHandling.ITokenRevocationResponseGenerator" />
+    /// <seealso cref="ITokenRevocationResponseGenerator" />
     public class TokenRevocationResponseGenerator : ITokenRevocationResponseGenerator
     {
         /// <summary>

@@ -3,24 +3,25 @@
 
 
 using IdentityModel;
-using Skywalker.IdentityServer.Extensions;
-using Skywalker.IdentityServer.Models;
-using Skywalker.IdentityServer.Services;
-using Microsoft.Extensions.Logging;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Security.Claims;
-using System.Threading.Tasks;
-using System.IdentityModel.Tokens.Jwt;
-using Microsoft.IdentityModel.Tokens;
-using Skywalker.IdentityServer.Stores;
-using Skywalker.IdentityServer.Configuration;
-using Skywalker.IdentityServer.Logging.Models;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Authentication;
+using Microsoft.AspNetCore.Http;
+using Microsoft.Extensions.Logging;
+using Microsoft.IdentityModel.Tokens;
+using Skywalker.IdentityServer.AspNetCore.Configuration.DependencyInjection.Options;
+using Skywalker.IdentityServer.AspNetCore.Extensions;
+using Skywalker.IdentityServer.AspNetCore.Logging.Models;
+using Skywalker.IdentityServer.AspNetCore.Models;
+using Skywalker.IdentityServer.AspNetCore.Models.Contexts;
+using Skywalker.IdentityServer.AspNetCore.Services;
+using Skywalker.IdentityServer.Domain.Clients;
+using Skywalker.IdentityServer.Domain.Models;
+using Skywalker.IdentityServer.Domain.RefreshTokens;
+using Skywalker.IdentityServer.Domain.Stores;
+using System.IdentityModel.Tokens.Jwt;
+using System.Security.Claims;
+using TokenValidationResult = Skywalker.IdentityServer.AspNetCore.Validation.Models.TokenValidationResult;
 
-namespace Skywalker.IdentityServer.Validation
+namespace Skywalker.IdentityServer.AspNetCore.Validation.Default
 {
     internal class TokenValidator : ITokenValidator
     {
@@ -286,7 +287,7 @@ namespace Skywalker.IdentityServer.Validation
 
                     }
                 }
-                
+
                 // if access token contains an ID, log it
                 var jwtId = id.FindFirst(JwtClaimTypes.JwtId);
                 if (jwtId != null)
@@ -307,7 +308,7 @@ namespace Skywalker.IdentityServer.Validation
                 }
 
                 var claims = id.Claims.ToList();
-                
+
                 // check the scope format (array vs space delimited string)
                 var scopes = claims.Where(c => c.Type == JwtClaimTypes.Scope).ToArray();
                 if (scopes.Any())
@@ -317,7 +318,7 @@ namespace Skywalker.IdentityServer.Validation
                         if (scope.Value.Contains(" "))
                         {
                             claims.Remove(scope);
-                            
+
                             var values = scope.Value.Split(' ', StringSplitOptions.RemoveEmptyEntries);
                             foreach (var value in values)
                             {

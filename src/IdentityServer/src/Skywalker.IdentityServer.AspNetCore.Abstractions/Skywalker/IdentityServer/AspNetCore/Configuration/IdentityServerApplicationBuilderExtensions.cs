@@ -2,19 +2,17 @@
 // Licensed under the Apache License, Version 2.0. See LICENSE in the project root for license information.
 
 
-using Skywalker.IdentityServer.Configuration;
-using Skywalker.IdentityServer.Extensions;
-using Skywalker.IdentityServer.Hosting;
-using Skywalker.IdentityServer.Stores;
 using Microsoft.AspNetCore.Authentication;
+using Microsoft.AspNetCore.Builder;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
-using System;
-using System.Diagnostics;
+using Skywalker.IdentityServer.AspNetCore.Configuration.DependencyInjection.Options;
+using Skywalker.IdentityServer.AspNetCore.Hosting;
+using Skywalker.IdentityServer.AspNetCore.Stores.InMemory;
+using Skywalker.IdentityServer.Domain.Stores;
 using System.Reflection;
-using System.Threading.Tasks;
 
-namespace Microsoft.AspNetCore.Builder
+namespace Skywalker.IdentityServer.AspNetCore.Configuration
 {
     /// <summary>
     /// Pipeline extension methods for adding IdentityServer
@@ -55,7 +53,7 @@ namespace Microsoft.AspNetCore.Builder
             if (loggerFactory == null) throw new ArgumentNullException(nameof(loggerFactory));
 
             var logger = loggerFactory.CreateLogger("Skywalker.IdentityServer.Startup");
-            logger.LogInformation("Starting Skywalker.IdentityServer version {version}", typeof(Skywalker.IdentityServer.Hosting.IdentityServerMiddleware).Assembly.GetCustomAttribute<AssemblyInformationalVersionAttribute>().InformationalVersion);
+            logger.LogInformation("Starting Skywalker.IdentityServer version {version}", typeof(IdentityServerMiddleware).Assembly.GetCustomAttribute<AssemblyInformationalVersionAttribute>().InformationalVersion);
 
             var scopeFactory = app.ApplicationServices.GetService<IServiceScopeFactory>();
 
@@ -121,7 +119,7 @@ namespace Microsoft.AspNetCore.Builder
         private static void ValidateOptions(IdentityServerOptions options, ILogger logger)
         {
             if (options.IssuerUri.IsPresent()) logger.LogDebug("Custom IssuerUri set to {0}", options.IssuerUri);
-            
+
             // todo: perhaps different logging messages?
             //if (options.UserInteraction.LoginUrl.IsMissing()) throw new InvalidOperationException("LoginUrl is not configured");
             //if (options.UserInteraction.LoginReturnUrlParameter.IsMissing()) throw new InvalidOperationException("LoginReturnUrlParameter is not configured");

@@ -5,7 +5,7 @@
 using System;
 using Microsoft.AspNetCore.Http;
 
-namespace Skywalker.IdentityServer.Configuration
+namespace Skywalker.IdentityServer.AspNetCore.Configuration.DependencyInjection.Options
 {
     /// <summary>
     /// Configures the login and logout views and behavior.
@@ -27,7 +27,7 @@ namespace Skywalker.IdentityServer.Configuration
         /// Specified if the cookie should be sliding or not (only effective if the built-in cookie middleware is used)
         /// </summary>
         public bool CookieSlidingExpiration { get; set; } = false;
-        
+
         /// <summary>
         /// Specifies the SameSite mode for the internal authentication and temp cookie
         /// </summary>
@@ -45,7 +45,7 @@ namespace Skywalker.IdentityServer.Configuration
         /// Gets or sets the name of the cookie used for the check session endpoint.
         /// </summary>
         public string CheckSessionCookieName { get; set; } = IdentityServerConstants.DefaultCheckSessionCookieName;
-        
+
         /// <summary>
         /// Gets or sets the domain of the cookie used for the check session endpoint. Defaults to null.
         /// </summary>

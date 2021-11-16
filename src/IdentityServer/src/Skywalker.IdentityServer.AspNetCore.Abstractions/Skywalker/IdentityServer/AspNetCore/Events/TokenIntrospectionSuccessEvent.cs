@@ -2,18 +2,15 @@
 // Licensed under the Apache License, Version 2.0. See LICENSE in the project root for license information.
 
 
-using Skywalker.IdentityServer.Extensions;
-using Skywalker.IdentityServer.Validation;
-using System;
-using System.Collections.Generic;
-using System.Linq;
+using Skywalker.IdentityServer.AspNetCore.Events.Infrastructure;
+using Skywalker.IdentityServer.AspNetCore.Validation.Models;
 
-namespace Skywalker.IdentityServer.Events
+namespace Skywalker.IdentityServer.AspNetCore.Events
 {
     /// <summary>
     /// Event for successful token introspection
     /// </summary>
-    /// <seealso cref="Skywalker.IdentityServer.Events.Event" />
+    /// <seealso cref="Event" />
     public class TokenIntrospectionSuccessEvent : Event
     {
         /// <summary>
@@ -33,7 +30,7 @@ namespace Skywalker.IdentityServer.Events
             {
                 Token = Obfuscate(result.Token);
             }
-            
+
             if (!result.Claims.IsNullOrEmpty())
             {
                 ClaimTypes = result.Claims.Select(c => c.Type).Distinct();

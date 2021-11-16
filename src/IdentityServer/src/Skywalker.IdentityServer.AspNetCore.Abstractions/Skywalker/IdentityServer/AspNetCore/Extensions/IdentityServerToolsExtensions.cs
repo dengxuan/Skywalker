@@ -6,13 +6,11 @@ using IdentityModel;
 using System.Collections.Generic;
 using System.Security.Claims;
 using System.Threading.Tasks;
-using Skywalker.IdentityServer.Extensions;
 using Microsoft.Extensions.DependencyInjection;
-using Skywalker.IdentityServer.Configuration;
-using Skywalker.IdentityServer;
 using System;
+using Skywalker.IdentityServer.AspNetCore.Configuration.DependencyInjection.Options;
 
-namespace Skywalker.IdentityServer
+namespace Skywalker.IdentityServer.AspNetCore.Extensions
 {
     /// <summary>
     /// Extensions for IdentityServerTools
@@ -39,7 +37,7 @@ namespace Skywalker.IdentityServer
             var claims = new HashSet<Claim>(new ClaimComparer());
             var context = tools.ContextAccessor.HttpContext;
             var options = context.RequestServices.GetRequiredService<IdentityServerOptions>();
-            
+
             if (additionalClaims != null)
             {
                 foreach (var claim in additionalClaims)
@@ -62,7 +60,7 @@ namespace Skywalker.IdentityServer
             {
                 claims.Add(new Claim(JwtClaimTypes.Audience, string.Format(IdentityServerConstants.AccessTokenAudience, tools.ContextAccessor.HttpContext.GetIdentityServerIssuerUri().EnsureTrailingSlash())));
             }
-            
+
             if (!audiences.IsNullOrEmpty())
             {
                 foreach (var audience in audiences)

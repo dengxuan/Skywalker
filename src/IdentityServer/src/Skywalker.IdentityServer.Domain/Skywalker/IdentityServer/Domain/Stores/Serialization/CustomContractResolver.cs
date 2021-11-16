@@ -10,9 +10,9 @@ using System.Linq;
 
 #pragma warning disable 1591
 
-namespace Skywalker.IdentityServer.Stores.Serialization
+namespace Skywalker.IdentityServer.Domain.Stores.Serialization
 {
-    public class CustomContractResolver: DefaultContractResolver
+    public class CustomContractResolver : DefaultContractResolver
     {
         protected override IList<JsonProperty> CreateProperties(Type type, MemberSerialization memberSerialization)
         {

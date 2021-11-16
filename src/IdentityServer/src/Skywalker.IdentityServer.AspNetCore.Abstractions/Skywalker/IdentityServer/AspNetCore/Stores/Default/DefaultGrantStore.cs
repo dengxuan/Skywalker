@@ -2,15 +2,14 @@
 // Licensed under the Apache License, Version 2.0. See LICENSE in the project root for license information.
 
 
-using Skywalker.IdentityServer.Extensions;
-using Skywalker.IdentityServer.Models;
-using Skywalker.IdentityServer.Services;
-using Skywalker.IdentityServer.Stores.Serialization;
 using Microsoft.Extensions.Logging;
-using System;
-using System.Threading.Tasks;
+using Skywalker.IdentityServer.AspNetCore.Extensions;
+using Skywalker.IdentityServer.AspNetCore.Services;
+using Skywalker.IdentityServer.Domain.PersistedGrants;
+using Skywalker.IdentityServer.Domain.Stores;
+using Skywalker.IdentityServer.Domain.Stores.Serialization;
 
-namespace Skywalker.IdentityServer.Stores
+namespace Skywalker.IdentityServer.AspNetCore.Stores.Default
 {
     /// <summary>
     /// Base class for persisting grants using the IPersistedGrantStore.
@@ -51,7 +50,7 @@ namespace Skywalker.IdentityServer.Stores
         /// <param name="serializer">The serializer.</param>
         /// <param name="handleGenerationService">The handle generation service.</param>
         /// <param name="logger">The logger.</param>
-        /// <exception cref="System.ArgumentNullException">grantType</exception>
+        /// <exception cref="ArgumentNullException">grantType</exception>
         protected DefaultGrantStore(string grantType,
             IPersistedGrantStore store,
             IPersistentGrantSerializer serializer,

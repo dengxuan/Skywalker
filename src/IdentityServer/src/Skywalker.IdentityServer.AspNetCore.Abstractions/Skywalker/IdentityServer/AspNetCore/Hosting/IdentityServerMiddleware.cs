@@ -2,15 +2,13 @@
 // Licensed under the Apache License, Version 2.0. See LICENSE in the project root for license information.
 
 
-using Skywalker.IdentityServer.Events;
-using Skywalker.IdentityServer.Extensions;
-using Skywalker.IdentityServer.Services;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Logging;
-using System;
-using System.Threading.Tasks;
+using Skywalker.IdentityServer.AspNetCore.Events;
+using Skywalker.IdentityServer.AspNetCore.Extensions;
+using Skywalker.IdentityServer.AspNetCore.Services;
 
-namespace Skywalker.IdentityServer.Hosting
+namespace Skywalker.IdentityServer.AspNetCore.Hosting
 {
     /// <summary>
     /// IdentityServer middleware

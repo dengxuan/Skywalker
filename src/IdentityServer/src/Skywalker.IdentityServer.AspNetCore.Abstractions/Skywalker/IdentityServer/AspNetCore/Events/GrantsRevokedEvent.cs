@@ -2,12 +2,14 @@
 // Licensed under the Apache License, Version 2.0. See LICENSE in the project root for license information.
 
 
-namespace Skywalker.IdentityServer.Events
+using Skywalker.IdentityServer.AspNetCore.Events.Infrastructure;
+
+namespace Skywalker.IdentityServer.AspNetCore.Events
 {
     /// <summary>
     /// Event for revoked grants.
     /// </summary>
-    /// <seealso cref="Skywalker.IdentityServer.Events.Event" />
+    /// <seealso cref="Event" />
     public class GrantsRevokedEvent : Event
     {
         /// <summary>

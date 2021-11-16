@@ -3,14 +3,10 @@
 
 
 using IdentityModel;
-using Skywalker.IdentityServer.Extensions;
-using Skywalker.IdentityServer.Models;
-using System.Collections.Generic;
-using System.Linq;
+using Skywalker.IdentityServer.AspNetCore.Models;
 using System.Security.Claims;
-using System;
 
-namespace Skywalker.IdentityServer.Validation
+namespace Skywalker.IdentityServer.AspNetCore.Validation.Models
 {
     /// <summary>
     /// Models the result of custom grant validation.

@@ -2,9 +2,6 @@
 // Licensed under the Apache License, Version 2.0. See LICENSE in the project root for license information.
 
 
-using Skywalker.IdentityServer.Extensions;
-using Skywalker.IdentityServer.Models;
-using Skywalker.IdentityServer.Stores;
 using Microsoft.AspNetCore.Http;
 using System;
 using System.Threading.Tasks;
@@ -12,8 +9,13 @@ using System.Collections.Generic;
 using Microsoft.Extensions.Logging;
 using System.Linq;
 using Microsoft.AspNetCore.Authentication;
+using Skywalker.IdentityServer.AspNetCore.Models;
+using Skywalker.IdentityServer.AspNetCore.Models.Messages;
+using Skywalker.IdentityServer.AspNetCore.Services;
+using Skywalker.IdentityServer.AspNetCore.Extensions;
+using Skywalker.IdentityServer.AspNetCore.Stores;
 
-namespace Skywalker.IdentityServer.Services
+namespace Skywalker.IdentityServer.AspNetCore.Services.Default
 {
     internal class DefaultIdentityServerInteractionService : IIdentityServerInteractionService
     {
@@ -98,7 +100,7 @@ namespace Skywalker.IdentityServer.Services
         public async Task<ErrorMessage> GetErrorContextAsync(string errorId)
         {
             if (errorId != null)
-            { 
+            {
                 var result = await _errorMessageStore.ReadAsync(errorId);
                 var data = result?.Data;
                 if (data != null)
@@ -136,7 +138,7 @@ namespace Skywalker.IdentityServer.Services
 
         public Task DenyAuthorizationAsync(AuthorizationRequest request, AuthorizationError error, string errorDescription = null)
         {
-            var response = new ConsentResponse 
+            var response = new ConsentResponse
             {
                 Error = error,
                 ErrorDescription = errorDescription

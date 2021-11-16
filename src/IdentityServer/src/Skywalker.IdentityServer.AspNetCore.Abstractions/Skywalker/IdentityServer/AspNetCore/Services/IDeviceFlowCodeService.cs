@@ -1,7 +1,7 @@
 using System.Threading.Tasks;
-using Skywalker.IdentityServer.Models;
+using Skywalker.IdentityServer.Domain.DeviceAuthorizations;
 
-namespace Skywalker.IdentityServer.Services
+namespace Skywalker.IdentityServer.AspNetCore.Services
 {
     /// <summary>
     /// Wrapper service for IDeviceFlowStore.

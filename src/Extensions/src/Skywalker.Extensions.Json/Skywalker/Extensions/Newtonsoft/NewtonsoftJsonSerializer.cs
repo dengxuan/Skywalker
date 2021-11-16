@@ -1,7 +1,7 @@
 using Newtonsoft.Json;
 using Newtonsoft.Json.Serialization;
 
-namespace Skywalker.Extensions.Json.Newtonsoft
+namespace Skywalker.Extensions.Newtonsoft
 {
     public class NewtonsoftJsonSerializer : IJsonSerializer
     {
@@ -35,7 +35,7 @@ namespace Skywalker.Extensions.Json.Newtonsoft
             var settings = new JsonSerializerSettings();
 
             settings.Converters.Insert(0, _dateTimeConverter);
-            
+
             if (camelCase)
             {
                 settings.ContractResolver = SharedCamelCaseExceptDictionaryKeysResolver;
@@ -45,7 +45,7 @@ namespace Skywalker.Extensions.Json.Newtonsoft
             {
                 settings.Formatting = Formatting.Indented;
             }
-            
+
             return settings;
         }
 

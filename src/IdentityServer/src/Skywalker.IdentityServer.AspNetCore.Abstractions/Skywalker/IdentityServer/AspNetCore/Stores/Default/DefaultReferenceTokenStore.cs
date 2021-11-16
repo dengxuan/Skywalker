@@ -3,12 +3,13 @@
 
 
 using System.Threading.Tasks;
-using Skywalker.IdentityServer.Models;
-using Skywalker.IdentityServer.Stores.Serialization;
 using Microsoft.Extensions.Logging;
-using Skywalker.IdentityServer.Services;
+using Skywalker.IdentityServer.Domain.Stores.Serialization;
+using Skywalker.IdentityServer.Domain.Stores;
+using Skywalker.IdentityServer.AspNetCore.Services;
+using Skywalker.IdentityServer.Domain.RefreshTokens;
 
-namespace Skywalker.IdentityServer.Stores
+namespace Skywalker.IdentityServer.AspNetCore.Stores.Default
 {
     /// <summary>
     /// Default reference token store.
@@ -23,10 +24,10 @@ namespace Skywalker.IdentityServer.Stores
         /// <param name="handleGenerationService">The handle generation service.</param>
         /// <param name="logger">The logger.</param>
         public DefaultReferenceTokenStore(
-            IPersistedGrantStore store, 
+            IPersistedGrantStore store,
             IPersistentGrantSerializer serializer,
             IHandleGenerationService handleGenerationService,
-            ILogger<DefaultReferenceTokenStore> logger) 
+            ILogger<DefaultReferenceTokenStore> logger)
             : base(IdentityServerConstants.PersistedGrantTypes.ReferenceToken, store, serializer, handleGenerationService, logger)
         {
         }

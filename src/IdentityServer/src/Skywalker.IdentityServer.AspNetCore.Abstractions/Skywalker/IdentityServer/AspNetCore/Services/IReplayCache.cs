@@ -1,7 +1,7 @@
 using System;
 using System.Threading.Tasks;
 
-namespace Skywalker.IdentityServer.Services
+namespace Skywalker.IdentityServer.AspNetCore.Services
 {
     /// <summary>
     /// Interface for replay cache implementations

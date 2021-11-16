@@ -3,15 +3,11 @@
 
 
 using IdentityModel;
-using Skywalker.IdentityServer.Extensions;
-using System;
-using System.Collections.Generic;
 using System.Collections.Specialized;
-using System.Linq;
 using System.Security.Cryptography;
 using System.Text;
 
-namespace Skywalker.IdentityServer.Models
+namespace Skywalker.IdentityServer.AspNetCore.Models.Messages
 {
     /// <summary>
     /// Models the parameters to identify a request for consent.

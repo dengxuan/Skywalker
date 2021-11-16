@@ -1,8 +1,7 @@
 ﻿using Microsoft.Extensions.DependencyInjection.Extensions;
-using Skywalker;
+using Skywalker.Ddd;
 using Skywalker.Ddd.EntityFrameworkCore;
 using Skywalker.Ddd.EntityFrameworkCore.DbContextConfiguration;
-using Skywalker.EntityFrameworkCore;
 using Skywalker.Extensions.Linq;
 using System;
 using System.Collections.Generic;

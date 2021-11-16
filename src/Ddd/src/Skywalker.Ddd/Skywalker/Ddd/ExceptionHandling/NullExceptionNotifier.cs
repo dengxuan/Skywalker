@@ -1,7 +1,7 @@
 ﻿using System.Diagnostics.CodeAnalysis;
 using System.Threading.Tasks;
 
-namespace Skywalker.ExceptionHandling
+namespace Skywalker.Ddd.ExceptionHandling
 {
     public class NullExceptionNotifier : IExceptionNotifier
     {
@@ -9,7 +9,7 @@ namespace Skywalker.ExceptionHandling
 
         private NullExceptionNotifier()
         {
-            
+
         }
 
         public Task NotifyAsync([NotNull] ExceptionNotificationContext context)

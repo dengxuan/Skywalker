@@ -3,25 +3,23 @@
 
 
 using IdentityModel;
-using Skywalker.IdentityServer.Endpoints.Results;
-using Skywalker.IdentityServer.Hosting;
-using Skywalker.IdentityServer.Validation;
-using Microsoft.Extensions.Logging;
-using System.Net;
-using System.Threading.Tasks;
-using Skywalker.IdentityServer.Services;
 using Microsoft.AspNetCore.Http;
-using Skywalker.IdentityServer.Events;
-using Skywalker.IdentityServer.ResponseHandling;
-using Skywalker.IdentityServer.Extensions;
-using System;
+using Microsoft.Extensions.Logging;
+using Skywalker.IdentityServer.AspNetCore.Endpoints.Results;
+using Skywalker.IdentityServer.AspNetCore.Events;
+using Skywalker.IdentityServer.AspNetCore.Extensions;
+using Skywalker.IdentityServer.AspNetCore.Hosting;
+using Skywalker.IdentityServer.AspNetCore.ResponseHandling;
+using Skywalker.IdentityServer.AspNetCore.Services;
+using Skywalker.IdentityServer.AspNetCore.Validation;
+using System.Net;
 
-namespace Skywalker.IdentityServer.Endpoints
+namespace Skywalker.IdentityServer.AspNetCore.Endpoints
 {
     /// <summary>
     /// The revocation endpoint
     /// </summary>
-    /// <seealso cref="Skywalker.IdentityServer.Hosting.IEndpointHandler" />
+    /// <seealso cref="IEndpointHandler" />
     internal class TokenRevocationEndpoint : IEndpointHandler
     {
         private readonly ILogger _logger;

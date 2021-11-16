@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Diagnostics.CodeAnalysis;
 
-namespace Skywalker.Caching.Abstractions
+namespace Caching.Abstractions
 {
     /// <summary>
     /// Defines a cache that can be store and get items by keys.

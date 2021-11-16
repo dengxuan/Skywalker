@@ -1,25 +1,25 @@
 ﻿// Copyright (c) Brock Allen & Dominick Baier. All rights reserved.
 // Licensed under the Apache License, Version 2.0. See LICENSE in the project root for license information.
 
-using System;
-using System.Collections.Specialized;
-using System.Security.Claims;
-using System.Threading.Tasks;
 using IdentityModel;
-using Skywalker.IdentityServer.Configuration;
-using Skywalker.IdentityServer.Endpoints.Results;
-using Skywalker.IdentityServer.Events;
-using Skywalker.IdentityServer.Extensions;
-using Skywalker.IdentityServer.Hosting;
-using Skywalker.IdentityServer.Logging.Models;
-using Skywalker.IdentityServer.Models;
-using Skywalker.IdentityServer.ResponseHandling;
-using Skywalker.IdentityServer.Services;
-using Skywalker.IdentityServer.Validation;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Logging;
+using Skywalker.IdentityServer.AspNetCore.Configuration.DependencyInjection.Options;
+using Skywalker.IdentityServer.AspNetCore.Endpoints.Results;
+using Skywalker.IdentityServer.AspNetCore.Events;
+using Skywalker.IdentityServer.AspNetCore.Extensions;
+using Skywalker.IdentityServer.AspNetCore.Hosting;
+using Skywalker.IdentityServer.AspNetCore.Logging.Models;
+using Skywalker.IdentityServer.AspNetCore.Models.Messages;
+using Skywalker.IdentityServer.AspNetCore.ResponseHandling;
+using Skywalker.IdentityServer.AspNetCore.ResponseHandling.Models;
+using Skywalker.IdentityServer.AspNetCore.Services;
+using Skywalker.IdentityServer.AspNetCore.Validation;
+using Skywalker.IdentityServer.AspNetCore.Validation.Models;
+using System.Collections.Specialized;
+using System.Security.Claims;
 
-namespace Skywalker.IdentityServer.Endpoints
+namespace Skywalker.IdentityServer.AspNetCore.Endpoints
 {
     internal abstract class AuthorizeEndpointBase : IEndpointHandler
     {

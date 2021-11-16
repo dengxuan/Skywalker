@@ -1,16 +1,17 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Infrastructure;
+using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.DependencyInjection.Extensions;
 using Microsoft.Extensions.Options;
-using Skywalker.AspNetCore.Mvc;
+using Skywalker.AspNetCore.Mvc.Abstractions;
+using Skywalker.AspNetCore.Mvc.Abstractions.Models;
 using Skywalker.AspNetCore.Mvc.Filters;
-using Skywalker.AspNetCore.Mvc.Models;
+using Skywalker.AspNetCore.Mvc.Response;
 using Skywalker.AspNetCore.Mvc.Response.Wrapping;
-using Skywalker.AspNetCore.Mvc.Results;
 using System;
 
-namespace Microsoft.Extensions.DependencyInjection
+namespace Microsoft.DependencyInjection
 {
     public static class SkywalkerResponseWrapperIServiceCollectionExtensions
     {

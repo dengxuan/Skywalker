@@ -1,9 +1,8 @@
 ﻿using System;
-using Microsoft.AspNetCore.Builder;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Options;
 
-namespace Microsoft.AspNetCore.Builder
+namespace Microsoft.Builder
 {
     public static class VirtualFileSystemApplicationBuilderExtensions
     {
@@ -14,7 +13,7 @@ namespace Microsoft.AspNetCore.Builder
             {
                 configure(app.ApplicationServices.GetRequiredService<IOptions<StaticFileOptions>>().Value);
             }
-            
+
             return app.UseStaticFiles();
         }
     }

@@ -2,7 +2,9 @@
 // Licensed under the Apache License, Version 2.0. See LICENSE in the project root for license information.
 
 
-namespace Microsoft.Extensions.DependencyInjection
+using Microsoft.Extensions.DependencyInjection;
+
+namespace Skywalker.IdentityServer.AspNetCore.Configuration.DependencyInjection
 {
     /// <summary>
     /// IdentityServer builder Interface

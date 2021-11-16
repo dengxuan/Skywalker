@@ -3,12 +3,13 @@
 
 
 using Microsoft.Extensions.Logging;
+using Skywalker.IdentityServer.Application;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace Skywalker.IdentityServer.Services
+namespace Skywalker.IdentityServer.AspNetCore.Services.Default
 {
     /// <summary>
     /// Default CORS policy service.
@@ -52,7 +53,7 @@ namespace Skywalker.IdentityServer.Services
         /// <returns></returns>
         public virtual Task<bool> IsOriginAllowedAsync(string origin)
         {
-            if (!String.IsNullOrWhiteSpace(origin))
+            if (!string.IsNullOrWhiteSpace(origin))
             {
                 if (AllowAll)
                 {

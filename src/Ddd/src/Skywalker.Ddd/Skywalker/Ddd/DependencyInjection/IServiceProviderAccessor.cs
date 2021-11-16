@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace Microsoft.Extensions.DependencyInjection
+namespace Skywalker.Ddd.DependencyInjection
 {
     public interface IServiceProviderAccessor
     {

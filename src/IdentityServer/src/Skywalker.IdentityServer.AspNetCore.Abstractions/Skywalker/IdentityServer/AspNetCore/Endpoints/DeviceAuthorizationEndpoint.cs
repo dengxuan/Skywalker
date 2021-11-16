@@ -2,26 +2,25 @@
 // Licensed under the Apache License, Version 2.0. See LICENSE in the project root for license information.
 
 
-using System.Collections.Generic;
-using System.Threading.Tasks;
 using IdentityModel;
-using Skywalker.IdentityServer.Endpoints.Results;
-using Skywalker.IdentityServer.Events;
-using Skywalker.IdentityServer.Extensions;
-using Skywalker.IdentityServer.Hosting;
-using Skywalker.IdentityServer.ResponseHandling;
-using Skywalker.IdentityServer.Services;
-using Skywalker.IdentityServer.Validation;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Logging;
-using System;
+using Skywalker.IdentityServer.AspNetCore.Endpoints.Results;
+using Skywalker.IdentityServer.AspNetCore.Events;
+using Skywalker.IdentityServer.AspNetCore.Extensions;
+using Skywalker.IdentityServer.AspNetCore.Hosting;
+using Skywalker.IdentityServer.AspNetCore.ResponseHandling;
+using Skywalker.IdentityServer.AspNetCore.ResponseHandling.Models;
+using Skywalker.IdentityServer.AspNetCore.Services;
+using Skywalker.IdentityServer.AspNetCore.Validation;
+using Skywalker.IdentityServer.AspNetCore.Validation.Models;
 
-namespace Skywalker.IdentityServer.Endpoints
+namespace Skywalker.IdentityServer.AspNetCore.Endpoints
 {
     /// <summary>
     /// The device authorization endpoint
     /// </summary>
-    /// <seealso cref="Skywalker.IdentityServer.Hosting.IEndpointHandler" />
+    /// <seealso cref="IEndpointHandler" />
     internal class DeviceAuthorizationEndpoint : IEndpointHandler
     {
         private readonly IClientSecretValidator _clientValidator;
@@ -49,7 +48,7 @@ namespace Skywalker.IdentityServer.Endpoints
         /// </summary>
         /// <param name="context">The HTTP context.</param>
         /// <returns></returns>
-        /// <exception cref="System.NotImplementedException"></exception>
+        /// <exception cref="NotImplementedException"></exception>
         public async Task<IEndpointResult> ProcessAsync(HttpContext context)
         {
             _logger.LogTrace("Processing device authorize request.");

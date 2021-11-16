@@ -1,4 +1,6 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
+using Skywalker.Ddd.DependencyInjection;
+using Skywalker.Ddd.ExceptionHandling;
 using Skywalker.Ddd.Uow.Abstractions;
 
 namespace Skywalker.Ddd.Uow;

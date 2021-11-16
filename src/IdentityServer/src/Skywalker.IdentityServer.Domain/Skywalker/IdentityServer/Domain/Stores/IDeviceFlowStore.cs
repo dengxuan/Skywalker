@@ -3,9 +3,9 @@
 
 
 using System.Threading.Tasks;
-using Skywalker.IdentityServer.Models;
+using Skywalker.IdentityServer.Domain.DeviceAuthorizations;
 
-namespace Skywalker.IdentityServer.Stores
+namespace Skywalker.IdentityServer.Domain.Stores
 {
     /// <summary>
     /// Interface for the device flow store

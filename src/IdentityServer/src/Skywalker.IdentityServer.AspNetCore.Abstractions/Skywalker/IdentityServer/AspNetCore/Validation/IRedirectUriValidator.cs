@@ -2,10 +2,10 @@
 // Licensed under the Apache License, Version 2.0. See LICENSE in the project root for license information.
 
 
-using Skywalker.IdentityServer.Models;
+using Skywalker.IdentityServer.Domain.Clients;
 using System.Threading.Tasks;
 
-namespace Skywalker.IdentityServer.Validation
+namespace Skywalker.IdentityServer.AspNetCore.Validation
 {
     /// <summary>
     /// Models the logic when validating redirect and post logout redirect URIs.
@@ -19,7 +19,7 @@ namespace Skywalker.IdentityServer.Validation
         /// <param name="client">The client.</param>
         /// <returns><c>true</c> is the URI is valid; <c>false</c> otherwise.</returns>
         Task<bool> IsRedirectUriValidAsync(string requestedUri, Client client);
-        
+
         /// <summary>
         /// Determines whether a post logout URI is valid for a client.
         /// </summary>

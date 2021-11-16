@@ -2,14 +2,14 @@
 // Licensed under the Apache License, Version 2.0. See LICENSE in the project root for license information.
 
 
-using System;
-using System.Threading.Tasks;
-using Skywalker.IdentityServer.Models;
-using Skywalker.IdentityServer.Stores;
-using Skywalker.IdentityServer.Validation;
 using Microsoft.Extensions.Logging;
+using Skywalker.IdentityServer.AspNetCore.Extensions;
+using Skywalker.IdentityServer.AspNetCore.Models;
+using Skywalker.IdentityServer.AspNetCore.Models.Messages;
+using Skywalker.IdentityServer.AspNetCore.Validation;
+using Skywalker.IdentityServer.Domain.Stores;
 
-namespace Skywalker.IdentityServer.Services
+namespace Skywalker.IdentityServer.AspNetCore.Services.Default
 {
     internal class DefaultDeviceFlowInteractionService : IDeviceFlowInteractionService
     {
@@ -58,7 +58,7 @@ namespace Skywalker.IdentityServer.Services
         {
             if (userCode == null) throw new ArgumentNullException(nameof(userCode));
             if (consent == null) throw new ArgumentNullException(nameof(consent));
-            
+
             var deviceAuth = await _devices.FindByUserCodeAsync(userCode);
             if (deviceAuth == null) return LogAndReturnError("Invalid user code", "Device authorization failure - user code is invalid");
 
@@ -67,7 +67,7 @@ namespace Skywalker.IdentityServer.Services
 
             var subject = await _session.GetUserAsync();
             if (subject == null) return LogAndReturnError("No user present in device flow request", "Device authorization failure - no user found");
-            
+
             var sid = await _session.GetSessionIdAsync();
 
             deviceAuth.IsAuthorized = true;

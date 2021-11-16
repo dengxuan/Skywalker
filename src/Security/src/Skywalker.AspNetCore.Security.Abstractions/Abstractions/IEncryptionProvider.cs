@@ -1,6 +1,6 @@
 ﻿using System.IO;
 
-namespace Skywalker.Extensions.AspNetCore.Security.Abstractions
+namespace Abstractions
 {
     public interface IEncryptionProvider
     {

@@ -1,9 +1,9 @@
-﻿using Microsoft.Extensions.Options;
-using Skywalker.Caching.Redis.Abstractions;
+﻿using Caching.Redis.Abstractions;
+using Microsoft.Extensions.Options;
 using StackExchange.Redis;
 using System;
 
-namespace Skywalker.Caching.Redis
+namespace Caching.Redis
 {
     public class RedisDatabaseProvider : IRedisDatabaseProvider
     {

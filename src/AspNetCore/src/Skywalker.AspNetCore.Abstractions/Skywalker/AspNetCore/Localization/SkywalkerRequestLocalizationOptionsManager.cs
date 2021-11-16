@@ -3,7 +3,7 @@ using Microsoft.Extensions.Options;
 using Skywalker.Ddd.Options;
 using System.Threading.Tasks;
 
-namespace Microsoft.AspNetCore.RequestLocalization
+namespace Skywalker.AspNetCore.Localization
 {
     public class SkywalkerRequestLocalizationOptionsManager : SkywalkerDynamicOptionsManager<RequestLocalizationOptions>
     {

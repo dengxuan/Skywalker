@@ -3,14 +3,15 @@
 
 
 using IdentityModel;
+using Skywalker.IdentityServer.AspNetCore.Services;
 using System.Threading.Tasks;
 
-namespace Skywalker.IdentityServer.Services
+namespace Skywalker.IdentityServer.AspNetCore.Services.Default
 {
     /// <summary>
     /// Default handle generation service
     /// </summary>
-    /// <seealso cref="Skywalker.IdentityServer.Services.IHandleGenerationService" />
+    /// <seealso cref="IHandleGenerationService" />
     public class DefaultHandleGenerationService : IHandleGenerationService
     {
         /// <summary>

@@ -2,15 +2,15 @@
 // Licensed under the Apache License, Version 2.0. See LICENSE in the project root for license information.
 
 
-using Skywalker.IdentityServer.Extensions;
 using Microsoft.AspNetCore.Http;
 using System.Threading.Tasks;
-using Skywalker.IdentityServer.Configuration;
 using System;
+using Skywalker.IdentityServer.AspNetCore.Configuration.DependencyInjection.Options;
+using Skywalker.IdentityServer.AspNetCore.Extensions;
 
 #pragma warning disable 1591
 
-namespace Skywalker.IdentityServer.Hosting
+namespace Skywalker.IdentityServer.AspNetCore.Hosting
 {
     public class BaseUrlMiddleware
     {
@@ -26,7 +26,7 @@ namespace Skywalker.IdentityServer.Hosting
         public async Task Invoke(HttpContext context)
         {
             var request = context.Request;
-            
+
             context.SetIdentityServerBasePath(request.PathBase.Value.RemoveTrailingSlash());
 
             await _next(context);

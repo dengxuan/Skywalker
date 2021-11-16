@@ -1,4 +1,4 @@
-﻿using Skywalker;
+﻿using Skywalker.Ddd;
 using Skywalker.Ddd.Tracing;
 
 namespace Microsoft.Extensions.DependencyInjection;

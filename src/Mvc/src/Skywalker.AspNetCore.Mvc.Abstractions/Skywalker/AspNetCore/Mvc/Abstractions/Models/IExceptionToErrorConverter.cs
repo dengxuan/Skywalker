@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace Skywalker.AspNetCore.Mvc.Models
+namespace Skywalker.AspNetCore.Mvc.Abstractions.Models
 {
     /// <summary>
     /// This interface can be implemented to convert an <see cref="Exception"/> object to an <see cref="ErrorInfo"/> object. 

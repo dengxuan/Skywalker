@@ -2,14 +2,14 @@
 // Licensed under the Apache License, Version 2.0. See LICENSE in the project root for license information.
 
 
-using Skywalker.IdentityServer.Models;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using System;
-using Skywalker.IdentityServer.Validation;
+using Skywalker.IdentityServer.AspNetCore.Validation.Models;
+using Skywalker.IdentityServer.Domain.ApiResources;
+using Skywalker.IdentityServer.Domain.ApiScopes;
+using Skywalker.IdentityServer.Domain.IdentityResources;
+using Skywalker.IdentityServer.Domain.Models;
+using Skywalker.IdentityServer.Domain.Stores;
 
-namespace Skywalker.IdentityServer.Stores
+namespace Skywalker.IdentityServer.AspNetCore.Extensions
 {
     /// <summary>
     /// Extensions for IResourceStore
@@ -59,7 +59,7 @@ namespace Skywalker.IdentityServer.Stores
                 throw new Exception(
                     $"Duplicate api resources found. This is an invalid configuration. Use different names for API resources. Names found: {names}");
             }
-            
+
             var scopesNames = apiScopes.Select(x => x.Name);
             dups = GetDuplicates(scopesNames);
             if (dups.Any())

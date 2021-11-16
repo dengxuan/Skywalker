@@ -3,12 +3,13 @@
 
 
 using IdentityModel;
+using Skywalker.IdentityServer.Domain.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Security.Claims;
 
-namespace Skywalker.IdentityServer.Models
+namespace Skywalker.IdentityServer.Domain.RefreshTokens
 {
     /// <summary>
     /// Models a token.
@@ -48,7 +49,7 @@ namespace Skywalker.IdentityServer.Models
         /// The audiences.
         /// </value>
         public ICollection<string> Audiences { get; set; } = new HashSet<string>();
-        
+
         /// <summary>
         /// Gets or sets the issuer.
         /// </summary>
@@ -56,7 +57,7 @@ namespace Skywalker.IdentityServer.Models
         /// The issuer.
         /// </value>
         public string Issuer { get; set; }
-        
+
         /// <summary>
         /// Gets or sets the creation time.
         /// </summary>
@@ -64,7 +65,7 @@ namespace Skywalker.IdentityServer.Models
         /// The creation time.
         /// </value>
         public DateTime CreationTime { get; set; }
-        
+
         /// <summary>
         /// Gets or sets the lifetime.
         /// </summary>
@@ -104,7 +105,7 @@ namespace Skywalker.IdentityServer.Models
         /// The description.
         /// </value>
         public string Description { get; set; }
-        
+
         /// <summary>
         /// Gets or sets the claims.
         /// </summary>

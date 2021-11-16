@@ -2,17 +2,18 @@
 // Licensed under the Apache License, Version 2.0. See LICENSE in the project root for license information.
 
 
+using Skywalker.IdentityServer.AspNetCore.Services;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace Skywalker.IdentityServer.Services
+namespace Skywalker.IdentityServer.AspNetCore.Services.Default
 {
     /// <summary>
     /// Default user code service implementation.
     /// </summary>
-    /// <seealso cref="Skywalker.IdentityServer.Services.IUserCodeService" />
+    /// <seealso cref="IUserCodeService" />
     public class DefaultUserCodeService : IUserCodeService
     {
         private readonly IEnumerable<IUserCodeGenerator> _generators;

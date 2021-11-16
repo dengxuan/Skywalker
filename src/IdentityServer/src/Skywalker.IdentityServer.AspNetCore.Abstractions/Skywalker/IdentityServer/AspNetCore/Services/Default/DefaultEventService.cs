@@ -5,17 +5,18 @@
 using System;
 using System.Diagnostics;
 using Microsoft.AspNetCore.Http;
-using Skywalker.IdentityServer.Configuration;
 using System.Threading.Tasks;
-using Skywalker.IdentityServer.Services;
 using Microsoft.AspNetCore.Authentication;
+using Skywalker.IdentityServer.AspNetCore.Services;
+using Skywalker.IdentityServer.AspNetCore.Configuration.DependencyInjection.Options;
+using Skywalker.IdentityServer.AspNetCore.Events.Infrastructure;
 
-namespace Skywalker.IdentityServer.Events
+namespace Skywalker.IdentityServer.AspNetCore.Services.Default
 {
     /// <summary>
     /// The default event service
     /// </summary>
-    /// <seealso cref="Skywalker.IdentityServer.Services.IEventService" />
+    /// <seealso cref="IEventService" />
     public class DefaultEventService : IEventService
     {
         /// <summary>
@@ -58,7 +59,7 @@ namespace Skywalker.IdentityServer.Events
         /// </summary>
         /// <param name="evt">The event.</param>
         /// <returns></returns>
-        /// <exception cref="System.ArgumentNullException">evt</exception>
+        /// <exception cref="ArgumentNullException">evt</exception>
         public async Task RaiseAsync(Event evt)
         {
             if (evt == null) throw new ArgumentNullException(nameof(evt));
@@ -75,7 +76,7 @@ namespace Skywalker.IdentityServer.Events
         /// </summary>
         /// <param name="evtType"></param>
         /// <returns></returns>
-        /// <exception cref="System.ArgumentOutOfRangeException"></exception>
+        /// <exception cref="ArgumentOutOfRangeException"></exception>
         public bool CanRaiseEventType(EventTypes evtType)
         {
             switch (evtType)

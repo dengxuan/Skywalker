@@ -3,7 +3,7 @@ using Skywalker.Scheduler.Abstractions;
 using System;
 using System.Runtime.CompilerServices;
 
-namespace Skywalker.Scheduler
+namespace Skywalker.Scheduler.ConTrigger
 {
     public class CronTrigger : ITrigger, IEquatable<ITrigger>
     {
@@ -15,9 +15,9 @@ namespace Skywalker.Scheduler
         {
             _expression = CronExpression.Parse(expression, CronFormat.IncludeSeconds);
 
-            this.Expression = _expression.ToString();
-            this.ExpirationTime = expiration;
-            this.EffectiveTime = effective;
+            Expression = _expression.ToString();
+            ExpirationTime = expiration;
+            EffectiveTime = effective;
         }
 
         /// <summary>
@@ -37,13 +37,13 @@ namespace Skywalker.Scheduler
 
         public DateTime? GetNextOccurrence(bool inclusive = false)
         {
-            var now = this.Now();
+            var now = Now();
 
-            if(this.EffectiveTime.HasValue && now < this.EffectiveTime.Value)
+            if (EffectiveTime.HasValue && now < EffectiveTime.Value)
             {
                 return null;
             }
-            if(this.ExpirationTime.HasValue && now > this.ExpirationTime.Value)
+            if (ExpirationTime.HasValue && now > ExpirationTime.Value)
             {
                 return null;
             }
@@ -53,27 +53,27 @@ namespace Skywalker.Scheduler
 
         public DateTime? GetNextOccurrence(DateTime origin, bool inclusive = false)
         {
-            var now = this.Now( origin );
+            var now = Now(origin);
 
-            if(this.EffectiveTime.HasValue && now < this.EffectiveTime.Value)
+            if (EffectiveTime.HasValue && now < EffectiveTime.Value)
             {
                 return null;
             }
-            if(this.ExpirationTime.HasValue && now > this.ExpirationTime.Value)
+            if (ExpirationTime.HasValue && now > ExpirationTime.Value)
             {
                 return null;
             }
 
-            return _expression.GetNextOccurrence(this.Now(origin), inclusive);
+            return _expression.GetNextOccurrence(Now(origin), inclusive);
         }
 
 
         public bool Equals(ITrigger other)
         {
-            return (other is CronTrigger cron) &&
+            return other is CronTrigger cron &&
                 cron._expression.Equals(_expression) &&
-                this.EffectiveTime == other.EffectiveTime &&
-                this.ExpirationTime == other.ExpirationTime;
+                EffectiveTime == other.EffectiveTime &&
+                ExpirationTime == other.ExpirationTime;
         }
 
         public override bool Equals(object obj)
@@ -85,28 +85,28 @@ namespace Skywalker.Scheduler
         {
             var code = _expression.GetHashCode();
 
-            if(this.EffectiveTime.HasValue)
+            if (EffectiveTime.HasValue)
             {
-                code ^= this.EffectiveTime.Value.GetHashCode();
+                code ^= EffectiveTime.Value.GetHashCode();
             }
-            if(this.ExpirationTime.HasValue)
+            if (ExpirationTime.HasValue)
             {
-                code ^= this.ExpirationTime.Value.GetHashCode();
+                code ^= ExpirationTime.Value.GetHashCode();
             }
             return code;
         }
 
         public override string ToString()
         {
-            if(this.EffectiveTime == null && this.ExpirationTime == null)
+            if (EffectiveTime == null && ExpirationTime == null)
             {
                 return "Cron: " + _expression.ToString();
             }
             else
             {
                 return "Cron: " + _expression.ToString() + " (" +
-                    (this.EffectiveTime.HasValue ? this.EffectiveTime.ToString() : "?") + " ~ " +
-                    (this.ExpirationTime.HasValue ? this.ExpirationTime.ToString() : "?") + ")";
+                    (EffectiveTime.HasValue ? EffectiveTime.ToString() : "?") + " ~ " +
+                    (ExpirationTime.HasValue ? ExpirationTime.ToString() : "?") + ")";
             }
         }
 
@@ -120,7 +120,7 @@ namespace Skywalker.Scheduler
         {
             public ITrigger Build(string expression, DateTime? expiration = null, DateTime? effective = null)
             {
-                if(string.IsNullOrWhiteSpace(expression))
+                if (string.IsNullOrWhiteSpace(expression))
                 {
                     throw new ArgumentNullException(nameof(expression));
                 }

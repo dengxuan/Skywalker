@@ -1,17 +1,17 @@
 ﻿using System;
 
-namespace Skywalker.Threading
+namespace Skywalker.Extensions.Threading
 {
     /// <summary>
     /// Extension methods to make locking easier.
     /// </summary>
     public static class LockExtensions
     {
-        /// <summary>
-        /// Executes given <paramref name="action"/> by locking given <paramref name="source"/> object.
-        /// </summary>
-        /// <param name="source">Source object (to be locked)</param>
-        /// <param name="action">Action (to be executed)</param>
+        ///// <summary>
+        ///// Executes given <paramref name="action"/> by locking given <paramref name="source"/> object.
+        ///// </summary>
+        ///// <param name="source">Source object (to be locked)</param>
+        ///// <param name="action">Action (to be executed)</param>
         public static void Locking(this object source, Action action)
         {
             lock (source)

@@ -7,7 +7,7 @@ using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 
-namespace Skywalker.IdentityServer.Models
+namespace Skywalker.IdentityServer.Domain.Models
 {
     /// <summary>
     /// Models the common data of API and identity resources.

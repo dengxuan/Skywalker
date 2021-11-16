@@ -3,10 +3,10 @@
 
 
 using System.Collections.Generic;
-using Skywalker.IdentityServer.Models;
 using System.Threading.Tasks;
+using Skywalker.IdentityServer.AspNetCore.Models.Messages;
 
-namespace Skywalker.IdentityServer.Stores
+namespace Skywalker.IdentityServer.AspNetCore.Stores
 {
     /// <summary>
     /// Interface for authorization request messages that are sent from the authorization endpoint to the login and consent UI.

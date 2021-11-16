@@ -9,10 +9,10 @@ using System.Diagnostics;
 using System.Security.Claims;
 using System.Security.Principal;
 
-namespace Skywalker.IdentityServer.Extensions
+namespace Skywalker.IdentityServer.AspNetCore.Extensions
 {
     /// <summary>
-    /// Extension methods for <see cref="System.Security.Principal.IPrincipal"/> and <see cref="System.Security.Principal.IIdentity"/> .
+    /// Extension methods for <see cref="IPrincipal"/> and <see cref="IIdentity"/> .
     /// </summary>
     public static class PrincipalExtensions
     {
@@ -50,7 +50,7 @@ namespace Skywalker.IdentityServer.Extensions
             var claim = id.FindFirst(JwtClaimTypes.AuthenticationTime);
 
             if (claim == null) throw new InvalidOperationException("auth_time is missing.");
-           
+
             return long.Parse(claim.Value);
         }
 
@@ -70,7 +70,7 @@ namespace Skywalker.IdentityServer.Extensions
         /// </summary>
         /// <param name="identity">The identity.</param>
         /// <returns></returns>
-        /// <exception cref="System.InvalidOperationException">sub claim is missing</exception>
+        /// <exception cref="InvalidOperationException">sub claim is missing</exception>
         [DebuggerStepThrough]
         public static string GetSubjectId(this IIdentity identity)
         {
@@ -115,7 +115,7 @@ namespace Skywalker.IdentityServer.Extensions
         /// </summary>
         /// <param name="identity">The identity.</param>
         /// <returns></returns>
-        /// <exception cref="System.InvalidOperationException">name claim is missing</exception>
+        /// <exception cref="InvalidOperationException">name claim is missing</exception>
         [DebuggerStepThrough]
         [Obsolete("This method will be removed in a future version. Use GetDisplayName instead.")]
         public static string GetName(this IIdentity identity)
@@ -154,7 +154,7 @@ namespace Skywalker.IdentityServer.Extensions
         /// </summary>
         /// <param name="identity">The identity.</param>
         /// <returns></returns>
-        /// <exception cref="System.InvalidOperationException">amr claim is missing</exception>
+        /// <exception cref="InvalidOperationException">amr claim is missing</exception>
         [DebuggerStepThrough]
         public static string GetAuthenticationMethod(this IIdentity identity)
         {
@@ -193,7 +193,7 @@ namespace Skywalker.IdentityServer.Extensions
         /// </summary>
         /// <param name="identity">The identity.</param>
         /// <returns></returns>
-        /// <exception cref="System.InvalidOperationException">idp claim is missing</exception>
+        /// <exception cref="InvalidOperationException">idp claim is missing</exception>
         [DebuggerStepThrough]
         public static string GetIdentityProvider(this IIdentity identity)
         {

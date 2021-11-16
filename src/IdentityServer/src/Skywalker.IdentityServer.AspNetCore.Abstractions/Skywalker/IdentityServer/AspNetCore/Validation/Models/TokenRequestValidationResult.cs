@@ -4,7 +4,7 @@
 
 using System.Collections.Generic;
 
-namespace Skywalker.IdentityServer.Validation
+namespace Skywalker.IdentityServer.AspNetCore.Validation.Models
 {
     /// <summary>
     /// Validation result for token requests

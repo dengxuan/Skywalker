@@ -5,7 +5,7 @@
 using System;
 using System.Collections.Generic;
 
-namespace Skywalker.IdentityServer.Models
+namespace Skywalker.IdentityServer.Domain.Models
 {
     /// <summary>
     /// Represents the permissions (in terms of scopes) granted to a client by a subject
@@ -19,7 +19,7 @@ namespace Skywalker.IdentityServer.Models
         /// The subject identifier.
         /// </value>
         public string SubjectId { get; set; }
-        
+
         /// <summary>
         /// Gets or sets the client identifier.
         /// </summary>
@@ -27,7 +27,7 @@ namespace Skywalker.IdentityServer.Models
         /// The client identifier.
         /// </value>
         public string ClientId { get; set; }
-        
+
         /// <summary>
         /// Gets or sets the scopes.
         /// </summary>

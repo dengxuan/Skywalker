@@ -2,10 +2,9 @@
 // Licensed under the Apache License, Version 2.0. See LICENSE in the project root for license information.
 
 
-using System.Threading.Tasks;
-using Skywalker.IdentityServer.Models;
+using Skywalker.IdentityServer.AspNetCore.Validation.Models;
 
-namespace Skywalker.IdentityServer.Validation
+namespace Skywalker.IdentityServer.AspNetCore.Validation
 {
     /// <summary>
     /// Interface for the token validator
@@ -19,7 +18,7 @@ namespace Skywalker.IdentityServer.Validation
         /// <param name="expectedScope">The expected scope.</param>
         /// <returns></returns>
         Task<TokenValidationResult> ValidateAccessTokenAsync(string token, string expectedScope = null);
-        
+
         /// <summary>
         /// Validates an identity token.
         /// </summary>

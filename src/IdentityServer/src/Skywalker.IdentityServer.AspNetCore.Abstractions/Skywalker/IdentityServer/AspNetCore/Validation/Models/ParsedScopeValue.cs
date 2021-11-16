@@ -4,7 +4,7 @@
 
 using System;
 
-namespace Skywalker.IdentityServer.Validation
+namespace Skywalker.IdentityServer.AspNetCore.Validation.Models
 {
     /// <summary>
     /// Models a parsed scope value.
@@ -28,12 +28,12 @@ namespace Skywalker.IdentityServer.Validation
         /// <param name="parsedParameter"></param>
         public ParsedScopeValue(string rawValue, string parsedName, string parsedParameter)
         {
-            if (String.IsNullOrWhiteSpace(rawValue))
+            if (string.IsNullOrWhiteSpace(rawValue))
             {
                 throw new ArgumentNullException(nameof(rawValue));
             }
 
-            if (String.IsNullOrWhiteSpace(parsedName))
+            if (string.IsNullOrWhiteSpace(parsedName))
             {
                 throw new ArgumentNullException(nameof(parsedName));
             }

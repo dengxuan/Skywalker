@@ -6,7 +6,7 @@
 using Microsoft.IdentityModel.Tokens;
 using System.Collections.Generic;
 
-namespace Skywalker.IdentityServer
+namespace Skywalker.IdentityServer.AspNetCore
 {
     public static class IdentityServerConstants
     {

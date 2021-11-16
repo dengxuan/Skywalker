@@ -3,15 +3,13 @@
 
 
 using IdentityModel;
-using Skywalker.IdentityServer.Extensions;
-using Skywalker.IdentityServer.Models;
 using Microsoft.Extensions.Logging;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+using Skywalker.IdentityServer.AspNetCore.Extensions;
+using Skywalker.IdentityServer.AspNetCore.Models;
+using Skywalker.IdentityServer.AspNetCore.Validation.Models;
+using Skywalker.IdentityServer.Domain.Models;
 
-namespace Skywalker.IdentityServer.Validation
+namespace Skywalker.IdentityServer.AspNetCore.Validation.Default
 {
     /// <summary>
     /// Validates a shared secret stored in SHA256 or SHA512
@@ -37,7 +35,7 @@ namespace Skywalker.IdentityServer.Validation
         /// <returns>
         /// A validation result
         /// </returns>
-        /// <exception cref="System.ArgumentNullException">Id or cedential</exception>
+        /// <exception cref="ArgumentNullException">Id or cedential</exception>
         public Task<SecretValidationResult> ValidateAsync(IEnumerable<Secret> secrets, ParsedSecret parsedSecret)
         {
             var fail = Task.FromResult(new SecretValidationResult { Success = false });

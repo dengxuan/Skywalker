@@ -1,6 +1,6 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
 
-namespace Skywalker
+namespace Skywalker.Ddd
 {
     public class SkywalkerDddBuilder
     {

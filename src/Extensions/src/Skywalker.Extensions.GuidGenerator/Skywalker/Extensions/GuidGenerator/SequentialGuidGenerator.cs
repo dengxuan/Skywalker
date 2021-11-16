@@ -1,9 +1,8 @@
 ﻿using Microsoft.Extensions.Options;
-using Skywalker.Extensions.GuidGenerator;
 using System;
 using System.Security.Cryptography;
 
-namespace Skywalker
+namespace Skywalker.Extensions.GuidGenerator
 {
     /* This code is taken from jhtodd/SequentialGuid https://github.com/jhtodd/SequentialGuid/blob/master/SequentialGuid/Classes/SequentialGuid.cs */
 

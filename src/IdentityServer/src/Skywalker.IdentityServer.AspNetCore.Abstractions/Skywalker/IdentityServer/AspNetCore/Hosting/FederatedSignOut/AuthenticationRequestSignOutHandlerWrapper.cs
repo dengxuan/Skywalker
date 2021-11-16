@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Http;
 
-namespace Skywalker.IdentityServer.Hosting.FederatedSignOut
+namespace Skywalker.IdentityServer.AspNetCore.Hosting.FederatedSignOut
 {
     internal class AuthenticationRequestSignOutHandlerWrapper : AuthenticationRequestHandlerWrapper, IAuthenticationSignOutHandler
     {

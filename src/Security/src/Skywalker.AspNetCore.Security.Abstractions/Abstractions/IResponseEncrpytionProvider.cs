@@ -1,6 +1,6 @@
 ﻿using Microsoft.AspNetCore.Http;
 
-namespace Skywalker.Extensions.AspNetCore.Security.Abstractions
+namespace Abstractions
 {
     public interface IResponseEncrpytionProvider
     {

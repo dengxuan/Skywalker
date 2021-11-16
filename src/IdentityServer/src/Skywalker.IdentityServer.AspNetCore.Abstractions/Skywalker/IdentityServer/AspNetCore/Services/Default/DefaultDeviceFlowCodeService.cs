@@ -1,13 +1,13 @@
-using System.Threading.Tasks;
-using Skywalker.IdentityServer.Models;
-using Skywalker.IdentityServer.Stores;
+using Skywalker.IdentityServer.AspNetCore.Extensions;
+using Skywalker.IdentityServer.Domain.DeviceAuthorizations;
+using Skywalker.IdentityServer.Domain.Stores;
 
-namespace Skywalker.IdentityServer.Services.Default
+namespace Skywalker.IdentityServer.AspNetCore.Services.Default
 {
     /// <summary>
     /// Default wrapper service for IDeviceFlowStore, handling key hashing
     /// </summary>
-    /// <seealso cref="Skywalker.IdentityServer.Services.IDeviceFlowCodeService" />
+    /// <seealso cref="IDeviceFlowCodeService" />
     public class DefaultDeviceFlowCodeService : IDeviceFlowCodeService
     {
         private readonly IDeviceFlowStore _store;

@@ -5,7 +5,7 @@
 using System.Collections.Generic;
 using System.Linq;
 
-namespace Skywalker.IdentityServer.Models
+namespace Skywalker.IdentityServer.AspNetCore.Models.Messages
 {
     /// <summary>
     /// Models the user's response to the consent screen.

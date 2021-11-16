@@ -1,5 +1,5 @@
 ﻿using Microsoft.AspNetCore.Hosting;
-using Skywalker;
+using Skywalker.Ddd;
 
 namespace Microsoft.Extensions.DependencyInjection
 {

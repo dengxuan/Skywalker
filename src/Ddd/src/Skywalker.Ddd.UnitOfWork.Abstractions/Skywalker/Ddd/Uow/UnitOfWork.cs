@@ -1,6 +1,7 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
+using Skywalker.Ddd.ExceptionHandling;
 using Skywalker.Ddd.Uow.Abstractions;
 using System.Collections.Immutable;
 

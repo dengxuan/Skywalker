@@ -1,12 +1,13 @@
 ﻿using IdentityModel;
 using Microsoft.IdentityModel.Tokens;
+using Skywalker.IdentityServer.AspNetCore;
 using System;
 using System.Linq;
 using System.Security.Cryptography;
 using System.Security.Cryptography.X509Certificates;
 using System.Text;
 
-namespace Skywalker.IdentityServer.Configuration
+namespace Skywalker.IdentityServer.AspNetCore.Configuration
 {
     /// <summary>
     /// Crypto helper
@@ -66,7 +67,7 @@ namespace Skywalker.IdentityServer.Configuration
             using (var sha = GetHashAlgorithmForSigningAlgorithm(tokenSigningAlgorithm))
             {
                 var hash = sha.ComputeHash(Encoding.ASCII.GetBytes(value));
-                var size = (sha.HashSize / 8) / 2;
+                var size = sha.HashSize / 8 / 2;
 
                 var leftPart = new byte[size];
                 Array.Copy(hash, leftPart, size);

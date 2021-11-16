@@ -4,7 +4,8 @@ using Microsoft.CodeAnalysis.CSharp.Syntax;
 using Microsoft.Extensions.DependencyModel;
 using Microsoft.Extensions.Logging;
 using Skywalker.Lightning.Abstractions;
-using Skywalker.Lightning.Proxies.Abstractions;
+using Skywalker.Lightning.Terminal.Abstractions;
+using Skywalker.Lightning.Terminal.Proxies.Abstractions;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -12,7 +13,7 @@ using System.Reflection;
 using System.Runtime.Loader;
 using System.Threading.Tasks;
 
-namespace Skywalker.Lightning.Proxies
+namespace Skywalker.Lightning.Terminal.Proxies
 {
     public class LightningProxyGenerator : ILightningProxyGenerator, IDisposable
     {

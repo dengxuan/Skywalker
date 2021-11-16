@@ -2,13 +2,9 @@
 // Licensed under the Apache License, Version 2.0. See LICENSE in the project root for license information.
 
 
-using Skywalker.IdentityServer.Extensions;
 using Microsoft.AspNetCore.Http;
-using System;
-using System.Collections.Generic;
-using System.Linq;
 
-namespace Skywalker.IdentityServer.Configuration
+namespace Skywalker.IdentityServer.AspNetCore.Configuration.DependencyInjection.Options
 {
     /// <summary>
     /// Options for CORS

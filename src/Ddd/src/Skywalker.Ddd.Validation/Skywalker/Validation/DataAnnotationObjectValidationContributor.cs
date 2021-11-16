@@ -1,5 +1,5 @@
 using Microsoft.Extensions.Options;
-using Skywalker.Reflection;
+using Skywalker.Localization;
 using System.Collections;
 using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;

@@ -1,6 +1,6 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
 using Skywalker.Application.Dtos.Contracts;
-using Skywalker.Ddd.UnitOfWork.Abstractions;
+using Skywalker.Ddd.Uow.Abstractions;
 
 namespace Skywalker.Application.Abstractions;
 

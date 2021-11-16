@@ -2,6 +2,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Options;
 using Skywalker.Data;
+using Skywalker.Ddd.ExceptionHandling;
 using System;
 using System.Collections.Generic;
 

@@ -2,10 +2,10 @@
 // Licensed under the Apache License, Version 2.0. See LICENSE in the project root for license information.
 
 
-using Skywalker.IdentityServer.Stores;
+using Skywalker.IdentityServer.Domain.Stores;
 using System;
 
-namespace Skywalker.IdentityServer.Extensions
+namespace Skywalker.IdentityServer.Domain.Extensions
 {
     /// <summary>
     /// Extensions for PersistedGrantFilter.
@@ -20,10 +20,10 @@ namespace Skywalker.IdentityServer.Extensions
         {
             if (filter == null) throw new ArgumentNullException(nameof(filter));
 
-            if (String.IsNullOrWhiteSpace(filter.ClientId) &&
-                String.IsNullOrWhiteSpace(filter.SessionId) &&
-                String.IsNullOrWhiteSpace(filter.SubjectId) &&
-                String.IsNullOrWhiteSpace(filter.Type))
+            if (string.IsNullOrWhiteSpace(filter.ClientId) &&
+                string.IsNullOrWhiteSpace(filter.SessionId) &&
+                string.IsNullOrWhiteSpace(filter.SubjectId) &&
+                string.IsNullOrWhiteSpace(filter.Type))
             {
                 throw new ArgumentException("No filter values set.", nameof(filter));
             }

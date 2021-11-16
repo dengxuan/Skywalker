@@ -3,15 +3,12 @@
 
 
 using IdentityModel;
-using Skywalker.IdentityServer.Extensions;
-using Skywalker.IdentityServer.Models;
 using Microsoft.Extensions.Logging;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+using Skywalker.IdentityServer.AspNetCore.Models;
+using Skywalker.IdentityServer.AspNetCore.Validation.Models;
+using Skywalker.IdentityServer.Domain.Models;
 
-namespace Skywalker.IdentityServer.Validation
+namespace Skywalker.IdentityServer.AspNetCore.Validation.Default
 {
     /// <summary>
     /// Validates a secret stored in plain text
@@ -37,7 +34,7 @@ namespace Skywalker.IdentityServer.Validation
         /// <returns>
         /// A validation result
         /// </returns>
-        /// <exception cref="System.ArgumentException">id or credential is missing.</exception>
+        /// <exception cref="ArgumentException">id or credential is missing.</exception>
         public Task<SecretValidationResult> ValidateAsync(IEnumerable<Secret> secrets, ParsedSecret parsedSecret)
         {
             var fail = Task.FromResult(new SecretValidationResult { Success = false });

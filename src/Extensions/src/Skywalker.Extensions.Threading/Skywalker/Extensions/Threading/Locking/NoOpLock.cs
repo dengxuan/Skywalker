@@ -12,20 +12,20 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-namespace Skywalker.Threading.Locking
+namespace Skywalker.Extensions.Threading.Locking
 {
-	internal class NoOpLock : ILockHolder
-	{
-		public static readonly ILockHolder Lock = new NoOpLock();
+    internal class NoOpLock : ILockHolder
+    {
+        public static readonly ILockHolder Lock = new NoOpLock();
 
-		public void Dispose()
-		{
+        public void Dispose()
+        {
 
-		}
+        }
 
-		public bool LockAcquired
-		{
-			get { return true; }
-		}
-	}
+        public bool LockAcquired
+        {
+            get { return true; }
+        }
+    }
 }

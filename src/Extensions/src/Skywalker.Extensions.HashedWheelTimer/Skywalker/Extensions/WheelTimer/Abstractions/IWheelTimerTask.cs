@@ -1,6 +1,6 @@
 ﻿using System.Threading.Tasks;
 
-namespace Skywalker.Extensions.WheelTimer
+namespace Skywalker.Extensions.WheelTimer.Abstractions
 {
     /// <summary>
     /// A task which is executed after the delay specified with Timer.NewTimeout(TimerTask, long, TimeUnit).

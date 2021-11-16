@@ -1,11 +1,12 @@
 ﻿using System.Collections.Generic;
 using System.Threading.Tasks;
 using IdentityModel;
-using Skywalker.IdentityServer.Models;
-using Skywalker.IdentityServer.Services;
 using Microsoft.Extensions.Caching.Distributed;
+using Skywalker.IdentityServer.AspNetCore.Models.Messages;
+using Skywalker.IdentityServer.AspNetCore.Infrastructure;
+using Skywalker.IdentityServer.AspNetCore.Services;
 
-namespace Skywalker.IdentityServer.Stores.Default
+namespace Skywalker.IdentityServer.AspNetCore.Stores.Default
 {
     /// <summary>
     /// Implementation of IAuthorizationParametersMessageStore that uses the IDistributedCache.
@@ -27,7 +28,7 @@ namespace Skywalker.IdentityServer.Stores.Default
         }
 
         private string CacheKeyPrefix => "DistributedCacheAuthorizationParametersMessageStore";
-        
+
         /// <inheritdoc/>
         public async Task<string> WriteAsync(Message<IDictionary<string, string[]>> message)
         {
@@ -39,7 +40,7 @@ namespace Skywalker.IdentityServer.Stores.Default
 
             var key = await _handleGenerationService.GenerateAsync();
             var cacheKey = $"{CacheKeyPrefix}-{key}";
-            
+
             var json = ObjectSerializer.ToString(message);
 
             var options = new DistributedCacheEntryOptions();

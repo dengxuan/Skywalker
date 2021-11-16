@@ -4,7 +4,7 @@
 using System;
 using System.Collections.Generic;
 
-namespace Skywalker.IdentityServer.Models
+namespace Skywalker.IdentityServer.AspNetCore.Models
 {
     /// <summary>
     /// Models a grant the user has given.

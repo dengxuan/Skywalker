@@ -4,7 +4,7 @@
 
 using System.Security.Claims;
 
-namespace Skywalker.IdentityServer.Validation
+namespace Skywalker.IdentityServer.AspNetCore.Validation.Models
 {
     /// <summary>
     /// Validation result for userinfo requests

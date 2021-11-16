@@ -2,16 +2,22 @@
 // Licensed under the Apache License, Version 2.0. See LICENSE in the project root for license information.
 
 
-using Skywalker.IdentityServer.Models;
-using Skywalker.IdentityServer.Services;
-using Skywalker.IdentityServer.Stores;
 using Microsoft.Extensions.Caching.Memory;
-using Microsoft.Extensions.DependencyInjection.Extensions;
-using System.Collections.Generic;
-using System.Linq;
 using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.DependencyInjection.Extensions;
+using Skywalker.IdentityServer.Application;
+using Skywalker.IdentityServer.AspNetCore.Services;
+using Skywalker.IdentityServer.AspNetCore.Services.Default;
+using Skywalker.IdentityServer.AspNetCore.Services.InMemory;
+using Skywalker.IdentityServer.AspNetCore.Stores.InMemory;
+using Skywalker.IdentityServer.Domain.ApiResources;
+using Skywalker.IdentityServer.Domain.ApiScopes;
+using Skywalker.IdentityServer.Domain.Clients;
+using Skywalker.IdentityServer.Domain.IdentityResources;
+using Skywalker.IdentityServer.Domain.Stores;
 
-namespace Microsoft.Extensions.DependencyInjection
+namespace Skywalker.IdentityServer.AspNetCore.Configuration.DependencyInjection.BuilderExtensions
 {
     /// <summary>
     /// Builder extension methods for registering in-memory services
@@ -72,7 +78,7 @@ namespace Microsoft.Extensions.DependencyInjection
 
             return builder;
         }
-        
+
         /// <summary>
         /// Adds the in memory API resources.
         /// </summary>
@@ -128,8 +134,8 @@ namespace Microsoft.Extensions.DependencyInjection
             builder.AddClientStore<InMemoryClientStore>();
 
             var existingCors = builder.Services.Where(x => x.ServiceType == typeof(ICorsPolicyService)).LastOrDefault();
-            if (existingCors != null && 
-                existingCors.ImplementationType == typeof(DefaultCorsPolicyService) && 
+            if (existingCors != null &&
+                existingCors.ImplementationType == typeof(DefaultCorsPolicyService) &&
                 existingCors.Lifetime == ServiceLifetime.Transient)
             {
                 // if our default is registered, then overwrite with the InMemoryCorsPolicyService

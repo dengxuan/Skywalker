@@ -2,13 +2,13 @@
 // Licensed under the Apache License, Version 2.0. See LICENSE in the project root for license information.
 
 
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using Skywalker.IdentityServer.Extensions;
-using Skywalker.IdentityServer.Validation;
+using Skywalker.IdentityServer.AspNetCore.Validation.Models;
+using Skywalker.IdentityServer.Domain.ApiResources;
+using Skywalker.IdentityServer.Domain.ApiScopes;
+using Skywalker.IdentityServer.Domain.IdentityResources;
+using Skywalker.IdentityServer.Domain.Models;
 
-namespace Skywalker.IdentityServer.Models
+namespace Skywalker.IdentityServer.AspNetCore.Extensions
 {
     /// <summary>
     /// Extensions for Resource
@@ -42,7 +42,7 @@ namespace Skywalker.IdentityServer.Models
             {
                 names.Add(IdentityServerConstants.StandardScopes.OfflineAccess);
             }
-            
+
             return names;
         }
 
@@ -115,7 +115,7 @@ namespace Skywalker.IdentityServer.Models
             {
                 return apis.First().AllowedAccessTokenSigningAlgorithms;
             }
-            
+
             var allAlgorithms = apis.Where(r => r.AllowedAccessTokenSigningAlgorithms.Any()).Select(r => r.AllowedAccessTokenSigningAlgorithms).ToList();
 
             // resources need to agree on allowed signing algorithms

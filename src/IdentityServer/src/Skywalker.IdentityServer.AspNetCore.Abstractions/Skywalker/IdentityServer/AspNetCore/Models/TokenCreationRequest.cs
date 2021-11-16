@@ -2,11 +2,11 @@
 // Licensed under the Apache License, Version 2.0. See LICENSE in the project root for license information.
 
 
-using Skywalker.IdentityServer.Validation;
+using Skywalker.IdentityServer.AspNetCore.Validation.Models;
 using System;
 using System.Security.Claims;
 
-namespace Skywalker.IdentityServer.Models
+namespace Skywalker.IdentityServer.AspNetCore.Models
 {
     /// <summary>
     /// Models the data to create a token from a validated request.

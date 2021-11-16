@@ -4,13 +4,11 @@
 
 using IdentityModel;
 using Newtonsoft.Json;
-using System;
-using System.Linq;
 using System.Security.Claims;
 
 #pragma warning disable 1591
 
-namespace Skywalker.IdentityServer.Stores.Serialization
+namespace Skywalker.IdentityServer.Domain.Stores.Serialization
 {
     public class ClaimsPrincipalConverter : JsonConverter
     {

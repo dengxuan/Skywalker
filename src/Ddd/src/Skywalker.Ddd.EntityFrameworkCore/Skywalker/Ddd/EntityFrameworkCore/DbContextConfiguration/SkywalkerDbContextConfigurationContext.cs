@@ -1,8 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
-using Skywalker.EntityFrameworkCore;
-using System;
+using Skywalker.Ddd.DependencyInjection;
 using System.Data.Common;
 using System.Diagnostics.CodeAnalysis;
 

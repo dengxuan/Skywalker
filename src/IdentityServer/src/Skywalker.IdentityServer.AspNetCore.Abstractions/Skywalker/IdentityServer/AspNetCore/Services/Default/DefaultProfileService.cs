@@ -3,16 +3,18 @@
 
 
 using System.Threading.Tasks;
-using Skywalker.IdentityServer.Models;
 using Microsoft.Extensions.Logging;
+using Skywalker.IdentityServer.AspNetCore.Extensions;
+using Skywalker.IdentityServer.AspNetCore.Models.Contexts;
+using Skywalker.IdentityServer.AspNetCore.Services;
 
-namespace Skywalker.IdentityServer.Services
+namespace Skywalker.IdentityServer.AspNetCore.Services.Default
 {
     /// <summary>
     /// Default profile service implementation.
     /// This implementation sources all claims from the current subject (e.g. the cookie).
     /// </summary>
-    /// <seealso cref="Skywalker.IdentityServer.Services.IProfileService" />
+    /// <seealso cref="IProfileService" />
     public class DefaultProfileService : IProfileService
     {
         /// <summary>

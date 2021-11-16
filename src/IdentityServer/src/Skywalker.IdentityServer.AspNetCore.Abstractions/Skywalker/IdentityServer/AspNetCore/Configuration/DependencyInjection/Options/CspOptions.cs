@@ -2,9 +2,9 @@
 // Licensed under the Apache License, Version 2.0. See LICENSE in the project root for license information.
 
 
-using Skywalker.IdentityServer.Models;
+using Skywalker.IdentityServer.Domain.Models;
 
-namespace Skywalker.IdentityServer.Configuration
+namespace Skywalker.IdentityServer.AspNetCore.Configuration.DependencyInjection.Options
 {
     /// <summary>
     /// Options for Content Security Policy

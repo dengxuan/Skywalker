@@ -3,7 +3,8 @@
 
 #pragma warning disable 1591
 
-namespace Skywalker.IdentityServer.Models
+
+namespace Skywalker.IdentityServer.Domain.Models
 {
     public static class GrantType
     {

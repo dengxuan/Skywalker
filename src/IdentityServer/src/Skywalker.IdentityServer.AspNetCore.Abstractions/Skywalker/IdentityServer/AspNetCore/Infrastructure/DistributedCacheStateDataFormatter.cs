@@ -10,7 +10,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Caching.Distributed;
 using Microsoft.Extensions.DependencyInjection;
 
-namespace Skywalker.IdentityServer.Infrastructure
+namespace Skywalker.IdentityServer.AspNetCore.Infrastructure
 {
     /// <summary>
     /// State formatter using IDistributedCache
@@ -67,7 +67,7 @@ namespace Skywalker.IdentityServer.Infrastructure
             {
                 options.SetSlidingExpiration(Constants.DefaultCacheDuration);
             }
-            
+
             // Rather than encrypt the full AuthenticationProperties
             // cache the data and encrypt the key that points to the data
             Cache.SetString(cacheKey, json, options);
@@ -93,7 +93,7 @@ namespace Skywalker.IdentityServer.Infrastructure
         /// <returns></returns>
         public AuthenticationProperties Unprotect(string protectedText, string purpose)
         {
-            if (String.IsNullOrWhiteSpace(protectedText))
+            if (string.IsNullOrWhiteSpace(protectedText))
             {
                 return null;
             }

@@ -2,24 +2,21 @@
 // Licensed under the Apache License, Version 2.0. See LICENSE in the project root for license information.
 
 
-using System;
-using System.Collections.Generic;
-using System.Threading.Tasks;
-using Skywalker.IdentityServer.Configuration;
-using Skywalker.IdentityServer.Hosting;
 using Microsoft.AspNetCore.Http;
-using Skywalker.IdentityServer.Validation;
-using Skywalker.IdentityServer.Extensions;
 using Microsoft.Extensions.DependencyInjection;
-using Skywalker.IdentityServer.Stores;
-using Skywalker.IdentityServer.Models;
+using Skywalker.IdentityServer.AspNetCore.Configuration.DependencyInjection.Options;
+using Skywalker.IdentityServer.AspNetCore.Extensions;
+using Skywalker.IdentityServer.AspNetCore.Hosting;
+using Skywalker.IdentityServer.AspNetCore.Models.Messages;
+using Skywalker.IdentityServer.AspNetCore.Stores;
+using Skywalker.IdentityServer.AspNetCore.Validation.Models;
 
-namespace Skywalker.IdentityServer.Endpoints.Results
+namespace Skywalker.IdentityServer.AspNetCore.Endpoints.Results
 {
     /// <summary>
     /// Result for consent page
     /// </summary>
-    /// <seealso cref="Skywalker.IdentityServer.Hosting.IEndpointResult" />
+    /// <seealso cref="IEndpointResult" />
     public class ConsentPageResult : IEndpointResult
     {
         private readonly ValidatedAuthorizeRequest _request;
@@ -28,7 +25,7 @@ namespace Skywalker.IdentityServer.Endpoints.Results
         /// Initializes a new instance of the <see cref="ConsentPageResult"/> class.
         /// </summary>
         /// <param name="request">The request.</param>
-        /// <exception cref="System.ArgumentNullException">request</exception>
+        /// <exception cref="ArgumentNullException">request</exception>
         public ConsentPageResult(ValidatedAuthorizeRequest request)
         {
             _request = request ?? throw new ArgumentNullException(nameof(request));
@@ -37,7 +34,7 @@ namespace Skywalker.IdentityServer.Endpoints.Results
         internal ConsentPageResult(
             ValidatedAuthorizeRequest request,
             IdentityServerOptions options,
-            IAuthorizationParametersMessageStore authorizationParametersMessageStore = null) 
+            IAuthorizationParametersMessageStore authorizationParametersMessageStore = null)
             : this(request)
         {
             _options = options;

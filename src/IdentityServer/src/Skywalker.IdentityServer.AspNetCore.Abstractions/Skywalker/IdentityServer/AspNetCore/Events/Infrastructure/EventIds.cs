@@ -3,7 +3,8 @@
 
 #pragma warning disable 1591
 
-namespace Skywalker.IdentityServer.Events
+
+namespace Skywalker.IdentityServer.AspNetCore.Events.Infrastructure
 {
     public static class EventIds
     {
@@ -18,7 +19,7 @@ namespace Skywalker.IdentityServer.Events
 
         public const int ClientAuthenticationSuccess = AuthenticationEventsStart + 10;
         public const int ClientAuthenticationFailure = AuthenticationEventsStart + 11;
-        
+
         public const int ApiAuthenticationSuccess = AuthenticationEventsStart + 20;
         public const int ApiAuthenticationFailure = AuthenticationEventsStart + 21;
 
@@ -34,7 +35,7 @@ namespace Skywalker.IdentityServer.Events
 
         public const int TokenIntrospectionSuccess = TokenEventsStart + 20;
         public const int TokenIntrospectionFailure = TokenEventsStart + 21;
-        
+
         //////////////////////////////////////////////////////
         /// Error related events
         //////////////////////////////////////////////////////

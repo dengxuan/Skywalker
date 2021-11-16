@@ -1,4 +1,4 @@
-﻿using Skywalker.Lightning.Abstractions;
+﻿using Skywalker.Lightning.Terminal.Abstractions;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 

@@ -4,7 +4,7 @@
 
 using Microsoft.AspNetCore.Http;
 
-namespace Skywalker.IdentityServer.Hosting
+namespace Skywalker.IdentityServer.AspNetCore.Hosting
 {
     /// <summary>
     /// The endpoint router

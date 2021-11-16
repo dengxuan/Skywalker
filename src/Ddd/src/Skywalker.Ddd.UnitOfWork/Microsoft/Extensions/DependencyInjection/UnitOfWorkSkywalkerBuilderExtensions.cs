@@ -1,5 +1,5 @@
 ﻿using Microsoft.Extensions.DependencyInjection.Extensions;
-using Skywalker;
+using Skywalker.Ddd;
 using Skywalker.Ddd.EntityFrameworkCore;
 using Skywalker.Ddd.Uow;
 using Skywalker.Ddd.Uow.Abstractions;

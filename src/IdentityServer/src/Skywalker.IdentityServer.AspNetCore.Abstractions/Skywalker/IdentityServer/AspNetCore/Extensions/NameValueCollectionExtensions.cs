@@ -8,8 +8,9 @@ using System.Collections.Generic;
 using System.Collections.Specialized;
 using System.Text;
 using System.Text.Encodings.Web;
+using Skywalker.IdentityServer.AspNetCore.Extensions;
 
-namespace Skywalker.IdentityServer.Extensions
+namespace Skywalker.IdentityServer.AspNetCore.Extensions
 {
     internal static class NameValueCollectionExtensions
     {
@@ -32,12 +33,12 @@ namespace Skywalker.IdentityServer.Extensions
 
             return nvc;
         }
-        
+
         public static string ToQueryString(this NameValueCollection collection)
         {
             if (collection.Count == 0)
             {
-                return String.Empty;
+                return string.Empty;
             }
 
             var builder = new StringBuilder(128);
@@ -47,7 +48,7 @@ namespace Skywalker.IdentityServer.Extensions
                 var values = collection.GetValues(name);
                 if (values == null || values.Length == 0)
                 {
-                    first = AppendNameValuePair(builder, first, true, name, String.Empty);
+                    first = AppendNameValuePair(builder, first, true, name, string.Empty);
                 }
                 else
                 {
@@ -130,7 +131,7 @@ namespace Skywalker.IdentityServer.Extensions
 
         internal static string ConvertFormUrlEncodedSpacesToUrlEncodedSpaces(string str)
         {
-            if ((str != null) && (str.IndexOf('+') >= 0))
+            if (str != null && str.IndexOf('+') >= 0)
             {
                 str = str.Replace("+", "%20");
             }
@@ -139,10 +140,10 @@ namespace Skywalker.IdentityServer.Extensions
 
         private static bool AppendNameValuePair(StringBuilder builder, bool first, bool urlEncode, string name, string value)
         {
-            var effectiveName = name ?? String.Empty;
+            var effectiveName = name ?? string.Empty;
             var encodedName = urlEncode ? UrlEncoder.Default.Encode(effectiveName) : effectiveName;
 
-            var effectiveValue = value ?? String.Empty;
+            var effectiveValue = value ?? string.Empty;
             var encodedValue = urlEncode ? UrlEncoder.Default.Encode(effectiveValue) : effectiveValue;
             encodedValue = ConvertFormUrlEncodedSpacesToUrlEncodedSpaces(encodedValue);
 
@@ -156,7 +157,7 @@ namespace Skywalker.IdentityServer.Extensions
             }
 
             builder.Append(encodedName);
-            if (!String.IsNullOrEmpty(encodedValue))
+            if (!string.IsNullOrEmpty(encodedValue))
             {
                 builder.Append("=");
                 builder.Append(encodedValue);

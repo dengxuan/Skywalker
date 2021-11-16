@@ -19,14 +19,14 @@ using Microsoft.CodeAnalysis.CSharp;
 using Microsoft.CodeAnalysis.CSharp.Syntax;
 using Microsoft.Extensions.Logging;
 using Skywalker.Lightning.Abstractions;
-using Skywalker.Lightning.Proxies;
+using Skywalker.Lightning.Terminal.Abstractions;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Reflection;
 using System.Threading.Tasks;
 
-namespace Skywalker.Lightning.Proxies
+namespace Skywalker.Lightning.Terminal.Proxies
 {
     static class CompilationUtilitys
     {

@@ -2,14 +2,15 @@
 // Licensed under the Apache License, Version 2.0. See LICENSE in the project root for license information.
 
 
-using static Skywalker.IdentityServer.Constants;
+using Skywalker.IdentityServer.AspNetCore.Events.Infrastructure;
+using static Skywalker.IdentityServer.AspNetCore.Constants;
 
-namespace Skywalker.IdentityServer.Events
+namespace Skywalker.IdentityServer.AspNetCore.Events
 {
     /// <summary>
     /// Event for failed user authentication
     /// </summary>
-    /// <seealso cref="Skywalker.IdentityServer.Events.Event" />
+    /// <seealso cref="Event" />
     public class UserLoginFailureEvent : Event
     {
         /// <summary>
@@ -22,7 +23,7 @@ namespace Skywalker.IdentityServer.Events
         public UserLoginFailureEvent(string username, string error, bool interactive = true, string clientId = null)
             : base(EventCategories.Authentication,
                   "User Login Failure",
-                  EventTypes.Failure, 
+                  EventTypes.Failure,
                   EventIds.UserLoginFailure,
                   error)
         {

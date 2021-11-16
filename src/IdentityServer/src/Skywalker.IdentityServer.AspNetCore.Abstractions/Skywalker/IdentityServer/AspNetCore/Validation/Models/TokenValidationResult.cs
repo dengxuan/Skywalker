@@ -2,11 +2,11 @@
 // Licensed under the Apache License, Version 2.0. See LICENSE in the project root for license information.
 
 
-using Skywalker.IdentityServer.Models;
-using System.Collections.Generic;
+using Skywalker.IdentityServer.Domain.Clients;
+using Skywalker.IdentityServer.Domain.RefreshTokens;
 using System.Security.Claims;
 
-namespace Skywalker.IdentityServer.Validation
+namespace Skywalker.IdentityServer.AspNetCore.Validation.Models
 {
     /// <summary>
     /// Models the validation result of access tokens and id tokens.
@@ -20,7 +20,7 @@ namespace Skywalker.IdentityServer.Validation
         /// The claims.
         /// </value>
         public IEnumerable<Claim> Claims { get; set; }
-        
+
         /// <summary>
         /// Gets or sets the JWT.
         /// </summary>

@@ -4,7 +4,8 @@
 
 #pragma warning disable 1591
 
-namespace Skywalker.IdentityServer.ResponseHandling
+
+namespace Skywalker.IdentityServer.AspNetCore.ResponseHandling.Models
 {
     public class DeviceAuthorizationResponse
     {

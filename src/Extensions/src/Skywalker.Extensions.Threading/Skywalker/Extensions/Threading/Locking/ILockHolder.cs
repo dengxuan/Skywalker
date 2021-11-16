@@ -12,12 +12,12 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-namespace Skywalker.Threading.Locking
+namespace Skywalker.Extensions.Threading.Locking
 {
-	using System;
+    using System;
 
-	public interface ILockHolder:IDisposable
-	{
-		bool LockAcquired { get; }
-	}
+    public interface ILockHolder : IDisposable
+    {
+        bool LockAcquired { get; }
+    }
 }

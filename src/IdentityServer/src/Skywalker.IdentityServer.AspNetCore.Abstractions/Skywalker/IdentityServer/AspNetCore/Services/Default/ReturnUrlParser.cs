@@ -2,11 +2,12 @@
 // Licensed under the Apache License, Version 2.0. See LICENSE in the project root for license information.
 
 
-using Skywalker.IdentityServer.Models;
+using Skywalker.IdentityServer.AspNetCore.Models.Messages;
+using Skywalker.IdentityServer.AspNetCore.Services;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
-namespace Skywalker.IdentityServer.Services
+namespace Skywalker.IdentityServer.AspNetCore.Services.Default
 {
     /// <summary>
     /// Parses a return URL using all registered URL parsers
@@ -40,7 +41,7 @@ namespace Skywalker.IdentityServer.Services
                 }
             }
 
-            return null;            
+            return null;
         }
 
         /// <summary>

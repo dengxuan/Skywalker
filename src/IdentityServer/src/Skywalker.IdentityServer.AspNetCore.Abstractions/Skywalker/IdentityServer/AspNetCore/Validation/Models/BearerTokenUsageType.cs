@@ -5,7 +5,8 @@
 
 #pragma warning disable 1591
 
-namespace Skywalker.IdentityServer.Validation
+
+namespace Skywalker.IdentityServer.AspNetCore.Validation.Models
 {
     public enum BearerTokenUsageType
     {

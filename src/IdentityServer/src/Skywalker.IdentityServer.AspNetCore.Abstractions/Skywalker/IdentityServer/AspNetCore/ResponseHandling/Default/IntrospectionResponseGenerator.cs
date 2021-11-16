@@ -3,22 +3,18 @@
 
 
 using IdentityModel;
-using Skywalker.IdentityServer.Events;
-using Skywalker.IdentityServer.Extensions;
-using Skywalker.IdentityServer.Services;
-using Skywalker.IdentityServer.Validation;
 using Microsoft.Extensions.Logging;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using System;
+using Skywalker.IdentityServer.AspNetCore.Events;
+using Skywalker.IdentityServer.AspNetCore.Extensions;
+using Skywalker.IdentityServer.AspNetCore.Services;
+using Skywalker.IdentityServer.AspNetCore.Validation.Models;
 
-namespace Skywalker.IdentityServer.ResponseHandling
+namespace Skywalker.IdentityServer.AspNetCore.ResponseHandling.Default
 {
     /// <summary>
     /// The introspection response generator
     /// </summary>
-    /// <seealso cref="Skywalker.IdentityServer.ResponseHandling.IIntrospectionResponseGenerator" />
+    /// <seealso cref="IIntrospectionResponseGenerator" />
     public class IntrospectionResponseGenerator : IIntrospectionResponseGenerator
     {
         /// <summary>

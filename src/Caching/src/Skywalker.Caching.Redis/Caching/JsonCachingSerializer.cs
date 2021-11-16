@@ -1,9 +1,9 @@
-﻿using Microsoft.Extensions.Options;
+﻿using Caching.Abstractions;
+using Microsoft.Extensions.Options;
 using Newtonsoft.Json;
-using Skywalker.Caching.Abstractions;
 using System;
 
-namespace Skywalker.Caching
+namespace Caching
 {
     internal class JsonCachingSerializer : ICachingSerializer
     {

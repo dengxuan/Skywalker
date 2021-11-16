@@ -4,6 +4,7 @@ using System.IO;
 using Microsoft.Extensions.Localization;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Serialization;
+using Skywalker.Ddd.ExceptionHandling;
 
 namespace Skywalker.Localization.Json
 {

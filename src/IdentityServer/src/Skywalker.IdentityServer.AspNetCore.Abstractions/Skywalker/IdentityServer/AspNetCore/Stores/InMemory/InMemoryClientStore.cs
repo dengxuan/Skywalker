@@ -2,14 +2,10 @@
 // Licensed under the Apache License, Version 2.0. See LICENSE in the project root for license information.
 
 
-using Skywalker.IdentityServer.Extensions;
-using Skywalker.IdentityServer.Models;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+using Skywalker.IdentityServer.Domain.Clients;
+using Skywalker.IdentityServer.Domain.Stores;
 
-namespace Skywalker.IdentityServer.Stores
+namespace Skywalker.IdentityServer.AspNetCore.Stores.InMemory
 {
     /// <summary>
     /// In-memory client store
@@ -44,7 +40,7 @@ namespace Skywalker.IdentityServer.Stores
                 from client in _clients
                 where client.ClientId == clientId
                 select client;
-            
+
             return Task.FromResult(query.SingleOrDefault());
         }
     }

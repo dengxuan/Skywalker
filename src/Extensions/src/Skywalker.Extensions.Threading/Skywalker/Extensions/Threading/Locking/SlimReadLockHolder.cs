@@ -12,37 +12,37 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-namespace Skywalker.Threading.Locking
+namespace Skywalker.Extensions.Threading.Locking
 {
-	using System.Threading;
+    using System.Threading;
 
-	internal class SlimReadLockHolder : ILockHolder
-	{
-		private readonly ReaderWriterLockSlim locker;
-		private bool lockAcquired;
+    internal class SlimReadLockHolder : ILockHolder
+    {
+        private readonly ReaderWriterLockSlim locker;
+        private bool lockAcquired;
 
-		public SlimReadLockHolder(ReaderWriterLockSlim locker, bool waitForLock)
-		{
-			this.locker = locker;
-			if(waitForLock)
-			{
-				locker.EnterReadLock();
-				lockAcquired = true;
-				return;
-			}
-			lockAcquired = locker.TryEnterReadLock(0);
-		}
+        public SlimReadLockHolder(ReaderWriterLockSlim locker, bool waitForLock)
+        {
+            this.locker = locker;
+            if (waitForLock)
+            {
+                locker.EnterReadLock();
+                lockAcquired = true;
+                return;
+            }
+            lockAcquired = locker.TryEnterReadLock(0);
+        }
 
-		public void Dispose()
-		{
-			if (!LockAcquired) return;
-			locker.ExitReadLock();
-			lockAcquired = false;
-		}
+        public void Dispose()
+        {
+            if (!LockAcquired) return;
+            locker.ExitReadLock();
+            lockAcquired = false;
+        }
 
-		public bool LockAcquired
-		{
-			get { return lockAcquired; }
-		}
-	}
+        public bool LockAcquired
+        {
+            get { return lockAcquired; }
+        }
+    }
 }

@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace Skywalker.Lightning.Abstractions
+namespace Skywalker.Lightning
 {
     [AttributeUsage(AttributeTargets.Class | AttributeTargets.Method)]
     public class LightningAttribute : Attribute

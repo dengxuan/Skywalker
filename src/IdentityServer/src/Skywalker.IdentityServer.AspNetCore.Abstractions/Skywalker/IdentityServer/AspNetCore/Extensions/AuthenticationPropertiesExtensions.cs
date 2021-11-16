@@ -4,12 +4,13 @@
 
 using IdentityModel;
 using Microsoft.AspNetCore.Authentication;
+using Skywalker.IdentityServer.AspNetCore.Infrastructure;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
-namespace Skywalker.IdentityServer.Extensions
+namespace Skywalker.IdentityServer.AspNetCore.Extensions
 {
     /// <summary>
     /// Extensions for AuthenticationProperties

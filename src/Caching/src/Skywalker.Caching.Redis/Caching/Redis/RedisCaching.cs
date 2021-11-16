@@ -1,11 +1,12 @@
-﻿using Skywalker.Caching.Abstractions;
-using Skywalker.Caching.Redis.Abstractions;
+﻿using Caching;
+using Caching.Abstractions;
+using Caching.Redis.Abstractions;
 using StackExchange.Redis;
 using System;
 using System.Diagnostics.CodeAnalysis;
 using System.Threading;
 
-namespace Skywalker.Caching.Redis
+namespace Caching.Redis
 {
     internal class RedisCaching : ICaching
     {
@@ -69,7 +70,7 @@ namespace Skywalker.Caching.Redis
         public TVaule? Get<TVaule>(string key)
         {
             byte[] bytes = Get(key);
-            if(bytes == null)
+            if (bytes == null)
             {
                 return default;
             }

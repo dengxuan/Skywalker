@@ -1,4 +1,4 @@
-﻿using Skywalker.Ddd.UnitOfWork.Abstractions;
+﻿using Skywalker.Ddd.Uow.Abstractions;
 using System.Diagnostics.CodeAnalysis;
 using System.Reflection;
 

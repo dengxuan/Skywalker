@@ -4,7 +4,7 @@
 
 using System.Collections.Generic;
 
-namespace Skywalker.IdentityServer.Models
+namespace Skywalker.IdentityServer.AspNetCore.Models
 {
     /// <summary>
     /// Represents a secret extracted from the HttpContext

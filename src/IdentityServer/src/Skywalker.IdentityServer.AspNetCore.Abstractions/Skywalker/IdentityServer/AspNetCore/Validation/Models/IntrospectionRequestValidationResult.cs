@@ -2,17 +2,17 @@
 // Licensed under the Apache License, Version 2.0. See LICENSE in the project root for license information.
 
 
-using Skywalker.IdentityServer.Models;
+using Skywalker.IdentityServer.Domain.ApiResources;
 using System.Collections.Generic;
 using System.Collections.Specialized;
 using System.Security.Claims;
 
-namespace Skywalker.IdentityServer.Validation
+namespace Skywalker.IdentityServer.AspNetCore.Validation.Models
 {
     /// <summary>
     /// Validation result for introspection request
     /// </summary>
-    /// <seealso cref="Skywalker.IdentityServer.Validation.ValidationResult" />
+    /// <seealso cref="ValidationResult" />
     public class IntrospectionRequestValidationResult : ValidationResult
     {
         /// <summary>

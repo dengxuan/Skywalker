@@ -4,7 +4,8 @@
 
 #pragma warning disable 1591
 
-namespace Skywalker.IdentityServer.Stores.Serialization
+
+namespace Skywalker.IdentityServer.Domain.Stores.Serialization
 {
     public class ClaimLite
     {

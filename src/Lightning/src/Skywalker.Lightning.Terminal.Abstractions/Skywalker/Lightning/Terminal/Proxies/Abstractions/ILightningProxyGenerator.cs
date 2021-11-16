@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace Skywalker.Lightning.Proxies.Abstractions
+namespace Skywalker.Lightning.Terminal.Proxies.Abstractions
 {
     public interface ILightningProxyGenerator
     {

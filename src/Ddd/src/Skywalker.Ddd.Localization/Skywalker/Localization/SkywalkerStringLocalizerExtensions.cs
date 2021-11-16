@@ -1,4 +1,5 @@
 ﻿using Microsoft.Extensions.Localization;
+using Skywalker.Ddd.ExceptionHandling;
 using Skywalker.Reflection;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;

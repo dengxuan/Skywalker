@@ -2,24 +2,23 @@
 // Licensed under the Apache License, Version 2.0. See LICENSE in the project root for license information.
 
 
-using System.Threading.Tasks;
-using Skywalker.IdentityServer.Validation;
-using Skywalker.IdentityServer.ResponseHandling;
-using Microsoft.Extensions.Logging;
-using Skywalker.IdentityServer.Hosting;
-using Skywalker.IdentityServer.Endpoints.Results;
 using Microsoft.AspNetCore.Http;
+using Microsoft.Extensions.Logging;
+using Skywalker.IdentityServer.AspNetCore.Endpoints.Results;
+using Skywalker.IdentityServer.AspNetCore.Events;
+using Skywalker.IdentityServer.AspNetCore.Extensions;
+using Skywalker.IdentityServer.AspNetCore.Hosting;
+using Skywalker.IdentityServer.AspNetCore.ResponseHandling;
+using Skywalker.IdentityServer.AspNetCore.Services;
+using Skywalker.IdentityServer.AspNetCore.Validation;
 using System.Net;
-using Skywalker.IdentityServer.Services;
-using Skywalker.IdentityServer.Events;
-using Skywalker.IdentityServer.Extensions;
 
-namespace Skywalker.IdentityServer.Endpoints
+namespace Skywalker.IdentityServer.AspNetCore.Endpoints
 {
     /// <summary>
     /// Introspection endpoint
     /// </summary>
-    /// <seealso cref="Skywalker.IdentityServer.Hosting.IEndpointHandler" />
+    /// <seealso cref="IEndpointHandler" />
     internal class IntrospectionEndpoint : IEndpointHandler
     {
         private readonly IIntrospectionResponseGenerator _responseGenerator;

@@ -3,7 +3,8 @@
 
 #pragma warning disable 1591
 
-namespace Skywalker.IdentityServer.Models
+
+namespace Skywalker.IdentityServer.AspNetCore.Models
 {
     public class DiscoveryDocument
     {

@@ -1,7 +1,7 @@
 using System.Threading.Tasks;
-using Skywalker.IdentityServer.Models;
+using Skywalker.IdentityServer.Domain.Clients;
 
-namespace Skywalker.IdentityServer.Services
+namespace Skywalker.IdentityServer.AspNetCore.Services
 {
     /// <summary>
     /// Models making HTTP requests for JWTs from the authorize endpoint.

@@ -1,4 +1,4 @@
-﻿namespace Skywalker.Extensions.Json
+﻿namespace Skywalker.Extensions
 {
     public interface IJsonSerializer
     {

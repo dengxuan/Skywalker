@@ -1,6 +1,4 @@
-﻿using System.Reflection.Emit;
-
-namespace System.Reflection
+﻿namespace System.Reflection.Emit
 {
     public static class CustomTypeBuilderExtensions
     {

@@ -1,4 +1,4 @@
-﻿namespace Skywalker.Lightning
+﻿namespace Skywalker.Lightning.Server
 {
     public class LightningServerOptions
     {

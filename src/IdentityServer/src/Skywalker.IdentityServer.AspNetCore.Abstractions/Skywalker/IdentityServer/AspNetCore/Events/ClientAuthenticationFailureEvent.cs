@@ -2,12 +2,14 @@
 // Licensed under the Apache License, Version 2.0. See LICENSE in the project root for license information.
 
 
-namespace Skywalker.IdentityServer.Events
+using Skywalker.IdentityServer.AspNetCore.Events.Infrastructure;
+
+namespace Skywalker.IdentityServer.AspNetCore.Events
 {
     /// <summary>
     /// Event for failed client authentication
     /// </summary>
-    /// <seealso cref="Skywalker.IdentityServer.Events.Event" />
+    /// <seealso cref="Event" />
     public class ClientAuthenticationFailureEvent : Event
     {
         /// <summary>
@@ -16,10 +18,10 @@ namespace Skywalker.IdentityServer.Events
         /// <param name="clientId">The client identifier.</param>
         /// <param name="message">The message.</param>
         public ClientAuthenticationFailureEvent(string clientId, string message)
-            : base(EventCategories.Authentication, 
+            : base(EventCategories.Authentication,
                   "Client Authentication Failure",
-                  EventTypes.Failure, 
-                  EventIds.ClientAuthenticationFailure, 
+                  EventTypes.Failure,
+                  EventIds.ClientAuthenticationFailure,
                   message)
         {
             ClientId = clientId;

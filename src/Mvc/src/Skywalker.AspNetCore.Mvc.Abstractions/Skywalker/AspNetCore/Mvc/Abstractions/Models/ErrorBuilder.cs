@@ -1,6 +1,7 @@
-﻿using System;
+﻿using Skywalker.AspNetCore.Mvc.Abstractions;
+using System;
 
-namespace Skywalker.AspNetCore.Mvc.Models
+namespace Skywalker.AspNetCore.Mvc.Abstractions.Models
 {
     /// <inheritdoc/>
     public class ErrorBuilder : IErrorBuilder

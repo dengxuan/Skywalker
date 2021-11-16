@@ -1,11 +1,13 @@
+using Skywalker.IdentityServer.AspNetCore.Validation;
+using Skywalker.IdentityServer.AspNetCore.Validation.Contexts;
 using System.Threading.Tasks;
 
-namespace Skywalker.IdentityServer.Validation
+namespace Skywalker.IdentityServer.AspNetCore.Validation.Default
 {
     /// <summary>
     /// No-op client configuration validator (for backwards-compatibility).
     /// </summary>
-    /// <seealso cref="Skywalker.IdentityServer.Validation.IClientConfigurationValidator" />
+    /// <seealso cref="IClientConfigurationValidator" />
     public class NopClientConfigurationValidator : IClientConfigurationValidator
     {
         /// <summary>

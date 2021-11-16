@@ -3,14 +3,15 @@
 
 
 using IdentityModel;
-using Skywalker.IdentityServer.Extensions;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Logging;
 using System.Linq;
 using System.Threading.Tasks;
 using System;
+using Skywalker.IdentityServer.AspNetCore.Validation.Models;
+using Skywalker.IdentityServer.AspNetCore.Extensions;
 
-namespace Skywalker.IdentityServer.Validation
+namespace Skywalker.IdentityServer.AspNetCore.Validation.Default
 {
     /// <summary>
     /// Validates a request that uses a bearer token for authentication

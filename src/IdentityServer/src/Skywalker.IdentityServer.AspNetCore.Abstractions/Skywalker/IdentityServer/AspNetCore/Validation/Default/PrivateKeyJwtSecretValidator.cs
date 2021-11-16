@@ -7,14 +7,16 @@ using System.Collections.Generic;
 using System.IdentityModel.Tokens.Jwt;
 using System.Linq;
 using System.Threading.Tasks;
-using Skywalker.IdentityServer.Extensions;
-using Skywalker.IdentityServer.Models;
-using Skywalker.IdentityServer.Services;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Logging;
 using Microsoft.IdentityModel.Tokens;
+using Skywalker.IdentityServer.AspNetCore.Extensions;
+using Skywalker.IdentityServer.AspNetCore.Validation.Models;
+using Skywalker.IdentityServer.AspNetCore.Services;
+using Skywalker.IdentityServer.AspNetCore.Models;
+using Skywalker.IdentityServer.Domain.Models;
 
-namespace Skywalker.IdentityServer.Validation
+namespace Skywalker.IdentityServer.AspNetCore.Validation.Default
 {
     /// <summary>
     /// Validates a secret based on RS256 signed JWT token
@@ -26,7 +28,7 @@ namespace Skywalker.IdentityServer.Validation
         private readonly ILogger _logger;
 
         private const string Purpose = nameof(PrivateKeyJwtSecretValidator);
-        
+
         /// <summary>
         /// Instantiates an instance of private_key_jwt secret validator
         /// </summary>
@@ -45,7 +47,7 @@ namespace Skywalker.IdentityServer.Validation
         /// <returns>
         /// A validation result
         /// </returns>
-        /// <exception cref="System.ArgumentException">ParsedSecret.Credential is not a JWT token</exception>
+        /// <exception cref="ArgumentException">ParsedSecret.Credential is not a JWT token</exception>
         public async Task<SecretValidationResult> ValidateAsync(IEnumerable<Secret> secrets, ParsedSecret parsedSecret)
         {
             var fail = new SecretValidationResult { Success = false };
@@ -88,7 +90,7 @@ namespace Skywalker.IdentityServer.Validation
                 string.Concat(_contextAccessor.HttpContext.GetIdentityServerIssuerUri().EnsureTrailingSlash(),
                     Constants.ProtocolRoutePaths.Token)
             };
-            
+
             var tokenValidationParameters = new TokenValidationParameters
             {
                 IssuerSigningKeys = trustedKeys,
@@ -102,7 +104,7 @@ namespace Skywalker.IdentityServer.Validation
 
                 RequireSignedTokens = true,
                 RequireExpirationTime = true,
-                
+
                 ClockSkew = TimeSpan.FromMinutes(5)
             };
             try
@@ -116,14 +118,14 @@ namespace Skywalker.IdentityServer.Validation
                     _logger.LogError("Both 'sub' and 'iss' in the client assertion token must have a value of client_id.");
                     return fail;
                 }
-                
+
                 var exp = jwtToken.Payload.Exp;
                 if (!exp.HasValue)
                 {
                     _logger.LogError("exp is missing.");
                     return fail;
                 }
-                
+
                 var jti = jwtToken.Payload.Jti;
                 if (jti.IsMissing())
                 {

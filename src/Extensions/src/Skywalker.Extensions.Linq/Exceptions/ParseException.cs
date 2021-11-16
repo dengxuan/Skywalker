@@ -1,8 +1,9 @@
-﻿using System;
+﻿using Skywalker.Extensions.Linq;
+using System;
 using System.Globalization;
 using System.Runtime.Serialization;
 
-namespace Skywalker.Extensions.Linq.Exceptions
+namespace Exceptions
 {
     /// <summary>
     /// Represents errors that occur while parsing dynamic linq string expressions.

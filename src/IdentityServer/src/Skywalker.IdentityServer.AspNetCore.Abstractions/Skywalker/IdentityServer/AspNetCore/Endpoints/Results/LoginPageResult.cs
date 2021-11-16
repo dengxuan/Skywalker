@@ -2,24 +2,20 @@
 // Licensed under the Apache License, Version 2.0. See LICENSE in the project root for license information.
 
 
-using System;
-using System.Collections.Generic;
-using System.Threading.Tasks;
-using Skywalker.IdentityServer.Hosting;
-using Skywalker.IdentityServer.Validation;
 using Microsoft.AspNetCore.Http;
-using Skywalker.IdentityServer.Extensions;
-using Skywalker.IdentityServer.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using Skywalker.IdentityServer.Stores;
-using Skywalker.IdentityServer.Models;
+using Skywalker.IdentityServer.AspNetCore.Configuration.DependencyInjection.Options;
+using Skywalker.IdentityServer.AspNetCore.Extensions;
+using Skywalker.IdentityServer.AspNetCore.Hosting;
+using Skywalker.IdentityServer.AspNetCore.Stores;
+using Skywalker.IdentityServer.AspNetCore.Validation.Models;
 
-namespace Skywalker.IdentityServer.Endpoints.Results
+namespace Skywalker.IdentityServer.AspNetCore.Endpoints.Results
 {
     /// <summary>
     /// Result for login page
     /// </summary>
-    /// <seealso cref="Skywalker.IdentityServer.Hosting.IEndpointResult" />
+    /// <seealso cref="IEndpointResult" />
     public class LoginPageResult : IEndpointResult
     {
         private readonly ValidatedAuthorizeRequest _request;
@@ -28,7 +24,7 @@ namespace Skywalker.IdentityServer.Endpoints.Results
         /// Initializes a new instance of the <see cref="LoginPageResult"/> class.
         /// </summary>
         /// <param name="request">The request.</param>
-        /// <exception cref="System.ArgumentNullException">request</exception>
+        /// <exception cref="ArgumentNullException">request</exception>
         public LoginPageResult(ValidatedAuthorizeRequest request)
         {
             _request = request ?? throw new ArgumentNullException(nameof(request));
@@ -37,7 +33,7 @@ namespace Skywalker.IdentityServer.Endpoints.Results
         internal LoginPageResult(
             ValidatedAuthorizeRequest request,
             IdentityServerOptions options,
-            IAuthorizationParametersMessageStore authorizationParametersMessageStore = null) 
+            IAuthorizationParametersMessageStore authorizationParametersMessageStore = null)
             : this(request)
         {
             _options = options;
@@ -65,7 +61,7 @@ namespace Skywalker.IdentityServer.Endpoints.Results
             var returnUrl = context.GetIdentityServerBasePath().EnsureTrailingSlash() + Constants.ProtocolRoutePaths.AuthorizeCallback;
             if (_authorizationParametersMessageStore != null)
             {
-                var msg = new Message<IDictionary<string, string[]>>(_request.Raw.ToFullDictionary());
+                var msg = new Models.Messages.Message<IDictionary<string, string[]>>(_request.Raw.ToFullDictionary());
                 var id = await _authorizationParametersMessageStore.WriteAsync(msg);
                 returnUrl = returnUrl.AddQueryString(Constants.AuthorizationParamsStore.MessageStoreIdParameterName, id);
             }

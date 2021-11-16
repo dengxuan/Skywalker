@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 
-namespace Skywalker.Lightning
+namespace Skywalker.Lightning.Terminal
 {
     public class LightningInvokeContext
     {

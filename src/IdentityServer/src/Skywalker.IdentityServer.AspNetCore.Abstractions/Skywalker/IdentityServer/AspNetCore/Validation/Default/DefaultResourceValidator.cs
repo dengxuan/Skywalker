@@ -2,14 +2,19 @@
 // Licensed under the Apache License, Version 2.0. See LICENSE in the project root for license information.
 
 
-using Skywalker.IdentityServer.Models;
-using Skywalker.IdentityServer.Stores;
 using Microsoft.Extensions.Logging;
 using System;
 using System.Linq;
 using System.Threading.Tasks;
+using Skywalker.IdentityServer.AspNetCore.Extensions;
+using Skywalker.IdentityServer.AspNetCore.Validation.Models;
+using Skywalker.IdentityServer.Domain.Models;
+using Skywalker.IdentityServer.Domain.Clients;
+using Skywalker.IdentityServer.Domain.ApiScopes;
+using Skywalker.IdentityServer.Domain.Stores;
+using Skywalker.IdentityServer.Domain.IdentityResources;
 
-namespace Skywalker.IdentityServer.Validation
+namespace Skywalker.IdentityServer.AspNetCore.Validation.Default
 {
     /// <summary>
     /// Default implementation of IResourceValidator.
@@ -41,7 +46,7 @@ namespace Skywalker.IdentityServer.Validation
             var parsedScopesResult = _scopeParser.ParseScopeValues(request.Scopes);
 
             var result = new ResourceValidationResult();
-            
+
             if (!parsedScopesResult.Succeeded)
             {
                 foreach (var invalidScope in parsedScopesResult.Errors)
@@ -81,9 +86,9 @@ namespace Skywalker.IdentityServer.Validation
         /// <param name="result"></param>
         /// <returns></returns>
         protected virtual async Task ValidateScopeAsync(
-            Client client, 
-            Resources resourcesFromStore, 
-            ParsedScopeValue requestedScope, 
+            Client client,
+            Resources resourcesFromStore,
+            ParsedScopeValue requestedScope,
             ResourceValidationResult result)
         {
             if (requestedScope.ParsedName == IdentityServerConstants.StandardScopes.OfflineAccess)

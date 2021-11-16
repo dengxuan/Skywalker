@@ -1,4 +1,4 @@
-﻿namespace Skywalker
+﻿namespace Skywalker.Extensions.GuidGenerator
 {
     /// <summary>
     /// Describes the type of a sequential GUID value.

@@ -2,26 +2,22 @@
 // Licensed under the Apache License, Version 2.0. See LICENSE in the project root for license information.
 
 
-using System;
-using System.Collections.Generic;
-using System.Collections.Specialized;
-using System.Linq;
-using System.Threading.Tasks;
 using IdentityModel;
-using Skywalker.IdentityServer.Configuration;
-using Skywalker.IdentityServer.Extensions;
-using Skywalker.IdentityServer.Logging;
-using Skywalker.IdentityServer.Models;
 using Microsoft.Extensions.Logging;
+using Skywalker.IdentityServer.AspNetCore.Configuration.DependencyInjection.Options;
+using Skywalker.IdentityServer.AspNetCore.Logging.Models;
+using Skywalker.IdentityServer.AspNetCore.Validation.Models;
+using Skywalker.IdentityServer.Domain.Models;
+using System.Collections.Specialized;
 
-namespace Skywalker.IdentityServer.Validation
+namespace Skywalker.IdentityServer.AspNetCore.Validation.Default
 {
     internal class DeviceAuthorizationRequestValidator : IDeviceAuthorizationRequestValidator
     {
         private readonly IdentityServerOptions _options;
         private readonly IResourceValidator _resourceValidator;
         private readonly ILogger<DeviceAuthorizationRequestValidator> _logger;
-        
+
         public DeviceAuthorizationRequestValidator(
             IdentityServerOptions options,
             IResourceValidator resourceValidator,
@@ -152,8 +148,9 @@ namespace Skywalker.IdentityServer.Validation
             //////////////////////////////////////////////////////////
             // check if scopes are valid/supported
             //////////////////////////////////////////////////////////
-            var validatedResources = await _resourceValidator.ValidateRequestedResourcesAsync(new ResourceValidationRequest{
-                Client = request.Client, 
+            var validatedResources = await _resourceValidator.ValidateRequestedResourcesAsync(new ResourceValidationRequest
+            {
+                Client = request.Client,
                 Scopes = request.RequestedScopes
             });
 
@@ -163,7 +160,7 @@ namespace Skywalker.IdentityServer.Validation
                 {
                     return Invalid(request, OidcConstants.AuthorizeErrors.InvalidScope);
                 }
-                
+
                 return Invalid(request, OidcConstants.AuthorizeErrors.UnauthorizedClient, "Invalid scope");
             }
 
@@ -174,7 +171,7 @@ namespace Skywalker.IdentityServer.Validation
             }
 
             request.ValidatedResources = validatedResources;
-            
+
             return Valid(request);
         }
     }

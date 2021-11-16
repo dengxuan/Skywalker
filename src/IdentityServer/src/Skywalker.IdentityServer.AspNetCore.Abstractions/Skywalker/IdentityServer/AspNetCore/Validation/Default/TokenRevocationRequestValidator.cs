@@ -3,19 +3,17 @@
 
 
 using IdentityModel;
-using Skywalker.IdentityServer.Extensions;
-using Skywalker.IdentityServer.Models;
 using Microsoft.Extensions.Logging;
-using System;
+using Skywalker.IdentityServer.AspNetCore.Validation.Models;
+using Skywalker.IdentityServer.Domain.Clients;
 using System.Collections.Specialized;
-using System.Threading.Tasks;
 
-namespace Skywalker.IdentityServer.Validation
+namespace Skywalker.IdentityServer.AspNetCore.Validation.Default
 {
     /// <summary>
     /// The token revocation request validator
     /// </summary>
-    /// <seealso cref="Skywalker.IdentityServer.Validation.ITokenRevocationRequestValidator" />
+    /// <seealso cref="ITokenRevocationRequestValidator" />
     internal class TokenRevocationRequestValidator : ITokenRevocationRequestValidator
     {
         private readonly ILogger _logger;
@@ -35,7 +33,7 @@ namespace Skywalker.IdentityServer.Validation
         /// <param name="parameters">The parameters.</param>
         /// <param name="client">The client.</param>
         /// <returns></returns>
-        /// <exception cref="System.ArgumentNullException">
+        /// <exception cref="ArgumentNullException">
         /// parameters
         /// or
         /// client

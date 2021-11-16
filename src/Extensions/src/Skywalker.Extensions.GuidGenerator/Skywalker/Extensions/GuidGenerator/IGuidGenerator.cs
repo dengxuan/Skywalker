@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace Skywalker
+namespace Skywalker.Extensions.GuidGenerator
 {
     /// <summary>
     /// Used to generate Ids.

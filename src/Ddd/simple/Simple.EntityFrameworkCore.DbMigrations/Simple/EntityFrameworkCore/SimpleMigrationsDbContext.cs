@@ -1,5 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Simple.Domain.Users;
+using Simple.Infrastructure.EntityFrameworkCore;
 using Skywalker.Data;
 using Skywalker.Ddd.EntityFrameworkCore;
 
