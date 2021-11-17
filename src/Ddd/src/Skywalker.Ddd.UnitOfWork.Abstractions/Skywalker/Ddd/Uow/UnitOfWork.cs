@@ -1,12 +1,13 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
+using Skywalker.Ddd.ExceptionHandling;
 using Skywalker.Ddd.Uow.Abstractions;
 using System.Collections.Immutable;
 
 namespace Skywalker.Ddd.Uow;
 
-public class UnitOfWork : IUnitOfWork, ITransientDependency
+public class UnitOfWork : IUnitOfWork/*, ITransientDependency*/
 {
     public Guid Id { get; } = Guid.NewGuid();
 

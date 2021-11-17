@@ -5,7 +5,7 @@
 using Microsoft.IdentityModel.Tokens;
 using System.Threading.Tasks;
 
-namespace Skywalker.IdentityServer.Stores
+namespace Skywalker.IdentityServer.AspNetCore.Stores
 {
     /// <summary>
     /// Interface for a signing credential store

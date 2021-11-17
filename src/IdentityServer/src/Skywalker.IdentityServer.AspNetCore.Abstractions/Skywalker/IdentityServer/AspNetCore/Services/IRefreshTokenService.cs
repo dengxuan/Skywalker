@@ -2,12 +2,13 @@
 // Licensed under the Apache License, Version 2.0. See LICENSE in the project root for license information.
 
 
-using Skywalker.IdentityServer.Models;
 using System.Security.Claims;
 using System.Threading.Tasks;
-using Skywalker.IdentityServer.Validation;
+using Skywalker.IdentityServer.AspNetCore.Validation.Models;
+using Skywalker.IdentityServer.Domain.RefreshTokens;
+using Skywalker.IdentityServer.Domain.Clients;
 
-namespace Skywalker.IdentityServer.Services
+namespace Skywalker.IdentityServer.AspNetCore.Services
 {
     /// <summary>
     /// Implements refresh token creation and validation
@@ -21,7 +22,7 @@ namespace Skywalker.IdentityServer.Services
         /// <param name="client">The client.</param>
         /// <returns></returns>
         Task<TokenValidationResult> ValidateRefreshTokenAsync(string token, Client client);
-        
+
         /// <summary>
         /// Creates the refresh token.
         /// </summary>

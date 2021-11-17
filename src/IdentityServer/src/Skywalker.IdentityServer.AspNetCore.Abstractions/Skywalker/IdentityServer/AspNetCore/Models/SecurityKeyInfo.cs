@@ -4,7 +4,7 @@
 
 using Microsoft.IdentityModel.Tokens;
 
-namespace Skywalker.IdentityServer.Models
+namespace Skywalker.IdentityServer.AspNetCore.Models
 {
     /// <summary>
     /// Information about a security key

@@ -1,4 +1,4 @@
-﻿namespace Skywalker.Lightning.Proxies.Abstractions
+﻿namespace Skywalker.Lightning.Terminal.Proxies.Abstractions
 {
     /// <summary>
     ///     serice proxy

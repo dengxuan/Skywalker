@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using Abstractions;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Http.Extensions;
 using Microsoft.AspNetCore.Http.Features;
 using Microsoft.Net.Http.Headers;
@@ -8,7 +9,7 @@ using System.IO;
 using System.Threading;
 using System.Threading.Tasks;
 
-namespace Skywalker.Extensions.AspNetCore.Security.Streams
+namespace Streams
 {
     /// <summary>
     /// Stream wrapper that create specific encryption stream only if necessary.
@@ -144,7 +145,7 @@ namespace Skywalker.Extensions.AspNetCore.Security.Streams
         {
             try
             {
-               await WriteAsync(buffer, offset, count);
+                await WriteAsync(buffer, offset, count);
                 tcs!.TrySetResult(null);
             }
             catch (Exception ex)

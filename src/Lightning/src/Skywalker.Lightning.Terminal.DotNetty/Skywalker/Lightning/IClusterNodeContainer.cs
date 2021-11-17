@@ -1,6 +1,6 @@
 ﻿using System.Net;
 
-namespace Skywalker.Lightning.Terminal.Abstractions
+namespace Skywalker.Lightning
 {
     internal interface IClusterNodeContainer
     {

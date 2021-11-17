@@ -1,8 +1,5 @@
 using Skywalker.Ddd.Domain.Repositories;
 using Skywalker.Domain.Repositories;
-using Skywalker.EntityFrameworkCore;
-using System;
-using System.Collections.Generic;
 
 namespace Microsoft.Extensions.DependencyInjection
 {

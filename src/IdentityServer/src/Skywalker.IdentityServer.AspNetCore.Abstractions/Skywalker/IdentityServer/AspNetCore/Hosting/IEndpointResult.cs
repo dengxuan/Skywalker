@@ -5,7 +5,7 @@
 using Microsoft.AspNetCore.Http;
 using System.Threading.Tasks;
 
-namespace Skywalker.IdentityServer.Hosting
+namespace Skywalker.IdentityServer.AspNetCore.Hosting
 {
     /// <summary>
     /// Endpoint result

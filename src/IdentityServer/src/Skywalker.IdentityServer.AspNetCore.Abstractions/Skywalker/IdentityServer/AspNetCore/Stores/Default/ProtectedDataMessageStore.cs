@@ -2,15 +2,16 @@
 // Licensed under the Apache License, Version 2.0. See LICENSE in the project root for license information.
 
 
-using Skywalker.IdentityServer.Models;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.DataProtection;
 using IdentityModel;
 using System.Text;
 using System;
 using Microsoft.Extensions.Logging;
+using Skywalker.IdentityServer.AspNetCore.Models.Messages;
+using Skywalker.IdentityServer.AspNetCore.Infrastructure;
 
-namespace Skywalker.IdentityServer.Stores
+namespace Skywalker.IdentityServer.AspNetCore.Stores.Default
 {
     /// <summary>
     /// IMessageStore implementation that uses data protection to protect message.
@@ -46,7 +47,7 @@ namespace Skywalker.IdentityServer.Stores
         {
             Message<TModel> result = null;
 
-            if (!String.IsNullOrWhiteSpace(value))
+            if (!string.IsNullOrWhiteSpace(value))
             {
                 try
                 {
@@ -55,7 +56,7 @@ namespace Skywalker.IdentityServer.Stores
                     var json = Encoding.UTF8.GetString(bytes);
                     result = ObjectSerializer.FromString<Message<TModel>>(json);
                 }
-                catch(Exception ex)
+                catch (Exception ex)
                 {
                     Logger.LogError(ex, "Exception reading protected message");
                 }
@@ -76,7 +77,7 @@ namespace Skywalker.IdentityServer.Stores
                 bytes = Protector.Protect(bytes);
                 value = Base64Url.Encode(bytes);
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 Logger.LogError(ex, "Exception writing protected message");
             }

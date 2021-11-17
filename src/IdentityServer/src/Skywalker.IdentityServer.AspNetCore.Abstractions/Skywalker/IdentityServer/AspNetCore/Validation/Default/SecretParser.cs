@@ -2,15 +2,15 @@
 // Licensed under the Apache License, Version 2.0. See LICENSE in the project root for license information.
 
 
-using Skywalker.IdentityServer.Models;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Skywalker.IdentityServer.AspNetCore.Models;
 
-namespace Skywalker.IdentityServer.Validation
+namespace Skywalker.IdentityServer.AspNetCore.Validation.Default
 {
     /// <summary>
     /// Uses the registered secret parsers to parse a secret on the current request
@@ -72,7 +72,7 @@ namespace Skywalker.IdentityServer.Validation
         /// <returns></returns>
         public IEnumerable<string> GetAvailableAuthenticationMethods()
         {
-            return _parsers.Select(p => p.AuthenticationMethod).Where(p => !String.IsNullOrWhiteSpace(p));
+            return _parsers.Select(p => p.AuthenticationMethod).Where(p => !string.IsNullOrWhiteSpace(p));
         }
     }
 }

@@ -2,12 +2,12 @@
 // Licensed under the Apache License, Version 2.0. See LICENSE in the project root for license information.
 
 
-using Skywalker.IdentityServer.Services;
 using Microsoft.Extensions.Logging;
 using System;
 using System.Threading.Tasks;
+using Skywalker.IdentityServer.AspNetCore.Services;
 
-namespace Skywalker.IdentityServer.Extensions
+namespace Skywalker.IdentityServer.AspNetCore.Extensions
 {
     /// <summary>
     /// Extensions for ICache
@@ -25,7 +25,7 @@ namespace Skywalker.IdentityServer.Extensions
         /// <param name="get">The get function.</param>
         /// <param name="logger">The logger.</param>
         /// <returns></returns>
-        /// <exception cref="System.ArgumentNullException">cache
+        /// <exception cref="ArgumentNullException">cache
         /// or
         /// get</exception>
         /// <exception cref="ArgumentNullException">cache

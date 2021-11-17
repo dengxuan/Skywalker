@@ -1,5 +1,5 @@
 ﻿using Microsoft.Extensions.Logging;
-using Skywalker;
+using Skywalker.Ddd.ExceptionHandling;
 using Skywalker.Logging;
 using System;
 using System.Collections.Generic;
@@ -7,15 +7,15 @@ using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Runtime.Serialization;
 
-namespace Volo.Abp.Validation
+namespace Skywalker.Validation
 {
     /// <summary>
     /// This exception type is used to throws validation exceptions.
     /// </summary>
     [Serializable]
-    public class SkywalkerValidationException : SkywalkerException, 
-        IHasLogLevel, 
-        IHasValidationErrors, 
+    public class SkywalkerValidationException : SkywalkerException,
+        IHasLogLevel,
+        IHasValidationErrors,
         IExceptionWithSelfLogging
     {
         /// <summary>

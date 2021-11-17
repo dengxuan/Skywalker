@@ -1,11 +1,12 @@
-﻿using Simple.Domain.Users;
+﻿using Simple.Application.Abstractions;
+using Simple.Domain.Users;
 using Skywalker.Application.Abstractions;
 using Skywalker.Application.Dtos;
 using Skywalker.Ddd.ObjectMapping;
 
-namespace Simple.Application.Abstractions
+namespace Simple.Application.Users
 {
-    public class UserQueryHandler : IExecuteQueryHandler<PagedResultDto<UserOutputDto>>, IExecuteQueryHandler<UserInputDto, PagedResultDto<UserOutputDto>>
+    public class UserQueryHandler : IExecuteHandler<PagedResultDto<UserOutputDto>>, IExecuteHandler<UserInputDto, PagedResultDto<UserOutputDto>>
     {
         private readonly IUserManager _userManager;
 
@@ -22,9 +23,9 @@ namespace Simple.Application.Abstractions
             List<User> users = await _userManager.FindUsersAsync("");
 
             List<UserOutputDto>? result = _objectMapper.Map<List<User>, List<UserOutputDto>>(users);
-            if(result == null)
+            if (result == null)
             {
-               return new PagedResultDto<UserOutputDto>();
+                return new PagedResultDto<UserOutputDto>();
             }
             return new PagedResultDto<UserOutputDto>(100, result);
         }

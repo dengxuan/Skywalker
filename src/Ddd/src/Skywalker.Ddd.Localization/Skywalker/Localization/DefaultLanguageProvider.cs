@@ -1,22 +1,18 @@
-﻿using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.Options;
-using System.Collections.Generic;
-using System.Threading.Tasks;
+﻿using Microsoft.Extensions.Options;
 
-namespace Skywalker.Localization
+namespace Skywalker.Localization;
+
+public class DefaultLanguageProvider : ILanguageProvider/*, ITransientDependency*/
 {
-    public class DefaultLanguageProvider : ILanguageProvider, ITransientDependency
+    protected SkywalkerLocalizationOptions Options { get; }
+
+    public DefaultLanguageProvider(IOptions<SkywalkerLocalizationOptions> options)
     {
-        protected SkywalkerLocalizationOptions Options { get; }
+        Options = options.Value;
+    }
 
-        public DefaultLanguageProvider(IOptions<SkywalkerLocalizationOptions> options)
-        {
-            Options = options.Value;
-        }
-
-        public Task<IReadOnlyList<LanguageInfo>> GetLanguagesAsync()
-        {
-            return Task.FromResult((IReadOnlyList<LanguageInfo>)Options.Languages);
-        }
+    public Task<IReadOnlyList<LanguageInfo>> GetLanguagesAsync()
+    {
+        return Task.FromResult((IReadOnlyList<LanguageInfo>)Options.Languages);
     }
 }

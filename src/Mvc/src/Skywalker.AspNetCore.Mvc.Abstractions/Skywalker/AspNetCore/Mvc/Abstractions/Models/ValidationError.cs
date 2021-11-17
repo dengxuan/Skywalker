@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace Skywalker.AspNetCore.Mvc.Models
+namespace Skywalker.AspNetCore.Mvc.Abstractions.Models
 {
     /// <summary>
     /// Used to store information about a validation error.

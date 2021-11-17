@@ -2,8 +2,8 @@ using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Localization;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Options;
+using Skywalker.Extensions.Threading;
 using Skywalker.Localization;
-using Skywalker.Threading;
 using System;
 using System.Collections.Generic;
 using System.Globalization;
@@ -11,7 +11,7 @@ using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 
-namespace Microsoft.AspNetCore.RequestLocalization
+namespace Skywalker.AspNetCore.Localization
 {
     public class DefaultSkywalkerRequestLocalizationOptionsProvider : ISkywalkerRequestLocalizationOptionsProvider
     {

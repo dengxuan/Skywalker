@@ -1,5 +1,4 @@
 ﻿using Skywalker.Domain.Entities;
-using Skywalker.IdentityServer.Models;
 using System;
 
 namespace Skywalker.IdentityServer.Domain.DeviceAuthorizations

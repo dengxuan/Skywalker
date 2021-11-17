@@ -3,7 +3,7 @@ using System;
 
 namespace Skywalker.Ddd.Tracing
 {
-    public class DefaultCorrelationIdProvider : ICorrelationIdProvider, ISingletonDependency
+    public class DefaultCorrelationIdProvider : ICorrelationIdProvider/*, ISingletonDependency*/
     {
         public string Get()
         {

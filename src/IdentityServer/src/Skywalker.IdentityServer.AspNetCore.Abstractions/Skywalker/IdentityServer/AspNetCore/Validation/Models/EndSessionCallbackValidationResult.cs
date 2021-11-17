@@ -4,12 +4,12 @@
 
 using System.Collections.Generic;
 
-namespace Skywalker.IdentityServer.Validation
+namespace Skywalker.IdentityServer.AspNetCore.Validation.Models
 {
     /// <summary>
     /// Validation result for end session callback requests.
     /// </summary>
-    /// <seealso cref="Skywalker.IdentityServer.Validation.ValidationResult" />
+    /// <seealso cref="ValidationResult" />
     public class EndSessionCallbackValidationResult : ValidationResult
     {
         /// <summary>

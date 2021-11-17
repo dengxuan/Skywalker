@@ -3,17 +3,17 @@
 
 
 using System.Linq;
-using Skywalker.IdentityServer.Validation;
 using System.Threading.Tasks;
-using Skywalker.IdentityServer.Hosting;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.DependencyInjection;
 using System.Net;
 using System;
-using Skywalker.IdentityServer.Extensions;
-using Skywalker.IdentityServer.Configuration;
+using Skywalker.IdentityServer.AspNetCore.Configuration.DependencyInjection.Options;
+using Skywalker.IdentityServer.AspNetCore.Extensions;
+using Skywalker.IdentityServer.AspNetCore.Hosting;
+using Skywalker.IdentityServer.AspNetCore.Validation.Models;
 
-namespace Skywalker.IdentityServer.Endpoints.Results
+namespace Skywalker.IdentityServer.AspNetCore.Endpoints.Results
 {
     internal class EndSessionCallbackResult : IEndpointResult
     {

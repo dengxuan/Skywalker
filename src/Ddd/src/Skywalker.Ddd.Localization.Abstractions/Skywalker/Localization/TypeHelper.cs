@@ -1,4 +1,4 @@
-﻿using Skywalker.Localization;
+﻿using Skywalker.Reflection;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -8,7 +8,7 @@ using System.Globalization;
 using System.Linq;
 using System.Reflection;
 
-namespace Skywalker.Reflection
+namespace Skywalker.Localization
 {
     public static class TypeHelper
     {
@@ -184,7 +184,7 @@ namespace Skywalker.Reflection
 
         public static string GetFullNameHandlingNullableAndGenerics([NotNull] Type type)
         {
-            Check.NotNull(type, nameof(type));
+            type.NotNull(nameof(type));
 
             if (type.IsGenericType && type.GetGenericTypeDefinition() == typeof(Nullable<>))
             {
@@ -202,7 +202,7 @@ namespace Skywalker.Reflection
 
         public static string GetSimplifiedName([NotNull] Type type)
         {
-            Check.NotNull(type, nameof(type));
+            type.NotNull(nameof(type));
 
             if (type.IsGenericType && type.GetGenericTypeDefinition() == typeof(Nullable<>))
             {

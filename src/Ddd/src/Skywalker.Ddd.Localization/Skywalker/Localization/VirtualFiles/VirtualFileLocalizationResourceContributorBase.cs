@@ -2,10 +2,9 @@
 using Microsoft.Extensions.FileProviders;
 using Microsoft.Extensions.Localization;
 using Microsoft.Extensions.Primitives;
-using Skywalker.Text;
+using Skywalker.Ddd.ExceptionHandling;
 using Skywalker.Extensions.VirtualFileSystem;
-using System;
-using System.Collections.Generic;
+using Skywalker.Text;
 
 namespace Skywalker.Localization.VirtualFiles
 {

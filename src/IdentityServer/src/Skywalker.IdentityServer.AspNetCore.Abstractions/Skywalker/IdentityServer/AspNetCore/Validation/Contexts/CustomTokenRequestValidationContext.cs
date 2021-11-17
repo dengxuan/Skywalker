@@ -2,7 +2,9 @@
 // Licensed under the Apache License, Version 2.0. See LICENSE in the project root for license information.
 
 
-namespace Skywalker.IdentityServer.Validation
+using Skywalker.IdentityServer.AspNetCore.Validation.Models;
+
+namespace Skywalker.IdentityServer.AspNetCore.Validation.Contexts
 {
     /// <summary>
     /// Context class for custom token request validation

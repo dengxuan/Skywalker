@@ -1,10 +1,10 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using Abstractions;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Http.Features;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 using Skywalker.Extensions.AspNetCore.Security.Abstractions;
-using Skywalker.Extensions.AspNetCore.Security.Streams;
-using System.Threading.Tasks;
+using Streams;
 
 namespace Skywalker.Extensions.AspNetCore.Security
 {

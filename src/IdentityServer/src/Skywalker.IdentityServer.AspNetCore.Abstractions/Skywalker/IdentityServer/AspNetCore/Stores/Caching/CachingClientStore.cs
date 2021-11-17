@@ -2,20 +2,21 @@
 // Licensed under the Apache License, Version 2.0. See LICENSE in the project root for license information.
 
 
-using Skywalker.IdentityServer.Extensions;
-using Skywalker.IdentityServer.Models;
-using Skywalker.IdentityServer.Services;
 using System.Threading.Tasks;
-using Skywalker.IdentityServer.Configuration;
 using Microsoft.Extensions.Logging;
+using Skywalker.IdentityServer.AspNetCore.Extensions;
+using Skywalker.IdentityServer.AspNetCore.Configuration.DependencyInjection.Options;
+using Skywalker.IdentityServer.AspNetCore.Services;
+using Skywalker.IdentityServer.Domain.Clients;
+using Skywalker.IdentityServer.Domain.Stores;
 
-namespace Skywalker.IdentityServer.Stores
+namespace Skywalker.IdentityServer.AspNetCore.Stores.Caching
 {
     /// <summary>
     /// Cache decorator for IClientStore
     /// </summary>
     /// <typeparam name="T"></typeparam>
-    /// <seealso cref="Skywalker.IdentityServer.Stores.IClientStore" />
+    /// <seealso cref="IClientStore" />
     public class CachingClientStore<T> : IClientStore
         where T : IClientStore
     {

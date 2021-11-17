@@ -3,23 +3,22 @@
 
 
 using IdentityModel;
-using Skywalker.IdentityServer.Configuration;
-using Skywalker.IdentityServer.Events;
-using Skywalker.IdentityServer.Extensions;
-using Skywalker.IdentityServer.Models;
-using Skywalker.IdentityServer.Services;
-using Skywalker.IdentityServer.Stores;
-using Microsoft.Extensions.Logging;
-using System;
-using System.Collections.Generic;
-using System.Collections.Specialized;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Skywalker.IdentityServer.Logging.Models;
 using Microsoft.AspNetCore.Authentication;
+using Microsoft.Extensions.Logging;
+using Skywalker.IdentityServer.AspNetCore.Configuration.DependencyInjection.Options;
+using Skywalker.IdentityServer.AspNetCore.Events;
+using Skywalker.IdentityServer.AspNetCore.Extensions;
+using Skywalker.IdentityServer.AspNetCore.Logging.Models;
+using Skywalker.IdentityServer.AspNetCore.Models.Contexts;
+using Skywalker.IdentityServer.AspNetCore.Services;
+using Skywalker.IdentityServer.AspNetCore.Validation.Contexts;
+using Skywalker.IdentityServer.AspNetCore.Validation.Models;
+using Skywalker.IdentityServer.Domain.Models;
+using Skywalker.IdentityServer.Domain.Stores;
+using System.Collections.Specialized;
+using System.Text;
 
-namespace Skywalker.IdentityServer.Validation
+namespace Skywalker.IdentityServer.AspNetCore.Validation.Default
 {
     internal class TokenRequestValidator : ITokenRequestValidator
     {
@@ -57,19 +56,19 @@ namespace Skywalker.IdentityServer.Validation
         /// <param name="events">The events.</param>
         /// <param name="clock">The clock.</param>
         /// <param name="logger">The logger.</param>
-        public TokenRequestValidator(IdentityServerOptions options, 
-            IAuthorizationCodeStore authorizationCodeStore, 
-            IResourceOwnerPasswordValidator resourceOwnerValidator, 
-            IProfileService profile, 
-            IDeviceCodeValidator deviceCodeValidator, 
-            ExtensionGrantValidator extensionGrantValidator, 
+        public TokenRequestValidator(IdentityServerOptions options,
+            IAuthorizationCodeStore authorizationCodeStore,
+            IResourceOwnerPasswordValidator resourceOwnerValidator,
+            IProfileService profile,
+            IDeviceCodeValidator deviceCodeValidator,
+            ExtensionGrantValidator extensionGrantValidator,
             ICustomTokenRequestValidator customRequestValidator,
             IResourceValidator resourceValidator,
             IResourceStore resourceStore,
-            ITokenValidator tokenValidator, 
+            ITokenValidator tokenValidator,
             IRefreshTokenService refreshTokenService,
-            IEventService events, 
-            ISystemClock clock, 
+            IEventService events,
+            ISystemClock clock,
             ILogger<TokenRequestValidator> logger)
         {
             _logger = logger;
@@ -94,7 +93,7 @@ namespace Skywalker.IdentityServer.Validation
         /// <param name="parameters">The parameters.</param>
         /// <param name="clientValidationResult">The client validation result.</param>
         /// <returns></returns>
-        /// <exception cref="System.ArgumentNullException">
+        /// <exception cref="ArgumentNullException">
         /// parameters
         /// or
         /// client
@@ -235,7 +234,7 @@ namespace Skywalker.IdentityServer.Validation
                 LogError("Invalid authorization code", new { code });
                 return Invalid(OidcConstants.TokenErrors.InvalidGrant);
             }
-            
+
             /////////////////////////////////////////////
             // validate client binding
             /////////////////////////////////////////////
@@ -396,7 +395,7 @@ namespace Skywalker.IdentityServer.Validation
             /////////////////////////////////////////////
             // check if client is allowed to request scopes
             /////////////////////////////////////////////
-            if (!(await ValidateRequestedScopesAsync(parameters)))
+            if (!await ValidateRequestedScopesAsync(parameters))
             {
                 return Invalid(OidcConstants.TokenErrors.InvalidScope);
             }
@@ -527,7 +526,7 @@ namespace Skywalker.IdentityServer.Validation
 
             _logger.LogDebug("Validation of refresh token request success");
             // todo: more logging - similar to TokenValidator before
-            
+
             return Valid();
         }
 
@@ -711,7 +710,8 @@ namespace Skywalker.IdentityServer.Validation
                 return false;
             }
 
-            var resourceValidationResult = await _resourceValidator.ValidateRequestedResourcesAsync(new ResourceValidationRequest { 
+            var resourceValidationResult = await _resourceValidator.ValidateRequestedResourcesAsync(new ResourceValidationRequest
+            {
                 Client = _validatedRequest.Client,
                 Scopes = requestedScopes
             });
@@ -732,7 +732,7 @@ namespace Skywalker.IdentityServer.Validation
 
             _validatedRequest.RequestedScopes = requestedScopes;
             _validatedRequest.ValidatedResources = resourceValidationResult;
-            
+
             return true;
         }
 

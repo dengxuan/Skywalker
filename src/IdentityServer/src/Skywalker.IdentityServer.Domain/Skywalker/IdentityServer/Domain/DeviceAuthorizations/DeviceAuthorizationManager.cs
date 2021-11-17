@@ -1,8 +1,5 @@
-﻿using Skywalker.Caching.Abstractions;
-using Skywalker.Domain.Repositories;
+﻿using Skywalker.Domain.Repositories;
 using Skywalker.Domain.Services;
-using Skywalker.IdentityServer.Models;
-using System.Threading.Tasks;
 
 namespace Skywalker.IdentityServer.Domain.DeviceAuthorizations
 {

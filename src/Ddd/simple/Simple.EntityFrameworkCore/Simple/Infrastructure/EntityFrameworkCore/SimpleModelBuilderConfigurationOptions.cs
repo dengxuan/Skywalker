@@ -1,12 +1,12 @@
 ﻿using Simple.Domain;
-using Skywalker.Ddd.EntityFrameworkCore;
+using Skywalker.Ddd.EntityFrameworkCore.Modeling;
 using System.Diagnostics.CodeAnalysis;
 
-namespace Simple.EntityFrameworkCore
+namespace Simple.Infrastructure.EntityFrameworkCore
 {
     public class SimpleModelBuilderConfigurationOptions : SkywalkerModelBuilderConfigurationOptions
     {
-        public SimpleModelBuilderConfigurationOptions([NotNull] string tablePrefix = SimpleConsts.DefaultDbTablePrefix,[MaybeNull] string? schema = SimpleConsts.DefaultDbSchema) : base(tablePrefix, schema)
+        public SimpleModelBuilderConfigurationOptions([NotNull] string tablePrefix = SimpleConsts.DefaultDbTablePrefix, [MaybeNull] string? schema = SimpleConsts.DefaultDbSchema) : base(tablePrefix, schema)
         {
 
         }

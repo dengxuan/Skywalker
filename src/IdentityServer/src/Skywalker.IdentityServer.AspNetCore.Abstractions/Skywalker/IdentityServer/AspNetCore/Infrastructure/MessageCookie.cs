@@ -2,9 +2,6 @@
 // Licensed under the Apache License, Version 2.0. See LICENSE in the project root for license information.
 
 
-using Skywalker.IdentityServer.Configuration;
-using Skywalker.IdentityServer.Extensions;
-using Skywalker.IdentityServer.Models;
 using Microsoft.AspNetCore.DataProtection;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Logging;
@@ -12,8 +9,11 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Security.Cryptography;
+using Skywalker.IdentityServer.AspNetCore.Models.Messages;
+using Skywalker.IdentityServer.AspNetCore.Configuration.DependencyInjection.Options;
+using Skywalker.IdentityServer.AspNetCore.Extensions;
 
-namespace Skywalker.IdentityServer
+namespace Skywalker.IdentityServer.AspNetCore.Infrastructure
 {
     internal class MessageCookie<TModel>
     {
@@ -23,9 +23,9 @@ namespace Skywalker.IdentityServer
         private readonly IDataProtector _protector;
 
         public MessageCookie(
-            ILogger<MessageCookie<TModel>> logger, 
+            ILogger<MessageCookie<TModel>> logger,
             IdentityServerOptions options,
-            IHttpContextAccessor context, 
+            IHttpContextAccessor context,
             IDataProtectionProvider provider)
         {
             _logger = logger;
@@ -114,7 +114,7 @@ namespace Skywalker.IdentityServer
                 {
                     return Unprotect(data);
                 }
-                catch(Exception ex)
+                catch (Exception ex)
                 {
                     _logger.LogError(ex, "Error unprotecting message cookie");
                     ClearByCookieName(name);
@@ -145,7 +145,7 @@ namespace Skywalker.IdentityServer
         }
 
         private long GetCookieRank(string name)
-        {   
+        {
             // empty and invalid cookies are considered to be the oldest:
             var rank = DateTime.MinValue.Ticks;
 
@@ -159,11 +159,11 @@ namespace Skywalker.IdentityServer
                 }
             }
             catch (CryptographicException e)
-            {   
+            {
                 // cookie was protected with a different key/algorithm
                 _logger.LogDebug(e, "Unable to unprotect cookie {0}", name);
             }
-            
+
             return rank;
         }
 

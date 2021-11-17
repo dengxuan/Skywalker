@@ -4,7 +4,7 @@
 
 using System.Threading.Tasks;
 
-namespace Skywalker.IdentityServer.Services
+namespace Skywalker.IdentityServer.Application
 {
     /// <summary>
     /// Service that determines if CORS is allowed.

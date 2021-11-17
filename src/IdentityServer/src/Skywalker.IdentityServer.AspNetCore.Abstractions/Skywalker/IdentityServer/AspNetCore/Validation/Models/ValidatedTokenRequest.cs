@@ -2,10 +2,12 @@
 // Licensed under the Apache License, Version 2.0. See LICENSE in the project root for license information.
 
 
-using Skywalker.IdentityServer.Models;
+using Skywalker.IdentityServer.Domain.DeviceAuthorizations;
+using Skywalker.IdentityServer.Domain.Models;
+using Skywalker.IdentityServer.Domain.RefreshTokens;
 using System.Collections.Generic;
 
-namespace Skywalker.IdentityServer.Validation
+namespace Skywalker.IdentityServer.AspNetCore.Validation.Models
 {
     /// <summary>
     /// Models a validated request to the token endpoint.
@@ -19,7 +21,7 @@ namespace Skywalker.IdentityServer.Validation
         /// The type of the grant.
         /// </value>
         public string GrantType { get; set; }
-        
+
         /// <summary>
         /// Gets or sets the scopes.
         /// </summary>
@@ -35,7 +37,7 @@ namespace Skywalker.IdentityServer.Validation
         /// The name of the user.
         /// </value>
         public string UserName { get; set; }
-        
+
         /// <summary>
         /// Gets or sets the refresh token.
         /// </summary>
@@ -43,7 +45,7 @@ namespace Skywalker.IdentityServer.Validation
         /// The refresh token.
         /// </value>
         public RefreshToken RefreshToken { get; set; }
-        
+
         /// <summary>
         /// Gets or sets the refresh token handle.
         /// </summary>

@@ -7,7 +7,7 @@ using System.Threading;
 
 namespace Skywalker.Data.Filtering
 {
-    public class DataFilter : IDataFilter, ISingletonDependency
+    public class DataFilter : IDataFilter/*, ISingletonDependency*/
     {
         private readonly ConcurrentDictionary<Type, object> _filters;
 

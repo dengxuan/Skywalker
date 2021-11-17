@@ -6,13 +6,13 @@ using System.Threading.Tasks;
 using Microsoft.Extensions.Caching.Memory;
 using System;
 
-namespace Skywalker.IdentityServer.Services
+namespace Skywalker.IdentityServer.AspNetCore.Services.Default
 {
     /// <summary>
     /// IMemoryCache-based implementation of the cache
     /// </summary>
     /// <typeparam name="T"></typeparam>
-    /// <seealso cref="Skywalker.IdentityServer.Services.ICache{T}" />
+    /// <seealso cref="ICache{T}" />
     public class DefaultCache<T> : ICache<T>
         where T : class
     {

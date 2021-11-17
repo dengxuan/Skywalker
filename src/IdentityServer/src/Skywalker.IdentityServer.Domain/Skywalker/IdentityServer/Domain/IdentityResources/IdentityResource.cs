@@ -2,12 +2,10 @@
 // Licensed under the Apache License, Version 2.0. See LICENSE in the project root for license information.
 
 
-using Skywalker.IdentityServer.Extensions;
-using System;
-using System.Collections.Generic;
+using Skywalker.IdentityServer.Domain.Models;
 using System.Diagnostics;
 
-namespace Skywalker.IdentityServer.Models
+namespace Skywalker.IdentityServer.Domain.IdentityResources
 {
     /// <summary>
     /// Models a user identity resource.
@@ -16,7 +14,7 @@ namespace Skywalker.IdentityServer.Models
     public class IdentityResource : Resource
     {
         private string DebuggerDisplay => Name ?? $"{{{typeof(IdentityResource)}}}";
-        
+
         /// <summary>
         /// Initializes a new instance of the <see cref="IdentityResource"/> class.
         /// </summary>
@@ -40,8 +38,8 @@ namespace Skywalker.IdentityServer.Models
         /// <param name="name">The name.</param>
         /// <param name="displayName">The display name.</param>
         /// <param name="userClaims">List of associated user claims that should be included when this resource is requested.</param>
-        /// <exception cref="System.ArgumentNullException">name</exception>
-        /// <exception cref="System.ArgumentException">Must provide at least one claim type - claimTypes</exception>
+        /// <exception cref="ArgumentNullException">name</exception>
+        /// <exception cref="ArgumentException">Must provide at least one claim type - claimTypes</exception>
         public IdentityResource(string name, string displayName, IEnumerable<string> userClaims)
         {
             if (name.IsMissing())
@@ -55,7 +53,7 @@ namespace Skywalker.IdentityServer.Models
             Name = name;
             DisplayName = displayName;
 
-            foreach(var type in userClaims)
+            foreach (var type in userClaims)
             {
                 UserClaims.Add(type);
             }

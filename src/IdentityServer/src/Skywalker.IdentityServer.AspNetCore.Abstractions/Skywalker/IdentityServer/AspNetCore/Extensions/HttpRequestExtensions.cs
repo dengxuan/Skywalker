@@ -9,7 +9,7 @@ using Microsoft.Net.Http.Headers;
 
 #pragma warning disable 1591
 
-namespace Skywalker.IdentityServer.Extensions
+namespace Skywalker.IdentityServer.AspNetCore.Extensions
 {
     public static class HttpRequestExtensions
     {
@@ -28,11 +28,11 @@ namespace Skywalker.IdentityServer.Extensions
 
             return null;
         }
-        
+
         internal static bool HasApplicationFormContentType(this HttpRequest request)
         {
             if (request.ContentType is null) return false;
-            
+
             if (MediaTypeHeaderValue.TryParse(request.ContentType, out var header))
             {
                 // Content-Type: application/x-www-form-urlencoded; charset=utf-8

@@ -4,14 +4,15 @@
 
 using System;
 using System.Threading.Tasks;
-using Skywalker.IdentityServer.Models;
-using Skywalker.IdentityServer.Extensions;
-using Skywalker.IdentityServer.Validation;
 using Microsoft.Extensions.Logging;
-using Skywalker.IdentityServer.Stores;
 using System.Collections.Specialized;
+using Skywalker.IdentityServer.AspNetCore.Models.Messages;
+using Skywalker.IdentityServer.AspNetCore.Validation;
+using Skywalker.IdentityServer.AspNetCore;
+using Skywalker.IdentityServer.AspNetCore.Stores;
+using Skywalker.IdentityServer.AspNetCore.Extensions;
 
-namespace Skywalker.IdentityServer.Services
+namespace Skywalker.IdentityServer.AspNetCore.Services.Default
 {
     internal class OidcReturnUrlParser : IReturnUrlParser
     {

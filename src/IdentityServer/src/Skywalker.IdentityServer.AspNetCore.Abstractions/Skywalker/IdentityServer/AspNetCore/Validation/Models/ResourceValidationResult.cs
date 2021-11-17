@@ -2,11 +2,12 @@
 // Licensed under the Apache License, Version 2.0. See LICENSE in the project root for license information.
 
 
-using Skywalker.IdentityServer.Models;
+using Skywalker.IdentityServer.AspNetCore.Extensions;
+using Skywalker.IdentityServer.Domain.Models;
 using System.Collections.Generic;
 using System.Linq;
 
-namespace Skywalker.IdentityServer.Validation
+namespace Skywalker.IdentityServer.AspNetCore.Validation.Models
 {
     /// <summary>
     /// Result of validation of requested scopes and resource indicators.
@@ -90,7 +91,7 @@ namespace Skywalker.IdentityServer.Validation
             {
                 OfflineAccess = offline
             };
-            
+
             return new ResourceValidationResult()
             {
                 Resources = resources,

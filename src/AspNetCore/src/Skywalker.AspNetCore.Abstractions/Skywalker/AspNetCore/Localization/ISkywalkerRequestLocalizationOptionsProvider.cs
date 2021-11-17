@@ -2,7 +2,7 @@
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Builder;
 
-namespace Microsoft.AspNetCore.RequestLocalization
+namespace Skywalker.AspNetCore.Localization
 {
     public interface ISkywalkerRequestLocalizationOptionsProvider
     {

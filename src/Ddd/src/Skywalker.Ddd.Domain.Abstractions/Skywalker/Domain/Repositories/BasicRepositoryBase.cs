@@ -1,4 +1,4 @@
-﻿using Microsoft.Extensions.DependencyInjection;
+﻿using Skywalker.Ddd.DependencyInjection;
 using Skywalker.Domain.Entities;
 using Skywalker.Extensions.Threading;
 using System;

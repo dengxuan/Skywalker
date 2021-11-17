@@ -2,21 +2,16 @@
 // Licensed under the Apache License, Version 2.0. See LICENSE in the project root for license information.
 
 
-using System.Collections.Generic;
-using System.Threading.Tasks;
 using Microsoft.IdentityModel.Tokens;
-using Skywalker.IdentityServer.Stores;
-using Skywalker.IdentityServer.Models;
-using System.Linq;
-using System;
-using Skywalker.IdentityServer.Extensions;
+using Skywalker.IdentityServer.AspNetCore.Models;
+using Skywalker.IdentityServer.AspNetCore.Stores;
 
-namespace Skywalker.IdentityServer.Services
+namespace Skywalker.IdentityServer.AspNetCore.Services.Default
 {
     /// <summary>
     /// The default key material service
     /// </summary>
-    /// <seealso cref="Skywalker.IdentityServer.Services.IKeyMaterialService" />
+    /// <seealso cref="IKeyMaterialService" />
     public class DefaultKeyMaterialService : IKeyMaterialService
     {
         private readonly IEnumerable<ISigningCredentialStore> _signingCredentialStores;

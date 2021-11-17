@@ -1,11 +1,7 @@
 ﻿// Copyright (c) Brock Allen & Dominick Baier. All rights reserved.
 // Licensed under the Apache License, Version 2.0. See LICENSE in the project root for license information.
 
-
-using Skywalker.IdentityServer.Extensions;
-using System;
-
-namespace Skywalker.IdentityServer.ResponseHandling
+namespace Skywalker.IdentityServer.AspNetCore.ResponseHandling.Models
 {
     /// <summary>
     /// Indicates interaction outcome for user on authorization endpoint.

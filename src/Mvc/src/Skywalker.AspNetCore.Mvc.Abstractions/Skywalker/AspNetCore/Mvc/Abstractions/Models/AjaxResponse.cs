@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace Skywalker.AspNetCore.Mvc.Models
+namespace Skywalker.AspNetCore.Mvc.Abstractions.Models
 {
     /// <summary>
     /// This class is used to create standard responses for AJAX/remote requests.

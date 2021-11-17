@@ -4,12 +4,12 @@
 
 using Microsoft.AspNetCore.Authentication;
 
-namespace Skywalker.IdentityServer.Hosting.LocalApiAuthentication
+namespace Skywalker.IdentityServer.AspNetCore.Hosting.LocalApiAuthentication
 {
     /// <summary>
     /// Options for local API authentication
     /// </summary>
-    /// <seealso cref="Microsoft.AspNetCore.Authentication.AuthenticationSchemeOptions" />
+    /// <seealso cref="AuthenticationSchemeOptions" />
     public class LocalApiAuthenticationOptions : AuthenticationSchemeOptions
     {
         /// <summary>

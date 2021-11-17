@@ -1,4 +1,5 @@
-﻿using System.Data;
+﻿using Skywalker.Ddd.ExceptionHandling;
+using System.Data;
 
 namespace Skywalker.Ddd.Uow;
 

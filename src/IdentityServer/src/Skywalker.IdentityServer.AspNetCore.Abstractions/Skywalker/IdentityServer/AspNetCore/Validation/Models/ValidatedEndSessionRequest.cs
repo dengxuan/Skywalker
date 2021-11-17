@@ -4,7 +4,7 @@
 
 using System.Collections.Generic;
 
-namespace Skywalker.IdentityServer.Validation
+namespace Skywalker.IdentityServer.AspNetCore.Validation.Models
 {
     /// <summary>
     /// Represents a validated end session (logout) request
@@ -26,7 +26,7 @@ namespace Skywalker.IdentityServer.Validation
         /// The post-logout URI.
         /// </value>
         public string PostLogOutUri { get; set; }
-        
+
         /// <summary>
         /// Gets or sets the state.
         /// </summary>

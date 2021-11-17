@@ -3,15 +3,16 @@
 
 
 using System.Threading.Tasks;
-using Skywalker.IdentityServer.Extensions;
 using Microsoft.Extensions.Primitives;
-using Skywalker.IdentityServer.Hosting;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Net.Http.Headers;
 using IdentityModel;
 using System;
+using Skywalker.IdentityServer.AspNetCore;
+using Skywalker.IdentityServer.AspNetCore.Extensions;
+using Skywalker.IdentityServer.AspNetCore.Hosting;
 
-namespace Skywalker.IdentityServer.Endpoints.Results
+namespace Skywalker.IdentityServer.AspNetCore.Endpoints.Results
 {
     internal class ProtectedResourceErrorResult : IEndpointResult
     {

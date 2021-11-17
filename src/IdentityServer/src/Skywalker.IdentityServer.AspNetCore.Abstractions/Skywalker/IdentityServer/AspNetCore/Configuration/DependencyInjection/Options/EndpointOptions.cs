@@ -1,8 +1,7 @@
 // Copyright (c) Brock Allen & Dominick Baier. All rights reserved.
 // Licensed under the Apache License, Version 2.0. See LICENSE in the project root for license information.
 
-
-namespace Skywalker.IdentityServer.Configuration
+namespace Skywalker.IdentityServer.AspNetCore.Configuration.DependencyInjection.Options
 {
     /// <summary>
     /// Configures which endpoints are enabled or disabled.
@@ -16,7 +15,7 @@ namespace Skywalker.IdentityServer.Configuration
         /// <c>true</c> if the authorize endpoint is enabled; otherwise, <c>false</c>.
         /// </value>
         public bool EnableAuthorizeEndpoint { get; set; } = true;
-        
+
         /// <summary>
         /// Gets or sets if JWT request_uri processing is enabled on the authorize endpoint. 
         /// </summary>
@@ -53,7 +52,7 @@ namespace Skywalker.IdentityServer.Configuration
         /// <c>true</c> if the end session endpoint is enabled; otherwise, <c>false</c>.
         /// </value>
         public bool EnableEndSessionEndpoint { get; set; } = true;
-        
+
         /// <summary>
         /// Gets or sets a value indicating whether the check session endpoint is enabled.
         /// </summary>

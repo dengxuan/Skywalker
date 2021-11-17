@@ -1,16 +1,15 @@
 // Copyright (c) Brock Allen & Dominick Baier. All rights reserved.
 // Licensed under the Apache License, Version 2.0. See LICENSE in the project root for license information.
 
-using System.Net;
-using System.Threading.Tasks;
-using Skywalker.IdentityServer.Configuration;
-using Skywalker.IdentityServer.Endpoints.Results;
-using Skywalker.IdentityServer.Hosting;
-using Skywalker.IdentityServer.ResponseHandling;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Logging;
+using Skywalker.IdentityServer.AspNetCore.Configuration.DependencyInjection.Options;
+using Skywalker.IdentityServer.AspNetCore.Endpoints.Results;
+using Skywalker.IdentityServer.AspNetCore.Hosting;
+using Skywalker.IdentityServer.AspNetCore.ResponseHandling;
+using System.Net;
 
-namespace Skywalker.IdentityServer.Endpoints
+namespace Skywalker.IdentityServer.AspNetCore.Endpoints
 {
     internal class DiscoveryKeyEndpoint : IEndpointHandler
     {

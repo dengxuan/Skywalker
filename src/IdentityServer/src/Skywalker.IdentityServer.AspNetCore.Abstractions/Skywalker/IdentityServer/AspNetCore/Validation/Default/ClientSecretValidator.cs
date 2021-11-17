@@ -2,15 +2,15 @@
 // Licensed under the Apache License, Version 2.0. See LICENSE in the project root for license information.
 
 
-using Skywalker.IdentityServer.Services;
-using System.Threading.Tasks;
-using Skywalker.IdentityServer.Events;
-using Microsoft.Extensions.Logging;
 using Microsoft.AspNetCore.Http;
-using Skywalker.IdentityServer.Stores;
-using Skywalker.IdentityServer.Models;
+using Microsoft.Extensions.Logging;
+using Skywalker.IdentityServer.AspNetCore.Events;
+using Skywalker.IdentityServer.AspNetCore.Extensions;
+using Skywalker.IdentityServer.AspNetCore.Services;
+using Skywalker.IdentityServer.AspNetCore.Validation.Models;
+using Skywalker.IdentityServer.Domain.Stores;
 
-namespace Skywalker.IdentityServer.Validation
+namespace Skywalker.IdentityServer.AspNetCore.Validation.Default
 {
     /// <summary>
     /// Validates a client secret using the registered secret validators and parsers

@@ -5,9 +5,10 @@
 using System.Collections.Generic;
 using System.Security.Claims;
 using System;
-using Skywalker.IdentityServer.Validation;
+using Skywalker.IdentityServer.AspNetCore.Validation.Models;
+using Skywalker.IdentityServer.Domain.Clients;
 
-namespace Skywalker.IdentityServer.Models
+namespace Skywalker.IdentityServer.AspNetCore.Models.Contexts
 {
     /// <summary>
     /// Class describing the profile data request

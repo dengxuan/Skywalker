@@ -7,12 +7,12 @@ using System;
 using System.Collections.Generic;
 using System.Security.Claims;
 
-namespace Skywalker.IdentityServer.Models
+namespace Skywalker.IdentityServer.Domain.RefreshTokens
 {
     /// <summary>
     /// Models a refresh token.
     /// </summary>
-    public class RefreshToken:AggregateRoot<Guid>
+    public class RefreshToken : AggregateRoot<Guid>
     {
 
         /// <summary>

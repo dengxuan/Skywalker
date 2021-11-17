@@ -4,7 +4,7 @@ using System.Diagnostics.CodeAnalysis;
 
 namespace Skywalker.Ddd.Uow;
 
-public class AmbientUnitOfWork : IAmbientUnitOfWork, ISingletonDependency
+public class AmbientUnitOfWork : IAmbientUnitOfWork/*, ISingletonDependency*/
 {
     [MaybeNull]
     public IUnitOfWork? UnitOfWork => _currentUow.Value;

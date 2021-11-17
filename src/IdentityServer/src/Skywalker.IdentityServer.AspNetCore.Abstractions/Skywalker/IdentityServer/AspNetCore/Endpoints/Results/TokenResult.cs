@@ -3,16 +3,16 @@
 
 
 using IdentityModel;
-using Skywalker.IdentityServer.Extensions;
-using Skywalker.IdentityServer.Hosting;
-using Skywalker.IdentityServer.ResponseHandling;
 using Microsoft.AspNetCore.Http;
 using System;
 using System.Collections.Generic;
 using System.Text.Json.Serialization;
 using System.Threading.Tasks;
+using Skywalker.IdentityServer.AspNetCore.Extensions;
+using Skywalker.IdentityServer.AspNetCore.Hosting;
+using Skywalker.IdentityServer.AspNetCore.ResponseHandling.Models;
 
-namespace Skywalker.IdentityServer.Endpoints.Results
+namespace Skywalker.IdentityServer.AspNetCore.Endpoints.Results
 {
     internal class TokenResult : IEndpointResult
     {
@@ -35,7 +35,7 @@ namespace Skywalker.IdentityServer.Endpoints.Results
                 expires_in = Response.AccessTokenLifetime,
                 token_type = OidcConstants.TokenResponse.BearerTokenType,
                 scope = Response.Scope,
-                
+
                 Custom = Response.Custom
             };
 

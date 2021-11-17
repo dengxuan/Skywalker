@@ -2,80 +2,80 @@
 using System.Threading;
 using System.Threading.Tasks;
 
-namespace Skywalker.Threading
+namespace Skywalker.Extensions.Threading
 {
     public static class SemaphoreSlimExtensions
     {
         public static async Task<IDisposable> LockAsync(this SemaphoreSlim semaphoreSlim)
         {
             await semaphoreSlim.WaitAsync();
-            return GetDispose(semaphoreSlim);
+            return semaphoreSlim.GetDispose();
         }
 
         public static async Task<IDisposable> LockAsync(this SemaphoreSlim semaphoreSlim, CancellationToken cancellationToken)
         {
             await semaphoreSlim.WaitAsync(cancellationToken);
-            return GetDispose(semaphoreSlim);
+            return semaphoreSlim.GetDispose();
         }
 
         public static async Task<IDisposable> LockAsync(this SemaphoreSlim semaphoreSlim, int millisecondsTimeout)
         {
             await semaphoreSlim.WaitAsync(millisecondsTimeout);
-            return GetDispose(semaphoreSlim);
+            return semaphoreSlim.GetDispose();
         }
 
         public static async Task<IDisposable> LockAsync(this SemaphoreSlim semaphoreSlim, int millisecondsTimeout, CancellationToken cancellationToken)
         {
             await semaphoreSlim.WaitAsync(millisecondsTimeout, cancellationToken);
-            return GetDispose(semaphoreSlim);
+            return semaphoreSlim.GetDispose();
         }
 
         public static async Task<IDisposable> LockAsync(this SemaphoreSlim semaphoreSlim, TimeSpan timeout)
         {
             await semaphoreSlim.WaitAsync(timeout);
-            return GetDispose(semaphoreSlim);
+            return semaphoreSlim.GetDispose();
         }
 
         public static async Task<IDisposable> LockAsync(this SemaphoreSlim semaphoreSlim, TimeSpan timeout, CancellationToken cancellationToken)
         {
             await semaphoreSlim.WaitAsync(timeout, cancellationToken);
-            return GetDispose(semaphoreSlim);
+            return semaphoreSlim.GetDispose();
         }
 
         public static IDisposable Lock(this SemaphoreSlim semaphoreSlim)
         {
             semaphoreSlim.Wait();
-            return GetDispose(semaphoreSlim);
+            return semaphoreSlim.GetDispose();
         }
 
         public static IDisposable Lock(this SemaphoreSlim semaphoreSlim, CancellationToken cancellationToken)
         {
             semaphoreSlim.Wait(cancellationToken);
-            return GetDispose(semaphoreSlim);
+            return semaphoreSlim.GetDispose();
         }
 
         public static IDisposable Lock(this SemaphoreSlim semaphoreSlim, int millisecondsTimeout)
         {
             semaphoreSlim.Wait(millisecondsTimeout);
-            return GetDispose(semaphoreSlim);
+            return semaphoreSlim.GetDispose();
         }
 
         public static IDisposable Lock(this SemaphoreSlim semaphoreSlim, int millisecondsTimeout, CancellationToken cancellationToken)
         {
             semaphoreSlim.Wait(millisecondsTimeout, cancellationToken);
-            return GetDispose(semaphoreSlim);
+            return semaphoreSlim.GetDispose();
         }
 
         public static IDisposable Lock(this SemaphoreSlim semaphoreSlim, TimeSpan timeout)
         {
             semaphoreSlim.Wait(timeout);
-            return GetDispose(semaphoreSlim);
+            return semaphoreSlim.GetDispose();
         }
 
         public static IDisposable Lock(this SemaphoreSlim semaphoreSlim, TimeSpan timeout, CancellationToken cancellationToken)
         {
             semaphoreSlim.Wait(timeout, cancellationToken);
-            return GetDispose(semaphoreSlim);
+            return semaphoreSlim.GetDispose();
         }
 
         private static IDisposable GetDispose(this SemaphoreSlim semaphoreSlim)

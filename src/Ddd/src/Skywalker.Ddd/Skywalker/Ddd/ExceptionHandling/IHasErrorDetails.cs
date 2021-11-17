@@ -1,4 +1,4 @@
-namespace Skywalker.ExceptionHandling
+namespace Skywalker.Ddd.ExceptionHandling
 {
     public interface IHasErrorDetails
     {

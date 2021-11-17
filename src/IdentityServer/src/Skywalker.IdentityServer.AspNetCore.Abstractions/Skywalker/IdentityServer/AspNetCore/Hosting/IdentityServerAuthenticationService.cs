@@ -6,16 +6,16 @@ using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Http;
 using System.Security.Claims;
 using System.Threading.Tasks;
-using Skywalker.IdentityServer.Services;
 using Microsoft.Extensions.Logging;
-using Skywalker.IdentityServer.Configuration.DependencyInjection;
-using Skywalker.IdentityServer.Extensions;
 using System;
 using IdentityModel;
 using System.Linq;
-using Skywalker.IdentityServer.Configuration;
+using Skywalker.IdentityServer.AspNetCore.Configuration.DependencyInjection;
+using Skywalker.IdentityServer.AspNetCore.Configuration.DependencyInjection.Options;
+using Skywalker.IdentityServer.AspNetCore.Extensions;
+using Skywalker.IdentityServer.AspNetCore.Services;
 
-namespace Skywalker.IdentityServer.Hosting
+namespace Skywalker.IdentityServer.AspNetCore.Hosting
 {
     // this decorates the real authentication service to detect when the 
     // user is being signed in. this allows us to ensure the user has
@@ -44,7 +44,7 @@ namespace Skywalker.IdentityServer.Hosting
             ILogger<IdentityServerAuthenticationService> logger)
         {
             _inner = decorator.Instance;
-            
+
             _schemes = schemes;
             _clock = clock;
             _session = session;
@@ -58,7 +58,7 @@ namespace Skywalker.IdentityServer.Hosting
             var defaultScheme = await _schemes.GetDefaultSignInSchemeAsync();
             var cookieScheme = await context.GetCookieAuthenticationSchemeAsync();
 
-            if ((scheme == null && defaultScheme?.Name == cookieScheme) || scheme == cookieScheme)
+            if (scheme == null && defaultScheme?.Name == cookieScheme || scheme == cookieScheme)
             {
                 AugmentPrincipal(principal);
 
@@ -82,7 +82,7 @@ namespace Skywalker.IdentityServer.Hosting
             var defaultScheme = await _schemes.GetDefaultSignOutSchemeAsync();
             var cookieScheme = await context.GetCookieAuthenticationSchemeAsync();
 
-            if ((scheme == null && defaultScheme?.Name == cookieScheme) || scheme == cookieScheme)
+            if (scheme == null && defaultScheme?.Name == cookieScheme || scheme == cookieScheme)
             {
                 // this sets a flag used by middleware to do post-signout work.
                 context.SetSignOutCalled();

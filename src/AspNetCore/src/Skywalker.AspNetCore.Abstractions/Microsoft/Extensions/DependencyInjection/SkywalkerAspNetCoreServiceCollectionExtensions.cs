@@ -1,5 +1,5 @@
 ﻿using Microsoft.AspNetCore.Hosting;
-using Skywalker;
+using Skywalker.Ddd;
 
 namespace Microsoft.Extensions.DependencyInjection
 {
@@ -10,7 +10,7 @@ namespace Microsoft.Extensions.DependencyInjection
             return services.GetSingletonInstance<IWebHostEnvironment>();
         }
 
-        public static SkywalkerBuilder AddAspNetCore(this SkywalkerBuilder skywalkerBuilder)
+        public static SkywalkerDddBuilder AddAspNetCore(this SkywalkerDddBuilder skywalkerBuilder)
         {
             skywalkerBuilder.Services.AddHttpContextAccessor();
             return skywalkerBuilder;

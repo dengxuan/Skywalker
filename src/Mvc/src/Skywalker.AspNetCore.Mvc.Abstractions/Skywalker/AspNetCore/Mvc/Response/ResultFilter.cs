@@ -1,9 +1,10 @@
 ﻿using Microsoft.AspNetCore.Mvc.Abstractions;
 using Microsoft.AspNetCore.Mvc.Filters;
+using Skywalker.AspNetCore.Mvc.Abstractions;
 using Skywalker.AspNetCore.Mvc.Response.Wrapping;
 using Skywalker.Reflection;
 
-namespace Skywalker.AspNetCore.Mvc.Results
+namespace Skywalker.AspNetCore.Mvc.Response
 {
 
     public class ResultFilter : IResultFilter

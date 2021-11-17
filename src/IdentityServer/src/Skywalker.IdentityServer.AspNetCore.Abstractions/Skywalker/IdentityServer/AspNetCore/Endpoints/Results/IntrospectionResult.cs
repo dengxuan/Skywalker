@@ -4,17 +4,17 @@
 
 using System.Collections.Generic;
 using System.Threading.Tasks;
-using Skywalker.IdentityServer.Hosting;
 using Microsoft.AspNetCore.Http;
 using System;
-using Skywalker.IdentityServer.Extensions;
+using Skywalker.IdentityServer.AspNetCore.Extensions;
+using Skywalker.IdentityServer.AspNetCore.Hosting;
 
-namespace Skywalker.IdentityServer.Endpoints.Results
+namespace Skywalker.IdentityServer.AspNetCore.Endpoints.Results
 {
     /// <summary>
     /// Result for introspection
     /// </summary>
-    /// <seealso cref="Skywalker.IdentityServer.Hosting.IEndpointResult" />
+    /// <seealso cref="IEndpointResult" />
     public class IntrospectionResult : IEndpointResult
     {
         /// <summary>
@@ -29,7 +29,7 @@ namespace Skywalker.IdentityServer.Endpoints.Results
         /// Initializes a new instance of the <see cref="IntrospectionResult"/> class.
         /// </summary>
         /// <param name="entries">The result.</param>
-        /// <exception cref="System.ArgumentNullException">result</exception>
+        /// <exception cref="ArgumentNullException">result</exception>
         public IntrospectionResult(Dictionary<string, object> entries)
         {
             Entries = entries ?? throw new ArgumentNullException(nameof(entries));
@@ -43,7 +43,7 @@ namespace Skywalker.IdentityServer.Endpoints.Results
         public Task ExecuteAsync(HttpContext context)
         {
             context.Response.SetNoCache();
-            
+
             return context.Response.WriteJsonAsync(Entries);
         }
     }

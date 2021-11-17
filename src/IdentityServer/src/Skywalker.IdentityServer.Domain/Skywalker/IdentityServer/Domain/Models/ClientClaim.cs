@@ -5,7 +5,7 @@
 using System;
 using System.Security.Claims;
 
-namespace Skywalker.IdentityServer.Models
+namespace Skywalker.IdentityServer.Domain.Models
 {
     /// <summary>
     /// A client claim
@@ -16,7 +16,7 @@ namespace Skywalker.IdentityServer.Models
         /// The claim type
         /// </summary>
         public string Type { get; set; }
-        
+
         /// <summary>
         /// The claim value
         /// </summary>
@@ -61,7 +61,7 @@ namespace Skywalker.IdentityServer.Models
         /// <inheritdoc/>
         public override int GetHashCode()
         {
-            unchecked 
+            unchecked
             {
                 int hash = 17;
 
@@ -78,9 +78,9 @@ namespace Skywalker.IdentityServer.Models
             if (obj is null) return false;
             if (obj is ClientClaim c)
             {
-                return (string.Equals(Type, c.Type, StringComparison.Ordinal) &&
+                return string.Equals(Type, c.Type, StringComparison.Ordinal) &&
                         string.Equals(Value, c.Value, StringComparison.Ordinal) &&
-                        string.Equals(ValueType, c.ValueType, StringComparison.Ordinal));
+                        string.Equals(ValueType, c.ValueType, StringComparison.Ordinal);
             }
 
             return false;

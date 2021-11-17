@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Abstractions;
+using System;
 using System.Collections.ObjectModel;
 
 namespace Skywalker.Extensions.AspNetCore.Security.Abstractions

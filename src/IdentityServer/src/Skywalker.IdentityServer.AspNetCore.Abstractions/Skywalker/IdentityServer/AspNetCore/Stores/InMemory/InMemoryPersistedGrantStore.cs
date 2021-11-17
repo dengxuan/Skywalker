@@ -2,15 +2,12 @@
 // Licensed under the Apache License, Version 2.0. See LICENSE in the project root for license information.
 
 
-using Skywalker.IdentityServer.Extensions;
-using Skywalker.IdentityServer.Models;
+using Skywalker.IdentityServer.Domain.Extensions;
+using Skywalker.IdentityServer.Domain.PersistedGrants;
+using Skywalker.IdentityServer.Domain.Stores;
 using System.Collections.Concurrent;
-using System.Linq;
-using System.Threading.Tasks;
-using System.Collections.Generic;
-using System;
 
-namespace Skywalker.IdentityServer.Stores
+namespace Skywalker.IdentityServer.AspNetCore.Stores.InMemory
 {
     /// <summary>
     /// In-memory persisted grant store
@@ -42,9 +39,9 @@ namespace Skywalker.IdentityServer.Stores
         public Task<IEnumerable<PersistedGrant>> GetAllAsync(PersistedGrantFilter filter)
         {
             filter.Validate();
-            
+
             var items = Filter(filter);
-            
+
             return Task.FromResult(items);
         }
 
@@ -62,7 +59,7 @@ namespace Skywalker.IdentityServer.Stores
             filter.Validate();
 
             var items = Filter(filter);
-            
+
             foreach (var item in items)
             {
                 _repository.TryRemove(item.Id, out _);
@@ -77,19 +74,19 @@ namespace Skywalker.IdentityServer.Stores
                 from item in _repository
                 select item.Value;
 
-            if (!String.IsNullOrWhiteSpace(filter.ClientId))
+            if (!string.IsNullOrWhiteSpace(filter.ClientId))
             {
                 query = query.Where(x => x.ClientId == filter.ClientId);
             }
-            if (!String.IsNullOrWhiteSpace(filter.SessionId))
+            if (!string.IsNullOrWhiteSpace(filter.SessionId))
             {
                 query = query.Where(x => x.SessionId == filter.SessionId);
             }
-            if (!String.IsNullOrWhiteSpace(filter.SubjectId))
+            if (!string.IsNullOrWhiteSpace(filter.SubjectId))
             {
                 query = query.Where(x => x.SubjectId == filter.SubjectId);
             }
-            if (!String.IsNullOrWhiteSpace(filter.Type))
+            if (!string.IsNullOrWhiteSpace(filter.Type))
             {
                 query = query.Where(x => x.Type == filter.Type);
             }

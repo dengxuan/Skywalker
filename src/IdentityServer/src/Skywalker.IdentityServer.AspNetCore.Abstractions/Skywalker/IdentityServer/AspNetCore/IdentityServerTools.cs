@@ -2,18 +2,15 @@
 // Licensed under the Apache License, Version 2.0. See LICENSE in the project root for license information.
 
 
-using Skywalker.IdentityServer.Models;
-using Microsoft.AspNetCore.Http;
-using System.Collections.Generic;
-using System.Threading.Tasks;
-using Skywalker.IdentityServer.Extensions;
-using System.Security.Claims;
-using Skywalker.IdentityServer.Services;
 using IdentityModel;
-using System;
 using Microsoft.AspNetCore.Authentication;
+using Microsoft.AspNetCore.Http;
+using Skywalker.IdentityServer.AspNetCore.Extensions;
+using Skywalker.IdentityServer.AspNetCore.Services;
+using Skywalker.IdentityServer.Domain.RefreshTokens;
+using System.Security.Claims;
 
-namespace Skywalker.IdentityServer
+namespace Skywalker.IdentityServer.AspNetCore
 {
     /// <summary>
     /// Class for useful helpers for interacting with IdentityServer

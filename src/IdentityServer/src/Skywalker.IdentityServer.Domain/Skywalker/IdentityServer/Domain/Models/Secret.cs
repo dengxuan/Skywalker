@@ -4,7 +4,7 @@
 
 using System;
 
-namespace Skywalker.IdentityServer.Models
+namespace Skywalker.IdentityServer.Domain.Models
 {
     /// <summary>
     /// Models a client secret with identifier and expiration
@@ -96,11 +96,11 @@ namespace Skywalker.IdentityServer.Models
         }
 
         /// <summary>
-        /// Determines whether the specified <see cref="System.Object" />, is equal to this instance.
+        /// Determines whether the specified <see cref="object" />, is equal to this instance.
         /// </summary>
-        /// <param name="obj">The <see cref="System.Object" /> to compare with this instance.</param>
+        /// <param name="obj">The <see cref="object" /> to compare with this instance.</param>
         /// <returns>
-        ///   <c>true</c> if the specified <see cref="System.Object" /> is equal to this instance; otherwise, <c>false</c>.
+        ///   <c>true</c> if the specified <see cref="object" /> is equal to this instance; otherwise, <c>false</c>.
         /// </returns>
         public override bool Equals(object obj)
         {
@@ -109,8 +109,8 @@ namespace Skywalker.IdentityServer.Models
             if (other == null) return false;
             if (ReferenceEquals(other, this)) return true;
 
-            return String.Equals(other.Type, Type, StringComparison.Ordinal) && 
-                String.Equals(other.Value, Value, StringComparison.Ordinal);
+            return string.Equals(other.Type, Type, StringComparison.Ordinal) &&
+                string.Equals(other.Value, Value, StringComparison.Ordinal);
         }
     }
 }

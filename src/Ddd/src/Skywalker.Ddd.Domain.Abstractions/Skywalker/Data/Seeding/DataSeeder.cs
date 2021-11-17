@@ -1,12 +1,13 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Options;
+using Skywalker.Ddd.DependencyInjection;
 using Skywalker.DependencyInjection;
 using System.Threading.Tasks;
 
-namespace Skywalker.Data.Seeding.Seeding
+namespace Skywalker.Data.Seeding
 {
     //TODO: Create a Skywalker.Data.Seeding namespace?
-    public class DataSeeder : IDataSeeder, ITransientDependency
+    public class DataSeeder : IDataSeeder/*, ITransientDependency*/
     {
         protected IHybridServiceScopeFactory ServiceScopeFactory { get; }
         protected SkywalkerDataSeedOptions Options { get; }

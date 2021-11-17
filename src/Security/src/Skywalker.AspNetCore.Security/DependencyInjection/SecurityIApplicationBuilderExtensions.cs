@@ -1,7 +1,8 @@
 ﻿using Microsoft.AspNetCore.Builder;
+using Skywalker.Extensions.AspNetCore.Security;
 using System;
 
-namespace Skywalker.Extensions.AspNetCore.Security.DependencyInjection
+namespace DependencyInjection
 {
     public static class SecurityIApplicationBuilderExtensions
     {

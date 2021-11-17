@@ -5,6 +5,7 @@ using Microsoft.Extensions.Logging;
 using Skywalker.Data;
 using Skywalker.Ddd.EntityFrameworkCore;
 using Skywalker.Ddd.EntityFrameworkCore.DbContextConfiguration;
+using Skywalker.Ddd.ExceptionHandling;
 using Skywalker.Ddd.Uow.Abstractions;
 
 namespace Skywalker.Ddd.Uow.EntityFrameworkCore

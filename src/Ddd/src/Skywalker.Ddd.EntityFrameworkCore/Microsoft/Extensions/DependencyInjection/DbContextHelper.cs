@@ -6,11 +6,11 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
 
-namespace Skywalker.EntityFrameworkCore
+namespace Microsoft.Extensions.DependencyInjection
 {
     internal static class DbContextHelper
     {
-        public static IEnumerable<Type> GetEntityTypes<TDbContext>() where TDbContext: DbContext
+        public static IEnumerable<Type> GetEntityTypes<TDbContext>() where TDbContext : DbContext
         {
             return from property in typeof(TDbContext).GetProperties(BindingFlags.Public | BindingFlags.Instance)
                    where ReflectionHelper.IsAssignableToGenericType(property.PropertyType, typeof(DbSet<>))

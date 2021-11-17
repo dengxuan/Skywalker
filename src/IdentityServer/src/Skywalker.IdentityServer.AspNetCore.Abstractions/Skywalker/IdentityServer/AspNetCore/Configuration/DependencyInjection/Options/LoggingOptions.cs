@@ -5,7 +5,7 @@
 using System.Collections.Generic;
 using IdentityModel;
 
-namespace Skywalker.IdentityServer.Configuration
+namespace Skywalker.IdentityServer.AspNetCore.Configuration.DependencyInjection.Options
 {
     /// <summary>
     /// Options for configuring logging behavior
@@ -15,7 +15,7 @@ namespace Skywalker.IdentityServer.Configuration
         /// <summary>
         /// 
         /// </summary>
-        public ICollection<string> TokenRequestSensitiveValuesFilter { get; set; } = 
+        public ICollection<string> TokenRequestSensitiveValuesFilter { get; set; } =
             new HashSet<string>
             {
                 OidcConstants.TokenRequest.ClientSecret,
@@ -28,7 +28,7 @@ namespace Skywalker.IdentityServer.Configuration
         /// <summary>
         /// 
         /// </summary>
-        public ICollection<string> AuthorizeRequestSensitiveValuesFilter { get; set; } = 
+        public ICollection<string> AuthorizeRequestSensitiveValuesFilter { get; set; } =
             new HashSet<string>
             {
                 OidcConstants.AuthorizeRequest.IdTokenHint

@@ -2,19 +2,16 @@
 // Licensed under the Apache License, Version 2.0. See LICENSE in the project root for license information.
 
 
-using Skywalker.IdentityServer.Extensions;
-using Skywalker.IdentityServer.Models;
-using Skywalker.IdentityServer.Stores;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Security.Claims;
-using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.Extensions.Logging;
-using Skywalker.IdentityServer.Validation;
+using Skywalker.IdentityServer.AspNetCore.Extensions;
+using Skywalker.IdentityServer.AspNetCore.Validation.Models;
+using Skywalker.IdentityServer.Domain.Clients;
+using Skywalker.IdentityServer.Domain.Models;
+using Skywalker.IdentityServer.Domain.Stores;
+using System.Security.Claims;
 
-namespace Skywalker.IdentityServer.Services
+namespace Skywalker.IdentityServer.AspNetCore.Services.Default
 {
     /// <summary>
     /// Default consent service
@@ -42,7 +39,7 @@ namespace Skywalker.IdentityServer.Services
         /// <param name="clock">The clock.</param>
         /// <param name="userConsentStore">The user consent store.</param>
         /// <param name="logger">The logger.</param>
-        /// <exception cref="System.ArgumentNullException">store</exception>
+        /// <exception cref="ArgumentNullException">store</exception>
         public DefaultConsentService(ISystemClock clock, IUserConsentStore userConsentStore, ILogger<DefaultConsentService> logger)
         {
             Clock = clock;
@@ -59,7 +56,7 @@ namespace Skywalker.IdentityServer.Services
         /// <returns>
         /// Boolean if consent is required.
         /// </returns>
-        /// <exception cref="System.ArgumentNullException">
+        /// <exception cref="ArgumentNullException">
         /// client
         /// or
         /// subject
@@ -86,7 +83,7 @@ namespace Skywalker.IdentityServer.Services
                 Logger.LogDebug("Client is configured to not allow remembering consent, consent is required");
                 return true;
             }
-            
+
             if (parsedScopes.Any(x => x.ParsedName != x.RawValue))
             {
                 Logger.LogDebug("Scopes contains parameterized values, consent is required");
@@ -147,7 +144,7 @@ namespace Skywalker.IdentityServer.Services
         /// <param name="subject">The subject.</param>
         /// <param name="parsedScopes">The parsed scopes.</param>
         /// <returns></returns>
-        /// <exception cref="System.ArgumentNullException">
+        /// <exception cref="ArgumentNullException">
         /// client
         /// or
         /// subject

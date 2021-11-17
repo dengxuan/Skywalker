@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 
-namespace Volo.Abp.Validation
+namespace Skywalker.Validation
 {
     public interface IHasValidationErrors
     {

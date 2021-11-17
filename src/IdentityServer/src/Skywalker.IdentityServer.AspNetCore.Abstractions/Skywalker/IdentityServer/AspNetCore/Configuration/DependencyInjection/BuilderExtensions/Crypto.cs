@@ -2,19 +2,15 @@
 // Licensed under the Apache License, Version 2.0. See LICENSE in the project root for license information.
 
 
-using Skywalker.IdentityServer;
-using Skywalker.IdentityServer.Configuration;
-using Skywalker.IdentityServer.Models;
-using Skywalker.IdentityServer.Stores;
+using Microsoft.Extensions.DependencyInjection;
 using Microsoft.IdentityModel.Tokens;
 using Newtonsoft.Json;
-using System;
-using System.IO;
-using System.Linq;
+using Skywalker.IdentityServer.AspNetCore.Models;
+using Skywalker.IdentityServer.AspNetCore.Stores;
+using Skywalker.IdentityServer.AspNetCore.Stores.InMemory;
 using System.Security.Cryptography.X509Certificates;
-using JsonWebKey = Microsoft.IdentityModel.Tokens.JsonWebKey;
 
-namespace Microsoft.Extensions.DependencyInjection
+namespace Skywalker.IdentityServer.AspNetCore.Configuration.DependencyInjection.BuilderExtensions
 {
     /// <summary>
     /// Builder extension methods for registering crypto services
@@ -30,7 +26,7 @@ namespace Microsoft.Extensions.DependencyInjection
         public static IIdentityServerBuilder AddSigningCredential(this IIdentityServerBuilder builder, SigningCredentials credential)
         {
             if (!(credential.Key is AsymmetricSecurityKey
-                || credential.Key is IdentityModel.Tokens.JsonWebKey && ((IdentityModel.Tokens.JsonWebKey)credential.Key).HasPrivateKey))
+                || credential.Key is Microsoft.IdentityModel.Tokens.JsonWebKey && ((Microsoft.IdentityModel.Tokens.JsonWebKey)credential.Key).HasPrivateKey))
             {
                 throw new InvalidOperationException("Signing key is not asymmetric");
             }
@@ -45,7 +41,7 @@ namespace Microsoft.Extensions.DependencyInjection
                 throw new InvalidOperationException("Invalid curve for signing algorithm");
             }
 
-            if (credential.Key is IdentityModel.Tokens.JsonWebKey jsonWebKey)
+            if (credential.Key is Microsoft.IdentityModel.Tokens.JsonWebKey jsonWebKey)
             {
                 if (jsonWebKey.Kty == JsonWebAlgorithmsKeyTypes.EllipticCurve && !CryptoHelper.IsValidCrvValueForAlgorithm(jsonWebKey.Crv))
                     throw new InvalidOperationException("Invalid crv value for signing algorithm");
@@ -173,7 +169,7 @@ namespace Microsoft.Extensions.DependencyInjection
             if (File.Exists(filename))
             {
                 var json = File.ReadAllText(filename);
-                var jwk = new JsonWebKey(json);
+                var jwk = new Microsoft.IdentityModel.Tokens.JsonWebKey(json);
 
                 return builder.AddSigningCredential(jwk, jwk.Alg);
             }
@@ -265,7 +261,7 @@ namespace Microsoft.Extensions.DependencyInjection
             // add signing algorithm name to key ID to allow using the same key for two different algorithms (e.g. RS256 and PS56);
             var key = new X509SecurityKey(certificate);
             key.KeyId += signingAlgorithm;
-            
+
             var keyInfo = new SecurityKeyInfo
             {
                 Key = key,

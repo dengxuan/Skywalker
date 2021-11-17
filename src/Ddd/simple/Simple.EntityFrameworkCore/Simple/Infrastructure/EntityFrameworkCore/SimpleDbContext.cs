@@ -4,7 +4,7 @@ using Simple.Domain.Users;
 using Skywalker.Data;
 using Skywalker.Ddd.EntityFrameworkCore;
 
-namespace Simple.EntityFrameworkCore
+namespace Simple.Infrastructure.EntityFrameworkCore
 {
     [ConnectionStringName("Simple")]
     public class SimpleDbContext : SkywalkerDbContext<SimpleDbContext>

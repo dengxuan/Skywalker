@@ -1,16 +1,16 @@
 // Copyright (c) Brock Allen & Dominick Baier. All rights reserved.
 // Licensed under the Apache License, Version 2.0. See LICENSE in the project root for license information.
 
-using System.Net;
-using System.Threading.Tasks;
-using Skywalker.IdentityServer.Endpoints.Results;
-using Skywalker.IdentityServer.Extensions;
-using Skywalker.IdentityServer.Hosting;
-using Skywalker.IdentityServer.Validation;
 using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
+using Skywalker.IdentityServer.AspNetCore.Endpoints.Results;
+using Skywalker.IdentityServer.AspNetCore.Extensions;
+using Skywalker.IdentityServer.AspNetCore.Hosting;
+using Skywalker.IdentityServer.AspNetCore.Validation;
+using System.Net;
 
-namespace Skywalker.IdentityServer.Endpoints
+namespace Skywalker.IdentityServer.AspNetCore.Endpoints
 {
     internal class EndSessionCallbackEndpoint : IEndpointHandler
     {
@@ -30,7 +30,7 @@ namespace Skywalker.IdentityServer.Endpoints
             if (!HttpMethods.IsGet(context.Request.Method))
             {
                 _logger.LogWarning("Invalid HTTP method for end session callback endpoint.");
-                return new StatusCodeResult(HttpStatusCode.MethodNotAllowed);
+                return new Results.StatusCodeResult(HttpStatusCode.MethodNotAllowed);
             }
 
             _logger.LogDebug("Processing signout callback request");
@@ -46,7 +46,7 @@ namespace Skywalker.IdentityServer.Endpoints
             {
                 _logger.LogError("Error validating signout callback: {error}", result.Error);
             }
-            
+
             return new EndSessionCallbackResult(result);
         }
     }

@@ -2,17 +2,18 @@
 // Licensed under the Apache License, Version 2.0. See LICENSE in the project root for license information.
 
 
-using Skywalker.IdentityServer.Configuration;
-using Skywalker.IdentityServer.Models;
 using Microsoft.AspNetCore.Http;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System;
+using Skywalker.IdentityServer.AspNetCore.Infrastructure;
+using Skywalker.IdentityServer.AspNetCore.Configuration.DependencyInjection.Options;
+using Skywalker.IdentityServer.Domain.Models;
 
 #pragma warning disable 1591
 
-namespace Skywalker.IdentityServer.Extensions
+namespace Skywalker.IdentityServer.AspNetCore.Extensions
 {
     public static class HttpResponseExtensions
     {
@@ -34,7 +35,7 @@ namespace Skywalker.IdentityServer.Extensions
         {
             if (maxAge == 0)
             {
-                SetNoCache(response);
+                response.SetNoCache();
             }
             else if (maxAge > 0)
             {

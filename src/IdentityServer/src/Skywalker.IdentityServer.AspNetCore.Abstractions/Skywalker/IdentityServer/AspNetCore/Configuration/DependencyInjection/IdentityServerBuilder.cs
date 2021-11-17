@@ -5,7 +5,7 @@
 using Microsoft.Extensions.DependencyInjection;
 using System;
 
-namespace Skywalker.IdentityServer.Configuration
+namespace Skywalker.IdentityServer.AspNetCore.Configuration.DependencyInjection
 {
     /// <summary>
     /// IdentityServer helper class for DI configuration
@@ -16,7 +16,7 @@ namespace Skywalker.IdentityServer.Configuration
         /// Initializes a new instance of the <see cref="IdentityServerBuilder"/> class.
         /// </summary>
         /// <param name="services">The services.</param>
-        /// <exception cref="System.ArgumentNullException">services</exception>
+        /// <exception cref="ArgumentNullException">services</exception>
         public IdentityServerBuilder(IServiceCollection services)
         {
             Services = services ?? throw new ArgumentNullException(nameof(services));

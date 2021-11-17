@@ -1,13 +1,11 @@
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Options;
-using System.Collections.Generic;
+using Skywalker.Ddd.DependencyInjection;
 using System.ComponentModel.DataAnnotations;
-using System.Linq;
-using Volo.Abp.Validation;
 
 namespace Skywalker.Validation
 {
-    public class ObjectValidator : IObjectValidator, ITransientDependency
+    public class ObjectValidator : IObjectValidator/*, ITransientDependency*/
     {
         protected IHybridServiceScopeFactory ServiceScopeFactory { get; }
         protected AbpValidationOptions Options { get; }

@@ -4,7 +4,7 @@ using Newtonsoft.Json.Converters;
 using Skywalker.Extensions.Timing;
 using System;
 
-namespace Skywalker.Extensions.Json.Newtonsoft
+namespace Skywalker.Extensions.Newtonsoft
 {
     public class SkywalkerJsonIsoDateTimeConverter : IsoDateTimeConverter
     {

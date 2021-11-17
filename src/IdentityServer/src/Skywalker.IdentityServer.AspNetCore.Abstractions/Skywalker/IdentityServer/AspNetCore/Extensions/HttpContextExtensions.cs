@@ -2,20 +2,21 @@
 // Licensed under the Apache License, Version 2.0. See LICENSE in the project root for license information.
 
 
-using Skywalker.IdentityServer.Configuration;
-using Skywalker.IdentityServer.Services;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.DependencyInjection;
 using System;
 using System.Threading.Tasks;
-using Skywalker.IdentityServer.Models;
-using Skywalker.IdentityServer.Stores;
 using System.Linq;
 using Microsoft.AspNetCore.Authentication;
+using Skywalker.IdentityServer.AspNetCore.Configuration.DependencyInjection.Options;
+using Skywalker.IdentityServer.AspNetCore.Models.Messages;
+using Skywalker.IdentityServer.AspNetCore.Services;
+using Skywalker.IdentityServer.AspNetCore.Models.Contexts;
+using Skywalker.IdentityServer.AspNetCore.Stores;
 
 #pragma warning disable 1591
 
-namespace Skywalker.IdentityServer.Extensions
+namespace Skywalker.IdentityServer.AspNetCore.Extensions
 {
     public static class HttpContextExtensions
     {
@@ -23,7 +24,7 @@ namespace Skywalker.IdentityServer.Extensions
         {
             var provider = context.RequestServices.GetRequiredService<IAuthenticationHandlerProvider>();
             var handler = await provider.GetHandlerAsync(context, scheme);
-            return (handler is IAuthenticationSignOutHandler);
+            return handler is IAuthenticationSignOutHandler;
         }
 
         public static void SetIdentityServerOrigin(this HttpContext context, string value)
@@ -49,7 +50,7 @@ namespace Skywalker.IdentityServer.Extensions
         {
             var options = context.RequestServices.GetRequiredService<IdentityServerOptions>();
             var request = context.Request;
-            
+
             if (options.MutualTls.Enabled && options.MutualTls.DomainName.IsPresent())
             {
                 if (!options.MutualTls.DomainName.Contains("."))
@@ -61,7 +62,7 @@ namespace Skywalker.IdentityServer.Extensions
                     }
                 }
             }
-            
+
             return request.Scheme + "://" + request.Host.Value;
         }
 
@@ -131,7 +132,7 @@ namespace Skywalker.IdentityServer.Extensions
         /// </summary>
         /// <param name="context">The context.</param>
         /// <returns></returns>
-        /// <exception cref="System.ArgumentNullException">context</exception>
+        /// <exception cref="ArgumentNullException">context</exception>
         public static string GetIdentityServerIssuerUri(this HttpContext context)
         {
             if (context == null) throw new ArgumentNullException(nameof(context));

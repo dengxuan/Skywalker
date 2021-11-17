@@ -1,5 +1,3 @@
-using Skywalker.EntityFrameworkCore;
-
 namespace Skywalker.Ddd.EntityFrameworkCore.DbContextConfiguration
 {
     public interface ISkywalkerDbContextConfigurer

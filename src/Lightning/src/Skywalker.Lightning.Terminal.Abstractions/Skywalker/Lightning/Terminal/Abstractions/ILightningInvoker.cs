@@ -1,8 +1,9 @@
-﻿using System;
+﻿using Skywalker.Lightning.Terminal;
+using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
-namespace Skywalker.Lightning.Abstractions
+namespace Skywalker.Lightning.Terminal.Abstractions
 {
     public interface ILightningInvoker
     {

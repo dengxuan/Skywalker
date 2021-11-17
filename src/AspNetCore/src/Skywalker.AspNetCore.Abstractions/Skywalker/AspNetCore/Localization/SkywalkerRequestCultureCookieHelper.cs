@@ -2,7 +2,7 @@
 using Microsoft.AspNetCore.Localization;
 using System;
 
-namespace Microsoft.AspNetCore.RequestLocalization
+namespace Skywalker.AspNetCore.Localization
 {
     public static class SkywalkerRequestCultureCookieHelper
     {

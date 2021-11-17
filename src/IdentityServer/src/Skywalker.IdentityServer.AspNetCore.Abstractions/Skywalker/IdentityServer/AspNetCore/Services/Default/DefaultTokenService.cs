@@ -3,10 +3,6 @@
 
 
 using IdentityModel;
-using Skywalker.IdentityServer.Configuration;
-using Skywalker.IdentityServer.Extensions;
-using Skywalker.IdentityServer.Models;
-using Skywalker.IdentityServer.Stores;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Logging;
@@ -15,8 +11,16 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Security.Claims;
 using System.Threading.Tasks;
+using Skywalker.IdentityServer.AspNetCore.Configuration.DependencyInjection.Options;
+using Skywalker.IdentityServer.AspNetCore.Extensions;
+using Skywalker.IdentityServer.AspNetCore;
+using Skywalker.IdentityServer.Domain.RefreshTokens;
+using Skywalker.IdentityServer.AspNetCore.Models;
+using Skywalker.IdentityServer.AspNetCore.Configuration;
+using Skywalker.IdentityServer.Domain.Models;
+using Skywalker.IdentityServer.Domain.Stores;
 
-namespace Skywalker.IdentityServer.Services
+namespace Skywalker.IdentityServer.AspNetCore.Services.Default
 {
     /// <summary>
     /// Default token service
@@ -201,7 +205,7 @@ namespace Skywalker.IdentityServer.Services
             {
                 claims.Add(new Claim(JwtClaimTypes.SessionId, request.ValidatedRequest.SessionId));
             }
-            
+
             // iat claim as required by JWT profile
             claims.Add(new Claim(JwtClaimTypes.IssuedAt, Clock.UtcNow.ToUnixTimeSeconds().ToString(),
                 ClaimValueTypes.Integer64));
@@ -246,7 +250,7 @@ namespace Skywalker.IdentityServer.Services
                     }
                 }
             }
-            
+
             return token;
         }
 
@@ -257,7 +261,7 @@ namespace Skywalker.IdentityServer.Services
         /// <returns>
         /// A security token in serialized form
         /// </returns>
-        /// <exception cref="System.InvalidOperationException">Invalid token type.</exception>
+        /// <exception cref="InvalidOperationException">Invalid token type.</exception>
         public virtual async Task<string> CreateSecurityTokenAsync(Token token)
         {
             string tokenResult;

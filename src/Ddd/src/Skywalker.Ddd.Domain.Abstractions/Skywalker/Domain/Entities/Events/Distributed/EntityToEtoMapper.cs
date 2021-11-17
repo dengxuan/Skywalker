@@ -3,10 +3,11 @@ using Microsoft.Extensions.Options;
 using Skywalker.DependencyInjection;
 using Skywalker.Ddd.ObjectMapping;
 using System.Collections.Generic;
+using Skywalker.Ddd.DependencyInjection;
 
 namespace Skywalker.Domain.Entities.Events.Distributed
 {
-    public class EntityToEtoMapper : IEntityToEtoMapper, ITransientDependency
+    public class EntityToEtoMapper : IEntityToEtoMapper/*, ITransientDependency*/
     {
         protected IHybridServiceScopeFactory HybridServiceScopeFactory { get; }
         

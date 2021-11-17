@@ -2,14 +2,15 @@
 // Licensed under the Apache License, Version 2.0. See LICENSE in the project root for license information.
 
 
-using Skywalker.IdentityServer;
-using Skywalker.IdentityServer.Configuration;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.Extensions.DependencyInjection;
 using System;
 using System.Threading.Tasks;
+using Skywalker.IdentityServer.AspNetCore.Configuration.DependencyInjection.Options;
+using Microsoft.AspNetCore.Http;
+using Skywalker.IdentityServer.AspNetCore.Extensions;
 
-namespace Microsoft.AspNetCore.Http
+namespace Skywalker.IdentityServer.AspNetCore.Extensions
 {
     /// <summary>
     /// Extension methods for signin/out using the IdentityServer authentication scheme.

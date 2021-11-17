@@ -2,10 +2,13 @@
 // Licensed under the Apache License, Version 2.0. See LICENSE in the project root for license information.
 
 
+using Skywalker.IdentityServer.Domain.ApiResources;
+using Skywalker.IdentityServer.Domain.ApiScopes;
+using Skywalker.IdentityServer.Domain.IdentityResources;
 using System.Collections.Generic;
 using System.Linq;
 
-namespace Skywalker.IdentityServer.Models
+namespace Skywalker.IdentityServer.Domain.Models
 {
     /// <summary>
     /// Models a collection of identity and API resources.
@@ -68,7 +71,7 @@ namespace Skywalker.IdentityServer.Models
         /// Gets or sets the API resources.
         /// </summary>
         public ICollection<ApiResource> ApiResources { get; set; } = new HashSet<ApiResource>();
-        
+
         /// <summary>
         /// Gets or sets the API scopes.
         /// </summary>

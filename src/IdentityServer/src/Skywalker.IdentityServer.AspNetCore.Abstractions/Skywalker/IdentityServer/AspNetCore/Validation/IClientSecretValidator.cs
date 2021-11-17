@@ -4,8 +4,9 @@
 
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
+using Skywalker.IdentityServer.AspNetCore.Validation.Models;
 
-namespace Skywalker.IdentityServer.Validation
+namespace Skywalker.IdentityServer.AspNetCore.Validation
 {
     /// <summary>
     /// Validator for handling client authentication

@@ -4,11 +4,11 @@
 
 using System.Collections.Generic;
 using System.Threading.Tasks;
-using Skywalker.IdentityServer.Extensions;
-using Skywalker.IdentityServer.Hosting;
 using Microsoft.AspNetCore.Http;
+using Skywalker.IdentityServer.AspNetCore.Extensions;
+using Skywalker.IdentityServer.AspNetCore.Hosting;
 
-namespace Skywalker.IdentityServer.Endpoints.Results
+namespace Skywalker.IdentityServer.AspNetCore.Endpoints.Results
 {
     internal class UserInfoResult : IEndpointResult
     {

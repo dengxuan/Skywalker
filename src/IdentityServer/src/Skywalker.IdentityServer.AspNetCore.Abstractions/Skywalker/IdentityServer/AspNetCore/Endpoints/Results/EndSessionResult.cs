@@ -3,23 +3,23 @@
 
 
 using System.Threading.Tasks;
-using Skywalker.IdentityServer.Validation;
-using Skywalker.IdentityServer.Hosting;
 using Microsoft.AspNetCore.Http;
-using Skywalker.IdentityServer.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using Skywalker.IdentityServer.Models;
-using Skywalker.IdentityServer.Stores;
-using Skywalker.IdentityServer.Extensions;
 using System;
 using Microsoft.AspNetCore.Authentication;
+using Skywalker.IdentityServer.AspNetCore.Configuration.DependencyInjection.Options;
+using Skywalker.IdentityServer.AspNetCore.Models.Messages;
+using Skywalker.IdentityServer.AspNetCore.Extensions;
+using Skywalker.IdentityServer.AspNetCore.Validation.Models;
+using Skywalker.IdentityServer.AspNetCore.Hosting;
+using Skywalker.IdentityServer.AspNetCore.Stores;
 
-namespace Skywalker.IdentityServer.Endpoints.Results
+namespace Skywalker.IdentityServer.AspNetCore.Endpoints.Results
 {
     /// <summary>
     /// Result for endsession
     /// </summary>
-    /// <seealso cref="Skywalker.IdentityServer.Hosting.IEndpointResult" />
+    /// <seealso cref="IEndpointResult" />
     public class EndSessionResult : IEndpointResult
     {
         private readonly EndSessionValidationResult _result;
@@ -28,7 +28,7 @@ namespace Skywalker.IdentityServer.Endpoints.Results
         /// Initializes a new instance of the <see cref="EndSessionResult"/> class.
         /// </summary>
         /// <param name="result">The result.</param>
-        /// <exception cref="System.ArgumentNullException">result</exception>
+        /// <exception cref="ArgumentNullException">result</exception>
         public EndSessionResult(EndSessionValidationResult result)
         {
             _result = result ?? throw new ArgumentNullException(nameof(result));

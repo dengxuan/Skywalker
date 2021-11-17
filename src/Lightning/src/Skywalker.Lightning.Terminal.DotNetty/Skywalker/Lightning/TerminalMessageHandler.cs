@@ -2,7 +2,7 @@
 using Skywalker.Lightning.Messaging;
 using Skywalker.Lightning.Terminal.Abstractions;
 
-namespace Skywalker.Lightning.Terminal
+namespace Skywalker.Lightning
 {
     public class TerminalMessageHandler : ChannelHandlerAdapter
     {

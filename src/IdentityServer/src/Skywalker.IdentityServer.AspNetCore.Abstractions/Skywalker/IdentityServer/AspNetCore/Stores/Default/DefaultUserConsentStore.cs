@@ -3,12 +3,13 @@
 
 
 using System.Threading.Tasks;
-using Skywalker.IdentityServer.Models;
-using Skywalker.IdentityServer.Stores.Serialization;
 using Microsoft.Extensions.Logging;
-using Skywalker.IdentityServer.Services;
+using Skywalker.IdentityServer.Domain.Stores.Serialization;
+using Skywalker.IdentityServer.Domain.Models;
+using Skywalker.IdentityServer.Domain.Stores;
+using Skywalker.IdentityServer.AspNetCore.Services;
 
-namespace Skywalker.IdentityServer.Stores
+namespace Skywalker.IdentityServer.AspNetCore.Stores.Default
 {
     /// <summary>
     /// Default user consent store.
@@ -23,10 +24,10 @@ namespace Skywalker.IdentityServer.Stores
         /// <param name="handleGenerationService">The handle generation service.</param>
         /// <param name="logger">The logger.</param>
         public DefaultUserConsentStore(
-            IPersistedGrantStore store, 
+            IPersistedGrantStore store,
             IPersistentGrantSerializer serializer,
             IHandleGenerationService handleGenerationService,
-            ILogger<DefaultUserConsentStore> logger) 
+            ILogger<DefaultUserConsentStore> logger)
             : base(IdentityServerConstants.PersistedGrantTypes.UserConsent, store, serializer, handleGenerationService, logger)
         {
         }

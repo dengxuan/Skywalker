@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace Skywalker.Caching.Abstractions
+namespace Caching.Abstractions
 {
     public interface ICachingSerializer
     {

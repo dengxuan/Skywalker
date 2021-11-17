@@ -1,6 +1,6 @@
-﻿using Skywalker.AspNetCore.Mvc.Models;
+﻿using Skywalker.AspNetCore.Mvc.Abstractions.Models;
 
-namespace Skywalker.AspNetCore.Mvc
+namespace Skywalker.AspNetCore.Mvc.Abstractions
 {
     public class SkywalkerResponseWrapperOptions
     {

@@ -1,7 +1,6 @@
-﻿using Microsoft.Extensions.DependencyInjection;
-using Skywalker.Ddd.Uow.Abstractions;
+﻿using Skywalker.Ddd.DependencyInjection;
 
-namespace Skywalker.Ddd.UnitOfWork.Abstractions;
+namespace Skywalker.Ddd.Uow.Abstractions;
 
 public interface IDatabaseApiContainer : IServiceProviderAccessor
 {

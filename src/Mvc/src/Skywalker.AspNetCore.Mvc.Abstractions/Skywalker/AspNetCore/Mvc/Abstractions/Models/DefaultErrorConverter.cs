@@ -2,7 +2,7 @@
 using System.Net;
 using System.Text;
 
-namespace Skywalker.AspNetCore.Mvc.Models
+namespace Skywalker.AspNetCore.Mvc.Abstractions.Models
 {
     //TODO@Gordon: Localizer later
     internal class DefaultErrorConverter : IExceptionToErrorConverter

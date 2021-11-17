@@ -1,7 +1,7 @@
-﻿using Skywalker.Caching.Abstractions;
+﻿using Caching.Abstractions;
 using System;
 
-namespace Skywalker.Caching
+namespace Caching
 {
     public static class SerializerExtensions
     {

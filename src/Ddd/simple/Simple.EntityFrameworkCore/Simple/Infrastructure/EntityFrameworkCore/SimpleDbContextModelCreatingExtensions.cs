@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using Simple.Domain.Users;
 using Skywalker;
 
-namespace Simple.EntityFrameworkCore
+namespace Simple.Infrastructure.EntityFrameworkCore
 {
     public static class SimpleDbContextModelCreatingExtensions
     {
@@ -11,7 +11,7 @@ namespace Simple.EntityFrameworkCore
         public static void ConfigureSimple(this ModelBuilder builder, Action<SimpleModelBuilderConfigurationOptions>? optionsAction = null)
         {
 
-            Check.NotNull(builder, nameof(builder));
+            builder.NotNull(nameof(builder));
 
             var options = new SimpleModelBuilderConfigurationOptions();
 

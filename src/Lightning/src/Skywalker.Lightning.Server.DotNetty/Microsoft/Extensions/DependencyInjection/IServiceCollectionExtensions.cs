@@ -1,5 +1,6 @@
 ﻿using Microsoft.Extensions.Hosting;
 using Skywalker.Lightning;
+using Skywalker.Lightning.Server;
 using Skywalker.Lightning.Server.Abstractions;
 
 namespace Microsoft.Extensions.DependencyInjection

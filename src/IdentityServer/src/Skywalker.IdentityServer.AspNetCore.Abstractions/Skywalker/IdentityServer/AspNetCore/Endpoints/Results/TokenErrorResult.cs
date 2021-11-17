@@ -3,15 +3,15 @@
 
 
 using System.Threading.Tasks;
-using Skywalker.IdentityServer.Hosting;
 using Microsoft.AspNetCore.Http;
-using Skywalker.IdentityServer.Extensions;
 using System;
 using System.Collections.Generic;
 using System.Text.Json.Serialization;
-using Skywalker.IdentityServer.ResponseHandling;
+using Skywalker.IdentityServer.AspNetCore.Extensions;
+using Skywalker.IdentityServer.AspNetCore.Hosting;
+using Skywalker.IdentityServer.AspNetCore.ResponseHandling.Models;
 
-namespace Skywalker.IdentityServer.Endpoints.Results
+namespace Skywalker.IdentityServer.AspNetCore.Endpoints.Results
 {
     internal class TokenErrorResult : IEndpointResult
     {
@@ -33,7 +33,7 @@ namespace Skywalker.IdentityServer.Endpoints.Results
             {
                 error = Response.Error,
                 error_description = Response.ErrorDescription,
-                
+
                 custom = Response.Custom
             };
 
@@ -47,6 +47,6 @@ namespace Skywalker.IdentityServer.Endpoints.Results
 
             [JsonExtensionData]
             public Dictionary<string, object> custom { get; set; }
-        }    
+        }
     }
 }

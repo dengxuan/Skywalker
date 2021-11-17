@@ -3,24 +3,23 @@
 
 
 using IdentityModel;
-using Skywalker.IdentityServer.Extensions;
-using Skywalker.IdentityServer.Models;
-using Skywalker.IdentityServer.Services;
-using Skywalker.IdentityServer.Stores;
-using Skywalker.IdentityServer.Validation;
 using Microsoft.Extensions.Logging;
-using System;
-using System.Collections.Generic;
-using System.Linq;
+using Skywalker.IdentityServer.AspNetCore.Extensions;
+using Skywalker.IdentityServer.AspNetCore.Models.Contexts;
+using Skywalker.IdentityServer.AspNetCore.Services;
+using Skywalker.IdentityServer.AspNetCore.Validation.Models;
+using Skywalker.IdentityServer.Domain.ApiResources;
+using Skywalker.IdentityServer.Domain.ApiScopes;
+using Skywalker.IdentityServer.Domain.Models;
+using Skywalker.IdentityServer.Domain.Stores;
 using System.Security.Claims;
-using System.Threading.Tasks;
 
-namespace Skywalker.IdentityServer.ResponseHandling
+namespace Skywalker.IdentityServer.AspNetCore.ResponseHandling.Default
 {
     /// <summary>
     /// The userinfo response generator
     /// </summary>
-    /// <seealso cref="Skywalker.IdentityServer.ResponseHandling.IUserInfoResponseGenerator" />
+    /// <seealso cref="IUserInfoResponseGenerator" />
     public class UserInfoResponseGenerator : IUserInfoResponseGenerator
     {
         /// <summary>
@@ -56,7 +55,7 @@ namespace Skywalker.IdentityServer.ResponseHandling
         /// </summary>
         /// <param name="validationResult">The userinfo request validation result.</param>
         /// <returns></returns>
-        /// <exception cref="System.InvalidOperationException">Profile service returned incorrect subject value</exception>
+        /// <exception cref="InvalidOperationException">Profile service returned incorrect subject value</exception>
         public virtual async Task<Dictionary<string, object>> ProcessAsync(UserInfoRequestValidationResult validationResult)
         {
             Logger.LogDebug("Creating userinfo response");
@@ -124,10 +123,10 @@ namespace Skywalker.IdentityServer.ResponseHandling
 
             // if we ever parameterize identity scopes, then we would need to invoke the resource validator's parse API here
             var identityResources = await Resources.FindEnabledIdentityResourcesByScopeAsync(scopes);
-            
+
             var resources = new Resources(identityResources, Enumerable.Empty<ApiResource>(), Enumerable.Empty<ApiScope>());
             var result = new ResourceValidationResult(resources);
-            
+
             return result;
         }
 

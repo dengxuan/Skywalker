@@ -1,11 +1,11 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.DependencyInjection;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using Simple.Application;
 using Simple.Application.Hosting;
-using Simple.EntityFrameworkCore;
-using Skywalker;
+using Simple.Infrastructure.EntityFrameworkCore;
 using Skywalker.Ddd.EntityFrameworkCore;
 using Skywalker.Extensions.GuidGenerator;
 

@@ -2,12 +2,10 @@
 // Licensed under the Apache License, Version 2.0. See LICENSE in the project root for license information.
 
 
-using Skywalker.IdentityServer.Extensions;
-using Skywalker.IdentityServer.ResponseHandling;
-using System;
+using Skywalker.IdentityServer.AspNetCore.ResponseHandling.Models;
 using System.Collections.Specialized;
 
-namespace Skywalker.IdentityServer.Models
+namespace Skywalker.IdentityServer.AspNetCore.Extensions
 {
     internal static class AuthorizeResponseExtensions
     {
@@ -55,7 +53,7 @@ namespace Skywalker.IdentityServer.Models
             {
                 collection.Add("state", response.State);
             }
-            
+
             if (response.SessionState.IsPresent())
             {
                 collection.Add("session_state", response.SessionState);

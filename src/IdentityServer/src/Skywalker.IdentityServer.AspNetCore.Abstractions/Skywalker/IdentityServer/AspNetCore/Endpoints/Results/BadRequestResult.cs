@@ -3,12 +3,12 @@
 
 
 using System.Threading.Tasks;
-using Skywalker.IdentityServer.Hosting;
 using Microsoft.AspNetCore.Http;
-using Skywalker.IdentityServer.Extensions;
 using System;
+using Skywalker.IdentityServer.AspNetCore.Extensions;
+using Skywalker.IdentityServer.AspNetCore.Hosting;
 
-namespace Skywalker.IdentityServer.Endpoints.Results
+namespace Skywalker.IdentityServer.AspNetCore.Endpoints.Results
 {
     internal class BadRequestResult : IEndpointResult
     {
@@ -42,6 +42,6 @@ namespace Skywalker.IdentityServer.Endpoints.Results
         {
             public string error { get; set; }
             public string error_description { get; set; }
-        }    
+        }
     }
 }

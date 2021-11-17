@@ -2,11 +2,12 @@
 // Licensed under the Apache License, Version 2.0. See LICENSE in the project root for license information.
 
 
+using Skywalker.IdentityServer.Domain.Models;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 
-namespace Skywalker.IdentityServer.Models
+namespace Skywalker.IdentityServer.Domain.ApiResources
 {
     /// <summary>
     /// Models a web API resource.
@@ -58,7 +59,7 @@ namespace Skywalker.IdentityServer.Models
         /// <param name="name">The name.</param>
         /// <param name="displayName">The display name.</param>
         /// <param name="userClaims">List of associated user claims that should be included when this resource is requested.</param>
-        /// <exception cref="System.ArgumentNullException">name</exception>
+        /// <exception cref="ArgumentNullException">name</exception>
         public ApiResource(string name, string displayName, IEnumerable<string> userClaims)
         {
             if (name.IsMissing()) throw new ArgumentNullException(nameof(name));

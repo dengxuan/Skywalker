@@ -3,13 +3,11 @@
 
 
 using Microsoft.IdentityModel.Tokens;
-using System;
-using System.Collections.Generic;
-using System.Linq;
+using Skywalker.IdentityServer.Domain.Clients;
+using Skywalker.IdentityServer.Domain.Models;
 using System.Security.Cryptography.X509Certificates;
-using System.Threading.Tasks;
 
-namespace Skywalker.IdentityServer.Models
+namespace Skywalker.IdentityServer.AspNetCore.Extensions
 {
     /// <summary>
     /// Extension methods for client.
@@ -44,7 +42,7 @@ namespace Skywalker.IdentityServer.Models
 
             var jwks = secretList
                         .Where(s => s.Type == IdentityServerConstants.SecretTypes.JsonWebKey)
-                        .Select(s => new Microsoft.IdentityModel.Tokens.JsonWebKey(s.Value))
+                        .Select(s => new JsonWebKey(s.Value))
                         .ToList();
             keys.AddRange(jwks);
 

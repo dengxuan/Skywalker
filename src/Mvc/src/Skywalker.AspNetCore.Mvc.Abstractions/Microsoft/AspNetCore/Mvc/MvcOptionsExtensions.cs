@@ -1,5 +1,5 @@
 ﻿using Skywalker.AspNetCore.Mvc.Filters;
-using Skywalker.AspNetCore.Mvc.Results;
+using Skywalker.AspNetCore.Mvc.Response;
 
 namespace Microsoft.AspNetCore.Mvc
 {

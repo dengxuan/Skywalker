@@ -2,33 +2,34 @@
 // Licensed under the Apache License, Version 2.0. See LICENSE in the project root for license information.
 
 
-using Skywalker.IdentityServer;
-using Skywalker.IdentityServer.Configuration;
-using Skywalker.IdentityServer.Configuration.DependencyInjection;
-using Skywalker.IdentityServer.Endpoints;
-using Skywalker.IdentityServer.Events;
-using Skywalker.IdentityServer.Hosting;
-using Skywalker.IdentityServer.ResponseHandling;
-using Skywalker.IdentityServer.Services;
-using Skywalker.IdentityServer.Stores;
-using Skywalker.IdentityServer.Stores.Serialization;
-using Skywalker.IdentityServer.Validation;
+using Microsoft.AspNetCore.Authentication;
+using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Cors.Infrastructure;
 using Microsoft.AspNetCore.Http;
+using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.DependencyInjection.Extensions;
 using Microsoft.Extensions.Options;
-using System;
-using System.Linq;
-using Skywalker.IdentityServer.Models;
-using Microsoft.AspNetCore.Authentication.Cookies;
-using Microsoft.AspNetCore.Authentication;
-using static Skywalker.IdentityServer.Constants;
-using Skywalker.IdentityServer.Extensions;
-using Skywalker.IdentityServer.Hosting.FederatedSignOut;
-using Skywalker.IdentityServer.Services.Default;
-using Skywalker.IdentityServer;
+using Skywalker.IdentityServer.Application;
+using Skywalker.IdentityServer.AspNetCore.Configuration.DependencyInjection.Options;
+using Skywalker.IdentityServer.AspNetCore.Endpoints;
+using Skywalker.IdentityServer.AspNetCore.Hosting;
+using Skywalker.IdentityServer.AspNetCore.Hosting.FederatedSignOut;
+using Skywalker.IdentityServer.AspNetCore.Infrastructure;
+using Skywalker.IdentityServer.AspNetCore.Models.Contexts;
+using Skywalker.IdentityServer.AspNetCore.Models.Messages;
+using Skywalker.IdentityServer.AspNetCore.ResponseHandling;
+using Skywalker.IdentityServer.AspNetCore.ResponseHandling.Default;
+using Skywalker.IdentityServer.AspNetCore.Services;
+using Skywalker.IdentityServer.AspNetCore.Services.Default;
+using Skywalker.IdentityServer.AspNetCore.Stores;
+using Skywalker.IdentityServer.AspNetCore.Stores.Default;
+using Skywalker.IdentityServer.AspNetCore.Validation;
+using Skywalker.IdentityServer.AspNetCore.Validation.Default;
+using Skywalker.IdentityServer.Domain.Stores;
+using Skywalker.IdentityServer.Domain.Stores.Serialization;
+using static Skywalker.IdentityServer.AspNetCore.Constants;
 
-namespace Microsoft.Extensions.DependencyInjection
+namespace Skywalker.IdentityServer.AspNetCore.Configuration.DependencyInjection.BuilderExtensions
 {
     /// <summary>
     /// Builder extension methods for registering core services
@@ -42,7 +43,7 @@ namespace Microsoft.Extensions.DependencyInjection
         /// <returns></returns>
         public static IIdentityServerBuilder AddRequiredPlatformServices(this IIdentityServerBuilder builder)
         {
-            builder.Services.TryAddSingleton<IHttpContextAccessor, HttpContextAccessor>();            
+            builder.Services.TryAddSingleton<IHttpContextAccessor, HttpContextAccessor>();
             builder.Services.AddOptions();
             builder.Services.AddSingleton(
                 resolver => resolver.GetRequiredService<IOptions<IdentityServerOptions>>().Value);
@@ -107,7 +108,7 @@ namespace Microsoft.Extensions.DependencyInjection
             where T : class, IEndpointHandler
         {
             builder.Services.AddTransient<T>();
-            builder.Services.AddSingleton(new Skywalker.IdentityServer.Hosting.Endpoint(name, path, typeof(T)));
+            builder.Services.AddSingleton(new Hosting.Endpoint(name, path, typeof(T)));
 
             return builder;
         }
@@ -213,7 +214,7 @@ namespace Microsoft.Extensions.DependencyInjection
             // optional
             builder.Services.TryAddTransient<ICustomTokenValidator, DefaultCustomTokenValidator>();
             builder.Services.TryAddTransient<ICustomAuthorizeRequestValidator, DefaultCustomAuthorizeRequestValidator>();
-            
+
             return builder;
         }
 

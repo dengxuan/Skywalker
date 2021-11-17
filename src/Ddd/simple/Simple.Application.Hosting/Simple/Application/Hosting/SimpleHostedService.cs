@@ -21,7 +21,7 @@ namespace Simple.Application.Hosting
         {
             try
             {
-                PagedResultDto<UserOutputDto>? userDtos = await _searcher.ExecuteQueryAsync<UserInputDto, PagedResultDto<UserOutputDto>>(new UserInputDto(""), cancellationToken);
+                PagedResultDto<UserOutputDto>? userDtos = await _searcher.ExecuteAsync<UserInputDto, PagedResultDto<UserOutputDto>>(new UserInputDto(""), cancellationToken);
             }
             catch (Exception ex)
             {

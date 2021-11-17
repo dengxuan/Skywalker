@@ -7,13 +7,13 @@ using System.Threading.Tasks;
 using Microsoft.Extensions.Logging;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Cors.Infrastructure;
-using Skywalker.IdentityServer.Configuration;
-using Skywalker.IdentityServer.Configuration.DependencyInjection;
-using Skywalker.IdentityServer.Services;
 using Microsoft.Extensions.DependencyInjection;
-using Skywalker.IdentityServer.Extensions;
+using Skywalker.IdentityServer.AspNetCore.Configuration.DependencyInjection;
+using Skywalker.IdentityServer.AspNetCore.Configuration.DependencyInjection.Options;
+using Skywalker.IdentityServer.Application;
+using Skywalker.IdentityServer.AspNetCore.Extensions;
 
-namespace Skywalker.IdentityServer.Hosting
+namespace Skywalker.IdentityServer.AspNetCore.Hosting
 {
     internal class CorsPolicyProvider : ICorsPolicyProvider
     {

@@ -4,7 +4,7 @@
 
 using System;
 
-namespace Skywalker.IdentityServer.Configuration.DependencyInjection
+namespace Skywalker.IdentityServer.AspNetCore.Configuration.DependencyInjection
 {
     internal class Decorator<TService>
     {

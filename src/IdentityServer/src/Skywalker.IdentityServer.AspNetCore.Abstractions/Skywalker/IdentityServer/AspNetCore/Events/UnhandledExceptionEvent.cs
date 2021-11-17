@@ -2,14 +2,15 @@
 // Licensed under the Apache License, Version 2.0. See LICENSE in the project root for license information.
 
 
+using Skywalker.IdentityServer.AspNetCore.Events.Infrastructure;
 using System;
 
-namespace Skywalker.IdentityServer.Events
+namespace Skywalker.IdentityServer.AspNetCore.Events
 {
     /// <summary>
     /// Event for unhandled exceptions
     /// </summary>
-    /// <seealso cref="Skywalker.IdentityServer.Events.Event" />
+    /// <seealso cref="Event" />
     public class UnhandledExceptionEvent : Event
     {
         /// <summary>
@@ -19,7 +20,7 @@ namespace Skywalker.IdentityServer.Events
         public UnhandledExceptionEvent(Exception ex)
             : base(EventCategories.Error,
                   "Unhandled Exception",
-                  EventTypes.Error, 
+                  EventTypes.Error,
                   EventIds.UnhandledException,
                   ex.Message)
         {

@@ -16,20 +16,20 @@ public class Application : IApplication
         _iocResolver = iocResolver;
     }
 
-    public Task<TOutputDto?> ExecuteQueryAsync<TOutputDto>(CancellationToken cancellationToken = default) where TOutputDto : IEntityDto
+    public Task<TOutputDto?> ExecuteAsync<TOutputDto>(CancellationToken cancellationToken = default) where TOutputDto : IEntityDto
     {
-        var handler = _iocResolver.GetRequiredService<IExecuteQueryHandlerProvider<TOutputDto>>();
+        var handler = _iocResolver.GetRequiredService<IExecuteHandlerProvider<TOutputDto>>();
         return handler.HandleAsync(cancellationToken);
     }
 
-    public Task<TOutputDto?> ExecuteQueryAsync<TInputDto, TOutputDto>(TInputDto inputDto, CancellationToken cancellationToken = default) where TInputDto : IEntityDto where TOutputDto : IEntityDto
+    public Task<TOutputDto?> ExecuteAsync<TInputDto, TOutputDto>(TInputDto inputDto, CancellationToken cancellationToken = default) where TInputDto : IEntityDto where TOutputDto : IEntityDto
     {
         if (inputDto == null)
         {
             throw new ArgumentNullException(nameof(inputDto));
         }
 
-        var handler = _iocResolver.GetRequiredService<IExecuteQueryHandlerProvider<TInputDto, TOutputDto>>();
+        var handler = _iocResolver.GetRequiredService<IExecuteHandlerProvider<TInputDto, TOutputDto>>();
         return handler.HandleAsync(inputDto, cancellationToken);
     }
 }

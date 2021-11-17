@@ -2,12 +2,9 @@
 // Licensed under the Apache License, Version 2.0. See LICENSE in the project root for license information.
 
 
-using Skywalker.IdentityServer.Extensions;
-using Skywalker.IdentityServer.Logging;
-using System;
-using System.Threading.Tasks;
+using Skywalker.IdentityServer.AspNetCore.Logging;
 
-namespace Skywalker.IdentityServer.Events
+namespace Skywalker.IdentityServer.AspNetCore.Events.Infrastructure
 {
     /// <summary>
     /// Models base class for events raised from IdentityServer.
@@ -22,7 +19,7 @@ namespace Skywalker.IdentityServer.Events
         /// <param name="type">The type.</param>
         /// <param name="id">The identifier.</param>
         /// <param name="message">The message.</param>
-        /// <exception cref="System.ArgumentNullException">category</exception>
+        /// <exception cref="ArgumentNullException">category</exception>
         protected Event(string category, string name, EventTypes type, int id, string message = null)
         {
             Category = category ?? throw new ArgumentNullException(nameof(category));

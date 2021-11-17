@@ -1,11 +1,11 @@
 ﻿using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc.ApplicationParts;
+using Microsoft.DependencyInjection;
 using Microsoft.Extensions.Configuration;
-using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Simple.Application;
-using Simple.EntityFrameworkCore;
+using Simple.Infrastructure.EntityFrameworkCore;
 using Skywalker.Ddd.EntityFrameworkCore;
 using Skywalker.Localization;
 using Skywalker.Localization.Resources.SkywalkerLocalization;

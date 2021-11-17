@@ -3,7 +3,7 @@
 
 using System.Collections.Generic;
 
-namespace Skywalker.IdentityServer.Models
+namespace Skywalker.IdentityServer.AspNetCore.Models.Contexts
 {
     /// <summary>
     /// Provides the context necessary to construct a logout notificaiton.

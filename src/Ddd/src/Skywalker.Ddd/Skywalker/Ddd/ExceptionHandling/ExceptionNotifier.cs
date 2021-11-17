@@ -5,7 +5,7 @@ using System;
 using System.Diagnostics.CodeAnalysis;
 using System.Threading.Tasks;
 
-namespace Skywalker.ExceptionHandling
+namespace Skywalker.Ddd.ExceptionHandling
 {
     public class ExceptionNotifier : IExceptionNotifier
     {
@@ -21,7 +21,7 @@ namespace Skywalker.ExceptionHandling
 
         public virtual async Task NotifyAsync([NotNull] ExceptionNotificationContext context)
         {
-            Check.NotNull(context, nameof(context));
+            context.NotNull(nameof(context));
 
             using var scope = ServiceScopeFactory.CreateScope();
             var exceptionSubscribers = scope.ServiceProvider

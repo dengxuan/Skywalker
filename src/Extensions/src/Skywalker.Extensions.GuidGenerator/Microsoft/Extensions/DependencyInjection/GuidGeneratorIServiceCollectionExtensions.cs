@@ -1,4 +1,4 @@
-﻿using Skywalker;
+﻿using Skywalker.Extensions.GuidGenerator;
 
 namespace Microsoft.Extensions.DependencyInjection
 {

@@ -2,14 +2,14 @@
 // Licensed under the Apache License, Version 2.0. See LICENSE in the project root for license information.
 
 
-using Skywalker.IdentityServer.Configuration;
-using Skywalker.IdentityServer.Extensions;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
+using Skywalker.IdentityServer.AspNetCore.Configuration.DependencyInjection.Options;
+using Skywalker.IdentityServer.AspNetCore.Extensions;
 
-namespace Skywalker.IdentityServer.Hosting
+namespace Skywalker.IdentityServer.AspNetCore.Hosting
 {
     internal class EndpointRouter : IEndpointRouter
     {
@@ -28,7 +28,7 @@ namespace Skywalker.IdentityServer.Hosting
         {
             if (context == null) throw new ArgumentNullException(nameof(context));
 
-            foreach(var endpoint in _endpoints)
+            foreach (var endpoint in _endpoints)
             {
                 var path = endpoint.Path;
                 if (context.Request.Path.Equals(path, StringComparison.OrdinalIgnoreCase))

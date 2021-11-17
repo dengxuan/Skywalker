@@ -2,16 +2,18 @@
 // Licensed under the Apache License, Version 2.0. See LICENSE in the project root for license information.
 
 
+using Skywalker.IdentityServer.AspNetCore;
+using Skywalker.IdentityServer.AspNetCore.Services;
 using System;
 using System.Security.Cryptography;
 using System.Threading.Tasks;
 
-namespace Skywalker.IdentityServer.Services
+namespace Skywalker.IdentityServer.AspNetCore.Services.Default
 {
     /// <summary>
     /// User code generator using 9 digit number
     /// </summary>
-    /// <seealso cref="Skywalker.IdentityServer.Services.IUserCodeGenerator" />
+    /// <seealso cref="IUserCodeGenerator" />
     public class NumericUserCodeGenerator : IUserCodeGenerator
     {
         /// <summary>

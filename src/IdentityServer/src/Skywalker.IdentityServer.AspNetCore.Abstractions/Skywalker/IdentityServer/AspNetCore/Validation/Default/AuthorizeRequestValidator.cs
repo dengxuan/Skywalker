@@ -3,20 +3,19 @@
 
 
 using IdentityModel;
-using Skywalker.IdentityServer.Configuration;
-using Skywalker.IdentityServer.Extensions;
-using Skywalker.IdentityServer.Models;
-using Skywalker.IdentityServer.Services;
-using Skywalker.IdentityServer.Stores;
 using Microsoft.Extensions.Logging;
-using System;
+using Skywalker.IdentityServer.AspNetCore.Configuration.DependencyInjection.Options;
+using Skywalker.IdentityServer.AspNetCore.Extensions;
+using Skywalker.IdentityServer.AspNetCore.Logging.Models;
+using Skywalker.IdentityServer.AspNetCore.Services;
+using Skywalker.IdentityServer.AspNetCore.Validation.Contexts;
+using Skywalker.IdentityServer.AspNetCore.Validation.Models;
+using Skywalker.IdentityServer.Domain.Models;
+using Skywalker.IdentityServer.Domain.Stores;
 using System.Collections.Specialized;
-using System.Linq;
 using System.Security.Claims;
-using System.Threading.Tasks;
-using Skywalker.IdentityServer.Logging.Models;
 
-namespace Skywalker.IdentityServer.Validation
+namespace Skywalker.IdentityServer.AspNetCore.Validation.Default
 {
     internal class AuthorizeRequestValidator : IAuthorizeRequestValidator
     {
@@ -65,7 +64,7 @@ namespace Skywalker.IdentityServer.Validation
                 Subject = subject ?? Principal.Anonymous,
                 Raw = parameters ?? throw new ArgumentNullException(nameof(parameters))
             };
-            
+
             // load client_id
             // client_id must always be present on the request
             var loadClientResult = await LoadClientAsync(request);
@@ -272,9 +271,9 @@ namespace Skywalker.IdentityServer.Validation
                 foreach (var key in jwtRequestValidationResult.Payload.Keys)
                 {
                     if (ignoreKeys.Contains(key)) continue;
-                    
+
                     var value = jwtRequestValidationResult.Payload[key];
-                    
+
                     var qsValue = request.Raw.Get(key);
                     if (qsValue != null)
                     {

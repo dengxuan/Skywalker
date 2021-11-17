@@ -4,7 +4,7 @@
 
 using System.Text.Json;
 
-namespace Skywalker.IdentityServer
+namespace Skywalker.IdentityServer.AspNetCore.Infrastructure
 {
     internal static class ObjectSerializer
     {
@@ -12,7 +12,7 @@ namespace Skywalker.IdentityServer
         {
             IgnoreNullValues = true
         };
-        
+
         public static string ToString(object o)
         {
             return JsonSerializer.Serialize(o, Options);

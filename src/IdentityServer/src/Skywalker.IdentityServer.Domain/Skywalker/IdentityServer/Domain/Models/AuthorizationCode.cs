@@ -7,7 +7,7 @@ using System;
 using System.Collections.Generic;
 using System.Security.Claims;
 
-namespace Skywalker.IdentityServer.Models
+namespace Skywalker.IdentityServer.Domain.Models
 {
     /// <summary>
     /// Models an authorization code.

@@ -3,14 +3,15 @@
 
 
 using System;
-using Skywalker.IdentityServer.Models;
 using Microsoft.Extensions.Logging;
 using System.Net.Http;
 using System.Threading.Tasks;
 using IdentityModel;
-using Skywalker.IdentityServer.Configuration;
+using Skywalker.IdentityServer.AspNetCore.Services;
+using Skywalker.IdentityServer.AspNetCore.Configuration.DependencyInjection.Options;
+using Skywalker.IdentityServer.Domain.Clients;
 
-namespace Skywalker.IdentityServer.Services
+namespace Skywalker.IdentityServer.AspNetCore.Services.Default
 {
     /// <summary>
     /// Default JwtRequest client
@@ -55,11 +56,11 @@ namespace Skywalker.IdentityServer.Services
                 }
 
                 _logger.LogDebug("Success http response from jwt url {url}", url);
-                
+
                 var json = await response.Content.ReadAsStringAsync();
                 return json;
             }
-                
+
             _logger.LogError("Invalid http status code {status} from jwt url {url}", response.StatusCode, url);
             return null;
         }

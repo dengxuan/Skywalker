@@ -1,19 +1,18 @@
-using Microsoft.AspNetCore.Builder;
-using Microsoft.AspNetCore.RequestLocalization;
-using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Skywalker;
+using Skywalker.AspNetCore.Localization;
 using Skywalker.AspNetCore.Tracing;
+using Skywalker.Ddd.DependencyInjection;
 using System;
 using System.Diagnostics.CodeAnalysis;
 
-namespace Microsoft.AspNetCore.Builder
+namespace Microsoft.Builder
 {
     public static class SkywalkerApplicationBuilderExtensions
     {
         public static void InitializeApplication([NotNull] this IApplicationBuilder app)
         {
-            Check.NotNull(app, nameof(app));
+            app.NotNull(nameof(app));
 
             app.ApplicationServices.GetRequiredService<ObjectAccessor<IApplicationBuilder>>().Value = app;
             var applicationLifetime = app.ApplicationServices.GetRequiredService<IHostApplicationLifetime>();

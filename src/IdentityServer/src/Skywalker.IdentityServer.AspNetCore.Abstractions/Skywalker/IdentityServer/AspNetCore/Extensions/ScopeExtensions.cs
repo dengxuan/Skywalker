@@ -2,11 +2,12 @@
 // Licensed under the Apache License, Version 2.0. See LICENSE in the project root for license information.
 
 
+using Skywalker.IdentityServer.Domain.ApiScopes;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
 
-namespace Skywalker.IdentityServer.Models
+namespace Skywalker.IdentityServer.AspNetCore.Extensions
 {
     internal static class ScopeExtensions
     {

@@ -2,14 +2,13 @@
 // Licensed under the Apache License, Version 2.0. See LICENSE in the project root for license information.
 
 
-using Skywalker.IdentityServer.Endpoints.Results;
-using Skywalker.IdentityServer.Hosting;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Logging;
+using Skywalker.IdentityServer.AspNetCore.Endpoints.Results;
+using Skywalker.IdentityServer.AspNetCore.Hosting;
 using System.Net;
-using System.Threading.Tasks;
 
-namespace Skywalker.IdentityServer.Endpoints
+namespace Skywalker.IdentityServer.AspNetCore.Endpoints
 {
     internal class CheckSessionEndpoint : IEndpointHandler
     {
@@ -37,5 +36,5 @@ namespace Skywalker.IdentityServer.Endpoints
 
             return Task.FromResult(result);
         }
-   }
+    }
 }

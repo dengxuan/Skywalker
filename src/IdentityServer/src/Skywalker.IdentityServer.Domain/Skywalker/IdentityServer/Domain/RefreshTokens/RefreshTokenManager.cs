@@ -1,6 +1,5 @@
 ﻿using Skywalker.Domain.Repositories;
 using Skywalker.Domain.Services;
-using Skywalker.IdentityServer.Models;
 
 namespace Skywalker.IdentityServer.Domain.RefreshTokens
 {

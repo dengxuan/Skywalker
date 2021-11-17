@@ -5,7 +5,7 @@
 using System.Text.Json;
 using System.Text.Json.Serialization;
 
-namespace Skywalker.IdentityServer.Logging
+namespace Skywalker.IdentityServer.AspNetCore.Logging
 {
     /// <summary>
     /// Helper to JSON serialize object data for logging.

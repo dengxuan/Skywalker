@@ -1,8 +1,7 @@
 // Copyright (c) Brock Allen & Dominick Baier. All rights reserved.
 // Licensed under the Apache License, Version 2.0. See LICENSE in the project root for license information.
 
-
-namespace Skywalker.IdentityServer.Configuration
+namespace Skywalker.IdentityServer.AspNetCore.Configuration.DependencyInjection.Options
 {
     /// <summary>
     /// The IdentityServerOptions class is the top level container for all configuration settings of IdentityServer.
@@ -40,7 +39,7 @@ namespace Skywalker.IdentityServer.Configuration
         /// Specifies whether scopes in JWTs are emitted as array or string
         /// </summary>
         public bool EmitScopesAsSpaceDelimitedStringInJwt { get; set; } = false;
-        
+
         /// <summary>
         /// Specifies whether the JWT typ and content-type for JWT secured authorization requests is checked according to IETF spec.
         /// This might break older OIDC conformant request objects.
@@ -125,7 +124,7 @@ namespace Skywalker.IdentityServer.Configuration
         /// Gets or sets the device flow options.
         /// </summary>
         public DeviceFlowOptions DeviceFlow { get; set; } = new DeviceFlowOptions();
-        
+
         /// <summary>
         /// Gets or sets the logging options
         /// </summary>

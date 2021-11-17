@@ -1,8 +1,9 @@
 using System;
 using System.Threading.Tasks;
 using Microsoft.Extensions.Caching.Distributed;
+using Skywalker.IdentityServer.AspNetCore.Services;
 
-namespace Skywalker.IdentityServer.Services
+namespace Skywalker.IdentityServer.AspNetCore.Services.Default
 {
     /// <summary>
     /// Default implementation of the replay cache using IDistributedCache
@@ -10,9 +11,9 @@ namespace Skywalker.IdentityServer.Services
     public class DefaultReplayCache : IReplayCache
     {
         private const string Prefix = nameof(DefaultReplayCache) + ":";
-        
+
         private readonly IDistributedCache _cache;
-        
+
         /// <summary>
         /// ctor
         /// </summary>
@@ -21,7 +22,7 @@ namespace Skywalker.IdentityServer.Services
         {
             _cache = cache;
         }
-        
+
         /// <inheritdoc />
         public async Task AddAsync(string purpose, string handle, DateTimeOffset expiration)
         {
@@ -29,14 +30,14 @@ namespace Skywalker.IdentityServer.Services
             {
                 AbsoluteExpiration = expiration
             };
-            
+
             await _cache.SetAsync(Prefix + purpose + handle, new byte[] { }, options);
         }
 
         /// <inheritdoc />
         public async Task<bool> ExistsAsync(string purpose, string handle)
         {
-            return (await _cache.GetAsync(Prefix + purpose + handle, default)) != null;
+            return await _cache.GetAsync(Prefix + purpose + handle, default) != null;
         }
     }
 }

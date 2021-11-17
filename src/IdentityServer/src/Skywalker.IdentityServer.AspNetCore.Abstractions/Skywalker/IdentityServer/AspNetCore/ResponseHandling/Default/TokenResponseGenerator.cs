@@ -3,23 +3,23 @@
 
 
 using IdentityModel;
-using Skywalker.IdentityServer.Extensions;
-using Skywalker.IdentityServer.Models;
-using Skywalker.IdentityServer.Services;
-using Skywalker.IdentityServer.Stores;
-using Skywalker.IdentityServer.Validation;
-using Microsoft.Extensions.Logging;
-using System;
-using System.Linq;
-using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authentication;
+using Microsoft.Extensions.Logging;
+using Skywalker.IdentityServer.AspNetCore.Extensions;
+using Skywalker.IdentityServer.AspNetCore.Models;
+using Skywalker.IdentityServer.AspNetCore.ResponseHandling.Models;
+using Skywalker.IdentityServer.AspNetCore.Services;
+using Skywalker.IdentityServer.AspNetCore.Validation;
+using Skywalker.IdentityServer.AspNetCore.Validation.Models;
+using Skywalker.IdentityServer.Domain.Clients;
+using Skywalker.IdentityServer.Domain.Stores;
 
-namespace Skywalker.IdentityServer.ResponseHandling
+namespace Skywalker.IdentityServer.AspNetCore.ResponseHandling.Default
 {
     /// <summary>
     /// The default token response generator
     /// </summary>
-    /// <seealso cref="Skywalker.IdentityServer.ResponseHandling.ITokenResponseGenerator" />
+    /// <seealso cref="ITokenResponseGenerator" />
     public class TokenResponseGenerator : ITokenResponseGenerator
     {
         /// <summary>
@@ -131,7 +131,7 @@ namespace Skywalker.IdentityServer.ResponseHandling
         /// </summary>
         /// <param name="request">The request.</param>
         /// <returns></returns>
-        /// <exception cref="System.InvalidOperationException">Client does not exist anymore.</exception>
+        /// <exception cref="InvalidOperationException">Client does not exist anymore.</exception>
         protected virtual async Task<TokenResponse> ProcessAuthorizationCodeRequestAsync(TokenRequestValidationResult request)
         {
             Logger.LogTrace("Creating response for authorization code request");
@@ -293,7 +293,7 @@ namespace Skywalker.IdentityServer.ResponseHandling
 
                 var parsedScopesResult = ScopeParser.ParseScopeValues(request.ValidatedRequest.DeviceCode.AuthorizedScopes);
                 var validatedResources = await Resources.CreateResourceValidationResult(parsedScopesResult);
-                
+
                 var tokenRequest = new TokenCreationRequest
                 {
                     Subject = request.ValidatedRequest.DeviceCode.Subject,
@@ -351,7 +351,7 @@ namespace Skywalker.IdentityServer.ResponseHandling
         /// </summary>
         /// <param name="request">The request.</param>
         /// <returns></returns>
-        /// <exception cref="System.InvalidOperationException">Client does not exist anymore.</exception>
+        /// <exception cref="InvalidOperationException">Client does not exist anymore.</exception>
         protected virtual async Task<(string accessToken, string refreshToken)> CreateAccessTokenAsync(ValidatedTokenRequest request)
         {
             TokenCreationRequest tokenRequest;
@@ -443,7 +443,7 @@ namespace Skywalker.IdentityServer.ResponseHandling
             // todo: can we just check for "openid" scope?
             //var identityResources = await Resources.FindEnabledIdentityResourcesByScopeAsync(request.RefreshToken.Scopes);
             //if (identityResources.Any())
-            
+
             if (request.RefreshToken.Scopes.Contains(OidcConstants.StandardScopes.OpenId))
             {
                 var oldAccessToken = request.RefreshToken.AccessToken;

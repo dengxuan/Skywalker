@@ -3,14 +3,15 @@
 
 
 using Microsoft.IdentityModel.Tokens;
+using Skywalker.IdentityServer.AspNetCore.Stores;
 using System.Threading.Tasks;
 
-namespace Skywalker.IdentityServer.Stores
+namespace Skywalker.IdentityServer.AspNetCore.Stores.InMemory
 {
     /// <summary>
     /// Default signing credentials store
     /// </summary>
-    /// <seealso cref="Skywalker.IdentityServer.Stores.ISigningCredentialStore" />
+    /// <seealso cref="ISigningCredentialStore" />
     public class InMemorySigningCredentialsStore : ISigningCredentialStore
     {
         private readonly SigningCredentials _credential;

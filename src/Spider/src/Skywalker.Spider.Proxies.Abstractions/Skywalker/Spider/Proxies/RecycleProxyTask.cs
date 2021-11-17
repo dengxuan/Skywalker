@@ -1,4 +1,4 @@
-﻿using Skywalker.Extensions.WheelTimer;
+﻿using Skywalker.Extensions.WheelTimer.Abstractions;
 using Skywalker.Spider.Proxies.Abstractions;
 using System;
 using System.Threading.Tasks;

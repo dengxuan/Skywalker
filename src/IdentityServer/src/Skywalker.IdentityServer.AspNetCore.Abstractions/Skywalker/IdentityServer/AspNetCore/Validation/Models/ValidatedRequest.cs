@@ -3,15 +3,17 @@
 
 
 using System.Collections.Generic;
-using Skywalker.IdentityServer.Configuration;
-using Skywalker.IdentityServer.Models;
 using System.Collections.Specialized;
 using System.Security.Claims;
 using IdentityModel;
 using System.Linq;
 using System;
+using Skywalker.IdentityServer.AspNetCore.Configuration.DependencyInjection.Options;
+using Skywalker.IdentityServer.AspNetCore.Models;
+using Skywalker.IdentityServer.Domain.Clients;
+using Skywalker.IdentityServer.Domain.Models;
 
-namespace Skywalker.IdentityServer.Validation
+namespace Skywalker.IdentityServer.AspNetCore.Validation.Models
 {
     /// <summary>
     /// Base class for a validate authorize or token request
@@ -75,7 +77,7 @@ namespace Skywalker.IdentityServer.Validation
         /// The session identifier.
         /// </value>
         public string SessionId { get; set; }
-        
+
         /// <summary>
         /// Gets or sets the identity server options.
         /// </summary>

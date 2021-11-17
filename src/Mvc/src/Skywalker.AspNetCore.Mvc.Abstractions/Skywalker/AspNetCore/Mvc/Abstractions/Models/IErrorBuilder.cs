@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace Skywalker.AspNetCore.Mvc.Models
+namespace Skywalker.AspNetCore.Mvc.Abstractions.Models
 {
     /// <summary>
     /// This interface is used to build <see cref="ErrorInformation"/> objects.

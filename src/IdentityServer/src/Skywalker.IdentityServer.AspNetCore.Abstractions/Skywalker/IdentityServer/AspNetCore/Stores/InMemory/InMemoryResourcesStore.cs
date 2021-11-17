@@ -2,14 +2,13 @@
 // Licensed under the Apache License, Version 2.0. See LICENSE in the project root for license information.
 
 
-using Skywalker.IdentityServer.Extensions;
-using Skywalker.IdentityServer.Models;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+using Skywalker.IdentityServer.Domain.ApiResources;
+using Skywalker.IdentityServer.Domain.ApiScopes;
+using Skywalker.IdentityServer.Domain.IdentityResources;
+using Skywalker.IdentityServer.Domain.Models;
+using Skywalker.IdentityServer.Domain.Stores;
 
-namespace Skywalker.IdentityServer.Stores
+namespace Skywalker.IdentityServer.AspNetCore.Stores.InMemory
 {
     /// <summary>
     /// In-memory resource store
@@ -24,8 +23,8 @@ namespace Skywalker.IdentityServer.Stores
         /// Initializes a new instance of the <see cref="InMemoryResourcesStore" /> class.
         /// </summary>
         public InMemoryResourcesStore(
-            IEnumerable<IdentityResource> identityResources = null, 
-            IEnumerable<ApiResource> apiResources = null, 
+            IEnumerable<IdentityResource> identityResources = null,
+            IEnumerable<ApiResource> apiResources = null,
             IEnumerable<ApiScope> apiScopes = null)
         {
             if (identityResources?.HasDuplicates(m => m.Name) == true)
@@ -37,7 +36,7 @@ namespace Skywalker.IdentityServer.Stores
             {
                 throw new ArgumentException("Api resources must not contain duplicate names");
             }
-            
+
             if (apiScopes?.HasDuplicates(m => m.Name) == true)
             {
                 throw new ArgumentException("Scopes must not contain duplicate names");
@@ -99,7 +98,7 @@ namespace Skywalker.IdentityServer.Stores
                 from x in _apiScopes
                 where scopeNames.Contains(x.Name)
                 select x;
-            
+
             return Task.FromResult(query);
         }
     }

@@ -2,22 +2,22 @@
 // Licensed under the Apache License, Version 2.0. See LICENSE in the project root for license information.
 
 
-using System.Threading.Tasks;
-using Skywalker.IdentityServer.Validation;
-using Skywalker.IdentityServer.ResponseHandling;
-using Microsoft.Extensions.Logging;
-using Skywalker.IdentityServer.Hosting;
-using Skywalker.IdentityServer.Endpoints.Results;
 using IdentityModel;
 using Microsoft.AspNetCore.Http;
+using Microsoft.Extensions.Logging;
+using Skywalker.IdentityServer.AspNetCore.Endpoints.Results;
+using Skywalker.IdentityServer.AspNetCore.Hosting;
+using Skywalker.IdentityServer.AspNetCore.ResponseHandling;
+using Skywalker.IdentityServer.AspNetCore.Validation;
+using Skywalker.IdentityServer.AspNetCore.Validation.Default;
 using System.Net;
 
-namespace Skywalker.IdentityServer.Endpoints
+namespace Skywalker.IdentityServer.AspNetCore.Endpoints
 {
     /// <summary>
     /// The userinfo endpoint
     /// </summary>
-    /// <seealso cref="Skywalker.IdentityServer.Hosting.IEndpointHandler" />
+    /// <seealso cref="IEndpointHandler" />
     internal class UserInfoEndpoint : IEndpointHandler
     {
         private readonly BearerTokenUsageValidator _tokenUsageValidator;
@@ -33,9 +33,9 @@ namespace Skywalker.IdentityServer.Endpoints
         /// <param name="responseGenerator">The response generator.</param>
         /// <param name="logger">The logger.</param>
         public UserInfoEndpoint(
-            BearerTokenUsageValidator tokenUsageValidator, 
-            IUserInfoRequestValidator requestValidator, 
-            IUserInfoResponseGenerator responseGenerator, 
+            BearerTokenUsageValidator tokenUsageValidator,
+            IUserInfoRequestValidator requestValidator,
+            IUserInfoResponseGenerator responseGenerator,
             ILogger<UserInfoEndpoint> logger)
         {
             _tokenUsageValidator = tokenUsageValidator;

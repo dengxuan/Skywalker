@@ -2,11 +2,14 @@
 // Licensed under the Apache License, Version 2.0. See LICENSE in the project root for license information.
 
 
-using Skywalker.IdentityServer.Models;
+using Skywalker.IdentityServer.Domain.ApiResources;
+using Skywalker.IdentityServer.Domain.ApiScopes;
+using Skywalker.IdentityServer.Domain.IdentityResources;
+using Skywalker.IdentityServer.Domain.Models;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
-namespace Skywalker.IdentityServer.Stores
+namespace Skywalker.IdentityServer.Domain.Stores
 {
     /// <summary>
     /// Resource retrieval
@@ -22,7 +25,7 @@ namespace Skywalker.IdentityServer.Stores
         /// Gets API scopes by scope name.
         /// </summary>
         Task<IEnumerable<ApiScope>> FindApiScopesByNameAsync(IEnumerable<string> scopeNames);
-        
+
         /// <summary>
         /// Gets API resources by scope name.
         /// </summary>

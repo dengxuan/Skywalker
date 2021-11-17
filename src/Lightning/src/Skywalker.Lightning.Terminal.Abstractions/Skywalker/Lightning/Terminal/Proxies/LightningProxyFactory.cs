@@ -1,11 +1,11 @@
-﻿using Skywalker.Lightning.Abstractions;
-using Skywalker.Lightning.Proxies.Abstractions;
+﻿using Skywalker.Lightning.Terminal.Abstractions;
+using Skywalker.Lightning.Terminal.Proxies.Abstractions;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
 
-namespace Skywalker.Lightning.Proxies
+namespace Skywalker.Lightning.Terminal.Proxies
 {
     public class LightningProxyFactory : ILightningProxyFactory
     {

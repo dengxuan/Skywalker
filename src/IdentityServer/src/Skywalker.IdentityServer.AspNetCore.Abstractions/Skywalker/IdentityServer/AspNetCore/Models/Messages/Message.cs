@@ -5,7 +5,7 @@
 
 using System;
 
-namespace Skywalker.IdentityServer.Models
+namespace Skywalker.IdentityServer.AspNetCore.Models.Messages
 {
     /// <summary>
     /// Base class for data that needs to be written out as cookies.
@@ -27,7 +27,7 @@ namespace Skywalker.IdentityServer.Models
         public Message()
         {
         }
-        
+
         /// <summary>
         /// Initializes a new instance of the <see cref="Message{TModel}"/> class.
         /// </summary>

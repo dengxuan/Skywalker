@@ -8,12 +8,12 @@ using System.Linq;
 using System.Security.Claims;
 using System.Threading.Tasks;
 using IdentityModel;
-using Skywalker.IdentityServer.Models;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.Extensions.Logging;
-using Skywalker.IdentityServer;
+using Skywalker.IdentityServer.AspNetCore.Services;
+using Skywalker.IdentityServer.AspNetCore.Models.Contexts;
 
-namespace Skywalker.IdentityServer.Services
+namespace Skywalker.IdentityServer.AspNetCore.Services.Default
 {
     /// <summary>
     /// Default back-channel logout notification implementation.
@@ -29,7 +29,7 @@ namespace Skywalker.IdentityServer.Services
         /// The system clock;
         /// </summary>
         protected ISystemClock Clock { get; }
-        
+
         /// <summary>
         /// The IdentityServerTools used to create and the JWT.
         /// </summary>

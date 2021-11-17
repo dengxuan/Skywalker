@@ -2,7 +2,7 @@
 using System;
 using System.Diagnostics.CodeAnalysis;
 
-namespace Skywalker.ExceptionHandling
+namespace Skywalker.Ddd.ExceptionHandling
 {
     public class ExceptionNotificationContext
     {
@@ -24,7 +24,7 @@ namespace Skywalker.ExceptionHandling
             LogLevel? logLevel = null,
             bool handled = true)
         {
-            Exception = Check.NotNull(exception, nameof(exception));
+            Exception = exception.NotNull(nameof(exception));
             LogLevel = logLevel ?? LogLevel.Error;
             Handled = handled;
         }

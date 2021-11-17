@@ -4,18 +4,19 @@ using System.Linq;
 using System.Security.Claims;
 using System.Threading.Tasks;
 using IdentityModel;
-using Skywalker.IdentityServer.Configuration;
-using Skywalker.IdentityServer.Extensions;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Logging;
 using Microsoft.AspNetCore.Authentication;
+using Skywalker.IdentityServer.AspNetCore.Extensions;
+using Skywalker.IdentityServer.AspNetCore.Configuration.DependencyInjection.Options;
+using Skywalker.IdentityServer.AspNetCore.Services;
 
-namespace Skywalker.IdentityServer.Services
+namespace Skywalker.IdentityServer.AspNetCore.Services.Default
 {
     /// <summary>
     /// Cookie-based session implementation
     /// </summary>
-    /// <seealso cref="Skywalker.IdentityServer.Services.IUserSession" />
+    /// <seealso cref="IUserSession" />
     public class DefaultUserSession : IUserSession
     {
         /// <summary>
@@ -58,7 +59,7 @@ namespace Skywalker.IdentityServer.Services
         /// The name of the check session cookie.
         /// </value>
         protected string CheckSessionCookieName => Options.Authentication.CheckSessionCookieName;
-        
+
         /// <summary>
         /// Gets the domain of the check session cookie.
         /// </summary>

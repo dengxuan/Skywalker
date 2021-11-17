@@ -2,13 +2,13 @@
 // Licensed under the Apache License, Version 2.0. See LICENSE in the project root for license information.
 
 
-using System.Threading.Tasks;
-using Skywalker.IdentityServer.Models;
-using Skywalker.IdentityServer.Stores.Serialization;
 using Microsoft.Extensions.Logging;
-using Skywalker.IdentityServer.Services;
+using Skywalker.IdentityServer.AspNetCore.Services;
+using Skywalker.IdentityServer.Domain.RefreshTokens;
+using Skywalker.IdentityServer.Domain.Stores;
+using Skywalker.IdentityServer.Domain.Stores.Serialization;
 
-namespace Skywalker.IdentityServer.Stores
+namespace Skywalker.IdentityServer.AspNetCore.Stores.Default
 {
     /// <summary>
     /// Default refresh token store.
@@ -23,10 +23,10 @@ namespace Skywalker.IdentityServer.Stores
         /// <param name="handleGenerationService">The handle generation service.</param>
         /// <param name="logger">The logger.</param>
         public DefaultRefreshTokenStore(
-            IPersistedGrantStore store, 
-            IPersistentGrantSerializer serializer, 
+            IPersistedGrantStore store,
+            IPersistentGrantSerializer serializer,
             IHandleGenerationService handleGenerationService,
-            ILogger<DefaultRefreshTokenStore> logger) 
+            ILogger<DefaultRefreshTokenStore> logger)
             : base(IdentityServerConstants.PersistedGrantTypes.RefreshToken, store, serializer, handleGenerationService, logger)
         {
         }

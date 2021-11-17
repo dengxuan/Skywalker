@@ -3,17 +3,13 @@
 
 
 using IdentityModel;
-using Skywalker.IdentityServer.Extensions;
-using Skywalker.IdentityServer.Models;
-using Skywalker.IdentityServer.Validation;
 using Microsoft.Extensions.Logging;
-using System.Collections.Generic;
-using System.Linq;
+using Skywalker.IdentityServer.AspNetCore.Extensions;
+using Skywalker.IdentityServer.AspNetCore.Models.Contexts;
+using Skywalker.IdentityServer.AspNetCore.Validation.Models;
 using System.Security.Claims;
-using System.Threading.Tasks;
-using System;
 
-namespace Skywalker.IdentityServer.Services
+namespace Skywalker.IdentityServer.AspNetCore.Services.Default
 {
     /// <summary>
     /// Default claims provider implementation
@@ -180,7 +176,7 @@ namespace Skywalker.IdentityServer.Services
                     }
                 }
 
-                foreach(var scope in resourceResult.Resources.ApiScopes)
+                foreach (var scope in resourceResult.Resources.ApiScopes)
                 {
                     // add claims configured on scopes
                     if (scope.UserClaims != null)

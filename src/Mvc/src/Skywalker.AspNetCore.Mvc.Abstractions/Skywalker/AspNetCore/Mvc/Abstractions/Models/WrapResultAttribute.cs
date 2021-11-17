@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace Skywalker.AspNetCore.Mvc.Models
+namespace Skywalker.AspNetCore.Mvc.Abstractions.Models
 {
     /// <summary>
     /// Used to determine how ABP should wrap response on the web layer.

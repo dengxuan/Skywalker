@@ -1,7 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Simple.Domain.Users;
 
-namespace Simple.EntityFrameworkCore
+namespace Simple.Infrastructure.EntityFrameworkCore
 {
     public interface ISimpleDbContext
     {

@@ -2,12 +2,11 @@
 // Licensed under the Apache License, Version 2.0. See LICENSE in the project root for license information.
 
 
-using System.Threading.Tasks;
-using Skywalker.IdentityServer.Configuration.DependencyInjection;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Http;
+using Skywalker.IdentityServer.AspNetCore.Configuration.DependencyInjection;
 
-namespace Skywalker.IdentityServer.Hosting.FederatedSignOut
+namespace Skywalker.IdentityServer.AspNetCore.Hosting.FederatedSignOut
 {
     // this intercepts IAuthenticationRequestHandler authentication handlers
     // to detect when they are handling federated signout. when they are invoked,
@@ -21,7 +20,7 @@ namespace Skywalker.IdentityServer.Hosting.FederatedSignOut
         private readonly IHttpContextAccessor _httpContextAccessor;
 
         public FederatedSignoutAuthenticationHandlerProvider(
-            Decorator<IAuthenticationHandlerProvider> decorator, 
+            Decorator<IAuthenticationHandlerProvider> decorator,
             IHttpContextAccessor httpContextAccessor)
         {
             _provider = decorator.Instance;

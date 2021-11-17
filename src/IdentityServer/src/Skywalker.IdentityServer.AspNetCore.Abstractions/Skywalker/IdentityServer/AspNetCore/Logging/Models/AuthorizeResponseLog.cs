@@ -2,10 +2,11 @@
 // Licensed under the Apache License, Version 2.0. See LICENSE in the project root for license information.
 
 
-using Skywalker.IdentityServer.Extensions;
-using Skywalker.IdentityServer.ResponseHandling;
+using Skywalker.IdentityServer.AspNetCore.Extensions;
+using Skywalker.IdentityServer.AspNetCore.Logging;
+using Skywalker.IdentityServer.AspNetCore.ResponseHandling.Models;
 
-namespace Skywalker.IdentityServer.Logging.Models
+namespace Skywalker.IdentityServer.AspNetCore.Logging.Models
 {
     internal class AuthorizeResponseLog
     {

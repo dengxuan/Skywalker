@@ -4,12 +4,12 @@
 
 using Newtonsoft.Json;
 
-namespace Skywalker.IdentityServer.Stores.Serialization
+namespace Skywalker.IdentityServer.Domain.Stores.Serialization
 {
     /// <summary>
     /// JSON-based persisted grant serializer
     /// </summary>
-    /// <seealso cref="Skywalker.IdentityServer.Stores.Serialization.IPersistentGrantSerializer" />
+    /// <seealso cref="IPersistentGrantSerializer" />
     public class PersistentGrantSerializer : IPersistentGrantSerializer
     {
         private static readonly JsonSerializerSettings _settings;

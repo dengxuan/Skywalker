@@ -3,19 +3,18 @@
 
 
 using IdentityModel;
-using Skywalker.IdentityServer.Extensions;
-using Skywalker.IdentityServer.Models;
-using Skywalker.IdentityServer.Services;
 using Microsoft.Extensions.Logging;
-using System.Linq;
-using System.Threading.Tasks;
+using Skywalker.IdentityServer.AspNetCore.Extensions;
+using Skywalker.IdentityServer.AspNetCore.Models.Contexts;
+using Skywalker.IdentityServer.AspNetCore.Services;
+using Skywalker.IdentityServer.AspNetCore.Validation.Models;
 
-namespace Skywalker.IdentityServer.Validation
+namespace Skywalker.IdentityServer.AspNetCore.Validation.Default
 {
     /// <summary>
     /// Default userinfo request validator
     /// </summary>
-    /// <seealso cref="Skywalker.IdentityServer.Validation.IUserInfoRequestValidator" />
+    /// <seealso cref="IUserInfoRequestValidator" />
     internal class UserInfoRequestValidator : IUserInfoRequestValidator
     {
         private readonly ITokenValidator _tokenValidator;
@@ -29,7 +28,7 @@ namespace Skywalker.IdentityServer.Validation
         /// <param name="profile">The profile service</param>
         /// <param name="logger">The logger.</param>
         public UserInfoRequestValidator(
-            ITokenValidator tokenValidator, 
+            ITokenValidator tokenValidator,
             IProfileService profile,
             ILogger<UserInfoRequestValidator> logger)
         {
@@ -43,7 +42,7 @@ namespace Skywalker.IdentityServer.Validation
         /// </summary>
         /// <param name="accessToken">The access token.</param>
         /// <returns></returns>
-        /// <exception cref="System.NotImplementedException"></exception>
+        /// <exception cref="NotImplementedException"></exception>
         public async Task<UserInfoRequestValidationResult> ValidateRequestAsync(string accessToken)
         {
             // the access token needs to be valid and have at least the openid scope

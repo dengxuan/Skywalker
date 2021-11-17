@@ -3,11 +3,12 @@
 
 
 using System.Collections.Generic;
-using Skywalker.IdentityServer.Models;
 using System.Threading.Tasks;
-using Skywalker.IdentityServer.Extensions;
+using Skywalker.IdentityServer.AspNetCore.Models.Messages;
+using Skywalker.IdentityServer.AspNetCore.Stores;
+using Skywalker.IdentityServer.AspNetCore.Extensions;
 
-namespace Skywalker.IdentityServer.Stores
+namespace Skywalker.IdentityServer.AspNetCore.Stores.Default
 {
     // internal just for testing
     internal class QueryStringAuthorizationParametersMessageStore : IAuthorizationParametersMessageStore

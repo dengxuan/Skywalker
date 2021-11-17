@@ -2,18 +2,21 @@
 // Licensed under the Apache License, Version 2.0. See LICENSE in the project root for license information.
 
 
-using Skywalker.IdentityServer.ResponseHandling;
-using Skywalker.IdentityServer.Services;
-using Skywalker.IdentityServer.Stores;
-using Skywalker.IdentityServer.Validation;
+using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.DependencyInjection.Extensions;
-using System;
-using System.Net.Http;
-using Skywalker.IdentityServer;
-using Skywalker.IdentityServer.Configuration;
 using Microsoft.Extensions.Logging;
+using Skywalker.IdentityServer.Application;
+using Skywalker.IdentityServer.AspNetCore.Configuration.DependencyInjection.Options;
+using Skywalker.IdentityServer.AspNetCore.ResponseHandling;
+using Skywalker.IdentityServer.AspNetCore.Services;
+using Skywalker.IdentityServer.AspNetCore.Services.Default;
+using Skywalker.IdentityServer.AspNetCore.Stores;
+using Skywalker.IdentityServer.AspNetCore.Stores.Caching;
+using Skywalker.IdentityServer.AspNetCore.Validation;
+using Skywalker.IdentityServer.AspNetCore.Validation.Default;
+using Skywalker.IdentityServer.Domain.Stores;
 
-namespace Microsoft.Extensions.DependencyInjection
+namespace Skywalker.IdentityServer.AspNetCore.Configuration.DependencyInjection.BuilderExtensions
 {
     /// <summary>
     /// Builder extension methods for registering additional services 
@@ -85,7 +88,7 @@ namespace Microsoft.Extensions.DependencyInjection
 
             return builder;
         }
-        
+
         /// <summary>
         /// Adds a resource validator.
         /// </summary>
@@ -372,7 +375,8 @@ namespace Microsoft.Extensions.DependencyInjection
             else
             {
                 httpBuilder = builder.Services.AddHttpClient(name)
-                    .ConfigureHttpClient(client => {
+                    .ConfigureHttpClient(client =>
+                    {
                         client.Timeout = TimeSpan.FromSeconds(IdentityServerConstants.HttpClients.DefaultTimeoutSeconds);
                     });
             }
@@ -382,7 +386,7 @@ namespace Microsoft.Extensions.DependencyInjection
                 var httpClientFactory = s.GetRequiredService<IHttpClientFactory>();
                 var httpClient = httpClientFactory.CreateClient(name);
                 var loggerFactory = s.GetRequiredService<ILoggerFactory>();
-                
+
                 return new DefaultBackChannelLogoutHttpClient(httpClient, loggerFactory);
             });
 
@@ -409,11 +413,12 @@ namespace Microsoft.Extensions.DependencyInjection
             else
             {
                 httpBuilder = builder.Services.AddHttpClient(name)
-                    .ConfigureHttpClient(client => {
+                    .ConfigureHttpClient(client =>
+                    {
                         client.Timeout = TimeSpan.FromSeconds(IdentityServerConstants.HttpClients.DefaultTimeoutSeconds);
                     });
             }
-            
+
             builder.Services.AddTransient<IJwtRequestUriHttpClient, DefaultJwtRequestUriHttpClient>(s =>
             {
                 var httpClientFactory = s.GetRequiredService<IHttpClientFactory>();

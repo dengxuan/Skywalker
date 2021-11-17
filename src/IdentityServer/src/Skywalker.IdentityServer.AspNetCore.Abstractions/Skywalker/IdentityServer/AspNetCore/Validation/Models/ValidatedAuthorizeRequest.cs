@@ -6,7 +6,7 @@ using IdentityModel;
 using System.Collections.Generic;
 using System.Linq;
 
-namespace Skywalker.IdentityServer.Validation
+namespace Skywalker.IdentityServer.AspNetCore.Validation.Models
 {
     /// <summary>
     /// Models a validated request to the authorize endpoint.
@@ -181,7 +181,7 @@ namespace Skywalker.IdentityServer.Validation
         /// The request object
         /// </value>
         public string RequestObject { get; set; }
-        
+
         /// <summary>
         /// Gets a value indicating whether an access token was requested.
         /// </summary>

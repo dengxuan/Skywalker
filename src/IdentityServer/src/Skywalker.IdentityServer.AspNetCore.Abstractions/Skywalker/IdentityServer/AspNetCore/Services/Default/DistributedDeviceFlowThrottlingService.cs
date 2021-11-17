@@ -4,17 +4,18 @@
 
 using System;
 using System.Threading.Tasks;
-using Skywalker.IdentityServer.Configuration;
-using Skywalker.IdentityServer.Models;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.Extensions.Caching.Distributed;
+using Skywalker.IdentityServer.AspNetCore.Configuration.DependencyInjection.Options;
+using Skywalker.IdentityServer.AspNetCore.Services;
+using Skywalker.IdentityServer.Domain.DeviceAuthorizations;
 
-namespace Skywalker.IdentityServer.Services
+namespace Skywalker.IdentityServer.AspNetCore.Services.Default
 {
     /// <summary>
     /// The default device flow throttling service using IDistributedCache.
     /// </summary>
-    /// <seealso cref="Skywalker.IdentityServer.Services.IDeviceFlowThrottlingService" />
+    /// <seealso cref="IDeviceFlowThrottlingService" />
     public class DistributedDeviceFlowThrottlingService : IDeviceFlowThrottlingService
     {
         private readonly IDistributedCache _cache;
@@ -49,9 +50,9 @@ namespace Skywalker.IdentityServer.Services
         public async Task<bool> ShouldSlowDown(string deviceCode, DeviceCode details)
         {
             if (deviceCode == null) throw new ArgumentNullException(nameof(deviceCode));
-            
+
             var key = KeyPrefix + deviceCode;
-            var options = new DistributedCacheEntryOptions {AbsoluteExpiration = _clock.UtcNow.AddSeconds(details.Lifetime)};
+            var options = new DistributedCacheEntryOptions { AbsoluteExpiration = _clock.UtcNow.AddSeconds(details.Lifetime) };
 
             var lastSeenAsString = await _cache.GetStringAsync(key);
 

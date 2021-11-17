@@ -1,7 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
-using Skywalker.AspNetCore.Mvc;
-using Skywalker.AspNetCore.Mvc.Models;
+using Skywalker.AspNetCore.Mvc.Abstractions.Models;
 
 namespace Simple.WebApi
 {

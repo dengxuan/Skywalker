@@ -2,7 +2,7 @@
 using System.Reflection;
 using System.Threading.Tasks;
 
-namespace Skywalker.Threading
+namespace Skywalker.Extensions.Threading
 {
     /// <summary>
     /// Provides some helper methods to work with async methods.
@@ -15,10 +15,10 @@ namespace Skywalker.Threading
         /// <param name="method">A method to check</param>
         public static bool IsAsyncMethod(MethodInfo method)
         {
-            return (
+            return
                 method.ReturnType == typeof(Task) ||
-                (method.ReturnType.GetTypeInfo().IsGenericType && method.ReturnType.GetGenericTypeDefinition() == typeof(Task<>))
-                );
+                method.ReturnType.GetTypeInfo().IsGenericType && method.ReturnType.GetGenericTypeDefinition() == typeof(Task<>)
+                ;
         }
 
         /// <summary>
@@ -30,7 +30,7 @@ namespace Skywalker.Threading
         public static TResult Run<TResult>(Func<Task<TResult>> func)
         {
             return Task.Run(func).Result;
-        } 
+        }
 
         /// <summary>
         /// Runs a async method synchronously.

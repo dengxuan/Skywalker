@@ -3,14 +3,14 @@
 
 
 using IdentityModel;
-using Skywalker.IdentityServer.Extensions;
-using Skywalker.IdentityServer.Validation;
+using Skywalker.IdentityServer.AspNetCore.Extensions;
+using Skywalker.IdentityServer.AspNetCore.Validation.Models;
 using System;
 using System.Collections.Generic;
 using System.Collections.Specialized;
 using System.Linq;
 
-namespace Skywalker.IdentityServer.Models
+namespace Skywalker.IdentityServer.AspNetCore.Models.Messages
 {
     /// <summary>
     /// Models the validated singout context.
@@ -78,7 +78,7 @@ namespace Skywalker.IdentityServer.Models
         /// Gets or sets the subject identifier for the user at logout time.
         /// </summary>
         public string SubjectId { get; set; }
-        
+
         /// <summary>
         /// Gets or sets the session identifier for the user at logout time.
         /// </summary>

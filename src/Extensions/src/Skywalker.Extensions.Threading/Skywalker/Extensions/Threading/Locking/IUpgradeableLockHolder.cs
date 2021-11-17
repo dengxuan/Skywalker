@@ -12,11 +12,11 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-namespace Skywalker.Threading.Locking
+namespace Skywalker.Extensions.Threading.Locking
 {
-	public interface IUpgradeableLockHolder : ILockHolder
-	{
-		ILockHolder Upgrade();
-		ILockHolder Upgrade(bool waitForLock);
-	}
+    public interface IUpgradeableLockHolder : ILockHolder
+    {
+        ILockHolder Upgrade();
+        ILockHolder Upgrade(bool waitForLock);
+    }
 }

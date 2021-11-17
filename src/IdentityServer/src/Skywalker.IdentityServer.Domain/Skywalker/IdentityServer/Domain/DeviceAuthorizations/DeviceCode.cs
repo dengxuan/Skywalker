@@ -6,7 +6,7 @@ using System;
 using System.Collections.Generic;
 using System.Security.Claims;
 
-namespace Skywalker.IdentityServer.Models
+namespace Skywalker.IdentityServer.Domain.DeviceAuthorizations
 {
     /// <summary>
     /// Represents data needed for device flow.

@@ -6,7 +6,7 @@
 using System;
 using Microsoft.AspNetCore.Http;
 
-namespace Skywalker.IdentityServer.Hosting
+namespace Skywalker.IdentityServer.AspNetCore.Hosting
 {
     public class Endpoint
     {

@@ -3,9 +3,11 @@
 
 
 using IdentityModel;
+using Skywalker.IdentityServer.AspNetCore;
+using Skywalker.IdentityServer.Domain.IdentityResources;
 using System.Linq;
 
-namespace Skywalker.IdentityServer.Models
+namespace Skywalker.IdentityServer.AspNetCore.Models
 {
     /// <summary>
     /// Convenience class that defines standard identity resources.
@@ -15,7 +17,7 @@ namespace Skywalker.IdentityServer.Models
         /// <summary>
         /// Models the standard openid scope
         /// </summary>
-        /// <seealso cref="Skywalker.IdentityServer.Models.IdentityResource" />
+        /// <seealso cref="IdentityResource" />
         public class OpenId : IdentityResource
         {
             /// <summary>
@@ -33,7 +35,7 @@ namespace Skywalker.IdentityServer.Models
         /// <summary>
         /// Models the standard profile scope
         /// </summary>
-        /// <seealso cref="Skywalker.IdentityServer.Models.IdentityResource" />
+        /// <seealso cref="IdentityResource" />
         public class Profile : IdentityResource
         {
             /// <summary>
@@ -52,7 +54,7 @@ namespace Skywalker.IdentityServer.Models
         /// <summary>
         /// Models the standard email scope
         /// </summary>
-        /// <seealso cref="Skywalker.IdentityServer.Models.IdentityResource" />
+        /// <seealso cref="IdentityResource" />
         public class Email : IdentityResource
         {
             /// <summary>
@@ -63,14 +65,14 @@ namespace Skywalker.IdentityServer.Models
                 Name = IdentityServerConstants.StandardScopes.Email;
                 DisplayName = "Your email address";
                 Emphasize = true;
-                UserClaims = (Constants.ScopeToClaimsMapping[IdentityServerConstants.StandardScopes.Email].ToList());
+                UserClaims = Constants.ScopeToClaimsMapping[IdentityServerConstants.StandardScopes.Email].ToList();
             }
         }
 
         /// <summary>
         /// Models the standard phone scope
         /// </summary>
-        /// <seealso cref="Skywalker.IdentityServer.Models.IdentityResource" />
+        /// <seealso cref="IdentityResource" />
         public class Phone : IdentityResource
         {
             /// <summary>
@@ -88,7 +90,7 @@ namespace Skywalker.IdentityServer.Models
         /// <summary>
         /// Models the standard address scope
         /// </summary>
-        /// <seealso cref="Skywalker.IdentityServer.Models.IdentityResource" />
+        /// <seealso cref="IdentityResource" />
         public class Address : IdentityResource
         {
             /// <summary>

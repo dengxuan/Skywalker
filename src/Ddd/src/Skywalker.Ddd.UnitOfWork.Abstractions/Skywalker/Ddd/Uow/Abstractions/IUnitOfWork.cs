@@ -1,6 +1,4 @@
-﻿using Skywalker.Ddd.UnitOfWork.Abstractions;
-
-namespace Skywalker.Ddd.Uow.Abstractions;
+﻿namespace Skywalker.Ddd.Uow.Abstractions;
 
 public interface IUnitOfWork : IDatabaseApiContainer, ITransactionApiContainer, IDisposable
 {

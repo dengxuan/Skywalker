@@ -5,7 +5,7 @@ using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 using System.Threading.Tasks;
 
-namespace Microsoft.AspNetCore.RequestLocalization
+namespace Skywalker.AspNetCore.Localization
 {
     public class SkywalkerRequestLocalizationMiddleware : IMiddleware
     {

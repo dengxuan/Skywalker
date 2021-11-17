@@ -2,35 +2,39 @@
 // Licensed under the Apache License, Version 2.0. See LICENSE in the project root for license information.
 
 
-using Skywalker.IdentityServer.Extensions;
-using Skywalker.IdentityServer.Models;
-using Skywalker.IdentityServer.Services;
 using System.Threading.Tasks;
-using Skywalker.IdentityServer.Configuration;
 using System.Collections.Generic;
 using System.Linq;
 using Microsoft.Extensions.Logging;
+using Skywalker.IdentityServer.AspNetCore.Extensions;
+using Skywalker.IdentityServer.Domain.ApiResources;
+using Skywalker.IdentityServer.AspNetCore.Configuration.DependencyInjection.Options;
+using Skywalker.IdentityServer.AspNetCore.Services;
+using Skywalker.IdentityServer.Domain.Models;
+using Skywalker.IdentityServer.Domain.ApiScopes;
+using Skywalker.IdentityServer.Domain.Stores;
+using Skywalker.IdentityServer.Domain.IdentityResources;
 
-namespace Skywalker.IdentityServer.Stores
+namespace Skywalker.IdentityServer.AspNetCore.Stores.Caching
 {
     /// <summary>
     /// Caching decorator for IResourceStore
     /// </summary>
     /// <typeparam name="T"></typeparam>
-    /// <seealso cref="Skywalker.IdentityServer.Stores.IResourceStore" />
+    /// <seealso cref="IResourceStore" />
     public class CachingResourceStore<T> : IResourceStore
         where T : IResourceStore
     {
         private const string AllKey = "__all__";
 
         private readonly IdentityServerOptions _options;
-        
+
         private readonly ICache<IEnumerable<IdentityResource>> _identityCache;
         private readonly ICache<IEnumerable<ApiResource>> _apiByScopeCache;
         private readonly ICache<IEnumerable<ApiScope>> _apiScopeCache;
         private readonly ICache<IEnumerable<ApiResource>> _apiResourceCache;
         private readonly ICache<Resources> _allCache;
-        
+
         private readonly IResourceStore _inner;
         private readonly ILogger _logger;
 
@@ -45,8 +49,8 @@ namespace Skywalker.IdentityServer.Stores
         /// <param name="scopeCache"></param>
         /// <param name="allCache">All cache.</param>
         /// <param name="logger">The logger.</param>
-        public CachingResourceStore(IdentityServerOptions options, T inner, 
-            ICache<IEnumerable<IdentityResource>> identityCache, 
+        public CachingResourceStore(IdentityServerOptions options, T inner,
+            ICache<IEnumerable<IdentityResource>> identityCache,
             ICache<IEnumerable<ApiResource>> apiByScopeCache,
             ICache<IEnumerable<ApiResource>> apisCache,
             ICache<IEnumerable<ApiScope>> scopeCache,

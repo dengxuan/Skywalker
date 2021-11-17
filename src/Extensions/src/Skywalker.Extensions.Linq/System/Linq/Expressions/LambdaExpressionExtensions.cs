@@ -1,10 +1,9 @@
-﻿namespace System.Linq.Expressions
+﻿namespace System.Linq.Expressions;
+
+internal static class LambdaExpressionExtensions
 {
-    internal static class LambdaExpressionExtensions
+    public static Type GetReturnType(this LambdaExpression lambdaExpression)
     {
-        public static Type GetReturnType(this LambdaExpression lambdaExpression)
-        {
-            return lambdaExpression.ReturnType;
-        }
+        return lambdaExpression.ReturnType;
     }
 }

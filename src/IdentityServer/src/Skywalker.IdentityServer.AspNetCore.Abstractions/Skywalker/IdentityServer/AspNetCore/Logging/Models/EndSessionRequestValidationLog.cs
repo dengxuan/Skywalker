@@ -4,10 +4,11 @@
 
 using System.Collections.Generic;
 using IdentityModel;
-using Skywalker.IdentityServer.Extensions;
-using Skywalker.IdentityServer.Validation;
+using Skywalker.IdentityServer.AspNetCore.Extensions;
+using Skywalker.IdentityServer.AspNetCore.Logging;
+using Skywalker.IdentityServer.AspNetCore.Validation.Models;
 
-namespace Skywalker.IdentityServer.Logging.Models
+namespace Skywalker.IdentityServer.AspNetCore.Logging.Models
 {
     internal class EndSessionRequestValidationLog
     {
@@ -25,7 +26,7 @@ namespace Skywalker.IdentityServer.Logging.Models
             Raw = request.Raw.ToScrubbedDictionary(OidcConstants.EndSessionRequest.IdTokenHint);
 
             SubjectId = "unknown";
-            
+
             var subjectClaim = request.Subject?.FindFirst(JwtClaimTypes.Subject);
             if (subjectClaim != null)
             {

@@ -2,9 +2,9 @@
 // Licensed under the Apache License, Version 2.0. See LICENSE in the project root for license information.
 
 
-using Skywalker.IdentityServer.Models;
+using Skywalker.IdentityServer.Domain.Clients;
 
-namespace Skywalker.IdentityServer.Validation
+namespace Skywalker.IdentityServer.AspNetCore.Validation.Models
 {
     /// <summary>
     /// Models the validation result of access tokens and id tokens.
@@ -18,7 +18,7 @@ namespace Skywalker.IdentityServer.Validation
         /// The token type hint.
         /// </value>
         public string TokenTypeHint { get; set; }
-        
+
         /// <summary>
         /// Gets or sets the token.
         /// </summary>

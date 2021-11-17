@@ -5,7 +5,7 @@ using System.Collections.Generic;
 
 namespace Skywalker.Data
 {
-    public class DefaultConnectionStringResolver : IConnectionStringResolver, ITransientDependency
+    public class DefaultConnectionStringResolver : IConnectionStringResolver/*, ITransientDependency*/
     {
         protected SkywalkerDbConnectionOptions Options { get; }
 

@@ -2,14 +2,15 @@
 // Licensed under the Apache License, Version 2.0. See LICENSE in the project root for license information.
 
 
-using Skywalker.IdentityServer.Configuration;
-using Microsoft.Extensions.Configuration;
-using System;
-using Microsoft.AspNetCore.Http;
-using Microsoft.Extensions.Options;
 using Microsoft.AspNetCore.Authentication.OpenIdConnect;
+using Microsoft.AspNetCore.Http;
+using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Options;
+using Skywalker.IdentityServer.AspNetCore.Configuration.DependencyInjection.BuilderExtensions;
+using Skywalker.IdentityServer.AspNetCore.Configuration.DependencyInjection.Options;
 
-namespace Microsoft.Extensions.DependencyInjection
+namespace Skywalker.IdentityServer.AspNetCore.Configuration.DependencyInjection
 {
     /// <summary>
     /// DI extension methods for adding IdentityServer

@@ -2,7 +2,7 @@
 using System.Collections.Specialized;
 using System.Diagnostics;
 
-namespace Skywalker.IdentityServer.Extensions
+namespace Skywalker.IdentityServer.AspNetCore.Extensions
 {
     internal static class StringExtensions
     {

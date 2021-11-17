@@ -3,13 +3,14 @@
 
 
 using System.Threading.Tasks;
-using Skywalker.IdentityServer.Models;
-using Skywalker.IdentityServer.Stores.Serialization;
 using Microsoft.Extensions.Logging;
-using Skywalker.IdentityServer.Extensions;
-using Skywalker.IdentityServer.Services;
+using Skywalker.IdentityServer.Domain.Stores.Serialization;
+using Skywalker.IdentityServer.Domain.Stores;
+using Skywalker.IdentityServer.AspNetCore.Services;
+using Skywalker.IdentityServer.Domain.Models;
+using Skywalker.IdentityServer.AspNetCore.Extensions;
 
-namespace Skywalker.IdentityServer.Stores
+namespace Skywalker.IdentityServer.AspNetCore.Stores.Default
 {
     /// <summary>
     /// Default authorization code store.

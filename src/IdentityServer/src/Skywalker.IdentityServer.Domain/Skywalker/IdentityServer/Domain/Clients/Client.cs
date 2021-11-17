@@ -8,8 +8,9 @@ using System;
 using System.Collections;
 using System.Diagnostics;
 using Skywalker.Domain.Entities;
+using Skywalker.IdentityServer.Domain.Models;
 
-namespace Skywalker.IdentityServer.Models
+namespace Skywalker.IdentityServer.Domain.Clients
 {
     /// <summary>
     /// Models an OpenID Connect or OAuth2 client
@@ -316,7 +317,7 @@ namespace Skywalker.IdentityServer.Models
         /// Validates the grant types.
         /// </summary>
         /// <param name="grantTypes">The grant types.</param>
-        /// <exception cref="System.InvalidOperationException">
+        /// <exception cref="InvalidOperationException">
         /// Grant types list is empty
         /// or
         /// Grant types cannot contain spaces

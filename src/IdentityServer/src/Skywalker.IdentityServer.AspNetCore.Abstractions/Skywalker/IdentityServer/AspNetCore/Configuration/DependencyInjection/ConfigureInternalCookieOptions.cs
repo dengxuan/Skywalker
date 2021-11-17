@@ -2,13 +2,12 @@
 // Licensed under the Apache License, Version 2.0. See LICENSE in the project root for license information.
 
 
-using Skywalker.IdentityServer.Extensions;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
-using System;
+using Skywalker.IdentityServer.AspNetCore.Configuration.DependencyInjection.Options;
 
-namespace Skywalker.IdentityServer.Configuration
+namespace Skywalker.IdentityServer.AspNetCore.Configuration.DependencyInjection
 {
     internal class ConfigureInternalCookieOptions : IConfigureNamedOptions<CookieAuthenticationOptions>
     {

@@ -11,7 +11,7 @@ namespace Skywalker.Domain.Services
 
     public abstract class DomainService<TEntity> : DomainService<TEntity, Guid>, IDomainService<TEntity, Guid> where TEntity : class, IEntity<Guid>
     {
-        protected DomainService(IRepository<TEntity, Guid> repository) : base(repository)
+        protected DomainService(IRepository<TEntity, Guid> entities) : base(entities)
         {
         }
     }
@@ -19,21 +19,21 @@ namespace Skywalker.Domain.Services
     public abstract class DomainService<TEntity, TKey> : DomainService where TEntity : class, IEntity<TKey>
     {
 
-        protected IRepository<TEntity, TKey> Repository { get; }
+        protected IRepository<TEntity, TKey> Entities { get; }
 
-        protected DomainService(IRepository<TEntity, TKey> repository)
+        protected DomainService(IRepository<TEntity, TKey> entities)
         {
-            Repository = repository;
+            Entities = entities;
         }
 
         public Task<TEntity> GetAsync(TKey id)
         {
-            return Repository.GetAsync(predicate => predicate.Id!.Equals(id));
+            return Entities.GetAsync(predicate => predicate.Id!.Equals(id));
         }
 
         public Task<TEntity?> FindAsync(TKey id)
         {
-            return Repository.FindAsync(predicate => predicate.Id!.Equals(id));
+            return Entities.FindAsync(predicate => predicate.Id!.Equals(id));
         }
     }
 }

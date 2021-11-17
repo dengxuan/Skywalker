@@ -1,10 +1,10 @@
 ﻿// Licensed under the Apache License, Version 2.0. See LICENSE in the project root for license information.
 using System.Collections.Generic;
-using Skywalker.IdentityServer.Models;
 using Microsoft.AspNetCore.Http;
 using System.Threading.Tasks;
+using Skywalker.IdentityServer.AspNetCore.Models;
 
-namespace Skywalker.IdentityServer.Validation
+namespace Skywalker.IdentityServer.AspNetCore.Validation
 {
     /// <summary>
     /// Parser for finding the best secret in an Enumerable List

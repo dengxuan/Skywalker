@@ -3,21 +3,19 @@
 
 
 using IdentityModel;
-using Skywalker.IdentityServer.Extensions;
-using Microsoft.Extensions.Logging;
-using System.Collections.Specialized;
-using System.Linq;
-using System.Security.Claims;
-using System.Threading.Tasks;
-using Skywalker.IdentityServer.Configuration;
-using Skywalker.IdentityServer.Services;
-using Skywalker.IdentityServer.Stores;
 using Microsoft.AspNetCore.Http;
-using System;
-using Skywalker.IdentityServer.Logging.Models;
-using Skywalker.IdentityServer.Models;
+using Microsoft.Extensions.Logging;
+using Skywalker.IdentityServer.AspNetCore.Configuration.DependencyInjection.Options;
+using Skywalker.IdentityServer.AspNetCore.Extensions;
+using Skywalker.IdentityServer.AspNetCore.Logging.Models;
+using Skywalker.IdentityServer.AspNetCore.Models.Contexts;
+using Skywalker.IdentityServer.AspNetCore.Services;
+using Skywalker.IdentityServer.AspNetCore.Stores;
+using Skywalker.IdentityServer.AspNetCore.Validation.Models;
+using System.Collections.Specialized;
+using System.Security.Claims;
 
-namespace Skywalker.IdentityServer.Validation
+namespace Skywalker.IdentityServer.AspNetCore.Validation.Default
 {
     /// <summary>
     /// Validates requests to the end session endpoint.

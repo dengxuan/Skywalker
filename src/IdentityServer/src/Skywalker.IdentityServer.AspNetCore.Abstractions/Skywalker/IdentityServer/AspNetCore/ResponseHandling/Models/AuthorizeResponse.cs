@@ -2,13 +2,11 @@
 // Licensed under the Apache License, Version 2.0. See LICENSE in the project root for license information.
 
 
-using Skywalker.IdentityServer.Extensions;
-using Skywalker.IdentityServer.Validation;
-using System;
+using Skywalker.IdentityServer.AspNetCore.Validation.Models;
 
 #pragma warning disable 1591
 
-namespace Skywalker.IdentityServer.ResponseHandling
+namespace Skywalker.IdentityServer.AspNetCore.ResponseHandling.Models
 {
     public class AuthorizeResponse
     {
