@@ -24,9 +24,9 @@
 		<PackageRequireLicenseAcceptance>false</PackageRequireLicenseAcceptance>
 		<NeutralLanguage>zh-Hans</NeutralLanguage>
 
-		<RestoreAdditionalProjectSources>
-			https://dotnet.myget.org/F/aspnetcore-dev/api/v3/index.json;
-			https://dotnet.myget.org/F/blazor-dev/api/v3/index.json;
-		</RestoreAdditionalProjectSources>
+	</PropertyGroup>
+
+	<PropertyGroup>
+		<LibrariesProjectRoot>$([MSBuild]::NormalizeDirectory('$(MSBuildThisFileDirectory)', 'src', 'libraries'))</LibrariesProjectRoot>
 	</PropertyGroup>
 </Project>

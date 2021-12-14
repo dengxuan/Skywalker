@@ -1,21 +1,26 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
 	<PropertyGroup>
+		<TargetFrameworks>$(NetCoreAppCurrent);$(NetCoreAppMinimum);netstandard2.0;$(NetFrameworkMinimum)</TargetFrameworks>
 		<RootNamespace></RootNamespace>
 	</PropertyGroup>
 
 	<ItemGroup>
 		<PackageReference Include="Microsoft.Extensions.Options.ConfigurationExtensions" Version="6.0.0" />
-		<PackageReference Include="Skywalker.EventBus.Abstractions" Version="1.0.1" />
 		<PackageReference Include="Skywalker.ExceptionHandler.Abstractions" Version="1.0.1" />
-		<PackageReference Include="Skywalker.Extensions.GuidGenerator" Version="1.0.1" />
-		<PackageReference Include="Skywalker.Extensions.Threading" Version="1.0.1" />
-		<PackageReference Include="Skywalker.Extensions.Timing" Version="1.0.1" />
 		<PackageReference Include="System.ComponentModel.Annotations" Version="5.0.0" />
 	</ItemGroup>
 
 	<ItemGroup>
-		<AnalyzerReference Include="..\gen\Skywalker.Ddd.Domain.Generators.Roslyn3.11.csproj" />
+		<ProjectReference Include="$(LibrariesProjectRoot)Skywalker.Extensions.Linq\src\Skywalker.Extensions.Linq.csproj" />
+		<ProjectReference Include="$(LibrariesProjectRoot)Skywalker.Extensions.Timing\src\Skywalker.Extensions.Timing.csproj" />
+		<ProjectReference Include="$(LibrariesProjectRoot)Skywalker.Extensions.Threading\src\Skywalker.Extensions.Threading.csproj" />
+		<ProjectReference Include="$(LibrariesProjectRoot)Skywalker.EventBus.Abstractions\src\Skywalker.EventBus.Abstractions.csproj" />
+		<ProjectReference Include="$(LibrariesProjectRoot)Skywalker.Extensions.GuidGenerator\src\Skywalker.Extensions.GuidGenerator.csproj" />
+	</ItemGroup>
+
+	<ItemGroup>
+		<AnalyzerReference Include="..\gen\Skywalker.Ddd.Domain.Generators.Roslyn3.11.csproj" Condition="'$(DotNetBuildFromSource)' != 'true'" />
 		<AnalyzerReference Include="..\gen\Skywalker.Ddd.Domain.Generators.Roslyn4.0.csproj" />
 	</ItemGroup>
 

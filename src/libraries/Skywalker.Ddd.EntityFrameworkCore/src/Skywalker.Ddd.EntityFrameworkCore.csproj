@@ -1,0 +1,33 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+	<PropertyGroup>
+		<TargetFrameworks>$(NetCoreAppCurrent);$(NetCoreAppMinimum);netstandard2.0;$(NetFrameworkMinimum)</TargetFrameworks>
+		<RootNamespace></RootNamespace>
+	</PropertyGroup>
+
+	<ItemGroup>
+		<ProjectReference Include="$(LibrariesProjectRoot)Skywalker.Ddd.Domain.Abstractions\src\Skywalker.Ddd.Domain.Abstractions.csproj" />
+		<ProjectReference Include="$(LibrariesProjectRoot)Skywalker.Ddd.UnitOfWork.Abstractions\src\Skywalker.Ddd.UnitOfWork.Abstractions.csproj" />
+	</ItemGroup>
+
+	<ItemGroup Condition="'$(TargetFramework)' == 'net6.0'">
+		<PackageReference Include="Microsoft.EntityFrameworkCore" Version="6.0.0" />
+		<PackageReference Include="Microsoft.EntityFrameworkCore.Relational" Version="6.0.0" />
+	</ItemGroup>
+
+	<ItemGroup Condition="'$(TargetFramework)' == 'net5.0' OR '$(TargetFramework)' == 'netstandard2.1'">
+		<PackageReference Include="Microsoft.EntityFrameworkCore" Version="5.0.12" />
+		<PackageReference Include="Microsoft.EntityFrameworkCore.Relational" Version="5.0.12" />
+	</ItemGroup>
+
+	<ItemGroup Condition="'$(TargetFramework)' == 'netstandard2.1'">
+		<PackageReference Include="Newtonsoft.Json" Version="13.0.1" />
+	</ItemGroup>
+	
+	<ItemGroup Condition="'$(TargetFramework)' == 'netstandard2.0'">
+		<PackageReference Include="Newtonsoft.Json" Version="13.0.1" />
+		<PackageReference Include="Microsoft.EntityFrameworkCore" Version="3.1.21" />
+		<PackageReference Include="Microsoft.EntityFrameworkCore.Relational" Version="3.1.21" />
+	</ItemGroup>
+
+</Project>

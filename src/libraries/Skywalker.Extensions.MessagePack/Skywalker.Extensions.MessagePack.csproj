@@ -1,0 +1,14 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+	<PropertyGroup>
+		<RootNamespace></RootNamespace>
+	</PropertyGroup>
+
+	<ItemGroup>
+		<PackageReference Include="MessagePack" Version="2.3.85" />
+	</ItemGroup>
+	<ItemGroup>
+		<ProjectReference Include="..\Skywalker.Extensions.Universal\Skywalker.Extensions.Universal.csproj" />
+	</ItemGroup>
+
+</Project>

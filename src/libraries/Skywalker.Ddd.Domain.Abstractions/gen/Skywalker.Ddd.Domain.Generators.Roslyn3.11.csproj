@@ -1,14 +1,13 @@
 <Project Sdk="Microsoft.NET.Sdk">
 
-    <PropertyGroup>
-        <AnalyzerRoslynVersion>3.11</AnalyzerRoslynVersion>
-        <RoslynApiVersion>$(MicrosoftCodeAnalysisCSharpWorkspacesVersion_3_11)</RoslynApiVersion>
-    </PropertyGroup>
+	<PropertyGroup>
+		<AnalyzerRoslynVersion>3.11</AnalyzerRoslynVersion>
+		<RoslynApiVersion>$(MicrosoftCodeAnalysisCSharpWorkspacesVersion_3_11)</RoslynApiVersion>
+	</PropertyGroup>
 
     <Import Project="Skywalker.Ddd.Domain.Generators.targets" />
 
     <ItemGroup>
-        <Compile Remove="LoggerMessageGenerator.Roslyn3.11.cs" />
+        <Compile Remove="DddDomainGenerator.Roslyn4.0.cs" />
     </ItemGroup>
-
 </Project>

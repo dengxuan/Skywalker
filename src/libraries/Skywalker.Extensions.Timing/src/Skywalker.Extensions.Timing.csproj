@@ -1,0 +1,18 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+	<PropertyGroup>
+		<TargetFrameworks>$(NetCoreAppCurrent);$(NetCoreAppMinimum);netstandard2.0;$(NetFrameworkMinimum)</TargetFrameworks>
+		<RootNamespace></RootNamespace>
+	</PropertyGroup>
+
+	<ItemGroup>
+		<PackageReference Include="Microsoft.Extensions.DependencyInjection.Abstractions" Version="6.0.0" />
+		<PackageReference Include="Microsoft.Extensions.Options" Version="6.0.0" />
+		<PackageReference Include="TimeZoneConverter" Version="3.5.0" />
+	</ItemGroup>
+
+	<ItemGroup>
+		<ProjectReference Include="$(LibrariesProjectRoot)Skywalker.Extensions.Universal\src\Skywalker.Extensions.Universal.csproj" />
+	</ItemGroup>
+
+</Project>
