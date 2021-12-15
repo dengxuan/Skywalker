@@ -1,0 +1,18 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+	
+	<PropertyGroup>
+		<TargetFrameworks>$(NetCoreAppCurrent);$(NetCoreAppMinimum);netstandard2.0;$(NetFrameworkMinimum)</TargetFrameworks>
+		<RootNamespace></RootNamespace>
+		<DisableImplicitAssemblyReferences>false</DisableImplicitAssemblyReferences>
+	</PropertyGroup>
+
+	<ItemGroup Condition=" '$(TargetFramework)' == 'netstandard2.0'">
+	  <PackageReference Include="System.Threading.Tasks.Extensions" Version="4.5.4" />
+	</ItemGroup>
+
+	<ItemGroup>
+		<AnalyzerReference Include="..\gen\Skywalker.Ddd.Application.Generators.Roslyn3.11.csproj" Condition="'$(DotNetBuildFromSource)' != 'true'" />
+		<AnalyzerReference Include="..\gen\Skywalker.Ddd.Application.Generators.Roslyn4.0.csproj" />
+	</ItemGroup>
+
+</Project>
