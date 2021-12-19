@@ -46,11 +46,6 @@ public sealed partial class ApplicationGenerator : IIncrementalGenerator
     {
         var model = new { GeneratorVersion = generatorVersion };
 
-        var file = @"Templates/ApplicationOptionsAttribute.sbn-cs";
-        var template = Template.Parse(EmbeddedResource.GetContent(file), file);
-        var output = template.Render(model, member => member.Name);
-        context.AddSource("ApplicationOptionsAttribute.g.cs", SourceText.From(output, Encoding.UTF8));
     }
 
-    public void Initialize(IncrementalGeneratorInitializationContext context) => throw new NotImplementedException();
 }
