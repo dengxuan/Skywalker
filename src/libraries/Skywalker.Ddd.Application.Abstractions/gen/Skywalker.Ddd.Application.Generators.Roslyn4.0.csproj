@@ -1,8 +1,8 @@
-<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk">
 
 	<PropertyGroup>
 		<AnalyzerRoslynVersion>4.0</AnalyzerRoslynVersion>
-		<RoslynApiVersion>$(MicrosoftCodeAnalysisCSharpWorkspacesVersion)</RoslynApiVersion>
+		<RoslynApiVersion>4.0.1</RoslynApiVersion>
 		<DefineConstants>$(DefineConstants);ROSLYN4_0_OR_GREATER</DefineConstants>
 	</PropertyGroup>
 
