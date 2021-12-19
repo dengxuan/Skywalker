@@ -1,0 +1,22 @@
+<Project TreatAsLocalProperty="TargetOS">
+  <PropertyGroup>
+    <SkipInferTargetOSName>true</SkipInferTargetOSName>
+    <DisableArcadeTestFramework>true</DisableArcadeTestFramework>
+
+    <_projectDirName>$([System.IO.Path]::GetFileName('$(MSBuildProjectDirectory)'))</_projectDirName>
+    <IsReferenceAssembly Condition="'$(_projectDirName)' == 'ref'">true</IsReferenceAssembly>
+    <IsSourceProject Condition="'$(_projectDirName)' == 'src'">true</IsSourceProject>
+    <IsGeneratorProject Condition="'$(_projectDirName)' == 'gen'">true</IsGeneratorProject>
+    <!-- Set OutDirName to change BaseOutputPath and BaseIntermediateOutputPath to include the ref subfolder. -->
+    <OutDirName Condition="'$(IsReferenceAssembly)' == 'true'">$(MSBuildProjectName)$([System.IO.Path]::DirectorySeparatorChar)ref</OutDirName>
+  </PropertyGroup>
+
+  <Import Project="..\..\Directory.Build.props" />
+
+  <PropertyGroup>
+    <BeforeTargetFrameworkInferenceTargets>$(RepositoryEngineeringRoot)BeforeTargetFrameworkInference.targets</BeforeTargetFrameworkInferenceTargets>
+    <!-- Build all .NET Framework configurations when net48 is passed in. This is for convenience. -->
+    <AdditionalBuildTargetFrameworks Condition="'$(BuildTargetFramework)' == 'net48'">net462;net47;net471;net472</AdditionalBuildTargetFrameworks>
+  </PropertyGroup>
+
+</Project>

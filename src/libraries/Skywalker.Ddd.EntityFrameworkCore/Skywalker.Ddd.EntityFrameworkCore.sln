@@ -19,9 +19,17 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Skywalker.Ddd.UnitOfWork.Ab
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Skywalker.Extensions.Universal", "..\Skywalker.Extensions.Universal\src\Skywalker.Extensions.Universal.csproj", "{3497FAE0-1183-453E-A84C-45A82791BB9F}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Skywalker.Extensions.Linq", "..\Skywalker.Extensions.Linq\src\Skywalker.Extensions.Linq.csproj", "{3020050D-DF58-401D-A254-1848126CC926}"
-EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{B85045AC-C36D-4F83-AB31-7043617E5ADF}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "gen", "gen", "{4E1062F1-0BD9-44DA-B532-F7F2980C9B35}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Skywalker.Ddd.EntityFrameworkCore.Generators.Roslyn3.11", "gen\Skywalker.Ddd.EntityFrameworkCore.Generators.Roslyn3.11.csproj", "{CCE87A1D-609F-4E24-ACB2-9A4060FF7B8A}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Skywalker.Ddd.EntityFrameworkCore.Generators.Roslyn4.0", "gen\Skywalker.Ddd.EntityFrameworkCore.Generators.Roslyn4.0.csproj", "{E418BF80-1970-4C03-AC44-4BAAA1AF4D89}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "tests", "tests", "{3EC84C2D-1266-4B2F-B72C-E26897E90D73}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Skywalker.Ddd.EntityFrameworkCoreTest", "tests\Skywalker.Ddd.EntityFrameworkCoreTest\Skywalker.Ddd.EntityFrameworkCoreTest.csproj", "{F3E3128F-89B9-493D-B3F8-6FEDF5D502A8}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -61,10 +69,18 @@ Global
 		{3497FAE0-1183-453E-A84C-45A82791BB9F}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{3497FAE0-1183-453E-A84C-45A82791BB9F}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{3497FAE0-1183-453E-A84C-45A82791BB9F}.Release|Any CPU.Build.0 = Release|Any CPU
-		{3020050D-DF58-401D-A254-1848126CC926}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{3020050D-DF58-401D-A254-1848126CC926}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{3020050D-DF58-401D-A254-1848126CC926}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{3020050D-DF58-401D-A254-1848126CC926}.Release|Any CPU.Build.0 = Release|Any CPU
+		{CCE87A1D-609F-4E24-ACB2-9A4060FF7B8A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{CCE87A1D-609F-4E24-ACB2-9A4060FF7B8A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{CCE87A1D-609F-4E24-ACB2-9A4060FF7B8A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{CCE87A1D-609F-4E24-ACB2-9A4060FF7B8A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{E418BF80-1970-4C03-AC44-4BAAA1AF4D89}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E418BF80-1970-4C03-AC44-4BAAA1AF4D89}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E418BF80-1970-4C03-AC44-4BAAA1AF4D89}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E418BF80-1970-4C03-AC44-4BAAA1AF4D89}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F3E3128F-89B9-493D-B3F8-6FEDF5D502A8}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F3E3128F-89B9-493D-B3F8-6FEDF5D502A8}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F3E3128F-89B9-493D-B3F8-6FEDF5D502A8}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F3E3128F-89B9-493D-B3F8-6FEDF5D502A8}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -78,7 +94,9 @@ Global
 		{A9EA63FE-84C1-4B66-A5CA-7041428BDD6C} = {B85045AC-C36D-4F83-AB31-7043617E5ADF}
 		{2476BA19-47BD-4371-ABAC-794D28D68C64} = {B85045AC-C36D-4F83-AB31-7043617E5ADF}
 		{3497FAE0-1183-453E-A84C-45A82791BB9F} = {B85045AC-C36D-4F83-AB31-7043617E5ADF}
-		{3020050D-DF58-401D-A254-1848126CC926} = {B85045AC-C36D-4F83-AB31-7043617E5ADF}
+		{CCE87A1D-609F-4E24-ACB2-9A4060FF7B8A} = {4E1062F1-0BD9-44DA-B532-F7F2980C9B35}
+		{E418BF80-1970-4C03-AC44-4BAAA1AF4D89} = {4E1062F1-0BD9-44DA-B532-F7F2980C9B35}
+		{F3E3128F-89B9-493D-B3F8-6FEDF5D502A8} = {3EC84C2D-1266-4B2F-B72C-E26897E90D73}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {BBFA199B-AFD2-4E05-B3C5-8C1B3FBD5F9A}

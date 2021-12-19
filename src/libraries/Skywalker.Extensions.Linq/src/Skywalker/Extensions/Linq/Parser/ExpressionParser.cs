@@ -1631,7 +1631,7 @@ namespace Skywalker.Extensions.Linq.Parser
             return false;
         }
 
-        Expression ParseMemberAccess(Type type, Expression expression)
+        Expression ParseMemberAccess(Type? type, Expression expression)
         {
             if (expression != null)
             {

@@ -34,9 +34,9 @@ public static class Converters
 
         var dictionary = new Dictionary<string, object?>();
 
-        foreach (PropertyDescriptor property in TypeDescriptor.GetProperties(source))
+        foreach (PropertyDescriptor? property in TypeDescriptor.GetProperties(source))
         {
-            var dataMemberAttribute = property.Attributes.OfType<DataMemberAttribute>().FirstOrDefault();
+            var dataMemberAttribute = property!.Attributes.OfType<DataMemberAttribute>().FirstOrDefault();
             var emitDefaultValue = dataMemberAttribute?.EmitDefaultValue ?? true;
 
             var value = property.GetValue(source);

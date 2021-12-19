@@ -1,7 +1,6 @@
-﻿<Project Sdk="Microsoft.NET.Sdk">
+<Project Sdk="Microsoft.NET.Sdk">
 
 	<PropertyGroup>
-		<TargetFrameworks>$(NetCoreAppCurrent);$(NetCoreAppMinimum);netstandard2.0;$(NetFrameworkMinimum)</TargetFrameworks>
 		<RootNamespace></RootNamespace>
 	</PropertyGroup>
 
@@ -12,16 +11,10 @@
 	</ItemGroup>
 
 	<ItemGroup>
-		<ProjectReference Include="$(LibrariesProjectRoot)Skywalker.Extensions.Linq\src\Skywalker.Extensions.Linq.csproj" />
 		<ProjectReference Include="$(LibrariesProjectRoot)Skywalker.Extensions.Timing\src\Skywalker.Extensions.Timing.csproj" />
 		<ProjectReference Include="$(LibrariesProjectRoot)Skywalker.Extensions.Threading\src\Skywalker.Extensions.Threading.csproj" />
 		<ProjectReference Include="$(LibrariesProjectRoot)Skywalker.EventBus.Abstractions\src\Skywalker.EventBus.Abstractions.csproj" />
 		<ProjectReference Include="$(LibrariesProjectRoot)Skywalker.Extensions.GuidGenerator\src\Skywalker.Extensions.GuidGenerator.csproj" />
-	</ItemGroup>
-
-	<ItemGroup>
-		<AnalyzerReference Include="..\gen\Skywalker.Ddd.Domain.Generators.Roslyn3.11.csproj" Condition="'$(DotNetBuildFromSource)' != 'true'" />
-		<AnalyzerReference Include="..\gen\Skywalker.Ddd.Domain.Generators.Roslyn4.0.csproj" />
 	</ItemGroup>
 
 </Project>

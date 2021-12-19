@@ -229,11 +229,12 @@ public class Repository<TDbContext, TEntity> : BasicRepository<TEntity>, IReposi
         return DbSet.LongCountAsync(GetCancellationToken(cancellationToken));
     }
 
-    public async override Task<List<TEntity>> GetPagedListAsync(int skipCount, int maxResultCount, string sorting, CancellationToken cancellationToken = default)
+    public override Task<List<TEntity>> GetPagedListAsync(int skipCount, int maxResultCount, string sorting, CancellationToken cancellationToken = default)
     {
-        return await DbSet.OrderBy(sorting)
-                          .Page(skipCount, maxResultCount)
-                          .ToListAsync(GetCancellationToken(cancellationToken));
+        throw new NotSupportedException();
+        //return await DbSet.OrderBy(sorting)
+        //                  .Page(skipCount, maxResultCount)
+        //                  .ToListAsync(GetCancellationToken(cancellationToken));
     }
 
     public IAsyncEnumerator<TEntity> GetAsyncEnumerator(CancellationToken cancellationToken = default)

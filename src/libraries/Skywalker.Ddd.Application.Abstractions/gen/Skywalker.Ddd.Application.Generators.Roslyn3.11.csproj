@@ -1,0 +1,13 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+	<PropertyGroup>
+		<AnalyzerRoslynVersion>3.11</AnalyzerRoslynVersion>
+		<RoslynApiVersion>$(MicrosoftCodeAnalysisCSharpWorkspacesVersion_3_11)</RoslynApiVersion>
+	</PropertyGroup>
+
+    <Import Project="Skywalker.Ddd.Application.Generators.targets" />
+
+    <ItemGroup>
+        <Compile Remove="DddApplicationGenerator.Roslyn4.0.cs" />
+    </ItemGroup>
+</Project>

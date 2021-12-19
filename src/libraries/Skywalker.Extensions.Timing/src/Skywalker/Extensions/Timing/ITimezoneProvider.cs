@@ -1,18 +1,17 @@
-﻿using System;
-using System.Collections.Generic;
+﻿// Licensed to the Gordon under one or more agreements.
+// Gordon licenses this file to you under the MIT license.
 
-namespace Skywalker.Extensions.Timing
+namespace Skywalker.Extensions.Timing;
+
+public interface ITimezoneProvider
 {
-    public interface ITimezoneProvider
-    {
-        List<NameValue> GetWindowsTimezones();
+    List<NameValue> GetWindowsTimezones();
 
-        List<NameValue> GetIanaTimezones();
+    List<NameValue> GetIanaTimezones();
 
-        string WindowsToIana(string windowsTimeZoneId);
+    string WindowsToIana(string windowsTimeZoneId);
 
-        string IanaToWindows(string ianaTimeZoneName);
+    string IanaToWindows(string ianaTimeZoneName);
 
-        TimeZoneInfo GetTimeZoneInfo(string windowsOrIanaTimeZoneId);
-    }
+    TimeZoneInfo GetTimeZoneInfo(string windowsOrIanaTimeZoneId);
 }

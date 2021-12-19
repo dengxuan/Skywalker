@@ -1,8 +1,11 @@
-﻿using Microsoft.Extensions.Logging;
+﻿// Licensed to the Gordon under one or more agreements.
+// Gordon licenses this file to you under the MIT license.
+
+using System.Collections.Immutable;
+using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 using Skywalker.Ddd.Uow.Abstractions;
 using Skywalker.ExceptionHandler;
-using System.Collections.Immutable;
 
 namespace Skywalker.Ddd.Uow;
 
@@ -10,7 +13,7 @@ public class UnitOfWork : IUnitOfWork/*, ITransientDependency*/
 {
     public Guid Id { get; } = Guid.NewGuid();
 
-    public IAbpUnitOfWorkOptions? Options { get; private set; }
+    public IUnitOfWorkOptions? Options { get; private set; }
 
     public IUnitOfWork? Outer { get; private set; }
 
@@ -33,14 +36,14 @@ public class UnitOfWork : IUnitOfWork/*, ITransientDependency*/
 
     private readonly Dictionary<string, IDatabaseApi> _databaseApis;
     private readonly Dictionary<string, ITransactionApi> _transactionApis;
-    private readonly AbpUnitOfWorkDefaultOptions _defaultOptions;
+    private readonly UnitOfWorkDefaultOptions _defaultOptions;
     private readonly ILogger<UnitOfWork> _logger;
 
     private Exception? _exception;
     private bool _isCompleting;
     private bool _isRolledback;
 
-    public UnitOfWork(IServiceProvider serviceProvider, IOptions<AbpUnitOfWorkDefaultOptions> options, ILogger<UnitOfWork> logger)
+    public UnitOfWork(IServiceProvider serviceProvider, IOptions<UnitOfWorkDefaultOptions> options, ILogger<UnitOfWork> logger)
     {
         ServiceProvider = serviceProvider;
         _defaultOptions = options.Value;
@@ -52,7 +55,7 @@ public class UnitOfWork : IUnitOfWork/*, ITransientDependency*/
         Items = new Dictionary<string, object>();
     }
 
-    public virtual void Initialize(AbpUnitOfWorkOptions options)
+    public virtual void Initialize(UnitOfWorkOptions options)
     {
         options.NotNull(nameof(options));
 

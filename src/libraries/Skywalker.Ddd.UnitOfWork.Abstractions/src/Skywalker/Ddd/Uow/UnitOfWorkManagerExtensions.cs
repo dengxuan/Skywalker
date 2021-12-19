@@ -1,5 +1,8 @@
-﻿using Skywalker.Ddd.Uow.Abstractions;
+﻿// Licensed to the Gordon under one or more agreements.
+// Gordon licenses this file to you under the MIT license.
+
 using System.Data;
+using Skywalker.Ddd.Uow.Abstractions;
 
 namespace Skywalker.Ddd.Uow;
 
@@ -9,7 +12,7 @@ public static class UnitOfWorkManagerExtensions
     {
         unitOfWorkManager.NotNull(nameof(unitOfWorkManager));
 
-        return unitOfWorkManager.Begin(new AbpUnitOfWorkOptions
+        return unitOfWorkManager.Begin(new UnitOfWorkOptions
         {
             IsTransactional = isTransactional,
             IsolationLevel = isolationLevel,
@@ -22,7 +25,7 @@ public static class UnitOfWorkManagerExtensions
         unitOfWorkManager.NotNull(nameof(unitOfWorkManager));
         reservationName.NotNull(nameof(reservationName));
 
-        unitOfWorkManager.BeginReserved(reservationName, new AbpUnitOfWorkOptions());
+        unitOfWorkManager.BeginReserved(reservationName, new UnitOfWorkOptions());
     }
 
     public static void TryBeginReserved(this IUnitOfWorkManager unitOfWorkManager, string reservationName)
@@ -30,6 +33,6 @@ public static class UnitOfWorkManagerExtensions
         unitOfWorkManager.NotNull(nameof(unitOfWorkManager));
         reservationName.NotNull(nameof(reservationName));
 
-        unitOfWorkManager.TryBeginReserved(reservationName, new AbpUnitOfWorkOptions());
+        unitOfWorkManager.TryBeginReserved(reservationName, new UnitOfWorkOptions());
     }
 }

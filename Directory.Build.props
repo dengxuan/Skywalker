@@ -1,32 +1,45 @@
-<Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
-	<Import Project="version.props" />
-	<PropertyGroup>
-		<Version>1.0.0.0</Version>
-		<FileVersion>1.0.0.0</FileVersion>
-		<AssemblyVersion>1.0.0.0</AssemblyVersion>
-		<PackageVersion>1.0.0.0-rc</PackageVersion>
+<Project>
 
-		<Description>Skywalker</Description>
-		<Authors>Gordon</Authors>
-		<Company></Company>
-		<Copyright>Copyright 2017 Gordon</Copyright>
-		<RepositoryUrl>https://dengxuan.visualstudio.com/Skywalker/_git/Skywalker</RepositoryUrl>
-		<RepositoryType>git</RepositoryType>
+  <!-- The TFMs to build and test against. -->
+  <PropertyGroup>
+    <TargetFrameworks>netstandard2.0;netstandard2.1;netcoreapp3.1;net5.0;net6.0</TargetFrameworks>
+    <Nullable>enable</Nullable>
+    <AppendTargetFrameworkToOutputPath>false</AppendTargetFrameworkToOutputPath>
+  </PropertyGroup>
 
-		<TargetFrameworks>net6.0;</TargetFrameworks>
-		<OutputType>Library</OutputType>
-		<IsPackable>true</IsPackable>
-		<LangVersion>10.0</LangVersion>
-		<Nullable>enable</Nullable>
-		<ImplicitUsings>enable</ImplicitUsings>
+  <PropertyGroup>
+    <LibrariesProjectRoot>$([MSBuild]::NormalizeDirectory('$(MSBuildThisFileDirectory)', 'src', 'libraries'))</LibrariesProjectRoot>
+    <ArtifactsRoot>$([MSBuild]::NormalizeDirectory('$(MSBuildThisFileDirectory)', 'artifacts'))</ArtifactsRoot>
+    <XmlDocDir>$([MSBuild]::NormalizeDirectory('$(ArtifactsBinDir)', 'docs'))</XmlDocDir>
+    <XmlDocFileRoot>$([MSBuild]::NormalizeDirectory('$(NuGetPackageRoot)', 'microsoft.private.intellisense', '$(MicrosoftPrivateIntellisenseVersion)', 'IntellisenseFiles', 'net'))</XmlDocFileRoot>
+    <DocsDir>$([MSBuild]::NormalizeDirectory('$(MSBuildThisFileDirectory)', 'docs'))</DocsDir>
+    <ManPagesDir>$([MSBuild]::NormalizeDirectory('$(DocsDir)', 'manpages'))</ManPagesDir>
+    <RepositoryEngineeringRoot>$([MSBuild]::NormalizeDirectory('$(MSBuildThisFileDirectory)', 'eng'))</RepositoryEngineeringRoot>
+    <BaseIntermediateOutputPath>$([MSBuild]::NormalizeDirectory('$(ArtifactsRoot)', 'obj', '$(MSBuildProjectName)'))</BaseIntermediateOutputPath>
+    <BaseOutputPath>$([MSBuild]::NormalizeDirectory('$(ArtifactsRoot)', 'bin', '$(MSBuildProjectName)'))</BaseOutputPath>
+  </PropertyGroup>
 
-		<GeneratePackageOnBuild>false</GeneratePackageOnBuild>
-		<PackageRequireLicenseAcceptance>false</PackageRequireLicenseAcceptance>
-		<NeutralLanguage>zh-Hans</NeutralLanguage>
+  <Import Project="$(RepositoryEngineeringRoot)Versions.props" />
 
-	</PropertyGroup>
+  <!-- Language configuration -->
+  <PropertyGroup>
+    <!-- default to allowing all language features -->
+    <LangVersion>latest</LangVersion>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <!-- default to max warnlevel -->
+    <AnalysisLevel Condition="'$(MSBuildProjectExtension)' == '.csproj'">latest</AnalysisLevel>
+    <!-- Enables Strict mode for Roslyn compiler -->
+    <Features>strict;nullablePublicOnly</Features>
+    <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
+    <!-- Always pass portable to override arcade sdk which uses embedded for local builds -->
+    <DebugType>portable</DebugType>
+    <DebugSymbols>true</DebugSymbols>
+    <!-- Default to discarding symbols if not explicitly set -->
+    <KeepNativeSymbols Condition="'$(KeepNativeSymbols)' == ''">false</KeepNativeSymbols>
+    <!-- Used for launchSettings.json and runtime config files. -->
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <!-- By default the SDK produces ref assembly for 5.0 or later -->
+    <ProduceReferenceAssembly>false</ProduceReferenceAssembly>
+  </PropertyGroup>
 
-	<PropertyGroup>
-		<LibrariesProjectRoot>$([MSBuild]::NormalizeDirectory('$(MSBuildThisFileDirectory)', 'src', 'libraries'))</LibrariesProjectRoot>
-	</PropertyGroup>
 </Project>

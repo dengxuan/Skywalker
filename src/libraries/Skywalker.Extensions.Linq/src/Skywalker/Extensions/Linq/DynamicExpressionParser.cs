@@ -21,7 +21,7 @@ namespace Skywalker.Extensions.Linq
         /// <param name="expression">The expression.</param>
         /// <param name="values">An object array that contains zero or more objects which are used as replacement values.</param>
         /// <returns>The generated <see cref="LambdaExpression"/></returns>
-        public static LambdaExpression ParseLambda(ParsingConfig parsingConfig, bool createParameterCtor, Type resultType, string expression, params object[] values)
+        public static LambdaExpression ParseLambda(ParsingConfig? parsingConfig, bool createParameterCtor, Type resultType, string expression, params object[] values)
         {
             Check.NotNullOrEmpty(expression, nameof(expression));
 
@@ -88,7 +88,7 @@ namespace Skywalker.Extensions.Linq
         /// <param name="expression">The expression.</param>
         /// <param name="values">An object array that contains zero or more objects which are used as replacement values.</param>
         /// <returns>The generated <see cref="LambdaExpression"/></returns>
-        public static LambdaExpression ParseLambda(ParsingConfig parsingConfig, bool createParameterCtor, ParameterExpression[] parameters, Type resultType, string expression, params object[] values)
+        public static LambdaExpression ParseLambda(ParsingConfig parsingConfig, bool createParameterCtor, ParameterExpression[] parameters, Type? resultType, string expression, params object[] values)
         {
             return ParseLambda(null, parsingConfig, createParameterCtor, parameters, resultType, expression, values);
         }
@@ -104,9 +104,9 @@ namespace Skywalker.Extensions.Linq
         /// <param name="expression">The expression.</param>
         /// <param name="values">An object array that contains zero or more objects which are used as replacement values.</param>
         /// <returns>The generated <see cref="LambdaExpression"/></returns>
-        public static LambdaExpression ParseLambda(Type delegateType, ParsingConfig parsingConfig, bool createParameterCtor, ParameterExpression[] parameters, Type resultType, string expression, params object[] values)
+        public static LambdaExpression ParseLambda(Type? delegateType, ParsingConfig parsingConfig, bool createParameterCtor, ParameterExpression[] parameters, Type? resultType, string expression, params object[] values)
         {
-            LambdaExpression lambdaExpression = null;
+            LambdaExpression? lambdaExpression = null;
 
             Check.NotNull(parameters, nameof(parameters));
             Check.HasNoNulls(parameters, nameof(parameters));
@@ -330,7 +330,7 @@ namespace Skywalker.Extensions.Linq
         /// <param name="expression">The expression.</param>
         /// <param name="values">An object array that contains zero or more objects which are used as replacement values.</param>
         /// <returns>The generated <see cref="LambdaExpression"/></returns>
-        public static LambdaExpression ParseLambda(ParsingConfig parsingConfig, bool createParameterCtor, Type itType, Type resultType, string expression, params object[] values)
+        public static LambdaExpression ParseLambda(ParsingConfig parsingConfig, bool createParameterCtor, Type itType, Type? resultType, string expression, params object[] values)
         {
             Check.NotNull(itType, nameof(itType));
             Check.NotNullOrEmpty(expression, nameof(expression));

@@ -1,3 +1,6 @@
+// Licensed to the Gordon under one or more agreements.
+// Gordon licenses this file to you under the MIT license.
+
 using Skywalker.Ddd.Uow.Abstractions;
 
 namespace Skywalker.Ddd.Uow;
@@ -6,7 +9,7 @@ internal class ChildUnitOfWork : IUnitOfWork
 {
     public Guid Id => _parent.Id;
 
-    public IAbpUnitOfWorkOptions? Options => _parent.Options;
+    public IUnitOfWorkOptions? Options => _parent.Options;
 
     public IUnitOfWork? Outer => _parent.Outer;
 
@@ -42,7 +45,7 @@ internal class ChildUnitOfWork : IUnitOfWork
         _parent.SetOuter(outer);
     }
 
-    public void Initialize(AbpUnitOfWorkOptions options)
+    public void Initialize(UnitOfWorkOptions options)
     {
         _parent.Initialize(options);
     }

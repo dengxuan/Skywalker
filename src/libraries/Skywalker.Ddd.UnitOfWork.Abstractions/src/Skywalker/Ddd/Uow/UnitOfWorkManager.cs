@@ -1,4 +1,7 @@
-﻿using Microsoft.Extensions.DependencyInjection;
+﻿// Licensed to the Gordon under one or more agreements.
+// Gordon licenses this file to you under the MIT license.
+
+using Microsoft.Extensions.DependencyInjection;
 using Skywalker.Ddd.Uow.Abstractions;
 using Skywalker.ExceptionHandler;
 
@@ -19,7 +22,7 @@ public class UnitOfWorkManager : IUnitOfWorkManager/*, ISingletonDependency*/
         _serviceScopeFactory = serviceScopeFactory;
     }
 
-    public IUnitOfWork Begin(AbpUnitOfWorkOptions options, bool requiresNew = false)
+    public IUnitOfWork Begin(UnitOfWorkOptions options, bool requiresNew = false)
     {
         options.NotNull(nameof(options));
 
@@ -52,7 +55,7 @@ public class UnitOfWorkManager : IUnitOfWorkManager/*, ISingletonDependency*/
         return unitOfWork;
     }
 
-    public void BeginReserved(string reservationName, AbpUnitOfWorkOptions options)
+    public void BeginReserved(string reservationName, UnitOfWorkOptions options)
     {
         if (!TryBeginReserved(reservationName, options))
         {
@@ -60,7 +63,7 @@ public class UnitOfWorkManager : IUnitOfWorkManager/*, ISingletonDependency*/
         }
     }
 
-    public bool TryBeginReserved(string reservationName, AbpUnitOfWorkOptions options)
+    public bool TryBeginReserved(string reservationName, UnitOfWorkOptions options)
     {
         reservationName.NotNull(nameof(reservationName));
 

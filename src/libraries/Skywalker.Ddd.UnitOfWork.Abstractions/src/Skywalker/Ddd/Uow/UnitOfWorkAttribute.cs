@@ -1,4 +1,7 @@
-﻿using System.Data;
+﻿// Licensed to the Gordon under one or more agreements.
+// Gordon licenses this file to you under the MIT license.
+
+using System.Data;
 
 namespace Skywalker.Ddd.Uow;
 
@@ -61,7 +64,7 @@ public class UnitOfWorkAttribute : Attribute
 
     //TODO: More constructors!
 
-    public virtual void SetOptions(AbpUnitOfWorkOptions options)
+    public virtual void SetOptions(UnitOfWorkOptions options)
     {
         if (IsTransactional.HasValue)
         {

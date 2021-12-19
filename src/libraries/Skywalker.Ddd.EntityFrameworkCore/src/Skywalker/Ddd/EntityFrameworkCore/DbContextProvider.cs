@@ -16,7 +16,7 @@ public class DbContextProvider<TDbContext> : IDbContextProvider<TDbContext> wher
     {
 #if NETSTANDARD2_0
         return _serviceProvider.GetRequiredService<TDbContext>();
-#elif NETSTANDARD2_1_OR_GREATER || NET5_0_OR_GREATER
+#elif NETSTANDARD2_1_OR_GREATER || NET5_0_OR_GREATER || NETCOREAPP
         IDbContextFactory<TDbContext> dbContextFactory = _serviceProvider.GetRequiredService<IDbContextFactory<TDbContext>>();
         return dbContextFactory.CreateDbContext();
 #endif

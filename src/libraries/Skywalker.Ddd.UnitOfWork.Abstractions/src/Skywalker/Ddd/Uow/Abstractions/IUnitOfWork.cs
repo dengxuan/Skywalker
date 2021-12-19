@@ -1,4 +1,7 @@
-﻿namespace Skywalker.Ddd.Uow.Abstractions;
+﻿// Licensed to the Gordon under one or more agreements.
+// Gordon licenses this file to you under the MIT license.
+
+namespace Skywalker.Ddd.Uow.Abstractions;
 
 public interface IUnitOfWork : IDatabaseApiContainer, ITransactionApiContainer, IDisposable
 {
@@ -11,7 +14,7 @@ public interface IUnitOfWork : IDatabaseApiContainer, ITransactionApiContainer, 
 
     event EventHandler<UnitOfWorkEventArgs>? Disposed;
 
-    IAbpUnitOfWorkOptions? Options { get; }
+    IUnitOfWorkOptions? Options { get; }
 
     IUnitOfWork? Outer { get; }
 
@@ -25,7 +28,7 @@ public interface IUnitOfWork : IDatabaseApiContainer, ITransactionApiContainer, 
 
     void SetOuter(IUnitOfWork? outer);
 
-    void Initialize(AbpUnitOfWorkOptions options);
+    void Initialize(UnitOfWorkOptions options);
 
     void Reserve(string reservationName);
 

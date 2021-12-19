@@ -16,7 +16,7 @@ namespace Skywalker.Extensions.Linq.CustomTypeProviders
         /// </summary>
         /// <param name="assemblies">The assemblies to process.</param>
         /// <returns><see cref="IEnumerable{Type}" /></returns>
-        protected IEnumerable<Type> FindTypesMarkedWithDynamicLinqTypeAttribute(IEnumerable<Assembly> assemblies)
+        protected IEnumerable<Type?> FindTypesMarkedWithDynamicLinqTypeAttribute(IEnumerable<Assembly> assemblies)
         {
             Check.NotNull(assemblies, nameof(assemblies));
             assemblies = assemblies.Where(a => !a.IsDynamic);
@@ -34,9 +34,9 @@ namespace Skywalker.Extensions.Linq.CustomTypeProviders
             Check.NotNull(assemblies, nameof(assemblies));
             Check.NotNullOrEmpty(typeName, nameof(typeName));
 
-            foreach (var assembly in assemblies)
+            foreach (Assembly? assembly in assemblies)
             {
-                Type resolvedType = assembly.GetType(typeName, false, true);
+                Type? resolvedType = assembly.GetType(typeName, false, true);
                 if (resolvedType != null)
                 {
                     return resolvedType;
@@ -57,14 +57,14 @@ namespace Skywalker.Extensions.Linq.CustomTypeProviders
             Check.NotNull(assemblies, nameof(assemblies));
             Check.NotNullOrEmpty(simpleTypeName, nameof(simpleTypeName));
 
-            foreach (var assembly in assemblies)
+            foreach (Assembly? assembly in assemblies)
             {
-                var fullnames = assembly.GetTypes().Select(t => t.FullName).Distinct();
-                var firstMatchingFullname = fullnames.FirstOrDefault(fn => fn.EndsWith($".{simpleTypeName}"));
+                IEnumerable<string?>? fullnames = assembly.GetTypes().Select(t => t.FullName).Distinct();
+                string? firstMatchingFullname = fullnames.FirstOrDefault(fn => fn?.EndsWith($".{simpleTypeName}") == true);
 
                 if (firstMatchingFullname != null)
                 {
-                    Type resolvedType = assembly.GetType(firstMatchingFullname, false, true);
+                    Type? resolvedType = assembly.GetType(firstMatchingFullname, false, true);
                     if (resolvedType != null)
                     {
                         return resolvedType;
@@ -75,19 +75,19 @@ namespace Skywalker.Extensions.Linq.CustomTypeProviders
             return null;
         }
 
-#if (WINDOWS_APP || UAP10_0 || NETSTANDARD)
+#if (WINDOWS_APP || UAP10_0 || NETSTANDARD || NET5_0_OR_GREATER || NETCOREAPP)
         /// <summary>
         /// Gets the assembly types annotated with <see cref="DynamicLinqTypeAttribute"/> in an Exception friendly way.
         /// </summary>
         /// <param name="assemblies">The assemblies to process.</param>
         /// <returns><see cref="IEnumerable{Type}" /></returns>
-        protected IEnumerable<Type> GetAssemblyTypesWithDynamicLinqTypeAttribute(IEnumerable<Assembly> assemblies)
+        protected IEnumerable<Type?> GetAssemblyTypesWithDynamicLinqTypeAttribute(IEnumerable<Assembly> assemblies)
         {
             Check.NotNull(assemblies, nameof(assemblies));
 
-            foreach (var assembly in assemblies)
+            foreach (Assembly? assembly in assemblies)
             {
-                Type[]? definedTypes = null;
+                Type?[]? definedTypes = null;
 
                 try
                 {
@@ -104,7 +104,7 @@ namespace Skywalker.Extensions.Linq.CustomTypeProviders
 
                 if (definedTypes != null && definedTypes.Length > 0)
                 {
-                    foreach (var definedType in definedTypes)
+                    foreach (Type? definedType in definedTypes)
                     {
                         yield return definedType;
                     }
