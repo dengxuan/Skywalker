@@ -1,4 +1,4 @@
-<Project InitialTargets="UpdateProjectReferencesWithAttributes">
+<Project>
   <PropertyGroup>
     <!-- Override strong name key to default to Open for test projects,
          Tests which wish to control this should set TestStrongNameKeyId. -->
@@ -12,24 +12,7 @@
 
   <PropertyGroup>
     <NetCoreAppCurrentBuildSettings>$(NetCoreAppCurrent)-$(TargetOS)-$(Configuration)-$(TargetArchitecture)</NetCoreAppCurrentBuildSettings>
-    <NativeBinDir>$([MSBuild]::NormalizeDirectory('$(ArtifactsBinDir)', 'native', '$(NetCoreAppCurrentBuildSettings)'))</NativeBinDir>
-    <NetCoreAppCurrentTestHostPath>$([MSBuild]::NormalizeDirectory('$(ArtifactsBinDir)', 'testhost', '$(NetCoreAppCurrentBuildSettings)'))</NetCoreAppCurrentTestHostPath>
-    <NetCoreAppCurrentTestHostSharedFrameworkPath>$([MSBuild]::NormalizeDirectory('$(NetCoreAppCurrentTestHostPath)', 'shared', '$(MicrosoftNetCoreAppFrameworkName)', '$(ProductVersion)'))</NetCoreAppCurrentTestHostSharedFrameworkPath>
 
-    <NoWarn Condition="'$(TargetFrameworkIdentifier)' != '.NETCoreApp'">$(NoWarn);nullable</NoWarn>
-    <NoWarn Condition="'$(GeneratePlatformNotSupportedAssembly)' == 'true' or '$(GeneratePlatformNotSupportedAssemblyMessage)' != ''">$(NoWarn);nullable;CA1052</NoWarn>
-    <!-- Ignore Obsolete errors within the generated shims that type-forward types.
-         SYSLIB0003: Code Access Security (CAS).
-         SYSLIB0004: Constrained Execution Region (CER).
-         SYSLIB0017: Strong name signing.
-         SYSLIB0021: Derived cryptographic types.
-         SYSLIB0022: Rijndael types.
-         SYSLIB0023: RNGCryptoServiceProvider.
-         SYSLIB0025: SuppressIldasmAttribute.
-         SYSLIB0032: HandleProcessCorruptedStateExceptionsAttribute.
-         SYSLIB0036: Regex.CompileToAssembly
-    -->
-    <NoWarn Condition="'$(IsPartialFacadeAssembly)' == 'true'">$(NoWarn);SYSLIB0003;SYSLIB0004;SYSLIB0015;SYSLIB0017;SYSLIB0021;SYSLIB0022;SYSLIB0023;SYSLIB0025;SYSLIB0032;SYSLIB0036</NoWarn>
     <!-- Reset these properties back to blank, since they are defaulted by Microsoft.NET.Sdk -->
     <WarningsAsErrors Condition="'$(WarningsAsErrors)' == 'NU1605'" />
     <IsNETCoreAppSrc Condition="'$(IsNETCoreAppSrc)' == '' and
@@ -38,25 +21,7 @@
     <IsNETCoreAppRef Condition="'$(IsNETCoreAppRef)' == '' and
                                 '$(IsReferenceAssembly)' == 'true' and
                                 $(NetCoreAppLibrary.Contains('$(AssemblyName);'))">true</IsNETCoreAppRef>
-    <!-- By default, disable implicit framework references for NetCoreAppCurrent libraries. -->
-    <DisableImplicitFrameworkReferences Condition="'$(TargetFrameworkIdentifier)' == '.NETCoreApp' and
-                                                   $([MSBuild]::VersionGreaterThanOrEquals($(TargetFrameworkVersion), '$(NETCoreAppCurrentVersion)')) and
-                                                   ('$(IsNETCoreAppRef)' == 'true' or '$(IsNETCoreAppSrc)' == 'true')">true</DisableImplicitFrameworkReferences>
-    <!-- Disable implicit assembly references for .NETCoreApp refs and sources. -->
-    <DisableImplicitAssemblyReferences Condition="'$(DisableImplicitAssemblyReferences)' == '' and
-                                                  '$(DisableImplicitFrameworkReferences)' != 'true' and
-                                                  '$(TargetFrameworkIdentifier)' == '.NETCoreApp' and
-                                                  ('$(IsReferenceAssembly)' == 'true' or '$(IsSourceProject)' == 'true')">true</DisableImplicitAssemblyReferences>
-    <!-- Enable trimming for any source project that's part of the shared framework.
-         Don't attempt to trim PNSE assemblies which are generated from the reference source. -->
-    <ILLinkTrimAssembly Condition="'$(ILLinkTrimAssembly)' == '' and
-                                   '$(TargetFrameworkIdentifier)' == '.NETCoreApp' and
-                                   '$(IsNETCoreAppSrc)' == 'true' and
-                                   '$(GeneratePlatformNotSupportedAssembly)' != 'true' and
-                                   '$(GeneratePlatformNotSupportedAssemblyMessage)' == ''">true</ILLinkTrimAssembly>
   </PropertyGroup>
-
-  <Import Project="$(RepositoryEngineeringDir)versioning.targets" />
 
   <!-- Libraries-specific binplacing properties -->
   <PropertyGroup>
@@ -71,8 +36,7 @@
     <GetBinPlaceItemsDependsOn Condition="$(MSBuildProjectName.StartsWith('Microsoft.Extensions.'))">$(GetBinPlaceItemsDependsOn);AddDocumentationFileAsBinPlaceItemForExtensionsProjects</GetBinPlaceItemsDependsOn>
   </PropertyGroup>
 
-  <Target Name="AddDocumentationFileAsBinPlaceItemForExtensionsProjects"
-          Condition="Exists('$(DocumentationFile)')">
+  <Target Name="AddDocumentationFileAsBinPlaceItemForExtensionsProjects" Condition="Exists('$(DocumentationFile)')">
     <ItemGroup>
       <!-- Microsoft.Extensions are not yet using the doc-file package -->
       <BinPlaceItem Include="$(DocumentationFile)" />
@@ -81,19 +45,16 @@
 
   <ItemGroup Condition="'@(BinPlaceTargetFrameworks)' == ''">
     <!-- binplace to directories for the target vertical -->
-    <BinPlaceTargetFrameworks Include="$(NetCoreAppCurrent)-$(TargetOS)"
-                              Condition="'$(BinPlaceForTargetVertical)' == 'true'">
+    <BinPlaceTargetFrameworks Include="$(NetCoreAppCurrent)-$(TargetOS)" Condition="'$(BinPlaceForTargetVertical)' == 'true'">
       <NativePath>$(NetCoreAppCurrentRuntimePath)</NativePath>
       <RefPath>$(NetCoreAppCurrentRefPath)</RefPath>
       <RuntimePath>$(NetCoreAppCurrentRuntimePath)</RuntimePath>
     </BinPlaceTargetFrameworks>
 
-    <BinPlaceDir Include="$(MicrosoftNetCoreAppRefPackDir)analyzers\dotnet\$(AnalyzerLanguage)"
-                 Condition="'$(IsNETCoreAppAnalyzer)' == 'true'" />
+    <BinPlaceDir Include="$(MicrosoftNetCoreAppRefPackDir)analyzers\dotnet\$(AnalyzerLanguage)" Condition="'$(IsNETCoreAppAnalyzer)' == 'true'" />
 
     <!-- Setup the shared framework directory for testing -->
-    <BinPlaceTargetFrameworks Include="$(NetCoreAppCurrent)-$(TargetOS)"
-                              Condition="'$(BuildTargetFramework)' == '$(NetCoreAppCurrent)' or '$(BuildTargetFramework)' == ''">
+    <BinPlaceTargetFrameworks Include="$(NetCoreAppCurrent)-$(TargetOS)" Condition="'$(BuildTargetFramework)' == '$(NetCoreAppCurrent)' or '$(BuildTargetFramework)' == ''">
       <NativePath >$(NetCoreAppCurrentTestHostSharedFrameworkPath)</NativePath>
       <RuntimePath Condition="'$(IsNETCoreAppSrc)' == 'true'">$(NetCoreAppCurrentTestHostSharedFrameworkPath)</RuntimePath>
     </BinPlaceTargetFrameworks>
@@ -108,30 +69,9 @@
     <BinPlaceTargetFrameworks Include="@(AdditionalBinPlaceTargetFrameworks)" />
   </ItemGroup>
 
-  <Import Project="$(RepositoryEngineeringDir)codeOptimization.targets" />
-  <Import Project="$(RepositoryEngineeringDir)targetingpacks.targets" />
-  <Import Project="$(RepositoryEngineeringDir)references.targets" />
-  <Import Project="$(RepositoryEngineeringDir)resolveContract.targets" />
-  <Import Project="$(RepositoryEngineeringDir)testing\tests.targets" Condition="'$(EnableTestSupport)' == 'true'" />
-  <Import Project="$(RepositoryEngineeringDir)testing\linker\trimmingTests.targets" Condition="'$(IsTrimmingTestProject)' == 'true'" />
-  <Import Project="$(RepositoryEngineeringDir)testing\runtimeConfiguration.targets" />
-  <Import Project="$(RepositoryEngineeringDir)testing\runsettings.targets" Condition="'$(EnableRunSettingsSupport)' == 'true'" />
-  <Import Project="$(RepositoryEngineeringDir)testing\coverage.targets" Condition="'$(EnableRunSettingsSupport)' == 'true' or '$(EnableCoverageSupport)' == 'true'" />
-  <Import Project="$(RepositoryEngineeringDir)slngen.targets" />
-
-  <Import Sdk="Microsoft.DotNet.Build.Tasks.TargetFramework.Sdk" Project="Sdk.targets" Condition="'$(UseTargetFrameworkSDK)' != 'false'"  />
-  <Import Project="$(RepositoryEngineeringDir)illink.targets" Condition="'$(IsSourceProject)' == 'true'" />
-  <Import Project="$(RepositoryEngineeringDir)AvoidRestoreCycleOnSelfReference.targets" Condition="'$(AvoidRestoreCycleOnSelfReference)' == 'true'" />
   <Import Project="$(RepositoryEngineeringDir)packaging.targets" Condition="'$(IsPackable)' == 'true'" />
 
-  <ItemGroup Condition="'$(IsSourceProject)' == 'true' or '$(IsReferenceAssembly)' == 'true' or '$(IsPartialFacadeAssembly)' == 'true'">
-    <PackageReference Include="Microsoft.DotNet.ApiCompat" Condition="'$(DotNetBuildFromSource)' != 'true'" Version="$(MicrosoftDotNetApiCompatVersion)" PrivateAssets="all" IsImplicitlyDefined="true" />
-    <PackageReference Include="Microsoft.DotNet.GenAPI" Condition="'$(DotNetBuildFromSource)' != 'true'" Version="$(MicrosoftDotNetGenApiVersion)" PrivateAssets="all" IsImplicitlyDefined="true" />
-    <PackageReference Include="Microsoft.DotNet.GenFacades" Version="$(MicrosoftDotNetGenFacadesVersion)" PrivateAssets="all" IsImplicitlyDefined="true" />
-  </ItemGroup>
-
-  <Target Name="SetGenApiProperties"
-          BeforeTargets="GenerateReferenceAssemblySource">
+  <Target Name="SetGenApiProperties" BeforeTargets="GenerateReferenceAssemblySource">
     <PropertyGroup>
       <_ExcludeAPIList>$([MSBuild]::NormalizePath('$(MSBuildProjectDirectory)', '..', 'ref', 'ReferenceSourceExcludeApi.txt'))</_ExcludeAPIList>
       <_ExcludeAttributesList>$(RepositoryEngineeringDir)DefaultGenApiDocIds.txt</_ExcludeAttributesList>
@@ -145,91 +85,26 @@
     </PropertyGroup>
   </Target>
 
-  <Target Name="GenerateReferenceSource" DependsOnTargets="GenerateReferenceAssemblySource">
-    <Message Text="This is a deprecated target. It will be replaced by GenerateReferenceAssemblySource in next infra rollout changes." Importance="high" />
-  </Target>
-
-  <Import Project="$(RepositoryEngineeringDir)outerBuild.targets" Condition="'$(IsCrossTargetingBuild)' == 'true'" />
-
-  <Target Name="UpdateProjectReferencesWithAttributes" Condition="'@(ProjectReference)' != ''">
-    <ItemGroup>
-      <ProjectReference Condition="'%(Filename)' == 'System.Private.CoreLib'">
-        <!-- Don't flow TargetFramework and Platform to use same inputs and outputs as the CoreLib's build as part of the runtime. -->
-        <UndefineProperties>$(UndefineProperties);TargetFramework;Platform</UndefineProperties>
-        <SetConfiguration Condition="'$(RuntimeFlavor)' == 'CoreCLR' and
-                                     '$(Configuration)' != '$(CoreCLRConfiguration)'">Configuration=$(CoreCLRConfiguration)</SetConfiguration>
-        <SetConfiguration Condition="'$(RuntimeFlavor)' == 'Mono' and
-                                     '$(Configuration)' != '$(MonoConfiguration)'">Configuration=$(MonoConfiguration)</SetConfiguration>
-        <Private>false</Private>
-      </ProjectReference>
-    </ItemGroup>
-    <!-- Disable TargetArchitectureMismatch warning when we reference CoreLib which is platform specific. -->
-    <PropertyGroup Condition="@(ProjectReference->AnyHaveMetadataValue('Identity', '$(CoreLibProject)'))">
-      <ResolveAssemblyWarnOrErrorOnTargetArchitectureMismatch>None</ResolveAssemblyWarnOrErrorOnTargetArchitectureMismatch>
-    </PropertyGroup>
-  </Target>
-
   <!--
     Do not clean binplace assets in the ref targeting pack to avoid incremental build failures
     when the SDK tries to resolve the assets from the FrameworkList.
   -->
-  <Target Name="RemoveTargetingPackIncrementalClean"
-          Condition="'@(AdditionalCleanDirectories)' != ''"
-          BeforeTargets="IncrementalCleanAdditionalDirectories;
+  <Target Name="RemoveTargetingPackIncrementalClean" Condition="'@(AdditionalCleanDirectories)' != ''" BeforeTargets="IncrementalCleanAdditionalDirectories;
                          CleanAdditionalDirectories">
     <ItemGroup>
       <AdditionalCleanDirectories Remove="@(AdditionalCleanDirectories)" Condition="'%(Identity)' == '$(MicrosoftNetCoreAppRefPackRefDir)'" />
     </ItemGroup>
   </Target>
 
-  <!-- Adds Nullable annotation attributes to non .NETCoreApp builds. -->
-  <ItemGroup Condition="'$(Nullable)' != '' and '$(TargetFrameworkIdentifier)' != '.NETCoreApp'">
-    <Compile Include="$(CoreLibSharedDir)System\Diagnostics\CodeAnalysis\NullableAttributes.cs" Link="System\Diagnostics\CodeAnalysis\NullableAttributes.cs" />
+  <!-- Adds RoslynExtensions to gen builds. -->
+  <ItemGroup Condition="'$(IsGeneratorProject)'== 'true'">
+    <Compile Include="$(SharedSourceDir)Microsoft\CodeAnalysis\RoslynExtensions.cs" Link="Microsoft\CodeAnalysis\RoslynExtensions.cs" />
   </ItemGroup>
 
-  <!-- If a tfm doesn't target .NETCoreApp but uses the platform support attributes, then we include the
-       System.Runtime.Versioning*Platform* annotation attribute classes in the project as internal.
-
-       If a project has specified assembly-level SupportedOSPlatforms or UnsupportedOSPlatforms,
-       we can infer the need without having IncludePlatformAttributes set. -->
-  <PropertyGroup>
-    <IncludePlatformAttributes Condition="'$(IncludePlatformAttributes)' == '' and ('$(SupportedOSPlatforms)' != '' or '$(UnsupportedOSPlatforms)' != '')">true</IncludePlatformAttributes>
-  </PropertyGroup>
-
-  <ItemGroup Condition="'$(IncludePlatformAttributes)' == 'true' and '$(TargetFrameworkIdentifier)' != '.NETCoreApp'">
-    <Compile Include="$(CoreLibSharedDir)System\Runtime\Versioning\PlatformAttributes.cs" Link="System\Runtime\Versioning\PlatformAttributes.cs" />
+  <!-- Adds RoslynExtensions to gen builds. -->
+  <ItemGroup Condition="'$(LangVersion)'== 'latest'">
+    <Compile Include="$(SharedSourceDir)System\Runtime\CompilerServices\IsExternalInit.cs" Link="System\Runtime\CompilerServices\IsExternalInit.cs" />
   </ItemGroup>
-
-  <!-- Adds ObsoleteAttribute to projects that need to apply downlevel Obsoletions with DiagnosticId and UrlFormat -->
-  <Choose>
-    <When Condition="'$(IncludeInternalObsoleteAttribute)' == 'true' and '$(TargetFrameworkIdentifier)' != '.NETCoreApp'">
-      <ItemGroup>
-        <Compile Include="$(CoreLibSharedDir)System\ObsoleteAttribute.cs" Link="System\ObsoleteAttribute.cs" />
-      </ItemGroup>
-      <PropertyGroup>
-        <!-- Suppress CS0436 to allow ObsoleteAttribute to be internally defined and used in netstandard -->
-        <NoWarn>$(NoWarn);CS0436</NoWarn>
-      </PropertyGroup>
-    </When>
-  </Choose>
-
-  <PropertyGroup>
-    <SkipLocalsInit Condition="'$(SkipLocalsInit)' == '' and '$(MSBuildProjectExtension)' == '.csproj' and '$(IsNETCoreAppSrc)' == 'true' and '$(TargetFrameworkIdentifier)' == '.NETCoreApp'">true</SkipLocalsInit>
-  </PropertyGroup>
-
-  <!--Instructs compiler not to emit .locals init, using SkipLocalsInitAttribute.-->
-  <Choose>
-    <When Condition="'$(SkipLocalsInit)' == 'true'">
-      <PropertyGroup >
-        <!-- This is needed to use the SkipLocalsInitAttribute. -->
-        <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
-      </PropertyGroup>
-
-      <ItemGroup>
-        <Compile Include="$(CommonPath)SkipLocalsInit.cs" Link="Common\SkipLocalsInit.cs" />
-      </ItemGroup>
-    </When>
-  </Choose>
 
   <PropertyGroup>
     <BuildAnalyzerReferences>$(BuildProjectReferences)</BuildAnalyzerReferences>
@@ -242,17 +117,10 @@
          so we don't apply TargetFramework filters nor do we pass in TargetFramework.
          When BuildProjectReferences=false we make sure to set BuildReference=false to make
          sure not to try to call GetTargetPath in the outerbuild of the analyzer project. -->
-    <ProjectReference Include="@(AnalyzerReference)"
-                      SkipGetTargetFrameworkProperties="true"
-                      UndefineProperties="TargetFramework"
-                      ReferenceOutputAssembly="false"
-                      PrivateAssets="all"
-                      BuildReference="$(BuildAnalyzerReferences)" />
+    <ProjectReference Include="@(AnalyzerReference)" SkipGetTargetFrameworkProperties="true" UndefineProperties="TargetFramework" ReferenceOutputAssembly="false" PrivateAssets="all" BuildReference="$(BuildAnalyzerReferences)" />
   </ItemGroup>
 
-  <Target Name="GetAnalyzerPackFiles"
-          DependsOnTargets="$(GenerateNuspecDependsOn)"
-          Returns="@(_AnalyzerPackFile)">
+  <Target Name="GetAnalyzerPackFiles" DependsOnTargets="$(GenerateNuspecDependsOn)" Returns="@(_AnalyzerPackFile)">
     <PropertyGroup>
       <_analyzerPath>analyzers/dotnet</_analyzerPath>
       <_analyzerPath Condition="'$(AnalyzerRoslynVersion)' != ''">$(_analyzerPath)/roslyn$(AnalyzerRoslynVersion)</_analyzerPath>
@@ -263,7 +131,6 @@
       <_AnalyzerPackFile Include="@(_TargetPathsToSymbols)" IsSymbol="true" />
       <_AnalyzerPackFile PackagePath="$(_analyzerPath)/%(TargetPath)" />
     </ItemGroup>
-    <Error Condition="'%(_AnalyzerPackFile.TargetFramework)' != 'netstandard2.0'"
-           Text="Analyzers must only target netstandard2.0 since they run in the compiler which targets netstandard2.0. The following files were found to target '%(_AnalyzerPackFile.TargetFramework)': @(_AnalyzerPackFile)" />
+    <Error Condition="'%(_AnalyzerPackFile.TargetFramework)' != 'netstandard2.0'" Text="Analyzers must only target netstandard2.0 since they run in the compiler which targets netstandard2.0. The following files were found to target '%(_AnalyzerPackFile.TargetFramework)': @(_AnalyzerPackFile)" />
   </Target>
 </Project>

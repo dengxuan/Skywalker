@@ -39,7 +39,7 @@ public partial class DddEntityFrameworkCoreGenerator
             _reportDiagnostic = reportDiagnostic;
         }
 
-        private static bool IsOpenGeneric(INamedTypeSymbol symbol) => symbol.TypeArguments.Length > 0 && symbol.TypeArguments[0] is ITypeParameterSymbol;
+        internal static bool IsOpenGeneric(INamedTypeSymbol symbol) => symbol.TypeArguments.Length > 0 && symbol.TypeArguments[0] is ITypeParameterSymbol;
 
         internal static bool IsSyntaxTargetForGeneration(SyntaxNode node) => node is ClassDeclarationSyntax m && m.Members.Count > 0;
 
@@ -117,6 +117,10 @@ public partial class DddEntityFrameworkCoreGenerator
                         continue;
                     }
                     if (propertyNamedTypeSymbol.TypeArguments[0] is not INamedTypeSymbol entityNamedTypeSymbol)
+                    {
+                        continue;
+                    }
+                    if(entityNamedTypeSymbol.TypeKind is not TypeKind.Class)
                     {
                         continue;
                     }

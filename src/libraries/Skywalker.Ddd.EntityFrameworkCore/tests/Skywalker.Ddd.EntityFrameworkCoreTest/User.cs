@@ -9,7 +9,7 @@ namespace Skywalker.Ddd.EntityFrameworkCoreTest
 
     public record class Username(int Id, string Name):AggregateRoot<int>(Id);
 
-    public record class Schoole : AggregateRoot
+    public  record class Schoole : AggregateRoot
     {
         public int Id { get; set; }
 

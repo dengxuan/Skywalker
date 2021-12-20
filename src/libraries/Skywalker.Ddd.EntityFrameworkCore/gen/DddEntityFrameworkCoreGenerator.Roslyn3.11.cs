@@ -1,8 +1,8 @@
-﻿using Microsoft.CodeAnalysis;
+﻿using System.Text;
+using Microsoft.CodeAnalysis;
 using Microsoft.CodeAnalysis.Text;
-using System.Text;
 
-namespace Skywalker.CodeAnalyzers.Analyzers.SourceGenerator;
+namespace Skywalker.Ddd.EntityFrameworkCore.Generators;
 
 [Generator]
 public class DomainServiceGenerator : ISourceGenerator

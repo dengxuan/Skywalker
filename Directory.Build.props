@@ -9,6 +9,7 @@
 
   <PropertyGroup>
     <LibrariesProjectRoot>$([MSBuild]::NormalizeDirectory('$(MSBuildThisFileDirectory)', 'src', 'libraries'))</LibrariesProjectRoot>
+    <SharedSourceDir>$([MSBuild]::NormalizeDirectory('$(LibrariesProjectRoot)', 'Common', 'src'))</SharedSourceDir>
     <ArtifactsRoot>$([MSBuild]::NormalizeDirectory('$(MSBuildThisFileDirectory)', 'artifacts'))</ArtifactsRoot>
     <XmlDocDir>$([MSBuild]::NormalizeDirectory('$(ArtifactsBinDir)', 'docs'))</XmlDocDir>
     <XmlDocFileRoot>$([MSBuild]::NormalizeDirectory('$(NuGetPackageRoot)', 'microsoft.private.intellisense', '$(MicrosoftPrivateIntellisenseVersion)', 'IntellisenseFiles', 'net'))</XmlDocFileRoot>
