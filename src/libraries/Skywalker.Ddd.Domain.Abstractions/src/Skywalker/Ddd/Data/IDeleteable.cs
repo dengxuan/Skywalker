@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace Skywalker.Data
+namespace Skywalker.Ddd.Data
 {
     /// <summary>
     /// Used to standardize soft deleting entities.

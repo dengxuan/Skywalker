@@ -1,12 +1,9 @@
-﻿using System.Threading.Tasks;
+﻿namespace Skywalker.Ddd.Data.Seeding;
 
-namespace Skywalker.Data.Seeding
+public static class DataSeederExtensions
 {
-    public static class DataSeederExtensions
+    public static Task SeedAsync(this IDataSeeder seeder)
     {
-        public static Task SeedAsync(this IDataSeeder seeder)
-        {
-            return seeder.SeedAsync(new DataSeedContext());
-        }
+        return seeder.SeedAsync(new DataSeedContext());
     }
 }

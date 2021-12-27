@@ -1,4 +1,4 @@
-﻿namespace Skywalker.Data
+﻿namespace Skywalker.Ddd.Data
 {
     public interface IConnectionStringResolver
     {

@@ -1,6 +1,6 @@
 using System;
 
-namespace Skywalker.Domain.Entities
+namespace Skywalker.Ddd.Domain.Entities
 {
     /// <summary>
     /// This interface can be implemented to store deletion information (who delete and when deleted).

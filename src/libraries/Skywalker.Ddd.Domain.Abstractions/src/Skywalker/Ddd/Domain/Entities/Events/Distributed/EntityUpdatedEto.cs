@@ -1,7 +1,7 @@
 ﻿using System;
 using Skywalker.EventBus;
 
-namespace Skywalker.Domain.Entities.Events.Distributed
+namespace Skywalker.Ddd.Domain.Entities.Events.Distributed
 {
     [Serializable]
     [GenericEventName(Postfix = ".Updated")]

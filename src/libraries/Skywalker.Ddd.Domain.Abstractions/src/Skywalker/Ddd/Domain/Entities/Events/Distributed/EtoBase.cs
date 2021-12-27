@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace Skywalker.Domain.Entities.Events.Distributed
+namespace Skywalker.Ddd.Domain.Entities.Events.Distributed
 {
     [Serializable]
     public abstract class EtoBase

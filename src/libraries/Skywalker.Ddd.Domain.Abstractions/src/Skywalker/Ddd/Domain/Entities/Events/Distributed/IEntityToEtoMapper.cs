@@ -1,4 +1,4 @@
-﻿namespace Skywalker.Domain.Entities.Events.Distributed;
+﻿namespace Skywalker.Ddd.Domain.Entities.Events.Distributed;
 
 public interface IEntityToEtoMapper
 {

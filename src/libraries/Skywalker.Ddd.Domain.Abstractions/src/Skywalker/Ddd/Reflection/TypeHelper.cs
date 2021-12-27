@@ -2,19 +2,20 @@
 using System.ComponentModel;
 using System.Globalization;
 using System.Reflection;
+using Skywalker.Reflection;
 
-namespace Skywalker.Reflection;
+namespace Skywalker.Ddd.Reflection;
 
 public static class TypeHelper
 {
-    private static readonly HashSet<Type> FloatingTypes = new()
+    private static readonly HashSet<Type> s_floatingTypes = new()
     {
         typeof(float),
         typeof(double),
         typeof(decimal)
     };
 
-    private static readonly HashSet<Type> NonNullablePrimitiveTypes = new()
+    private static readonly HashSet<Type> s_nonNullablePrimitiveTypes = new()
     {
         typeof(byte),
         typeof(short),
@@ -35,7 +36,7 @@ public static class TypeHelper
 
     public static bool IsNonNullablePrimitiveType(Type type)
     {
-        return NonNullablePrimitiveTypes.Contains(type);
+        return s_nonNullablePrimitiveTypes.Contains(type);
     }
 
     public static bool IsFunc(object obj)
@@ -321,12 +322,12 @@ public static class TypeHelper
 
     public static bool IsFloatingType(Type type, bool includeNullable = true)
     {
-        if (FloatingTypes.Contains(type))
+        if (s_floatingTypes.Contains(type))
         {
             return true;
         }
 
-        if (includeNullable && IsNullable(type) && FloatingTypes.Contains(type.GenericTypeArguments[0]))
+        if (includeNullable && IsNullable(type) && s_floatingTypes.Contains(type.GenericTypeArguments[0]))
         {
             return true;
         }

@@ -1,4 +1,4 @@
-namespace Skywalker.Domain.Entities.Events;
+namespace Skywalker.Ddd.Domain.Entities.Events;
 
 /// <summary>
 /// This type of event is used to notify just before update of an Entity.

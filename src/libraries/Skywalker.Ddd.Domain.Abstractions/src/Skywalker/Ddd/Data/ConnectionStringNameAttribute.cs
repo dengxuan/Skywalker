@@ -1,16 +1,16 @@
 ﻿using System.Reflection;
 
-namespace Skywalker.Data
+namespace Skywalker.Ddd.Data
 {
     [AttributeUsage(AttributeTargets.Class)]
     public class ConnectionStringNameAttribute : Attribute
     {
-        
+
         public string Name { get; }
 
         public ConnectionStringNameAttribute(string name)
         {
-            Check.NotNull(name, nameof(name));
+            name.NotNull(nameof(name));
 
             Name = name;
         }

@@ -1,4 +1,4 @@
-﻿using Skywalker.Domain.Entities;
+﻿using Skywalker.Ddd.Domain.Entities;
 
 namespace Skywalker.Ddd.EntityFrameworkCore.Repositories;
 

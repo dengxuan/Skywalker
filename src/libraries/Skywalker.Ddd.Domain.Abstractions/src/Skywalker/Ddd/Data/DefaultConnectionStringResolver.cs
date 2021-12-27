@@ -3,7 +3,7 @@ using Microsoft.Extensions.Options;
 using System;
 using System.Collections.Generic;
 
-namespace Skywalker.Data
+namespace Skywalker.Ddd.Data
 {
     public class DefaultConnectionStringResolver : IConnectionStringResolver/*, ITransientDependency*/
     {
@@ -25,7 +25,7 @@ namespace Skywalker.Data
                     return moduleConnString!;
                 }
             }
-            
+
             //Get default value
             return Options.ConnectionStrings.Default;
         }

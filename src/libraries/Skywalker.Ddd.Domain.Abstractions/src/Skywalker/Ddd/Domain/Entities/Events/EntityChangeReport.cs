@@ -1,6 +1,6 @@
 using System.Collections.Generic;
 
-namespace Skywalker.Domain.Entities.Events
+namespace Skywalker.Ddd.Domain.Entities.Events
 {
     public class EntityChangeReport
     {
@@ -19,8 +19,8 @@ namespace Skywalker.Domain.Entities.Events
 
         public bool IsEmpty()
         {
-            return ChangedEntities.Count <= 0 && 
-                   DomainEvents.Count <= 0 && 
+            return ChangedEntities.Count <= 0 &&
+                   DomainEvents.Count <= 0 &&
                    DistributedEvents.Count <= 0;
         }
 

@@ -5,7 +5,7 @@ using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Threading;
 
-namespace Skywalker.Data.Filtering
+namespace Skywalker.Ddd.Data.Filtering
 {
     public class DataFilter : IDataFilter/*, ISingletonDependency*/
     {

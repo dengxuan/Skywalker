@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 
-namespace Skywalker.Domain.Entities
+namespace Skywalker.Ddd.Domain.Entities
 {
     //TODO: Re-consider this interface
 

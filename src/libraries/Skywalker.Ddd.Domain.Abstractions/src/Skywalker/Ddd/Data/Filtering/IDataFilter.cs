@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace Skywalker.Data.Filtering
+namespace Skywalker.Ddd.Data.Filtering
 {
     public interface IDataFilter<TFilter>
         where TFilter : class
@@ -16,7 +16,7 @@ namespace Skywalker.Data.Filtering
     {
         IDisposable Enable<TFilter>()
             where TFilter : class;
-        
+
         IDisposable Disable<TFilter>()
             where TFilter : class;
 

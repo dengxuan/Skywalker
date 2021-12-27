@@ -1,41 +1,37 @@
-﻿using System.Collections.Generic;
-using System.Linq;
+﻿namespace Skywalker.Ddd.Domain.Values;
 
-namespace Skywalker.Domain.Values
+//Inspired from https://docs.microsoft.com/en-us/dotnet/standard/microservices-architecture/microservice-ddd-cqrs-patterns/implement-value-objects
+
+public abstract class ValueObject
 {
-    //Inspired from https://docs.microsoft.com/en-us/dotnet/standard/microservices-architecture/microservice-ddd-cqrs-patterns/implement-value-objects
+    protected abstract IEnumerable<object> GetAtomicValues();
 
-    public abstract class ValueObject
+    public bool ValueEquals(object obj)
     {
-        protected abstract IEnumerable<object> GetAtomicValues();
-
-        public bool ValueEquals(object obj)
+        if (obj == null || obj.GetType() != GetType())
         {
-            if (obj == null || obj.GetType() != GetType())
+            return false;
+        }
+
+        var other = (ValueObject)obj;
+
+        var thisValues = GetAtomicValues().GetEnumerator();
+        var otherValues = other.GetAtomicValues().GetEnumerator();
+
+        while (thisValues.MoveNext() && otherValues.MoveNext())
+        {
+            if (thisValues.Current is null ^ otherValues.Current is null)
             {
                 return false;
             }
 
-            ValueObject other = (ValueObject)obj;
-
-            IEnumerator<object> thisValues = GetAtomicValues().GetEnumerator();
-            IEnumerator<object> otherValues = other.GetAtomicValues().GetEnumerator();
-
-            while (thisValues.MoveNext() && otherValues.MoveNext())
+            if (thisValues.Current != null &&
+                !thisValues.Current.Equals(otherValues.Current))
             {
-                if (thisValues.Current is null ^ otherValues.Current is null)
-                {
-                    return false;
-                }
-
-                if (thisValues.Current != null &&
-                    !thisValues.Current.Equals(otherValues.Current))
-                {
-                    return false;
-                }
+                return false;
             }
-
-            return !thisValues.MoveNext() && !otherValues.MoveNext();
         }
+
+        return !thisValues.MoveNext() && !otherValues.MoveNext();
     }
 }

@@ -1,4 +1,4 @@
-﻿namespace Skywalker.Domain.Entities
+﻿namespace Skywalker.Ddd.Domain.Entities
 {
     public static class ConcurrencyStampConsts
     {

@@ -1,43 +1,43 @@
-﻿//using Microsoft.Extensions.DependencyInjection;
-//using Microsoft.Extensions.Options;
-//using Skywalker.Ddd.ObjectMapping;
+﻿using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Options;
+using Skywalker.Extensions.ObjectMapper;
 
-//namespace Skywalker.Domain.Entities.Events.Distributed;
+namespace Skywalker.Ddd.Domain.Entities.Events.Distributed;
 
-//public class EntityToEtoMapper : IEntityToEtoMapper/*, ITransientDependency*/
-//{
-//    protected IHybridServiceScopeFactory HybridServiceScopeFactory { get; }
+public class EntityToEtoMapper : IEntityToEtoMapper
+{
+    protected IHybridServiceScopeFactory HybridServiceScopeFactory { get; }
 
-//    protected SkywalkerDistributedEntityEventOptions Options { get; }
+    protected SkywalkerDistributedEntityEventOptions Options { get; }
 
-//    public EntityToEtoMapper(IOptions<SkywalkerDistributedEntityEventOptions> options, IHybridServiceScopeFactory hybridServiceScopeFactory)
-//    {
-//        HybridServiceScopeFactory = hybridServiceScopeFactory;
-//        Options = options.Value;
-//    }
+    public EntityToEtoMapper(IOptions<SkywalkerDistributedEntityEventOptions> options, IHybridServiceScopeFactory hybridServiceScopeFactory)
+    {
+        HybridServiceScopeFactory = hybridServiceScopeFactory;
+        Options = options.Value;
+    }
 
-//    public object? Map(object @object)
-//    {
-//        Check.NotNull(@object, nameof(@object));
+    public object? Map(object @object)
+    {
+        Check.NotNull(@object, nameof(@object));
 
-//        if (@object is not IEntity entity)
-//        {
-//            return null;
-//        }
+        if (@object is not IEntity entity)
+        {
+            return null;
+        }
 
-//        var entityType = entity.GetType();
-//        var etoMappingItem = Options.EtoMappings.GetOrDefault(entityType);
-//        if (etoMappingItem == null)
-//        {
-//            var keys = entity.GetKeys().JoinAsString(",");
-//            return new EntityEto(entityType.FullName!, keys);
-//        }
+        var entityType = entity.GetType();
+        var etoMappingItem = Options.EtoMappings.GetOrDefault(entityType);
+        if (etoMappingItem == null)
+        {
+            var keys = entity.GetKeys().JoinAsString(",");
+            return new EntityEto(entityType.FullName!, keys);
+        }
 
-//        using var scope = HybridServiceScopeFactory.CreateScope();
-//        var objectMapperType = etoMappingItem.ObjectMappingContextType == null ? typeof(IObjectMapper) : typeof(IObjectMapper<>).MakeGenericType(etoMappingItem.ObjectMappingContextType);
+        using var scope = HybridServiceScopeFactory.CreateScope();
+        var objectMapperType = etoMappingItem.ObjectMappingContextType == null ? typeof(IObjectMapper) : typeof(IObjectMapper<>).MakeGenericType(etoMappingItem.ObjectMappingContextType);
 
-//        var objectMapper = (IObjectMapper)scope.ServiceProvider.GetRequiredService(objectMapperType);
+        var objectMapper = (IObjectMapper)scope.ServiceProvider.GetRequiredService(objectMapperType);
 
-//        return objectMapper.Map(entityType, etoMappingItem.EtoType, @object);
-//    }
-//}
+        return objectMapper.Map(entityType, etoMappingItem.EtoType, @object);
+    }
+}

@@ -1,6 +1,6 @@
 using System.Threading.Tasks;
 
-namespace Skywalker.Domain.Entities.Events
+namespace Skywalker.Ddd.Domain.Entities.Events
 {
     /// <summary>
     /// Null-object implementation of <see cref="IEntityChangeEventHelper"/>.

@@ -1,6 +1,6 @@
 ﻿using System.Threading.Tasks;
 
-namespace Skywalker.Data.Seeding
+namespace Skywalker.Ddd.Data.Seeding
 {
     public interface IDataSeedContributor
     {

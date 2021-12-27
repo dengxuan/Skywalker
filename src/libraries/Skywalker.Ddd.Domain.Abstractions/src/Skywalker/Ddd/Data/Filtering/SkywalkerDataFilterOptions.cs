@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace Skywalker.Data.Filtering
+namespace Skywalker.Ddd.Data.Filtering
 {
     public class SkywalkerDataFilterOptions
     {

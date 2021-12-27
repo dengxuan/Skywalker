@@ -1,9 +1,9 @@
 ﻿using System;
 
-namespace Skywalker.Domain.Entities
-{
-    public class DisableIdGenerationAttribute : Attribute
-    {
+namespace Skywalker.Ddd.Domain.Entities;
 
-    }
+[AttributeUsage(AttributeTargets.Property)]
+public class DisableIdGenerationAttribute : Attribute
+{
+
 }

@@ -1,12 +1,12 @@
-using Skywalker.Domain.Entities;
+using Skywalker.Ddd.Domain.Entities;
 
-namespace Skywalker.Domain.Services;
+namespace Skywalker.Ddd.Domain.Services;
 
 /// <summary>
 /// This interface can be implemented by all domain services to identify them by convention.
 /// Just to mark a class as domain service
 /// </summary>
-public interface IDomainService/* : ITransientDependency*/
+public interface IDomainService
 {
 }
 

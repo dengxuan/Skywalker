@@ -5,11 +5,11 @@ using System.Collections.Immutable;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 using Skywalker.Ddd.Uow.Abstractions;
-using Skywalker.ExceptionHandler;
+using Skywalker.Extensions.Exceptions;
 
 namespace Skywalker.Ddd.Uow;
 
-public class UnitOfWork : IUnitOfWork/*, ITransientDependency*/
+public class UnitOfWork : IUnitOfWork
 {
     public Guid Id { get; } = Guid.NewGuid();
 

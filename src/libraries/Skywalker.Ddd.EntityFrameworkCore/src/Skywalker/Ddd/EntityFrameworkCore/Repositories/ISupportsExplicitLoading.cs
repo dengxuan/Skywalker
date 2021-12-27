@@ -1,5 +1,5 @@
-using Skywalker.Domain.Entities;
 using System.Linq.Expressions;
+using Skywalker.Ddd.Domain.Entities;
 
 namespace Skywalker.Domain.Repositories;
 

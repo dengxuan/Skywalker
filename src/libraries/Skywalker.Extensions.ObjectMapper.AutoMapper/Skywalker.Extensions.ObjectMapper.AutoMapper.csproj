@@ -1,0 +1,16 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+	<PropertyGroup>
+		<RootNamespace></RootNamespace>
+	</PropertyGroup>
+
+	<ItemGroup>
+		<PackageReference Include="AutoMapper" Version="10.1.1" />
+		<PackageReference Include="Microsoft.Extensions.Options" Version="6.0.0" />
+		<PackageReference Include="Skywalker.Extensions.Universal" Version="1.0.1" />
+	</ItemGroup>
+	<ItemGroup>
+		<ProjectReference Include="..\Skywalker.Ddd.ObjectMapping\Skywalker.Ddd.ObjectMapping.csproj" />
+	</ItemGroup>
+
+</Project>

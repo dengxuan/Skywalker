@@ -1,15 +1,15 @@
-﻿using Microsoft.EntityFrameworkCore;
-using Skywalker.Data;
-using Skywalker.Domain.Entities;
-using Skywalker.Domain.Entities.Events;
+﻿using System.ComponentModel.DataAnnotations.Schema;
+using System.Linq.Expressions;
+using Microsoft.EntityFrameworkCore;
+using Skywalker.Ddd.Data;
+using Skywalker.Ddd.Domain.Entities;
+using Skywalker.Ddd.Domain.Entities.Events;
 using Skywalker.Domain.Repositories;
 using Skywalker.EventBus;
 using Skywalker.EventBus.Abstractions;
 using Skywalker.Extensions.GuidGenerator;
 using Skywalker.Extensions.Timing;
 using Skywalker.Reflection;
-using System.ComponentModel.DataAnnotations.Schema;
-using System.Linq.Expressions;
 
 namespace Skywalker.Ddd.EntityFrameworkCore.Repositories;
 
@@ -289,7 +289,7 @@ public class Repository<TDbContext, TEntity, TKey> : Repository<TDbContext, TEnt
 
     public async Task<TEntity> GetAsync(TKey id, CancellationToken cancellationToken = default)
     {
-        TEntity? entity = await FindAsync(id, cancellationToken);
+        var entity = await FindAsync(id, cancellationToken);
         if (entity == null)
         {
             throw new EntityNotFoundException();

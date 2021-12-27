@@ -1,6 +1,6 @@
 using Skywalker.EventBus.Abstractions;
 
-namespace Skywalker.Domain.Entities.Events;
+namespace Skywalker.Ddd.Domain.Entities.Events;
 
 /// <summary>
 /// Used to pass data for an event that is related to with an <see cref="IEntity"/> object.

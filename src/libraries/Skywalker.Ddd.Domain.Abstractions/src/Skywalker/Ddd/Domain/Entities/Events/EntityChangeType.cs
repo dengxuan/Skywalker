@@ -1,4 +1,4 @@
-﻿namespace Skywalker.Domain.Entities.Events
+﻿namespace Skywalker.Ddd.Domain.Entities.Events
 {
     public enum EntityChangeType : byte
     {

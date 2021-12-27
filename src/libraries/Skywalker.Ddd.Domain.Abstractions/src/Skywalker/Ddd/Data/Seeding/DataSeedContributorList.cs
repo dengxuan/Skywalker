@@ -1,6 +1,6 @@
 ﻿using Skywalker.Collections.Generic;
 
-namespace Skywalker.Data.Seeding
+namespace Skywalker.Ddd.Data.Seeding
 {
     public class DataSeedContributorList : TypeList<IDataSeedContributor>
     {

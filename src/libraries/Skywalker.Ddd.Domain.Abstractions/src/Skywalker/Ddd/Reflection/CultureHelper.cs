@@ -1,12 +1,12 @@
 using System.Globalization;
 
-namespace Skywalker.Reflection;
+namespace Skywalker.Ddd.Reflection;
 
 public static class CultureHelper
 {
     public static IDisposable Use(string culture, string? uiCulture = null)
     {
-        Check.NotNull(culture, nameof(culture));
+        culture.NotNull(nameof(culture));
 
         return Use(
             new CultureInfo(culture),
@@ -18,7 +18,7 @@ public static class CultureHelper
 
     public static IDisposable Use(CultureInfo culture, CultureInfo? uiCulture = null)
     {
-        Check.NotNull(culture, nameof(culture));
+        culture.NotNull(nameof(culture));
 
         var currentCulture = CultureInfo.CurrentCulture;
         var currentUiCulture = CultureInfo.CurrentUICulture;
@@ -55,8 +55,8 @@ public static class CultureHelper
 
     public static string GetBaseCultureName(string cultureName)
     {
-        return cultureName.Contains("-")
-            ? cultureName.Left(cultureName.IndexOf("-", StringComparison.Ordinal))
+        return cultureName.Contains('-')
+            ? cultureName.Left(cultureName.IndexOf('-'))
             : cultureName;
     }
 }

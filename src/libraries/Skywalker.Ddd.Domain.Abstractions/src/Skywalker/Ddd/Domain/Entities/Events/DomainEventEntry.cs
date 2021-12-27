@@ -1,18 +1,15 @@
-using System;
+namespace Skywalker.Ddd.Domain.Entities.Events;
 
-namespace Skywalker.Domain.Entities.Events
+[Serializable]
+public class DomainEventEntry
 {
-    [Serializable]
-    public class DomainEventEntry
+    public object SourceEntity { get; }
+
+    public object EventData { get; }
+
+    public DomainEventEntry(object sourceEntity, object eventData)
     {
-        public object SourceEntity { get; }
-
-        public object EventData { get; }
-
-        public DomainEventEntry(object sourceEntity, object eventData)
-        {
-            SourceEntity = sourceEntity;
-            EventData = eventData;
-        }
+        SourceEntity = sourceEntity;
+        EventData = eventData;
     }
 }

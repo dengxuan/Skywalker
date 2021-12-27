@@ -1,6 +1,5 @@
-﻿using Skywalker.Data;
-using Skywalker.Domain.Entities;
-using System;
+﻿using Skywalker.Ddd.Data;
+using Skywalker.Ddd.Domain.Entities;
 
 namespace Microsoft.EntityFrameworkCore.Metadata.Builders;
 

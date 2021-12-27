@@ -1,4 +1,4 @@
-﻿namespace Skywalker.Data.Filtering
+﻿namespace Skywalker.Ddd.Data.Filtering
 {
     public class DataFilterState
     {
@@ -8,7 +8,7 @@
         {
             IsEnabled = isEnabled;
         }
-        
+
         public DataFilterState Clone()
         {
             return new DataFilterState(IsEnabled);

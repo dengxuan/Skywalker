@@ -1,4 +1,4 @@
-﻿namespace Skywalker.Data.Seeding;
+﻿namespace Skywalker.Ddd.Data.Seeding;
 
 public class DataSeedContext
 {

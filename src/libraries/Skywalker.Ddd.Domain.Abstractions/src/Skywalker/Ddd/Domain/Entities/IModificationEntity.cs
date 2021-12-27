@@ -1,6 +1,6 @@
 using System;
 
-namespace Skywalker.Domain.Entities
+namespace Skywalker.Ddd.Domain.Entities
 {
     /// <summary>
     /// This interface can be implemented to store modification information (who and when modified lastly).

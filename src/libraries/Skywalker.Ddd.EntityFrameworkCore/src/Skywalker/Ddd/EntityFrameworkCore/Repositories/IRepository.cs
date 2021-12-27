@@ -1,6 +1,6 @@
-﻿using Microsoft.EntityFrameworkCore;
-using Skywalker.Domain.Entities;
-using System.Linq.Expressions;
+﻿using System.Linq.Expressions;
+using Microsoft.EntityFrameworkCore;
+using Skywalker.Ddd.Domain.Entities;
 
 namespace Skywalker.Ddd.EntityFrameworkCore.Repositories;
 

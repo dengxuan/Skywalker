@@ -1,4 +1,4 @@
-namespace Skywalker.Domain.Entities.Events;
+namespace Skywalker.Ddd.Domain.Entities.Events;
 
 /// <summary>
 /// This type of event can be used to notify just after deletion of an Entity.

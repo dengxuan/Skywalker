@@ -1,11 +1,12 @@
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Logging.Abstractions;
 using Microsoft.Extensions.Options;
-using Skywalker.Domain.Entities.Events.Distributed;
+using Skywalker.Ddd.Domain.Entities;
+using Skywalker.Ddd.Domain.Entities.Events.Distributed;
 using Skywalker.EventBus;
 using Skywalker.EventBus.Abstractions;
 
-namespace Skywalker.Domain.Entities.Events;
+namespace Skywalker.Ddd.Domain.Entities.Events;
 
 /// <summary>
 /// Used to trigger entity change events.

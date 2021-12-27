@@ -1,17 +1,17 @@
+using System.ComponentModel.DataAnnotations.Schema;
+using System.Linq.Expressions;
+using System.Reflection;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.ChangeTracking;
 using Microsoft.EntityFrameworkCore.Metadata;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
-using Skywalker.Data;
-using Skywalker.Data.Filtering;
+using Skywalker.Ddd.Data;
+using Skywalker.Ddd.Data.Filtering;
+using Skywalker.Ddd.Domain.Entities;
+using Skywalker.Ddd.Domain.Entities.Events;
 using Skywalker.Ddd.EntityFrameworkCore.ValueConverters;
 using Skywalker.Ddd.Uow.Abstractions;
-using Skywalker.Domain.Entities;
-using Skywalker.Domain.Entities.Events;
 using Skywalker.Extensions.Timing;
-using System.ComponentModel.DataAnnotations.Schema;
-using System.Linq.Expressions;
-using System.Reflection;
 
 namespace Skywalker.Ddd.EntityFrameworkCore;
 
@@ -26,21 +26,21 @@ public class SkywalkerDbContext<TDbContext> : DbContext where TDbContext : DbCon
 
     protected IClock? Clock { get; set; }
 
-    private static readonly MethodInfo _configureBasePropertiesMethodInfo
+    private static readonly MethodInfo s_configureBasePropertiesMethodInfo
         = typeof(SkywalkerDbContext<TDbContext>)
             .GetMethod(
                 nameof(ConfigureBaseProperties),
                 BindingFlags.Instance | BindingFlags.NonPublic
             )!;
 
-    private static readonly MethodInfo _configureValueConverterMethodInfo
+    private static readonly MethodInfo s_configureValueConverterMethodInfo
         = typeof(SkywalkerDbContext<TDbContext>)
             .GetMethod(
                 nameof(ConfigureValueConverter),
                 BindingFlags.Instance | BindingFlags.NonPublic
             )!;
 
-    private static readonly MethodInfo _configureValueGeneratedMethodInfo
+    private static readonly MethodInfo s_configureValueGeneratedMethodInfo
         = typeof(SkywalkerDbContext<TDbContext>)
             .GetMethod(
                 nameof(ConfigureValueGenerated),
@@ -75,15 +75,15 @@ public class SkywalkerDbContext<TDbContext> : DbContext where TDbContext : DbCon
 
         foreach (var entityType in modelBuilder.Model.GetEntityTypes())
         {
-            _configureBasePropertiesMethodInfo
+            s_configureBasePropertiesMethodInfo
                 .MakeGenericMethod(entityType.ClrType)
                 .Invoke(this, new object[] { modelBuilder, entityType });
 
-            _configureValueConverterMethodInfo
+            s_configureValueConverterMethodInfo
                 .MakeGenericMethod(entityType.ClrType)
                 .Invoke(this, new object[] { modelBuilder, entityType });
 
-            _configureValueGeneratedMethodInfo
+            s_configureValueGeneratedMethodInfo
                 .MakeGenericMethod(entityType.ClrType)
                 .Invoke(this, new object[] { modelBuilder, entityType });
         }

@@ -1,7 +1,7 @@
 ﻿using System.Collections.ObjectModel;
 using System.ComponentModel.DataAnnotations;
 
-namespace Skywalker.Domain.Entities;
+namespace Skywalker.Ddd.Domain.Entities;
 
 [Serializable]
 public abstract record class AggregateRoot : Entity, IAggregateRoot, IGeneratesDomainEvents, IHasConcurrencyStamp, IHasCreationTime

@@ -1,6 +1,6 @@
 using System;
 
-namespace Skywalker.Domain.Entities
+namespace Skywalker.Ddd.Domain.Entities
 {
     /// <summary>
     /// A standard interface to add CreationTime property.

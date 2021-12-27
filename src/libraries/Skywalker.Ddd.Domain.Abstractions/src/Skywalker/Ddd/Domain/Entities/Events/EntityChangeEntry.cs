@@ -1,6 +1,6 @@
 using System;
 
-namespace Skywalker.Domain.Entities.Events
+namespace Skywalker.Ddd.Domain.Entities.Events
 {
     [Serializable]
     public class EntityChangeEntry
