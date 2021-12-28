@@ -1,5 +1,4 @@
 ﻿using System.Linq.Expressions;
-using Microsoft.EntityFrameworkCore;
 using Skywalker.Ddd.Domain.Entities;
 
 namespace Skywalker.Ddd.EntityFrameworkCore.Repositories;
@@ -9,7 +8,6 @@ namespace Skywalker.Ddd.EntityFrameworkCore.Repositories;
 /// </summary>
 public interface IRepository
 {
-    DbContext DbContext { get; }
 }
 
 public interface IRepository<TEntity> : IReadOnlyRepository<TEntity>, IBasicRepository<TEntity> where TEntity : class, IEntity

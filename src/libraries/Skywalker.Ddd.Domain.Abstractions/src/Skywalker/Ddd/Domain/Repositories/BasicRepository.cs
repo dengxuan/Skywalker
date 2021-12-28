@@ -1,6 +1,5 @@
 ﻿using System.Collections;
 using System.Linq.Expressions;
-using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 using Skywalker.Ddd.Data;
 using Skywalker.Ddd.Data.Filtering;
@@ -24,10 +23,6 @@ public abstract class BasicRepository<TEntity> : IBasicRepository<TEntity>, ISer
     public Expression Expression => GetQueryable().Expression;
 
     public IQueryProvider Provider => GetQueryable().Provider;
-
-    public abstract DbContext DbContext { get; }
-
-    public abstract DbSet<TEntity> DbSet { get; }
 
     public IEnumerator<TEntity> GetEnumerator()
     {
@@ -66,6 +61,8 @@ public abstract class BasicRepository<TEntity> : IBasicRepository<TEntity>, ISer
 
     public abstract Task<List<TEntity>> GetPagedListAsync(int skipCount, int maxResultCount, string sorting, CancellationToken cancellationToken = default);
 
+    public abstract Task<List<TEntity>> GetPagedListAsync(Expression<Func<TEntity, bool>> expression, int skipCount, int maxResultCount, string sorting, CancellationToken cancellationToken = default);
+
     public abstract Task<TEntity?> FindAsync(Expression<Func<TEntity, bool>> predicate, CancellationToken cancellationToken = default);
 
     public async Task<TEntity> GetAsync(Expression<Func<TEntity, bool>> predicate, CancellationToken cancellationToken = default)
@@ -101,7 +98,7 @@ public abstract class BasicRepository<TEntity, TKey> : BasicRepository<TEntity>,
 
         if (entity == null)
         {
-            throw new EntityNotFoundException(typeof(TEntity), id!);
+            throw new EntityNotFoundException(typeof(TEntity), id);
         }
 
         return entity;

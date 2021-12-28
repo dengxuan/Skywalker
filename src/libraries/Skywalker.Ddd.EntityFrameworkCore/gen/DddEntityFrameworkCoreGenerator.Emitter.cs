@@ -37,7 +37,9 @@ public partial class DddEntityFrameworkCoreGenerator
                 s_builder.AppendLine($"{s_generatedCodeAttribute}");
                 s_builder.AppendLine("public static class IServiceCollectionExtensions");
                 s_builder.AppendLine("{");
+                AddDbContextCore(dbContextClass);
                 AddRepositories(dbContextClass);
+                AddDbContext(dbContextClass);
                 AddDbContextFactory(dbContextClass);
                 s_builder.AppendLine("}");
             }
@@ -45,36 +47,9 @@ public partial class DddEntityFrameworkCoreGenerator
             context.AddSource("Skywalker.Ddd.EntityFrameworkCore.g.cs", SourceText.From(s_builder.ToString(), Encoding.UTF8));
         }
 
-        private static void AddDbContext(DbContextClass dbContextClass)
-        {
-            s_builder.AppendLine($"\tpublic static IServiceCollection Add{dbContextClass.Name}s(this IServiceCollection services, Action<SkywalkerDbContextOptions> optionsBuilder)");
-            s_builder.AppendLine("\t{");
-            s_builder.AppendLine($"\t\tservices.Configure(optionsBuilder);");
-            s_builder.AppendLine($"\t\tservices.Add{dbContextClass.Name}Repisitories(optionsBuilder);");
-            s_builder.AppendLine($"\t\tservices.TryAddTransient(SkywalkerDbContextOptionsFactory.Create<{ dbContextClass.Fullname }>);");
-            s_builder.AppendLine($"\t\tservices.AddDbContext<{ dbContextClass.Fullname }>();");
-            s_builder.AppendLine("#if !NETSTANDARD2_0");
-            s_builder.AppendLine($"\t\tservices.AddDbContextFactory<{ dbContextClass.Fullname }>();");
-            s_builder.AppendLine("#endif");
-            s_builder.AppendLine("\t\treturn services;");
-            s_builder.AppendLine("\t}");
-        }
-
-        private static void AddDbContextFactory(DbContextClass dbContextClass)
-        {
-            s_builder.AppendLine($"\tpublic static IServiceCollection Add{dbContextClass.Name}s(this IServiceCollection services, Action<SkywalkerDbContextOptions> optionsBuilder)");
-            s_builder.AppendLine("\t{");
-            s_builder.AppendLine($"\t\tservices.Configure(optionsBuilder);");
-            s_builder.AppendLine($"\t\tservices.Add{dbContextClass.Name}Repisitories(optionsBuilder);");
-            s_builder.AppendLine($"\t\tservices.TryAddTransient(SkywalkerDbContextOptionsFactory.Create<{ dbContextClass.Fullname }>);");
-            s_builder.AppendLine($"\t\tservices.AddDbContext<{ dbContextClass.Fullname }>();");
-            s_builder.AppendLine("\t\treturn services;");
-            s_builder.AppendLine("\t}");
-        }
-
         private static void AddRepositories(DbContextClass dbContextClass)
         {
-            s_builder.AppendLine($"\tprivate static IServiceCollection Add{dbContextClass.Name}Repisitories(this IServiceCollection services, Action<SkywalkerDbContextOptions> optionsBuilder)");
+            s_builder.AppendLine($"\tinternal static IServiceCollection Add{dbContextClass.Name}Repisitories(this IServiceCollection services, Action<SkywalkerDbContextOptions> optionsBuilder)");
             s_builder.AppendLine("\t{");
             foreach (var dbContextProperty in dbContextClass.Properties)
             {
@@ -88,6 +63,39 @@ public partial class DddEntityFrameworkCoreGenerator
                     s_builder.AppendLine($"\t\tservices.TryAddTransient<IReadOnlyRepository<{ dbContextProperty.Fullname }, { dbContextProperty.PrimaryKey }>, Repository<{ dbContextClass.Fullname }, { dbContextProperty.Fullname }, { dbContextProperty.PrimaryKey }>>();");
                 }
             }
+            s_builder.AppendLine("\t\treturn services;");
+            s_builder.AppendLine("\t}");
+        }
+
+        private static void AddDbContextCore(DbContextClass dbContextClass)
+        {
+            s_builder.AppendLine($"\tpublic static IServiceCollection Add{dbContextClass.Name}Core(this IServiceCollection services, Action<SkywalkerDbContextOptions> optionsBuilder)");
+            s_builder.AppendLine("\t{");
+            s_builder.AppendLine($"\t\tservices.Configure(optionsBuilder);");
+            s_builder.AppendLine($"\t\tservices.Add{dbContextClass.Name}Repisitories(optionsBuilder);");
+            s_builder.AppendLine($"\t\tservices.TryAddTransient(SkywalkerDbContextOptionsFactory.Create<{ dbContextClass.Fullname }>);");
+            s_builder.AppendLine("\t\treturn services;");
+            s_builder.AppendLine("\t}");
+        }
+
+        private static void AddDbContext(DbContextClass dbContextClass)
+        {
+            s_builder.AppendLine($"\tpublic static IServiceCollection Add{dbContextClass.Name}s(this IServiceCollection services, Action<SkywalkerDbContextOptions> optionsBuilder)");
+            s_builder.AppendLine("\t{");
+            s_builder.AppendLine($"\t\tservices.Configure(optionsBuilder);");
+            s_builder.AppendLine($"\t\tservices.Add{dbContextClass.Name}Core(optionsBuilder);");
+            s_builder.AppendLine($"\t\tservices.AddDbContext<{ dbContextClass.Fullname }>();");
+            s_builder.AppendLine("\t\treturn services;");
+            s_builder.AppendLine("\t}");
+        }
+
+        private static void AddDbContextFactory(DbContextClass dbContextClass)
+        {
+            s_builder.AppendLine($"\tpublic static IServiceCollection AddPooled{dbContextClass.Name}sFactory(this IServiceCollection services, Action<SkywalkerDbContextOptions> optionsBuilder)");
+            s_builder.AppendLine("\t{");
+            s_builder.AppendLine($"\t\tservices.Configure(optionsBuilder);");
+            s_builder.AppendLine($"\t\tservices.Add{dbContextClass.Name}Core(optionsBuilder);");
+            s_builder.AppendLine($"\t\tservices.AddDbContextFactory<{ dbContextClass.Fullname }>();");
             s_builder.AppendLine("\t\treturn services;");
             s_builder.AppendLine("\t}");
         }

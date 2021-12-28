@@ -36,11 +36,7 @@ public static class RepositoryExtensions
         await HardDeleteWithUnitOfWorkAsync(repository, entity, cancellationToken);
     }
 
-    private static async Task HardDeleteWithUnitOfWorkAsync<TEntity>(
-        IBasicRepository<TEntity> repository,
-        TEntity entity,
-        CancellationToken cancellationToken
-    )
+    private static async Task HardDeleteWithUnitOfWorkAsync<TEntity>(IBasicRepository<TEntity> repository, TEntity entity, CancellationToken cancellationToken)
         where TEntity : class, IEntity, IDeleteable
     {
         //var hardDeleteEntities = (HashSet<IEntity>) currentUow.Items.GetOrAdd(

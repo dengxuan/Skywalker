@@ -1,5 +1,4 @@
-﻿using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.DependencyInjection.Extensions;
+﻿using Microsoft.Extensions.DependencyInjection.Extensions;
 using Skywalker.Ddd.EntityFrameworkCore;
 using Skywalker.Extensions.Linq;
 
@@ -14,9 +13,6 @@ public static class EntityFrameworkCoreIServiceCollectionExtensions
         services.TryAddTransient<IAsyncQueryableProvider, EfCoreAsyncQueryableProvider>();
         var builder = new SkywalkerDbContextBuilder(services);
         builderAction(builder);
-#if !NETSTANDARD2_0
-        services.AddDbContextFactory<DbContext>();
-#endif
         return services;
     }
 }

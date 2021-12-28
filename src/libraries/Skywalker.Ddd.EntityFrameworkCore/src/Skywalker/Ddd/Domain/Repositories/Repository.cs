@@ -27,9 +27,9 @@ public class Repository<TDbContext, TEntity> : BasicRepository<TEntity>, IReposi
 
     protected IEntityChangeEventHelper EntityChangeEventHelper { get; set; }
 
-    public override DbSet<TEntity> DbSet => DbContext.Set<TEntity>();
+    public  DbSet<TEntity> DbSet => DbContext.Set<TEntity>();
 
-    public override DbContext DbContext => _dbContextProvider.GetDbContext();
+    public  DbContext DbContext => _dbContextProvider.GetDbContext();
 
     public Repository(IDbContextProvider<TDbContext> dbContextProvider, IClock clock, IGuidGenerator guidGenerator)
     {
@@ -235,6 +235,11 @@ public class Repository<TDbContext, TEntity> : BasicRepository<TEntity>, IReposi
         //return await DbSet.OrderBy(sorting)
         //                  .Page(skipCount, maxResultCount)
         //                  .ToListAsync(GetCancellationToken(cancellationToken));
+    }
+
+    public override Task<List<TEntity>> GetPagedListAsync(Expression<Func<TEntity, bool>> expression, int skipCount, int maxResultCount, string sorting, CancellationToken cancellationToken = default)
+    {
+        throw new NotImplementedException();
     }
 
     public IAsyncEnumerator<TEntity> GetAsyncEnumerator(CancellationToken cancellationToken = default)
