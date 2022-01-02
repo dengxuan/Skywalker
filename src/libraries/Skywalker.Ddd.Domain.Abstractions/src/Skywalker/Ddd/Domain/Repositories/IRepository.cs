@@ -1,7 +1,7 @@
 ﻿using System.Linq.Expressions;
 using Skywalker.Ddd.Domain.Entities;
 
-namespace Skywalker.Ddd.EntityFrameworkCore.Repositories;
+namespace Skywalker.Ddd.Domain.Repositories;
 
 /// <summary>
 /// Just to mark a class as repository.

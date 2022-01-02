@@ -15,7 +15,7 @@ public partial class DddEntityFrameworkCoreGenerator
         private readonly Compilation _compilation;
         private readonly INamedTypeSymbol? _dbSetSymbol;
         private readonly INamedTypeSymbol? _dbContextSymbol;
-        private readonly INamedTypeSymbol?[] _entitiesSymbols;
+        private readonly INamedTypeSymbol? _entitiesSymbols;
         private readonly CancellationToken _cancellationToken;
         private readonly Action<Diagnostic> _reportDiagnostic;
 
@@ -24,24 +24,17 @@ public partial class DddEntityFrameworkCoreGenerator
             _compilation = compilation;
             _dbSetSymbol = _compilation.GetBestTypeByMetadataName(Constants.DbSetSymblyName);
             _dbContextSymbol = _compilation.GetBestTypeByMetadataName(Constants.DbContextSymblyName);
-            _entitiesSymbols = new INamedTypeSymbol?[]
-            {
-                _compilation.GetBestTypeByMetadataName($"{Constants.DomainEntitiesNamespace}.Entity"),
-                _compilation.GetBestTypeByMetadataName($"{Constants.DomainEntitiesNamespace}.Entity`1"),
-                _compilation.GetBestTypeByMetadataName($"{Constants.DomainEntitiesNamespace}.IEntity"),
-                _compilation.GetBestTypeByMetadataName($"{Constants.DomainEntitiesNamespace}.IEntity`1"),
-                _compilation.GetBestTypeByMetadataName($"{Constants.DomainEntitiesNamespace}.AggregateRoot"),
-                _compilation.GetBestTypeByMetadataName($"{Constants.DomainEntitiesNamespace}.AggregateRoot`1"),
-                _compilation.GetBestTypeByMetadataName($"{Constants.DomainEntitiesNamespace}.IAggregateRoot"),
-                _compilation.GetBestTypeByMetadataName($"{Constants.DomainEntitiesNamespace}.IAggregateRoot`1"),
-            };
+            _entitiesSymbols = _compilation.GetBestTypeByMetadataName(Constants.DomainEntitySymbolName);
             _cancellationToken = cancellationToken;
             _reportDiagnostic = reportDiagnostic;
         }
 
         internal static bool IsOpenGeneric(INamedTypeSymbol symbol) => symbol.TypeArguments.Length > 0 && symbol.TypeArguments[0] is ITypeParameterSymbol;
 
-        internal static bool IsSyntaxTargetForGeneration(SyntaxNode node) => node is ClassDeclarationSyntax m && m.Members.Count > 0;
+        internal static bool IsSyntaxTargetForGeneration(SyntaxNode node)
+        {
+            return node is ClassDeclarationSyntax;
+        }
 
         internal static ClassDeclarationSyntax? GetSemanticTargetForGeneration(GeneratorSyntaxContext context)
         {
@@ -120,12 +113,13 @@ public partial class DddEntityFrameworkCoreGenerator
                     {
                         continue;
                     }
-                    if(entityNamedTypeSymbol.TypeKind is not TypeKind.Class)
+                    if (entityNamedTypeSymbol.TypeKind is not TypeKind.Class)
                     {
                         continue;
                     }
                     // The property type arguments is domain Entity or AggregateRoot
-                    if (!_entitiesSymbols.Any(predicate => s_symbolComparer.Equals(predicate, entityNamedTypeSymbol.BaseType?.OriginalDefinition)))
+                    
+                    if (!entityNamedTypeSymbol.AllInterfaces.Any(predicate => s_symbolComparer.Equals(predicate, _entitiesSymbols)))
                     {
                         continue;
                     }
@@ -148,6 +142,7 @@ public partial class DddEntityFrameworkCoreGenerator
             return results;
         }
     }
+
 
     /// <summary>
     /// A DbContext struct holding a bunch of DbContext properties.

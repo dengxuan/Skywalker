@@ -15,7 +15,7 @@ using Skywalker.Extensions.Timing;
 
 namespace Skywalker.Ddd.EntityFrameworkCore;
 
-public class SkywalkerDbContext<TDbContext> : DbContext where TDbContext : DbContext
+public abstract class SkywalkerDbContext<TDbContext> : DbContext, ISkywalkerDbContext where TDbContext : DbContext
 {
 
     protected virtual bool IsSoftDeleteFilterEnabled => DataFilter?.IsEnabled<IDeleteable>() ?? false;

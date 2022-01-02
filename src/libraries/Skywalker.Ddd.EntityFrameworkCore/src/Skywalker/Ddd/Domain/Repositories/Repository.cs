@@ -4,6 +4,7 @@ using Microsoft.EntityFrameworkCore;
 using Skywalker.Ddd.Data;
 using Skywalker.Ddd.Domain.Entities;
 using Skywalker.Ddd.Domain.Entities.Events;
+using Skywalker.Ddd.Domain.Repositories;
 using Skywalker.Domain.Repositories;
 using Skywalker.EventBus;
 using Skywalker.EventBus.Abstractions;

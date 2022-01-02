@@ -9,6 +9,18 @@ public record class User(Guid Id, string Name) : AggregateRoot<Guid>(Id);
 
 public record class Username(int Id, string Name) : AggregateRoot<int>(Id);
 
+public record class Test : IEntity
+{
+    public object[] GetKeys() => new[] { "1", "2" };
+}
+
+public record class TestA : IEntity<long>
+{
+    public long Id { get; set; }
+
+    public object[] GetKeys() => new object[] { Id };
+}
+
 public record class Schoole : AggregateRoot
 {
     public int Id { get; set; }
@@ -17,5 +29,5 @@ public record class Schoole : AggregateRoot
     {
     }
 
-    public override object[] GetKeys() => throw new NotImplementedException();
+    public override object[] GetKeys() => new[] { "1", "2" };
 }

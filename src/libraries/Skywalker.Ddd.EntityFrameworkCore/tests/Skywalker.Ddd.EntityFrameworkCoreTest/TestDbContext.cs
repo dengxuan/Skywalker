@@ -4,6 +4,7 @@
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.DependencyInjection.Extensions;
+using Skywalker.Ddd.Domain.Repositories;
 using Skywalker.Ddd.EntityFrameworkCore;
 using Skywalker.Ddd.EntityFrameworkCore.Repositories;
 #nullable disable
@@ -28,6 +29,12 @@ public static class IServiceCollectionExtensions
 public class TestDbContext : SkywalkerDbContext<TestDbContext>
 {
     public DbSet<User> Users { get; set; }
+    public DbSet<Username> UserNames { get; set; }
+
+    public DbSet<Schoole> Schooles { get; set; }
+
+    public DbSet<Test> Tests { get; set; }
+    public DbSet<TestA> TestAs { get; set; }
 
     public TestDbContext(DbContextOptions<TestDbContext> options) : base(options)
     {

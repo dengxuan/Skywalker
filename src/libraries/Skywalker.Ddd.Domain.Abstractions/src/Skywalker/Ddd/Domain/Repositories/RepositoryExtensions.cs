@@ -1,7 +1,7 @@
 ﻿using System.Linq.Expressions;
 using Skywalker.Ddd.Data;
 using Skywalker.Ddd.Domain.Entities;
-using Skywalker.Ddd.EntityFrameworkCore.Repositories;
+using Skywalker.Ddd.Domain.Repositories;
 
 namespace Skywalker.Domain.Repositories;
 

@@ -10,6 +10,9 @@ using Microsoft.Extensions.Logging;
 Console.WriteLine("Hello, World!");
 var host = Host.CreateDefaultBuilder(args).ConfigureServices(services =>
 {
+    services.AddEntityFrameworkCore(options =>
+    {
+    });
     services.TryAddTransient(typeof(IDbContextProvider<>), typeof(DbContextProvider<>));
     services.AddPooledDbContextFactory<TestDbContext>(options =>
     {

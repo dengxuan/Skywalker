@@ -4,7 +4,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Skywalker.Ddd.Data;
 using Skywalker.Ddd.Data.Filtering;
 using Skywalker.Ddd.Domain.Entities;
-using Skywalker.Ddd.EntityFrameworkCore.Repositories;
+using Skywalker.Ddd.Domain.Repositories;
 using Skywalker.Extensions.Threading;
 
 namespace Skywalker.Domain.Repositories;

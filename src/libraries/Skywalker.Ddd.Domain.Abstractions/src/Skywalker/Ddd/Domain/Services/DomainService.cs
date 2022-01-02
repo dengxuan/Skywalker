@@ -3,7 +3,7 @@
 
 using System.Linq.Expressions;
 using Skywalker.Ddd.Domain.Entities;
-using Skywalker.Ddd.EntityFrameworkCore.Repositories;
+using Skywalker.Ddd.Domain.Repositories;
 using Skywalker.Extensions.Linq;
 
 namespace Skywalker.Ddd.Domain.Services;

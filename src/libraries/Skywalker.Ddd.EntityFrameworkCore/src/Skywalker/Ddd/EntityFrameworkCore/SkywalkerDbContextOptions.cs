@@ -1,59 +1,55 @@
 ﻿using Skywalker.Ddd.EntityFrameworkCore.DbContextConfiguration;
-using System;
-using System.Collections.Generic;
-using System.Diagnostics.CodeAnalysis;
 
-namespace Skywalker.Ddd.EntityFrameworkCore
+namespace Skywalker.Ddd.EntityFrameworkCore;
+
+public class SkywalkerDbContextOptions
 {
-    public class SkywalkerDbContextOptions
+    internal List<Action<SkywalkerDbContextConfigurationContext>> DefaultPreConfigureActions { get; set; }
+
+    internal Action<SkywalkerDbContextConfigurationContext>? DefaultConfigureAction { get; set; }
+
+    internal Dictionary<Type, List<object>> PreConfigureActions { get; set; }
+
+    internal Dictionary<Type, object> ConfigureActions { get; set; }
+
+    public SkywalkerDbContextOptions()
     {
-        internal List<Action<SkywalkerDbContextConfigurationContext>> DefaultPreConfigureActions { get; set; }
+        DefaultPreConfigureActions = new List<Action<SkywalkerDbContextConfigurationContext>>();
+        PreConfigureActions = new Dictionary<Type, List<object>>();
+        ConfigureActions = new Dictionary<Type, object>();
+    }
 
-        internal Action<SkywalkerDbContextConfigurationContext>? DefaultConfigureAction { get; set; }
+    public void PreConfigure(Action<SkywalkerDbContextConfigurationContext> action)
+    {
+        Check.NotNull(action, nameof(action));
 
-        internal Dictionary<Type, List<object>> PreConfigureActions { get; set; }
+        DefaultPreConfigureActions.Add(action);
+    }
 
-        internal Dictionary<Type, object> ConfigureActions { get; set; }
+    public void Configure(Action<SkywalkerDbContextConfigurationContext> action)
+    {
+        Check.NotNull(action, nameof(action));
 
-        public SkywalkerDbContextOptions()
+        DefaultConfigureAction = action;
+    }
+
+    public void PreConfigure<TDbContext>(Action<SkywalkerDbContextConfigurationContext<TDbContext>> action) where TDbContext : SkywalkerDbContext<TDbContext>
+    {
+        Check.NotNull(action, nameof(action));
+
+        var actions = PreConfigureActions.GetOrDefault(typeof(TDbContext));
+        if (actions == null)
         {
-            DefaultPreConfigureActions = new List<Action<SkywalkerDbContextConfigurationContext>>();
-            PreConfigureActions = new Dictionary<Type, List<object>>();
-            ConfigureActions = new Dictionary<Type, object>();
+            PreConfigureActions[typeof(TDbContext)] = actions = new List<object>();
         }
 
-        public void PreConfigure(Action<SkywalkerDbContextConfigurationContext> action)
-        {
-            Check.NotNull(action, nameof(action));
+        actions.Add(action);
+    }
 
-            DefaultPreConfigureActions.Add(action);
-        }
+    public void Configure<TDbContext>(Action<SkywalkerDbContextConfigurationContext<TDbContext>> action) where TDbContext : SkywalkerDbContext<TDbContext>
+    {
+        Check.NotNull(action, nameof(action));
 
-        public void Configure(Action<SkywalkerDbContextConfigurationContext> action)
-        {
-            Check.NotNull(action, nameof(action));
-
-            DefaultConfigureAction = action;
-        }
-
-        public void PreConfigure<TDbContext>(Action<SkywalkerDbContextConfigurationContext<TDbContext>> action) where TDbContext : SkywalkerDbContext<TDbContext>
-        {
-            Check.NotNull(action, nameof(action));
-
-            var actions = PreConfigureActions.GetOrDefault(typeof(TDbContext));
-            if (actions == null)
-            {
-                PreConfigureActions[typeof(TDbContext)] = actions = new List<object>();
-            }
-
-            actions.Add(action);
-        }
-
-        public void Configure<TDbContext>(Action<SkywalkerDbContextConfigurationContext<TDbContext>> action) where TDbContext : SkywalkerDbContext<TDbContext>
-        {
-            Check.NotNull(action, nameof(action));
-
-            ConfigureActions[typeof(TDbContext)] = action;
-        }
+        ConfigureActions[typeof(TDbContext)] = action;
     }
 }

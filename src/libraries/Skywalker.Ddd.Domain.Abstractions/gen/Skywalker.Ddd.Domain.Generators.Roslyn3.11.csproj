@@ -1,0 +1,20 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <AnalyzerRoslynVersion>3.11</AnalyzerRoslynVersion>
+    <RoslynApiVersion>$(MicrosoftCodeAnalysisCSharpWorkspacesVersion_3_11)</RoslynApiVersion>
+    <AssemblyName>$(MSBuildThisFileName)</AssemblyName>
+  </PropertyGroup>
+
+  <Import Project="Skywalker.Ddd.EntityFrameworkCore.Generators.targets" />
+
+  <ItemGroup>
+    <Compile Remove="DddEntityFrameworkCoreGenerator.Roslyn4.0.cs" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <!-- Package the generator in the analyzer directory of the nuget package -->
+    <None Include="$(BaseOutputPath)\*.dll" Pack="true" PackagePath="analyzers/dotnet/cs" Visible="false" />
+  </ItemGroup>
+
+</Project>

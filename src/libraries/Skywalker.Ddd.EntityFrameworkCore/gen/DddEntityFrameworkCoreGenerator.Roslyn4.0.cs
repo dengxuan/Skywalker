@@ -11,22 +11,27 @@ public partial class DddEntityFrameworkCoreGenerator : ISourceGenerator
 {
     public void Execute(GeneratorExecutionContext context)
     {
-        if (context.SyntaxContextReceiver is not SyntaxContextReceiver receiver || receiver.ClassDeclarations.Count == 0)
-        {
-            // nothing to do yet
-            return;
-        }
-        var parser = new Parser(context.Compilation, context.ReportDiagnostic, context.CancellationToken);
-        var dbContextClasses = parser.DbContextClasses(receiver.ClassDeclarations);
-        if (dbContextClasses.Count > 0)
-        {
-            Emitter.Emit(context, dbContextClasses);
-        }
+        var generatorAssembly = GetType().Assembly;
+        var generatorVersion = generatorAssembly.GetName().Version!.ToString();
+        var compilationAnalyzer = new CompilationAnalyzer(in context, generatorVersion);
+        var metadataClass = compilationAnalyzer.Analyze();
+
+        //if (context.SyntaxContextReceiver is not SyntaxContextReceiver receiver || receiver.ClassDeclarations.Count == 0)
+        //{
+        //    // nothing to do yet
+        //    return;
+        //}
+        //var parser = new Parser(context.Compilation, context.ReportDiagnostic, context.CancellationToken);
+        //var dbContextClasses = parser.DbContextClasses(receiver.ClassDeclarations);
+        //if (dbContextClasses.Count > 0)
+        //{
+        //    Emitter.Emit(context, dbContextClasses);
+        //}
     }
 
     public void Initialize(GeneratorInitializationContext context)
     {
-        context.RegisterForSyntaxNotifications(SyntaxContextReceiver.Create);
+        //context.RegisterForSyntaxNotifications(SyntaxContextReceiver.Create);
     }
 
     private sealed class SyntaxContextReceiver : ISyntaxContextReceiver

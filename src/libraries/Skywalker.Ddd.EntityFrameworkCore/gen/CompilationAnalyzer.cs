@@ -4,9 +4,10 @@ namespace Skywalker.Ddd.EntityFrameworkCore.Generators;
 
 internal class CompilationAnalyzer
 {
-    private static readonly SymbolEqualityComparer _symbolComparer = SymbolEqualityComparer.IncludeNullability;
-    private readonly INamedTypeSymbol[] _domainServicesSymbols;
-    private readonly INamedTypeSymbol[] _domainEntitiesSymbols;
+    private static readonly SymbolEqualityComparer s_symbolComparer = SymbolEqualityComparer.IncludeNullability;
+    private readonly INamedTypeSymbol? _dbContextSymbol;
+    private readonly INamedTypeSymbol? _domainServiceSymbol;
+    private readonly INamedTypeSymbol? _domainEntitieSymbol;
     private readonly GeneratorExecutionContext _context;
     private readonly Compilation _compilation;
     public string GeneratorVersion { get; }
@@ -15,27 +16,15 @@ internal class CompilationAnalyzer
     {
         _context = context;
         _compilation = context.Compilation;
-        _domainServicesSymbols = new INamedTypeSymbol[]
-        {
-            _compilation.GetTypeByMetadataName($"{Constants.DomainServiceNamespace}.IDomainService`1")!.OriginalDefinition,
-            _compilation.GetTypeByMetadataName($"{Constants.DomainServiceNamespace}.IDomainService`2")!.OriginalDefinition
-        };
-        _domainEntitiesSymbols = new INamedTypeSymbol[]
-        {
-            _compilation.GetTypeByMetadataName($"{Constants.DomainEntitiesNamespace}.IEntity")!.OriginalDefinition,
-            _compilation.GetTypeByMetadataName($"{Constants.DomainEntitiesNamespace}.IEntity`1")!.OriginalDefinition,
-            _compilation.GetTypeByMetadataName($"{Constants.DomainEntitiesNamespace}.Entity")!.OriginalDefinition,
-            _compilation.GetTypeByMetadataName($"{Constants.DomainEntitiesNamespace}.Entity`1")!.OriginalDefinition,
-            _compilation.GetTypeByMetadataName($"{Constants.DomainEntitiesNamespace}.IAggregateRoot")!.OriginalDefinition,
-            _compilation.GetTypeByMetadataName($"{Constants.DomainEntitiesNamespace}.IAggregateRoot`1")!.OriginalDefinition,
-            _compilation.GetTypeByMetadataName($"{Constants.DomainEntitiesNamespace}.AggregateRoot")!.OriginalDefinition,
-            _compilation.GetTypeByMetadataName($"{Constants.DomainEntitiesNamespace}.AggregateRoot`1")!.OriginalDefinition
-        };
+        _dbContextSymbol = _compilation.GetTypeByMetadataName(Constants.DbContextSymblyName);
+        _domainServiceSymbol = _compilation.GetTypeByMetadataName(Constants.DomainServiceSymbolName);
+        _domainEntitieSymbol = _compilation.GetTypeByMetadataName(Constants.DomainEntitySymbolName);
         GeneratorVersion = generatorVersion;
     }
 
-    private void FindGlobalNamespaces(Queue<INamespaceOrTypeSymbol> queue)
+    private Queue<INamespaceOrTypeSymbol> FindGlobalNamespaces()
     {
+        var queue = new Queue<INamespaceOrTypeSymbol>();
         queue.Enqueue(_compilation.Assembly.GlobalNamespace);
 
         foreach (var reference in _compilation.References)
@@ -45,44 +34,18 @@ internal class CompilationAnalyzer
                 continue;
             }
 
-            if (!assemblySymbol.Modules.Any(m => m.ReferencedAssemblies.Any(ra => ra.Name == Constants.Namespace)))
+            if (!assemblySymbol.Modules.Any(m => m.ReferencedAssemblies.Any(ra => ra.Name is Constants.DomainAssemblyName)))
             {
                 continue;
             }
-
             queue.Enqueue(assemblySymbol.GlobalNamespace);
         }
+        return queue;
     }
 
-    protected virtual void ProcessMember(Queue<INamespaceOrTypeSymbol> queue, INamespaceOrTypeSymbol member, Dictionary<INamedTypeSymbol, object?> mapping)
+    private MetadataClass PopulateMetadata(Queue<INamespaceOrTypeSymbol> queue)
     {
-        if (member is INamespaceSymbol childNsSymbol)
-        {
-            queue.Enqueue(childNsSymbol);
-            return;
-        }
-
-        var typeSymbol = (INamedTypeSymbol)member;
-
-        foreach (var childTypeSymbol in typeSymbol.GetTypeMembers())
-        {
-            queue.Enqueue(childTypeSymbol);
-        }
-
-        if (typeSymbol.IsStatic || typeSymbol.IsAbstract)
-        {
-            return;
-        }
-
-        if (typeSymbol.TypeKind is not TypeKind.Class)
-        {
-            return;
-        }
-    }
-
-    private void PopulateMetadata(Queue<INamespaceOrTypeSymbol> queue)
-    {
-        var repostoryMappings = new Dictionary<INamedTypeSymbol, ISymbol?>(_symbolComparer);
+        var metadataClass = new MetadataClass();
         while (queue.Count > 0)
         {
             var nsOrTypeSymbol = queue.Dequeue();
@@ -113,13 +76,26 @@ internal class CompilationAnalyzer
                         {
                             continue;
                         }
-
-                        // If is IEntity Or IAggregateRoot, add to entities mappings.
-                        if (_domainEntitiesSymbols.Any(predicate => _symbolComparer.Equals(predicate, namedTypeSymbol.BaseType?.OriginalDefinition)))
+                        foreach (var item in namedTypeSymbol.AllInterfaces)
                         {
-                            foreach (var item in namedTypeSymbol.GetMembers())
+                            if (s_symbolComparer.Equals(item, _domainServiceSymbol))
                             {
-                                repostoryMappings.Add(namedTypeSymbol, item);
+                                metadataClass.DomainServices.Add(namedTypeSymbol);
+                                break;
+                            }
+                            else if (s_symbolComparer.Equals(item, _domainEntitieSymbol))
+                            {
+                                metadataClass.DomainEntities.Add(namedTypeSymbol);
+                                break;
+                            }
+                            else if (s_symbolComparer.Equals(item, _dbContextSymbol))
+                            {
+                                metadataClass.DbContexts.Add(namedTypeSymbol);
+                                break;
+                            }
+                            else
+                            {
+                                continue;
                             }
                         }
 
@@ -128,15 +104,30 @@ internal class CompilationAnalyzer
                 default: continue;
             }
         }
+        return metadataClass;
     }
 
-    public void Analyze(CancellationToken cancellationToken)
+    public MetadataClass Analyze()
     {
-
-        var queue = new Queue<INamespaceOrTypeSymbol>();
-
-        FindGlobalNamespaces(queue);
-        PopulateMetadata(queue);
+        var queue = FindGlobalNamespaces();
+        return PopulateMetadata(queue);
 
     }
+
+    internal readonly record struct MetadataClass
+    {
+        internal HashSet<INamedTypeSymbol> DbContexts { get; }
+
+        internal HashSet<INamedTypeSymbol> DomainEntities { get; }
+
+        internal HashSet<INamedTypeSymbol> DomainServices { get; }
+
+        public MetadataClass()
+        {
+            DbContexts = new HashSet<INamedTypeSymbol>(s_symbolComparer);
+            DomainEntities = new HashSet<INamedTypeSymbol>(s_symbolComparer);
+            DomainServices = new HashSet<INamedTypeSymbol>(s_symbolComparer);
+        }
+    }
+
 }

@@ -1,6 +1,6 @@
 ﻿using Skywalker.Ddd.Domain.Entities;
 
-namespace Skywalker.Ddd.EntityFrameworkCore.Repositories;
+namespace Skywalker.Ddd.Domain.Repositories;
 
 public interface IBasicRepository<TEntity> : IReadOnlyRepository<TEntity> where TEntity : class, IEntity
 {

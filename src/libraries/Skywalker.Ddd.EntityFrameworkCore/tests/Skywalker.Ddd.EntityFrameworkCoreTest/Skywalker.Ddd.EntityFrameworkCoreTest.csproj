@@ -1,4 +1,4 @@
-﻿<Project Sdk="Microsoft.NET.Sdk">
+<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
     <OutputType>Exe</OutputType>
@@ -14,7 +14,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\gen\Skywalker.Ddd.EntityFrameworkCore.Generators.Roslyn4.0.csproj" OutputItemType="Analyzer" ReferenceOutputAssembly="false" />
+    <ProjectReference Include="..\..\..\Skywalker.Ddd.Domain.Abstractions\gen\Skywalker.Ddd.Domain.Generators.Roslyn4.0.csproj" OutputItemType="Analyzer" ReferenceOutputAssembly="true" />
     <ProjectReference Include="..\..\src\Skywalker.Ddd.EntityFrameworkCore.csproj" />
   </ItemGroup>
 

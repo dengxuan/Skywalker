@@ -1,7 +1,7 @@
 ﻿using System.Linq.Expressions;
 using Skywalker.Ddd.Domain.Entities;
 
-namespace Skywalker.Ddd.EntityFrameworkCore.Repositories;
+namespace Skywalker.Ddd.Domain.Repositories;
 
 public interface IReadOnlyRepository<TEntity> : IRepository, IQueryable<TEntity> where TEntity : class, IEntity
 {
