@@ -2,7 +2,7 @@
 
   <!-- The TFMs to build and test against. -->
   <PropertyGroup>
-    <TargetFrameworks>netstandard2.0;netstandard2.1;netcoreapp3.1;net5.0;net6.0</TargetFrameworks>
+    <TargetFrameworks>netstandard2.0;netstandard2.1;net5.0;net6.0</TargetFrameworks>
     <Nullable>enable</Nullable>
     <AppendTargetFrameworkToOutputPath>false</AppendTargetFrameworkToOutputPath>
   </PropertyGroup>
@@ -21,6 +21,31 @@
   </PropertyGroup>
 
   <Import Project="$(RepositoryEngineeringRoot)Versions.props" />
+
+  <!-- Packaging -->
+  <PropertyGroup>
+    <GitHubRepositoryName>runtime</GitHubRepositoryName>
+    <RepositoryUrl>https://github.com/dotnet/$(GitHubRepositoryName)</RepositoryUrl>
+    <PackageProjectUrl>https://dot.net</PackageProjectUrl>
+    <Owners>microsoft,dotnetframework</Owners>
+    <IncludeSymbols>true</IncludeSymbols>
+    <RuntimeIdGraphDefinitionFile>$([MSBuild]::NormalizePath('$(LibrariesProjectRoot)', 'Microsoft.NETCore.Platforms', 'src', 'runtime.json'))</RuntimeIdGraphDefinitionFile>
+    <LicenseFile>$(MSBuildThisFileDirectory)LICENSE.TXT</LicenseFile>
+    <PackageLicenseExpression>MIT</PackageLicenseExpression>
+    <PackageRequireLicenseAcceptance>false</PackageRequireLicenseAcceptance>
+    <Copyright>$(CopyrightNetFoundation)</Copyright>
+    <PackageThirdPartyNoticesFile>$(MSBuildThisFileDirectory)THIRD-PARTY-NOTICES.TXT</PackageThirdPartyNoticesFile>
+    <PackageReleaseNotes>https://go.microsoft.com/fwlink/?LinkID=799421</PackageReleaseNotes>
+    <!-- Indicates this is not an officially supported release. Release branches should set this to false. -->
+    <!-- Keep it in sync with PRERELEASE in eng/native/configureplatform.cmake -->
+    <IsPrerelease>true</IsPrerelease>
+    <IsPrivateAssembly>$(MSBuildProjectName.Contains('Private'))</IsPrivateAssembly>
+    <!-- Private packages should not be stable -->
+    <SuppressFinalPackageVersion Condition="'$(SuppressFinalPackageVersion)' == '' and $(IsPrivateAssembly)">true</SuppressFinalPackageVersion>
+    <!-- We don't want Private packages to be shipped to NuGet.org -->
+    <IsShippingPackage Condition="$(IsPrivateAssembly)">false</IsShippingPackage>
+    <!-- <PlaceholderFile>$(RepositoryEngineeringRoot)_._</PlaceholderFile> -->
+  </PropertyGroup>
 
   <!-- Language configuration -->
   <PropertyGroup>

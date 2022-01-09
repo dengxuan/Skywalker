@@ -5,6 +5,21 @@ namespace Microsoft.CodeAnalysis;
 
 internal static class RoslynExtensions
 {
+    public static string GetTypeSymbolFullName(this ITypeSymbol symbol, bool withGlobalPrefix = true, bool includeTypeParameters = true)
+    {
+        return symbol.ToDisplayString(new SymbolDisplayFormat(
+            withGlobalPrefix ? SymbolDisplayGlobalNamespaceStyle.Included : SymbolDisplayGlobalNamespaceStyle.Omitted,
+            SymbolDisplayTypeQualificationStyle.NameAndContainingTypesAndNamespaces,
+            includeTypeParameters ? SymbolDisplayGenericsOptions.IncludeTypeParameters : SymbolDisplayGenericsOptions.None,
+            miscellaneousOptions: SymbolDisplayMiscellaneousOptions.ExpandNullable
+        ));
+    }
+
+    public static string GetFieldSymbolFullName(this IFieldSymbol symbol)
+    {
+        return $"global::{symbol.ToDisplayString()}";
+    }
+
     // Copied from: https://github.com/dotnet/roslyn/blob/main/src/Workspaces/SharedUtilitiesAndExtensions/Compiler/Core/Extensions/CompilationExtensions.cs
     /// <summary>
     /// Gets a type by its metadata name to use for code analysis within a <see cref="Compilation"/>. This method

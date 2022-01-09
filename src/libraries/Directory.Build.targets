@@ -7,7 +7,6 @@
     <StrongNameKeyId Condition="'$(IsTestProject)' == 'true' or '$(IsTestSupportProject)' == 'true'">$(TestStrongNameKeyId)</StrongNameKeyId>
   </PropertyGroup>
 
-  <!-- resources.targets need to be imported before the Arcade SDK. -->
   <Import Project="..\..\Directory.Build.targets" />
 
   <PropertyGroup>
@@ -69,13 +68,13 @@
     <BinPlaceTargetFrameworks Include="@(AdditionalBinPlaceTargetFrameworks)" />
   </ItemGroup>
 
-  <Import Project="$(RepositoryEngineeringDir)packaging.targets" Condition="'$(IsPackable)' == 'true'" />
+  <Import Project="$(RepositoryEngineeringRoot)Packaging.targets" Condition="'$(IsPackable)' == 'true'" />
 
   <Target Name="SetGenApiProperties" BeforeTargets="GenerateReferenceAssemblySource">
     <PropertyGroup>
       <_ExcludeAPIList>$([MSBuild]::NormalizePath('$(MSBuildProjectDirectory)', '..', 'ref', 'ReferenceSourceExcludeApi.txt'))</_ExcludeAPIList>
-      <_ExcludeAttributesList>$(RepositoryEngineeringDir)DefaultGenApiDocIds.txt</_ExcludeAttributesList>
-      <_LicenseHeaderTxtPath>$(RepositoryEngineeringDir)LicenseHeader.txt</_LicenseHeaderTxtPath>
+      <_ExcludeAttributesList>$(RepositoryEngineeringRoot)DefaultGenApiDocIds.txt</_ExcludeAttributesList>
+      <_LicenseHeaderTxtPath>$(RepositoryEngineeringRoot)LicenseHeader.txt</_LicenseHeaderTxtPath>
       <GenAPITargetPath>$([MSBuild]::NormalizePath('$(MSBuildProjectDirectory)', '..', 'ref', '$(AssemblyName).cs'))</GenAPITargetPath>
       <GenAPIAdditionalParameters>$(GenAPIAdditionalParameters) --exclude-attributes-list "$(_ExcludeAttributesList)"</GenAPIAdditionalParameters>
       <GenAPIAdditionalParameters Condition="Exists('$(_ExcludeAPIList)')">$(GenAPIAdditionalParameters) --exclude-api-list "$(_ExcludeAPIList)"</GenAPIAdditionalParameters>

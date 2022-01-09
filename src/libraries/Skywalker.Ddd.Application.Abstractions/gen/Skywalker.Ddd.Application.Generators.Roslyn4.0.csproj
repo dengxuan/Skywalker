@@ -1,13 +1,18 @@
-<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk">
 
-	<PropertyGroup>
-		<AnalyzerRoslynVersion>4.0</AnalyzerRoslynVersion>
-		<DefineConstants>$(DefineConstants);ROSLYN4_0_OR_GREATER</DefineConstants>
-	</PropertyGroup>
+  <PropertyGroup>
+    <AnalyzerRoslynVersion>4.0</AnalyzerRoslynVersion>
+    <RoslynApiVersion>$(MicrosoftCodeAnalysisCSharpWorkspacesVersion)</RoslynApiVersion>
+    <DefineConstants>$(DefineConstants);ROSLYN4_0_OR_GREATER</DefineConstants>
+  </PropertyGroup>
 
-	<Import Project="Skywalker.Ddd.Application.Generators.targets" />
+  <Import Project="Skywalker.Ddd.Application.Generators.targets" />
 
-	<ItemGroup>
-		<Compile Remove="DddApplicationGenerator.Roslyn3.11.cs" />
-	</ItemGroup>
+  <ItemGroup>
+    <Compile Remove="DddApplicationGenerator.Roslyn3.11.cs" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Compile Remove="D:\Workspaces\Visual Studio Projects\dengxuan\Skywalker\src\libraries\Common\src\Microsoft\CodeAnalysis\RoslynExtensions.cs" />
+  </ItemGroup>
 </Project>

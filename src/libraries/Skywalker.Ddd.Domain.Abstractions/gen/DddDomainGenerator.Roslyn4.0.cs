@@ -12,10 +12,10 @@ public partial class DddDomainGenerator : ISourceGenerator
     {
         var compilationAnalyzer = new Analyzer(in context);
         var metadataClass = compilationAnalyzer.Analyze();
-        System.Diagnostics.Debugger.Launch();
-        var parser = new Parser(context.CancellationToken);
-        var dbContextClasses = parser.DbContextClasses(metadataClass.DbContextClasses);
+        var dbContextClasses = Parser.DbContextClasses(metadataClass.DbContextClasses, context.CancellationToken);
         Emitter.Emit(context, dbContextClasses);
+        var domainServiceClasses = Parser.DomainServiceClasses(metadataClass.DomainServices, context.CancellationToken);
+        Emitter.Emit(context, domainServiceClasses);
     }
 
     public void Initialize(GeneratorInitializationContext context)

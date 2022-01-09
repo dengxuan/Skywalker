@@ -82,7 +82,19 @@ public partial class DddDomainGenerator
 
                             if (namedTypeSymbol.AllInterfaces.Any(predicate => s_symbolComparer.Equals(predicate, _domainServiceSymbol)))
                             {
-                                metadataClass.DomainServices.Add(namedTypeSymbol);
+                                if(!metadataClass.DomainServices.TryGetValue(namedTypeSymbol,out var implImterfaces))
+                                {
+                                    implImterfaces = new HashSet<INamedTypeSymbol>(s_symbolComparer);
+                                    metadataClass.DomainServices.Add(namedTypeSymbol, implImterfaces);
+                                }
+                                foreach (var item in namedTypeSymbol.AllInterfaces)
+                                {
+                                    if (s_symbolComparer.Equals(item, _domainServiceSymbol))
+                                    {
+                                        continue;
+                                    }
+                                    implImterfaces.Add(item);
+                                }
                                 break;
                             }
 
@@ -107,7 +119,7 @@ public partial class DddDomainGenerator
                                     {
                                         continue;
                                     }
-                                    if(dbSetNamedTypeSymbol.TypeArguments[0] is not INamedTypeSymbol entityNameTypeSymbol)
+                                    if (dbSetNamedTypeSymbol.TypeArguments[0] is not INamedTypeSymbol entityNameTypeSymbol)
                                     {
                                         continue;
                                     }
@@ -147,13 +159,13 @@ public partial class DddDomainGenerator
 
     internal readonly record struct MetadataClass
     {
-        internal HashSet<INamedTypeSymbol> DomainServices { get; }
+        internal Dictionary<INamedTypeSymbol, HashSet<INamedTypeSymbol>> DomainServices { get; }
 
         internal Dictionary<INamedTypeSymbol, HashSet<INamedTypeSymbol>> DbContextClasses { get; }
 
         public MetadataClass()
         {
-            DomainServices = new HashSet<INamedTypeSymbol>(s_symbolComparer);
+            DomainServices = new Dictionary<INamedTypeSymbol, HashSet<INamedTypeSymbol>>(s_symbolComparer);
             DbContextClasses = new Dictionary<INamedTypeSymbol, HashSet<INamedTypeSymbol>>(s_symbolComparer);
         }
     }

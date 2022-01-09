@@ -1,56 +1,52 @@
-﻿using System;
-using System.Collections.Concurrent;
-using System.Collections.Generic;
-using System.Linq;
+﻿using System.Collections.Concurrent;
 using System.Reflection;
 
-namespace Skywalker.Extensions.Linq.Parser
+namespace Skywalker.Extensions.Linq.Parser;
+
+internal static class EnumerationsFromMscorlib
 {
-    internal static class EnumerationsFromMscorlib
+    /// <summary>
+    /// All Enum types from mscorlib/netstandard.
+    /// </summary>
+    public static readonly IDictionary<string, Type> PredefinedEnumerationTypes = new ConcurrentDictionary<string, Type>();
+
+    static EnumerationsFromMscorlib()
     {
-        /// <summary>
-        /// All Enum types from mscorlib/netstandard.
-        /// </summary>
-        public static readonly IDictionary<string, Type> PredefinedEnumerationTypes = new ConcurrentDictionary<string, Type>();
+        var list = new List<Type>(AddEnumsFromAssembly(typeof(UriFormat).GetTypeInfo().Assembly.FullName!));
 
-        static EnumerationsFromMscorlib()
+        list.AddRange(AddEnumsFromAssembly("System.Runtime"));
+        list.AddRange(AddEnumsFromAssembly("System.Private.Corelib"));
+        foreach (var group in list.GroupBy(t => t.Name))
         {
-            var list = new List<Type>(AddEnumsFromAssembly(typeof(UriFormat).GetTypeInfo().Assembly.FullName));
-
-            list.AddRange(AddEnumsFromAssembly("System.Runtime"));
-            list.AddRange(AddEnumsFromAssembly("System.Private.Corelib"));
-            foreach (var group in list.GroupBy(t => t.Name))
-            {
-                Add(group);
-            }
+            Add(group);
         }
+    }
 
-        private static IEnumerable<Type> AddEnumsFromAssembly(string assemblyName)
+    private static IEnumerable<Type> AddEnumsFromAssembly(string assemblyName)
+    {
+        try
         {
-            try
-            {
-                return Assembly.Load(new AssemblyName(assemblyName)).GetTypes().Where(t => t.GetTypeInfo().IsEnum && t.GetTypeInfo().IsPublic);
-            }
-            catch
-            {
-                return Enumerable.Empty<Type>();
-            }
+            return Assembly.Load(new AssemblyName(assemblyName)).GetTypes().Where(t => t.GetTypeInfo().IsEnum && t.GetTypeInfo().IsPublic);
         }
-
-        private static void Add(IGrouping<string, Type> group)
+        catch
         {
-            if (group.Count() == 1)
+            return Enumerable.Empty<Type>();
+        }
+    }
+
+    private static void Add(IGrouping<string, Type> group)
+    {
+        if (group.Count() == 1)
+        {
+            var singleType = group.Single();
+            PredefinedEnumerationTypes.Add(group.Key, singleType);
+            PredefinedEnumerationTypes.Add(singleType.FullName!, singleType);
+        }
+        else
+        {
+            foreach (var fullType in group)
             {
-                var singleType = group.Single();
-                PredefinedEnumerationTypes.Add(group.Key, singleType);
-                PredefinedEnumerationTypes.Add(singleType.FullName, singleType);
-            }
-            else
-            {
-                foreach (var fullType in group)
-                {
-                    PredefinedEnumerationTypes.Add(fullType.FullName, fullType);
-                }
+                PredefinedEnumerationTypes.Add(fullType.FullName!, fullType);
             }
         }
     }

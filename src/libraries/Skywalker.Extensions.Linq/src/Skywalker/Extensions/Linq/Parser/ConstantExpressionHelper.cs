@@ -1,29 +1,28 @@
 ﻿using System.Collections.Concurrent;
 using System.Linq.Expressions;
 
-namespace Skywalker.Extensions.Linq.Parser
+namespace Skywalker.Extensions.Linq.Parser;
+
+internal static class ConstantExpressionHelper
 {
-    internal static class ConstantExpressionHelper
+    private static readonly ConcurrentDictionary<object, Expression> s_expressions = new();
+    private static readonly ConcurrentDictionary<Expression, string> s_literals = new();
+
+    public static bool TryGetText(Expression expression, out string? text)
     {
-        private static readonly ConcurrentDictionary<object, Expression> Expressions = new ConcurrentDictionary<object, Expression>();
-        private static readonly ConcurrentDictionary<Expression, string> Literals = new ConcurrentDictionary<Expression, string>();
+        return s_literals.TryGetValue(expression, out text);
+    }
 
-        public static bool TryGetText(Expression expression, out string text)
+    public static Expression CreateLiteral(object value, string text)
+    {
+        if (!s_expressions.ContainsKey(value))
         {
-            return Literals.TryGetValue(expression, out text);
+            var constantExpression = Expression.Constant(value);
+
+            s_expressions.TryAdd(value, constantExpression);
+            s_literals.TryAdd(constantExpression, text);
         }
 
-        public static Expression CreateLiteral(object value, string text)
-        {
-            if (!Expressions.ContainsKey(value))
-            {
-                ConstantExpression constantExpression = Expression.Constant(value);
-
-                Expressions.TryAdd(value, constantExpression);
-                Literals.TryAdd(constantExpression, text);
-            }
-
-            return Expressions[value];
-        }
+        return s_expressions[value];
     }
 }

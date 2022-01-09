@@ -1,91 +1,89 @@
-﻿using System;
-using System.Linq.Expressions;
+﻿using System.Linq.Expressions;
 using System.Reflection;
 
-namespace Skywalker.Extensions.Linq.Parser
+namespace Skywalker.Extensions.Linq.Parser;
+
+/// <summary>
+/// ExpressionPromoter
+/// </summary>
+public class ExpressionPromoter : IExpressionPromoter
 {
+    private readonly NumberParser _numberParser;
+
     /// <summary>
-    /// ExpressionPromoter
+    /// Initializes a new instance of the <see cref="ExpressionPromoter"/> class.
     /// </summary>
-    public class ExpressionPromoter : IExpressionPromoter
+    /// <param name="config">The ParsingConfig.</param>
+    public ExpressionPromoter(ParsingConfig config)
     {
-        private readonly NumberParser _numberParser;
+        _numberParser = new NumberParser(config);
+    }
 
-        /// <summary>
-        /// Initializes a new instance of the <see cref="ExpressionPromoter"/> class.
-        /// </summary>
-        /// <param name="config">The ParsingConfig.</param>
-        public ExpressionPromoter(ParsingConfig config)
+    /// <inheritdoc cref="IExpressionPromoter.Promote(Expression, Type?, bool, bool)"/>
+    public virtual Expression? Promote(Expression expr, Type? type, bool exact, bool convertExpr)
+    {
+        if (expr.Type == type)
         {
-            _numberParser = new NumberParser(config);
+            return expr;
         }
 
-        /// <inheritdoc cref="IExpressionPromoter.Promote(Expression, Type, bool, bool)"/>
-        public virtual Expression Promote(Expression expr, Type type, bool exact, bool convertExpr)
+        if (expr is ConstantExpression ce)
         {
-            if (expr.Type == type)
+            if (Constants.IsNull(ce))
             {
-                return expr;
-            }
-
-            if (expr is ConstantExpression ce)
-            {
-                if (Constants.IsNull(ce))
+                if (!type?.GetTypeInfo().IsValueType == true || TypeHelper.IsNullableType(type!))
                 {
-                    if (!type.GetTypeInfo().IsValueType || TypeHelper.IsNullableType(type))
-                    {
-                        return Expression.Constant(null, type);
-                    }
+                    return Expression.Constant(null, type!);
                 }
-                else
+            }
+            else
+            {
+                if (ConstantExpressionHelper.TryGetText(ce, out var text))
                 {
-                    if (ConstantExpressionHelper.TryGetText(ce, out string text))
+                    var target = TypeHelper.GetNonNullableType(type!);
+                    object? value = null;
+
+                    switch (Type.GetTypeCode(ce.Type))
                     {
-                        Type target = TypeHelper.GetNonNullableType(type);
-                        object value = null;
+                        case TypeCode.Int32:
+                        case TypeCode.UInt32:
+                        case TypeCode.Int64:
+                        case TypeCode.UInt64:
+                            value = _numberParser.ParseNumber(text!, target);
 
-                        switch (Type.GetTypeCode(ce.Type))
-                        {
-                            case TypeCode.Int32:
-                            case TypeCode.UInt32:
-                            case TypeCode.Int64:
-                            case TypeCode.UInt64:
-                                value = _numberParser.ParseNumber(text, target);
+                            // Make sure an enum value stays an enum value
+                            if (target.IsEnum)
+                            {
+                                value = Enum.ToObject(target, value!);
+                            }
+                            break;
 
-                                // Make sure an enum value stays an enum value
-                                if (target.IsEnum)
-                                {
-                                    value = Enum.ToObject(target, value);
-                                }
-                                break;
+                        case TypeCode.Double:
+                            if (target == typeof(decimal) || target == typeof(double)) value = _numberParser.ParseNumber(text!, target);
+                            break;
 
-                            case TypeCode.Double:
-                                if (target == typeof(decimal) || target == typeof(double)) value = _numberParser.ParseNumber(text, target);
-                                break;
-
-                            case TypeCode.String:
-                                value = TypeHelper.ParseEnum(text, target);
-                                break;
-                        }
-                        if (value != null)
-                        {
-                            return Expression.Constant(value, type);
-                        }
+                        case TypeCode.String:
+                            value = TypeHelper.ParseEnum(text!, target);
+                            break;
+                    }
+                    if (value != null)
+                    {
+                        return Expression.Constant(value, type!);
                     }
                 }
             }
+        }
 
-            if (TypeHelper.IsCompatibleWith(expr.Type, type))
+        if (TypeHelper.IsCompatibleWith(expr.Type, type!))
+        {
+            if (type?.GetTypeInfo().IsValueType == true || exact || expr.Type.GetTypeInfo().IsValueType && convertExpr)
             {
-                if (type.GetTypeInfo().IsValueType || exact || expr.Type.GetTypeInfo().IsValueType && convertExpr)
-                {
-                    return Expression.Convert(expr, type);
-                }
-
-                return expr;
+                return Expression.Convert(expr, type!);
             }
 
-            return null;
+            return expr;
         }
+
+        return null;
     }
 }

@@ -1,8 +1,5 @@
-﻿using System.Diagnostics.CodeAnalysis;
+﻿namespace Skywalker.Ddd.Application.Dtos;
 
-namespace Skywalker.Ddd.Application.Dtos;
-
-[SuppressMessage("Style", "IDE0060:Remove unused parameter", Justification = "<Pending>")]
 public readonly struct Unit : IEquatable<Unit>, IComparable<Unit>, IComparable
 {
     private static readonly Unit s_value = new();

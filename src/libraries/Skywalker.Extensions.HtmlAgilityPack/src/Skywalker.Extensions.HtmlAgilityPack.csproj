@@ -1,0 +1,15 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+	<PropertyGroup>
+		<RootNamespace></RootNamespace>
+	</PropertyGroup>
+	
+	<ItemGroup>
+	  <PackageReference Include="HtmlAgilityPack" Version="1.11.38" />
+	  <PackageReference Include="Newtonsoft.Json" Version="13.0.1" />
+	</ItemGroup>
+	<ItemGroup>
+	  <ProjectReference Include="$(LibrariesProjectRoot)\Skywalker.Extensions.Universal\src\Skywalker.Extensions.Universal.csproj" />
+	</ItemGroup>
+
+</Project>

@@ -2,7 +2,6 @@
 // Gordon licenses this file to you under the MIT license.
 
 using Microsoft.CodeAnalysis;
-using Microsoft.CodeAnalysis.CSharp.Syntax;
 
 namespace Skywalker.Ddd.Domain.Generators;
 
@@ -10,19 +9,13 @@ public partial class DddDomainGenerator
 {
     internal class Parser
     {
-        private readonly CancellationToken _cancellationToken;
 
-        public Parser( CancellationToken cancellationToken)
-        {
-            _cancellationToken = cancellationToken;
-        }
-
-        public IReadOnlyList<DbContextClass> DbContextClasses(Dictionary<INamedTypeSymbol, HashSet<INamedTypeSymbol>> dbContextClasses)
+        public static IReadOnlyList<DbContextClass> DbContextClasses(Dictionary<INamedTypeSymbol, HashSet<INamedTypeSymbol>> dbContextClasses, CancellationToken cancellationToken)
         {
             var results = new List<DbContextClass>();
             foreach (var dbContextClass in dbContextClasses)
             {
-                _cancellationToken.ThrowIfCancellationRequested();
+                cancellationToken.ThrowIfCancellationRequested();
 
                 var dbContexterClass = new DbContextClass
                 {
@@ -51,6 +44,33 @@ public partial class DddDomainGenerator
             }
             return results;
         }
+
+        public static IReadOnlyList<DomainServiceClass> DomainServiceClasses(Dictionary<INamedTypeSymbol, HashSet<INamedTypeSymbol>> domainServicesClasses, CancellationToken cancellationToken)
+        {
+            var results = new List<DomainServiceClass>();
+            foreach (var domainService in domainServicesClasses)
+            {
+                cancellationToken.ThrowIfCancellationRequested();
+                var domainServiceClass = new DomainServiceClass
+                {
+                    Name = domainService.Key.Name,
+                    Fullname = domainService.Key.ToDisplayString(),
+                    Namespace = domainService.Key.ContainingNamespace.ToDisplayString(),
+                    ImplInterfaces = new()
+                };
+                foreach (var item in domainService.Value)
+                {
+                    var domainServiceImplInterface = new DomainServiceImplInterface
+                    {
+                        Name = item.Name,
+                        Fullname = item.ToDisplayString()
+                    };
+                    domainServiceClass.ImplInterfaces.Add(domainServiceImplInterface);
+                }
+                results.Add(domainServiceClass);
+            }
+            return results;
+        }
     }
 
 
@@ -63,4 +83,8 @@ public partial class DddDomainGenerator
     /// A DbContext property in a DbContext class.
     /// </summary>
     internal record struct DbContextProperty(string Name, string Fullname, string PrimaryKey);
+
+    internal record struct DomainServiceClass(string Namespace, string Name, string Fullname, List<DomainServiceImplInterface> ImplInterfaces);
+
+    internal record struct DomainServiceImplInterface(string Name, string Fullname);
 }

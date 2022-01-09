@@ -6,13 +6,19 @@ using Microsoft.Extensions.Hosting;
 using Skywalker.Ddd.EntityFrameworkCore;
 using Skywalker.Ddd.EntityFrameworkCoreTest;
 using Microsoft.Extensions.Logging;
+using Skywalker.Ddd.Domain.Repositories;
+using Skywalker.Ddd.EntityFrameworkCore.Repositories;
 
 Console.WriteLine("Hello, World!");
 var host = Host.CreateDefaultBuilder(args).ConfigureServices(services =>
 {
+    services.AddDomainServices(builder =>
+    {
+        builder.AddDomainServicesCore();
+    });
     services.AddEntityFrameworkCore(options =>
     {
-    });
+    }).AddTestDbContextFactory();
     services.TryAddTransient(typeof(IDbContextProvider<>), typeof(DbContextProvider<>));
     services.AddPooledDbContextFactory<TestDbContext>(options =>
     {

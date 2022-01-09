@@ -14,9 +14,9 @@ public class DefaultQueryableAnalyzer : IQueryableAnalyzer
         Check.NotNull(query, nameof(query));
         provider ??= query.Provider;
 
-        Type providerType = provider.GetType();
-        Type baseType = providerType.GetTypeInfo().BaseType;
-        bool isLinqToObjects = baseType == typeof(EnumerableQuery);
+        var providerType = provider.GetType();
+        var baseType = providerType.GetTypeInfo().BaseType;
+        var isLinqToObjects = baseType == typeof(EnumerableQuery);
         if (!isLinqToObjects)
         {
             // Support for https://github.com/StefH/QueryInterceptor.Core, version 1.0.1 and up
@@ -24,7 +24,7 @@ public class DefaultQueryableAnalyzer : IQueryableAnalyzer
             {
                 try
                 {
-                    PropertyInfo property = providerType.GetProperty("OriginalProvider");
+                    var property = providerType.GetProperty("OriginalProvider");
                     if (property != null)
                     {
                         return property.GetValue(provider, null) is IQueryProvider originalProvider && SupportsLinqToObjects(query, originalProvider);
@@ -43,7 +43,7 @@ public class DefaultQueryableAnalyzer : IQueryableAnalyzer
             {
                 try
                 {
-                    PropertyInfo property = query.GetType().GetProperty("InnerQuery", BindingFlags.NonPublic | BindingFlags.Instance);
+                    var property = query.GetType().GetProperty("InnerQuery", BindingFlags.NonPublic | BindingFlags.Instance);
                     if (property != null)
                     {
                         return property.GetValue(query, null) is IQueryable innerQuery && SupportsLinqToObjects(innerQuery, provider);

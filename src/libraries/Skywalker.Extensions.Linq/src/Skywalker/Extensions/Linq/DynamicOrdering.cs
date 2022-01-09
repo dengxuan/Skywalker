@@ -1,11 +1,17 @@
 ﻿using System.Linq.Expressions;
 
-namespace Skywalker.Extensions.Linq
+namespace Skywalker.Extensions.Linq;
+
+internal class DynamicOrdering
 {
-    internal class DynamicOrdering
+    public Expression Selector;
+    public bool Ascending;
+    public string MethodName;
+
+    internal DynamicOrdering(Expression selector, bool ascending, string methodName)
     {
-        public Expression Selector;
-        public bool Ascending;
-        public string MethodName;
+        Selector = selector;
+        Ascending = ascending;
+        MethodName = methodName;
     }
 }

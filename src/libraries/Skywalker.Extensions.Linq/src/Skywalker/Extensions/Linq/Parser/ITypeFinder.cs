@@ -1,11 +1,8 @@
-﻿using System;
-using System.Diagnostics.CodeAnalysis;
-using System.Linq.Expressions;
+﻿using System.Linq.Expressions;
 
-namespace Skywalker.Extensions.Linq.Parser
+namespace Skywalker.Extensions.Linq.Parser;
+
+interface ITypeFinder
 {
-    interface ITypeFinder
-    {
-        Type FindTypeByName(string name, ParameterExpression[] expressions, bool forceUseCustomTypeProvider);
-    }
+    Type? FindTypeByName(string name, ParameterExpression?[]? expressions, bool forceUseCustomTypeProvider);
 }

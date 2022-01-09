@@ -23,6 +23,8 @@ public sealed partial class ApplicationGenerator : IIncrementalGenerator
         }
     }
 
+    public void Initialize(IncrementalGeneratorInitializationContext context) => throw new NotImplementedException();
+
     private void ExecuteInternal(in GeneratorExecutionContext context)
     {
         var generatorAssembly = GetType().Assembly;

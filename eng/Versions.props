@@ -1,12 +1,12 @@
 <Project>
   <PropertyGroup>
     <!-- The .NET product branding version -->
-    <ProductVersion>6.0.0</ProductVersion>
+    <ProductVersion>2.0.0</ProductVersion>
     <!-- File version numbers -->
-    <MajorVersion>6</MajorVersion>
+    <MajorVersion>2</MajorVersion>
     <MinorVersion>0</MinorVersion>
     <PatchVersion>0</PatchVersion>
-    <SdkBandVersion>6.0.101</SdkBandVersion>
+    <SdkBandVersion>2.0.0</SdkBandVersion>
     <PreReleaseVersionLabel>alpha</PreReleaseVersionLabel>
     <PreReleaseVersionIteration>1</PreReleaseVersionIteration>
     <!-- Set assembly version to align with major and minor version,

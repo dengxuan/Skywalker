@@ -1,12 +1,17 @@
 ﻿using System.Linq.Expressions;
 using System.Reflection;
 
-namespace Skywalker.Extensions.Linq.Parser.SupportedMethods
+namespace Skywalker.Extensions.Linq.Parser.SupportedMethods;
+
+internal class MethodData
 {
-    internal class MethodData
+    public MethodBase MethodBase { get; set; }
+    public ParameterInfo[] Parameters { get; set; }
+    public Expression[]? Args { get; set; }
+
+    internal MethodData(MethodBase methodBase, ParameterInfo[] parameters)
     {
-        public MethodBase MethodBase { get; set; }
-        public ParameterInfo[] Parameters { get; set; }
-        public Expression[] Args { get; set; }
+        MethodBase = methodBase;
+        Parameters = parameters;
     }
 }

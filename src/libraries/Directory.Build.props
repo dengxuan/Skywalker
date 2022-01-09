@@ -19,4 +19,19 @@
     <AdditionalBuildTargetFrameworks Condition="'$(BuildTargetFramework)' == 'net48'">net462;net47;net471;net472</AdditionalBuildTargetFrameworks>
   </PropertyGroup>
 
+  <PropertyGroup>
+    <!-- Default any assembly not specifying a key to use the Open Key -->
+    <StrongNameKeyId>Open</StrongNameKeyId>
+    <!-- Microsoft.Extensions projects have a separate StrongNameKeyId -->
+    <IsPackable Condition="$(MSBuildProjectName.StartsWith('Skywalker')) and '$(IsSourceProject)' == 'true'">true</IsPackable>
+    <!-- We can't generate an apphost without restoring the targeting pack. -->
+    <UseAppHost>false</UseAppHost>
+    <EnableDefaultItems>true</EnableDefaultItems>
+    <!--
+      Microsoft.NET.TargetFrameworkInference.targets appends the TargetFramework.
+      We do this manually and use the Configuration instead.
+    -->
+    <AppendTargetFrameworkToOutputPath>false</AppendTargetFrameworkToOutputPath>
+  </PropertyGroup>
+
 </Project>

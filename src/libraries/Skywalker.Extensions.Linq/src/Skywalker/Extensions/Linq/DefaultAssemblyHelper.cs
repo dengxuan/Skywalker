@@ -1,13 +1,11 @@
-﻿using System;
-using System.Reflection;
+﻿using System.Reflection;
 
-namespace Skywalker.Extensions.Linq
+namespace Skywalker.Extensions.Linq;
+
+internal class DefaultAssemblyHelper : IAssemblyHelper
 {
-    internal class DefaultAssemblyHelper : IAssemblyHelper
+    public Assembly[] GetAssemblies()
     {
-        public Assembly[] GetAssemblies()
-        {
-            return AppDomain.CurrentDomain.GetAssemblies();
-        }
+        return AppDomain.CurrentDomain.GetAssemblies();
     }
 }
