@@ -161,7 +161,7 @@ public static class StringExtensions
 #if NETSTANDARD2_0
         return str.Substring(0, len);
 #else
-            return str[..len];
+        return str[..len];
 #endif
     }
 
