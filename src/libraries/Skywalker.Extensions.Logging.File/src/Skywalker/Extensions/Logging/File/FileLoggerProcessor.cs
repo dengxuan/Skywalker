@@ -11,17 +11,19 @@ namespace Skywalker.Extensions.Logging.File;
 #endif
 internal class FileLoggerProcessor : IDisposable
 {
-    private const int _maxQueuedMessages = 1024;
+    private const int MaxQueuedMessages = 1024;
 
-    private readonly BlockingCollection<LogMessageEntry> _messageQueue = new(_maxQueuedMessages);
+    private readonly BlockingCollection<LogMessageEntry> _messageQueue = new(MaxQueuedMessages);
     private readonly Thread _outputThread;
 
     public IFile File;
 
     public IFile ErrorFile;
 
-    public FileLoggerProcessor()
+    public FileLoggerProcessor(IFile file, IFile errFile)
     {
+        File = file;
+        ErrorFile = errFile;
         // Start File message queue processor
         _outputThread = new Thread(ProcessLogQueue)
         {
@@ -54,7 +56,7 @@ internal class FileLoggerProcessor : IDisposable
     // for testing
     internal virtual void WriteMessage(LogMessageEntry entry)
     {
-        IFile file = entry.LogAsError ? ErrorFile : File;
+        var file = entry.LogAsError ? ErrorFile : File;
         file.Write(entry.Message);
     }
 
@@ -62,7 +64,7 @@ internal class FileLoggerProcessor : IDisposable
     {
         try
         {
-            foreach (LogMessageEntry message in _messageQueue.GetConsumingEnumerable())
+            foreach (var message in _messageQueue.GetConsumingEnumerable())
             {
                 WriteMessage(message);
             }

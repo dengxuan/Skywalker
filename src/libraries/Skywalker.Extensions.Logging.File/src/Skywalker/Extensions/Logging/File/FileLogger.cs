@@ -12,14 +12,13 @@ namespace Skywalker.Extensions.Logging.File;
 #endif
 internal sealed class FileLogger : ILogger
 {
-    private readonly string _name;
-    private readonly FileLoggerProcessor _queueProcessor;
 
-    internal FileLogger(string name, FileLoggerProcessor loggerProcessor)
-    {
-        _name = name ?? throw new ArgumentNullException(nameof(name));
-        _queueProcessor = loggerProcessor;
-    }
+    [ThreadStatic]
+    private static StringWriter? s_stringWriter;
+
+    private readonly string _name;
+
+    private readonly FileLoggerProcessor _queueProcessor;
 
     internal FileFormatter? Formatter { get; set; }
 
@@ -27,10 +26,14 @@ internal sealed class FileLogger : ILogger
 
     internal FileLoggerOptions? Options { get; set; }
 
-    [ThreadStatic]
-    private static StringWriter? t_stringWriter;
+    internal FileLogger(string name, FileLoggerProcessor loggerProcessor, IExternalScopeProvider externalScopeProvider)
+    {
+        _name = name ?? throw new ArgumentNullException(nameof(name));
+        _queueProcessor = loggerProcessor;
+        ScopeProvider = externalScopeProvider;
+    }
 
-    public void Log<TState>(LogLevel logLevel, EventId eventId, TState state, Exception exception, Func<TState, Exception, string> formatter)
+    public void Log<TState>(LogLevel logLevel, EventId eventId, TState state, Exception? exception, Func<TState, Exception?, string> formatter)
     {
         if (!IsEnabled(logLevel))
         {
@@ -40,16 +43,16 @@ internal sealed class FileLogger : ILogger
         {
             throw new ArgumentNullException(nameof(formatter));
         }
-        t_stringWriter ??= new StringWriter();
+        s_stringWriter ??= new StringWriter();
         LogEntry<TState> logEntry = new(logLevel, _name, eventId, state, exception, formatter);
-        Formatter?.Write(in logEntry, ScopeProvider, t_stringWriter);
+        Formatter?.Write(in logEntry, ScopeProvider, s_stringWriter);
 
-        var sb = t_stringWriter.GetStringBuilder();
+        var sb = s_stringWriter.GetStringBuilder();
         if (sb.Length == 0)
         {
             return;
         }
-        string computedAnsiString = sb.ToString();
+        var computedAnsiString = sb.ToString();
         sb.Clear();
         if (sb.Capacity > 1024)
         {

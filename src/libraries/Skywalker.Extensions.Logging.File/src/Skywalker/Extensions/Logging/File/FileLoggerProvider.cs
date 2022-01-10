@@ -1,10 +1,10 @@
 // Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 
-using Microsoft.Extensions.Logging;
-using Microsoft.Extensions.Options;
 using System.Collections.Concurrent;
 using System.Runtime.Versioning;
+using Microsoft.Extensions.Logging;
+using Microsoft.Extensions.Options;
 
 namespace Skywalker.Extensions.Logging.File;
 
@@ -19,11 +19,13 @@ public class FileLoggerProvider : ILoggerProvider, ISupportExternalScope
 {
     private readonly IOptionsMonitor<FileLoggerOptions> _options;
     private readonly ConcurrentDictionary<string, FileLogger> _loggers;
-    private ConcurrentDictionary<string, FileFormatter> _formatters;
     private readonly FileLoggerProcessor _messageQueue;
-
     private readonly IDisposable _optionsReloadToken;
+
+    private ConcurrentDictionary<string, FileFormatter> _formatters;
+
     private IExternalScopeProvider _scopeProvider = NullExternalScopeProvider.Instance;
+    private bool _disposedValue;
 
     /// <summary>
     /// Creates an instance of <see cref="FileLoggerProvider"/>.
@@ -37,7 +39,9 @@ public class FileLoggerProvider : ILoggerProvider, ISupportExternalScope
     /// </summary>
     /// <param name="options">The options to create <see cref="FileLogger"/> instances with.</param>
     /// <param name="formatters">Log formatters added for <see cref="FileLogger"/> insteaces.</param>
+#pragma warning disable CS8618 // Non-nullable field must contain a non-null value when exiting constructor. Consider declaring as nullable.
     public FileLoggerProvider(IOptionsMonitor<FileLoggerOptions> options, IEnumerable<FileFormatter> formatters)
+#pragma warning restore CS8618 // Non-nullable field must contain a non-null value when exiting constructor. Consider declaring as nullable.
     {
         _options = options;
         _loggers = new ConcurrentDictionary<string, FileLogger>();
@@ -46,21 +50,17 @@ public class FileLoggerProvider : ILoggerProvider, ISupportExternalScope
         ReloadLoggerOptions(options.CurrentValue);
         _optionsReloadToken = _options.OnChange(ReloadLoggerOptions);
 
-        _messageQueue = new FileLoggerProcessor
-        {
-            File = new AnsiLogFile(),
-            ErrorFile = new AnsiLogFile(stdErr: true)
-        };
+        _messageQueue = new FileLoggerProcessor(new AnsiLogFile(), new AnsiLogFile(stdErr: true));
     }
 
-    private void SetFormatters(IEnumerable<FileFormatter> formatters = null)
+    private void SetFormatters(IEnumerable<FileFormatter>? formatters = null)
     {
         var cd = new ConcurrentDictionary<string, FileFormatter>(StringComparer.OrdinalIgnoreCase);
 
-        bool added = false;
+        var added = false;
         if (formatters != null)
         {
-            foreach (FileFormatter formatter in formatters)
+            foreach (var formatter in formatters)
             {
                 cd.TryAdd(formatter.Name, formatter);
                 added = true;
@@ -80,41 +80,33 @@ public class FileLoggerProvider : ILoggerProvider, ISupportExternalScope
     // warning:  ReloadLoggerOptions can be called before the ctor completed,... before registering all of the state used in this method need to be initialized
     private void ReloadLoggerOptions(FileLoggerOptions options)
     {
-        if (options.FormatterName == null || !_formatters.TryGetValue(options.FormatterName, out FileFormatter? logFormatter))
+        if (options.FormatterName == null || !_formatters.TryGetValue(options.FormatterName, out var fileFormatter))
         {
-            logFormatter = _formatters[FileFormatterNames.Simple];
+            fileFormatter = _formatters![FileFormatterNames.Simple];
         }
 
-        foreach (KeyValuePair<string, FileLogger> logger in _loggers)
+        foreach (var logger in _loggers)
         {
             logger.Value.Options = options;
-            logger.Value.Formatter = logFormatter;
+            logger.Value.Formatter = fileFormatter;
         }
     }
 
     /// <inheritdoc />
     public ILogger CreateLogger(string name)
     {
-        if (_options.CurrentValue.FormatterName == null || !_formatters.TryGetValue(_options.CurrentValue.FormatterName, out FileFormatter? logFormatter))
+        if (_options.CurrentValue.FormatterName == null || !_formatters.TryGetValue(_options.CurrentValue.FormatterName, out var fileFormatter))
         {
-            logFormatter = _formatters[FileFormatterNames.Simple];
+            fileFormatter = _formatters[FileFormatterNames.Simple];
         }
 
-        return _loggers.TryGetValue(name, out FileLogger? logger) ?
+        return _loggers.TryGetValue(name, out var logger) ?
             logger :
-            _loggers.GetOrAdd(name, new FileLogger(name, _messageQueue)
+            _loggers.GetOrAdd(name, new FileLogger(name, _messageQueue, _scopeProvider)
             {
                 Options = _options.CurrentValue,
-                ScopeProvider = _scopeProvider,
-                Formatter = logFormatter,
+                Formatter = fileFormatter,
             });
-    }
-
-    /// <inheritdoc />
-    public void Dispose()
-    {
-        _optionsReloadToken?.Dispose();
-        _messageQueue.Dispose();
     }
 
     /// <inheritdoc />
@@ -122,9 +114,36 @@ public class FileLoggerProvider : ILoggerProvider, ISupportExternalScope
     {
         _scopeProvider = scopeProvider;
 
-        foreach (KeyValuePair<string, FileLogger> logger in _loggers)
+        foreach (var logger in _loggers)
         {
             logger.Value.ScopeProvider = _scopeProvider;
         }
+    }
+
+    protected virtual void Dispose(bool disposing)
+    {
+        if (!_disposedValue)
+        {
+            if (disposing)
+            {
+                _optionsReloadToken?.Dispose();
+                _messageQueue.Dispose();
+            }
+            _disposedValue = true;
+        }
+    }
+
+    ~FileLoggerProvider()
+    {
+        // Do not change this code. Put cleanup code in 'Dispose(bool disposing)' method
+        Dispose(disposing: false);
+    }
+
+    /// <inheritdoc />
+    public void Dispose()
+    {
+        // Do not change this code. Put cleanup code in 'Dispose(bool disposing)' method
+        Dispose(disposing: true);
+        GC.SuppressFinalize(this);
     }
 }

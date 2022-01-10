@@ -1,0 +1,30 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.0.32014.148
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{A5AB21DA-99E7-4009-B639-A08A4FEB95C7}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Skywalker.Extensions.Logging.File", "src\Skywalker.Extensions.Logging.File.csproj", "{E881D3F2-6971-40FC-90FF-F6CD086F9178}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{E881D3F2-6971-40FC-90FF-F6CD086F9178}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E881D3F2-6971-40FC-90FF-F6CD086F9178}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E881D3F2-6971-40FC-90FF-F6CD086F9178}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E881D3F2-6971-40FC-90FF-F6CD086F9178}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{E881D3F2-6971-40FC-90FF-F6CD086F9178} = {A5AB21DA-99E7-4009-B639-A08A4FEB95C7}
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {E596100F-2A99-4846-999F-46618099FA15}
+	EndGlobalSection
+EndGlobal

@@ -1,21 +1,23 @@
 // Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 
-using Microsoft.Extensions.Logging;
-using Microsoft.Extensions.Logging.Abstractions;
-using Microsoft.Extensions.Options;
 using System.Globalization;
 using System.Runtime.InteropServices;
 using System.Text;
 using System.Text.Json;
+using Microsoft.Extensions.Logging;
+using Microsoft.Extensions.Logging.Abstractions;
+using Microsoft.Extensions.Options;
 
 namespace Skywalker.Extensions.Logging.File;
 
 internal sealed class JsonFileFormatter : FileFormatter, IDisposable
 {
-    private IDisposable _optionsReloadToken;
+    private readonly IDisposable _optionsReloadToken;
 
+#pragma warning disable CS8618 // Non-nullable field must contain a non-null value when exiting constructor. Consider declaring as nullable.
     public JsonFileFormatter(IOptionsMonitor<JsonFileFormatterOptions> options)
+#pragma warning restore CS8618 // Non-nullable field must contain a non-null value when exiting constructor. Consider declaring as nullable.
         : base(FileFormatterNames.Json)
     {
         ReloadLoggerOptions(options.CurrentValue);
@@ -24,15 +26,15 @@ internal sealed class JsonFileFormatter : FileFormatter, IDisposable
 
     public override void Write<TState>(in LogEntry<TState> logEntry, IExternalScopeProvider scopeProvider, TextWriter textWriter)
     {
-        string message = logEntry.Formatter(logEntry.State, logEntry.Exception);
+        var message = logEntry.Formatter?.Invoke(logEntry.State, logEntry.Exception);
         if (logEntry.Exception == null && message == null)
         {
             return;
         }
-        LogLevel logLevel = logEntry.LogLevel;
-        string category = logEntry.Category;
-        int eventId = logEntry.EventId.Id;
-        Exception exception = logEntry.Exception;
+        var logLevel = logEntry.LogLevel;
+        var category = logEntry.Category;
+        var eventId = logEntry.EventId.Id;
+        var exception = logEntry.Exception;
         const int DefaultBufferSize = 1024;
         using (var output = new PooledByteBufferWriter(DefaultBufferSize))
         {
@@ -42,7 +44,7 @@ internal sealed class JsonFileFormatter : FileFormatter, IDisposable
                 var timestampFormat = FormatterOptions.TimestampFormat;
                 if (timestampFormat != null)
                 {
-                    DateTimeOffset dateTimeOffset = FormatterOptions.UseUtcTimestamp ? DateTimeOffset.UtcNow : DateTimeOffset.Now;
+                    var dateTimeOffset = FormatterOptions.UseUtcTimestamp ? DateTimeOffset.UtcNow : DateTimeOffset.Now;
                     writer.WriteString("Timestamp", dateTimeOffset.ToString(timestampFormat));
                 }
                 writer.WriteNumber(nameof(logEntry.EventId), eventId);
@@ -52,7 +54,7 @@ internal sealed class JsonFileFormatter : FileFormatter, IDisposable
 
                 if (exception != null)
                 {
-                    string exceptionMessage = exception.ToString();
+                    var exceptionMessage = exception.ToString();
                     if (!FormatterOptions.JsonWriterOptions.Indented)
                     {
                         exceptionMessage = exceptionMessage.Replace(Environment.NewLine, " ");
@@ -66,7 +68,7 @@ internal sealed class JsonFileFormatter : FileFormatter, IDisposable
                     writer.WriteString("Message", logEntry.State.ToString());
                     if (logEntry.State is IReadOnlyCollection<KeyValuePair<string, object>> stateProperties)
                     {
-                        foreach (KeyValuePair<string, object> item in stateProperties)
+                        foreach (var item in stateProperties)
                         {
                             WriteItem(writer, item);
                         }
@@ -80,7 +82,7 @@ internal sealed class JsonFileFormatter : FileFormatter, IDisposable
 #if NETCOREAPP
             textWriter.Write(Encoding.UTF8.GetString(output.WrittenMemory.Span));
 #else
-                textWriter.Write(Encoding.UTF8.GetString(output.WrittenMemory.Span.ToArray()));
+            textWriter.Write(Encoding.UTF8.GetString(output.WrittenMemory.Span.ToArray()));
 #endif
         }
         textWriter.Write(Environment.NewLine);
@@ -111,7 +113,7 @@ internal sealed class JsonFileFormatter : FileFormatter, IDisposable
                 {
                     state.WriteStartObject();
                     state.WriteString("Message", scope.ToString());
-                    foreach (KeyValuePair<string, object> item in scopeItems)
+                    foreach (var item in scopeItems)
                     {
                         WriteItem(state, item);
                     }
@@ -119,7 +121,7 @@ internal sealed class JsonFileFormatter : FileFormatter, IDisposable
                 }
                 else
                 {
-                    state.WriteStringValue(ToInvariantString(scope));
+                    state.WriteStringValue(ToInvariantString(scope!));
                 }
             }, writer);
             writer.WriteEndArray();
@@ -183,7 +185,7 @@ internal sealed class JsonFileFormatter : FileFormatter, IDisposable
         }
     }
 
-    private static string ToInvariantString(object obj) => Convert.ToString(obj, CultureInfo.InvariantCulture);
+    private static string? ToInvariantString(object obj) => Convert.ToString(obj, CultureInfo.InvariantCulture);
 
     internal JsonFileFormatterOptions FormatterOptions { get; set; }
 

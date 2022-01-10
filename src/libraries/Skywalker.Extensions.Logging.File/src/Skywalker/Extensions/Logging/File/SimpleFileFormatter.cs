@@ -12,11 +12,13 @@ namespace Skywalker.Extensions.Logging.File;
 internal sealed class SimpleFileFormatter : FileFormatter, IDisposable
 {
     private const string LoglevelPadding = ": ";
-    private static readonly string _messagePadding = new string(' ', GetLogLevelString(LogLevel.Information).Length + LoglevelPadding.Length);
-    private static readonly string _newLineWithMessagePadding = Environment.NewLine + _messagePadding;
-    private IDisposable _optionsReloadToken;
+    private static readonly string s_messagePadding = new(' ', GetLogLevelString(LogLevel.Information).Length + LoglevelPadding.Length);
+    private static readonly string s_newLineWithMessagePadding = Environment.NewLine + s_messagePadding;
+    private readonly IDisposable _optionsReloadToken;
 
+#pragma warning disable CS8618 // Non-nullable field must contain a non-null value when exiting constructor. Consider declaring as nullable.
     public SimpleFileFormatter(IOptionsMonitor<SimpleFileFormatterOptions> options)
+#pragma warning restore CS8618 // Non-nullable field must contain a non-null value when exiting constructor. Consider declaring as nullable.
         : base(FileFormatterNames.Simple)
     {
         ReloadLoggerOptions(options.CurrentValue);
@@ -37,19 +39,19 @@ internal sealed class SimpleFileFormatter : FileFormatter, IDisposable
 
     public override void Write<TState>(in LogEntry<TState> logEntry, IExternalScopeProvider scopeProvider, TextWriter textWriter)
     {
-        string message = logEntry.Formatter(logEntry.State, logEntry.Exception);
+        var message = logEntry.Formatter?.Invoke(logEntry.State, logEntry.Exception);
         if (logEntry.Exception == null && message == null)
         {
             return;
         }
-        LogLevel logLevel = logEntry.LogLevel;
-        string logLevelString = GetLogLevelString(logLevel);
+        var logLevel = logEntry.LogLevel;
+        var logLevelString = GetLogLevelString(logLevel);
 
         string? timestamp = null;
-        string timestampFormat = FormatterOptions.TimestampFormat;
+        var timestampFormat = FormatterOptions.TimestampFormat;
         if (timestampFormat != null)
         {
-            DateTimeOffset dateTimeOffset = GetCurrentDateTime();
+            var dateTimeOffset = GetCurrentDateTime();
             timestamp = dateTimeOffset.ToString(timestampFormat);
         }
         if (timestamp != null)
@@ -63,11 +65,11 @@ internal sealed class SimpleFileFormatter : FileFormatter, IDisposable
         CreateDefaultLogMessage(textWriter, logEntry, message, scopeProvider);
     }
 
-    private void CreateDefaultLogMessage<TState>(TextWriter textWriter, in LogEntry<TState> logEntry, string message, IExternalScopeProvider scopeProvider)
+    private void CreateDefaultLogMessage<TState>(TextWriter textWriter, in LogEntry<TState> logEntry, string? message, IExternalScopeProvider scopeProvider)
     {
-        bool singleLine = FormatterOptions.SingleLine;
-        int eventId = logEntry.EventId.Id;
-        Exception exception = logEntry.Exception;
+        var singleLine = FormatterOptions.SingleLine;
+        var eventId = logEntry.EventId.Id;
+        var exception = logEntry.Exception;
 
         // Example:
         // info: ConsoleApp.Program[10]
@@ -80,11 +82,18 @@ internal sealed class SimpleFileFormatter : FileFormatter, IDisposable
 
 #if NETCOREAPP
         Span<char> span = stackalloc char[10];
-        if (eventId.TryFormat(span, out int charsWritten))
+        if (eventId.TryFormat(span, out var charsWritten))
+        {
             textWriter.Write(span.Slice(0, charsWritten));
+        }
         else
-#endif
+        {
             textWriter.Write(eventId.ToString());
+        }
+#else
+
+        textWriter.Write(eventId.ToString());
+#endif
 
         textWriter.Write(']');
         if (!singleLine)
@@ -110,7 +119,7 @@ internal sealed class SimpleFileFormatter : FileFormatter, IDisposable
         }
     }
 
-    private void WriteMessage(TextWriter textWriter, string message, bool singleLine)
+    private static void WriteMessage(TextWriter textWriter, string? message, bool singleLine)
     {
         if (!string.IsNullOrEmpty(message))
         {
@@ -121,15 +130,15 @@ internal sealed class SimpleFileFormatter : FileFormatter, IDisposable
             }
             else
             {
-                textWriter.Write(_messagePadding);
-                WriteReplacing(textWriter, Environment.NewLine, _newLineWithMessagePadding, message);
+                textWriter.Write(s_messagePadding);
+                WriteReplacing(textWriter, Environment.NewLine, s_newLineWithMessagePadding, message);
                 textWriter.Write(Environment.NewLine);
             }
         }
 
-        static void WriteReplacing(TextWriter writer, string oldValue, string newValue, string message)
+        static void WriteReplacing(TextWriter writer, string oldValue, string newValue, string? message)
         {
-            string newMessage = message.Replace(oldValue, newValue);
+            var newMessage = message?.Replace(oldValue, newValue);
             writer.Write(newMessage);
         }
     }
@@ -157,13 +166,13 @@ internal sealed class SimpleFileFormatter : FileFormatter, IDisposable
     {
         if (FormatterOptions.IncludeScopes && scopeProvider != null)
         {
-            bool paddingNeeded = !singleLine;
+            var paddingNeeded = !singleLine;
             scopeProvider.ForEachScope((scope, state) =>
             {
                 if (paddingNeeded)
                 {
                     paddingNeeded = false;
-                    state.Write(_messagePadding);
+                    state.Write(s_messagePadding);
                     state.Write("=> ");
                 }
                 else

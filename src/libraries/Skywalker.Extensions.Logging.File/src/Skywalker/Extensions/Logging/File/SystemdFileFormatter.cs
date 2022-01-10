@@ -4,17 +4,16 @@
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Logging.Abstractions;
 using Microsoft.Extensions.Options;
-using System;
-using System.IO;
 
 namespace Skywalker.Extensions.Logging.File;
 
 internal sealed class SystemdFileFormatter : FileFormatter, IDisposable
 {
-    private IDisposable _optionsReloadToken;
+    private readonly IDisposable _optionsReloadToken;
 
-    public SystemdFileFormatter(IOptionsMonitor<FileFormatterOptions> options)
-        : base(FileFormatterNames.Systemd)
+#pragma warning disable CS8618 // Non-nullable field must contain a non-null value when exiting constructor. Consider declaring as nullable.
+    public SystemdFileFormatter(IOptionsMonitor<FileFormatterOptions> options) : base(FileFormatterNames.Systemd)
+#pragma warning restore CS8618 // Non-nullable field must contain a non-null value when exiting constructor. Consider declaring as nullable.
     {
         ReloadLoggerOptions(options.CurrentValue);
         _optionsReloadToken = options.OnChange(ReloadLoggerOptions);
@@ -34,15 +33,15 @@ internal sealed class SystemdFileFormatter : FileFormatter, IDisposable
 
     public override void Write<TState>(in LogEntry<TState> logEntry, IExternalScopeProvider scopeProvider, TextWriter textWriter)
     {
-        string message = logEntry.Formatter(logEntry.State, logEntry.Exception);
+        var message = logEntry.Formatter?.Invoke(logEntry.State, logEntry.Exception);
         if (logEntry.Exception == null && message == null)
         {
             return;
         }
-        LogLevel logLevel = logEntry.LogLevel;
-        string category = logEntry.Category;
-        int eventId = logEntry.EventId.Id;
-        Exception exception = logEntry.Exception;
+        var logLevel = logEntry.LogLevel;
+        var category = logEntry.Category;
+        var eventId = logEntry.EventId.Id;
+        var exception = logEntry.Exception;
         // systemd reads messages from standard out line-by-line in a '<pri>message' format.
         // newline characters are treated as message delimiters, so we must replace them.
         // Messages longer than the journal LineMax setting (default: 48KB) are cropped.
@@ -50,14 +49,14 @@ internal sealed class SystemdFileFormatter : FileFormatter, IDisposable
         // <6>ConsoleApp.Program[10] Request received
 
         // loglevel
-        string logLevelString = GetSyslogSeverityString(logLevel);
+        var logLevelString = GetSyslogSeverityString(logLevel);
         textWriter.Write(logLevelString);
 
         // timestamp
-        string timestampFormat = FormatterOptions.TimestampFormat;
+        var timestampFormat = FormatterOptions.TimestampFormat;
         if (timestampFormat != null)
         {
-            DateTimeOffset dateTimeOffset = GetCurrentDateTime();
+            var dateTimeOffset = GetCurrentDateTime();
             textWriter.Write(dateTimeOffset.ToString(timestampFormat));
         }
 
@@ -75,7 +74,7 @@ internal sealed class SystemdFileFormatter : FileFormatter, IDisposable
         {
             textWriter.Write(' ');
             // message
-            WriteReplacingNewLine(textWriter, message);
+            WriteReplacingNewLine(textWriter, message!);
         }
 
         // exception
@@ -91,7 +90,7 @@ internal sealed class SystemdFileFormatter : FileFormatter, IDisposable
 
         static void WriteReplacingNewLine(TextWriter writer, string message)
         {
-            string newMessage = message.Replace(Environment.NewLine, " ");
+            var newMessage = message.Replace(Environment.NewLine, " ");
             writer.Write(newMessage);
         }
     }
