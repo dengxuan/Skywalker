@@ -1,6 +1,6 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Options;
-using Skywalker.Extensions.ObjectMapper;
+using Skywalker.ObjectMapper;
 
 namespace Skywalker.Ddd.Domain.Entities.Events.Distributed;
 

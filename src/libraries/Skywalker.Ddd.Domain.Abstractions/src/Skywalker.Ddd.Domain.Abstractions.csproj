@@ -15,7 +15,7 @@
 		<ProjectReference Include="$(LibrariesProjectRoot)Skywalker.Extensions.Threading\src\Skywalker.Extensions.Threading.csproj" />
 		<ProjectReference Include="$(LibrariesProjectRoot)Skywalker.Extensions.GuidGenerator\src\Skywalker.Extensions.GuidGenerator.csproj" />
 		<ProjectReference Include="$(LibrariesProjectRoot)Skywalker.Extensions.Exceptions.Abstractions\src\Skywalker.Extensions.Exceptions.Abstractions.csproj" />
-		<ProjectReference Include="$(LibrariesProjectRoot)Skywalker.Extensions.ObjectMapper.Abstractions\Skywalker.Extensions.ObjectMapper.Abstractions.csproj" />
+		<ProjectReference Include="$(LibrariesProjectRoot)Skywalker.ObjectMapper.Abstractions\src\Skywalker.ObjectMapper.Abstractions.csproj" />
 	</ItemGroup>
 
   <ItemGroup>

@@ -1,9 +1,9 @@
 <Project>
   <PropertyGroup>
     <!-- The .NET product branding version -->
-    <ProductVersion>2.0.0</ProductVersion>
+    <ProductVersion>3.0.0</ProductVersion>
     <!-- File version numbers -->
-    <MajorVersion>2</MajorVersion>
+    <MajorVersion>3</MajorVersion>
     <MinorVersion>0</MinorVersion>
     <PatchVersion>0</PatchVersion>
     <SdkBandVersion>2.0.0</SdkBandVersion>
