@@ -1,8 +1,8 @@
-using Skywalker.Text.Formatting;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
+using Skywalker.Text.Formatting;
 
 namespace Skywalker.Text
 {

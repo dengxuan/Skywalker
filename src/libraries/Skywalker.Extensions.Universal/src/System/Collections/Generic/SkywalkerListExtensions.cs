@@ -1,6 +1,6 @@
-﻿using Skywalker;
-using System.Diagnostics.CodeAnalysis;
+﻿using System.Diagnostics.CodeAnalysis;
 using System.Linq;
+using Skywalker;
 
 namespace System.Collections.Generic
 {

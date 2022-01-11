@@ -7,7 +7,7 @@ public static class Randomizer
     private const string _digits = "0123456789ABCDEFGHJKMNPRSTUVWXYZ";
 
 #if NETSTANDARD2_0
-        private readonly static Random _random = new();
+    private readonly static Random _random = new();
 #endif
     public static byte[] Generate(int length)
     {
@@ -25,7 +25,7 @@ public static class Randomizer
     public static int GenerateInt32(int toExclusive = int.MaxValue)
     {
 #if NETSTANDARD2_0
-            return _random.Next(0,toExclusive);
+        return _random.Next(0, toExclusive);
 #else
         return RandomNumberGenerator.GetInt32(0, toExclusive);
 #endif
@@ -34,7 +34,7 @@ public static class Randomizer
     public static int GenerateInt32(int fromInclusive = 0, int toExclusive = int.MaxValue)
     {
 #if NETSTANDARD2_0
-            return _random.Next(fromInclusive, toExclusive);
+        return _random.Next(fromInclusive, toExclusive);
 #else
         return RandomNumberGenerator.GetInt32(fromInclusive, toExclusive);
 #endif
