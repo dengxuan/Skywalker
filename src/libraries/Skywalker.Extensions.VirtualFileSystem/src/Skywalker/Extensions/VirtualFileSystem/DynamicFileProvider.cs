@@ -1,9 +1,9 @@
-﻿using Microsoft.Extensions.FileProviders;
-using Microsoft.Extensions.Primitives;
-using System;
+﻿using System;
 using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Threading;
+using Microsoft.Extensions.FileProviders;
+using Microsoft.Extensions.Primitives;
 
 namespace Skywalker.Extensions.VirtualFileSystem
 {
@@ -24,7 +24,7 @@ namespace Skywalker.Extensions.VirtualFileSystem
 
         public DynamicFileProvider()
         {
-            FilePathTokenLookup = new ConcurrentDictionary<string, ChangeTokenInfo>(StringComparer.OrdinalIgnoreCase);;
+            FilePathTokenLookup = new ConcurrentDictionary<string, ChangeTokenInfo>(StringComparer.OrdinalIgnoreCase); ;
             DynamicFiles = new ConcurrentDictionary<string, IFileInfo>();
         }
 

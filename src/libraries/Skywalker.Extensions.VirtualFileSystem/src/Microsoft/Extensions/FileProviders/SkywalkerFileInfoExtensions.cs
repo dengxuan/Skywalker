@@ -1,8 +1,8 @@
-﻿using Skywalker;
-using System.Diagnostics.CodeAnalysis;
+﻿using System.Diagnostics.CodeAnalysis;
 using System.IO;
 using System.Text;
 using System.Threading.Tasks;
+using Skywalker;
 using Skywalker.Extensions.VirtualFileSystem;
 using Skywalker.Extensions.VirtualFileSystem.Embedded;
 

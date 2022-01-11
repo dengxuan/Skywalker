@@ -1,10 +1,10 @@
-﻿using Microsoft.Extensions.FileProviders;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using System.IO;
 using System.Linq;
 using System.Reflection;
+using Microsoft.Extensions.FileProviders;
 
 namespace Skywalker.Extensions.VirtualFileSystem.Embedded
 {
@@ -14,9 +14,9 @@ namespace Skywalker.Extensions.VirtualFileSystem.Embedded
         private readonly Lazy<Dictionary<string, IFileInfo>> _files;
 
         protected override IDictionary<string, IFileInfo> Files => _files.Value;
-        
+
         public Assembly Assembly { get; }
-        
+
         public string? BaseNamespace { get; }
 
         public SkywalkerEmbeddedFileProvider(Assembly assembly, string? baseNamespace = null)

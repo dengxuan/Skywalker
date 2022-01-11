@@ -1,7 +1,7 @@
-﻿using Microsoft.Extensions.FileProviders;
-using System.Collections;
+﻿using System.Collections;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
+using Microsoft.Extensions.FileProviders;
 
 namespace Skywalker.Extensions.VirtualFileSystem
 {

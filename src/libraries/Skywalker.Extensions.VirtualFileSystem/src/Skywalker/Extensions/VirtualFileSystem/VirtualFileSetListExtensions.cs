@@ -1,11 +1,11 @@
-﻿using Microsoft.Extensions.FileProviders;
-using Microsoft.Extensions.FileProviders.Physical;
-using Skywalker.Extensions.VirtualFileSystem.Embedded;
-using Skywalker.Extensions.VirtualFileSystem.Physical;
-using System;
+﻿using System;
 using System.Diagnostics.CodeAnalysis;
 using System.IO;
 using System.Reflection;
+using Microsoft.Extensions.FileProviders;
+using Microsoft.Extensions.FileProviders.Physical;
+using Skywalker.Extensions.VirtualFileSystem.Embedded;
+using Skywalker.Extensions.VirtualFileSystem.Physical;
 
 namespace Skywalker.Extensions.VirtualFileSystem
 {

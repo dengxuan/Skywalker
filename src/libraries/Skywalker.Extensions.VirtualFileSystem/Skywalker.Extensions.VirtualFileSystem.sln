@@ -1,0 +1,37 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.0.32014.148
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{921785EE-9B11-4CB6-85F6-571A986B0130}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Skywalker.Extensions.VirtualFileSystem", "src\Skywalker.Extensions.VirtualFileSystem.csproj", "{45E91C5E-CDE6-4A84-8E28-642E8AEE5996}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Skywalker.Extensions.Universal", "..\Skywalker.Extensions.Universal\src\Skywalker.Extensions.Universal.csproj", "{2AED7327-04F7-41DB-9E8B-7E295640CB8B}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{45E91C5E-CDE6-4A84-8E28-642E8AEE5996}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{45E91C5E-CDE6-4A84-8E28-642E8AEE5996}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{45E91C5E-CDE6-4A84-8E28-642E8AEE5996}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{45E91C5E-CDE6-4A84-8E28-642E8AEE5996}.Release|Any CPU.Build.0 = Release|Any CPU
+		{2AED7327-04F7-41DB-9E8B-7E295640CB8B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2AED7327-04F7-41DB-9E8B-7E295640CB8B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2AED7327-04F7-41DB-9E8B-7E295640CB8B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2AED7327-04F7-41DB-9E8B-7E295640CB8B}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{45E91C5E-CDE6-4A84-8E28-642E8AEE5996} = {921785EE-9B11-4CB6-85F6-571A986B0130}
+		{2AED7327-04F7-41DB-9E8B-7E295640CB8B} = {921785EE-9B11-4CB6-85F6-571A986B0130}
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {16BFC7F8-0D81-498E-8108-9D4CD1E073D7}
+	EndGlobalSection
+EndGlobal

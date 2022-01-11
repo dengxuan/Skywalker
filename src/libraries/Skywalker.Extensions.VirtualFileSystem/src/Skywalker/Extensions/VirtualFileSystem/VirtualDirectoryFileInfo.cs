@@ -18,7 +18,7 @@ namespace Skywalker.Extensions.VirtualFileSystem
 
         public bool IsDirectory => true;
 
-        public VirtualDirectoryFileInfo(string physicalPath, string name,  DateTimeOffset lastModified)
+        public VirtualDirectoryFileInfo(string physicalPath, string name, DateTimeOffset lastModified)
         {
             PhysicalPath = physicalPath;
             Name = name;
