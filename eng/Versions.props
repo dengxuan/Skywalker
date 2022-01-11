@@ -1,5 +1,7 @@
 <Project>
+
   <PropertyGroup>
+  
     <!-- The .NET product branding version -->
     <ProductVersion>3.0.0</ProductVersion>
     <!-- File version numbers -->
@@ -20,6 +22,7 @@
     <UsingToolIbcOptimization>false</UsingToolIbcOptimization>
     <UsingToolXliff>false</UsingToolXliff>
     <LastReleasedStableAssemblyVersion>$(AssemblyVersion)</LastReleasedStableAssemblyVersion>
+    <PackageVersion>$(MajorVersion).$(MinorVersion).$(PatchVersion)</PackageVersion>
   </PropertyGroup>
   <!--
     Servicing build settings for Setup/Installer packages. Instructions:
