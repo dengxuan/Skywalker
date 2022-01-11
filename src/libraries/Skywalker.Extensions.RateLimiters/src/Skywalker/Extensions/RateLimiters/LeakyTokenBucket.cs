@@ -1,6 +1,4 @@
-﻿using System;
-
-namespace Skywalker.Extensions.RateLimiters;
+﻿namespace Skywalker.Extensions.RateLimiters;
 
 public abstract class LeakyTokenBucket : TokenBucket
 {
