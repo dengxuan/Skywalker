@@ -1,19 +1,16 @@
-﻿using System.Text;
-using Microsoft.CodeAnalysis;
-using Microsoft.CodeAnalysis.Text;
+﻿using Microsoft.CodeAnalysis;
 
 namespace Skywalker.Ddd.EntityFrameworkCore.Generators;
 
 [Generator]
-public class DomainServiceGenerator : ISourceGenerator
+public partial class DddEntityFrameworkCoreGenerator : ISourceGenerator
 {
     public void Execute(GeneratorExecutionContext context)
     {
-        var _generator_assembly = GetType().Assembly;
-        var generatorVersion = _generator_assembly.GetName().Version!.ToString();
-        var compilationAnalyzer = new CompilationAnalyzer(in context, generatorVersion);
-        compilationAnalyzer.Analyze();
-        context.AddSource("Skywalker.g.cs", SourceText.From("class A {}", Encoding.UTF8));
+        var compilationAnalyzer = new Analyzer(in context);
+        var metadataClass = compilationAnalyzer.Analyze();
+        var dbContextClasses = Parser.DbContextClasses(metadataClass.DbContextClasses, context.CancellationToken);
+        Emitter.Emit(context, dbContextClasses);
     }
 
     public void Initialize(GeneratorInitializationContext context)

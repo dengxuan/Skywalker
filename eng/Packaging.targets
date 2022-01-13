@@ -12,7 +12,7 @@
         <TargetsForTfmSpecificContentInPackage>$(TargetsForTfmSpecificContentInPackage);IncludePrivateProjectReferencesWithPackAttributeInPackage</TargetsForTfmSpecificContentInPackage>
         <IncludeBuildOutput Condition="'$(TargetFrameworkSuffix)' != ''">false</IncludeBuildOutput>
         <!-- Don't include target platform specific dependencies, since we use the target platform to represent RIDs instead -->
-        <SuppressDependenciesWhenPacking Condition="'$(TargetFrameworkIdentifier)' == '.NETCoreApp' and '$(TargetPlatformIdentifier)' != ''">true</SuppressDependenciesWhenPacking>
+        <SuppressDependenciesWhenPacking Condition="'$(TargetFrameworkIdentifier)' == '.NETCoreApp' and '$(TargetPlatformIdentifier)' != ''">false</SuppressDependenciesWhenPacking>
         <PackageDesignerMarkerFile>$(MSBuildThisFileDirectory)useSharedDesignerContext.txt</PackageDesignerMarkerFile>
         <!-- Generate packages for rid specific projects or for allconfigurations during build. -->
         <!-- A package isn't generated if in servicing or in runtimelab. Intended to be overridden at project level. -->
@@ -75,7 +75,7 @@
        .NETCoreApp. This prohibits users to consume packages on an older .NETCoreApp version
        than the minimum supported one. -->
     <ItemGroup>
-        <NETStandardCompatError Include="netcoreapp2.0" Supported="$(NetCoreAppMinimum)" Condition="$(TargetFrameworks.Contains('netstandard2.')) and
+        <NETStandardCompatError Include="netstandard1.0" Supported="$(NetCoreAppMinimum)" Condition="$(TargetFrameworks.Contains('netstandard1.')) and
                                        ($(TargetFrameworks.Contains('$(NetCoreAppMinimum)')) or $(TargetFrameworks.Contains('$(NetCoreAppCurrent)'))) and
                                        '$(DisableNETStandardCompatErrorForNETCoreApp)' != 'true'" />
         <NETStandardCompatError Include="net461" Supported="$(NetFrameworkMinimum)" Condition="$(TargetFrameworks.Contains('netstandard2.0')) and

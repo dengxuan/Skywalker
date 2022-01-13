@@ -1,25 +1,25 @@
 <Project>
-	<PropertyGroup>
-		<TargetFrameworks>netstandard2.0</TargetFrameworks>
-		<AssemblyName>$(MSBuildThisFileName)</AssemblyName>
-		<RootNamespace>$(MSBuildThisFileName)</RootNamespace>
-		<StringResourcesClassName>SR</StringResourcesClassName>
-		<StringResourcesName>FxResources.$(RootNamespace).$(StringResourcesClassName)</StringResourcesName>
-		<Nullable>enable</Nullable>
-		<EnableDefaultItems>true</EnableDefaultItems>
-		<EnableDefaultEmbeddedResourceItems>false</EnableDefaultEmbeddedResourceItems>
-		<UsingToolXliff>true</UsingToolXliff>
-		<CLSCompliant>false</CLSCompliant>
-		<IsPackable>false</IsPackable>
-		<AnalyzerLanguage>cs</AnalyzerLanguage>
-	</PropertyGroup>
+  <PropertyGroup>
+    <TargetFrameworks>netstandard2.0</TargetFrameworks>
+    <AssemblyName>$(MSBuildThisFileName)</AssemblyName>
+    <RootNamespace>$(MSBuildThisFileName)</RootNamespace>
+    <UsingToolXliff>true</UsingToolXliff>
+    <CLSCompliant>false</CLSCompliant>
+    <IsPackable>false</IsPackable>
+    <AnalyzerLanguage>cs</AnalyzerLanguage>
+  </PropertyGroup>
 
-	<ItemGroup>
-		<PackageReference Include="Microsoft.CodeAnalysis.Analyzers" Version="3.3.3">
-			<PrivateAssets>all</PrivateAssets>
-			<IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
-		</PackageReference>
-		<PackageReference Include="Microsoft.CodeAnalysis.CSharp.Workspaces" Version="$(RoslynApiVersion)" PrivateAssets="all" />
-	</ItemGroup>
+  <ItemGroup>
+    <PackageReference Include="Microsoft.CodeAnalysis.Analyzers" Version="3.3.3">
+      <PrivateAssets>all</PrivateAssets>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+    </PackageReference>
+    <PackageReference Include="Microsoft.CodeAnalysis.CSharp.Workspaces" Version="$(RoslynApiVersion)" PrivateAssets="all" />
+    <PackageReference Include="Scriban" Version="5.0.0">
+      <PrivateAssets>all</PrivateAssets>
+      <IncludeAssets>compile; build; contentfiles; analyzers; buildtransitive</IncludeAssets>
+    </PackageReference>
+    <None Include="$(PkgScriban)\lib\netstandard2.0\*.dll" Pack="true" PackagePath="analyzers/dotnet/cs" Visible="false" />
+  </ItemGroup>
 
 </Project>

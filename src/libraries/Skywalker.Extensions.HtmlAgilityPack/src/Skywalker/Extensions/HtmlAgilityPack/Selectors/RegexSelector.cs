@@ -64,12 +64,12 @@ public class RegexSelector : ISelector
         var matches = _regex.Matches(text);
 
         var results = new List<string>();
-        foreach (Match match in matches)
+        foreach (Match? match in matches)
         {
-            var value = match.Result(_replacement);
-            if (!string.IsNullOrWhiteSpace(value))
+            var value = match?.Result(_replacement);
+            if (!value.IsNullOrWhiteSpace())
             {
-                results.Add(value);
+                results.Add(value!);
             }
         }
 

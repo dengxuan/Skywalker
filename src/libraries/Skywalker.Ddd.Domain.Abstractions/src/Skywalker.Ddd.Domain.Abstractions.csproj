@@ -19,6 +19,7 @@
 	</ItemGroup>
 
   <ItemGroup>
+    <AnalyzerReference Include="..\gen\Skywalker.Ddd.Domain.Generators.Roslyn3.11.csproj" Condition="'$(DotNetBuildFromSource)' != 'true'" />
     <AnalyzerReference Include="..\gen\Skywalker.Ddd.Domain.Generators.Roslyn4.0.csproj" />
   </ItemGroup>
   

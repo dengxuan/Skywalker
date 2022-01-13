@@ -6,26 +6,25 @@ using System.Diagnostics.CodeAnalysis;
 
 namespace Skywalker.Extensions.Logging.File;
 
-#if NET5_0_OR_GREATER
+#if NET
 internal sealed class FormatterOptionsMonitor<[DynamicallyAccessedMembers(DynamicallyAccessedMemberTypes.PublicParameterlessConstructor)] TOptions> : IOptionsMonitor<TOptions>
-#elif NETSTANDARD
+#elif NETSTANDARD || NETCOREAPP
 internal sealed class FormatterOptionsMonitor<TOptions> : IOptionsMonitor<TOptions>
 #endif
 
     where TOptions : FileFormatterOptions
 {
-    private readonly TOptions _options;
     public FormatterOptionsMonitor(TOptions options)
     {
-        _options = options;
+        CurrentValue = options;
     }
 
-    public TOptions Get(string name) => _options;
+    public TOptions Get(string name) => CurrentValue;
 
     public IDisposable? OnChange(Action<TOptions, string> listener)
     {
         return null;
     }
 
-    public TOptions CurrentValue => _options;
+    public TOptions CurrentValue { get; private set; }
 }

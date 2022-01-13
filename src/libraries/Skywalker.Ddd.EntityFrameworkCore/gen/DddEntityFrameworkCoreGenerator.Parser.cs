@@ -2,7 +2,6 @@
 // Gordon licenses this file to you under the MIT license.
 
 using Microsoft.CodeAnalysis;
-using Microsoft.CodeAnalysis.CSharp.Syntax;
 
 namespace Skywalker.Ddd.EntityFrameworkCore.Generators;
 
@@ -10,121 +9,24 @@ public partial class DddEntityFrameworkCoreGenerator
 {
     internal class Parser
     {
-        private const string DbContextFullname = "Skywalker.Ddd.EntityFrameworkCore.SkywalkerDbContext<TDbContext>";
-        private static readonly SymbolEqualityComparer s_symbolComparer = SymbolEqualityComparer.Default;
-        private readonly Compilation _compilation;
-        private readonly INamedTypeSymbol? _dbSetSymbol;
-        private readonly INamedTypeSymbol? _dbContextSymbol;
-        private readonly INamedTypeSymbol? _entitiesSymbols;
-        private readonly CancellationToken _cancellationToken;
-        private readonly Action<Diagnostic> _reportDiagnostic;
-
-        public Parser(Compilation compilation, Action<Diagnostic> reportDiagnostic, CancellationToken cancellationToken)
-        {
-            _compilation = compilation;
-            _dbSetSymbol = _compilation.GetBestTypeByMetadataName(Constants.DbSetSymblyName);
-            _dbContextSymbol = _compilation.GetBestTypeByMetadataName(Constants.DbContextSymblyName);
-            _entitiesSymbols = _compilation.GetBestTypeByMetadataName(Constants.DomainEntitySymbolName);
-            _cancellationToken = cancellationToken;
-            _reportDiagnostic = reportDiagnostic;
-        }
-
-        internal static bool IsOpenGeneric(INamedTypeSymbol symbol) => symbol.TypeArguments.Length > 0 && symbol.TypeArguments[0] is ITypeParameterSymbol;
-
-        internal static bool IsSyntaxTargetForGeneration(SyntaxNode node)
-        {
-            return node is ClassDeclarationSyntax;
-        }
-
-        internal static ClassDeclarationSyntax? GetSemanticTargetForGeneration(GeneratorSyntaxContext context)
-        {
-            var classDeclarationSyntax = (ClassDeclarationSyntax)context.Node;
-            if (context.SemanticModel.GetDeclaredSymbol(context.Node) is not INamedTypeSymbol namedTypeSymbol)
-            {
-                return null;
-            }
-
-            if (namedTypeSymbol.IsAbstract || namedTypeSymbol.IsStatic)
-            {
-                return null;
-            }
-
-            var baseTypeSymbol = namedTypeSymbol.OriginalDefinition.BaseType;
-            if (baseTypeSymbol == null)
-            {
-                return null;
-            }
-            var dbContextFullname = baseTypeSymbol.OriginalDefinition.ToDisplayString();
-
-            if (dbContextFullname != DbContextFullname)
-            {
-                return null;
-            }
-            return classDeclarationSyntax;
-        }
-
-        public IReadOnlyList<DbContextClass> DbContextClasses(IEnumerable<ClassDeclarationSyntax> classes)
+        public static IReadOnlyList<DbContextClass> DbContextClasses(Dictionary<INamedTypeSymbol, HashSet<INamedTypeSymbol>> dbContextClasses, CancellationToken cancellationToken)
         {
             var results = new List<DbContextClass>();
-            foreach (var @class in classes)
+            foreach (var dbContextClass in dbContextClasses)
             {
-                _cancellationToken.ThrowIfCancellationRequested();
-                var sm = _compilation.GetSemanticModel(@class.SyntaxTree);
-                if (sm.GetDeclaredSymbol(@class) is not INamedTypeSymbol classNamedTypeSymbol)
-                {
-                    continue;
-                }
-                // we only care about SkywalkerDbContext<TDbContext>
-                if (s_symbolComparer.Equals(_dbContextSymbol, classNamedTypeSymbol.OriginalDefinition))
-                {
-                    continue;
-                }
+                cancellationToken.ThrowIfCancellationRequested();
+
                 var dbContexterClass = new DbContextClass
                 {
                     Properties = new(),
-                    Name = classNamedTypeSymbol.Name,
-                    Fullname = classNamedTypeSymbol.ToDisplayString(),
-                    Namespace = classNamedTypeSymbol.ContainingNamespace.ToDisplayString()
+                    Name = dbContextClass.Key.Name,
+                    Fullname = dbContextClass.Key.ToDisplayString(),
+                    Namespace = dbContextClass.Key.ContainingNamespace.ToDisplayString()
                 };
-                foreach (var member in @class.Members)
+                foreach (var entityNamedTypeSymbol in dbContextClass.Value)
                 {
-                    if (member is not PropertyDeclarationSyntax property)
-                    {
-                        continue;
-                    }
-                    if (sm.GetDeclaredSymbol(property, _cancellationToken) is not IPropertySymbol propertySymbol)
-                    {
-                        continue;
-                    }
-                    if (propertySymbol.IsStatic || propertySymbol.IsReadOnly)
-                    {
-                        continue;
-                    }
-                    // The property is DbSet
-                    if (!s_symbolComparer.Equals(_dbSetSymbol, propertySymbol.Type.OriginalDefinition))
-                    {
-                        continue;
-                    }
-                    if (propertySymbol.Type is not INamedTypeSymbol propertyNamedTypeSymbol)
-                    {
-                        continue;
-                    }
-                    if (propertyNamedTypeSymbol.TypeArguments[0] is not INamedTypeSymbol entityNamedTypeSymbol)
-                    {
-                        continue;
-                    }
-                    if (entityNamedTypeSymbol.TypeKind is not TypeKind.Class)
-                    {
-                        continue;
-                    }
-                    // The property type arguments is domain Entity or AggregateRoot
-                    
-                    if (!entityNamedTypeSymbol.AllInterfaces.Any(predicate => s_symbolComparer.Equals(predicate, _entitiesSymbols)))
-                    {
-                        continue;
-                    }
                     var primaryKey = string.Empty;
-                    if (entityNamedTypeSymbol.BaseType!.TypeArguments.Length > 0 && entityNamedTypeSymbol.BaseType?.TypeArguments[0] is INamedTypeSymbol primaryKeyNameTypeSymbol)
+                    if (entityNamedTypeSymbol.BaseType?.TypeArguments.Length > 0 && entityNamedTypeSymbol.BaseType?.TypeArguments[0] is INamedTypeSymbol primaryKeyNameTypeSymbol)
                     {
                         primaryKey = primaryKeyNameTypeSymbol.Name;
                     }
@@ -136,8 +38,8 @@ public partial class DddEntityFrameworkCoreGenerator
                         PrimaryKey = primaryKey
                     };
                     dbContexterClass.Properties.Add(dbContextProperty);
-                    results.Add(dbContexterClass);
                 }
+                results.Add(dbContexterClass);
             }
             return results;
         }

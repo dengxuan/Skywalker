@@ -1,20 +1,24 @@
 ﻿using Microsoft.CodeAnalysis;
 
-namespace Skywalker.Ddd.Domain.Generators;
+namespace Skywalker.Ddd.EntityFrameworkCore.Generators;
 
-public partial class DddDomainGenerator
+public partial class DddEntityFrameworkCoreGenerator
 {
     protected static readonly SymbolEqualityComparer s_symbolComparer = SymbolEqualityComparer.IncludeNullability;
 
     internal class Analyzer
     {
-        private readonly INamedTypeSymbol? _domainServiceSymbol;
+        private readonly INamedTypeSymbol? _dbContextSymbol;
+        private readonly INamedTypeSymbol? _dbSetSymbol;
+        private readonly INamedTypeSymbol? _domainEntitieSymbol;
         private readonly Compilation _compilation;
 
         public Analyzer(in GeneratorExecutionContext context)
         {
             _compilation = context.Compilation;
-            _domainServiceSymbol = _compilation.GetTypeByMetadataName(Constants.DomainServiceSymbolName);
+            _dbContextSymbol = _compilation.GetTypeByMetadataName(Constants.DbContextSymblyName);
+            _dbSetSymbol = _compilation.GetTypeByMetadataName(Constants.DbSetSymblyName);
+            _domainEntitieSymbol = _compilation.GetTypeByMetadataName(Constants.DomainEntitySymbolName);
         }
 
         private Queue<INamespaceOrTypeSymbol> FindGlobalNamespaces()
@@ -72,24 +76,47 @@ public partial class DddDomainGenerator
                                 break;
                             }
 
-                            if (namedTypeSymbol.AllInterfaces.Any(predicate => s_symbolComparer.Equals(predicate, _domainServiceSymbol)))
+                            if (namedTypeSymbol.AllInterfaces.Any(predicate => s_symbolComparer.Equals(predicate, _dbContextSymbol)))
                             {
-                                if(!metadataClass.DomainServices.TryGetValue(namedTypeSymbol,out var implImterfaces))
+                                var dbContextProperties = new HashSet<INamedTypeSymbol>(s_symbolComparer);
+                                foreach (var propertyMember in namedTypeSymbol.GetMembers())
                                 {
-                                    implImterfaces = new HashSet<INamedTypeSymbol>(s_symbolComparer);
-                                    metadataClass.DomainServices.Add(namedTypeSymbol, implImterfaces);
-                                }
-                                foreach (var item in namedTypeSymbol.AllInterfaces)
-                                {
-                                    if (s_symbolComparer.Equals(item, _domainServiceSymbol))
+                                    if (propertyMember is not IPropertySymbol propertySymbol)
                                     {
                                         continue;
                                     }
-                                    implImterfaces.Add(item);
+                                    if (propertySymbol.IsStatic || propertySymbol.IsReadOnly || propertySymbol.IsWriteOnly)
+                                    {
+                                        continue;
+                                    }
+                                    if (propertySymbol.Type is not INamedTypeSymbol dbSetNamedTypeSymbol)
+                                    {
+                                        continue;
+                                    }
+                                    if (!s_symbolComparer.Equals(dbSetNamedTypeSymbol.OriginalDefinition, _dbSetSymbol))
+                                    {
+                                        continue;
+                                    }
+                                    if (dbSetNamedTypeSymbol.TypeArguments[0] is not INamedTypeSymbol entityNameTypeSymbol)
+                                    {
+                                        continue;
+                                    }
+
+                                    if (!entityNameTypeSymbol.AllInterfaces.Any(predicate => s_symbolComparer.Equals(predicate, _domainEntitieSymbol)))
+                                    {
+                                        continue;
+                                    }
+                                    dbContextProperties.Add(entityNameTypeSymbol);
                                 }
+                                // The DbContext is not define any DbSet<Entity> properties
+                                if (dbContextProperties.Count == 0)
+                                {
+                                    //Todo: Diagnostics report
+                                    break;
+                                }
+                                metadataClass.DbContextClasses.Add(namedTypeSymbol, dbContextProperties);
                                 break;
                             }
-
                             //Todo: Care about domain entity and check if all entities are add to DbContexts
                             break;
                         }
@@ -110,11 +137,11 @@ public partial class DddDomainGenerator
 
     internal readonly record struct MetadataClass
     {
-        internal Dictionary<INamedTypeSymbol, HashSet<INamedTypeSymbol>> DomainServices { get; }
+        internal Dictionary<INamedTypeSymbol, HashSet<INamedTypeSymbol>> DbContextClasses { get; }
 
         public MetadataClass()
         {
-            DomainServices = new Dictionary<INamedTypeSymbol, HashSet<INamedTypeSymbol>>(s_symbolComparer);
+            DbContextClasses = new Dictionary<INamedTypeSymbol, HashSet<INamedTypeSymbol>>(s_symbolComparer);
         }
     }
 }

@@ -14,5 +14,4 @@ internal static class Constants
     public const string DbContextSymblyName = "Skywalker.Ddd.EntityFrameworkCore.ISkywalkerDbContext";
 
     public const string DomainEntitySymbolName = "Skywalker.Ddd.Domain.Entities.IEntity";
-    public const string DomainServiceSymbolName = "Skywalker.Ddd.Domain.Services.IDomainService";
 }

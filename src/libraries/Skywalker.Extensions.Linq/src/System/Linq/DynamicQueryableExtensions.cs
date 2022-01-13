@@ -296,7 +296,7 @@ public static class DynamicQueryableExtensions
     /// </summary>
     /// <param name="source">The sequence to type as <see cref="IEnumerable{T}"/> of dynamic.</param>
     /// <returns>The input typed as <see cref="IEnumerable{T}"/> of dynamic.</returns>
-    public static IEnumerable<dynamic> AsEnumerable(this IQueryable source)
+    public static IEnumerable<dynamic?> AsEnumerable(this IQueryable source)
 #endif
     {
         foreach (var obj in source)

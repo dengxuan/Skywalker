@@ -38,4 +38,4 @@ dotnet pack src/libraries/Skywalker.Ddd.EntityFrameworkCore.SqlServer/Skywalker.
 dotnet pack src/libraries/Skywalker.Ddd.Application.Abstractions/Skywalker.Ddd.Application.Abstractions.sln -c Release -p:IncludeSymbols=true -p:SymbolPackageFormat=snupkg --output nupkgs
 
 
-#dotnet nuget push nupkgs\*.nupkg -k f2205526-ad54-351e-a993-54ad510ce1ed -s https://nexus.tankswar.com/repository/nuget-hosted/ -ss https://nexus.tankswar.com/repository/nuget-hosted/
+dotnet nuget push nupkgs\*.nupkg -k f2205526-ad54-351e-a993-54ad510ce1ed -s https://nexus.tankswar.com/repository/nuget-hosted/index.json -ss https://nexus.tankswar.com/repository/nuget-hosted/index.json

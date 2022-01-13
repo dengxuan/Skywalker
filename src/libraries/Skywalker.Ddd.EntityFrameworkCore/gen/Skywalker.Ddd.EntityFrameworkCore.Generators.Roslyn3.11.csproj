@@ -12,9 +12,4 @@
     <Compile Remove="DddEntityFrameworkCoreGenerator.Roslyn4.0.cs" />
   </ItemGroup>
 
-  <ItemGroup>
-    <!-- Package the generator in the analyzer directory of the nuget package -->
-    <None Include="$(BaseOutputPath)\*.dll" Pack="true" PackagePath="analyzers/dotnet/cs" Visible="false" />
-  </ItemGroup>
-
 </Project>

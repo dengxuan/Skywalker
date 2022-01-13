@@ -228,9 +228,9 @@ public sealed class Parser
         }
     }
 
-    private void CustomSelector(string name, bool hasArguments)
+    private void CustomSelector(string name, bool _)
     {
-        if (!CustomSelectors.TryGetValue(name, out var deleg))
+        if (!s_customSelectors.TryGetValue(name, out var deleg))
         {
             throw new FormatException(string.Format("Unknown pseudo-selector '{0}'.", name));
         }
@@ -603,11 +603,11 @@ public sealed class Parser
         return TokenSpec.B(token);
     }
 
-    internal static Dictionary<string, DelegateInfo> CustomSelectors = new();
+    internal static Dictionary<string, DelegateInfo> s_customSelectors = new();
 
     public static void RegisterCustomSelector<TNode>(string name, Func<Selector<TNode>> selector)
     {
-        CustomSelectors.Add(name, new DelegateInfo
+        s_customSelectors.Add(name, new DelegateInfo
         {
             Method = selector,
             ParameterTypes = new List<Type>()
@@ -615,7 +615,7 @@ public sealed class Parser
     }
     public static void RegisterCustomSelector<TNode, T1>(string name, Func<T1, Selector<TNode>> selector)
     {
-        CustomSelectors.Add(name, new DelegateInfo
+        s_customSelectors.Add(name, new DelegateInfo
         {
             Method = selector,
             ParameterTypes = new List<Type> { typeof(T1) }
@@ -623,7 +623,7 @@ public sealed class Parser
     }
     public static void RegisterCustomSelector<TNode, T1, T2>(string name, Func<T1, T2, Selector<TNode>> selector)
     {
-        CustomSelectors.Add(name, new DelegateInfo
+        s_customSelectors.Add(name, new DelegateInfo
         {
             Method = selector,
             ParameterTypes = new List<Type> { typeof(T1), typeof(T2) }
@@ -631,7 +631,7 @@ public sealed class Parser
     }
     public static void RegisterCustomSelector<TNode, T1, T2, T3>(string name, Func<T1, T2, T3, Selector<TNode>> selector)
     {
-        CustomSelectors.Add(name, new DelegateInfo
+        s_customSelectors.Add(name, new DelegateInfo
         {
             Method = selector,
             ParameterTypes = new List<Type> { typeof(T1), typeof(T2), typeof(T3) }

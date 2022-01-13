@@ -3,6 +3,7 @@ using System.Linq.Expressions;
 using System.Reflection;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.ChangeTracking;
+using Microsoft.EntityFrameworkCore.Internal;
 using Microsoft.EntityFrameworkCore.Metadata;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using Skywalker.Ddd.Data;
@@ -54,7 +55,7 @@ public abstract class SkywalkerDbContext<TDbContext> : DbContext, ISkywalkerDbCo
 
     public virtual void Initialize(IUnitOfWork unitOfWork)
     {
-        if (unitOfWork.Options?.Timeout.HasValue == true && Database.IsRelational() && !Database.GetCommandTimeout().HasValue)
+        if (unitOfWork.Options?.Timeout.HasValue == true && Database.IsRelationalDatabase() && !Database.GetCommandTimeout().HasValue)
         {
             Database.SetCommandTimeout(TimeSpan.FromMilliseconds(unitOfWork.Options!.Timeout!.Value));
         }
