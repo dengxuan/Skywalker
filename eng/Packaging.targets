@@ -9,7 +9,7 @@
          BeforePack must be used. Setting both to ensure that we are always running before other targets. -->
         <PackDependsOn>AddNETStandardCompatErrorFileForPackaging;IncludeAnalyzersInPackage;$(PackDependsOn)</PackDependsOn>
         <BeforePack>AddNETStandardCompatErrorFileForPackaging;IncludeAnalyzersInPackage;$(BeforePack)</BeforePack>
-        <TargetsForTfmSpecificContentInPackage>$(TargetsForTfmSpecificContentInPackage);IncludePrivateProjectReferencesWithPackAttributeInPackage</TargetsForTfmSpecificContentInPackage>
+        <TargetsForTfmSpecificContentInPackage>$(TargetsForTfmSpecificContentInPackage);AddRuntimeSpecificFilesToPackage;IncludePrivateProjectReferencesWithPackAttributeInPackage</TargetsForTfmSpecificContentInPackage>
         <IncludeBuildOutput Condition="'$(TargetFrameworkSuffix)' != ''">false</IncludeBuildOutput>
         <!-- Don't include target platform specific dependencies, since we use the target platform to represent RIDs instead -->
         <SuppressDependenciesWhenPacking Condition="'$(TargetFrameworkIdentifier)' == '.NETCoreApp' and '$(TargetPlatformIdentifier)' != ''">false</SuppressDependenciesWhenPacking>
@@ -26,6 +26,28 @@
         <LibIntellisenseDocumentationFilePath>$(XmlDocFileRoot)1033\$(AssemblyName).xml</LibIntellisenseDocumentationFilePath>
         <UseIntellisenseDocumentationFile Condition="'$(UseIntellisenseDocumentationFile)' == '' and Exists('$(LibIntellisenseDocumentationFilePath)')">true</UseIntellisenseDocumentationFile>
     </PropertyGroup>
+
+    <!-- Add runtime specific file into the package if the tfm is RID specific or if the tfm targets .NETFramework and netstandard2.0-windows TFM is present.
+       This is necessary as compatible RID specific tfms win over compatible RID agnostic tfms. Hence without this, netstandard2.0-windows would win over net461. -->
+    <Target Name="AddRuntimeSpecificFilesToPackage" DependsOnTargets="BuiltProjectOutputGroup;
+                            DocumentationProjectOutputGroup;
+                            SatelliteDllsProjectOutputGroup;
+                            $(TargetsForTfmSpecificBuildOutput)" Condition="'$(TargetFrameworkSuffix)' != '' or
+                     ('$(TargetFrameworkIdentifier)' == '.NETFramework' and $(TargetFrameworks.Contains('netstandard2.0-windows')))">
+        <PropertyGroup>
+            <RuntimeSymbolPath>$(TargetDir)$(TargetName).pdb</RuntimeSymbolPath>
+            <_packageTargetRuntime Condition="'$(TargetFrameworkIdentifier)' != '.NETFramework'">$(PackageTargetRuntime)</_packageTargetRuntime>
+            <_packageTargetRuntime Condition="'$(TargetFrameworkIdentifier)' == '.NETFramework'">win</_packageTargetRuntime>
+        </PropertyGroup>
+
+        <ItemGroup>
+            <TfmRuntimeSpecificPackageFile Include="@(SatelliteDllsProjectOutputGroupOutput);
+                                              @(BuiltProjectOutputGroupOutput);
+                                              @(DocumentationProjectOutputGroupOutput)" />
+            <TfmSpecificPackageFile Include="@(TfmRuntimeSpecificPackageFile)" PackagePath="runtimes/$(_packageTargetRuntime)/$(BuildOutputTargetFolder)/$(TargetFrameworkWithoutSuffix)" />
+            <TfmSpecificDebugSymbolsFile Include="$(RuntimeSymbolPath)" TargetPath="/runtimes/$(_packageTargetRuntime)/$(BuildOutputTargetFolder)/$(TargetFrameworkWithoutSuffix)/%(Filename)%(Extension)" TargetFramework="$(TargetFrameworkWithoutSuffix)" Condition="'$(IncludeSymbols)' == 'true' and Exists('$(RuntimeSymbolPath)')" />
+        </ItemGroup>
+    </Target>
 
     <Target Name="IncludeAnalyzersInPackage" Condition="'@(AnalyzerReference)' != ''">
         <!-- Call a target in the analyzer project to get all the files it would normally place in a package.
@@ -75,8 +97,7 @@
        .NETCoreApp. This prohibits users to consume packages on an older .NETCoreApp version
        than the minimum supported one. -->
     <ItemGroup>
-        <NETStandardCompatError Include="netstandard1.0" Supported="$(NetCoreAppMinimum)" Condition="$(TargetFrameworks.Contains('netstandard1.')) and
-                                       ($(TargetFrameworks.Contains('$(NetCoreAppMinimum)')) or $(TargetFrameworks.Contains('$(NetCoreAppCurrent)'))) and
+        <NETStandardCompatError Include="netcoreapp2.0" Supported="$(NetCoreAppMinimum)" Condition="$(TargetFrameworks.Contains('netcoreapp2.')) and
                                        '$(DisableNETStandardCompatErrorForNETCoreApp)' != 'true'" />
         <NETStandardCompatError Include="net461" Supported="$(NetFrameworkMinimum)" Condition="$(TargetFrameworks.Contains('netstandard2.0')) and
                                        ($(TargetFrameworks.Contains('$(NetFrameworkMinimum)')) or $(TargetFrameworks.Contains('net47')) or $(TargetFrameworks.Contains('net48'))) and

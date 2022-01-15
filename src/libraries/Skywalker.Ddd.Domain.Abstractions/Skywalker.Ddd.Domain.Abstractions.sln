@@ -27,8 +27,6 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Skywalker.ObjectMapper.Abst
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Skywalker.Ddd.Domain.Generators.Roslyn3.11", "gen\Skywalker.Ddd.Domain.Generators.Roslyn3.11.csproj", "{F7CB55F4-1AC9-4867-9340-66E1201A519A}"
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "ref", "ref", "{BEB81946-2A8A-4CFC-935F-0178F833488E}"
-EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
