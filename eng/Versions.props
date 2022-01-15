@@ -1,7 +1,7 @@
 <Project>
 
   <PropertyGroup>
-  
+
     <!-- The .NET product branding version -->
     <ProductVersion>3.0.0</ProductVersion>
     <!-- File version numbers -->

@@ -12,4 +12,10 @@
     <Compile Remove="DddDomainGenerator.Roslyn4.0.cs" />
   </ItemGroup>
 
+  <ItemGroup>
+    <EmbeddedResource Update="Templates\DddDomain.sbn-cs">
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </EmbeddedResource>
+  </ItemGroup>
+
 </Project>
