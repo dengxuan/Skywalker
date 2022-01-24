@@ -1,0 +1,16 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <AnalyzerRoslynVersion>3.11</AnalyzerRoslynVersion>
+    <RoslynApiVersion>$(MicrosoftCodeAnalysisCSharpWorkspacesVersion_3_11)</RoslynApiVersion>
+    <AssemblyName>$(MSBuildThisFileName)</AssemblyName>
+    <RootNamespace></RootNamespace>
+  </PropertyGroup>
+  
+  <Import Project="Skywalker.Extensions.DependencyInjection.targets" />
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\Skywalker.Extensions.DependencyInjection.Abstractions\src\Skywalker.Extensions.DependencyInjection.Abstractions.csproj" />
+  </ItemGroup>
+
+</Project>

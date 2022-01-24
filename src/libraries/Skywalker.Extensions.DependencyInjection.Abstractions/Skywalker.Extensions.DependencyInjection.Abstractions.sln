@@ -1,0 +1,62 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.0.32112.339
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "gen", "gen", "{FFDAD15B-EDB1-415A-BAE8-A6F8D51343D2}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{EA28E0AA-1DA1-45CB-BC01-6CD105948DE2}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "tests", "tests", "{6827F0F7-502A-46EA-B1BB-8B9071C61ADA}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Skywalker.Extensions.DependencyInjection.Abstractions", "src\Skywalker.Extensions.DependencyInjection.Abstractions.csproj", "{816B2B8D-A1B1-4BEC-B072-69FACF550F78}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Skywalker.Extensions.Universal", "..\Skywalker.Extensions.Universal\src\Skywalker.Extensions.Universal.csproj", "{0A0F23E4-10A7-452C-BD61-C0C7E92D3056}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Skywalker.Extensions.DependencyInjection.Generators.Roslyn3.11", "gen\Skywalker.Extensions.DependencyInjection.Generators.Roslyn3.11.csproj", "{6D82E696-139E-417D-A542-CA9183798C6A}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Skywalker.Extensions.DependencyInjection.Generators.Roslyn4.0", "gen\Skywalker.Extensions.DependencyInjection.Generators.Roslyn4.0.csproj", "{273100BB-DD51-46FF-93E3-E0BB0DF7D310}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DependencyInjectionTest", "tests\DependencyInjectionTest\DependencyInjectionTest.csproj", "{7A233EF1-E5CE-4C89-9DA7-05F984744E28}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{816B2B8D-A1B1-4BEC-B072-69FACF550F78}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{816B2B8D-A1B1-4BEC-B072-69FACF550F78}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{816B2B8D-A1B1-4BEC-B072-69FACF550F78}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{816B2B8D-A1B1-4BEC-B072-69FACF550F78}.Release|Any CPU.Build.0 = Release|Any CPU
+		{0A0F23E4-10A7-452C-BD61-C0C7E92D3056}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{0A0F23E4-10A7-452C-BD61-C0C7E92D3056}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{0A0F23E4-10A7-452C-BD61-C0C7E92D3056}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{0A0F23E4-10A7-452C-BD61-C0C7E92D3056}.Release|Any CPU.Build.0 = Release|Any CPU
+		{6D82E696-139E-417D-A542-CA9183798C6A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{6D82E696-139E-417D-A542-CA9183798C6A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{6D82E696-139E-417D-A542-CA9183798C6A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{6D82E696-139E-417D-A542-CA9183798C6A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{273100BB-DD51-46FF-93E3-E0BB0DF7D310}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{273100BB-DD51-46FF-93E3-E0BB0DF7D310}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{273100BB-DD51-46FF-93E3-E0BB0DF7D310}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{273100BB-DD51-46FF-93E3-E0BB0DF7D310}.Release|Any CPU.Build.0 = Release|Any CPU
+		{7A233EF1-E5CE-4C89-9DA7-05F984744E28}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{7A233EF1-E5CE-4C89-9DA7-05F984744E28}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{7A233EF1-E5CE-4C89-9DA7-05F984744E28}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{7A233EF1-E5CE-4C89-9DA7-05F984744E28}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{816B2B8D-A1B1-4BEC-B072-69FACF550F78} = {EA28E0AA-1DA1-45CB-BC01-6CD105948DE2}
+		{0A0F23E4-10A7-452C-BD61-C0C7E92D3056} = {EA28E0AA-1DA1-45CB-BC01-6CD105948DE2}
+		{6D82E696-139E-417D-A542-CA9183798C6A} = {FFDAD15B-EDB1-415A-BAE8-A6F8D51343D2}
+		{273100BB-DD51-46FF-93E3-E0BB0DF7D310} = {FFDAD15B-EDB1-415A-BAE8-A6F8D51343D2}
+		{7A233EF1-E5CE-4C89-9DA7-05F984744E28} = {6827F0F7-502A-46EA-B1BB-8B9071C61ADA}
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {B556D149-FD4E-4A58-B385-6C728D77B19F}
+	EndGlobalSection
+EndGlobal

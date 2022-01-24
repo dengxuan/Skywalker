@@ -16,13 +16,11 @@ namespace Microsoft.Extensions.DependencyInjection;
 [GeneratedCode("Skywalker.Ddd.Domain.Generators", "{{ GeneratorVersion }}")]
 public static partial class DomainIServiceCollectionExtensions
 {
-#if NET
     [ModuleInitializer]
-#endif
     [DebuggerNonUserCode]
     internal static void Initializer()
     {
-        ConfigureServices(services => services.AddGeneralDomainServices());
+        DomainServiceBuilder.ConfigureServices(services => services.AddGeneralDomainServices());
     }
 
     [DebuggerNonUserCode]

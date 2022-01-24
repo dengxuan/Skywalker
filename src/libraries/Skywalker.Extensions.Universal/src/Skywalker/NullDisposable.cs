@@ -1,19 +1,16 @@
-using System;
+namespace Skywalker;
 
-namespace Skywalker
+/// <summary>
+/// This class is used to simulate a Disposable that does nothing.
+/// </summary>
+public sealed class NullDisposable : IDisposable
 {
-    /// <summary>
-    /// This class is used to simulate a Disposable that does nothing.
-    /// </summary>
-    public sealed class NullDisposable : IDisposable
+    public static NullDisposable Instance { get; } = new NullDisposable();
+
+    private NullDisposable() { }
+
+    public void Dispose()
     {
-        public static NullDisposable Instance { get; } = new NullDisposable();
 
-        private NullDisposable() { }
-
-        public void Dispose()
-        {
-
-        }
     }
 }

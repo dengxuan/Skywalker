@@ -138,7 +138,7 @@ public static class StringExtensions
     /// <exception cref="ArgumentNullException">If this string is null</exception>
     public static bool IsEmptyOrWhiteSpace(this string str)
     {
-        string trimed = str.NotNull(nameof(str)).Trim();
+        var trimed = str.NotNull(nameof(str)).Trim();
         return string.Empty == trimed;
     }
 

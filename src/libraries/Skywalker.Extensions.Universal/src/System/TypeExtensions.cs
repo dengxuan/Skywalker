@@ -25,17 +25,9 @@ public static class TypeExtensions
         return type.GetTypeInfo().Assembly;
     }
 
-    public static IEnumerable<Attribute> GetCustomAttributes(this MemberInfo memberInfo, bool inherit = true)
-    {
-        if (inherit)
-        {
-            return memberInfo.GetCustomAttributes(true).OfType<Attribute>().ToArray();
-        }
-        return memberInfo.GetCustomAttributes(false).OfType<Attribute>().ToArray();
-    }
     public static IEnumerable<Attribute> GetCustomAttributes(this Type type, bool inherit = true)
     {
-        TypeInfo typeInfo = type.GetTypeInfo();
+        var typeInfo = type.GetTypeInfo();
         if (inherit)
         {
             return typeInfo.GetCustomAttributes(true).OfType<Attribute>().ToArray();
@@ -43,19 +35,9 @@ public static class TypeExtensions
         return typeInfo.GetCustomAttributes(false).OfType<Attribute>().ToArray();
     }
 
-    public static IEnumerable<TAttribute> GetCustomAttributes<TAttribute>(this MemberInfo memberInfo, bool inherit = true)
-    {
-        return GetCustomAttributes(memberInfo, inherit).OfType<TAttribute>();
-    }
-
     public static IEnumerable<TAttribute> GetCustomAttributes<TAttribute>(this Type type, bool inherit = true)
     {
         return GetCustomAttributes(type, inherit).OfType<TAttribute>();
-    }
-
-    public static TAttribute? GetCustomAttribute<TAttribute>(this MemberInfo memberInfo, bool inherit = true)
-    {
-        return GetCustomAttributes(memberInfo, inherit).OfType<TAttribute>().FirstOrDefault();
     }
 
     public static TAttribute? GetCustomAttribute<TAttribute>(this Type type, bool inherit = true)

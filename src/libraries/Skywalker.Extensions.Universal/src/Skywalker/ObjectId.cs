@@ -1,19 +1,18 @@
-﻿using System;
+﻿// Licensed to the Gordon under one or more agreements.
+// Gordon licenses this file to you under the MIT license.
+
 using System.ComponentModel;
 using System.Diagnostics;
 using System.Runtime.CompilerServices;
 using System.Security;
-using System.Threading;
 
 namespace Skywalker;
 
 public struct ObjectId : IComparable<ObjectId>, IEquatable<ObjectId>, IConvertible
 {
-    // private static fields
-    private static readonly ObjectId EmptyInstance = default;
-    private static readonly long Random = CalculateRandomValue();
-    private static int _staticIncrement = new Random().Next();
-    private static readonly DateTime UnixEpoch = new(1970, 1, 1, 0, 0, 0, DateTimeKind.Utc);
+    private static readonly long s_random = CalculateRandomValue();
+    private static int s_staticIncrement = new Random().Next();
+    private static readonly DateTime s_unixEpoch = new(1970, 1, 1, 0, 0, 0, DateTimeKind.Utc);
 
     // private fields
     private readonly int _a;
@@ -89,7 +88,7 @@ public struct ObjectId : IComparable<ObjectId>, IEquatable<ObjectId>, IConvertib
     /// <summary>
     /// Gets an instance of ObjectId where the value is empty.
     /// </summary>
-    public static ObjectId Empty => EmptyInstance;
+    public static ObjectId Empty { get; } = default;
 
     // public properties
     /// <summary>
@@ -115,7 +114,7 @@ public struct ObjectId : IComparable<ObjectId>, IEquatable<ObjectId>, IConvertib
     /// <summary>
     /// Gets the creation time (derived from the timestamp).
     /// </summary>
-    public DateTime CreationTime => UnixEpoch.AddSeconds((uint)Timestamp);
+    public DateTime CreationTime => s_unixEpoch.AddSeconds((uint)Timestamp);
 
     // public operators
     /// <summary>
@@ -211,8 +210,8 @@ public struct ObjectId : IComparable<ObjectId>, IEquatable<ObjectId>, IConvertib
     /// <returns>An ObjectId.</returns>
     public static ObjectId CreateId(int timestamp)
     {
-        int increment = Interlocked.Increment(ref _staticIncrement) & 0x00ffffff; // only use low order 3 bytes
-        return Create(timestamp, Random, increment);
+        var increment = Interlocked.Increment(ref s_staticIncrement) & 0x00ffffff; // only use low order 3 bytes
+        return Create(timestamp, s_random, increment);
     }
 
     /// <summary>
@@ -273,12 +272,12 @@ public struct ObjectId : IComparable<ObjectId>, IEquatable<ObjectId>, IConvertib
     {
         if (bytes == null)
         {
-            throw new ArgumentNullException("bytes");
+            throw new ArgumentNullException(nameof(bytes));
         }
 
         if (bytes.Length != 12)
         {
-            throw new ArgumentOutOfRangeException("bytes", "Byte array must be 12 bytes long.");
+            throw new ArgumentOutOfRangeException(nameof(bytes), "Byte array must be 12 bytes long.");
         }
 
         timestamp = (bytes[0] << 24) + (bytes[1] << 16) + (bytes[2] << 8) + bytes[3];
@@ -326,7 +325,11 @@ public struct ObjectId : IComparable<ObjectId>, IEquatable<ObjectId>, IConvertib
     [MethodImpl(MethodImplOptions.NoInlining)]
     private static int GetCurrentProcessId()
     {
+#if NET
+        return Environment.ProcessId;
+#else
         return Process.GetCurrentProcess().Id;
+#endif
     }
 
     private static int GetMachineHash()
@@ -356,7 +359,7 @@ public struct ObjectId : IComparable<ObjectId>, IEquatable<ObjectId>, IConvertib
     private static int GetTimestampFromDateTime(DateTime timestamp)
     {
         var secondsSinceEpoch =
-            (long)Math.Floor((ToUniversalTime(timestamp) - UnixEpoch).TotalSeconds);
+            (long)Math.Floor((ToUniversalTime(timestamp) - s_unixEpoch).TotalSeconds);
         if (secondsSinceEpoch < uint.MinValue || secondsSinceEpoch > uint.MaxValue)
         {
             throw new ArgumentOutOfRangeException(nameof(timestamp));
@@ -408,7 +411,7 @@ public struct ObjectId : IComparable<ObjectId>, IEquatable<ObjectId>, IConvertib
     /// <returns>A 32-bit signed integer that indicates whether this ObjectId is less than, equal to, or greather than the other.</returns>
     public int CompareTo(ObjectId other)
     {
-        int result = ((uint)_a).CompareTo((uint)other._a);
+        var result = ((uint)_a).CompareTo((uint)other._a);
         if (result != 0)
         {
             return result;
@@ -459,7 +462,7 @@ public struct ObjectId : IComparable<ObjectId>, IEquatable<ObjectId>, IConvertib
     /// <returns>The hash code.</returns>
     public override int GetHashCode()
     {
-        int hash = 17;
+        var hash = 17;
         hash = 37 * hash + _a.GetHashCode();
         hash = 37 * hash + _b.GetHashCode();
         hash = 37 * hash + _c.GetHashCode();

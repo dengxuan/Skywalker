@@ -1,0 +1,15 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <AnalyzerRoslynVersion>3.11</AnalyzerRoslynVersion>
+    <RoslynApiVersion>$(MicrosoftCodeAnalysisCSharpWorkspacesVersion_3_11)</RoslynApiVersion>
+    <AssemblyName>$(MSBuildThisFileName)</AssemblyName>
+  </PropertyGroup>
+
+  <Import Project="Skywalker.Extensions.DependencyInjection.Generators.targets" />
+
+  <ItemGroup>
+    <Compile Remove="DependencyInjectionGenerator.Roslyn4.0.cs" />
+  </ItemGroup>
+
+</Project>

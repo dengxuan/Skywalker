@@ -16,6 +16,10 @@ dotnet pack src/libraries/Skywalker.Extensions.HtmlAgilityPack/Skywalker.Extensi
 dotnet pack src/libraries/Skywalker.Extensions.HashedWheelTimer/Skywalker.Extensions.HashedWheelTimer.sln -c Release -p:IncludeSymbols=true -p:SymbolPackageFormat=snupkg --output nupkgs
 dotnet pack src/libraries/Skywalker.Extensions.Channels/Skywalker.Extensions.Channels.sln -c Release -p:IncludeSymbols=true -p:SymbolPackageFormat=snupkg --output nupkgs
 
+#DependencyInjection
+dotnet pack src/libraries/Skywalker.Extensions.DependencyInjection.Abstractions/Skywalker.Extensions.DependencyInjection.Abstractions.sln -c Release -p:IncludeSymbols=true -p:SymbolPackageFormat=snupkg --output nupkgs
+dotnet pack src/libraries/Skywalker.Extensions.DependencyInjection/Skywalker.Extensions.DependencyInjection.sln -c Release -p:IncludeSymbols=true -p:SymbolPackageFormat=snupkg --output nupkgs
+
 #Exceptions
 dotnet pack src/libraries/Skywalker.Extensions.Exceptions.Abstractions/Skywalker.Extensions.Exceptions.Abstractions.sln -c Release -p:IncludeSymbols=true -p:SymbolPackageFormat=snupkg --output nupkgs
 

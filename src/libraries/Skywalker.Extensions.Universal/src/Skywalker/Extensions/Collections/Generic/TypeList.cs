@@ -1,6 +1,4 @@
-﻿using System;
-using System.Collections;
-using System.Collections.Generic;
+﻿using System.Collections;
 using System.Reflection;
 
 namespace Skywalker.Collections.Generic;
@@ -136,7 +134,7 @@ public class TypeList<TBaseType> : ITypeList<TBaseType>
     {
         if (!typeof(TBaseType).GetTypeInfo().IsAssignableFrom(item))
         {
-            throw new ArgumentException("Given item is not type of " + typeof(TBaseType).AssemblyQualifiedName, "item");
+            throw new ArgumentException("Given item is not type of " + typeof(TBaseType).AssemblyQualifiedName, nameof(item));
         }
     }
 }

@@ -7,7 +7,7 @@ namespace System;
 
 public static class Converters
 {
-    private static readonly Type[] _simpleTypes =
+    private static readonly Type[] s_simpleTypes =
     {
         typeof(string),
         typeof(decimal),
@@ -72,7 +72,7 @@ public static class Converters
     // https://stackoverflow.com/a/1107090/833106
     public static TValue? ChangeType<TValue>(object o)
     {
-        Type conversionType = Nullable.GetUnderlyingType(typeof(TValue)) ?? typeof(TValue);
+        var conversionType = Nullable.GetUnderlyingType(typeof(TValue)) ?? typeof(TValue);
 
         if (conversionType.IsEnum && EnumTryParse(o?.ToString(), conversionType, out TValue? value))
         {
@@ -86,7 +86,7 @@ public static class Converters
     {
         try
         {
-            Type conversionType = Nullable.GetUnderlyingType(typeof(TValue)) ?? typeof(TValue);
+            var conversionType = Nullable.GetUnderlyingType(typeof(TValue)) ?? typeof(TValue);
 
             if (conversionType.IsEnum && EnumTryParse(value.ToString(), conversionType, out TValue? theEnum))
             {
@@ -115,7 +115,7 @@ public static class Converters
     {
         if (input != null)
         {
-            foreach (string en in Enum.GetNames(conversionType))
+            foreach (var en in Enum.GetNames(conversionType))
             {
                 if (en.Equals(input, StringComparison.InvariantCultureIgnoreCase))
                 {
@@ -210,28 +210,31 @@ public static class Converters
 
     private static bool IsSimpleType(Type type)
     {
-        return
-            type.IsPrimitive ||
-            type.IsEnum ||
-            _simpleTypes.Contains(type) ||
-            Convert.GetTypeCode(type) != TypeCode.Object ||
-            (type.IsGenericType && type.GetGenericTypeDefinition() == typeof(Nullable<>) && IsSimpleType(type.GetGenericArguments()[0]));
+        if(type.IsPrimitive || type.IsEnum || s_simpleTypes.Contains(type))
+        {
+            return true;
+        }
+        if(Convert.GetTypeCode(type) != TypeCode.Object)
+        {
+            return true;
+        }
+        return type.IsGenericType && type.GetGenericTypeDefinition() == typeof(Nullable<>) && IsSimpleType(type.GetGenericArguments()[0]);
     }
 
     private static bool IsEqualToDefaultValue<T>(T argument)
     {
         // deal with non-null nullables
-        Type methodType = typeof(T);
+        var methodType = typeof(T);
         if (Nullable.GetUnderlyingType(methodType) != null)
         {
             return false;
         }
 
         // deal with boxed value types
-        Type argumentType = argument!.GetType();
+        var argumentType = argument!.GetType();
         if (argumentType.IsValueType && argumentType != methodType)
         {
-            object? @object = Activator.CreateInstance(argument.GetType());
+            var @object = Activator.CreateInstance(argument.GetType());
             return @object?.Equals(argument) == true;
         }
 
