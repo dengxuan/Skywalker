@@ -1,3 +1,5 @@
 ﻿namespace Skywalker.Ddd.Application;
 
-public interface IApplication : IQuerier, ICommander { }
+public interface IApplication
+{
+}

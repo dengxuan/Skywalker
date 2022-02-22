@@ -40,6 +40,8 @@ dotnet pack src/libraries/Skywalker.Ddd.EntityFrameworkCore/Skywalker.Ddd.Entity
 dotnet pack src/libraries/Skywalker.Ddd.EntityFrameworkCore.MySQL/Skywalker.Ddd.EntityFrameworkCore.MySQL.sln -c Release -p:IncludeSymbols=true -p:SymbolPackageFormat=snupkg --output nupkgs
 dotnet pack src/libraries/Skywalker.Ddd.EntityFrameworkCore.SqlServer/Skywalker.Ddd.EntityFrameworkCore.SqlServer.sln -c Release -p:IncludeSymbols=true -p:SymbolPackageFormat=snupkg --output nupkgs
 dotnet pack src/libraries/Skywalker.Ddd.Application.Abstractions/Skywalker.Ddd.Application.Abstractions.sln -c Release -p:IncludeSymbols=true -p:SymbolPackageFormat=snupkg --output nupkgs
+dotnet pack src/libraries/Skywalker.Ddd.Application.Commands.Abstractions/Skywalker.Ddd.Application.Commands.Abstractions.sln -c Release -p:IncludeSymbols=true -p:SymbolPackageFormat=snupkg --output nupkgs
+dotnet pack src/libraries/Skywalker.Ddd.Application.Queries.Abstractions/Skywalker.Ddd.Application.Queries.Abstractions.sln -c Release -p:IncludeSymbols=true -p:SymbolPackageFormat=snupkg --output nupkgs
 
 
 dotnet nuget push nupkgs\*.nupkg -k f2205526-ad54-351e-a993-54ad510ce1ed -s https://nexus.tankswar.com/repository/nuget-hosted/index.json -ss https://nexus.tankswar.com/repository/nuget-hosted/index.json

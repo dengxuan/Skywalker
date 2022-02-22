@@ -6,6 +6,14 @@
     <AssemblyName>$(MSBuildThisFileName)</AssemblyName>
   </PropertyGroup>
 
+  <PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Debug|netstandard2.0|AnyCPU'">
+    <DefineConstants>$(DefineConstants)TRACE;ABC</DefineConstants>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Release|netstandard2.0|AnyCPU'">
+    <DefineConstants>$(DefineConstants)TRACE;ABC</DefineConstants>
+  </PropertyGroup>
+
   <Import Project="Skywalker.Ddd.EntityFrameworkCore.Generators.targets" />
 
   <ItemGroup>

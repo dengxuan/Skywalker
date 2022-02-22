@@ -1,4 +1,4 @@
-<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk">
 	
 	<PropertyGroup>
 		<RootNamespace></RootNamespace>
@@ -9,8 +9,7 @@
 	</ItemGroup>
 
 	<ItemGroup>
-		<AnalyzerReference Include="..\gen\Skywalker.Ddd.Application.Generators.Roslyn3.11.csproj" Condition="'$(DotNetBuildFromSource)' != 'true'" />
-		<AnalyzerReference Include="..\gen\Skywalker.Ddd.Application.Generators.Roslyn4.0.csproj" />
+	  <ProjectReference Include="$(LibrariesProjectRoot)\Skywalker.Ddd.Domain.Abstractions\src\Skywalker.Ddd.Domain.Abstractions.csproj" />
 	</ItemGroup>
-
+  
 </Project>

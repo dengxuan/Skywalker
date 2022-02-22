@@ -18,7 +18,7 @@ var host = Host.CreateDefaultBuilder(args).ConfigureServices(services =>
     });
     services.AddEntityFrameworkCore(options =>
     {
-    }).AddTestDbContextFactory();
+    });
     services.TryAddTransient(typeof(IDbContextProvider<>), typeof(DbContextProvider<>));
     services.AddPooledDbContextFactory<TestDbContext>(options =>
     {
