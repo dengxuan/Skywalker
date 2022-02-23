@@ -1,6 +1,6 @@
 ﻿using System.Reflection;
 
-namespace Skywalker.Authorization;
+namespace Skywalker.AspNetCore.Authorization;
 
 public class MethodInvocationAuthorizationContext
 {

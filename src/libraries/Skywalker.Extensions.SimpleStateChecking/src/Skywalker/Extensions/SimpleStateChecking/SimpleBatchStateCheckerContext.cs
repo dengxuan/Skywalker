@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace Volo.Abp.SimpleStateChecking;
+namespace Skywalker.Extensions.SimpleStateChecking;
 
 public class SimpleBatchStateCheckerContext<TState>
     where TState : IHasSimpleStateCheckers<TState>

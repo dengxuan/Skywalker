@@ -1,8 +1,6 @@
-﻿using Volo.Abp.DependencyInjection;
+﻿namespace Skywalker.AspNetCore.Authorization.Permissions;
 
-namespace Skywalker.Authorization.Permissions;
-
-public abstract class PermissionDefinitionProvider : IPermissionDefinitionProvider, ITransientDependency
+public abstract class PermissionDefinitionProvider : IPermissionDefinitionProvider
 {
     public virtual void PreDefine(IPermissionDefinitionContext context)
     {

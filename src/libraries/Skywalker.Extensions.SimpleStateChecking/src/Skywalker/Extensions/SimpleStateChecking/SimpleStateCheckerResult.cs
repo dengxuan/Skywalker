@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 
-namespace Volo.Abp.SimpleStateChecking;
+namespace Skywalker.Extensions.SimpleStateChecking;
 
 public class SimpleStateCheckerResult<TState> : Dictionary<TState, bool>
     where TState : IHasSimpleStateCheckers<TState>

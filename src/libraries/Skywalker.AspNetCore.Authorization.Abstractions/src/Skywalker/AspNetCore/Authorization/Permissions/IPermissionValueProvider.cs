@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Threading.Tasks;
 
-namespace Skywalker.Authorization.Permissions;
+namespace Skywalker.AspNetCore.Authorization.Permissions;
 
 public interface IPermissionValueProvider
 {

@@ -2,9 +2,9 @@
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.Extensions.DependencyInjection;
 
-namespace Skywalker.Authorization;
+namespace Skywalker.AspNetCore.Authorization;
 
-public interface IAbpAuthorizationService : IAuthorizationService, IServiceProviderAccessor
+public interface ISkywalkerAuthorizationService : IAuthorizationService, IServiceProviderAccessor
 {
     ClaimsPrincipal? CurrentPrincipal { get; }
 }

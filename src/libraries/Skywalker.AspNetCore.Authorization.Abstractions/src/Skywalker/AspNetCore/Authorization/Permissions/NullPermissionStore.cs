@@ -2,7 +2,7 @@
 using Microsoft.Extensions.Logging.Abstractions;
 using Skywalker.Extensions.Threading;
 
-namespace Skywalker.Authorization.Permissions;
+namespace Skywalker.AspNetCore.Authorization.Permissions;
 
 public class NullPermissionStore : IPermissionStore
 {

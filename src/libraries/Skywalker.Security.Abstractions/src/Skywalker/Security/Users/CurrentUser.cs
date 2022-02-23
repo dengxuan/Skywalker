@@ -1,9 +1,8 @@
 ﻿using System.Security.Claims;
 using System.Security.Principal;
 using Skywalker.Security.Claims;
-using Skywalker.Security.Users;
 
-namespace Skywalker.Users;
+namespace Skywalker.Security.Users;
 
 public class CurrentUser : ICurrentUser
 {

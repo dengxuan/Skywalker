@@ -1,8 +1,6 @@
-﻿using System.Collections.Generic;
-
-namespace Skywalker.Authorization.Permissions;
+﻿namespace Skywalker.AspNetCore.Authorization.Permissions;
 
 public interface IPermissionValueProviderManager
 {
-    IReadOnlyList<IPermissionValueProvider> ValueProviders { get; }
+    IReadOnlyList<IPermissionValueProvider?> ValueProviders { get; }
 }

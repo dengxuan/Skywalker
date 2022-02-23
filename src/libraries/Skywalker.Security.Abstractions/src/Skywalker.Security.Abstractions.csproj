@@ -7,6 +7,7 @@
 	<ItemGroup>
 		<ProjectReference Include="$(LibrariesProjectRoot)Skywalker.Extensions.Universal\src\Skywalker.Extensions.Universal.csproj" />
 		<ProjectReference Include="..\..\Skywalker.Extensions.DependencyInjection.Abstractions\src\Skywalker.Extensions.DependencyInjection.Abstractions.csproj" />
+		<ProjectReference Include="..\..\Skywalker.Extensions.Exceptions.Abstractions\src\Skywalker.Extensions.Exceptions.Abstractions.csproj" />
 	</ItemGroup>
 
 </Project>

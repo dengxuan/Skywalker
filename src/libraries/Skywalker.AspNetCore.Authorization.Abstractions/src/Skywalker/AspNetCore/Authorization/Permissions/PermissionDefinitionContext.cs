@@ -1,10 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using JetBrains.Annotations;
-using Volo.Abp.Localization;
-using Volo.Abp.MultiTenancy;
+﻿using Microsoft.Extensions.Localization;
+using Skywalker.Extensions.Exceptions;
 
-namespace Skywalker.Authorization.Permissions;
+namespace Skywalker.AspNetCore.Authorization.Permissions;
 
 public class PermissionDefinitionContext : IPermissionDefinitionContext
 {
@@ -18,35 +15,31 @@ public class PermissionDefinitionContext : IPermissionDefinitionContext
         Groups = new Dictionary<string, PermissionGroupDefinition>();
     }
 
-    public virtual PermissionGroupDefinition AddGroup(
-        string name,
-        ILocalizableString displayName = null,
-        MultiTenancySides multiTenancySide = MultiTenancySides.Both)
+    public virtual PermissionGroupDefinition AddGroup(string name, LocalizedString? displayName = null)
     {
         name.NotNull(nameof(name));
 
         if (Groups.ContainsKey(name))
         {
-            throw new AbpException($"There is already an existing permission group with name: {name}");
+            throw new SkywalkerException($"There is already an existing permission group with name: {name}");
         }
 
-        return Groups[name] = new PermissionGroupDefinition(name, displayName, multiTenancySide);
+        return Groups[name] = new PermissionGroupDefinition(name, displayName);
     }
 
-    [NotNull]
-    public virtual PermissionGroupDefinition GetGroup([NotNull] string name)
+    public virtual PermissionGroupDefinition GetGroup(string name)
     {
         var group = GetGroupOrNull(name);
 
         if (group == null)
         {
-            throw new AbpException($"Could not find a permission definition group with the given name: {name}");
+            throw new SkywalkerException($"Could not find a permission definition group with the given name: {name}");
         }
 
         return group;
     }
 
-    public virtual PermissionGroupDefinition GetGroupOrNull([NotNull] string name)
+    public virtual PermissionGroupDefinition? GetGroupOrNull(string name)
     {
         name.NotNull(nameof(name));
 
@@ -64,13 +57,13 @@ public class PermissionDefinitionContext : IPermissionDefinitionContext
 
         if (!Groups.ContainsKey(name))
         {
-            throw new AbpException($"Not found permission group with name: {name}");
+            throw new SkywalkerException($"Not found permission group with name: {name}");
         }
 
         Groups.Remove(name);
     }
 
-    public virtual PermissionDefinition GetPermissionOrNull([NotNull] string name)
+    public virtual PermissionDefinition? GetPermissionOrNull(string name)
     {
         name.NotNull(nameof(name));
 

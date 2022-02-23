@@ -1,4 +1,4 @@
-﻿namespace Skywalker.Authorization.Permissions;
+﻿namespace Skywalker.AspNetCore.Authorization.Permissions;
 
 public interface IPermissionStore
 {

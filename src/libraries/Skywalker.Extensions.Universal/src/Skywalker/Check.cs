@@ -45,7 +45,7 @@ public static class Check
         return type;
     }
 
-    public static T NotNull<T>(this T? argument, string parameterName) where T : class
+    public static T NotNull<T>(this T? argument, string parameterName)
     {
         if (argument == null)
         {
@@ -54,7 +54,7 @@ public static class Check
         return argument;
     }
 
-    public static T NotNull<T>(this T argument, string parameterName, string message) where T : class
+    public static T NotNull<T>(this T argument, string parameterName, string message)
     {
         if (argument == null)
         {

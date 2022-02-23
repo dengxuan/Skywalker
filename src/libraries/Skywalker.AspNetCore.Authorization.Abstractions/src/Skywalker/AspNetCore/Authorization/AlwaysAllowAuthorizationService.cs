@@ -2,9 +2,9 @@
 using Microsoft.AspNetCore.Authorization;
 using Skywalker.Security.Claims;
 
-namespace Skywalker.Authorization;
+namespace Skywalker.AspNetCore.Authorization;
 
-public class AlwaysAllowAuthorizationService : IAbpAuthorizationService
+public class AlwaysAllowAuthorizationService : ISkywalkerAuthorizationService
 {
     public IServiceProvider ServiceProvider { get; }
 

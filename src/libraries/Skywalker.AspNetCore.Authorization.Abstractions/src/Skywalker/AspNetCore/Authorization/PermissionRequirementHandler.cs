@@ -1,8 +1,7 @@
-﻿using System.Threading.Tasks;
-using Microsoft.AspNetCore.Authorization;
-using Skywalker.Authorization.Permissions;
+﻿using Microsoft.AspNetCore.Authorization;
+using Skywalker.AspNetCore.Authorization.Permissions;
 
-namespace Skywalker.Authorization;
+namespace Skywalker.AspNetCore.Authorization;
 
 public class PermissionRequirementHandler : AuthorizationHandler<PermissionRequirement>
 {
@@ -13,9 +12,7 @@ public class PermissionRequirementHandler : AuthorizationHandler<PermissionRequi
         _permissionChecker = permissionChecker;
     }
 
-    protected override async Task HandleRequirementAsync(
-        AuthorizationHandlerContext context,
-        PermissionRequirement requirement)
+    protected override async Task HandleRequirementAsync(AuthorizationHandlerContext context, PermissionRequirement requirement)
     {
         if (await _permissionChecker.IsGrantedAsync(context.User, requirement.PermissionName))
         {

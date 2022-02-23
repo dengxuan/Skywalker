@@ -1,20 +1,14 @@
-﻿using System.Collections.Generic;
-using System.Security.Claims;
-using JetBrains.Annotations;
+﻿using System.Security.Claims;
 
-namespace Skywalker.Authorization.Permissions;
+namespace Skywalker.AspNetCore.Authorization.Permissions;
 
 public class PermissionValuesCheckContext
 {
-    [NotNull]
     public List<PermissionDefinition> Permissions { get; }
 
-    [CanBeNull]
-    public ClaimsPrincipal Principal { get; }
+    public ClaimsPrincipal? Principal { get; }
 
-    public PermissionValuesCheckContext(
-        [NotNull] List<PermissionDefinition> permissions,
-        [CanBeNull] ClaimsPrincipal principal)
+    public PermissionValuesCheckContext(List<PermissionDefinition> permissions, ClaimsPrincipal? principal)
     {
         permissions.NotNull(nameof(permissions));
 

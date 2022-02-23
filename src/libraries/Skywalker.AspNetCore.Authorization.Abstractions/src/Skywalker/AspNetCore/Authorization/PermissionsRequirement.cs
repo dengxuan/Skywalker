@@ -1,6 +1,6 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 
-namespace Skywalker.Authorization;
+namespace Skywalker.AspNetCore.Authorization;
 
 public class PermissionsRequirement : IAuthorizationRequirement
 {

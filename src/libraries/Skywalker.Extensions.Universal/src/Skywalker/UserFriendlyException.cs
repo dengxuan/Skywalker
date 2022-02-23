@@ -2,13 +2,13 @@
 
 public class UserFriendlyException : Exception, IHasErrorCode
 {
-    public int Code { get; set; }
+    public string? Code { get; }
 
-    public UserFriendlyException(int code) : this(code, string.Empty)
+    public UserFriendlyException(string? code) : this(code, string.Empty)
     {
     }
 
-    public UserFriendlyException(int code, string message) : base(message)
+    public UserFriendlyException(string? code, string message) : base(message)
     {
         Code = code;
     }

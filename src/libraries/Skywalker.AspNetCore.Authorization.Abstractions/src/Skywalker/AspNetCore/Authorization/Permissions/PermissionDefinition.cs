@@ -1,12 +1,8 @@
-﻿using System.Collections.Generic;
-using System.Collections.Immutable;
-using JetBrains.Annotations;
+﻿using System.Collections.Immutable;
 using Microsoft.Extensions.Localization;
-using Volo.Abp.Localization;
-using Volo.Abp.MultiTenancy;
-using Volo.Abp.SimpleStateChecking;
+using Skywalker.Extensions.SimpleStateChecking;
 
-namespace Skywalker.Authorization.Permissions;
+namespace Skywalker.AspNetCore.Authorization.Permissions;
 
 public class PermissionDefinition : IHasSimpleStateCheckers<PermissionDefinition>
 {
@@ -19,7 +15,7 @@ public class PermissionDefinition : IHasSimpleStateCheckers<PermissionDefinition
     /// Parent of this permission if one exists.
     /// If set, this permission can be granted only if parent is granted.
     /// </summary>
-    public PermissionDefinition Parent { get; private set; }
+    public PermissionDefinition? Parent { get; private set; }
 
     /// <summary>
     /// A list of allowed providers to get/set value of this permission.
@@ -32,7 +28,7 @@ public class PermissionDefinition : IHasSimpleStateCheckers<PermissionDefinition
     public LocalizedString DisplayName
     {
         get => _displayName;
-        set => _displayName = Check.NotNull(value, nameof(value));
+        set => _displayName = value.NotNull(nameof(value));
     }
     private LocalizedString _displayName;
 
@@ -42,7 +38,7 @@ public class PermissionDefinition : IHasSimpleStateCheckers<PermissionDefinition
     /// <summary>
     /// Can be used to get/set custom properties for this permission definition.
     /// </summary>
-    public Dictionary<string, object> Properties { get; }
+    public Dictionary<string, object?> Properties { get; }
 
     /// <summary>
     /// Indicates whether this permission is enabled or disabled.
@@ -65,7 +61,7 @@ public class PermissionDefinition : IHasSimpleStateCheckers<PermissionDefinition
     /// Returns the value in the <see cref="Properties"/> dictionary by given <paramref name="name"/>.
     /// Returns null if given <paramref name="name"/> is not present in the <see cref="Properties"/> dictionary.
     /// </returns>
-    public object this[string name]
+    public object? this[string name]
     {
         get => Properties.GetOrDefault(name);
         set => Properties[name] = value;
@@ -74,10 +70,10 @@ public class PermissionDefinition : IHasSimpleStateCheckers<PermissionDefinition
     protected internal PermissionDefinition(string name, LocalizedString? displayName = null, bool isEnabled = true)
     {
         Name = name.NotNull(nameof(name));
-        DisplayName = displayName ?? new LocalizedString(name, name);
+        _displayName = displayName ?? new LocalizedString(name, name);
         IsEnabled = isEnabled;
 
-        Properties = new Dictionary<string, object>();
+        Properties = new Dictionary<string, object?>();
         Providers = new List<string>();
         StateCheckers = new List<ISimpleStateChecker<PermissionDefinition>>();
         _children = new List<PermissionDefinition>();

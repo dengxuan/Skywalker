@@ -28,7 +28,7 @@ public class SkywalkerException : Exception
     /// Creates a new <see cref="SkywalkerException"/> object.
     /// </summary>
     /// <param name="message">Exception message</param>
-    public SkywalkerException(string message) : base(message)
+    public SkywalkerException(string? message) : base(message)
     {
 
     }
@@ -38,7 +38,7 @@ public class SkywalkerException : Exception
     /// </summary>
     /// <param name="message">Exception message</param>
     /// <param name="innerException">Inner exception</param>
-    public SkywalkerException(string message, Exception? innerException) : base(message, innerException)
+    public SkywalkerException(string? message, Exception? innerException) : base(message, innerException)
     {
 
     }

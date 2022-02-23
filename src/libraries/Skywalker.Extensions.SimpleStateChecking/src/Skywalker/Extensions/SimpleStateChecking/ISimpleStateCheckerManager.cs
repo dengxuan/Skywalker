@@ -1,6 +1,6 @@
 ﻿using System.Threading.Tasks;
 
-namespace Volo.Abp.SimpleStateChecking;
+namespace Skywalker.Extensions.SimpleStateChecking;
 
 public interface ISimpleStateCheckerManager<TState>
     where TState : IHasSimpleStateCheckers<TState>

@@ -1,14 +1,14 @@
 ﻿using Skywalker.Collections.Generic;
 
-namespace Skywalker.Authorization.Permissions;
+namespace Skywalker.AspNetCore.Authorization.Permissions;
 
-public class AbpPermissionOptions
+public class PermissionOptions
 {
     public ITypeList<IPermissionDefinitionProvider> DefinitionProviders { get; }
 
     public ITypeList<IPermissionValueProvider> ValueProviders { get; }
 
-    public AbpPermissionOptions()
+    public PermissionOptions()
     {
         DefinitionProviders = new TypeList<IPermissionDefinitionProvider>();
         ValueProviders = new TypeList<IPermissionValueProvider>();

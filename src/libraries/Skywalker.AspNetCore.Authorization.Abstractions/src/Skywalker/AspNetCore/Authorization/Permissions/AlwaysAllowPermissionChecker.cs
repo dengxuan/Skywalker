@@ -1,6 +1,7 @@
 ﻿using System.Security.Claims;
+using Skywalker.Extensions.Threading;
 
-namespace Skywalker.Authorization.Permissions;
+namespace Skywalker.AspNetCore.Authorization.Permissions;
 
 /// <summary>
 /// Always allows for any permission.
@@ -15,7 +16,7 @@ public class AlwaysAllowPermissionChecker : IPermissionChecker
         return TaskCache.TrueResult;
     }
 
-    public Task<bool> IsGrantedAsync(ClaimsPrincipal claimsPrincipal, string name)
+    public Task<bool> IsGrantedAsync(ClaimsPrincipal? claimsPrincipal, string name)
     {
         return TaskCache.TrueResult;
     }

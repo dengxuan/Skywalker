@@ -1,6 +1,4 @@
-﻿using JetBrains.Annotations;
-
-namespace Skywalker.Authorization.Permissions;
+﻿namespace Skywalker.AspNetCore.Authorization.Permissions;
 
 public static class PermissionDefinitionContextExtensions
 {
@@ -14,9 +12,7 @@ public static class PermissionDefinitionContextExtensions
     /// Returns true if given permission was found.
     /// Returns false if given permission was not found.
     /// </returns>
-    public static bool TryDisablePermission(
-        [NotNull] this IPermissionDefinitionContext context,
-        [NotNull] string name)
+    public static bool TryDisablePermission(this IPermissionDefinitionContext context, string name)
     {
         context.NotNull(nameof(context));
         name.NotNull(nameof(name));

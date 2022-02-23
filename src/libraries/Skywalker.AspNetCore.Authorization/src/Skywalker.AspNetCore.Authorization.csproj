@@ -1,0 +1,11 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <RootNamespace></RootNamespace>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\Skywalker.AspNetCore.Authorization.Abstractions\src\Skywalker.AspNetCore.Authorization.Abstractions.csproj" />
+  </ItemGroup>
+
+</Project>

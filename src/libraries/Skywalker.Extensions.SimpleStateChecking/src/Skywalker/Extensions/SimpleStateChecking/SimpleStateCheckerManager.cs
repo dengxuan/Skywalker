@@ -1,12 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.Extensions.DependencyInjection;
+﻿using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Options;
-using Volo.Abp.DependencyInjection;
+using Skywalker.Extensions.DependencyInjection.Abstractions;
 
-namespace Volo.Abp.SimpleStateChecking;
+namespace Skywalker.Extensions.SimpleStateChecking;
 
 public class SimpleStateCheckerManager<TState> : ISimpleStateCheckerManager<TState>
     where TState : IHasSimpleStateCheckers<TState>
@@ -40,9 +36,9 @@ public class SimpleStateCheckerManager<TState> : ISimpleStateCheckerManager<TSta
 
             foreach (var stateChecker in batchStateCheckers)
             {
-                var context = new SimpleBatchStateCheckerContext<TState>(
-                    scope.ServiceProvider.GetRequiredService<ICachedServiceProvider>(),
-                    states.Where(x => x.StateCheckers.Contains(stateChecker)).ToArray());
+                var cachedServiceProvider = scope.ServiceProvider.GetRequiredService<ICachedServiceProvider>();
+                var stateCheckers = states.Where(x => x.StateCheckers.Contains(stateChecker)).ToArray();
+                var context = new SimpleBatchStateCheckerContext<TState>(cachedServiceProvider, stateCheckers);
 
                 foreach (var x in await stateChecker.IsEnabledAsync(context))
                 {
@@ -85,7 +81,8 @@ public class SimpleStateCheckerManager<TState> : ISimpleStateCheckerManager<TSta
     {
         using (var scope = ServiceProvider.CreateScope())
         {
-            var context = new SimpleStateCheckerContext<TState>(scope.ServiceProvider.GetRequiredService<ICachedServiceProvider>(), state);
+            var cachedServiceProvider = scope.ServiceProvider.GetRequiredService<ICachedServiceProvider>();
+            var context = new SimpleStateCheckerContext<TState>(cachedServiceProvider, state);
 
             foreach (var provider in state.StateCheckers.WhereIf(!useBatchChecker, x => x is not ISimpleBatchStateChecker<TState>))
             {

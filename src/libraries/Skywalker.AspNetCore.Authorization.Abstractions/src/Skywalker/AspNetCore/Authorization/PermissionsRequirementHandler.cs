@@ -1,9 +1,7 @@
-﻿using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Authorization;
-using Skywalker.Authorization.Permissions;
+﻿using Microsoft.AspNetCore.Authorization;
+using Skywalker.AspNetCore.Authorization.Permissions;
 
-namespace Skywalker.Authorization;
+namespace Skywalker.AspNetCore.Authorization;
 
 public class PermissionsRequirementHandler : AuthorizationHandler<PermissionsRequirement>
 {
@@ -14,15 +12,11 @@ public class PermissionsRequirementHandler : AuthorizationHandler<PermissionsReq
         _permissionChecker = permissionChecker;
     }
 
-    protected override async Task HandleRequirementAsync(
-        AuthorizationHandlerContext context,
-        PermissionsRequirement requirement)
+    protected override async Task HandleRequirementAsync(AuthorizationHandlerContext context, PermissionsRequirement requirement)
     {
         var multiplePermissionGrantResult = await _permissionChecker.IsGrantedAsync(context.User, requirement.PermissionNames);
 
-        if (requirement.RequiresAll ?
-            multiplePermissionGrantResult.AllGranted :
-            multiplePermissionGrantResult.Result.Any(x => x.Value == PermissionGrantResult.Granted))
+        if (requirement.RequiresAll ? multiplePermissionGrantResult.AllGranted : multiplePermissionGrantResult.Result.Any(x => x.Value == PermissionGrantResult.Granted))
         {
             context.Succeed(requirement);
         }
