@@ -6,28 +6,17 @@
 
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.DependencyInjection.Extensions;
+using System.CodeDom.Compiler;
 using System.Linq;
 
 namespace Microsoft.Extensions.DependencyInjection;
 
-[global::System.CodeDom.Compiler.GeneratedCode("Skywalker.Ddd.EntityFrameworkCore.Generators", "{{ GeneratorVersion }}")]
-public static class IServiceCollectionExtensions
+[GeneratedCode("Skywalker.Ddd.EntityFrameworkCore.Generators", "{{ GeneratorVersion }}")]
+public partial class {{~ Name ~}}Repository : Repository<{{~ DbContext ~}}, {{~ Name ~}}>, IRepository<{{~ Name ~}}>, IBasicRepository<{{~ Name ~}}>, IReadOnlyRepository<{{~ Name ~}}>
 {
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public static IServiceCollection AddEntityFrameworkCore(this IServiceCollection services)
-    {
-        {{~ for property in Properties ~}}
-        services.TryAddTransient<IRepository<{{~ property.Fullname ~}}>, Repository<{{~ Name ~}}, {{~ property.Fullname ~}}>>();
-        services.TryAddTransient<IBasicRepository<{{~ property.Fullname ~}}>, Repository<{{~ Name ~}}, {{~ property.Fullname ~}}>>();
-        services.TryAddTransient<IReadOnlyRepository<{{~ property.Fullname ~}}>, Repository<{{~ Name ~}}, {{~ property.Fullname ~}}>>();
+}
 
-        {{~ property.IsOpenGeneric ~}}
-        services.TryAddTransient<IRepository<{{~ property.Fullname ~}}, {{~ property.PrimaryKey ~}}>, Repository<{{~ Name ~}}, {{~ property.Fullname ~}}, {{~ property.PrimaryKey ~}}>>();
-        services.TryAddTransient<IBasicRepository<{{~ property.Fullname ~}}, {{~ property.PrimaryKey ~}}>, Repository<{{~ Name ~}}, {{~ property.Fullname ~}}, {{~ property.PrimaryKey ~}}>>();
-        services.TryAddTransient<IReadOnlyRepository<{{~ property.Fullname ~}}, {{~ property.PrimaryKey ~}}>, Repository<{{~ Name ~}}, {{~ property.Fullname ~}}, {{~ property.PrimaryKey ~}}>>();
-        {{~ end ~}}
-
-        {{~ end ~}}
-        return services;
-    }
+[GeneratedCode("Skywalker.Ddd.EntityFrameworkCore.Generators", "{{ GeneratorVersion }}")]
+public partial class {{~ Name ~}}Repository : Repository<{{~ DbContext ~}}, {{~ Name ~}}, {{~ PrimaryKey ~}}>, IRepository<{{~ Name ~}}, {{~ PrimaryKey ~}}>, IBasicRepository<{{~ Name ~}}, {{~ PrimaryKey ~}}>, IReadOnlyRepository<{{~ Name ~}}, {{~ PrimaryKey ~}}>
+{
 }

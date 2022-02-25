@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Microsoft.Extensions.DependencyInjection;
 using Skywalker.Ddd.Domain.Repositories;
 using Skywalker.Ddd.Domain.Services;
 using Skywalker.Extensions.Linq;
@@ -19,4 +20,15 @@ public class UserDomainService : DomainService<User>, IUserDomainService
     }
 
     public Task<User> GetEnabledAsync() => throw new NotImplementedException();
+}
+
+public static class UserDomainServiceExtensions
+{
+    public static void ConfigureTestDbContext(this DomainServiceBuilder builder)
+    {
+        DomainServiceBuilder.ConfigureServices(services =>
+        {
+            services.AddTransient<IUserDomainService, UserDomainService>();
+        });
+    }
 }
