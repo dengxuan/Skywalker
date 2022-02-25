@@ -42,6 +42,9 @@ public class DomainService<TEntity> : DomainService<TEntity, Guid>, IDomainServi
     /// </summary>
     public Task<List<TEntity>> GetPagedListAsync(Expression<Func<TEntity, bool>> expression, int skipCount, int maxResultCount, string sorting, CancellationToken cancellationToken = default) => Repository.GetPagedListAsync(expression, skipCount, maxResultCount, sorting, cancellationToken);
 
+    /// <summary>
+    /// <inheritdoc/>
+    /// </summary>
     public Task<TEntity> InsertAsync(TEntity entity, CancellationToken cancellationToken = default) => Repository.InsertAsync(entity, cancellationToken);
 
     /// <summary>
