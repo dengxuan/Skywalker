@@ -7,7 +7,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{A54EE698-AB6
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Skywalker.AspNetCore.Authorization", "src\Skywalker.AspNetCore.Authorization.csproj", "{A388ED99-F9C5-4D96-9BB7-64560FB0355F}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Skywalker.AspNetCore.Authorization.Abstractions", "..\Skywalker.AspNetCore.Authorization.Abstractions\src\Skywalker.AspNetCore.Authorization.Abstractions.csproj", "{9F11CAFE-2856-4D28-9E12-251E6AD5B9EB}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Skywalker.Authorization.Abstractions", "..\Skywalker.Authorization.Abstractions\src\Skywalker.Authorization.Abstractions.csproj", "{47FC0905-02D8-4EB0-8474-9EB857905C23}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -31,25 +31,25 @@ Global
 		{A388ED99-F9C5-4D96-9BB7-64560FB0355F}.Release|x64.Build.0 = Release|Any CPU
 		{A388ED99-F9C5-4D96-9BB7-64560FB0355F}.Release|x86.ActiveCfg = Release|Any CPU
 		{A388ED99-F9C5-4D96-9BB7-64560FB0355F}.Release|x86.Build.0 = Release|Any CPU
-		{9F11CAFE-2856-4D28-9E12-251E6AD5B9EB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{9F11CAFE-2856-4D28-9E12-251E6AD5B9EB}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{9F11CAFE-2856-4D28-9E12-251E6AD5B9EB}.Debug|x64.ActiveCfg = Debug|Any CPU
-		{9F11CAFE-2856-4D28-9E12-251E6AD5B9EB}.Debug|x64.Build.0 = Debug|Any CPU
-		{9F11CAFE-2856-4D28-9E12-251E6AD5B9EB}.Debug|x86.ActiveCfg = Debug|Any CPU
-		{9F11CAFE-2856-4D28-9E12-251E6AD5B9EB}.Debug|x86.Build.0 = Debug|Any CPU
-		{9F11CAFE-2856-4D28-9E12-251E6AD5B9EB}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{9F11CAFE-2856-4D28-9E12-251E6AD5B9EB}.Release|Any CPU.Build.0 = Release|Any CPU
-		{9F11CAFE-2856-4D28-9E12-251E6AD5B9EB}.Release|x64.ActiveCfg = Release|Any CPU
-		{9F11CAFE-2856-4D28-9E12-251E6AD5B9EB}.Release|x64.Build.0 = Release|Any CPU
-		{9F11CAFE-2856-4D28-9E12-251E6AD5B9EB}.Release|x86.ActiveCfg = Release|Any CPU
-		{9F11CAFE-2856-4D28-9E12-251E6AD5B9EB}.Release|x86.Build.0 = Release|Any CPU
+		{47FC0905-02D8-4EB0-8474-9EB857905C23}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{47FC0905-02D8-4EB0-8474-9EB857905C23}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{47FC0905-02D8-4EB0-8474-9EB857905C23}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{47FC0905-02D8-4EB0-8474-9EB857905C23}.Debug|x64.Build.0 = Debug|Any CPU
+		{47FC0905-02D8-4EB0-8474-9EB857905C23}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{47FC0905-02D8-4EB0-8474-9EB857905C23}.Debug|x86.Build.0 = Debug|Any CPU
+		{47FC0905-02D8-4EB0-8474-9EB857905C23}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{47FC0905-02D8-4EB0-8474-9EB857905C23}.Release|Any CPU.Build.0 = Release|Any CPU
+		{47FC0905-02D8-4EB0-8474-9EB857905C23}.Release|x64.ActiveCfg = Release|Any CPU
+		{47FC0905-02D8-4EB0-8474-9EB857905C23}.Release|x64.Build.0 = Release|Any CPU
+		{47FC0905-02D8-4EB0-8474-9EB857905C23}.Release|x86.ActiveCfg = Release|Any CPU
+		{47FC0905-02D8-4EB0-8474-9EB857905C23}.Release|x86.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
 		{A388ED99-F9C5-4D96-9BB7-64560FB0355F} = {A54EE698-AB60-430A-9F6F-D2C57ADBC6EF}
-		{9F11CAFE-2856-4D28-9E12-251E6AD5B9EB} = {A54EE698-AB60-430A-9F6F-D2C57ADBC6EF}
+		{47FC0905-02D8-4EB0-8474-9EB857905C23} = {A54EE698-AB60-430A-9F6F-D2C57ADBC6EF}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {16D5A542-6E4E-4B97-AB7F-EA906A784DF7}

@@ -1,0 +1,16 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+	<PropertyGroup>
+		<RootNamespace></RootNamespace>
+	</PropertyGroup>
+
+	<ItemGroup>
+		<PackageReference Include="StackExchange.Redis" Version="2.2.88" />
+	</ItemGroup>
+
+	<ItemGroup>
+		<ProjectReference Include="$(LibrariesProjectRoot)Skywalker.Caching.Abstractions\src\Skywalker.Caching.Abstractions.csproj" />
+		<ProjectReference Include="$(LibrariesProjectRoot)Skywalker.Extensions.Json\src\Skywalker.Extensions.Json.csproj" />
+	</ItemGroup>
+
+</Project>

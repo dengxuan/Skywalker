@@ -5,7 +5,11 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\Skywalker.AspNetCore.Authorization.Abstractions\src\Skywalker.AspNetCore.Authorization.Abstractions.csproj" />
+    <PackageReference Include="Microsoft.AspNetCore.Authorization" Version="6.0.2" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\Skywalker.Authorization.Abstractions\src\Skywalker.Authorization.Abstractions.csproj" />
   </ItemGroup>
 
 </Project>

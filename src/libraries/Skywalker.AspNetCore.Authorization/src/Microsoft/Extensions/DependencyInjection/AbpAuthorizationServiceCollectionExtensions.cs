@@ -1,7 +1,9 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.Extensions.DependencyInjection.Extensions;
 using Skywalker.AspNetCore.Authorization;
-using Skywalker.AspNetCore.Authorization.Permissions;
+using Skywalker.Authorization;
+using Skywalker.Authorization.Permissions;
+using Skywalker.Authorization.Permissions.Abstractions;
 
 namespace Microsoft.Extensions.DependencyInjection;
 

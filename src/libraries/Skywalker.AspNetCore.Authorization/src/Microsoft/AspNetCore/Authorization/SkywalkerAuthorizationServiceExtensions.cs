@@ -1,5 +1,6 @@
 ﻿using Skywalker;
 using Skywalker.AspNetCore.Authorization;
+using Skywalker.Authorization;
 using Skywalker.Extensions.Exceptions;
 using Skywalker.Security.Authorization;
 

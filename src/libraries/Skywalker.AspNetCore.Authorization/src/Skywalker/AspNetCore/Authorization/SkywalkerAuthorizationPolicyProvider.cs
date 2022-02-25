@@ -1,6 +1,6 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.Extensions.Options;
-using Skywalker.AspNetCore.Authorization.Permissions;
+using Skywalker.Authorization.Permissions.Abstractions;
 
 namespace Skywalker.AspNetCore.Authorization;
 

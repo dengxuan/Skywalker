@@ -1,5 +1,6 @@
 ﻿using System.Reflection;
 using Microsoft.AspNetCore.Authorization;
+using Skywalker.Authorization;
 
 namespace Skywalker.AspNetCore.Authorization;
 
