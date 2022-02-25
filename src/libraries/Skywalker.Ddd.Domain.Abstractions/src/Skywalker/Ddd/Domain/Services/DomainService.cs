@@ -20,17 +20,17 @@ public class DomainService<TEntity> : DomainService<TEntity, Guid>, IDomainServi
     /// <summary>
     /// <inheritdoc/>
     /// </summary>
-    public Task DeleteAsync(TEntity entity) => Repository.DeleteAsync(entity);
+    public Task DeleteAsync(TEntity entity, CancellationToken cancellationToken = default) => Repository.DeleteAsync(entity, cancellationToken);
 
     /// <summary>
     /// <inheritdoc/>
     /// </summary>
-    public Task<List<TEntity>> GetListAsync() => Repository.GetListAsync();
+    public Task<List<TEntity>> GetListAsync(CancellationToken cancellationToken = default) => Repository.GetListAsync(cancellationToken);
 
     /// <summary>
     /// <inheritdoc/>
     /// </summary>
-    public Task<List<TEntity>> GetListAsync(Expression<Func<TEntity, bool>> expression) => AsyncExecuter.ToListAsync(Repository.Where(expression));
+    public Task<List<TEntity>> GetListAsync(Expression<Func<TEntity, bool>> expression, CancellationToken cancellationToken = default) => AsyncExecuter.ToListAsync(Repository.Where(expression), cancellationToken);
 
     /// <summary>
     /// <inheritdoc/>
@@ -42,10 +42,12 @@ public class DomainService<TEntity> : DomainService<TEntity, Guid>, IDomainServi
     /// </summary>
     public Task<List<TEntity>> GetPagedListAsync(Expression<Func<TEntity, bool>> expression, int skipCount, int maxResultCount, string sorting, CancellationToken cancellationToken = default) => Repository.GetPagedListAsync(expression, skipCount, maxResultCount, sorting, cancellationToken);
 
+    public Task<TEntity> InsertAsync(TEntity entity, CancellationToken cancellationToken = default) => Repository.InsertAsync(entity, cancellationToken);
+
     /// <summary>
     /// <inheritdoc/>
     /// </summary>
-    public Task<TEntity> UpdateAsync(TEntity entity) => Repository.UpdateAsync(entity);
+    public Task<TEntity> UpdateAsync(TEntity entity, CancellationToken cancellationToken = default) => Repository.UpdateAsync(entity, cancellationToken);
 }
 
 /// <summary>
@@ -73,11 +75,11 @@ public class DomainService<TEntity, TKey> : IDomainService<TEntity, TKey> where 
     /// <summary>
     /// <inheritdoc/>
     /// </summary>
-    public Task<TEntity?> FindAsync(TKey id) => Repository.FindAsync(id);
+    public Task<TEntity?> FindAsync(TKey id, CancellationToken cancellationToken = default) => Repository.FindAsync(id,cancellationToken);
 
     /// <summary>
     /// <inheritdoc/>
     /// </summary>
-    public Task<TEntity> GetAsync(TKey id) => Repository.GetAsync(id);
+    public Task<TEntity> GetAsync(TKey id, CancellationToken cancellationToken = default) => Repository.GetAsync(id, cancellationToken);
 
 }

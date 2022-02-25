@@ -18,33 +18,45 @@ public interface IDomainService
 public interface IDomainService<TEntity> : IDomainService<TEntity, Guid> where TEntity : class, IEntity<Guid>
 {
     /// <summary>
+    /// 添加一个实体
+    /// </summary>
+    /// <param name="entity">待添加的实体</param>
+    /// <param name="cancellationToken">可取消操作的令牌</param>
+    /// <returns>添加后的实体</returns>
+    Task<TEntity> InsertAsync(TEntity entity, CancellationToken cancellationToken = default);
+
+    /// <summary>
     /// 更新一个实体
     /// </summary>
     /// <param name="entity">要更新的实体</param>
+    /// <param name="cancellationToken">可取消操作的令牌</param>
     /// <returns>更新后的实体</returns>
-    Task<TEntity> UpdateAsync(TEntity entity);
+    Task<TEntity> UpdateAsync(TEntity entity, CancellationToken cancellationToken = default);
 
     /// <summary>
     /// 删除一个实体
     /// </summary>
     /// <param name="entity">要删除的实体</param>
+    /// <param name="cancellationToken">可取消操作的令牌</param>
     /// <returns></returns>
-    Task DeleteAsync(TEntity entity);
+    Task DeleteAsync(TEntity entity, CancellationToken cancellationToken = default);
 
     /// <summary>
     /// 查询所有实体，慎重使用。
     /// 大表严禁使用此方法，推荐使用<see cref="IDomainService{TEntity, TKey}.GetPagedListAsync(int, int, string, CancellationToken)"/>进行分页读取
     /// </summary>
+    /// <param name="cancellationToken">可取消操作的令牌</param>
     /// <returns>当前实体<see cref="TEntity"/>的所有数据集，或者空集合</returns>
-    Task<List<TEntity>> GetListAsync();
+    Task<List<TEntity>> GetListAsync(CancellationToken cancellationToken = default);
 
     /// <summary>
     /// 查询符合条件的所有实体集，慎重使用。
     /// 筛选结果较多时，推荐使用<see cref="IDomainService{TEntity, TKey}.GetPagedListAsync(int, int, string, CancellationToken)"/>进行分页读取
     /// </summary>
-    /// <param name="expression"></param>
+    /// <param name="expression">查询条件</param>
+    /// <param name="cancellationToken">可取消操作的令牌</param>
     /// <returns>当前实体<see cref="TEntity"/>的所有数据集，或者空集合</returns>
-    Task<List<TEntity>> GetListAsync(Expression<Func<TEntity, bool>> expression);
+    Task<List<TEntity>> GetListAsync(Expression<Func<TEntity, bool>> expression, CancellationToken cancellationToken = default);
 
     /// <summary>
     /// 分页查询当前实体<see cref="TEntity"/>的数据集
@@ -80,15 +92,17 @@ public interface IDomainService<TEntity, TKey> : IDomainService where TEntity : 
     /// 如果给定主键的实体不存在，则抛出 <see cref="EntityNotFoundException"/> 异常
     /// </summary>
     /// <param name="id">要获取实体的主键</param>
+    /// <param name="cancellationToken">可取消操作的令牌</param>
     /// <exception cref="EntityNotFoundException">给定主键的实体不存在时抛出</exception>
     /// <returns>符合条件的实体<see cref="TEntity"/></returns>
-    Task<TEntity> GetAsync(TKey id);
+    Task<TEntity> GetAsync(TKey id, CancellationToken cancellationToken = default);
 
     /// <summary>
     /// 获取给定主键的实体，如果没有找到返回null
     /// </summary>
     /// <param name="id">要获取实体的主键</param>
+    /// <param name="cancellationToken">可取消操作的令牌</param>
     /// <returns>符合条件的实体<see cref="TEntity"/>或者null</returns>
-    Task<TEntity?> FindAsync(TKey id);
+    Task<TEntity?> FindAsync(TKey id, CancellationToken cancellationToken = default);
 
 }
