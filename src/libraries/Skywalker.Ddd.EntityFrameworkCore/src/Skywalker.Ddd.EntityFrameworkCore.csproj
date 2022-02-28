@@ -30,8 +30,7 @@
     <PackageReference Include="Microsoft.EntityFrameworkCore" Version="3.1.22" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.Relational" Version="3.1.22" />
   </ItemGroup>
-
-
+  
   <ItemGroup>
     <AnalyzerReference Include="..\gen\Skywalker.Ddd.EntityFrameworkCore.Generators.Roslyn3.11.csproj" Condition="'$(DotNetBuildFromSource)' != 'true'" />
     <AnalyzerReference Include="..\gen\Skywalker.Ddd.EntityFrameworkCore.Generators.Roslyn4.0.csproj" />

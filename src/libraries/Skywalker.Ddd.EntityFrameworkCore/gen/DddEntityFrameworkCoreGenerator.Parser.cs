@@ -20,7 +20,6 @@ public partial class DddEntityFrameworkCoreGenerator
                 {
                     Properties = new(),
                     Name = dbContextClass.Key.Name,
-                    Fullname = dbContextClass.Key.ToDisplayString(),
                     Namespace = dbContextClass.Key.ContainingNamespace.ToDisplayString()
                 };
                 foreach (var entityNamedTypeSymbol in dbContextClass.Value)
@@ -33,9 +32,9 @@ public partial class DddEntityFrameworkCoreGenerator
                     // The match conditions property like public DbSet<Entity> Entities {get; set;}
                     var dbContextProperty = new DbContextProperty
                     {
+                        PrimaryKey = primaryKey,
                         Name = entityNamedTypeSymbol.Name,
-                        Fullname = entityNamedTypeSymbol.ToDisplayString(),
-                        PrimaryKey = primaryKey
+                        Namespace = entityNamedTypeSymbol.ContainingNamespace.ToDisplayString()
                     };
                     dbContexterClass.Properties.Add(dbContextProperty);
                 }
@@ -49,10 +48,10 @@ public partial class DddEntityFrameworkCoreGenerator
     /// <summary>
     /// A DbContext struct holding a bunch of DbContext properties.
     /// </summary>
-    internal record struct DbContextClass(string Namespace, string Name, string Fullname, List<DbContextProperty> Properties);
+    internal record struct DbContextClass(string Namespace, string Name, List<DbContextProperty> Properties);
 
     /// <summary>
     /// A DbContext property in a DbContext class.
     /// </summary>
-    internal record struct DbContextProperty(string Name, string Fullname, string PrimaryKey);
+    internal record struct DbContextProperty(string Namespace, string Name, string PrimaryKey);
 }

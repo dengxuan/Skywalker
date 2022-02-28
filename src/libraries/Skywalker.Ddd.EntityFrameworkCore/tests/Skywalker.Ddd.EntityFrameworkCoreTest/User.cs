@@ -3,23 +3,12 @@
 
 using Skywalker.Ddd.Domain.Entities;
 
-namespace Skywalker.Ddd.EntityFrameworkCoreTest;
+namespace Skywalker.Ddd.EntityFrameworkCoreTest.Domain.Entities;
 
 public record class User(Guid Id, string Name) : AggregateRoot<Guid>(Id);
 
 public record class Username(int Id, string Name) : AggregateRoot<int>(Id);
 
-public record class Test : IEntity
-{
-    public object[] GetKeys() => new[] { "1", "2" };
-}
-
-public record class TestA : IEntity<long>
-{
-    public long Id { get; set; }
-
-    public object[] GetKeys() => new object[] { Id };
-}
 
 public record class Schoole : AggregateRoot
 {

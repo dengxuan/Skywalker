@@ -9,6 +9,7 @@ using System.Threading.Tasks;
 using Microsoft.Extensions.DependencyInjection;
 using Skywalker.Ddd.Domain.Repositories;
 using Skywalker.Ddd.Domain.Services;
+using Skywalker.Ddd.EntityFrameworkCoreTest.Domain.Entities;
 using Skywalker.Extensions.Linq;
 
 namespace Skywalker.Ddd.EntityFrameworkCoreTest;

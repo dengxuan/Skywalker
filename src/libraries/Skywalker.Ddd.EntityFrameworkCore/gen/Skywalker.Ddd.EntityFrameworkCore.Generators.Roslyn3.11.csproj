@@ -1,4 +1,4 @@
-<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
     <AnalyzerRoslynVersion>3.11</AnalyzerRoslynVersion>
@@ -18,6 +18,14 @@
 
   <ItemGroup>
     <Compile Remove="DddEntityFrameworkCoreGenerator.Roslyn4.0.cs" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Remove="Templates\DddEntityFrameworkCore.sbn-cs" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <EmbeddedResource Include="Templates\DddEntityFrameworkCore.sbn-cs" />
   </ItemGroup>
 
 </Project>

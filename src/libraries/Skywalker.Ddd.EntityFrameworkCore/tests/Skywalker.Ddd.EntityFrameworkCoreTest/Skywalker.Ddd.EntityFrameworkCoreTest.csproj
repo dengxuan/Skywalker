@@ -14,7 +14,8 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\..\Skywalker.Ddd.Domain.Abstractions\gen\Skywalker.Ddd.Domain.Generators.Roslyn4.0.csproj" OutputItemType="Analyzer" ReferenceOutputAssembly="true" />
+    <ProjectReference Include="..\..\gen\Skywalker.Ddd.EntityFrameworkCore.Generators.Roslyn3.11.csproj" OutputItemType="Analyzer" ReferenceOutputAssembly="true" />
+    <!--<ProjectReference Include="..\..\gen\Skywalker.Ddd.EntityFrameworkCore.Generators.Roslyn4.0.csproj" OutputItemType="Analyzer" ReferenceOutputAssembly="true" />-->
     <ProjectReference Include="..\..\src\Skywalker.Ddd.EntityFrameworkCore.csproj" />
   </ItemGroup>
 

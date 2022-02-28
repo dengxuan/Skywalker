@@ -4,19 +4,45 @@
 
 #pragma warning disable CS8019 // Unused usings
 
-using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.DependencyInjection.Extensions;
-using System.CodeDom.Compiler;
-using System.Linq;
+{{~ for namespace in Namespaces ~}}
+using {{namespace}};
+{{~ end ~}}
 
-namespace Microsoft.Extensions.DependencyInjection;
+namespace {{Namespace}};
 
+{{~ if PrimaryKey == null || PrimaryKey == '' ~}}
 [GeneratedCode("Skywalker.Ddd.EntityFrameworkCore.Generators", "{{ GeneratorVersion }}")]
-public partial class {{~ Name ~}}Repository : Repository<{{~ DbContext ~}}, {{~ Name ~}}>, IRepository<{{~ Name ~}}>, IBasicRepository<{{~ Name ~}}>, IReadOnlyRepository<{{~ Name ~}}>
+public class {{Name}}Repository<TEntity> : Repository<{{DbContext}}, TEntity>, IRepository<TEntity>
+    where TEntity : {{Name}}, IEntity
 {
+    public {{Name}}Repository(IDbContextProvider<{{DbContext}}> dbContextProvider, IClock clock, IGuidGenerator guidGenerator) : base(dbContextProvider, clock, guidGenerator)
+    {
+    }
 }
 
 [GeneratedCode("Skywalker.Ddd.EntityFrameworkCore.Generators", "{{ GeneratorVersion }}")]
-public partial class {{~ Name ~}}Repository : Repository<{{~ DbContext ~}}, {{~ Name ~}}, {{~ PrimaryKey ~}}>, IRepository<{{~ Name ~}}, {{~ PrimaryKey ~}}>, IBasicRepository<{{~ Name ~}}, {{~ PrimaryKey ~}}>, IReadOnlyRepository<{{~ Name ~}}, {{~ PrimaryKey ~}}>
+public partial class {{Name}}Repository : {{Name}}Repository<{{Name}}>
 {
+    public {{Name}}Repository(IDbContextProvider<{{DbContext}}> dbContextProvider, IClock clock, IGuidGenerator guidGenerator) : base(dbContextProvider, clock, guidGenerator)
+    {
+    }
 }
+{{~ else ~}}
+[GeneratedCode("Skywalker.Ddd.EntityFrameworkCore.Generators", "{{ GeneratorVersion }}")]
+public class {{Name}}Repository<TEntity, TKey> : Repository<{{DbContext}}, TEntity, TKey>, IRepository<TEntity, TKey>
+    where TEntity : {{Name}}, IEntity<TKey>
+    where TKey : notnull
+{
+    public {{Name}}Repository(IDbContextProvider<{{DbContext}}> dbContextProvider, IClock clock, IGuidGenerator guidGenerator) : base(dbContextProvider, clock, guidGenerator)
+    {
+    }
+}
+
+[GeneratedCode("Skywalker.Ddd.EntityFrameworkCore.Generators", "{{ GeneratorVersion }}")]
+public partial class {{Name}}Repository : {{Name}}Repository<{{Name}}, {{PrimaryKey}}>
+{
+    public {{Name}}Repository(IDbContextProvider<{{DbContext}}> dbContextProvider, IClock clock, IGuidGenerator guidGenerator) : base(dbContextProvider, clock, guidGenerator)
+    {
+    }
+}
+{{~ end ~}}

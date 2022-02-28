@@ -2,6 +2,7 @@
 // Gordon licenses this file to you under the MIT license.
 
 using Skywalker.Ddd.Domain.Services;
+using Skywalker.Ddd.EntityFrameworkCoreTest.Domain.Entities;
 
 namespace Skywalker.Ddd.EntityFrameworkCoreTest;
 

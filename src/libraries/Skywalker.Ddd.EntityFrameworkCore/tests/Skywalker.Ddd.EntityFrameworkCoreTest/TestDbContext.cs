@@ -1,12 +1,19 @@
 ﻿// Licensed to the Gordon under one or more agreements.
 // Gordon licenses this file to you under the MIT license.
 
+using System.CodeDom.Compiler;
+using System.Collections;
+using System.Linq.Expressions;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.DependencyInjection.Extensions;
+using Skywalker.Ddd.Domain.Entities;
 using Skywalker.Ddd.Domain.Repositories;
 using Skywalker.Ddd.EntityFrameworkCore;
 using Skywalker.Ddd.EntityFrameworkCore.Repositories;
+using Skywalker.Ddd.EntityFrameworkCoreTest.Domain.Entities;
+using Skywalker.Extensions.GuidGenerator;
+using Skywalker.Extensions.Timing;
 #nullable disable
 namespace Skywalker.Ddd.EntityFrameworkCoreTest;
 
@@ -24,6 +31,18 @@ public static class IServiceCollectionExtensions
         services.TryAddTransient<IReadOnlyRepository<User, Guid>, Repository<TestDbContext, User, Guid>>();
         return services;
     }
+}
+
+public record class Test : IEntity
+{
+    public object[] GetKeys() => new[] { "1", "2" };
+}
+
+public record class TestA : IEntity<long>
+{
+    public long Id { get; set; }
+
+    public object[] GetKeys() => new object[] { Id };
 }
 
 public class TestDbContext : SkywalkerDbContext<TestDbContext>

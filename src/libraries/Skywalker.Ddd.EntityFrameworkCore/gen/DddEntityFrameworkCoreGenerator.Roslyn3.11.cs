@@ -15,6 +15,5 @@ public partial class DddEntityFrameworkCoreGenerator : ISourceGenerator
 
     public void Initialize(GeneratorInitializationContext context)
     {
-        throw new NotImplementedException();
     }
 }

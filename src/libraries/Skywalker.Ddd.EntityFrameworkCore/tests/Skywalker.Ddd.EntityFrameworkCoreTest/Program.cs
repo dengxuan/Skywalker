@@ -8,6 +8,7 @@ using Skywalker.Ddd.EntityFrameworkCoreTest;
 using Microsoft.Extensions.Logging;
 using Skywalker.Ddd.Domain.Repositories;
 using Skywalker.Ddd.EntityFrameworkCore.Repositories;
+using Skywalker.Ddd.EntityFrameworkCoreTest.Domain.Entities;
 
 var host = Host.CreateDefaultBuilder(args).ConfigureServices(services =>
 {
