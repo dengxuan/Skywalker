@@ -8,13 +8,11 @@ public partial class DependencyInjectionGenerator
 
     internal class Analyzer
     {
-        private readonly INamedTypeSymbol? _modularSymbol;
         private readonly Compilation _compilation;
 
         public Analyzer(in GeneratorExecutionContext context)
         {
             _compilation = context.Compilation;
-            _modularSymbol = _compilation.GetTypeByMetadataName(Constants.ModularSymbolName);
         }
 
         private List<INamedTypeSymbol> FindNamedTypeSymbol(INamespaceSymbol namespaceSymbol)
@@ -37,10 +35,6 @@ public partial class DependencyInjectionGenerator
                                 break;
                             }
                             if (namedTypeSymbol.IsStatic || namedTypeSymbol.IsAbstract)
-                            {
-                                break;
-                            }
-                            if (!s_symbolComparer.Equals(namedTypeSymbol.BaseType, _modularSymbol))
                             {
                                 break;
                             }

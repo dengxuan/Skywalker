@@ -3,6 +3,7 @@
 
 using Microsoft.CodeAnalysis;
 using Microsoft.CodeAnalysis.CSharp;
+using Microsoft.CodeAnalysis.CSharp.Syntax;
 
 namespace Skywalker.Extensions.DependencyInjection.Generators;
 
@@ -19,6 +20,10 @@ public partial class DependencyInjectionGenerator
         private static bool IsSyntaxTargetForGeneration(SemanticModel semanticModel, SyntaxNode node, out INamedTypeSymbol? namedTypeSymbol)
         {
             namedTypeSymbol = semanticModel.GetSymbolInfo(node).Symbol as INamedTypeSymbol;
+            if (node is not ClassDeclarationSyntax classDeclarationSyntax || classDeclarationSyntax.AttributeLists.Count == 0)
+            {
+                return false;
+            }
             if (namedTypeSymbol is null)
             {
                 return false;
@@ -34,10 +39,14 @@ public partial class DependencyInjectionGenerator
             }
             var dependencySymbols = new[]
             {
-                semanticModel.Compilation.GetTypeByMetadataName(Constants.ScopedDependencyAttributeSymbolName),
-                semanticModel.Compilation.GetTypeByMetadataName(Constants.TransientDependencyAttributeSymbolName),
-                semanticModel.Compilation.GetTypeByMetadataName(Constants.SingletonDependencyAttributeSymbolName)
+                semanticModel.Compilation.GetTypeByMetadataName(Constants.ScopedDependencySymbolName),
+                semanticModel.Compilation.GetTypeByMetadataName(Constants.TransientDependencySymbolName),
+                semanticModel.Compilation.GetTypeByMetadataName(Constants.SingletonDependencySymbolName)
             };
+            if (!System.Diagnostics.Debugger.IsAttached)
+            {
+                System.Diagnostics.Debugger.Launch();
+            }
             foreach (var attributeData in namedTypeSymbol.GetAttributes())
             {
                 if (dependencySymbols.Any(predicate => s_symbolComparer.Equals(predicate, attributeData.AttributeClass)))

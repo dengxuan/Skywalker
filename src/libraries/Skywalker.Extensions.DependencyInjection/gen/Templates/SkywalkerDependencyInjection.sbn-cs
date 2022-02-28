@@ -6,7 +6,6 @@
 
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.DependencyInjection.Extensions;
-using Skywalker.Extensions.DependencyInjection;
 using System.CodeDom.Compiler;
 using System.Diagnostics;
 using System.Linq;
@@ -15,15 +14,11 @@ using System.Runtime.CompilerServices;
 namespace Microsoft.Extensions.DependencyInjection;
 
 [GeneratedCode("Skywalker.Extensions.DependencyInjection.Generators", "{{ GeneratorVersion }}")]
-public partial class {{ Modular }} : IModuleInitializer
+public static class SkywalkerDependencyInjectionIServiceCollectionExtensions
 {
     [DebuggerNonUserCode]
-    public void Initialize(IServiceCollection services)
+    public IServiceCollection AddSkywalker(this IServiceCollection services)
     {
-        {{~ for dependencyInjectionClass in DependencyInjectionClasses ~}}
-        {{~ for implInterface in dependencyInjectionClass.ImplInterfaces ~}}
-        services.TryAddTransient<{ implInterface.Fullname }, {domainServiceClass.Fullname}>();
-        {{~ end ~}}
-        {{~ end ~}}
+        return services;
     }
 }

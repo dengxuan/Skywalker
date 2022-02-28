@@ -1,6 +1,8 @@
-﻿namespace Microsoft.Extensions.DependencyInjection;
+﻿using Microsoft.Extensions.DependencyInjection;
 
-public interface IHybridServiceScopeFactory : IServiceScopeFactory
+namespace Skywalker.Extensions.DependencyInjection.Abstractions;
+
+public interface IHybridServiceScopeFactory : ISingletonDependency, IServiceScopeFactory
 {
 
 }

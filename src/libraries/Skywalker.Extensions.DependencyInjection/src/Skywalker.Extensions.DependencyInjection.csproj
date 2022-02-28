@@ -6,9 +6,11 @@
     <AssemblyName>$(MSBuildThisFileName)</AssemblyName>
     <RootNamespace></RootNamespace>
   </PropertyGroup>
-  
-  <Import Project="Skywalker.Extensions.DependencyInjection.targets" />
 
+  <ItemGroup>
+    <PackageReference Include="Scrutor" Version="4.0.0" />
+  </ItemGroup>
+ 
   <ItemGroup>
     <ProjectReference Include="..\..\Skywalker.Extensions.DependencyInjection.Abstractions\src\Skywalker.Extensions.DependencyInjection.Abstractions.csproj" />
   </ItemGroup>

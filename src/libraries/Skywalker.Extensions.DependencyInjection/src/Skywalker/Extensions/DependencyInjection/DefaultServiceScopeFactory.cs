@@ -1,8 +1,8 @@
-﻿using Skywalker.Extensions.DependencyInjection;
+﻿using Microsoft.Extensions.DependencyInjection;
+using Skywalker.Extensions.DependencyInjection.Abstractions;
 
-namespace Microsoft.Extensions.DependencyInjection;
+namespace Skywalker.Extensions.DependencyInjection;
 
-[SingletonDependency]
 public class DefaultServiceScopeFactory : IHybridServiceScopeFactory
 {
     protected IServiceScopeFactory Factory { get; }

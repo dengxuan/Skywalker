@@ -1,8 +1,6 @@
-﻿using Skywalker.Extensions.DependencyInjection;
+﻿namespace Skywalker.Extensions.DependencyInjection.Abstractions;
 
-namespace Microsoft.Extensions.DependencyInjection;
-
-public interface IObjectAccessor<out T>
+public interface IObjectAccessor<out T>: ISingletonDependency
 {
 
     T Value { get; }

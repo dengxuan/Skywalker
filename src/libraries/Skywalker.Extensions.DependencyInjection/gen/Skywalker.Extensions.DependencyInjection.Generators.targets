@@ -23,8 +23,8 @@
   </ItemGroup>
 
   <ItemGroup>
-    <None Remove="Templates\ModuleInitializer.sbn-cs" />
-    <EmbeddedResource Include="Templates\ModuleInitializer.sbn-cs" />
+    <None Remove="Templates\SkywalkerDependencyInjection.sbn-cs" />
+    <EmbeddedResource Include="Templates\SkywalkerDependencyInjection.sbn-cs" />
   </ItemGroup>
 
 </Project>

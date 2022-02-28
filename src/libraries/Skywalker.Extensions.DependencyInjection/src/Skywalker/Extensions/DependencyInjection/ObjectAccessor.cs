@@ -1,4 +1,6 @@
-﻿namespace Microsoft.Extensions.DependencyInjection;
+﻿using Skywalker.Extensions.DependencyInjection.Abstractions;
+
+namespace Skywalker.Extensions.DependencyInjection;
 
 public class ObjectAccessor<T> : IObjectAccessor<T>
 {

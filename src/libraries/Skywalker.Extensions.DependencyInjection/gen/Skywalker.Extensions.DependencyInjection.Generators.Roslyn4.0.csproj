@@ -12,5 +12,5 @@
   <ItemGroup>
     <Compile Remove="DependencyInjectionGenerator.Roslyn3.11.cs" />
   </ItemGroup>
-  
+
 </Project>

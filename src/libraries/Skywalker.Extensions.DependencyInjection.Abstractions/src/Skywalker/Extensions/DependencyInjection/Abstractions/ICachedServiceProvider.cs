@@ -8,6 +8,7 @@ namespace Skywalker.Extensions.DependencyInjection.Abstractions;
 /// 它缓存所有类型的服务，包括Transient。
 /// 这个服务的生命周期是Scoped，应该被使用对于有限的范围。
 /// </summary>
-public interface ICachedServiceProvider : IServiceProvider
+
+public interface ICachedServiceProvider : IScopedDependency, IServiceProvider
 {
 }

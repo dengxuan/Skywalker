@@ -1,4 +1,7 @@
-﻿using Microsoft.CodeAnalysis;
+﻿// Licensed to the Gordon under one or more agreements.
+// Gordon licenses this file to you under the MIT license.
+
+using Microsoft.CodeAnalysis;
 
 namespace Skywalker.Extensions.DependencyInjection.Generators;
 
@@ -11,14 +14,13 @@ public partial class DependencyInjectionGenerator : ISourceGenerator
         {
             return;
         }
-        var analyzer = new Analyzer(in context);
-        var modularSymbol = analyzer.GetModularSymbol();
         var classes = Parser.DependencyInjectionClasses(receiver.Classes, context.CancellationToken);
-        Emitter.Emit(context, modularSymbol!, classes);
+        Emitter.Emit(context, classes);
     }
 
     public void Initialize(GeneratorInitializationContext context)
     {
         context.RegisterForSyntaxNotifications(SyntaxContextReceiver.Create);
     }
+
 }

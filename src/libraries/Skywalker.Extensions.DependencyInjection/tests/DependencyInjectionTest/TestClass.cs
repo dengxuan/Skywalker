@@ -5,11 +5,12 @@ using Skywalker.Extensions.DependencyInjection;
 
 namespace DependencyInjectionTest;
 
-[TransientDependency]
-public class TestClass
+public class TestClass: TestInterface
 {
 }
 
-class TestService :TestClass
+public class TestService :TestClass
 {
 }
+
+public interface TestInterface: ISingletonDependency { }

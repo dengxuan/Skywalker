@@ -12,12 +12,12 @@ public partial class DependencyInjectionGenerator
 {
     internal class Emitter
     {
-        public static void Emit(GeneratorExecutionContext context,INamedTypeSymbol modularSymbol, IReadOnlyList<DependencyInjectionClass> dependencyInjectionClasses)
+        public static void Emit(GeneratorExecutionContext context, IReadOnlyList<DependencyInjectionClass> dependencyInjectionClasses)
         {
             var generatorVersion = typeof(Emitter).Assembly.GetName().Version;
             var file = @"Templates/ModuleInitializer.sbn-cs";
             var template = Template.Parse(EmbeddedResource.GetContent(file), file);
-            var output = template.Render(new { GeneratorVersion = generatorVersion, Modular= modularSymbol.Name, DependencyInjectionClasses = dependencyInjectionClasses }, member => member.Name);
+            var output = template.Render(new { GeneratorVersion = generatorVersion, DependencyInjectionClasses = dependencyInjectionClasses }, member => member.Name);
             context.AddSource("ModuleInitializer.g.cs", SourceText.From(output, Encoding.UTF8));
         }
     }
