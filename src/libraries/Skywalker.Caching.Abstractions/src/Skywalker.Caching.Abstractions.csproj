@@ -4,4 +4,8 @@
 		<RootNamespace></RootNamespace>
 	</PropertyGroup>
 
+	<ItemGroup>
+    <ProjectReference Include="$(LibrariesProjectRoot)Skywalker.Extensions.DependencyInjection.Abstractions\src\Skywalker.Extensions.DependencyInjection.Abstractions.csproj" />
+	</ItemGroup>
+
 </Project>

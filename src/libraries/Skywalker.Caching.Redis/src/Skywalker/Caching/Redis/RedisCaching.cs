@@ -6,7 +6,7 @@ namespace Skywalker.Caching.Redis;
 
 internal class RedisCaching : ICaching
 {
-    private static readonly ReaderWriterLockSlim _locker = new();
+    private static readonly ReaderWriterLockSlim s_locker = new();
 
 
     private readonly IDatabase _database;
@@ -34,13 +34,13 @@ internal class RedisCaching : ICaching
     {
         try
         {
-            _locker.EnterReadLock();
+            s_locker.EnterReadLock();
             byte[] bytes = _database.StringGet($"{Name}@{key}");
             return bytes;
         }
         finally
         {
-            _locker.ExitReadLock();
+            s_locker.ExitReadLock();
         }
     }
 
@@ -60,12 +60,12 @@ internal class RedisCaching : ICaching
 
     public void Dispose()
     {
-        _locker.Dispose();
+        s_locker.Dispose();
     }
 
     public TVaule? Get<TVaule>(string key)
     {
-        byte[] bytes = Get(key);
+        var bytes = Get(key);
         if (bytes == null)
         {
             return default;
@@ -75,24 +75,24 @@ internal class RedisCaching : ICaching
 
     public void Set<TVaule>(string key, TVaule value, TimeSpan? expireTime = null)
     {
-        byte[] bytes = _serializer.Serialize(value);
+        var bytes = _serializer.Serialize(value);
         Set(key, bytes, expireTime);
     }
 
     public TValue GetOrSet<TValue>(string key, Func<TValue> factory) where TValue : notnull
     {
-        TValue? value = Get<TValue>(key);
+        var value = Get<TValue>(key);
         if (value == null)
         {
             try
             {
-                _locker.EnterWriteLock();
+                s_locker.EnterWriteLock();
                 value = factory();
                 Set(key, value);
             }
             finally
             {
-                _locker.ExitWriteLock();
+                s_locker.ExitWriteLock();
             }
         }
         return value;
