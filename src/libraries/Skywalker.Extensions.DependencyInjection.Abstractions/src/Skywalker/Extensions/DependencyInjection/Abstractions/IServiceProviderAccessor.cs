@@ -1,6 +1,6 @@
 ﻿namespace Skywalker.Extensions.DependencyInjection.Abstractions;
 
-public interface IServiceProviderAccessor: ISingletonDependency
+public interface IServiceProviderAccessor
 {
     IServiceProvider? ServiceProvider { get; }
 }

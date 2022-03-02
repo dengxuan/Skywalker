@@ -1,2 +1,11 @@
-﻿// See https://aka.ms/new-console-template for more information
-Console.WriteLine("Hello, World!");
+﻿using DependencyInjectionTest;
+using Microsoft.Extensions.DependencyInjection;
+using Skywalker.Extensions.DependencyInjection;
+Console.WriteLine();
+var services = new ServiceCollection();
+
+services.AddSkywalker();
+
+var sp = services.BuildServiceProvider();
+var testInterface = sp.GetRequiredService<TestInterface>();
+Console.WriteLine(services.Count);

@@ -2,10 +2,12 @@
 // Gordon licenses this file to you under the MIT license.
 
 using Skywalker.Ddd.Uow.Abstractions;
+using Skywalker.Extensions.DependencyInjection;
 
 namespace Skywalker.Ddd.Uow;
 
-public class AmbientUnitOfWork : IAmbientUnitOfWork/*, ISingletonDependency*/
+[SingletonDependency]
+public class AmbientUnitOfWork : IAmbientUnitOfWork
 {
     
     public IUnitOfWork? UnitOfWork => _currentUow.Value;

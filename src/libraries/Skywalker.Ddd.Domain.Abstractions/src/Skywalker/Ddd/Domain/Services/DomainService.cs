@@ -4,6 +4,7 @@
 using System.Linq.Expressions;
 using Skywalker.Ddd.Domain.Entities;
 using Skywalker.Ddd.Domain.Repositories;
+using Skywalker.Extensions.DependencyInjection;
 using Skywalker.Extensions.Linq;
 
 namespace Skywalker.Ddd.Domain.Services;
@@ -11,6 +12,7 @@ namespace Skywalker.Ddd.Domain.Services;
 /// <summary>
 /// <inheritdoc/>
 /// </summary>
+[TransientDependency]
 public class DomainService<TEntity> : DomainService<TEntity, Guid>, IDomainService<TEntity> where TEntity : class, IEntity<Guid>
 {
     public DomainService(IRepository<TEntity, Guid> repository, IAsyncQueryableExecuter asyncExecuter) : base(repository, asyncExecuter)
@@ -56,6 +58,7 @@ public class DomainService<TEntity> : DomainService<TEntity, Guid>, IDomainServi
 /// <summary>
 /// <inheritdoc/>
 /// </summary>
+[TransientDependency]
 public class DomainService<TEntity, TKey> : IDomainService<TEntity, TKey> where TEntity : class, IEntity<TKey> where TKey : notnull
 {
     /// <summary>
@@ -78,7 +81,7 @@ public class DomainService<TEntity, TKey> : IDomainService<TEntity, TKey> where 
     /// <summary>
     /// <inheritdoc/>
     /// </summary>
-    public Task<TEntity?> FindAsync(TKey id, CancellationToken cancellationToken = default) => Repository.FindAsync(id,cancellationToken);
+    public Task<TEntity?> FindAsync(TKey id, CancellationToken cancellationToken = default) => Repository.FindAsync(id, cancellationToken);
 
     /// <summary>
     /// <inheritdoc/>

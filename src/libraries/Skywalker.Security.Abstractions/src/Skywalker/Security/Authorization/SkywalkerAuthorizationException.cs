@@ -6,24 +6,24 @@ using Skywalker.Logging;
 namespace Skywalker.Security.Authorization;
 
 /// <summary>
-/// This exception is thrown on an unauthorized request.
+/// 当一个请求未授权时抛出此异常
 /// </summary>
 [Serializable]
 public class SkywalkerAuthorizationException : SkywalkerException, IHasLogLevel, IHasErrorCode
 {
     /// <summary>
-    /// Severity of the exception.
-    /// Default: Warn.
+    /// 异常的严重级别
+    /// 默认: Warning
     /// </summary>
     public LogLevel LogLevel { get; set; }
 
     /// <summary>
-    /// Error code.
+    /// 错误码.
     /// </summary>
     public string? Code { get; }
 
     /// <summary>
-    /// Creates a new <see cref="SkywalkerAuthorizationException"/> object.
+    /// 创建一个 <see cref="SkywalkerAuthorizationException"/> 对象.
     /// </summary>
     public SkywalkerAuthorizationException()
     {
@@ -31,7 +31,9 @@ public class SkywalkerAuthorizationException : SkywalkerException, IHasLogLevel,
     }
 
     /// <summary>
-    /// Creates a new <see cref="SkywalkerAuthorizationException"/> object.
+    /// 创建一个 <see cref="SkywalkerAuthorizationException"/> 对象.
+    /// <paramref name="serializationInfo">序列化信息</paramref>
+    /// <paramref name="context">序列化流上下文</paramref>
     /// </summary>
     public SkywalkerAuthorizationException(SerializationInfo serializationInfo, StreamingContext context)
         : base(serializationInfo, context)
@@ -40,9 +42,9 @@ public class SkywalkerAuthorizationException : SkywalkerException, IHasLogLevel,
     }
 
     /// <summary>
-    /// Creates a new <see cref="SkywalkerAuthorizationException"/> object.
+    /// 创建一个 <see cref="SkywalkerAuthorizationException"/> 对象.
     /// </summary>
-    /// <param name="message">Exception message</param>
+    /// <param name="message">异常消息</param>
     public SkywalkerAuthorizationException(string? message)
         : base(message)
     {
@@ -50,10 +52,10 @@ public class SkywalkerAuthorizationException : SkywalkerException, IHasLogLevel,
     }
 
     /// <summary>
-    /// Creates a new <see cref="SkywalkerAuthorizationException"/> object.
+    /// 创建一个 <see cref="SkywalkerAuthorizationException"/> 对象.
     /// </summary>
-    /// <param name="message">Exception message</param>
-    /// <param name="innerException">Inner exception</param>
+    /// <param name="message">异常消息</param>
+    /// <param name="innerException">内部异常</param>
     public SkywalkerAuthorizationException(string? message, Exception innerException)
         : base(message, innerException)
     {
@@ -61,11 +63,11 @@ public class SkywalkerAuthorizationException : SkywalkerException, IHasLogLevel,
     }
 
     /// <summary>
-    /// Creates a new <see cref="SkywalkerAuthorizationException"/> object.
+    /// 创建一个 <see cref="SkywalkerAuthorizationException"/> 对象.
     /// </summary>
-    /// <param name="message">Exception message</param>
-    /// <param name="code">Exception code</param>
-    /// <param name="innerException">Inner exception</param>
+    /// <param name="message">异常消息</param>
+    /// <param name="code">错误码</param>
+    /// <param name="innerException">内部异常</param>
     public SkywalkerAuthorizationException(string? message = null, string? code = null, Exception? innerException = null)
         : base(message, innerException)
     {

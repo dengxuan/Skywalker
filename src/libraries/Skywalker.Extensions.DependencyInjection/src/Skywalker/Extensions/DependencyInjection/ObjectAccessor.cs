@@ -2,7 +2,8 @@
 
 namespace Skywalker.Extensions.DependencyInjection;
 
-public class ObjectAccessor<T> : IObjectAccessor<T>
+[SingletonDependency]
+public sealed class ObjectAccessor<T> : IObjectAccessor<T>
 {
     public T Value { get; set; }
 

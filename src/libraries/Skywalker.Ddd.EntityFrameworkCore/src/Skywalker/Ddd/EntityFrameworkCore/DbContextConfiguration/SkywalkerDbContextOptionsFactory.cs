@@ -21,27 +21,9 @@ public static class SkywalkerDbContextOptionsFactory
 
         var options = GetDbContextOptions<TDbContext>(serviceProvider);
 
-        PreConfigure(options, context);
         Configure(options, context);
 
         return context.DbContextOptions.Options;
-    }
-
-    private static void PreConfigure<TDbContext>(SkywalkerDbContextOptions options, SkywalkerDbContextConfigurationContext<TDbContext> context) where TDbContext : SkywalkerDbContext<TDbContext>
-    {
-        foreach (var defaultPreConfigureAction in options.DefaultPreConfigureActions)
-        {
-            defaultPreConfigureAction.Invoke(context);
-        }
-
-        var preConfigureActions = options.PreConfigureActions.GetOrDefault(typeof(TDbContext));
-        if (!preConfigureActions.IsNullOrEmpty())
-        {
-            foreach (var preConfigureAction in preConfigureActions!)
-            {
-                ((Action<SkywalkerDbContextConfigurationContext<TDbContext>>)preConfigureAction).Invoke(context);
-            }
-        }
     }
 
     private static void Configure<TDbContext>(SkywalkerDbContextOptions options, SkywalkerDbContextConfigurationContext<TDbContext> context) where TDbContext : SkywalkerDbContext<TDbContext>

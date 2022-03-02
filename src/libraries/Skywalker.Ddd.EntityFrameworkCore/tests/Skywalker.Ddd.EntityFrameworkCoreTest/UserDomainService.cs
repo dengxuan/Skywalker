@@ -22,14 +22,3 @@ public class UserDomainService : DomainService<User>, IUserDomainService
 
     public Task<User> GetEnabledAsync() => throw new NotImplementedException();
 }
-
-public static class UserDomainServiceExtensions
-{
-    public static void ConfigureTestDbContext(this DomainServiceBuilder builder)
-    {
-        DomainServiceBuilder.ConfigureServices(services =>
-        {
-            services.AddTransient<IUserDomainService, UserDomainService>();
-        });
-    }
-}

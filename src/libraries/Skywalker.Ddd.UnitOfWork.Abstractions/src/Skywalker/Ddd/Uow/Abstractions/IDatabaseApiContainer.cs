@@ -1,7 +1,7 @@
 ﻿// Licensed to the Gordon under one or more agreements.
 // Gordon licenses this file to you under the MIT license.
 
-using Microsoft.Extensions.DependencyInjection;
+using Skywalker.Extensions.DependencyInjection.Abstractions;
 
 namespace Skywalker.Ddd.Uow.Abstractions;
 

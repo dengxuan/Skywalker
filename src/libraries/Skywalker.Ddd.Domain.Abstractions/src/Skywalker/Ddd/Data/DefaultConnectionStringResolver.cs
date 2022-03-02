@@ -1,11 +1,10 @@
-using Microsoft.Extensions.DependencyInjection;
+using Skywalker.Extensions.DependencyInjection;
 using Microsoft.Extensions.Options;
-using System;
-using System.Collections.Generic;
 
 namespace Skywalker.Ddd.Data
 {
-    public class DefaultConnectionStringResolver : IConnectionStringResolver/*, ITransientDependency*/
+    [TransientDependency]
+    public class DefaultConnectionStringResolver : IConnectionStringResolver
     {
         protected SkywalkerDbConnectionOptions Options { get; }
 

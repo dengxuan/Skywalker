@@ -1,14 +1,15 @@
-﻿using Skywalker.Extensions.Threading;
+﻿using Skywalker.Extensions.Linq;
+using Skywalker.Extensions.Threading;
 
-namespace Microsoft.Extensions.DependencyInjection
+namespace Microsoft.Extensions.DependencyInjection;
+
+public static class ThreadingIServiceCollectionExtensions
 {
-    public static class ThreadingIServiceCollectionExtensions
+    public static IServiceCollection AddThreading(this IServiceCollection services)
     {
-        public static IServiceCollection ConfigureServices(IServiceCollection services)
-        {
-            services.AddSingleton<ICancellationTokenProvider>(NullCancellationTokenProvider.Instance);
-            services.AddSingleton(typeof(IAmbientScopeProvider<>), typeof(AmbientDataContextAmbientScopeProvider<>));
-            return services;
-        }
+        services.AddSingleton<ICancellationTokenProvider>(NullCancellationTokenProvider.Instance);
+        services.AddSingleton<IAsyncQueryableExecuter, AsyncQueryableExecuter>();
+        services.AddSingleton(typeof(IAmbientScopeProvider<>), typeof(AmbientDataContextAmbientScopeProvider<>));
+        return services;
     }
 }

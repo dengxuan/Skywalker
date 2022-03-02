@@ -11,10 +11,6 @@ public partial class DependencyInjectionGenerator : ISourceGenerator
         {
             return;
         }
-        if (!System.Diagnostics.Debugger.IsAttached)
-        {
-            System.Diagnostics.Debugger.Launch();
-        }
         var classes = Parser.DependencyInjectionClasses(receiver.Classes, context.CancellationToken);
         Emitter.Emit(context, classes);
     }

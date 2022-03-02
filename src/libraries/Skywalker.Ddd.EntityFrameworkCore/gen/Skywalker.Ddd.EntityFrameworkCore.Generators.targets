@@ -25,4 +25,9 @@
     </PackageReference>
   </ItemGroup>
 
+  <ItemGroup>
+    <None Remove="Templates\DddEntityFrameworkCore.sbn-cs" />
+    <EmbeddedResource Include="Templates\DddEntityFrameworkCore.sbn-cs" />
+  </ItemGroup>
+
 </Project>

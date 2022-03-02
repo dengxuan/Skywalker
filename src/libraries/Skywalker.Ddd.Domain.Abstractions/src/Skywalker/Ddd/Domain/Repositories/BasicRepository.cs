@@ -1,14 +1,16 @@
 ﻿using System.Collections;
 using System.Linq.Expressions;
-using Microsoft.Extensions.DependencyInjection;
 using Skywalker.Ddd.Data;
 using Skywalker.Ddd.Data.Filtering;
 using Skywalker.Ddd.Domain.Entities;
 using Skywalker.Ddd.Domain.Repositories;
+using Skywalker.Extensions.DependencyInjection;
+using Skywalker.Extensions.DependencyInjection.Abstractions;
 using Skywalker.Extensions.Threading;
 
 namespace Skywalker.Domain.Repositories;
 
+[TransientDependency]
 public abstract class BasicRepository<TEntity> : IBasicRepository<TEntity>, IServiceProviderAccessor where TEntity : class, IEntity
 {
 

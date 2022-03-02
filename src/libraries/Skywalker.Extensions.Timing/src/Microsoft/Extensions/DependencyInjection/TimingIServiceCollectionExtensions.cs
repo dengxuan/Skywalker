@@ -16,7 +16,7 @@ public static class TimingIServiceCollectionExtensions
         return services.AddTimingServices();
     }
 
-    public static IServiceCollection AddTimiing(this IServiceCollection services, Action<SkywalkerClockOptions> options)
+    public static IServiceCollection AddTiming(this IServiceCollection services, Action<SkywalkerClockOptions> options)
     {
         services.Configure(options);
         return services.AddTimingServices();

@@ -20,12 +20,4 @@
     <Compile Remove="DddEntityFrameworkCoreGenerator.Roslyn4.0.cs" />
   </ItemGroup>
 
-  <ItemGroup>
-    <None Remove="Templates\DddEntityFrameworkCore.sbn-cs" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <EmbeddedResource Include="Templates\DddEntityFrameworkCore.sbn-cs" />
-  </ItemGroup>
-
 </Project>

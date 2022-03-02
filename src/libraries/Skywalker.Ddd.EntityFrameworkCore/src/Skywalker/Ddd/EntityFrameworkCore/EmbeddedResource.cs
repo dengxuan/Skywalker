@@ -8,11 +8,11 @@ namespace Skywalker.Ddd.Application;
 
 internal static class EmbeddedResource
 {
-    internal static readonly string BaseDir = Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location)!;
+    internal static readonly string s_baseDir = Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location)!;
 
     public static string GetContent(string relativePath)
     {
-        var filePath = Path.Combine(BaseDir, Path.GetFileName(relativePath));
+        var filePath = Path.Combine(s_baseDir, Path.GetFileName(relativePath));
         if (File.Exists(filePath))
         {
             return File.ReadAllText(filePath);

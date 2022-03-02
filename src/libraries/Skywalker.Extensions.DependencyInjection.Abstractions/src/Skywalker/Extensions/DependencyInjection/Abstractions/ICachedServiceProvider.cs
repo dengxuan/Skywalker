@@ -9,6 +9,6 @@ namespace Skywalker.Extensions.DependencyInjection.Abstractions;
 /// 这个服务的生命周期是Scoped，应该被使用对于有限的范围。
 /// </summary>
 
-public interface ICachedServiceProvider : IScopedDependency, IServiceProvider
+public interface ICachedServiceProvider : IServiceProvider
 {
 }

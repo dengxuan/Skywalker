@@ -12,7 +12,7 @@
   </ItemGroup>
  
   <ItemGroup>
-    <ProjectReference Include="..\..\Skywalker.Extensions.DependencyInjection.Abstractions\src\Skywalker.Extensions.DependencyInjection.Abstractions.csproj" />
+    <ProjectReference Include="$(LibrariesProjectRoot)Skywalker.Extensions.DependencyInjection.Abstractions\src\Skywalker.Extensions.DependencyInjection.Abstractions.csproj" />
   </ItemGroup>
 
 </Project>

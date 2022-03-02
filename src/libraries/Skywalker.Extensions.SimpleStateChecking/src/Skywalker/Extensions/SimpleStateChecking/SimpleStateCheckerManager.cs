@@ -1,17 +1,18 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Options;
+using Skywalker.Extensions.DependencyInjection;
 using Skywalker.Extensions.DependencyInjection.Abstractions;
 
 namespace Skywalker.Extensions.SimpleStateChecking;
 
-public class SimpleStateCheckerManager<TState> : ISimpleStateCheckerManager<TState>
-    where TState : IHasSimpleStateCheckers<TState>
+[TransientDependency]
+public class SimpleStateCheckerManager<TState> : ISimpleStateCheckerManager<TState> where TState : IHasSimpleStateCheckers<TState>
 {
     protected IServiceProvider ServiceProvider { get; }
 
-    protected AbpSimpleStateCheckerOptions<TState> Options { get; }
+    protected SimpleStateCheckerOptions<TState> Options { get; }
 
-    public SimpleStateCheckerManager(IServiceProvider serviceProvider, IOptions<AbpSimpleStateCheckerOptions<TState>> options)
+    public SimpleStateCheckerManager(IServiceProvider serviceProvider, IOptions<SimpleStateCheckerOptions<TState>> options)
     {
         ServiceProvider = serviceProvider;
         Options = options.Value;

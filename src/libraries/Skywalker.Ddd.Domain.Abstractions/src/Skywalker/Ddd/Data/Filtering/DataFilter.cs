@@ -1,5 +1,6 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Options;
+using Skywalker.Extensions.DependencyInjection;
 using System;
 using System.Collections.Concurrent;
 using System.Collections.Generic;
@@ -7,7 +8,8 @@ using System.Threading;
 
 namespace Skywalker.Ddd.Data.Filtering
 {
-    public class DataFilter : IDataFilter/*, ISingletonDependency*/
+    [SingletonDependency]
+    public class DataFilter : IDataFilter
     {
         private readonly ConcurrentDictionary<Type, object> _filters;
 
@@ -43,6 +45,7 @@ namespace Skywalker.Ddd.Data.Filtering
         }
     }
 
+    [SingletonDependency]
     public class DataFilter<TFilter> : IDataFilter<TFilter>
         where TFilter : class
     {

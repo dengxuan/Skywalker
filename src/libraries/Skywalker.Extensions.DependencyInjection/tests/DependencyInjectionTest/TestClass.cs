@@ -5,12 +5,15 @@ using Skywalker.Extensions.DependencyInjection;
 
 namespace DependencyInjectionTest;
 
-public class TestClass: TestInterface
+
+[ScopedDependency]
+public partial class TestClass: TestInterface
 {
 }
 
-public class TestService :TestClass
+[SingletonDependency]
+public class TestService : TestClass
 {
 }
 
-public interface TestInterface: ISingletonDependency { }
+public interface TestInterface { }

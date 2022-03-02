@@ -1,12 +1,11 @@
 ﻿using Skywalker.Ddd.EntityFrameworkCore;
 
-namespace Microsoft.EntityFrameworkCore
+namespace Microsoft.EntityFrameworkCore;
+
+public static class SkywalkerMySqlModelBuilderExtensions
 {
-    public static class SkywalkerMySqlModelBuilderExtensions
+    public static void UseMySQL(this ModelBuilder modelBuilder)
     {
-        public static void UseMySQL(this ModelBuilder modelBuilder)
-        {
-            modelBuilder.SetDatabaseProvider(EntityFrameworkCoreDatabaseProvider.MySql);
-        }
+        modelBuilder.SetDatabaseProvider(EntityFrameworkCoreDatabaseProvider.MySql);
     }
 }

@@ -8,13 +8,15 @@ using Skywalker.Ddd.Domain.Repositories;
 using Skywalker.Domain.Repositories;
 using Skywalker.EventBus;
 using Skywalker.EventBus.Abstractions;
+using Skywalker.Extensions.DependencyInjection;
 using Skywalker.Extensions.GuidGenerator;
 using Skywalker.Extensions.Timing;
 using Skywalker.Reflection;
 
 namespace Skywalker.Ddd.EntityFrameworkCore.Repositories;
 
-public class Repository<TDbContext, TEntity> : BasicRepository<TEntity>, IRepository<TEntity>, IAsyncEnumerable<TEntity>
+[TransientDependency]
+public abstract class Repository<TDbContext, TEntity> : BasicRepository<TEntity>, IRepository<TEntity>, IAsyncEnumerable<TEntity>
     where TDbContext : DbContext
     where TEntity : class, IEntity
 {
@@ -266,7 +268,7 @@ public class Repository<TDbContext, TEntity> : BasicRepository<TEntity>, IReposi
     }
 }
 
-public class Repository<TDbContext, TEntity, TKey> : Repository<TDbContext, TEntity>, IRepository<TEntity, TKey>, ISupportsExplicitLoading<TEntity, TKey>
+public abstract class Repository<TDbContext, TEntity, TKey> : Repository<TDbContext, TEntity>, IRepository<TEntity, TKey>, ISupportsExplicitLoading<TEntity, TKey>
     where TDbContext : DbContext
     where TEntity : class, IEntity<TKey>
     where TKey : notnull

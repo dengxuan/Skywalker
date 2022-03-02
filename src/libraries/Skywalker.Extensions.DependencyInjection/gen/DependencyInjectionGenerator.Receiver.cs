@@ -43,10 +43,6 @@ public partial class DependencyInjectionGenerator
                 semanticModel.Compilation.GetTypeByMetadataName(Constants.TransientDependencySymbolName),
                 semanticModel.Compilation.GetTypeByMetadataName(Constants.SingletonDependencySymbolName)
             };
-            if (!System.Diagnostics.Debugger.IsAttached)
-            {
-                System.Diagnostics.Debugger.Launch();
-            }
             foreach (var attributeData in namedTypeSymbol.GetAttributes())
             {
                 if (dependencySymbols.Any(predicate => s_symbolComparer.Equals(predicate, attributeData.AttributeClass)))

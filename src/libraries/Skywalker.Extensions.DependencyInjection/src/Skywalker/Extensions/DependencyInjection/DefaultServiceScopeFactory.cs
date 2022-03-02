@@ -3,6 +3,7 @@ using Skywalker.Extensions.DependencyInjection.Abstractions;
 
 namespace Skywalker.Extensions.DependencyInjection;
 
+[SingletonDependency]
 public class DefaultServiceScopeFactory : IHybridServiceScopeFactory
 {
     protected IServiceScopeFactory Factory { get; }

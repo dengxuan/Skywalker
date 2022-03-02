@@ -3,41 +3,40 @@
 
 using Microsoft.Extensions.Options;
 
-namespace Skywalker.Extensions.Timing
+namespace Skywalker.Extensions.Timing;
+
+public class Clock : IClock
 {
-    public class Clock : IClock
+    protected SkywalkerClockOptions Options { get; }
+
+    public Clock(IOptions<SkywalkerClockOptions> options)
     {
-        protected SkywalkerClockOptions Options { get; }
+        Options = options.Value;
+    }
 
-        public Clock(IOptions<SkywalkerClockOptions> options)
+    public virtual DateTime Now => Options.Kind == DateTimeKind.Utc ? DateTime.UtcNow : DateTime.Now;
+
+    public virtual DateTimeKind Kind => Options.Kind;
+
+    public virtual bool SupportsMultipleTimezone => Options.Kind == DateTimeKind.Utc;
+
+    public virtual DateTime Normalize(DateTime dateTime)
+    {
+        if (Kind == DateTimeKind.Unspecified || Kind == dateTime.Kind)
         {
-            Options = options.Value;
+            return dateTime;
         }
 
-        public virtual DateTime Now => Options.Kind == DateTimeKind.Utc ? DateTime.UtcNow : DateTime.Now;
-
-        public virtual DateTimeKind Kind => Options.Kind;
-
-        public virtual bool SupportsMultipleTimezone => Options.Kind == DateTimeKind.Utc;
-
-        public virtual DateTime Normalize(DateTime dateTime)
+        if (Kind == DateTimeKind.Local && dateTime.Kind == DateTimeKind.Utc)
         {
-            if (Kind == DateTimeKind.Unspecified || Kind == dateTime.Kind)
-            {
-                return dateTime;
-            }
-
-            if (Kind == DateTimeKind.Local && dateTime.Kind == DateTimeKind.Utc)
-            {
-                return dateTime.ToLocalTime();
-            }
-
-            if (Kind == DateTimeKind.Utc && dateTime.Kind == DateTimeKind.Local)
-            {
-                return dateTime.ToUniversalTime();
-            }
-
-            return DateTime.SpecifyKind(dateTime, Kind);
+            return dateTime.ToLocalTime();
         }
+
+        if (Kind == DateTimeKind.Utc && dateTime.Kind == DateTimeKind.Local)
+        {
+            return dateTime.ToUniversalTime();
+        }
+
+        return DateTime.SpecifyKind(dateTime, Kind);
     }
 }
