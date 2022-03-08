@@ -38,9 +38,9 @@ dotnet pack src/libraries/Skywalker.Ddd.UnitOfWork/Skywalker.Ddd.UnitOfWork.sln 
 dotnet pack src/libraries/Skywalker.Security.Abstractions/Skywalker.Security.Abstractions.sln -c Release -p:IncludeSymbols=true -p:SymbolPackageFormat=snupkg --output nupkgs
 dotnet pack src/libraries/Skywalker.Security/Skywalker.Security.sln -c Release -p:IncludeSymbols=true -p:SymbolPackageFormat=snupkg --output nupkgs
 
-#Permissions
-dotnet pack src/libraries/Skywalker.Permissions.Abstractions/Skywalker.Permissions.Abstractions.sln -c Release -p:IncludeSymbols=true -p:SymbolPackageFormat=snupkg --output nupkgs
-dotnet pack src/libraries/Skywalker.AspNetCore.Permissions/Skywalker.AspNetCore.Permissions.sln -c Release -p:IncludeSymbols=true -p:SymbolPackageFormat=snupkg --output nupkgs
+#Authorization
+dotnet pack src/libraries/Skywalker.Authorization.Abstractions/Skywalker.Authorization.Abstractions.sln -c Release -p:IncludeSymbols=true -p:SymbolPackageFormat=snupkg --output nupkgs
+dotnet pack src/libraries/Skywalker.AspNetCore.Authorization/Skywalker.AspNetCore.Authorization.sln -c Release -p:IncludeSymbols=true -p:SymbolPackageFormat=snupkg --output nupkgs
 
 #Caching
 dotnet pack src/libraries/Skywalker.Caching.Abstractions/Skywalker.Caching.Abstractions.sln -c Release -p:IncludeSymbols=true -p:SymbolPackageFormat=snupkg --output nupkgs
