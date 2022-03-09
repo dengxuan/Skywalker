@@ -12,7 +12,6 @@ public static class AuthorizationIServiceCollectionExtensions
     internal static IServiceCollection AddAuthorizationServices(this IServiceCollection services, Action<PermissionOptions> options)
     {
         services.Configure(options);
-        services.AddAuthorizationCore();
         services.TryAddSingleton<IAuthorizationHandler, PermissionRequirementHandler>();
         services.TryAddSingleton<IAuthorizationHandler, PermissionsRequirementHandler>();
         services.TryAddSingleton<IPermissionDefinitionManager, PermissionDefinitionManager>();
@@ -33,12 +32,12 @@ public static class AuthorizationIServiceCollectionExtensions
         return services.Replace(ServiceDescriptor.Singleton<IPermissionChecker, AlwaysAllowPermissionChecker>());
     }
 
-    public static IServiceCollection AddAuthorization(this IServiceCollection services, Action<PermissionOptions> options)
+    public static IServiceCollection AddAuthorizationPermissionsEvaluator(this IServiceCollection services, Action<PermissionOptions> options)
     {
         return services.AddAuthorizationServices(options);
     }
 
-    public static IServiceCollection AddAuthorization(this IServiceCollection services)
+    public static IServiceCollection AddAuthorizationPermissionsEvaluator(this IServiceCollection services)
     {
         return services.AddAuthorizationServices(options =>
         {
