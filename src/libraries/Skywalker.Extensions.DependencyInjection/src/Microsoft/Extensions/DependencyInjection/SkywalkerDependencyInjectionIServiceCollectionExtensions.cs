@@ -15,7 +15,6 @@ public static class SkywalkerDependencyInjectionIServiceCollectionExtensions
                    {
                        classes.WithAttribute<TransientDependencyAttribute>();
                    })
-                   .UsingRegistrationStrategy(RegistrationStrategy.Throw)
                    .AsImplementedInterfaces()
                    .WithTransientLifetime();
             scanner.FromApplicationDependencies()
@@ -23,7 +22,6 @@ public static class SkywalkerDependencyInjectionIServiceCollectionExtensions
                    {
                        classes.WithAttribute<ScopedDependencyAttribute>();
                    })
-                   .UsingRegistrationStrategy(RegistrationStrategy.Skip)
                    .AsImplementedInterfaces()
                    .WithScopedLifetime();
             scanner.FromApplicationDependencies()
@@ -31,7 +29,6 @@ public static class SkywalkerDependencyInjectionIServiceCollectionExtensions
                    {
                        classes.WithAttribute<SingletonDependencyAttribute>();
                    })
-                   .UsingRegistrationStrategy(RegistrationStrategy.Skip)
                    .AsImplementedInterfaces()
                    .WithSingletonLifetime();
         });
