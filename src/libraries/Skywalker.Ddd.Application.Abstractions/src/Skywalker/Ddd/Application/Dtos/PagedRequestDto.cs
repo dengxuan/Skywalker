@@ -6,4 +6,4 @@ namespace Skywalker.Ddd.Application.Dtos;
 /// 分区请求接口<see cref="IPagedRequest"/>的简单实现.
 /// </summary>
 [Serializable]
-public record class PagedRequestDto(int SkipCount) : LimitedRequestDto, IRequestDto, IPagedRequest;
+public record class PagedRequestDto(int SkipCount = 0, int MaxResultCount = 20) : LimitedRequestDto(MaxResultCount), IRequestDto, IPagedRequest;

@@ -232,17 +232,19 @@ public abstract class Repository<TDbContext, TEntity> : BasicRepository<TEntity>
         return DbSet.LongCountAsync(GetCancellationToken(cancellationToken));
     }
 
-    public override Task<List<TEntity>> GetPagedListAsync(int skipCount, int maxResultCount, string sorting, CancellationToken cancellationToken = default)
+    public override async Task<List<TEntity>> GetPagedListAsync(int skipCount, int maxResultCount, string sorting, CancellationToken cancellationToken = default)
     {
-        throw new NotSupportedException();
-        //return await DbSet.OrderBy(sorting)
-        //                  .Page(skipCount, maxResultCount)
-        //                  .ToListAsync(GetCancellationToken(cancellationToken));
+        return await DbSet.OrderBy(sorting)
+                          .Page(skipCount, maxResultCount)
+                          .ToListAsync(GetCancellationToken(cancellationToken));
     }
 
-    public override Task<List<TEntity>> GetPagedListAsync(Expression<Func<TEntity, bool>> expression, int skipCount, int maxResultCount, string sorting, CancellationToken cancellationToken = default)
+    public override async Task<List<TEntity>> GetPagedListAsync(Expression<Func<TEntity, bool>> expression, int skipCount, int maxResultCount, string sorting, CancellationToken cancellationToken = default)
     {
-        throw new NotImplementedException();
+        return await DbSet.Where(expression)
+                          .OrderBy(sorting)
+                          .Page(skipCount, maxResultCount)
+                          .ToListAsync(GetCancellationToken(cancellationToken));
     }
 
     public IAsyncEnumerator<TEntity> GetAsyncEnumerator(CancellationToken cancellationToken = default)
@@ -253,18 +255,16 @@ public abstract class Repository<TDbContext, TEntity> : BasicRepository<TEntity>
 
     public async Task EnsureCollectionLoadedAsync<TProperty>(TEntity entity, Expression<Func<TEntity, IEnumerable<TProperty>>> propertyExpression, CancellationToken cancellationToken) where TProperty : class
     {
-        await DbContext
-            .Entry(entity)
-            .Collection(propertyExpression)
-            .LoadAsync(GetCancellationToken(cancellationToken));
+        await DbContext.Entry(entity)
+                       .Collection(propertyExpression)
+                       .LoadAsync(GetCancellationToken(cancellationToken));
     }
 
     public async Task EnsurePropertyLoadedAsync<TProperty>(TEntity entity, Expression<Func<TEntity, TProperty?>> propertyExpression, CancellationToken cancellationToken) where TProperty : class
     {
-        await DbContext
-            .Entry(entity)
-            .Reference(propertyExpression)
-            .LoadAsync(GetCancellationToken(cancellationToken));
+        await DbContext.Entry(entity)
+                       .Reference(propertyExpression)
+                       .LoadAsync(GetCancellationToken(cancellationToken));
     }
 }
 

@@ -1,4 +1,4 @@
-﻿<Project Sdk="Microsoft.NET.Sdk">
+<Project Sdk="Microsoft.NET.Sdk">
 	
 	<PropertyGroup>
 		<RootNamespace></RootNamespace>
@@ -9,7 +9,7 @@
 	</ItemGroup>
 
 	<ItemGroup>
-	  <ProjectReference Include="$(LibrariesProjectRoot)\Skywalker.Ddd.Domain.Abstractions\src\Skywalker.Ddd.Domain.Abstractions.csproj" />
+	  <ProjectReference Include="$(LibrariesProjectRoot)Skywalker.Ddd.Domain.Abstractions\src\Skywalker.Ddd.Domain.Abstractions.csproj" />
 	</ItemGroup>
   
 </Project>

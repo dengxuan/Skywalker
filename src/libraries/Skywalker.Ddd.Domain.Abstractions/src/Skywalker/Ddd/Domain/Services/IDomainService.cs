@@ -7,15 +7,13 @@ namespace Skywalker.Ddd.Domain.Services;
 /// 所有域服务都可以实现此接口，以按约定识别它们.
 /// 仅标记一个类是一个领域服务
 /// </summary>
-public interface IDomainService
-{
-}
+public interface IDomainService { }
 
 /// <summary>
 /// 所有域服务都可以实现此接口，以按约定识别它们.
 /// 提供基本的数据操作接口
 /// </summary>
-public interface IDomainService<TEntity> : IDomainService<TEntity, Guid> where TEntity : class, IEntity<Guid>
+public interface IDomainService<TEntity> : IDomainService where TEntity : class, IEntity
 {
     /// <summary>
     /// 添加一个实体
@@ -84,7 +82,7 @@ public interface IDomainService<TEntity> : IDomainService<TEntity, Guid> where T
 /// 所有域服务都可以实现此接口，以按约定识别它们.
 /// 提供基本的数据操作接口
 /// </summary>
-public interface IDomainService<TEntity, TKey> : IDomainService where TEntity : class, IEntity<TKey> where TKey : notnull
+public interface IDomainService<TEntity, TKey> : IDomainService<TEntity> where TEntity : class, IEntity<TKey> where TKey : notnull
 {
 
     /// <summary>

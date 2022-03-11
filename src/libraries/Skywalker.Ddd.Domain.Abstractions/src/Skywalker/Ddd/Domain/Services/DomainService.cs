@@ -13,10 +13,23 @@ namespace Skywalker.Ddd.Domain.Services;
 /// <inheritdoc/>
 /// </summary>
 [TransientDependency]
-public class DomainService<TEntity> : DomainService<TEntity, Guid>, IDomainService<TEntity> where TEntity : class, IEntity<Guid>
+public class DomainService<TEntity> :  IDomainService<TEntity> where TEntity : class, IEntity
 {
-    public DomainService(IRepository<TEntity, Guid> repository, IAsyncQueryableExecuter asyncExecuter) : base(repository, asyncExecuter)
+    /// <summary>
+    /// 仓储实例，<see cref="IRepository{TEntity, TKey}"/>
+    /// 提供对<see cref="TEntity"/>的CRUD操作
+    /// </summary>
+    protected virtual IRepository<TEntity> Repository { get; }
+
+    /// <summary>
+    /// 异步查询执行器，添加对异步查询的支持<see cref="IAsyncQueryableExecuter"/>,<seealso cref="IAsyncQueryableProvider"/>
+    /// </summary>
+    protected virtual IAsyncQueryableExecuter AsyncExecuter { get; }
+
+    public DomainService(IRepository<TEntity> repository, IAsyncQueryableExecuter asyncExecuter)
     {
+        Repository = repository;
+        AsyncExecuter = asyncExecuter;
     }
 
     /// <summary>
@@ -59,23 +72,13 @@ public class DomainService<TEntity> : DomainService<TEntity, Guid>, IDomainServi
 /// <inheritdoc/>
 /// </summary>
 [TransientDependency]
-public class DomainService<TEntity, TKey> : IDomainService<TEntity, TKey> where TEntity : class, IEntity<TKey> where TKey : notnull
+public class DomainService<TEntity, TKey> : DomainService<TEntity>, IDomainService<TEntity, TKey> where TEntity : class, IEntity<TKey> where TKey : notnull
 {
-    /// <summary>
-    /// 仓储实例，<see cref="IRepository{TEntity, TKey}"/>
-    /// 提供对<see cref="TEntity"/>的CRUD操作
-    /// </summary>
-    protected IRepository<TEntity, TKey> Repository { get; }
+    protected new virtual IRepository<TEntity, TKey> Repository { get; }
 
-    /// <summary>
-    /// 异步查询执行器，添加对异步查询的支持<see cref="IAsyncQueryableExecuter"/>,<seealso cref="IAsyncQueryableProvider"/>
-    /// </summary>
-    protected IAsyncQueryableExecuter AsyncExecuter { get; }
-
-    public DomainService(IRepository<TEntity, TKey> repository, IAsyncQueryableExecuter asyncExecuter)
+    public DomainService(IRepository<TEntity, TKey> repository, IAsyncQueryableExecuter asyncExecuter) : base(repository, asyncExecuter)
     {
         Repository = repository;
-        AsyncExecuter = asyncExecuter;
     }
 
     /// <summary>
