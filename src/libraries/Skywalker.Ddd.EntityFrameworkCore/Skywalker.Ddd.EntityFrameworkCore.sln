@@ -33,6 +33,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Skywalker.Ddd.EntityFramewo
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Skywalker.Extensions.DependencyInjection.Abstractions", "..\Skywalker.Extensions.DependencyInjection.Abstractions\src\Skywalker.Extensions.DependencyInjection.Abstractions.csproj", "{CFC2CF40-CE25-4766-BB09-ED14662B6ED6}"
 EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Skywalker.Extensions.Linq", "..\Skywalker.Extensions.Linq\src\Skywalker.Extensions.Linq.csproj", "{BE1D104F-79DC-4DB8-B52E-F7C98D8EBAA4}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -87,6 +89,10 @@ Global
 		{CFC2CF40-CE25-4766-BB09-ED14662B6ED6}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{CFC2CF40-CE25-4766-BB09-ED14662B6ED6}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{CFC2CF40-CE25-4766-BB09-ED14662B6ED6}.Release|Any CPU.Build.0 = Release|Any CPU
+		{BE1D104F-79DC-4DB8-B52E-F7C98D8EBAA4}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{BE1D104F-79DC-4DB8-B52E-F7C98D8EBAA4}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{BE1D104F-79DC-4DB8-B52E-F7C98D8EBAA4}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{BE1D104F-79DC-4DB8-B52E-F7C98D8EBAA4}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -104,6 +110,7 @@ Global
 		{9CB68F89-A02B-429B-85C9-030A2361763D} = {C2B92A11-C386-4403-AAC4-1DF4EE314BC7}
 		{26912659-11B8-4AC0-8AB3-44151E9B2C54} = {B85045AC-C36D-4F83-AB31-7043617E5ADF}
 		{CFC2CF40-CE25-4766-BB09-ED14662B6ED6} = {B85045AC-C36D-4F83-AB31-7043617E5ADF}
+		{BE1D104F-79DC-4DB8-B52E-F7C98D8EBAA4} = {B85045AC-C36D-4F83-AB31-7043617E5ADF}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {BBFA199B-AFD2-4E05-B3C5-8C1B3FBD5F9A}
