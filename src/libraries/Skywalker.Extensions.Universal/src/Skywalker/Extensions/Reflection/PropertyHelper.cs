@@ -5,7 +5,7 @@ using System.Collections.Concurrent;
 using System.Diagnostics;
 using System.Reflection;
 
-namespace Skywalker.Reflection;
+namespace Skywalker.Extensions.Reflection;
 
 public class PropertyHelper
 {
@@ -449,7 +449,7 @@ public class PropertyHelper
 
             // Walk up the hierarchy until we find the type that actually declares this
             // PropertyInfo.
-            TypeInfo? currentTypeInfo = type.GetTypeInfo();
+            var currentTypeInfo = type.GetTypeInfo();
             var declaringTypeInfo = declaringType?.GetTypeInfo();
             while (currentTypeInfo != null && currentTypeInfo != declaringTypeInfo)
             {

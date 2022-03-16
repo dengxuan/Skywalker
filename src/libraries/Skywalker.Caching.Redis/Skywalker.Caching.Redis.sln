@@ -7,7 +7,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{B65E2CAC-0B4
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Skywalker.Caching.Redis", "src\Skywalker.Caching.Redis.csproj", "{A5F47439-F12A-4764-B56E-2076BAEAC332}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Skywalker.Caching.Abstractions", "..\Skywalker.Caching.Abstractions\src\Skywalker.Caching.Abstractions.csproj", "{4E86A8D7-D4EC-4471-AE54-9E557C83FB47}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Skywalker.Caching.Abstractions", "..\Skywalker.Extensions.Caching.Abstractions\src\Skywalker.Extensions.Caching.Abstractions.csproj", "{4E86A8D7-D4EC-4471-AE54-9E557C83FB47}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Skywalker.Extensions.Json", "..\Skywalker.Extensions.Json\src\Skywalker.Extensions.Json.csproj", "{5328CEA9-3773-4CF7-A60B-CE27610F1DB8}"
 EndProject

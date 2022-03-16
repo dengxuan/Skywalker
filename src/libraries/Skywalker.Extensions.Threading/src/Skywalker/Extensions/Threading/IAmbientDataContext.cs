@@ -1,9 +1,8 @@
-﻿namespace Skywalker.Extensions.Threading
-{
-    public interface IAmbientDataContext
-    {
-        void SetData(string key, object? value);
+﻿namespace Skywalker.Extensions.Threading;
 
-        object? GetData(string key);
-    }
+public interface IAmbientDataContext
+{
+    void SetData(string key, object? value);
+
+    object? GetData(string key);
 }

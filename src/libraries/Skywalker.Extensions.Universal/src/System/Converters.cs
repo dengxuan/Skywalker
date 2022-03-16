@@ -210,11 +210,11 @@ public static class Converters
 
     private static bool IsSimpleType(Type type)
     {
-        if(type.IsPrimitive || type.IsEnum || s_simpleTypes.Contains(type))
+        if (type.IsPrimitive || type.IsEnum || s_simpleTypes.Contains(type))
         {
             return true;
         }
-        if(Convert.GetTypeCode(type) != TypeCode.Object)
+        if (Convert.GetTypeCode(type) != TypeCode.Object)
         {
             return true;
         }

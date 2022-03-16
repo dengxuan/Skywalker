@@ -1,6 +1,4 @@
-﻿using System.Threading;
-
-namespace Skywalker.Extensions.Threading
+﻿namespace Skywalker.Extensions.Threading
 {
     public class NullCancellationTokenProvider : ICancellationTokenProvider
     {

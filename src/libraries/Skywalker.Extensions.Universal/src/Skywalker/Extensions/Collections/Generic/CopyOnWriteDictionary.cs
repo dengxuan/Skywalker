@@ -3,7 +3,7 @@
 using System.Diagnostics.CodeAnalysis;
 #endif
 
-namespace Skywalker.Collections.Generic;
+namespace Skywalker.Extensions.Collections.Generic;
 
 public class CopyOnWriteDictionary<TKey, TValue> : IDictionary<TKey, TValue> where TKey : notnull
 {

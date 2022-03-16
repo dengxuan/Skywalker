@@ -1,6 +1,4 @@
-﻿using Skywalker;
-
-namespace System.Collections.Generic;
+﻿namespace System.Collections.Generic;
 
 /// <summary>
 /// Adds reading semantics to a base <see cref="IEnumerator{T}"/> with the 

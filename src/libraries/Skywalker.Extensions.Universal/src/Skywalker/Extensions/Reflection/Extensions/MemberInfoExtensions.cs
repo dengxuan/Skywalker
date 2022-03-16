@@ -1,6 +1,6 @@
 ﻿using System.Reflection;
 
-namespace Skywalker.Reflection.Extensions;
+namespace Skywalker.Extensions.Reflection.Extensions;
 
 /// <summary>
 /// Extensions to <see cref="MemberInfo"/>.

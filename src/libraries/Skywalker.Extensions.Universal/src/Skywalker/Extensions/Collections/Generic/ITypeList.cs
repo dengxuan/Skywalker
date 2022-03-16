@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace Skywalker.Collections.Generic;
+namespace Skywalker.Extensions.Collections.Generic;
 
 /// <summary>
 /// A shortcut for <see cref="ITypeList{TBaseType}"/> to use object as base type.

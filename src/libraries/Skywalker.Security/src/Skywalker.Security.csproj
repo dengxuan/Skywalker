@@ -5,7 +5,7 @@
 	</PropertyGroup>
 
 	<ItemGroup>
-		<ProjectReference Include="..\Skywalker.Security.Abstractions\Skywalker.Security.Abstractions.csproj" />
+		<ProjectReference Include="$(LibrariesProjectRoot)Skywalker.Security.Abstractions\src\Skywalker.Security.Abstractions.csproj" />
 	</ItemGroup>
 
 </Project>

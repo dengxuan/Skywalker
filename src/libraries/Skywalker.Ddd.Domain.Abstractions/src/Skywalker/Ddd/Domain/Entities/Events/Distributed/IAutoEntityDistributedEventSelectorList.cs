@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using Skywalker.Extensions.Collections;
 
 namespace Skywalker.Ddd.Domain.Entities.Events.Distributed
 {

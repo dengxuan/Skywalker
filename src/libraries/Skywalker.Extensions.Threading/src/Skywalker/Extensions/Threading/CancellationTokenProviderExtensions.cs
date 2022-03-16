@@ -1,14 +1,11 @@
-﻿using System.Threading;
+﻿namespace Skywalker.Extensions.Threading;
 
-namespace Skywalker.Extensions.Threading
+public static class CancellationTokenProviderExtensions
 {
-    public static class CancellationTokenProviderExtensions
+    public static CancellationToken FallbackToProvider(this ICancellationTokenProvider provider, CancellationToken prefferedValue = default)
     {
-        public static CancellationToken FallbackToProvider(this ICancellationTokenProvider provider, CancellationToken prefferedValue = default)
-        {
-            return prefferedValue == default || prefferedValue == CancellationToken.None
-                ? provider.Token
-                : prefferedValue;
-        }
+        return prefferedValue == default || prefferedValue == CancellationToken.None
+            ? provider.Token
+            : prefferedValue;
     }
 }

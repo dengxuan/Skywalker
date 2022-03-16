@@ -1,6 +1,4 @@
-﻿using Skywalker;
-
-namespace System.Collections.Generic;
+﻿namespace System.Collections.Generic;
 
 /// <summary>
 /// Extension methods for Collections.

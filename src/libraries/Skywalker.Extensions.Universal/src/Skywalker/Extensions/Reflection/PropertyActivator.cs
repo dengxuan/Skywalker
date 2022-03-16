@@ -2,7 +2,7 @@
 using System.Linq;
 using System.Reflection;
 
-namespace Skywalker.Reflection
+namespace Skywalker.Extensions.Reflection
 {
     public class PropertyActivator<TContext>
     {

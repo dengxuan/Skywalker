@@ -1,9 +1,8 @@
-﻿namespace Skywalker.Extensions.Threading
-{
-    public interface IAmbientScopeProvider<T>
-    {
-        T? GetValue(string contextKey);
+﻿namespace Skywalker.Extensions.Threading;
 
-        IDisposable BeginScope(string contextKey, T value);
-    }
+public interface IAmbientScopeProvider<T>
+{
+    T? GetValue(string contextKey);
+
+    IDisposable BeginScope(string contextKey, T value);
 }

@@ -1,9 +1,6 @@
-﻿using System.Threading;
+﻿namespace Skywalker.Extensions.Threading;
 
-namespace Skywalker.Extensions.Threading
+public interface ICancellationTokenProvider
 {
-    public interface ICancellationTokenProvider
-    {
-        CancellationToken Token { get; }
-    }
+    CancellationToken Token { get; }
 }

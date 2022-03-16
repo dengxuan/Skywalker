@@ -1,7 +1,7 @@
 using Microsoft.Extensions.DependencyInjection;
-using Skywalker.Collections.Generic;
+using Skywalker.Extensions.Collections.Generic;
 using Skywalker.EventBus.Abstractions;
-using Skywalker.Reflection;
+using Skywalker.Extensions.Reflection;
 using System.Reflection;
 using System.Runtime.CompilerServices;
 

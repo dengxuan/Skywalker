@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
 
-namespace Skywalker.Reflection
+namespace Skywalker.Extensions.Reflection
 {
     public static class CustomAttributeAccessor
     {
@@ -26,7 +26,7 @@ namespace Skywalker.Reflection
         }
         public static IEnumerable<Attribute> GetCustomAttributes(Type type, bool inherit = true)
         {
-            TypeInfo typeInfo = type.GetTypeInfo();
+            var typeInfo = type.GetTypeInfo();
             Attribute[]? attributes;
             if (inherit)
             {
