@@ -1,7 +1,6 @@
 using System.Collections.Concurrent;
 using System.Linq.Expressions;
 using System.Reflection;
-using Skywalker.Ddd.Reflection;
 using Skywalker.Exceptions;
 
 namespace Skywalker.Ddd.Domain.Entities;

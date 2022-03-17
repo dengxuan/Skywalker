@@ -1,14 +1,13 @@
-﻿namespace Skywalker.Extensions.Threading
+﻿namespace Skywalker.Extensions.Threading;
+
+public class NullCancellationTokenProvider : ICancellationTokenProvider
 {
-    public class NullCancellationTokenProvider : ICancellationTokenProvider
+    public static NullCancellationTokenProvider Instance { get; } = new NullCancellationTokenProvider();
+
+    public CancellationToken Token { get; } = CancellationToken.None;
+
+    private NullCancellationTokenProvider()
     {
-        public static NullCancellationTokenProvider Instance { get; } = new NullCancellationTokenProvider();
-
-        public CancellationToken Token { get; } = CancellationToken.None;
-
-        private NullCancellationTokenProvider()
-        {
-            
-        }
+        
     }
 }

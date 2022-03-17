@@ -1,0 +1,34 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.30114.105
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{43CFB97F-EDAE-428B-93D3-1629A8C4E76C}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Skywalker.IdentifierGenerator.Snowflake", "src\Skywalker.IdentifierGenerator.Snowflake.csproj", "{CE8DCDA9-0E38-4841-8F7A-346BEB15C825}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Skywalker.IdentifierGenerator.Abstractions", "..\Skywalker.IdentifierGenerator.Abstractions\src\Skywalker.IdentifierGenerator.Abstractions.csproj", "{A855C9DC-7902-4D83-93B7-683816BFC6A3}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{CE8DCDA9-0E38-4841-8F7A-346BEB15C825}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{CE8DCDA9-0E38-4841-8F7A-346BEB15C825}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{CE8DCDA9-0E38-4841-8F7A-346BEB15C825}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{CE8DCDA9-0E38-4841-8F7A-346BEB15C825}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A855C9DC-7902-4D83-93B7-683816BFC6A3}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A855C9DC-7902-4D83-93B7-683816BFC6A3}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A855C9DC-7902-4D83-93B7-683816BFC6A3}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A855C9DC-7902-4D83-93B7-683816BFC6A3}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{CE8DCDA9-0E38-4841-8F7A-346BEB15C825} = {43CFB97F-EDAE-428B-93D3-1629A8C4E76C}
+		{A855C9DC-7902-4D83-93B7-683816BFC6A3} = {43CFB97F-EDAE-428B-93D3-1629A8C4E76C}
+	EndGlobalSection
+EndGlobal

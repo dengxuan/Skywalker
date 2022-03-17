@@ -1,9 +1,8 @@
 ﻿using System.Linq.Expressions;
 using Skywalker.Ddd.Data;
 using Skywalker.Ddd.Domain.Entities;
-using Skywalker.Ddd.Domain.Repositories;
 
-namespace Skywalker.Domain.Repositories;
+namespace Skywalker.Ddd.Domain.Repositories;
 
 public static class RepositoryExtensions
 {

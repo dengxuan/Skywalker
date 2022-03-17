@@ -1,0 +1,41 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.30114.105
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{B9B7B121-461E-46E6-A8BE-42BD3DD8997C}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Skywalker.IdentifierGenerator.Snowflake.Redis", "src\Skywalker.IdentifierGenerator.Snowflake.Redis.csproj", "{E5904AF0-6D09-4293-B871-DBFAE775360D}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Skywalker.IdentifierGenerator.Snowflake", "..\Skywalker.IdentifierGenerator.Snowflake\src\Skywalker.IdentifierGenerator.Snowflake.csproj", "{51687CD9-F4CE-4AA4-96D1-9620639E4DE4}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Skywalker.IdentifierGenerator.Abstractions", "..\Skywalker.IdentifierGenerator.Abstractions\src\Skywalker.IdentifierGenerator.Abstractions.csproj", "{89E552E4-1302-4B91-B6CB-03F1E1289CA1}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{E5904AF0-6D09-4293-B871-DBFAE775360D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E5904AF0-6D09-4293-B871-DBFAE775360D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E5904AF0-6D09-4293-B871-DBFAE775360D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E5904AF0-6D09-4293-B871-DBFAE775360D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{51687CD9-F4CE-4AA4-96D1-9620639E4DE4}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{51687CD9-F4CE-4AA4-96D1-9620639E4DE4}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{51687CD9-F4CE-4AA4-96D1-9620639E4DE4}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{51687CD9-F4CE-4AA4-96D1-9620639E4DE4}.Release|Any CPU.Build.0 = Release|Any CPU
+		{89E552E4-1302-4B91-B6CB-03F1E1289CA1}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{89E552E4-1302-4B91-B6CB-03F1E1289CA1}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{89E552E4-1302-4B91-B6CB-03F1E1289CA1}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{89E552E4-1302-4B91-B6CB-03F1E1289CA1}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{E5904AF0-6D09-4293-B871-DBFAE775360D} = {B9B7B121-461E-46E6-A8BE-42BD3DD8997C}
+		{51687CD9-F4CE-4AA4-96D1-9620639E4DE4} = {B9B7B121-461E-46E6-A8BE-42BD3DD8997C}
+		{89E552E4-1302-4B91-B6CB-03F1E1289CA1} = {B9B7B121-461E-46E6-A8BE-42BD3DD8997C}
+	EndGlobalSection
+EndGlobal

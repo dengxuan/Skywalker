@@ -11,12 +11,10 @@
 
   <ItemGroup>
     <ProjectReference Include="$(LibrariesProjectRoot)Skywalker.Extensions.Universal\src\Skywalker.Extensions.Universal.csproj" />
-    <ProjectReference Include="$(LibrariesProjectRoot)Skywalker.Extensions.Timing\src\Skywalker.Extensions.Timing.csproj" />
     <ProjectReference Include="$(LibrariesProjectRoot)Skywalker.Extensions.Threading\src\Skywalker.Extensions.Threading.csproj" />
-    <ProjectReference Include="$(LibrariesProjectRoot)Skywalker.Extensions.GuidGenerator\src\Skywalker.Extensions.GuidGenerator.csproj" />
     <ProjectReference Include="$(LibrariesProjectRoot)Skywalker.Extensions.Specifications\src\Skywalker.Extensions.Specifications.csproj" />
-    <ProjectReference Include="$(LibrariesProjectRoot)Skywalker.Exceptions.Abstractions\src\Skywalker.Exceptions.Abstractions.csproj" />
     <ProjectReference Include="$(LibrariesProjectRoot)Skywalker.EventBus.Abstractions\src\Skywalker.EventBus.Abstractions.csproj" />
+    <ProjectReference Include="$(LibrariesProjectRoot)Skywalker.Exceptions.Abstractions\src\Skywalker.Exceptions.Abstractions.csproj" />
     <ProjectReference Include="$(LibrariesProjectRoot)Skywalker.ObjectMapper.Abstractions\src\Skywalker.ObjectMapper.Abstractions.csproj" />
   </ItemGroup>
 
