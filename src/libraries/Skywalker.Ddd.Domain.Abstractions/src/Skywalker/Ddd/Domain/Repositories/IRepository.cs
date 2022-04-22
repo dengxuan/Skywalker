@@ -1,14 +1,13 @@
 ﻿using System.Linq.Expressions;
 using Skywalker.Ddd.Domain.Entities;
+using Skywalker.Extensions.DependencyInjection;
 
 namespace Skywalker.Ddd.Domain.Repositories;
 
 /// <summary>
 /// Just to mark a class as repository.
 /// </summary>
-public interface IRepository
-{
-}
+public interface IRepository : ITransientDependency { }
 
 public interface IRepository<TEntity> : IReadOnlyRepository<TEntity>, IBasicRepository<TEntity> where TEntity : class, IEntity
 {

@@ -1,8 +1,9 @@
 using System.Linq.Expressions;
+using Skywalker.Extensions.DependencyInjection;
 
 namespace System.Linq;
 
-public interface IAsyncQueryableExecuter
+public interface IAsyncQueryableExecuter: ISingletonDependency
 {
     #region Contains
 

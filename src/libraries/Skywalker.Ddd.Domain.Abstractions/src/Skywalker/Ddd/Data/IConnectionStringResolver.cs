@@ -1,7 +1,8 @@
-﻿namespace Skywalker.Ddd.Data
+﻿using Skywalker.Extensions.DependencyInjection;
+
+namespace Skywalker.Ddd.Data;
+
+public interface IConnectionStringResolver: ITransientDependency
 {
-    public interface IConnectionStringResolver
-    {
-        string Resolve(string connectionStringName);
-    }
+    string Resolve(string connectionStringName);
 }

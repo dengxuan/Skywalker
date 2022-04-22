@@ -1,6 +1,8 @@
-﻿namespace Skywalker.Extensions.Threading;
+﻿using Skywalker.Extensions.DependencyInjection;
 
-public interface IAmbientScopeProvider<T>
+namespace Skywalker.Extensions.Threading;
+
+public interface IAmbientScopeProvider<T>: ISingletonDependency
 {
     T? GetValue(string contextKey);
 

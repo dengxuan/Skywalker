@@ -1,32 +1,29 @@
-using Skywalker.Extensions.DependencyInjection;
 using Microsoft.Extensions.Options;
 
-namespace Skywalker.Ddd.Data
+namespace Skywalker.Ddd.Data;
+
+public class DefaultConnectionStringResolver : IConnectionStringResolver
 {
-    [TransientDependency]
-    public class DefaultConnectionStringResolver : IConnectionStringResolver
+    protected SkywalkerDbConnectionOptions Options { get; }
+
+    public DefaultConnectionStringResolver(IOptionsSnapshot<SkywalkerDbConnectionOptions> options)
     {
-        protected SkywalkerDbConnectionOptions Options { get; }
+        Options = options.Value;
+    }
 
-        public DefaultConnectionStringResolver(IOptionsSnapshot<SkywalkerDbConnectionOptions> options)
+    public virtual string Resolve(string connectionStringName)
+    {
+        //Get module specific value if provided
+        if (!connectionStringName!.IsNullOrEmpty())
         {
-            Options = options.Value;
-        }
-
-        public virtual string Resolve(string connectionStringName)
-        {
-            //Get module specific value if provided
-            if (!connectionStringName!.IsNullOrEmpty())
+            var moduleConnString = Options.ConnectionStrings.GetOrDefault(connectionStringName);
+            if (!moduleConnString.IsNullOrEmpty())
             {
-                var moduleConnString = Options.ConnectionStrings.GetOrDefault(connectionStringName);
-                if (!moduleConnString.IsNullOrEmpty())
-                {
-                    return moduleConnString!;
-                }
+                return moduleConnString!;
             }
-
-            //Get default value
-            return Options.ConnectionStrings.Default;
         }
+
+        //Get default value
+        return Options.ConnectionStrings.Default;
     }
 }

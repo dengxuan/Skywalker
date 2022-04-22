@@ -11,7 +11,6 @@ namespace Skywalker.Ddd.Domain.Services;
 /// <summary>
 /// <inheritdoc/>
 /// </summary>
-[TransientDependency]
 public class DomainService<TEntity> :  IDomainService<TEntity> where TEntity : class, IEntity
 {
     /// <summary>
@@ -70,7 +69,6 @@ public class DomainService<TEntity> :  IDomainService<TEntity> where TEntity : c
 /// <summary>
 /// <inheritdoc/>
 /// </summary>
-[TransientDependency]
 public class DomainService<TEntity, TKey> : DomainService<TEntity>, IDomainService<TEntity, TKey> where TEntity : class, IEntity<TKey> where TKey : notnull
 {
     protected new virtual IRepository<TEntity, TKey> Repository { get; }
