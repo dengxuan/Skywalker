@@ -1,14 +1,11 @@
-﻿using System.Collections.Generic;
+﻿namespace Skywalker.Ddd.Domain.Entities;
 
-namespace Skywalker.Ddd.Domain.Entities
+//TODO: Re-consider this interface
+
+public interface IGeneratesDomainEvents
 {
-    //TODO: Re-consider this interface
 
-    public interface IGeneratesDomainEvents
-    {
+    IEnumerable<object> GetDistributedEvents();
 
-        IEnumerable<object> GetDistributedEvents();
-
-        void ClearDistributedEvents();
-    }
+    void ClearDistributedEvents();
 }

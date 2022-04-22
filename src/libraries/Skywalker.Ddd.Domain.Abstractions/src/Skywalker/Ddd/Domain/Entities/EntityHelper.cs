@@ -205,7 +205,7 @@ public static class EntityHelper
         return Expression.Lambda<Func<TEntity, bool>>(lambdaBody, lambdaParam);
     }
 
-    public static void TrySetId<TKey>(IEntity<TKey> entity, Func<TKey> idFactory, bool checkForDisableIdGenerationAttribute = false) where TKey : notnull
+    public static void TrySetEntityId<TKey>(IEntity<TKey> entity, Func<TKey> idFactory, bool checkForDisableIdGenerationAttribute = false) where TKey : notnull
     {
         var property = s_cachedIdProperties!.GetOrAdd($"{entity.GetType().FullName}-{checkForDisableIdGenerationAttribute}", () =>
         {
@@ -216,12 +216,10 @@ public static class EntityHelper
                 return null;
             }
 
-            if (checkForDisableIdGenerationAttribute &&
-                idProperty.IsDefined(typeof(DisableIdGenerationAttribute), true))
+            if (checkForDisableIdGenerationAttribute && idProperty.IsDefined(typeof(DisableIdGenerationAttribute), true))
             {
                 return null;
             }
-
             return idProperty;
         });
 

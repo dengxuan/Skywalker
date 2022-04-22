@@ -1,6 +1,5 @@
 ﻿using System.Security.Claims;
 using Skywalker.Authorization.Permissions.Abstractions;
-using Skywalker.Extensions.Threading;
 
 namespace Skywalker.Authorization.Permissions;
 
@@ -14,12 +13,14 @@ public class AlwaysAllowPermissionChecker : IPermissionChecker
 {
     public Task<bool> IsGrantedAsync(string name)
     {
-        return TaskCache.TrueResult;
+        return Task.FromResult(true);
+       // Todo: return TaskCache.TrueResult;
     }
 
     public Task<bool> IsGrantedAsync(ClaimsPrincipal? claimsPrincipal, string name)
     {
-        return TaskCache.TrueResult;
+        return Task.FromResult(true);
+        // Todo: return TaskCache.TrueResult;
     }
 
     public Task<MultiplePermissionGrantResult> IsGrantedAsync(string[] names)

@@ -12,7 +12,7 @@ using Skywalker.Ddd.Domain.Entities;
 using Skywalker.Ddd.Domain.Entities.Events;
 using Skywalker.Ddd.EntityFrameworkCore.ValueConverters;
 using Skywalker.Ddd.Uow.Abstractions;
-using Skywalker.Extensions.Timing;
+using Skywalker.Extensions.Timezone;
 
 namespace Skywalker.Ddd.EntityFrameworkCore;
 

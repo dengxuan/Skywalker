@@ -1,5 +1,5 @@
 ﻿using Skywalker.Authorization.Permissions.Abstractions;
-using Skywalker.Collections.Generic;
+using Skywalker.Extensions.Collections.Generic;
 
 namespace Skywalker.Authorization.Permissions;
 

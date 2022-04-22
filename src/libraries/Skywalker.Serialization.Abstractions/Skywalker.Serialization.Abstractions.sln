@@ -5,11 +5,7 @@ VisualStudioVersion = 17.0.32014.148
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{07084B7C-642F-49BE-B2A4-51719F3131F8}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Skywalker.Extensions.Json", "src\Skywalker.Extensions.Json.csproj", "{8AE11C9D-0CFB-4A64-A6E9-745D6480666A}"
-EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Skywalker.Extensions.Timing", "..\Skywalker.Extensions.Timing\src\Skywalker.Extensions.Timing.csproj", "{F8852B9C-6840-49F9-9B73-1243FB48EC09}"
-EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Skywalker.Extensions.Universal", "..\Skywalker.Extensions.Universal\src\Skywalker.Extensions.Universal.csproj", "{BDA2DE9C-08C1-42A6-9509-F7A315CD16B8}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Skywalker.Serialization.Abstractions", "src\Skywalker.Serialization.Abstractions.csproj", "{42A9694B-8ED4-43F2-AA5D-E18891472332}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -17,26 +13,16 @@ Global
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{8AE11C9D-0CFB-4A64-A6E9-745D6480666A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{8AE11C9D-0CFB-4A64-A6E9-745D6480666A}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{8AE11C9D-0CFB-4A64-A6E9-745D6480666A}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{8AE11C9D-0CFB-4A64-A6E9-745D6480666A}.Release|Any CPU.Build.0 = Release|Any CPU
-		{F8852B9C-6840-49F9-9B73-1243FB48EC09}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{F8852B9C-6840-49F9-9B73-1243FB48EC09}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{F8852B9C-6840-49F9-9B73-1243FB48EC09}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{F8852B9C-6840-49F9-9B73-1243FB48EC09}.Release|Any CPU.Build.0 = Release|Any CPU
-		{BDA2DE9C-08C1-42A6-9509-F7A315CD16B8}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{BDA2DE9C-08C1-42A6-9509-F7A315CD16B8}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{BDA2DE9C-08C1-42A6-9509-F7A315CD16B8}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{BDA2DE9C-08C1-42A6-9509-F7A315CD16B8}.Release|Any CPU.Build.0 = Release|Any CPU
+		{42A9694B-8ED4-43F2-AA5D-E18891472332}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{42A9694B-8ED4-43F2-AA5D-E18891472332}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{42A9694B-8ED4-43F2-AA5D-E18891472332}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{42A9694B-8ED4-43F2-AA5D-E18891472332}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
-		{8AE11C9D-0CFB-4A64-A6E9-745D6480666A} = {07084B7C-642F-49BE-B2A4-51719F3131F8}
-		{F8852B9C-6840-49F9-9B73-1243FB48EC09} = {07084B7C-642F-49BE-B2A4-51719F3131F8}
-		{BDA2DE9C-08C1-42A6-9509-F7A315CD16B8} = {07084B7C-642F-49BE-B2A4-51719F3131F8}
+		{42A9694B-8ED4-43F2-AA5D-E18891472332} = {07084B7C-642F-49BE-B2A4-51719F3131F8}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {FAE2E927-C4D5-49BC-B77A-1CA4C07DE5B1}

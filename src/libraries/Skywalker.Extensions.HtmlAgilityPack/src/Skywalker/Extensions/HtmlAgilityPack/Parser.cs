@@ -1,8 +1,7 @@
 ﻿using System.Globalization;
 using Skywalker.Extensions.HtmlAgilityPack.Abstractions;
-using Skywalker.Tokenizer;
-
-using TokenSpec = Skywalker.Tokenizer.Either<Skywalker.Tokenizer.TokenKind, Skywalker.Tokenizer.Token>;
+using Skywalker.Extensions.Tokenizer;
+using TokenSpec = Skywalker.Extensions.Tokenizer.Either<Skywalker.Extensions.Tokenizer.TokenKind, Skywalker.Extensions.Tokenizer.Token>;
 
 namespace Skywalker.Extensions.HtmlAgilityPack;
 

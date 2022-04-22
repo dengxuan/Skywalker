@@ -1,4 +1,4 @@
-﻿<Project Sdk="Microsoft.NET.Sdk">
+<Project Sdk="Microsoft.NET.Sdk">
 
 	<PropertyGroup>
 		<RootNamespace></RootNamespace>
@@ -9,8 +9,8 @@
 	</ItemGroup>
 
 	<ItemGroup>
-		<ProjectReference Include="..\Skywalker.AspNetCore.Security.Abstractions\Skywalker.AspNetCore.Security.Abstractions.csproj" />
-		<ProjectReference Include="..\Skywalker.Security\Skywalker.Security.csproj" />
+		<ProjectReference Include="$(LibrariesProjectRoot)Skywalker.AspNetCore.Security.Abstractions\src\Skywalker.AspNetCore.Security.Abstractions.csproj" />
+		<ProjectReference Include="$(LibrariesProjectRoot)Skywalker.Security\src\Skywalker.Security.csproj" />
 	</ItemGroup>
 
 </Project>

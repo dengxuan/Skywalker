@@ -5,7 +5,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Skywalker.Ddd.Uow.Abstractions;
 using Skywalker.Extensions.DependencyInjection;
 using Skywalker.Extensions.DependencyInjection.Abstractions;
-using Skywalker.Extensions.Exceptions;
+using Skywalker.Exceptions;
 
 namespace Skywalker.Ddd.Uow;
 

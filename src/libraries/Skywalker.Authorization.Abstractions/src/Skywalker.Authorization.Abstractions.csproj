@@ -1,4 +1,4 @@
-<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
     <RootNamespace></RootNamespace>
@@ -15,7 +15,7 @@
   <ItemGroup>
     <ProjectReference Include="$(LibrariesProjectRoot)Skywalker.Security.Abstractions\src\Skywalker.Security.Abstractions.csproj" />
     <ProjectReference Include="$(LibrariesProjectRoot)Skywalker.Extensions.SimpleStateChecking\src\Skywalker.Extensions.SimpleStateChecking.csproj" />
-    <ProjectReference Include="$(LibrariesProjectRoot)Skywalker.Extensions.Exceptions.Abstractions\src\Skywalker.Extensions.Exceptions.Abstractions.csproj" />
+    <ProjectReference Include="$(LibrariesProjectRoot)Skywalker.ExceptionHandler.Abstractions\src\Skywalker.ExceptionHandler.Abstractions.csproj" />
   </ItemGroup>
 
 </Project>

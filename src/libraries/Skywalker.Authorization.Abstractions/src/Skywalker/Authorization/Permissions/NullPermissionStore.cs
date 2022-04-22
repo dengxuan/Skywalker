@@ -16,7 +16,9 @@ public class NullPermissionStore : IPermissionStore
 
     public Task<bool> IsGrantedAsync(string name, string? providerName, string? providerKey)
     {
-        return TaskCache.FalseResult;
+        //Todo: TaskCache.FalseResult;
+        return Task.FromResult(false);
+        //return TaskCache.FalseResult;
     }
 
     public Task<MultiplePermissionGrantResult> IsGrantedAsync(string[] names, string? providerName, string? providerKey)

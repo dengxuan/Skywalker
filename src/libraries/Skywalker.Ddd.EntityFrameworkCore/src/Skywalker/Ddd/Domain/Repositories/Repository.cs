@@ -1,17 +1,16 @@
 ﻿using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq.Expressions;
+using System.Reflection;
 using Microsoft.EntityFrameworkCore;
 using Skywalker.Ddd.Data;
 using Skywalker.Ddd.Domain.Entities;
 using Skywalker.Ddd.Domain.Entities.Events;
 using Skywalker.Ddd.Domain.Repositories;
-using Skywalker.Domain.Repositories;
 using Skywalker.EventBus;
 using Skywalker.EventBus.Abstractions;
 using Skywalker.Extensions.DependencyInjection;
-using Skywalker.Extensions.GuidGenerator;
-using Skywalker.Extensions.Timing;
-using Skywalker.Reflection;
+using Skywalker.Extensions.Timezone;
+using Skywalker.IdentifierGenerator.Abstractions;
 
 namespace Skywalker.Ddd.EntityFrameworkCore.Repositories;
 
@@ -24,22 +23,19 @@ public abstract class Repository<TDbContext, TEntity> : BasicRepository<TEntity>
 
     private readonly IEventBus _eventBus;
 
-    private readonly IGuidGenerator _guidGenerator;
-
     private readonly IDbContextProvider<TDbContext> _dbContextProvider;
 
     protected IEntityChangeEventHelper EntityChangeEventHelper { get; set; }
 
-    public  DbSet<TEntity> DbSet => DbContext.Set<TEntity>();
+    public DbSet<TEntity> DbSet => DbContext.Set<TEntity>();
 
-    public  DbContext DbContext => _dbContextProvider.GetDbContext();
+    public DbContext DbContext => _dbContextProvider.GetDbContext();
 
-    public Repository(IDbContextProvider<TDbContext> dbContextProvider, IClock clock, IGuidGenerator guidGenerator)
+    public Repository(IDbContextProvider<TDbContext> dbContextProvider, IClock clock)
     {
-        _dbContextProvider = dbContextProvider;
         _clock = clock;
-        _guidGenerator = guidGenerator;
         _eventBus = NullEventBus.Instance;
+        _dbContextProvider = dbContextProvider;
         EntityChangeEventHelper = NullEntityChangeEventHelper.Instance;
     }
 
@@ -106,26 +102,6 @@ public abstract class Repository<TDbContext, TEntity> : BasicRepository<TEntity>
         }
     }
 
-    protected void TrySetGuidId(IEntity<Guid> entity)
-    {
-        if (entity.Id != default)
-        {
-            return;
-        }
-
-        var idProperty = entity.GetType().GetProperty("Id");
-
-        //Check for DatabaseGeneratedAttribute
-        var dbGeneratedAttr = ReflectionHelper.GetSingleAttributeOrDefault<DatabaseGeneratedAttribute>(idProperty!);
-
-        if (dbGeneratedAttr != null && dbGeneratedAttr.DatabaseGeneratedOption != DatabaseGeneratedOption.None)
-        {
-            return;
-        }
-
-        EntityHelper.TrySetId(entity, () => _guidGenerator.Create(), true);
-    }
-
     protected virtual void SetConcurrencyStampIfNull(TEntity entity)
     {
         if (entity is not IHasConcurrencyStamp hasConcurrencyStamp)
@@ -146,6 +122,8 @@ public abstract class Repository<TDbContext, TEntity> : BasicRepository<TEntity>
     {
         return DbSet.AsQueryable();
     }
+
+    protected abstract void SetIdentifier(TEntity entity);
 
     public override async Task<TEntity?> FindAsync(Expression<Func<TEntity, bool>> predicate, CancellationToken cancellationToken = default)
     {
@@ -169,10 +147,7 @@ public abstract class Repository<TDbContext, TEntity> : BasicRepository<TEntity>
             objectWithCreationTime.CreationTime = _clock.Now;
         }
 
-        if (entity is IEntity<Guid> entityWithGuidId)
-        {
-            TrySetGuidId(entityWithGuidId);
-        }
+        SetIdentifier(entity);
 
         SetConcurrencyStampIfNull(entity);
 
@@ -192,12 +167,10 @@ public abstract class Repository<TDbContext, TEntity> : BasicRepository<TEntity>
                 objectWithCreationTime.CreationTime = _clock.Now;
             }
 
-            if (entity is IEntity<Guid> entityWithGuidId)
-            {
-                TrySetGuidId(entityWithGuidId);
-            }
+            SetIdentifier(entity);
 
             SetConcurrencyStampIfNull(entity);
+
             await ApplySkywalkerConceptsForAddedEntityAsync(entity);
         }
         await DbSet.AddRangeAsync(entities, GetCancellationToken(cancellationToken));
@@ -273,10 +246,28 @@ public abstract class Repository<TDbContext, TEntity, TKey> : Repository<TDbCont
     where TEntity : class, IEntity<TKey>
     where TKey : notnull
 {
-    public Repository(IDbContextProvider<TDbContext> dbContextProvider, IClock clock, IGuidGenerator guidGenerator)
-        : base(dbContextProvider, clock, guidGenerator)
-    {
 
+    private readonly IIdentifierGenerator<TKey> _identifierGenerator;
+
+    protected override void SetIdentifier(TEntity entity)
+    {
+        var identifier = typeof(TEntity).GetProperty(nameof(entity.Id));
+
+        //Check for DatabaseGeneratedAttribute
+        var dbGeneratedAttr = ReflectionHelper.GetSingleAttributeOrDefault<DatabaseGeneratedAttribute>(identifier!);
+
+        if (dbGeneratedAttr != null && dbGeneratedAttr.DatabaseGeneratedOption != DatabaseGeneratedOption.None)
+        {
+            return;
+        }
+
+        EntityHelper.TrySetEntityId(entity, () => _identifierGenerator.Create(), true);
+    }
+
+    public Repository(IDbContextProvider<TDbContext> dbContextProvider, IClock clock, IIdentifierGenerator<TKey> identifierGenerator)
+        : base(dbContextProvider, clock)
+    {
+        _identifierGenerator = identifierGenerator;
     }
 
     public async Task DeleteAsync(TKey id, CancellationToken cancellationToken = default)

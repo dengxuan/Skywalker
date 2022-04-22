@@ -13,8 +13,6 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Skywalker.Extensions.Univer
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Skywalker.Extensions.SimpleStateChecking", "..\Skywalker.Extensions.SimpleStateChecking\src\Skywalker.Extensions.SimpleStateChecking.csproj", "{3BC12106-5A91-4F6F-92A8-082D7114C13C}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Skywalker.Extensions.Exceptions.Abstractions", "..\Skywalker.Extensions.Exceptions.Abstractions\src\Skywalker.Extensions.Exceptions.Abstractions.csproj", "{3D0067A7-BB9A-4E50-94F7-A5FEDEE67CA9}"
-EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Skywalker.Extensions.DependencyInjection.Abstractions", "..\Skywalker.Extensions.DependencyInjection.Abstractions\src\Skywalker.Extensions.DependencyInjection.Abstractions.csproj", "{0B6D5C69-5906-491F-AD3E-07E361B3547A}"
 EndProject
 Global
@@ -39,10 +37,6 @@ Global
 		{3BC12106-5A91-4F6F-92A8-082D7114C13C}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{3BC12106-5A91-4F6F-92A8-082D7114C13C}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{3BC12106-5A91-4F6F-92A8-082D7114C13C}.Release|Any CPU.Build.0 = Release|Any CPU
-		{3D0067A7-BB9A-4E50-94F7-A5FEDEE67CA9}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{3D0067A7-BB9A-4E50-94F7-A5FEDEE67CA9}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{3D0067A7-BB9A-4E50-94F7-A5FEDEE67CA9}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{3D0067A7-BB9A-4E50-94F7-A5FEDEE67CA9}.Release|Any CPU.Build.0 = Release|Any CPU
 		{0B6D5C69-5906-491F-AD3E-07E361B3547A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{0B6D5C69-5906-491F-AD3E-07E361B3547A}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{0B6D5C69-5906-491F-AD3E-07E361B3547A}.Release|Any CPU.ActiveCfg = Release|Any CPU
@@ -56,7 +50,6 @@ Global
 		{4F8501C9-86CB-436E-89C9-FCABE15576BD} = {BC79A5F6-147D-4297-B7E1-976259536B39}
 		{4FA87929-86FC-4761-AB8C-787390C80A43} = {BC79A5F6-147D-4297-B7E1-976259536B39}
 		{3BC12106-5A91-4F6F-92A8-082D7114C13C} = {BC79A5F6-147D-4297-B7E1-976259536B39}
-		{3D0067A7-BB9A-4E50-94F7-A5FEDEE67CA9} = {BC79A5F6-147D-4297-B7E1-976259536B39}
 		{0B6D5C69-5906-491F-AD3E-07E361B3547A} = {BC79A5F6-147D-4297-B7E1-976259536B39}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution

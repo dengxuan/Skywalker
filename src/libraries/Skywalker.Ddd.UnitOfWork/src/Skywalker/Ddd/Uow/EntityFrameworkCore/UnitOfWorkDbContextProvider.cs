@@ -6,7 +6,7 @@ using Skywalker.Ddd.Data;
 using Skywalker.Ddd.EntityFrameworkCore;
 using Skywalker.Ddd.EntityFrameworkCore.DbContextConfiguration;
 using Skywalker.Ddd.Uow.Abstractions;
-using Skywalker.Extensions.Exceptions;
+using Skywalker.Exceptions;
 
 namespace Skywalker.Ddd.Uow.EntityFrameworkCore;
 

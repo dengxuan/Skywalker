@@ -1,7 +1,6 @@
 // Licensed to the Gordon under one or more agreements.
 // Gordon licenses this file to you under the MIT license.
 
-using System.Linq;
 using System.Text;
 using Microsoft.CodeAnalysis;
 using Microsoft.CodeAnalysis.Text;
@@ -19,8 +18,8 @@ public partial class DddEntityFrameworkCoreGenerator
         "Skywalker.Ddd.Domain.Repositories",
         "Skywalker.Ddd.EntityFrameworkCore",
         "Skywalker.Ddd.EntityFrameworkCore.Repositories",
-        "Skywalker.Extensions.GuidGenerator",
-        "Skywalker.Extensions.Timing",
+        "Skywalker.IdentifierGenerator.Abstractions",
+        "Skywalker.Extensions.Timezone",
         "System.CodeDom.Compiler",
         "System.Linq",
     };

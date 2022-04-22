@@ -1,5 +1,5 @@
 ﻿using AutoMapper;
-using Skywalker.Collections.Generic;
+using Skywalker.Extensions.Collections.Generic;
 
 namespace Skywalker.ObjectMapper.AutoMapper;
 

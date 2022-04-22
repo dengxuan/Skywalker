@@ -1,6 +1,6 @@
 ﻿using Microsoft.Extensions.Localization;
 using Skywalker.Authorization.Permissions.Abstractions;
-using Skywalker.Extensions.Exceptions;
+using Skywalker.Exceptions;
 
 namespace Skywalker.Authorization.Permissions;
 

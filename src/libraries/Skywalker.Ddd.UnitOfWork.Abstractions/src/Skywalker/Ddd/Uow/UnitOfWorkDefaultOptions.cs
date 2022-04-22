@@ -2,7 +2,7 @@
 // Gordon licenses this file to you under the MIT license.
 
 using System.Data;
-using Skywalker.Extensions.Exceptions;
+using Skywalker.Exceptions;
 
 namespace Skywalker.Ddd.Uow;
 
