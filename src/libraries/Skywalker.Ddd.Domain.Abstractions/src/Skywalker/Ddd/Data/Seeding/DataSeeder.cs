@@ -1,19 +1,15 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Options;
 using Skywalker.Extensions.DependencyInjection.Abstractions;
-using Skywalker.Extensions.DependencyInjection;
 
 namespace Skywalker.Ddd.Data.Seeding;
 
-[SingletonDependency]
 public class DataSeeder : IDataSeeder
 {
     protected IHybridServiceScopeFactory ServiceScopeFactory { get; }
     protected SkywalkerDataSeedOptions Options { get; }
 
-    public DataSeeder(
-        IOptions<SkywalkerDataSeedOptions> options,
-        IHybridServiceScopeFactory serviceScopeFactory)
+    public DataSeeder(IOptions<SkywalkerDataSeedOptions> options, IHybridServiceScopeFactory serviceScopeFactory)
     {
         ServiceScopeFactory = serviceScopeFactory;
         Options = options.Value;

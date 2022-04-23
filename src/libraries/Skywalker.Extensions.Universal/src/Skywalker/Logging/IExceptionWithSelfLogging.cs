@@ -1,9 +1,8 @@
 ﻿using Microsoft.Extensions.Logging;
 
-namespace Skywalker.Logging
+namespace Skywalker.Logging;
+
+public interface IExceptionWithSelfLogging
 {
-    public interface IExceptionWithSelfLogging
-    {
-        void Log(ILogger logger);
-    }
+    void Log(ILogger logger);
 }

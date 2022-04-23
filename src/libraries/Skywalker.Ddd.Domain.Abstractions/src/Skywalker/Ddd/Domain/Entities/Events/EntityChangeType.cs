@@ -1,11 +1,10 @@
-﻿namespace Skywalker.Ddd.Domain.Entities.Events
+﻿namespace Skywalker.Ddd.Domain.Entities.Events;
+
+public enum EntityChangeType : byte
 {
-    public enum EntityChangeType : byte
-    {
-        Created = 0,
+    Created = 0,
 
-        Updated = 1,
+    Updated = 1,
 
-        Deleted = 2
-    }
+    Deleted = 2
 }

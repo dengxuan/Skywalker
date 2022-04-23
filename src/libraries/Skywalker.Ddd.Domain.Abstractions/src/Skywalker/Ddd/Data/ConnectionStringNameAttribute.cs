@@ -1,35 +1,34 @@
 ﻿using System.Reflection;
 
-namespace Skywalker.Ddd.Data
+namespace Skywalker.Ddd.Data;
+
+[AttributeUsage(AttributeTargets.Class)]
+public class ConnectionStringNameAttribute : Attribute
 {
-    [AttributeUsage(AttributeTargets.Class)]
-    public class ConnectionStringNameAttribute : Attribute
+
+    public string Name { get; }
+
+    public ConnectionStringNameAttribute(string name)
     {
+        name.NotNull(nameof(name));
 
-        public string Name { get; }
+        Name = name;
+    }
 
-        public ConnectionStringNameAttribute(string name)
+    public static string GetConnectionStringName<T>()
+    {
+        return GetConnectionStringName(typeof(T));
+    }
+
+    public static string GetConnectionStringName(Type type)
+    {
+        var nameAttribute = type.GetCustomAttribute<ConnectionStringNameAttribute>();
+
+        if (nameAttribute == null)
         {
-            name.NotNull(nameof(name));
-
-            Name = name;
+            return type.FullName!;
         }
 
-        public static string GetConnectionStringName<T>()
-        {
-            return GetConnectionStringName(typeof(T));
-        }
-
-        public static string GetConnectionStringName(Type type)
-        {
-            var nameAttribute = type.GetCustomAttribute<ConnectionStringNameAttribute>();
-
-            if (nameAttribute == null)
-            {
-                return type.FullName!;
-            }
-
-            return nameAttribute.Name;
-        }
+        return nameAttribute.Name;
     }
 }

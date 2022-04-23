@@ -2,7 +2,7 @@
 
 namespace Skywalker.Extensions.Threading;
 
-public interface IAmbientScopeProvider<T>: ISingletonDependency
+public interface IAmbientScopeProvider<T> : ISingletonDependency
 {
     T? GetValue(string contextKey);
 

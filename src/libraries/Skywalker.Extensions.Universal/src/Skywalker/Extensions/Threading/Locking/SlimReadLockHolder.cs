@@ -1,7 +1,7 @@
-﻿namespace Skywalker.Extensions.Threading.Locking;
-
+﻿
 using System.Threading;
 
+namespace Skywalker.Extensions.Threading.Locking;
 internal class SlimReadLockHolder : ILockHolder
 {
     private readonly ReaderWriterLockSlim _locker;

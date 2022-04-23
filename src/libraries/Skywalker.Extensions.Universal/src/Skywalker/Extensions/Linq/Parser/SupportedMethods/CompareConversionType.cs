@@ -1,10 +1,9 @@
 ﻿
-namespace Skywalker.Extensions.Linq.Parser.SupportedMethods
+namespace Skywalker.Extensions.Linq.Parser.SupportedMethods;
+
+internal enum CompareConversionType
 {
-    internal enum CompareConversionType
-    {
-        Both = 0,
-        First = 1,
-        Second = -1
-    }
+    Both = 0,
+    First = 1,
+    Second = -1
 }

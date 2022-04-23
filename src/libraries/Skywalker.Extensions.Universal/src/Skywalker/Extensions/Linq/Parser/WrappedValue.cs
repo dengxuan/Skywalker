@@ -1,12 +1,11 @@
-﻿namespace Skywalker.Extensions.Linq.Parser
-{
-    internal class WrappedValue<TValue>
-    {
-        public TValue Value { get; private set; }
+﻿namespace Skywalker.Extensions.Linq.Parser;
 
-        public WrappedValue(TValue value)
-        {
-            Value = value;
-        }
+internal class WrappedValue<TValue>
+{
+    public TValue Value { get; private set; }
+
+    public WrappedValue(TValue value)
+    {
+        Value = value;
     }
 }

@@ -1,10 +1,9 @@
-﻿namespace Skywalker.Ddd.Data
+﻿namespace Skywalker.Ddd.Data;
+
+public static class ConnectionStringResolverExtensions
 {
-    public static class ConnectionStringResolverExtensions
+    public static string Resolve<T>(this IConnectionStringResolver resolver)
     {
-        public static string Resolve<T>(this IConnectionStringResolver resolver)
-        {
-            return resolver.Resolve(ConnectionStringNameAttribute.GetConnectionStringName<T>());
-        }
+        return resolver.Resolve(ConnectionStringNameAttribute.GetConnectionStringName<T>());
     }
 }

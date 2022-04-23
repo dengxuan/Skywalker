@@ -1,53 +1,52 @@
 ﻿using System.Threading;
 
-namespace System
+namespace System;
+
+/// <summary>
+/// This class can be used to provide an action when
+/// Dipose method is called.
+/// </summary>
+public class DisposeAction : IDisposable
 {
+    public static readonly DisposeAction Empty = new(null);
+
+    private Action? _action;
+    private bool disposedValue;
+
     /// <summary>
-    /// This class can be used to provide an action when
-    /// Dipose method is called.
+    /// Creates a new <see cref="DisposeAction"/> object.
     /// </summary>
-    public class DisposeAction : IDisposable
+    /// <param name="action">Action to be executed when this object is disposed.</param>
+    public DisposeAction(Action? action)
     {
-        public static readonly DisposeAction Empty = new DisposeAction(null);
+        _action = action;
+    }
 
-        private Action? _action;
-        private bool disposedValue;
-
-        /// <summary>
-        /// Creates a new <see cref="DisposeAction"/> object.
-        /// </summary>
-        /// <param name="action">Action to be executed when this object is disposed.</param>
-        public DisposeAction(Action? action)
+    /// <summary>
+    /// </summary>
+    /// <param name="disposing"></param>
+    protected virtual void Dispose(bool disposing)
+    {
+        if (!disposedValue)
         {
-            _action = action;
-        }
-
-        /// <summary>
-        /// </summary>
-        /// <param name="disposing"></param>
-        protected virtual void Dispose(bool disposing)
-        {
-            if (!disposedValue)
+            if (disposing)
             {
-                if (disposing)
-                {
-                    // Interlocked prevents multiple execution of the _action.
-                    var action = Interlocked.Exchange(ref _action, null);
-                    action?.Invoke();
-                }
-                disposedValue = true;
+                // Interlocked prevents multiple execution of the _action.
+                var action = Interlocked.Exchange(ref _action, null);
+                action?.Invoke();
             }
+            disposedValue = true;
         }
+    }
 
-        ~DisposeAction()
-        {
-            Dispose(disposing: false);
-        }
+    ~DisposeAction()
+    {
+        Dispose(disposing: false);
+    }
 
-        public void Dispose()
-        {
-            Dispose(disposing: true);
-            GC.SuppressFinalize(this);
-        }
+    public void Dispose()
+    {
+        Dispose(disposing: true);
+        GC.SuppressFinalize(this);
     }
 }

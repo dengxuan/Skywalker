@@ -2,7 +2,7 @@
 
 namespace Skywalker.Extensions.Threading;
 
-public interface ICancellationTokenProvider: ISingletonDependency
+public interface ICancellationTokenProvider : ISingletonDependency
 {
     CancellationToken Token { get; }
 }

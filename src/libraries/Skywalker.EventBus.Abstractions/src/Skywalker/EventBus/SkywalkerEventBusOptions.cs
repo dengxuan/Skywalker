@@ -1,6 +1,6 @@
 using Microsoft.Extensions.DependencyInjection;
-using Skywalker.Extensions.Collections.Generic;
 using Skywalker.EventBus.Abstractions;
+using Skywalker.Extensions.Collections.Generic;
 
 namespace Skywalker.EventBus;
 

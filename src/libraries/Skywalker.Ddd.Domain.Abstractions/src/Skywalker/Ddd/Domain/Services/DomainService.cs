@@ -11,7 +11,7 @@ namespace Skywalker.Ddd.Domain.Services;
 /// <summary>
 /// <inheritdoc/>
 /// </summary>
-public class DomainService<TEntity> :  IDomainService<TEntity> where TEntity : class, IEntity
+public class DomainService<TEntity> : IDomainService<TEntity> where TEntity : class, IEntity
 {
     /// <summary>
     /// 仓储实例，<see cref="IRepository{TEntity, TKey}"/>

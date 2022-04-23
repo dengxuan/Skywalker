@@ -1,13 +1,12 @@
-﻿namespace Skywalker.Extensions.Linq.Tokenizer
+﻿namespace Skywalker.Extensions.Linq.Tokenizer;
+
+internal struct Token
 {
-    internal struct Token
-    {
-        public TokenId Id { get; set; }
+    public TokenId Id { get; set; }
 
-        public TokenId OriginalId { get; set; }
+    public TokenId OriginalId { get; set; }
 
-        public string Text { get; set; }
+    public string Text { get; set; }
 
-        public int Pos { get; set; }
-    }
+    public int Pos { get; set; }
 }

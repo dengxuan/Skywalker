@@ -43,7 +43,7 @@ public static class RepositoryExtensions
         //    () => new HashSet<IEntity>()
         //);
         //Doto
-        var hardDeleteEntities = new HashSet<IEntity>
+        _ = new HashSet<IEntity>
             {
                 entity
             };

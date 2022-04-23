@@ -1,7 +1,6 @@
-﻿namespace Skywalker.AspNetCore.Authentication
+﻿namespace Skywalker.AspNetCore.Authentication;
+
+public static class SkywalkerAuthenticationDefaults
 {
-    public static class SkywalkerAuthenticationDefaults
-    {
-        public const string AuthenticationScheme = "Skywalker";
-    }
+    public const string AuthenticationScheme = "Skywalker";
 }

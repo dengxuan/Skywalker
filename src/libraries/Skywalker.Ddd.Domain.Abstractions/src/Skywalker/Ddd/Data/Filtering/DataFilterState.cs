@@ -1,17 +1,16 @@
-﻿namespace Skywalker.Ddd.Data.Filtering
+﻿namespace Skywalker.Ddd.Data.Filtering;
+
+public class DataFilterState
 {
-    public class DataFilterState
+    public bool IsEnabled { get; set; }
+
+    public DataFilterState(bool isEnabled)
     {
-        public bool IsEnabled { get; set; }
+        IsEnabled = isEnabled;
+    }
 
-        public DataFilterState(bool isEnabled)
-        {
-            IsEnabled = isEnabled;
-        }
-
-        public DataFilterState Clone()
-        {
-            return new DataFilterState(IsEnabled);
-        }
+    public DataFilterState Clone()
+    {
+        return new DataFilterState(IsEnabled);
     }
 }

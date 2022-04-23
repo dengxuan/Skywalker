@@ -1,9 +1,8 @@
-﻿using System.Threading.Tasks;
+﻿using Skywalker.Extensions.DependencyInjection;
 
-namespace Skywalker.Ddd.Data.Seeding
+namespace Skywalker.Ddd.Data.Seeding;
+
+public interface IDataSeeder : ISingletonDependency
 {
-    public interface IDataSeeder
-    {
-        Task SeedAsync(DataSeedContext context);
-    }
+    Task SeedAsync(DataSeedContext context);
 }

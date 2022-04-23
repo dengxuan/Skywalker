@@ -10,77 +10,76 @@ using Microsoft.IdentityModel.Tokens;
 using Microsoft.Net.Http.Headers;
 using Skywalker.AspNetCore.Authentication.Abstractions;
 
-namespace Skywalker.AspNetCore.Authentication
+namespace Skywalker.AspNetCore.Authentication;
+
+public class SkywalkerAuthenticationHandler : AuthenticationHandler<SkywalkerAuthenticationOptions>, IAuthenticationSignInHandler, IAuthenticationSignOutHandler
 {
-    public class SkywalkerAuthenticationHandler : AuthenticationHandler<SkywalkerAuthenticationOptions>, IAuthenticationSignInHandler, IAuthenticationSignOutHandler
+    private readonly ISkywalkerTokenValidator _skywalkerTokenValidator;
+
+    protected new SkywalkerAuthenticationEvents Events
     {
-        private readonly ISkywalkerTokenValidator _skywalkerTokenValidator;
+        get => (SkywalkerAuthenticationEvents)base.Events;
+        set => base.Events = value;
+    }
 
-        protected new SkywalkerAuthenticationEvents Events
+    public SkywalkerAuthenticationHandler(IOptionsMonitor<SkywalkerAuthenticationOptions> options, ILoggerFactory logger, ISkywalkerTokenValidator skywalkerTokenValidator, UrlEncoder encoder, ISystemClock clock) : base(options, logger, encoder, clock)
+    {
+        _skywalkerTokenValidator = skywalkerTokenValidator;
+    }
+
+    protected override Task<object> CreateEventsAsync() => Task.FromResult<object>(new SkywalkerAuthenticationEvents());
+
+    protected override async Task HandleChallengeAsync(AuthenticationProperties properties)
+    {
+        var authResult = await HandleAuthenticateOnceSafeAsync();
+        var eventContext = new SkywalkerChallengeContext(Context, Scheme, Options, properties)
         {
-            get => (SkywalkerAuthenticationEvents)base.Events;
-            set => base.Events = value;
-        }
-
-        public SkywalkerAuthenticationHandler(IOptionsMonitor<SkywalkerAuthenticationOptions> options, ILoggerFactory logger, ISkywalkerTokenValidator skywalkerTokenValidator, UrlEncoder encoder, ISystemClock clock) : base(options, logger, encoder, clock)
+            AuthenticateFailure = authResult?.Failure
+        };
+        await Events.Challenge(eventContext!);
+        if (eventContext.Handled)
         {
-            _skywalkerTokenValidator = skywalkerTokenValidator;
+            return;
         }
+        Response.StatusCode = 401;
+        Response.Headers.Append(HeaderNames.WWWAuthenticate, Options.Challenge);
+    }
 
-        protected override Task<object> CreateEventsAsync() => Task.FromResult<object>(new SkywalkerAuthenticationEvents());
-
-        protected override async Task HandleChallengeAsync(AuthenticationProperties properties)
+    protected override async Task<AuthenticateResult> HandleAuthenticateAsync()
+    {
+        string skywalker = Request.Headers[SkywalkerAuthenticationDefaults.AuthenticationScheme];
+        if (string.IsNullOrEmpty(skywalker))
         {
-            var authResult = await HandleAuthenticateOnceSafeAsync();
-            var eventContext = new SkywalkerChallengeContext(Context, Scheme, Options, properties)
-            {
-                AuthenticateFailure = authResult?.Failure
-            };
-            await Events.Challenge(eventContext!);
-            if (eventContext.Handled)
-            {
-                return;
-            }
-            Response.StatusCode = 401;
-            Response.Headers.Append(HeaderNames.WWWAuthenticate, Options.Challenge);
+            return AuthenticateResult.NoResult();
         }
-
-        protected override async Task<AuthenticateResult> HandleAuthenticateAsync()
+        var claimsPrincipal = await _skywalkerTokenValidator.ValidateTokenAsync(skywalker!);
+        var validatedContext = new SkywalkerTokenValidatedContext(Context, Scheme, Options)
         {
-            string skywalker = Request.Headers[SkywalkerAuthenticationDefaults.AuthenticationScheme];
-            if (string.IsNullOrEmpty(skywalker))
-            {
-                return AuthenticateResult.NoResult();
-            }
-            ClaimsPrincipal claimsPrincipal = await _skywalkerTokenValidator.ValidateTokenAsync(skywalker!);
-            var validatedContext = new SkywalkerTokenValidatedContext(Context, Scheme, Options)
-            {
-                Principal = claimsPrincipal
-            };
-            validatedContext.Success();
-            return validatedContext.Result;
-        }
+            Principal = claimsPrincipal
+        };
+        validatedContext.Success();
+        return validatedContext.Result;
+    }
 
-        public Task SignInAsync(ClaimsPrincipal claimsPrincipal, AuthenticationProperties properties)
-        {
-            var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes("secretKey123..jackyfei"));
-            var credentials = new SigningCredentials(key, SecurityAlgorithms.HmacSha256);
+    public Task SignInAsync(ClaimsPrincipal claimsPrincipal, AuthenticationProperties properties)
+    {
+        var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes("secretKey123..jackyfei"));
+        var credentials = new SigningCredentials(key, SecurityAlgorithms.HmacSha256);
 
-            var token = new JwtSecurityToken(
-                Options.ClaimsIssuer,
-                Options.ClaimsIssuer,
-                claimsPrincipal.Claims,
-                null,
-                DateTime.MaxValue,
-                credentials
-            );
-            Response.Headers.Append(SkywalkerAuthenticationDefaults.AuthenticationScheme, new JwtSecurityTokenHandler().WriteToken(token));
-            return Task.CompletedTask;
-        }
+        var token = new JwtSecurityToken(
+            Options.ClaimsIssuer,
+            Options.ClaimsIssuer,
+            claimsPrincipal.Claims,
+            null,
+            DateTime.MaxValue,
+            credentials
+        );
+        Response.Headers.Append(SkywalkerAuthenticationDefaults.AuthenticationScheme, new JwtSecurityTokenHandler().WriteToken(token));
+        return Task.CompletedTask;
+    }
 
-        public Task SignOutAsync(AuthenticationProperties properties)
-        {
-            return Task.CompletedTask;
-        }
+    public Task SignOutAsync(AuthenticationProperties properties)
+    {
+        return Task.CompletedTask;
     }
 }

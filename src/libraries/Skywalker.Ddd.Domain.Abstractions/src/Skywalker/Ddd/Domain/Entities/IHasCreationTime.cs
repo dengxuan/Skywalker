@@ -1,15 +1,14 @@
 using System;
 
-namespace Skywalker.Ddd.Domain.Entities
+namespace Skywalker.Ddd.Domain.Entities;
+
+/// <summary>
+/// A standard interface to add CreationTime property.
+/// </summary>
+public interface IHasCreationTime
 {
     /// <summary>
-    /// A standard interface to add CreationTime property.
+    /// Creation time.
     /// </summary>
-    public interface IHasCreationTime
-    {
-        /// <summary>
-        /// Creation time.
-        /// </summary>
-        DateTime CreationTime { get; set; }
-    }
+    DateTime CreationTime { get; set; }
 }

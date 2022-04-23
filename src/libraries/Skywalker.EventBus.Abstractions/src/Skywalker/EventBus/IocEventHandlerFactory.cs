@@ -1,8 +1,8 @@
-using Microsoft.Extensions.DependencyInjection;
-using Skywalker.EventBus.Abstractions;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using Microsoft.Extensions.DependencyInjection;
+using Skywalker.EventBus.Abstractions;
 
 namespace Skywalker.EventBus;
 
@@ -31,7 +31,7 @@ public class IocEventHandlerFactory : IEventHandlerFactory, IDisposable
     public IEventHandlerDisposeWrapper GetHandler()
     {
         var scope = ScopeFactory.CreateScope();
-        IEventHandler eventHandler = (IEventHandler)scope.ServiceProvider.GetRequiredService(HandlerType);
+        var eventHandler = (IEventHandler)scope.ServiceProvider.GetRequiredService(HandlerType);
         return new EventHandlerDisposeWrapper(eventHandler, () => scope.Dispose());
     }
 

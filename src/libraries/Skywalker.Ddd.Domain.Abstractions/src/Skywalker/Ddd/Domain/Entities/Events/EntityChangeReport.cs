@@ -1,32 +1,31 @@
 using System.Collections.Generic;
 
-namespace Skywalker.Ddd.Domain.Entities.Events
+namespace Skywalker.Ddd.Domain.Entities.Events;
+
+public class EntityChangeReport
 {
-    public class EntityChangeReport
+    public List<EntityChangeEntry> ChangedEntities { get; }
+
+    public List<DomainEventEntry> DomainEvents { get; }
+
+    public List<DomainEventEntry> DistributedEvents { get; }
+
+    public EntityChangeReport()
     {
-        public List<EntityChangeEntry> ChangedEntities { get; }
+        ChangedEntities = new List<EntityChangeEntry>();
+        DomainEvents = new List<DomainEventEntry>();
+        DistributedEvents = new List<DomainEventEntry>();
+    }
 
-        public List<DomainEventEntry> DomainEvents { get; }
+    public bool IsEmpty()
+    {
+        return ChangedEntities.Count <= 0 &&
+               DomainEvents.Count <= 0 &&
+               DistributedEvents.Count <= 0;
+    }
 
-        public List<DomainEventEntry> DistributedEvents { get; }
-
-        public EntityChangeReport()
-        {
-            ChangedEntities = new List<EntityChangeEntry>();
-            DomainEvents = new List<DomainEventEntry>();
-            DistributedEvents = new List<DomainEventEntry>();
-        }
-
-        public bool IsEmpty()
-        {
-            return ChangedEntities.Count <= 0 &&
-                   DomainEvents.Count <= 0 &&
-                   DistributedEvents.Count <= 0;
-        }
-
-        public override string ToString()
-        {
-            return $"[EntityChangeReport] ChangedEntities: {ChangedEntities.Count}, DomainEvents: {DomainEvents.Count}, DistributedEvents: {DistributedEvents.Count}";
-        }
+    public override string ToString()
+    {
+        return $"[EntityChangeReport] ChangedEntities: {ChangedEntities.Count}, DomainEvents: {DomainEvents.Count}, DistributedEvents: {DistributedEvents.Count}";
     }
 }

@@ -6,10 +6,9 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Transactions;
 
-namespace Skywalker.AspNetCore.Authentication.Abstractions
+namespace Skywalker.AspNetCore.Authentication.Abstractions;
+
+public interface ISkywalkerTokenValidator
 {
-    public interface ISkywalkerTokenValidator
-    {
-        Task<ClaimsPrincipal> ValidateTokenAsync(string securityToken);
-    }
+    Task<ClaimsPrincipal> ValidateTokenAsync(string securityToken);
 }

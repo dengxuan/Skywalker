@@ -10,7 +10,7 @@ internal class TextParser
     private static readonly char[] EscapeCharacters = new[] { '\\', 'a', 'b', 'f', 'n', 'r', 't', 'v' };
 
     // These aliases are supposed to simply the where clause and make it more human readable
-    private static readonly Dictionary<string, TokenId> PredefinedOperatorAliases = new Dictionary<string, TokenId>(StringComparer.OrdinalIgnoreCase)
+    private static readonly Dictionary<string, TokenId> PredefinedOperatorAliases = new(StringComparer.OrdinalIgnoreCase)
         {
             { "eq", TokenId.Equal },
             { "equal", TokenId.Equal },
@@ -86,8 +86,8 @@ internal class TextParser
             NextChar();
         }
 
-        TokenId tokenId = TokenId.Unknown;
-        int tokenPos = _textPos;
+        var tokenId = TokenId.Unknown;
+        var tokenPos = _textPos;
 
         switch (_ch)
         {
@@ -279,14 +279,14 @@ internal class TextParser
 
             case '"':
             case '\'':
-                bool balanced = false;
-                char quote = _ch;
+                var balanced = false;
+                var quote = _ch;
 
                 NextChar();
 
                 while (_textPos < _textLen && _ch != quote)
                 {
-                    char next = PeekNextChar();
+                    var next = PeekNextChar();
 
                     if (_ch == '\\')
                     {
@@ -338,7 +338,7 @@ internal class TextParser
                         NextChar();
                     } while (char.IsDigit(_ch));
 
-                    bool hexInteger = false;
+                    var hexInteger = false;
                     if (_ch == 'X' || _ch == 'x')
                     {
                         NextChar();
@@ -464,7 +464,7 @@ internal class TextParser
 
     private static TokenId GetAliasedTokenId(TokenId tokenId, string alias)
     {
-        return tokenId == TokenId.Identifier && PredefinedOperatorAliases.TryGetValue(alias, out TokenId id) ? id : tokenId;
+        return tokenId == TokenId.Identifier && PredefinedOperatorAliases.TryGetValue(alias, out var id) ? id : tokenId;
     }
 
     private static bool IsHexChar(char c)

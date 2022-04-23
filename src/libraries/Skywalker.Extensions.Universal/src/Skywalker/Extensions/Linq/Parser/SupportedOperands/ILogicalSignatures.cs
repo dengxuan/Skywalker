@@ -1,8 +1,7 @@
-﻿namespace Skywalker.Extensions.Linq.Parser.SupportedOperands
+﻿namespace Skywalker.Extensions.Linq.Parser.SupportedOperands;
+
+internal interface ILogicalSignatures
 {
-    internal interface ILogicalSignatures
-    {
-        void F(bool x, bool y);
-        void F(bool? x, bool? y);
-    }
+    void F(bool x, bool y);
+    void F(bool? x, bool? y);
 }

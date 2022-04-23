@@ -1,7 +1,6 @@
-﻿namespace Skywalker.Ddd.Domain.Entities
+﻿namespace Skywalker.Ddd.Domain.Entities;
+
+public interface IHasConcurrencyStamp
 {
-    public interface IHasConcurrencyStamp
-    {
-        string ConcurrencyStamp { get; set; }
-    }
+    string ConcurrencyStamp { get; set; }
 }

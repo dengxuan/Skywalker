@@ -1,6 +1,6 @@
-using Skywalker.EventBus.Abstractions;
 using System.Collections.Generic;
 using System.Linq;
+using Skywalker.EventBus.Abstractions;
 
 namespace Skywalker.EventBus;
 

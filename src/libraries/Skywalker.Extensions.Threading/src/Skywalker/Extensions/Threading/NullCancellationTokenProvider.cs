@@ -8,6 +8,6 @@ public class NullCancellationTokenProvider : ICancellationTokenProvider
 
     private NullCancellationTokenProvider()
     {
-        
+
     }
 }

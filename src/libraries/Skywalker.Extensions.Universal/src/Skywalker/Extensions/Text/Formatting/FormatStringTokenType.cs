@@ -1,8 +1,7 @@
-namespace Skywalker.Extensions.Text.Formatting
+namespace Skywalker.Extensions.Text.Formatting;
+
+internal enum FormatStringTokenType
 {
-    internal enum FormatStringTokenType
-    {
-        ConstantText,
-        DynamicValue
-    }
+    ConstantText,
+    DynamicValue
 }

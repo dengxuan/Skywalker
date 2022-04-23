@@ -1,5 +1,5 @@
-﻿using Skywalker.EventBus.Abstractions;
-using System;
+﻿using System;
+using Skywalker.EventBus.Abstractions;
 
 namespace Skywalker.EventBus;
 

@@ -3,7 +3,7 @@ using Skywalker.Extensions.DependencyInjection;
 
 namespace System.Linq;
 
-public interface IAsyncQueryableExecuter: ISingletonDependency
+public interface IAsyncQueryableExecuter : ISingletonDependency
 {
     #region Contains
 

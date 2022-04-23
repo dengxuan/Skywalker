@@ -2,7 +2,7 @@
 
 namespace Skywalker.Ddd.Data;
 
-public interface IConnectionStringResolver: ITransientDependency
+public interface IConnectionStringResolver : ITransientDependency
 {
     string Resolve(string connectionStringName);
 }

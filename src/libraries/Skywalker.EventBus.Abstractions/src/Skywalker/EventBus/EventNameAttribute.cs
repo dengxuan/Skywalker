@@ -1,7 +1,7 @@
-﻿using Skywalker.EventBus.Abstractions;
-using System;
+﻿using System;
 using System.Diagnostics.CodeAnalysis;
 using System.Linq;
+using Skywalker.EventBus.Abstractions;
 
 namespace Skywalker.EventBus;
 
@@ -23,8 +23,8 @@ public class EventNameAttribute : Attribute, IEventNameProvider
     public static string GetNameOrDefault(Type eventType)
     {
         Check.NotNull(eventType, nameof(eventType));
-        IEventNameProvider? nameProvider= eventType.GetCustomAttributes(true).OfType<IEventNameProvider>().FirstOrDefault();
-        if(nameProvider == null)
+        var nameProvider = eventType.GetCustomAttributes(true).OfType<IEventNameProvider>().FirstOrDefault();
+        if (nameProvider == null)
         {
             return eventType.FullName!;
         }

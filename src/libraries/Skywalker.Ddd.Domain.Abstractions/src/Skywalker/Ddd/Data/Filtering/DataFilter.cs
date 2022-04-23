@@ -1,105 +1,97 @@
-﻿using Microsoft.Extensions.DependencyInjection;
+﻿using System.Collections.Concurrent;
+using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Options;
-using Skywalker.Extensions.DependencyInjection;
-using System;
-using System.Collections.Concurrent;
-using System.Collections.Generic;
-using System.Threading;
 
-namespace Skywalker.Ddd.Data.Filtering
+namespace Skywalker.Ddd.Data.Filtering;
+
+public class DataFilter : IDataFilter
 {
-    [SingletonDependency]
-    public class DataFilter : IDataFilter
+    private readonly ConcurrentDictionary<Type, object> _filters;
+
+    private readonly IServiceProvider _serviceProvider;
+
+    public DataFilter(IServiceProvider serviceProvider)
     {
-        private readonly ConcurrentDictionary<Type, object> _filters;
+        _serviceProvider = serviceProvider;
+        _filters = new ConcurrentDictionary<Type, object>();
+    }
 
-        private readonly IServiceProvider _serviceProvider;
+    public IDisposable Enable<TFilter>()
+        where TFilter : class
+    {
+        return GetFilter<TFilter>()!.Enable();
+    }
 
-        public DataFilter(IServiceProvider serviceProvider)
+    public IDisposable Disable<TFilter>()
+        where TFilter : class
+    {
+        return GetFilter<TFilter>()!.Disable();
+    }
+
+    public bool IsEnabled<TFilter>()
+        where TFilter : class
+    {
+        return GetFilter<TFilter>()!.IsEnabled;
+    }
+
+    private IDataFilter<TFilter>? GetFilter<TFilter>() where TFilter : class
+    {
+        return _filters.GetOrAdd(typeof(TFilter), () => _serviceProvider.GetRequiredService<IDataFilter<TFilter>>()) as IDataFilter<TFilter>;
+    }
+}
+
+public class DataFilter<TFilter> : IDataFilter<TFilter> where TFilter : class
+{
+    public bool IsEnabled
+    {
+        get
         {
-            _serviceProvider = serviceProvider;
-            _filters = new ConcurrentDictionary<Type, object>();
-        }
-
-        public IDisposable Enable<TFilter>()
-            where TFilter : class
-        {
-            return GetFilter<TFilter>()!.Enable();
-        }
-
-        public IDisposable Disable<TFilter>()
-            where TFilter : class
-        {
-            return GetFilter<TFilter>()!.Disable();
-        }
-
-        public bool IsEnabled<TFilter>()
-            where TFilter : class
-        {
-            return GetFilter<TFilter>()!.IsEnabled;
-        }
-
-        private IDataFilter<TFilter>? GetFilter<TFilter>() where TFilter : class
-        {
-            return _filters.GetOrAdd(typeof(TFilter), () => _serviceProvider.GetRequiredService<IDataFilter<TFilter>>()) as IDataFilter<TFilter>;
+            EnsureInitialized();
+            return _filter.Value!.IsEnabled;
         }
     }
 
-    [SingletonDependency]
-    public class DataFilter<TFilter> : IDataFilter<TFilter>
-        where TFilter : class
+    private readonly SkywalkerDataFilterOptions _options;
+
+    private readonly AsyncLocal<DataFilterState> _filter;
+
+    public DataFilter(IOptions<SkywalkerDataFilterOptions> options)
     {
-        public bool IsEnabled
+        _options = options.Value;
+        _filter = new AsyncLocal<DataFilterState>();
+    }
+
+    public IDisposable Enable()
+    {
+        if (IsEnabled)
         {
-            get
-            {
-                EnsureInitialized();
-                return _filter.Value!.IsEnabled;
-            }
+            return NullDisposable.Instance;
         }
 
-        private readonly SkywalkerDataFilterOptions _options;
+        _filter.Value!.IsEnabled = true;
 
-        private readonly AsyncLocal<DataFilterState> _filter;
+        return new DisposeAction(() => Disable());
+    }
 
-        public DataFilter(IOptions<SkywalkerDataFilterOptions> options)
+    public IDisposable Disable()
+    {
+        if (!IsEnabled)
         {
-            _options = options.Value;
-            _filter = new AsyncLocal<DataFilterState>();
+            return NullDisposable.Instance;
         }
 
-        public IDisposable Enable()
+        _filter.Value!.IsEnabled = false;
+
+        return new DisposeAction(() => Enable());
+    }
+
+    private void EnsureInitialized()
+    {
+        if (_filter.Value != null)
         {
-            if (IsEnabled)
-            {
-                return NullDisposable.Instance;
-            }
-
-            _filter.Value!.IsEnabled = true;
-
-            return new DisposeAction(() => Disable());
+            return;
         }
 
-        public IDisposable Disable()
-        {
-            if (!IsEnabled)
-            {
-                return NullDisposable.Instance;
-            }
-
-            _filter.Value!.IsEnabled = false;
-
-            return new DisposeAction(() => Enable());
-        }
-
-        private void EnsureInitialized()
-        {
-            if (_filter.Value != null)
-            {
-                return;
-            }
-
-            _filter.Value = _options.DefaultStates.GetOrDefault(typeof(TFilter))?.Clone() ?? new DataFilterState(true);
-        }
+        _filter.Value = _options.DefaultStates.GetOrDefault(typeof(TFilter))?.Clone() ?? new DataFilterState(true);
     }
 }

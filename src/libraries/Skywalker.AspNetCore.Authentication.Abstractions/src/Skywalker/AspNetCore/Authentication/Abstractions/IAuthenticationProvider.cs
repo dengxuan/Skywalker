@@ -1,12 +1,11 @@
-﻿using Microsoft.AspNetCore.Http;
-using System.Threading.Tasks;
+﻿using System.Threading.Tasks;
+using Microsoft.AspNetCore.Http;
 
-namespace Skywalker.AspNetCore.Authentication.Abstractions
+namespace Skywalker.AspNetCore.Authentication.Abstractions;
+
+public interface IAuthenticationProvider
 {
-    public interface IAuthenticationProvider
-    {
-        Task<bool> CanExecuteAsync(HttpContext httpContext);
+    Task<bool> CanExecuteAsync(HttpContext httpContext);
 
-        Task ExecuteAsync(HttpContext httpContext);
-    }
+    Task ExecuteAsync(HttpContext httpContext);
 }

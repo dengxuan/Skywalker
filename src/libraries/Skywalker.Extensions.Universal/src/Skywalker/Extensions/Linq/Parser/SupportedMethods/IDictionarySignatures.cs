@@ -1,7 +1,6 @@
-﻿namespace Skywalker.Extensions.Linq.Parser.SupportedMethods
+﻿namespace Skywalker.Extensions.Linq.Parser.SupportedMethods;
+
+internal interface IDictionarySignatures
 {
-    internal interface IDictionarySignatures
-    {
-        void ContainsKey(object selector);
-    }
+    void ContainsKey(object selector);
 }

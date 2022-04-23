@@ -1,6 +1,6 @@
-﻿using Skywalker.EventBus.Abstractions;
-using System;
+﻿using System;
 using System.Threading.Tasks;
+using Skywalker.EventBus.Abstractions;
 
 namespace Skywalker.EventBus;
 

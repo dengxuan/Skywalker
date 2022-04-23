@@ -14,7 +14,6 @@ public sealed class BloomFilter
     private readonly double _bitsPerElement;
     private readonly int _expectedNumberOfFilterElements; // expected (maximum) number of elements to be added
     private int _numberOfAddedElements; // number of elements actually added to the Bloom filter
-    private readonly int _k; // number of hash functions
     private static readonly Encoding s_charset = Encoding.UTF8; // encoding used for storing hash values as strings
 
     /// <summary>
@@ -33,7 +32,7 @@ public sealed class BloomFilter
     public BloomFilter(double c, int n, int k)
     {
         _expectedNumberOfFilterElements = n;
-        _k = k;
+        K = k;
         _bitsPerElement = c;
         _bitSetSize = (int)Math.Ceiling(c * n);
         _numberOfAddedElements = 0;
@@ -181,7 +180,7 @@ public sealed class BloomFilter
             return false;
         }
 
-        if (_k != other._k)
+        if (K != other.K)
         {
             return false;
         }
@@ -210,7 +209,7 @@ public sealed class BloomFilter
         hash = 61 * hash + (_bitSet != null ? HashBytes(_bitSet) : 0);
         hash = 61 * hash + _expectedNumberOfFilterElements;
         hash = 61 * hash + _bitSetSize;
-        hash = 61 * hash + _k;
+        hash = 61 * hash + K;
         return hash;
     }
 
@@ -239,8 +238,8 @@ public sealed class BloomFilter
     public double GetFalsePositiveProbability(double numberOfElements)
     {
         // (1 - e^(-k * n / m)) ^ k
-        return Math.Pow(1 - Math.Exp(-_k * numberOfElements
-                                     / _bitSetSize), _k);
+        return Math.Pow(1 - Math.Exp(-K * numberOfElements
+                                     / _bitSetSize), K);
     }
 
     /// <summary>
@@ -261,7 +260,7 @@ public sealed class BloomFilter
     /// of the Bloom filter and the expected number of inserted elements.
     /// </summary>
     /// <returns>optimal k.</returns>
-    public int K => _k;
+    public int K { get; private set; }
 
     /// <summary>
     /// Sets all bits to false in the Bloom filter.
@@ -288,7 +287,7 @@ public sealed class BloomFilter
     /// <param name="bytes">array of bytes to add to the Bloom filter.</param>
     public void Add(byte[] bytes)
     {
-        var hashes = CreateHashes(bytes, _k);
+        var hashes = CreateHashes(bytes, K);
         foreach (var hash in hashes)
         {
             _bitSet.Set(Math.Abs(hash % _bitSetSize), true);
@@ -342,7 +341,7 @@ public sealed class BloomFilter
     /// <returns>true if the array could have been inserted into the Bloom filter.</returns>
     public bool Contains(byte[] bytes)
     {
-        var hashes = CreateHashes(bytes, _k);
+        var hashes = CreateHashes(bytes, K);
         return hashes.All(hash => _bitSet.Get(Math.Abs(hash % _bitSetSize)));
     }
 
