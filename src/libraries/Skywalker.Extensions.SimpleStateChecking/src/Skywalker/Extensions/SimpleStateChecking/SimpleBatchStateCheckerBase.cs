@@ -1,10 +1,6 @@
-﻿using System.Linq;
-using System.Threading.Tasks;
+﻿namespace Skywalker.Extensions.SimpleStateChecking;
 
-namespace Skywalker.Extensions.SimpleStateChecking;
-
-public abstract class SimpleBatchStateCheckerBase<TState> : ISimpleBatchStateChecker<TState>
-    where TState : IHasSimpleStateCheckers<TState>
+public abstract class SimpleBatchStateCheckerBase<TState> : ISimpleBatchStateChecker<TState> where TState : IHasSimpleStateCheckers<TState>
 {
     public async Task<bool> IsEnabledAsync(SimpleStateCheckerContext<TState> context)
     {

@@ -2,7 +2,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Options;
 using Skywalker.Ddd.Data;
-using Skywalker.Exceptions;
+using Skywalker.ExceptionHandler;
 
 namespace Skywalker.Ddd.EntityFrameworkCore.DbContextConfiguration;
 

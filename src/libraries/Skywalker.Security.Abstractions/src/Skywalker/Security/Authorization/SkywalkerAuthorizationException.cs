@@ -1,6 +1,6 @@
 ﻿using System.Runtime.Serialization;
 using Microsoft.Extensions.Logging;
-using Skywalker.Exceptions;
+using Skywalker.ExceptionHandler;
 using Skywalker.Logging;
 
 namespace Skywalker.Security.Authorization;

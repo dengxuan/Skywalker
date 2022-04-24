@@ -1,8 +1,9 @@
 ﻿using System.Linq.Expressions;
+using Skywalker.Extensions.DependencyInjection;
 
 namespace System.Linq;
 
-public interface IAsyncQueryableProvider
+public interface IAsyncQueryableProvider: ITransientDependency
 {
     bool CanExecute<T>(IQueryable<T> queryable);
 

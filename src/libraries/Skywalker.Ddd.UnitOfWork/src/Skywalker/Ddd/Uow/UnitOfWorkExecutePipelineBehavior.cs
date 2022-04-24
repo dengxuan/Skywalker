@@ -6,20 +6,20 @@ using Skywalker.Ddd.Uow.Abstractions;
 
 namespace Skywalker.Ddd.Uow;
 
-public class UnitOfWorkExecutePipelineBehavior<TRequest, TResponse> : IPipelineBehavior<TRequest, TResponse> where TRequest : notnull, IRequestDto
+public class UnitOfWorkExecutePipelineBehavior: IPipelineBehavior
 {
     private readonly IUnitOfWorkManager _unitOfWorkManager;
     private readonly UnitOfWorkDefaultOptions _defaultOptions;
-    private readonly ILogger<UnitOfWorkExecutePipelineBehavior<TRequest, TResponse>> _logger;
+    private readonly ILogger<UnitOfWorkExecutePipelineBehavior> _logger;
 
-    public UnitOfWorkExecutePipelineBehavior(IUnitOfWorkManager unitOfWorkManager, IOptions<UnitOfWorkDefaultOptions> options, ILogger<UnitOfWorkExecutePipelineBehavior<TRequest, TResponse>> logger)
+    public UnitOfWorkExecutePipelineBehavior(IUnitOfWorkManager unitOfWorkManager, IOptions<UnitOfWorkDefaultOptions> options, ILogger<UnitOfWorkExecutePipelineBehavior> logger)
     {
         _unitOfWorkManager = unitOfWorkManager;
         _defaultOptions = options.Value;
         _logger = logger;
     }
 
-    public async ValueTask<TResponse> HandleAsync(TRequest message, MessageHandlerDelegate<TRequest, TResponse> next, CancellationToken cancellationToken)
+    public async ValueTask<TResponse?> HandleAsync<TRequest, TResponse>(TRequest message, ApplicationHandlerDelegate<TRequest, TResponse> next, CancellationToken cancellationToken) where TRequest : notnull, IRequestDto where TResponse : notnull, IResponseDto
     {
         if (!UnitOfWorkHelper.IsUnitOfWorkMethod(next.Method, out var unitOfWorkAttribute))
         {
@@ -33,6 +33,9 @@ public class UnitOfWorkExecutePipelineBehavior<TRequest, TResponse> : IPipelineB
         _logger.LogDebug("Complete Unit of work:[{uow.Id}]", uow.Id);
         return output;
     }
+
+    public ValueTask HandleAsync<TRequest>(TRequest request, ApplicationHandlerDelegate<TRequest> next, CancellationToken cancellationToken) where TRequest : notnull, IRequestDto => throw new NotImplementedException();
+
 
     private UnitOfWorkOptions CreateOptions(string methodName, UnitOfWorkAttribute? unitOfWorkAttribute)
     {

@@ -1,7 +1,7 @@
 ﻿using Microsoft.Extensions.Logging;
-using Skywalker.Exceptions.Abstractions;
+using Skywalker.ExceptionHandler.Abstractions;
 
-namespace Skywalker.Exceptions;
+namespace Skywalker.ExceptionHandler;
 
 public static class ExceptionNotifierExtensions
 {

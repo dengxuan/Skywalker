@@ -8,13 +8,11 @@ using Skywalker.Ddd.Domain.Entities.Events;
 using Skywalker.Ddd.Domain.Repositories;
 using Skywalker.EventBus;
 using Skywalker.EventBus.Abstractions;
-using Skywalker.Extensions.DependencyInjection;
 using Skywalker.Extensions.Timezone;
 using Skywalker.IdentifierGenerator.Abstractions;
 
 namespace Skywalker.Ddd.EntityFrameworkCore.Repositories;
 
-[TransientDependency]
 public abstract class Repository<TDbContext, TEntity> : BasicRepository<TEntity>, IRepository<TEntity>, IAsyncEnumerable<TEntity>
     where TDbContext : DbContext
     where TEntity : class, IEntity

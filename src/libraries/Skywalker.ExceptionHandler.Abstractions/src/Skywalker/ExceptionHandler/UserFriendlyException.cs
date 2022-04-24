@@ -1,4 +1,4 @@
-﻿namespace Skywalker.Exceptions;
+﻿namespace Skywalker.ExceptionHandler;
 
 public class UserFriendlyException : SkywalkerException, IHasErrorCode
 {

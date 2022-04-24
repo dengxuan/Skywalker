@@ -4,7 +4,6 @@
 using System.Linq.Expressions;
 using Skywalker.Ddd.Domain.Entities;
 using Skywalker.Ddd.Domain.Repositories;
-using Skywalker.Extensions.DependencyInjection;
 
 namespace Skywalker.Ddd.Domain.Services;
 

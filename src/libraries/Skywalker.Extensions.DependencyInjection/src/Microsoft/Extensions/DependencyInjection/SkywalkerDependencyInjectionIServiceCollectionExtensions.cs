@@ -1,5 +1,4 @@
-﻿using Scrutor;
-using Skywalker.Extensions.DependencyInjection;
+﻿using Skywalker.Extensions.DependencyInjection;
 
 namespace Microsoft.Extensions.DependencyInjection;
 
@@ -13,23 +12,23 @@ public static class SkywalkerDependencyInjectionIServiceCollectionExtensions
             scanner.FromApplicationDependencies()
                    .AddClasses(classes =>
                    {
-                       classes.WithAttribute<TransientDependencyAttribute>();
+                       classes.AssignableTo<ITransientDependency>();
                    })
-                   .AsImplementedInterfaces()
+                   .AsSelfWithInterfaces()
                    .WithTransientLifetime();
             scanner.FromApplicationDependencies()
                    .AddClasses(classes =>
                    {
-                       classes.WithAttribute<ScopedDependencyAttribute>();
+                       classes.AssignableTo<IScopedDependency>();
                    })
-                   .AsImplementedInterfaces()
+                   .AsSelfWithInterfaces()
                    .WithScopedLifetime();
             scanner.FromApplicationDependencies()
                    .AddClasses(classes =>
                    {
-                       classes.WithAttribute<SingletonDependencyAttribute>();
+                       classes.AssignableTo<ISingletonDependency>();
                    })
-                   .AsImplementedInterfaces()
+                   .AsSelfWithInterfaces()
                    .WithSingletonLifetime();
         });
         return services;

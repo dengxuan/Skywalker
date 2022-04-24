@@ -1,6 +1,6 @@
 ﻿using Microsoft.Extensions.Logging;
 
-namespace Skywalker.Exceptions;
+namespace Skywalker.ExceptionHandler;
 
 public class ExceptionNotificationContext
 {
@@ -17,10 +17,7 @@ public class ExceptionNotificationContext
     /// </summary>
     public bool Handled { get; }
 
-    public ExceptionNotificationContext(
-        Exception exception,
-        LogLevel? logLevel = null,
-        bool handled = true)
+    public ExceptionNotificationContext(Exception exception, LogLevel? logLevel = null, bool handled = true)
     {
         Exception = exception.NotNull(nameof(exception));
         LogLevel = logLevel ?? LogLevel.Error;

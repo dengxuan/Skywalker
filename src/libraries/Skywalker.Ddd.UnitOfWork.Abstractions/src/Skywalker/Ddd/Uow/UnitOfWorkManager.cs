@@ -3,13 +3,11 @@
 
 using Microsoft.Extensions.DependencyInjection;
 using Skywalker.Ddd.Uow.Abstractions;
-using Skywalker.Extensions.DependencyInjection;
+using Skywalker.ExceptionHandler;
 using Skywalker.Extensions.DependencyInjection.Abstractions;
-using Skywalker.Exceptions;
 
 namespace Skywalker.Ddd.Uow;
 
-[SingletonDependency]
 public class UnitOfWorkManager : IUnitOfWorkManager
 {
     public IUnitOfWork? Current => GetCurrentUnitOfWork();

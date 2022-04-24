@@ -1,9 +1,6 @@
-﻿using System.Collections.Generic;
+﻿namespace Skywalker.Extensions.SimpleStateChecking;
 
-namespace Skywalker.Extensions.SimpleStateChecking;
-
-public class SimpleStateCheckerResult<TState> : Dictionary<TState, bool>
-    where TState : IHasSimpleStateCheckers<TState>
+public class SimpleStateCheckerResult<TState> : Dictionary<TState, bool> where TState : IHasSimpleStateCheckers<TState>
 {
     public SimpleStateCheckerResult()
     {

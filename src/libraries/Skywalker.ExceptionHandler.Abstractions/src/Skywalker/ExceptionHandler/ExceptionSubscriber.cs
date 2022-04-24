@@ -1,6 +1,6 @@
-﻿using Skywalker.Exceptions.Abstractions;
+﻿using Skywalker.ExceptionHandler.Abstractions;
 
-namespace Skywalker.Exceptions;
+namespace Skywalker.ExceptionHandler;
 
 public abstract class ExceptionSubscriber : IExceptionSubscriber
 {

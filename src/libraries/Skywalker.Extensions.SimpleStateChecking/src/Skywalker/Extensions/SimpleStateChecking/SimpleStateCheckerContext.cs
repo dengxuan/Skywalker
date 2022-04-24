@@ -1,9 +1,6 @@
-﻿using System;
+﻿namespace Skywalker.Extensions.SimpleStateChecking;
 
-namespace Skywalker.Extensions.SimpleStateChecking;
-
-public class SimpleStateCheckerContext<TState>
-    where TState : IHasSimpleStateCheckers<TState>
+public class SimpleStateCheckerContext<TState> where TState : IHasSimpleStateCheckers<TState>
 {
     public IServiceProvider ServiceProvider { get; }
 

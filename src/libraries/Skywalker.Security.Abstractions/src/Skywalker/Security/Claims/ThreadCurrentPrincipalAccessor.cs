@@ -1,9 +1,7 @@
 ﻿using System.Security.Claims;
-using Skywalker.Extensions.DependencyInjection;
 
 namespace Skywalker.Security.Claims;
 
-[SingletonDependency]
 public class ThreadCurrentPrincipalAccessor : ICurrentPrincipalAccessor
 {
     public ClaimsPrincipal? Principal => _currentPrincipal.Value ?? GetClaimsPrincipal();

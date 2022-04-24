@@ -1,4 +1,4 @@
-﻿using Skywalker.Exceptions;
+﻿using Skywalker.ExceptionHandler;
 using Skywalker.Extensions.Collections;
 
 namespace Skywalker.Ddd.Domain.Entities.Events.Distributed;

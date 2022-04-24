@@ -1,4 +1,4 @@
-<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
     <RootNamespace></RootNamespace>
@@ -7,8 +7,8 @@
   <ItemGroup>
     <ProjectReference Include="$(LibrariesProjectRoot)Skywalker.Ddd.Domain.Abstractions\src\Skywalker.Ddd.Domain.Abstractions.csproj" />
     <ProjectReference Include="$(LibrariesProjectRoot)Skywalker.Ddd.UnitOfWork.Abstractions\src\Skywalker.Ddd.UnitOfWork.Abstractions.csproj" />
-    <ProjectReference Include="..\..\Skywalker.Extensions.Timezone\src\Skywalker.Extensions.Timezone.csproj" />
-    <ProjectReference Include="..\..\Skywalker.IdentifierGenerator.Abstractions\src\Skywalker.IdentifierGenerator.Abstractions.csproj" />
+    <ProjectReference Include="$(LibrariesProjectRoot)Skywalker.Extensions.Timezone\src\Skywalker.Extensions.Timezone.csproj" />
+    <ProjectReference Include="$(LibrariesProjectRoot)Skywalker.IdentifierGenerator.Abstractions\src\Skywalker.IdentifierGenerator.Abstractions.csproj" />
   </ItemGroup>
 
   <ItemGroup Condition="'$(TargetFramework)' == 'net6.0'">

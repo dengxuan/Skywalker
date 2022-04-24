@@ -1,4 +1,4 @@
-﻿namespace Skywalker.Exceptions.Abstractions;
+﻿namespace Skywalker.ExceptionHandler.Abstractions;
 
 public interface IHasErrorCode
 {

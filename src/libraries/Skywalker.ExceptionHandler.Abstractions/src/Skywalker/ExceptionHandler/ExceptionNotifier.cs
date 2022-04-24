@@ -1,9 +1,9 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Logging.Abstractions;
-using Skywalker.Exceptions.Abstractions;
+using Skywalker.ExceptionHandler.Abstractions;
 
-namespace Skywalker.Exceptions;
+namespace Skywalker.ExceptionHandler;
 
 public class ExceptionNotifier : IExceptionNotifier
 {

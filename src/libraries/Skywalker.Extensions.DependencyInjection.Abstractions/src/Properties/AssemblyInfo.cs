@@ -18,3 +18,5 @@ using System.Runtime.InteropServices;
 [assembly: Guid("8353f60e-7011-4ef4-bd40-8c5429ce04af")]
 
 [assembly: InternalsVisibleTo("Skywalker.Extensions.DependencyInjection")]
+[assembly: InternalsVisibleTo("Skywalker.Extensions.Threading")]
+[assembly: InternalsVisibleTo("Skywalker.Extensions.Timezone")]

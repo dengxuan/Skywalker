@@ -1,6 +1,6 @@
 ﻿using System.Runtime.Serialization;
 
-namespace Skywalker.Exceptions;
+namespace Skywalker.ExceptionHandler;
 
 /// <summary>
 /// Base exception type for those are thrown by Skywalker system for Skywalker specific exceptions.

@@ -1,6 +1,4 @@
-﻿using Skywalker.Exceptions;
-
-namespace Skywalker.Exceptions.Abstractions;
+﻿namespace Skywalker.ExceptionHandler.Abstractions;
 
 public interface IExceptionSubscriber
 {

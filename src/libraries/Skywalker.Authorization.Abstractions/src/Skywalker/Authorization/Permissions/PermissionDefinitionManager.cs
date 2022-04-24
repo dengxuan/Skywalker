@@ -2,7 +2,7 @@
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Options;
 using Skywalker.Authorization.Permissions.Abstractions;
-using Skywalker.Exceptions;
+using Skywalker.ExceptionHandler;
 
 namespace Skywalker.Authorization.Permissions;
 

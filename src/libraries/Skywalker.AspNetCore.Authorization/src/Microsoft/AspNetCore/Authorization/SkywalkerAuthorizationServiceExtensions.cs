@@ -1,7 +1,6 @@
-﻿using Skywalker;
-using Skywalker.AspNetCore.Authorization;
+﻿using Skywalker.AspNetCore.Authorization;
 using Skywalker.Authorization.Permissions;
-using Skywalker.Extensions.Exceptions;
+using Skywalker.ExceptionHandler;
 using Skywalker.Security.Authorization;
 
 namespace Microsoft.AspNetCore.Authorization;

@@ -2,7 +2,7 @@
 
 namespace Skywalker.Extensions.DependencyInjection.Abstractions;
 
-public interface IHybridServiceScopeFactory : IServiceScopeFactory
+public interface IHybridServiceScopeFactory : IServiceScopeFactory, ISingletonDependency
 {
 
 }

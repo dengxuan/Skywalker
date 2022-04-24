@@ -1,9 +1,6 @@
-﻿using System.Threading.Tasks;
+﻿namespace Skywalker.Extensions.SimpleStateChecking;
 
-namespace Skywalker.Extensions.SimpleStateChecking;
-
-public interface ISimpleStateCheckerManager<TState>
-    where TState : IHasSimpleStateCheckers<TState>
+public interface ISimpleStateCheckerManager<TState> where TState : IHasSimpleStateCheckers<TState>
 {
     Task<bool> IsEnabledAsync(TState state);
 

@@ -8,8 +8,4 @@
     <ProjectReference Include="$(LibrariesProjectRoot)\Skywalker.Ddd.Application.Abstractions\src\Skywalker.Ddd.Application.Abstractions.csproj" />
   </ItemGroup>
 
-  <ItemGroup>
-    <Folder Include="Skywalker\Ddd\" />
-  </ItemGroup>
-
 </Project>

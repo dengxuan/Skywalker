@@ -4,8 +4,7 @@ using Skywalker.Extensions.DependencyInjection;
 
 namespace Skywalker.AspNetCore.Authorization.Permissions;
 
-[SingletonDependency]
-public class PermissionRequirementHandler : AuthorizationHandler<PermissionRequirement>
+public class PermissionRequirementHandler : AuthorizationHandler<PermissionRequirement>, ISingletonDependency
 {
     private readonly IPermissionChecker _permissionChecker;
 

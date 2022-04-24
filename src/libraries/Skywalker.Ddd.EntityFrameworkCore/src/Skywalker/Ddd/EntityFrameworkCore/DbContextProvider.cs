@@ -1,10 +1,8 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
-using Skywalker.Extensions.DependencyInjection;
 
 namespace Skywalker.Ddd.EntityFrameworkCore;
 
-[SingletonDependency]
 public class DbContextProvider<TDbContext> : IDbContextProvider<TDbContext> where TDbContext : DbContext
 {
     private readonly IServiceProvider _serviceProvider;

@@ -5,7 +5,7 @@ using System.Collections.Immutable;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 using Skywalker.Ddd.Uow.Abstractions;
-using Skywalker.Exceptions;
+using Skywalker.ExceptionHandler;
 
 namespace Skywalker.Ddd.Uow;
 

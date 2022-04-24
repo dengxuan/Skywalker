@@ -1,6 +1,3 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
 using Microsoft.Extensions.DependencyInjection;
 using Skywalker.EventBus.Abstractions;
 
@@ -12,7 +9,7 @@ namespace Skywalker.EventBus;
 /// </summary>
 public class IocEventHandlerFactory : IEventHandlerFactory, IDisposable
 {
-    private bool disposedValue;
+    private bool _disposedValue;
 
     public Type HandlerType { get; }
 
@@ -44,13 +41,13 @@ public class IocEventHandlerFactory : IEventHandlerFactory, IDisposable
 
     protected virtual void Dispose(bool disposing)
     {
-        if (!disposedValue)
+        if (!_disposedValue)
         {
             if (disposing)
             {
             }
 
-            disposedValue = true;
+            _disposedValue = true;
         }
     }
 

@@ -1,4 +1,4 @@
-﻿using Skywalker.Exceptions;
+﻿using Skywalker.ExceptionHandler;
 
 namespace Skywalker.Ddd.Domain.Entities;
 
