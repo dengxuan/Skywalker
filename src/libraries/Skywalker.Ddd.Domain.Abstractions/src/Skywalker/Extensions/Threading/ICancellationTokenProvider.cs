@@ -1,8 +1,6 @@
-﻿using Skywalker.Extensions.DependencyInjection;
+﻿namespace Skywalker.Extensions.Threading;
 
-namespace Skywalker.Extensions.Threading;
-
-public interface ICancellationTokenProvider : ISingletonDependency
+public interface ICancellationTokenProvider
 {
     CancellationToken Token { get; }
 }

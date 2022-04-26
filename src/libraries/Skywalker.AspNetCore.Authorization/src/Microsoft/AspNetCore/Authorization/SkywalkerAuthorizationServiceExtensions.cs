@@ -19,7 +19,7 @@ public static class SkywalkerAuthorizationServiceExtensions
     public static async Task<AuthorizationResult> AuthorizeAsync(this IAuthorizationService authorizationService, object? resource, IAuthorizationRequirement requirement)
     {
         return await authorizationService.AuthorizeAsync(
-            authorizationService.AsAbpAuthorizationService().CurrentPrincipal!,
+            authorizationService.AsSkywalkerAuthorizationService().CurrentPrincipal!,
             resource,
             requirement
         );
@@ -28,7 +28,7 @@ public static class SkywalkerAuthorizationServiceExtensions
     public static async Task<AuthorizationResult> AuthorizeAsync(this IAuthorizationService authorizationService, object? resource, AuthorizationPolicy policy)
     {
         return await authorizationService.AuthorizeAsync(
-            authorizationService.AsAbpAuthorizationService().CurrentPrincipal!,
+            authorizationService.AsSkywalkerAuthorizationService().CurrentPrincipal!,
             resource,
             policy
         );
@@ -46,7 +46,7 @@ public static class SkywalkerAuthorizationServiceExtensions
     public static async Task<AuthorizationResult> AuthorizeAsync(this IAuthorizationService authorizationService, object resource, IEnumerable<IAuthorizationRequirement> requirements)
     {
         return await authorizationService.AuthorizeAsync(
-            authorizationService.AsAbpAuthorizationService().CurrentPrincipal!,
+            authorizationService.AsSkywalkerAuthorizationService().CurrentPrincipal!,
             resource,
             requirements
         );
@@ -55,7 +55,7 @@ public static class SkywalkerAuthorizationServiceExtensions
     public static async Task<AuthorizationResult> AuthorizeAsync(this IAuthorizationService authorizationService, object? resource, string policyName)
     {
         return await authorizationService.AuthorizeAsync(
-            authorizationService.AsAbpAuthorizationService().CurrentPrincipal!,
+            authorizationService.AsSkywalkerAuthorizationService().CurrentPrincipal!,
             resource,
             policyName
         );
@@ -161,7 +161,7 @@ public static class SkywalkerAuthorizationServiceExtensions
         }
     }
 
-    private static ISkywalkerAuthorizationService AsAbpAuthorizationService(this IAuthorizationService authorizationService)
+    private static ISkywalkerAuthorizationService AsSkywalkerAuthorizationService(this IAuthorizationService authorizationService)
     {
         if (authorizationService is not ISkywalkerAuthorizationService skywalkerAuthorizationService)
         {

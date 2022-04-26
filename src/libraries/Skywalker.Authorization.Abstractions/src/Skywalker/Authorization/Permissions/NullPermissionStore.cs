@@ -1,7 +1,6 @@
 ﻿using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Logging.Abstractions;
 using Skywalker.Authorization.Permissions.Abstractions;
-using Skywalker.Extensions.Threading;
 
 namespace Skywalker.Authorization.Permissions;
 
