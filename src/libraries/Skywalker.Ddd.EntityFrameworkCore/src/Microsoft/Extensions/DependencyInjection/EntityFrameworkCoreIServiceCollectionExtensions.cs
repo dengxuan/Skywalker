@@ -1,6 +1,9 @@
 ﻿using Microsoft.Extensions.DependencyInjection.Extensions;
 using Skywalker.Ddd.EntityFrameworkCore;
 using Skywalker.Ddd.EntityFrameworkCore.DbContextConfiguration;
+using Skywalker.Ddd.Uow;
+using Skywalker.Ddd.Uow.Abstractions;
+using Skywalker.Ddd.Uow.EntityFrameworkCore;
 
 namespace Microsoft.Extensions.DependencyInjection;
 
@@ -10,6 +13,10 @@ public static class EntityFrameworkCoreIServiceCollectionExtensions
     {
         services.Configure(options);
         services.TryAddTransient(SkywalkerDbContextOptionsFactory.Create<TDbContext>);
+        services.TryAddTransient(typeof(IDbContextProvider<>), typeof(UnitOfWorkDbContextProvider<>));
+        services.TryAddSingleton<IAmbientUnitOfWork, AmbientUnitOfWork>();
+        services.TryAddTransient<IUnitOfWork, UnitOfWork>();
+        services.TryAddSingleton<IUnitOfWorkManager, UnitOfWorkManager>();
         services.AddDbContext<TDbContext>();
         return services;
     }

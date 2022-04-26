@@ -1,18 +1,18 @@
 ﻿using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 using Skywalker.Ddd.Application.Dtos.Abstractions;
-using Skywalker.Ddd.Application.Pipeline;
+using Skywalker.Ddd.Uow;
 using Skywalker.Ddd.Uow.Abstractions;
 
-namespace Skywalker.Ddd.Uow;
+namespace Skywalker.Ddd.Application.Pipeline;
 
-public class UnitOfWorkExecutePipelineBehavior: IPipelineBehavior
+public class UnitOfWorkPipelineBehavior : IPipelineBehavior
 {
     private readonly IUnitOfWorkManager _unitOfWorkManager;
     private readonly UnitOfWorkDefaultOptions _defaultOptions;
-    private readonly ILogger<UnitOfWorkExecutePipelineBehavior> _logger;
+    private readonly ILogger<UnitOfWorkPipelineBehavior> _logger;
 
-    public UnitOfWorkExecutePipelineBehavior(IUnitOfWorkManager unitOfWorkManager, IOptions<UnitOfWorkDefaultOptions> options, ILogger<UnitOfWorkExecutePipelineBehavior> logger)
+    public UnitOfWorkPipelineBehavior(IUnitOfWorkManager unitOfWorkManager, IOptions<UnitOfWorkDefaultOptions> options, ILogger<UnitOfWorkPipelineBehavior> logger)
     {
         _unitOfWorkManager = unitOfWorkManager;
         _defaultOptions = options.Value;

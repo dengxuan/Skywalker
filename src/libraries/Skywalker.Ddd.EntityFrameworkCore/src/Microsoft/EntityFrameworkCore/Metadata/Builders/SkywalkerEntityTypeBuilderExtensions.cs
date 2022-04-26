@@ -9,8 +9,8 @@ public static class SkywalkerEntityTypeBuilderExtensions
     {
         b.TryConfigureConcurrencyStamp();
         b.TryConfigureCreationTime();
-        b.TryConfigureDeletionEntity();
-        b.TryConfigureModificationEntity();
+        b.TryConfigureModificationTime();
+        b.TryConfigureDeleteable();
     }
 
     public static void TryConfigureConcurrencyStamp(this EntityTypeBuilder b)
@@ -34,19 +34,13 @@ public static class SkywalkerEntityTypeBuilderExtensions
         }
     }
 
-    public static void TryConfigureDeletionEntity(this EntityTypeBuilder b)
+    public static void TryConfigureModificationTime(this EntityTypeBuilder b)
     {
-        if (b.Metadata.ClrType.IsAssignableTo<IDeletionEntity>())
+        if (b.Metadata.ClrType.IsAssignableTo<IHasModificationTime>())
         {
-            b.TryConfigureDeleteable();
-
-            b.Property(nameof(IDeletionEntity.DeleterId))
+            b.Property(nameof(IHasModificationTime.ModificationTime))
                 .IsRequired(false)
-                .HasColumnName(nameof(IDeletionEntity.DeleterId));
-
-            b.Property(nameof(IDeletionEntity.DeletionTime))
-                .IsRequired(false)
-                .HasColumnName(nameof(IDeletionEntity.DeletionTime));
+                .HasColumnName(nameof(IHasModificationTime.ModificationTime));
         }
     }
 
@@ -58,20 +52,10 @@ public static class SkywalkerEntityTypeBuilderExtensions
                 .IsRequired()
                 .HasDefaultValue(false)
                 .HasColumnName(nameof(IDeleteable.IsDeleted));
-        }
-    }
 
-    public static void TryConfigureModificationEntity(this EntityTypeBuilder b)
-    {
-        if (b.Metadata.ClrType.IsAssignableTo<IModificationEntity>())
-        {
-            b.Property(nameof(IModificationEntity.LastModifierId))
+            b.Property(nameof(IDeleteable.DeletionTime))
                 .IsRequired(false)
-                .HasColumnName(nameof(IModificationEntity.LastModifierId));
-
-            b.Property(nameof(IModificationEntity.LastModificationTime))
-                .IsRequired(false)
-                .HasColumnName(nameof(IModificationEntity.LastModificationTime));
+                .HasColumnName(nameof(IDeleteable.DeletionTime));
         }
     }
 }

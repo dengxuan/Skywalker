@@ -1,5 +1,4 @@
-﻿using System;
-using Skywalker.EventBus;
+﻿using Skywalker.EventBus;
 
 namespace Skywalker.Ddd.Domain.Entities.Events.Distributed;
 

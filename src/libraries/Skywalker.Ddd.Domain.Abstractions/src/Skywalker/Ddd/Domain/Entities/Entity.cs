@@ -2,8 +2,17 @@
 
 /// <inheritdoc/>
 [Serializable]
-public abstract record class Entity : IEntity
+public abstract record class Entity : IEntity, IHasConcurrencyStamp, IHasCreationTime
 {
+    public virtual string ConcurrencyStamp { get; set; }
+
+    public virtual DateTime CreationTime { get; set; }
+
+    protected Entity()
+    {
+        ConcurrencyStamp = Guid.NewGuid().ToString("N");
+    }
+
     /// <inheritdoc/>
     public override string ToString()
     {

@@ -6,8 +6,6 @@ Remove-Item nupkgs\*
 #Extensions
 dotnet pack src/libraries/Skywalker.Extensions.Universal/Skywalker.Extensions.Universal.sln -c Release -p:SymbolPackageFormat=snupkg  -p:IncludeSymbols=true --output nupkgs
 dotnet pack src/libraries/Skywalker.Extensions.Timezone/Skywalker.Extensions.Timezone.sln -c Release -p:IncludeSymbols=true -p:SymbolPackageFormat=snupkg --output nupkgs
-#dotnet pack src/libraries/Skywalker.Extensions.Threading/Skywalker.Extensions.Threading.sln -c Release -p:IncludeSymbols=true -p:SymbolPackageFormat=snupkg --output nupkgs
-#dotnet pack src/libraries/Skywalker.Extensions.GuidGenerator/Skywalker.Extensions.GuidGenerator.sln -c Release -p:IncludeSymbols=true -p:SymbolPackageFormat=snupkg --output nupkgs
 dotnet pack src/libraries/Skywalker.Extensions.Specifications/Skywalker.Extensions.Specifications.sln -c Release -p:IncludeSymbols=true -p:SymbolPackageFormat=snupkg --output nupkgs
 dotnet pack src/libraries/Skywalker.Extensions.RateLimiters/Skywalker.Extensions.RateLimiters.sln -c Release -p:IncludeSymbols=true -p:SymbolPackageFormat=snupkg --output nupkgs
 dotnet pack src/libraries/Skywalker.Extensions.Logging.File/Skywalker.Extensions.Logging.File.sln -c Release -p:IncludeSymbols=true -p:SymbolPackageFormat=snupkg --output nupkgs
@@ -27,10 +25,6 @@ dotnet pack src/libraries/Skywalker.ObjectMapper.AutoMapper/Skywalker.ObjectMapp
 
 #Eventbus
 dotnet pack src/libraries/Skywalker.EventBus.Abstractions/Skywalker.EventBus.Abstractions.sln -c Release -p:IncludeSymbols=true -p:SymbolPackageFormat=snupkg --output nupkgs
-
-#UnitOfWork
-dotnet pack src/libraries/Skywalker.Ddd.UnitOfWork.Abstractions/Skywalker.Ddd.UnitOfWork.Abstractions.sln -c Release -p:IncludeSymbols=true -p:SymbolPackageFormat=snupkg --output nupkgs
-dotnet pack src/libraries/Skywalker.Ddd.UnitOfWork/Skywalker.Ddd.UnitOfWork.sln -c Release -p:IncludeSymbols=true -p:SymbolPackageFormat=snupkg --output nupkgs
 
 #Security
 dotnet pack src/libraries/Skywalker.Security.Abstractions/Skywalker.Security.Abstractions.sln -c Release -p:IncludeSymbols=true -p:SymbolPackageFormat=snupkg --output nupkgs
@@ -60,6 +54,7 @@ dotnet pack src/libraries/Skywalker.Ddd.Domain.Abstractions/Skywalker.Ddd.Domain
 dotnet pack src/libraries/Skywalker.Ddd.EntityFrameworkCore/Skywalker.Ddd.EntityFrameworkCore.sln -c Release -p:IncludeSymbols=true -p:SymbolPackageFormat=snupkg --output nupkgs
 dotnet pack src/libraries/Skywalker.Ddd.EntityFrameworkCore.MySQL/Skywalker.Ddd.EntityFrameworkCore.MySQL.sln -c Release -p:IncludeSymbols=true -p:SymbolPackageFormat=snupkg --output nupkgs
 dotnet pack src/libraries/Skywalker.Ddd.EntityFrameworkCore.SqlServer/Skywalker.Ddd.EntityFrameworkCore.SqlServer.sln -c Release -p:IncludeSymbols=true -p:SymbolPackageFormat=snupkg --output nupkgs
+dotnet pack src/libraries/Skywalker.Ddd.UnitOfWork.Abstractions/Skywalker.Ddd.UnitOfWork.Abstractions.sln -c Release -p:IncludeSymbols=true -p:SymbolPackageFormat=snupkg --output nupkgs
 dotnet pack src/libraries/Skywalker.Ddd.Application.Abstractions/Skywalker.Ddd.Application.Abstractions.sln -c Release -p:IncludeSymbols=true -p:SymbolPackageFormat=snupkg --output nupkgs
 dotnet pack src/libraries/Skywalker.Ddd.Application/Skywalker.Ddd.Application.sln -c Release -p:IncludeSymbols=true -p:SymbolPackageFormat=snupkg --output nupkgs
 

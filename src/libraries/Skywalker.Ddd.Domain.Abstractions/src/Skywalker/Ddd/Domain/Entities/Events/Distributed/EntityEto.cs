@@ -1,7 +1,7 @@
 ﻿namespace Skywalker.Ddd.Domain.Entities.Events.Distributed;
 
 [Serializable]
-public class EntityEto : EtoBase
+public class EntityEto : Eto
 {
     public string EntityType { get; set; }
 

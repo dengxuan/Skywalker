@@ -1,5 +1,3 @@
-using System;
-
 namespace Skywalker.Ddd.Domain.Entities;
 
 /// <summary>

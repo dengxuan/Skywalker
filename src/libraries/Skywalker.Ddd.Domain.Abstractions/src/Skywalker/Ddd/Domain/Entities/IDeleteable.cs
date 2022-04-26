@@ -1,6 +1,4 @@
-﻿using System;
-
-namespace Skywalker.Ddd.Data;
+﻿namespace Skywalker.Ddd.Data;
 
 /// <summary>
 /// Used to standardize soft deleting entities.
@@ -14,4 +12,9 @@ public interface IDeleteable
     /// Used to mark an Entity as 'Deleted'. 
     /// </summary>
     bool IsDeleted { get; set; }
+
+    /// <summary>
+    /// Deletion time.
+    /// </summary>
+    DateTime? DeletionTime { get; set; }
 }

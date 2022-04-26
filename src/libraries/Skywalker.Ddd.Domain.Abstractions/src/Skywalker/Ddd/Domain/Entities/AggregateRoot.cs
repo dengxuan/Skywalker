@@ -6,16 +6,7 @@ namespace Skywalker.Ddd.Domain.Entities;
 [Serializable]
 public abstract record class AggregateRoot : Entity, IAggregateRoot, IGeneratesDomainEvents, IHasConcurrencyStamp, IHasCreationTime
 {
-
-    public virtual string ConcurrencyStamp { get; set; }
-    public virtual DateTime CreationTime { get; set; }
-
     private readonly ICollection<object> _distributedEvents = new Collection<object>();
-
-    protected AggregateRoot()
-    {
-        ConcurrencyStamp = Guid.NewGuid().ToString("N");
-    }
 
     protected virtual void AddDistributedEvent(object eventData)
     {
@@ -42,8 +33,6 @@ public abstract record class AggregateRoot : Entity, IAggregateRoot, IGeneratesD
 [Serializable]
 public abstract record class AggregateRoot<TKey> : Entity<TKey>, IAggregateRoot<TKey>, IGeneratesDomainEvents, IHasConcurrencyStamp, IHasCreationTime where TKey : notnull
 {
-    public virtual string ConcurrencyStamp { get; set; }
-    public virtual DateTime CreationTime { get; set; }
 
     private readonly ICollection<object> _distributedEvents = new Collection<object>();
 
