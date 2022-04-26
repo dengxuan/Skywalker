@@ -5,7 +5,7 @@ VisualStudioVersion = 17.1.32228.430
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{0F9D28DF-D11C-431B-9752-3A36183243DA}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Skywalker.IdentifierGenerator.Abstractions", "src\Skywalker.IdentifierGenerator.Abstractions.csproj", "{BCCE4F3E-E76E-4526-9988-282468CA4582}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Skywalker.Identifier.Abstractions", "src\Skywalker.Identifier.Abstractions.csproj", "{BCCE4F3E-E76E-4526-9988-282468CA4582}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

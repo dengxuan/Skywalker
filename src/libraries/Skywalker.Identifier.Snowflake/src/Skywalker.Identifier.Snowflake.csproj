@@ -10,7 +10,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\Skywalker.IdentifierGenerator.Abstractions\src\Skywalker.IdentifierGenerator.Abstractions.csproj" />
+    <ProjectReference Include="..\..\Skywalker.Identifier.Abstractions\src\Skywalker.Identifier.Abstractions.csproj" />
   </ItemGroup>
 
 </Project>

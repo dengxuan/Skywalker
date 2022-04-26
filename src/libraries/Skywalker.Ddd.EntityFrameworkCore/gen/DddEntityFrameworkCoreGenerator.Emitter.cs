@@ -18,7 +18,7 @@ public partial class DddEntityFrameworkCoreGenerator
         "Skywalker.Ddd.Domain.Repositories",
         "Skywalker.Ddd.EntityFrameworkCore",
         "Skywalker.Ddd.EntityFrameworkCore.Repositories",
-        "Skywalker.IdentifierGenerator.Abstractions",
+        "Skywalker.Identifier.Abstractions",
         "Skywalker.Extensions.Timezone",
         "System.CodeDom.Compiler",
         "System.Linq",

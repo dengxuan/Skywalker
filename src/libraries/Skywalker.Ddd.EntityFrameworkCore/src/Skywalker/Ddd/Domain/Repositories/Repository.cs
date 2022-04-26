@@ -9,7 +9,7 @@ using Skywalker.Ddd.Domain.Repositories;
 using Skywalker.EventBus;
 using Skywalker.EventBus.Abstractions;
 using Skywalker.Extensions.Timezone;
-using Skywalker.IdentifierGenerator.Abstractions;
+using Skywalker.Identifier.Abstractions;
 
 namespace Skywalker.Ddd.EntityFrameworkCore.Repositories;
 

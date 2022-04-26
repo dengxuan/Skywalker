@@ -1,4 +1,4 @@
-namespace Skywalker.IdentifierGenerator;
+namespace Skywalker.Identifier;
 
 public class IdentifierGeneratorOptions
 {

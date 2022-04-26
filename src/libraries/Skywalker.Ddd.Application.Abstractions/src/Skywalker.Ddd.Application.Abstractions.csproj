@@ -1,15 +1,15 @@
 <Project Sdk="Microsoft.NET.Sdk">
-	
+
 	<PropertyGroup>
 		<RootNamespace></RootNamespace>
 	</PropertyGroup>
 
 	<ItemGroup Condition="'$(TargetFramework)' == 'netstandard2.0'">
-	  <PackageReference Include="System.Threading.Tasks.Extensions" Version="4.5.4" />
+		<PackageReference Include="System.Threading.Tasks.Extensions" Version="4.5.4" />
 	</ItemGroup>
 
 	<ItemGroup>
-	  <ProjectReference Include="$(LibrariesProjectRoot)Skywalker.Ddd.Domain.Abstractions\src\Skywalker.Ddd.Domain.Abstractions.csproj" />
+		<ProjectReference Include="$(LibrariesProjectRoot)Skywalker.Ddd.Domain.Abstractions\src\Skywalker.Ddd.Domain.Abstractions.csproj" />
 	</ItemGroup>
-  
+
 </Project>

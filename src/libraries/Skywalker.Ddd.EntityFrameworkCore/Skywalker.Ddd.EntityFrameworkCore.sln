@@ -27,7 +27,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Skywalker.Ddd.EntityFramewo
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Skywalker.Extensions.DependencyInjection.Abstractions", "..\Skywalker.Extensions.DependencyInjection.Abstractions\src\Skywalker.Extensions.DependencyInjection.Abstractions.csproj", "{CFC2CF40-CE25-4766-BB09-ED14662B6ED6}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Skywalker.IdentifierGenerator.Abstractions", "..\Skywalker.IdentifierGenerator.Abstractions\src\Skywalker.IdentifierGenerator.Abstractions.csproj", "{AF27CAE8-C5C2-439A-A945-4F559DC8AA4F}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Skywalker.Identifier.Abstractions", "..\Skywalker.Identifier.Abstractions\src\Skywalker.Identifier.Abstractions.csproj", "{AF27CAE8-C5C2-439A-A945-4F559DC8AA4F}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Skywalker.Extensions.Timezone", "..\Skywalker.Extensions.Timezone\src\Skywalker.Extensions.Timezone.csproj", "{24570ADB-9EAD-47E7-B9B6-037C8DB9A195}"
 EndProject

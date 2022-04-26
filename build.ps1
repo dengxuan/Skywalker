@@ -7,7 +7,7 @@ Remove-Item nupkgs\*
 dotnet pack src/libraries/Skywalker.Extensions.Universal/Skywalker.Extensions.Universal.sln -c Release -p:SymbolPackageFormat=snupkg  -p:IncludeSymbols=true --output nupkgs
 dotnet pack src/libraries/Skywalker.Extensions.Timezone/Skywalker.Extensions.Timezone.sln -c Release -p:IncludeSymbols=true -p:SymbolPackageFormat=snupkg --output nupkgs
 #dotnet pack src/libraries/Skywalker.Extensions.Threading/Skywalker.Extensions.Threading.sln -c Release -p:IncludeSymbols=true -p:SymbolPackageFormat=snupkg --output nupkgs
-dotnet pack src/libraries/Skywalker.Extensions.GuidGenerator/Skywalker.Extensions.GuidGenerator.sln -c Release -p:IncludeSymbols=true -p:SymbolPackageFormat=snupkg --output nupkgs
+#dotnet pack src/libraries/Skywalker.Extensions.GuidGenerator/Skywalker.Extensions.GuidGenerator.sln -c Release -p:IncludeSymbols=true -p:SymbolPackageFormat=snupkg --output nupkgs
 dotnet pack src/libraries/Skywalker.Extensions.Specifications/Skywalker.Extensions.Specifications.sln -c Release -p:IncludeSymbols=true -p:SymbolPackageFormat=snupkg --output nupkgs
 dotnet pack src/libraries/Skywalker.Extensions.RateLimiters/Skywalker.Extensions.RateLimiters.sln -c Release -p:IncludeSymbols=true -p:SymbolPackageFormat=snupkg --output nupkgs
 dotnet pack src/libraries/Skywalker.Extensions.Logging.File/Skywalker.Extensions.Logging.File.sln -c Release -p:IncludeSymbols=true -p:SymbolPackageFormat=snupkg --output nupkgs
@@ -49,11 +49,11 @@ dotnet pack src/libraries/Skywalker.Serialization.Abstractions/Skywalker.Seriali
 dotnet pack src/libraries/Skywalker.Serialization.NewtonsoftJson/Skywalker.Serialization.NewtonsoftJson.sln -c Release -p:IncludeSymbols=true -p:SymbolPackageFormat=snupkg --output nupkgs
 dotnet pack src/libraries/Skywalker.Serialization.MessagePack/Skywalker.Serialization.MessagePack.sln -c Release -p:IncludeSymbols=true -p:SymbolPackageFormat=snupkg --output nupkgs
 
-#IdentifierGenerator
-dotnet pack src/libraries/Skywalker.IdentifierGenerator.Abstractions/Skywalker.IdentifierGenerator.Abstractions.sln -c Release -p:IncludeSymbols=true -p:SymbolPackageFormat=snupkg --output nupkgs
-dotnet pack src/libraries/Skywalker.IdentifierGenerator.Guid/Skywalker.IdentifierGenerator.Guid.sln -c Release -p:IncludeSymbols=true -p:SymbolPackageFormat=snupkg --output nupkgs
-dotnet pack src/libraries/Skywalker.IdentifierGenerator.Snowflake/Skywalker.IdentifierGenerator.Snowflake.sln -c Release -p:IncludeSymbols=true -p:SymbolPackageFormat=snupkg --output nupkgs
-dotnet pack src/libraries/Skywalker.IdentifierGenerator.Snowflake.Redis/Skywalker.IdentifierGenerator.Snowflake.Redis.sln -c Release -p:IncludeSymbols=true -p:SymbolPackageFormat=snupkg --output nupkgs
+#Identifier
+dotnet pack src/libraries/Skywalker.Identifier.Abstractions/Skywalker.Identifier.Abstractions.sln -c Release -p:IncludeSymbols=true -p:SymbolPackageFormat=snupkg --output nupkgs
+dotnet pack src/libraries/Skywalker.Identifier.Guid/Skywalker.Identifier.Guid.sln -c Release -p:IncludeSymbols=true -p:SymbolPackageFormat=snupkg --output nupkgs
+dotnet pack src/libraries/Skywalker.Identifier.Snowflake/Skywalker.Identifier.Snowflake.sln -c Release -p:IncludeSymbols=true -p:SymbolPackageFormat=snupkg --output nupkgs
+dotnet pack src/libraries/Skywalker.Identifier.Snowflake.Redis/Skywalker.Identifier.Snowflake.Redis.sln -c Release -p:IncludeSymbols=true -p:SymbolPackageFormat=snupkg --output nupkgs
 
 #Ddd
 dotnet pack src/libraries/Skywalker.Ddd.Domain.Abstractions/Skywalker.Ddd.Domain.Abstractions.sln -c Release -p:IncludeSymbols=true -p:SymbolPackageFormat=snupkg --output nupkgs

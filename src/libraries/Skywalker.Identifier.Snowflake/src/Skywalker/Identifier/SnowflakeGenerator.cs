@@ -1,8 +1,8 @@
-using Skywalker.IdentifierGenerator.Abstractions;
+using Skywalker.Identifier.Abstractions;
 using Microsoft.Extensions.Options;
 using Microsoft.Extensions.DependencyInjection;
 
-namespace Skywalker.IdentifierGenerator;
+namespace Skywalker.Identifier;
 
 public class SnowflakeGenerator : IIdentifierGenerator<long>
 {

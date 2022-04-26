@@ -5,9 +5,9 @@ VisualStudioVersion = 16.0.30114.105
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{43CFB97F-EDAE-428B-93D3-1629A8C4E76C}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Skywalker.IdentifierGenerator.Snowflake", "src\Skywalker.IdentifierGenerator.Snowflake.csproj", "{CE8DCDA9-0E38-4841-8F7A-346BEB15C825}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Skywalker.Identifier.Snowflake", "src\Skywalker.Identifier.Snowflake.csproj", "{CE8DCDA9-0E38-4841-8F7A-346BEB15C825}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Skywalker.IdentifierGenerator.Abstractions", "..\Skywalker.IdentifierGenerator.Abstractions\src\Skywalker.IdentifierGenerator.Abstractions.csproj", "{A855C9DC-7902-4D83-93B7-683816BFC6A3}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Skywalker.Identifier.Abstractions", "..\Skywalker.Identifier.Abstractions\src\Skywalker.Identifier.Abstractions.csproj", "{A855C9DC-7902-4D83-93B7-683816BFC6A3}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

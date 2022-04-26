@@ -12,7 +12,7 @@ namespace {{Namespace}};
 
 {{~ if PrimaryKey == null || PrimaryKey == '' ~}}
 [GeneratedCode("Skywalker.Ddd.EntityFrameworkCore.Generators", "{{ GeneratorVersion }}")]
-public class {{Name}}Repository<TEntity> : Repository<{{DbContext}}, TEntity>, IRepository<TEntity>
+public partial class {{Name}}Repository<TEntity> : Repository<{{DbContext}}, TEntity>, IRepository<TEntity>
     where TEntity : {{Name}}, IEntity
 {
     public {{Name}}Repository(IDbContextProvider<{{DbContext}}> dbContextProvider, IClock clock) : base(dbContextProvider, clock)
@@ -29,7 +29,7 @@ public partial class {{Name}}Repository : {{Name}}Repository<{{Name}}>
 }
 {{~ else ~}}
 [GeneratedCode("Skywalker.Ddd.EntityFrameworkCore.Generators", "{{ GeneratorVersion }}")]
-public class {{Name}}Repository<TEntity, TKey> : Repository<{{DbContext}}, TEntity, TKey>, IRepository<TEntity, TKey>
+public partial class {{Name}}Repository<TEntity, TKey> : Repository<{{DbContext}}, TEntity, TKey>, IRepository<TEntity, TKey>
     where TEntity : {{Name}}, IEntity<TKey>
     where TKey : notnull
 {

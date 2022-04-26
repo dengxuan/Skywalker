@@ -1,4 +1,4 @@
-namespace Skywalker.IdentifierGenerator.Abstractions;
+namespace Skywalker.Identifier.Abstractions;
 
 /// <summary>
 /// Used to generate Identifier.
