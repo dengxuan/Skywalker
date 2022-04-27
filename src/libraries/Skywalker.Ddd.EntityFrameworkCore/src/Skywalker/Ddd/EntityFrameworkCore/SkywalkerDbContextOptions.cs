@@ -5,16 +5,16 @@ namespace Skywalker.Ddd.EntityFrameworkCore;
 
 public class SkywalkerDbContextOptions
 {
-    public IServiceCollection Services { get; }
-
     internal Action<SkywalkerDbContextConfigurationContext>? DefaultConfigureAction { get; set; }
 
     internal Dictionary<Type, object> ConfigureActions { get; set; }
 
+    internal IServiceCollection Services { get; set; }
+
     public SkywalkerDbContextOptions(IServiceCollection services)
     {
-        Services = services;
         ConfigureActions = new Dictionary<Type, object>();
+        Services = services;
     }
 
     public void Configure(Action<SkywalkerDbContextConfigurationContext> action)
