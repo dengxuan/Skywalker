@@ -20,4 +20,27 @@ public static class EntityFrameworkCoreIServiceCollectionExtensions
         return services;
     }
 
+    public static SkywalkerDbContextOptions ConfigureDbContext<TDbContext>(this SkywalkerDbContextOptions options, Action<DbContextOptionsBuilder> builder) where TDbContext : SkywalkerDbContext<TDbContext>
+    {
+        options.Services.TryAddTransient(SkywalkerDbContextOptionsFactory.Create<TDbContext>);
+        options.Services.AddDbContext<TDbContext>(builder);
+        return options;
+    }
+
+#if NETSTANDARD2_1_OR_GREATER || NETCOREAPP3_1_OR_GREATER || NET5_0_OR_GREATER
+    public static SkywalkerDbContextOptions ConfigureDbContextFactory<TDbContext>(this SkywalkerDbContextOptions options, Action<DbContextOptionsBuilder> builder) where TDbContext : SkywalkerDbContext<TDbContext>
+    {
+        options.Services.TryAddTransient(SkywalkerDbContextOptionsFactory.Create<TDbContext>);
+        options.Services.AddDbContextFactory<TDbContext>(builder);
+        return options;
+    }
+
+    public static SkywalkerDbContextOptions ConfigurePooledDbContextFactory<TDbContext>(this SkywalkerDbContextOptions options, Action<DbContextOptionsBuilder> builder, int poolSize = 1024) where TDbContext : SkywalkerDbContext<TDbContext>
+    {
+        options.Services.TryAddTransient(SkywalkerDbContextOptionsFactory.Create<TDbContext>);
+        options.Services.AddPooledDbContextFactory<TDbContext>(builder, poolSize);
+        return options;
+    }
+#endif
+
 }
