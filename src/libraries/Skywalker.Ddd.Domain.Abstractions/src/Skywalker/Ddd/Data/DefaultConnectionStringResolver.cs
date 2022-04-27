@@ -1,4 +1,4 @@
-using Microsoft.Extensions.Options;
+using Microsoft.Extensions.Configuration;
 
 namespace Skywalker.Ddd.Data;
 
@@ -6,9 +6,10 @@ public class DefaultConnectionStringResolver : IConnectionStringResolver
 {
     protected SkywalkerDbConnectionOptions Options { get; }
 
-    public DefaultConnectionStringResolver(IOptionsSnapshot<SkywalkerDbConnectionOptions> options)
+    public DefaultConnectionStringResolver(IConfiguration configuration)
     {
-        Options = options.Value;
+        Options = new SkywalkerDbConnectionOptions();
+        configuration.Bind(Options);
     }
 
     public virtual string Resolve(string connectionStringName)
