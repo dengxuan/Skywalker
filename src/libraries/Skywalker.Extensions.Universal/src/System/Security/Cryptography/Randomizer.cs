@@ -2,7 +2,7 @@
 
 public static class Randomizer
 {
-    private const string Digits = "0123456789ABCDEFGHJKMNPRSTUVWXYZ";
+    private const string Digits = "0123456789ABCDEFGHJKMNPRSTUVWXYZabcdefghigklmnopqrstuvwxyz";
 
 #if NETSTANDARD2_0
     private static readonly Random s_random = new();
