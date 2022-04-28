@@ -1,4 +1,5 @@
 ﻿using Skywalker.Ddd.Application.Dtos.Abstractions;
+using Skywalker.Extensions.DependencyInjection;
 
 namespace Skywalker.Ddd.Application.Pipeline;
 
@@ -7,7 +8,7 @@ namespace Skywalker.Ddd.Application.Pipeline;
 /// Implementations add additional behavior and await the next delegate.
 /// </summary>
 /// <typeparam name="TRequest">Request type</typeparam>
-public interface IPipelineBehavior
+public interface IPipelineBehavior : ISingletonDependency
 {
     /// <summary>
     /// Pipeline handler. Perform any additional behavior and await the <paramref name="next"/> delegate as necessary

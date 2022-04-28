@@ -22,7 +22,13 @@ public static class UnitOfWorkHelper
         return false;
     }
 
-    public static bool IsUnitOfWorkMethod(MethodInfo methodInfo,  out UnitOfWorkAttribute? unitOfWorkAttribute)
+    /// <summary>
+    /// Todo:从Handler中判断是否需要启用
+    /// </summary>
+    /// <param name="methodInfo"></param>
+    /// <param name="unitOfWorkAttribute"></param>
+    /// <returns></returns>
+    public static bool IsUnitOfWorkMethod(MethodInfo methodInfo, out UnitOfWorkAttribute? unitOfWorkAttribute)
     {
         methodInfo.NotNull(nameof(methodInfo));
 
@@ -53,7 +59,7 @@ public static class UnitOfWorkHelper
         }
 
         unitOfWorkAttribute = null;
-        return false;
+        return true;
     }
 
     public static UnitOfWorkAttribute? GetUnitOfWorkAttributeOrNull(MethodInfo methodInfo)

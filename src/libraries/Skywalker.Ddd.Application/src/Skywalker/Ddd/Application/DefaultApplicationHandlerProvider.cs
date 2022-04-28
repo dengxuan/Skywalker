@@ -14,10 +14,10 @@ internal class DefaultApplicationHandlerProvider : IApplicationHandlerProvider
 
     private readonly IEnumerable<IPipelineBehavior> _behaviors;
 
-    public DefaultApplicationHandlerProvider(IServiceProvider serviceProvider, IEnumerable<IPipelineBehavior> behaviors)
+    public DefaultApplicationHandlerProvider(IServiceProvider serviceProvider)
     {
         _serviceProvider = serviceProvider;
-        _behaviors = behaviors.Reverse();
+        _behaviors = serviceProvider.GetServices<IPipelineBehavior>().Reverse();
     }
 
     public async ValueTask HandleAsync<TRequest>(TRequest request, CancellationToken cancellationToken) where TRequest : IRequestDto

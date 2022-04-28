@@ -1,7 +1,4 @@
-﻿using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.DependencyInjection.Extensions;
-using Skywalker.Ddd.EntityFrameworkCore;
-using Skywalker.Ddd.EntityFrameworkCore.DbContextConfiguration;
+﻿using Skywalker.Ddd.EntityFrameworkCore;
 using Skywalker.Ddd.Uow;
 using Skywalker.Ddd.Uow.Abstractions;
 using Skywalker.Ddd.Uow.EntityFrameworkCore;
@@ -10,13 +7,15 @@ namespace Microsoft.Extensions.DependencyInjection;
 
 public static class EntityFrameworkCoreIServiceCollectionExtensions
 {
-    public static IServiceCollection AddEntityFrameworkCore(this IServiceCollection services, Action<SkywalkerDbContextOptions> options)
+    public static IServiceCollection AddEntityFrameworkCore(this IServiceCollection services, Action<SkywalkerDbContextOptions> optionsAction)
     {
-        services.Configure(options);
-        services.TryAddTransient(typeof(IDbContextProvider<>), typeof(UnitOfWorkDbContextProvider<>));
-        services.TryAddTransient<IUnitOfWork, UnitOfWork>();
-        services.TryAddSingleton<IAmbientUnitOfWork, AmbientUnitOfWork>();
-        services.TryAddSingleton<IUnitOfWorkManager, UnitOfWorkManager>();
+        var options = new SkywalkerDbContextOptions(services);
+        services.AddSingleton(options);
+        services.AddSingleton(typeof(IDbContextProvider<>), typeof(UnitOfWorkDbContextProvider<>));
+        services.AddSingleton<IAmbientUnitOfWork, AmbientUnitOfWork>();
+        services.AddSingleton<IUnitOfWorkManager, UnitOfWorkManager>();
+        services.AddScoped<IUnitOfWork, UnitOfWork>();
+        optionsAction(options);
         return services;
     }
 

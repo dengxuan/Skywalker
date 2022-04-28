@@ -1,4 +1,5 @@
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Options;
 using Skywalker.Ddd.Data;
@@ -45,7 +46,10 @@ public static class SkywalkerDbContextOptionsFactory
 
     private static SkywalkerDbContextOptions GetDbContextOptions<TDbContext>(IServiceProvider serviceProvider) where TDbContext : SkywalkerDbContext<TDbContext>
     {
-        return serviceProvider.GetRequiredService<IOptions<SkywalkerDbContextOptions>>().Value;
+        //var configuration = serviceProvider.GetRequiredService<IConfiguration>();
+        var options = serviceProvider.GetRequiredService<SkywalkerDbContextOptions>();
+        //configuration.Bind(options);
+        return options;
     }
 
     private static SkywalkerDbContextCreationContext GetCreationContext<TDbContext>(IServiceProvider serviceProvider) where TDbContext : SkywalkerDbContext<TDbContext>

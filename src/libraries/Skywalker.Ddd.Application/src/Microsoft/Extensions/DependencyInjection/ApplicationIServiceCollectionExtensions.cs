@@ -13,7 +13,7 @@ public static class ApplicationIServiceCollectionExtensions
     {
         services.AddSingleton<IApplication, DefaultApplication>();
         services.AddSingleton(typeof(IApplicationHandlerProvider), typeof(DefaultApplicationHandlerProvider));
-        services.AddScoped<IPipelineBehavior, UnitOfWorkPipelineBehavior>();
+        services.AddSingleton<IPipelineBehavior, UnitOfWorkPipelineBehavior>();
         return services;
     }
 }

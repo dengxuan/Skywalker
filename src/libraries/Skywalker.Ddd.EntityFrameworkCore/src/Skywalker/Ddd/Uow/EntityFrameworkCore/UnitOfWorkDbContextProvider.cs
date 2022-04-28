@@ -16,9 +16,7 @@ public class UnitOfWorkDbContextProvider<TDbContext> : IDbContextProvider<TDbCon
     private readonly IConnectionStringResolver _connectionStringResolver;
     private readonly ILogger<UnitOfWorkDbContextProvider<TDbContext>> _logger;
 
-    public UnitOfWorkDbContextProvider(
-        IUnitOfWorkManager unitOfWorkManager,
-        IConnectionStringResolver connectionStringResolver, ILogger<UnitOfWorkDbContextProvider<TDbContext>> logger)
+    public UnitOfWorkDbContextProvider(IUnitOfWorkManager unitOfWorkManager, IConnectionStringResolver connectionStringResolver, ILogger<UnitOfWorkDbContextProvider<TDbContext>> logger)
     {
         _unitOfWorkManager = unitOfWorkManager;
         _connectionStringResolver = connectionStringResolver;
@@ -40,11 +38,11 @@ public class UnitOfWorkDbContextProvider<TDbContext> : IDbContextProvider<TDbCon
             throw new SkywalkerException("ConnectionString Can't be null!");
         }
         var dbContextKey = $"{typeof(TDbContext).FullName}_{connectionString}";
-        var databaseApi = unitOfWork.GetOrAddDatabaseApi(
-            dbContextKey,
-            () => new EfCoreDatabaseApi<TDbContext>(
-                CreateDbContext(unitOfWork, connectionStringName, connectionString)
-            ));
+        var databaseApi = unitOfWork.GetOrAddDatabaseApi(dbContextKey, () =>
+        {
+            var dbContext = CreateDbContext(unitOfWork, connectionStringName, connectionString);
+            return new EfCoreDatabaseApi<TDbContext>(dbContext);
+        });
 
         return ((EfCoreDatabaseApi<TDbContext>)databaseApi).DbContext;
     }
@@ -55,9 +53,10 @@ public class UnitOfWorkDbContextProvider<TDbContext> : IDbContextProvider<TDbCon
         using (SkywalkerDbContextCreationContext.Use(creationContext))
         {
             var dbContext = CreateDbContext(unitOfWork);
-
-            if (dbContext is SkywalkerDbContext<DbContext> skywalkerDbContext)
+            _logger.LogDebug("Create DbContext in unit of work: [{Id}]", unitOfWork.Id);
+            if (dbContext is ISkywalkerDbContext skywalkerDbContext)
             {
+                _logger.LogDebug("Initialize SkywalkerDbContext in unit of work: [{Id}]", unitOfWork.Id);
                 skywalkerDbContext.Initialize(unitOfWork);
             }
 
@@ -67,9 +66,11 @@ public class UnitOfWorkDbContextProvider<TDbContext> : IDbContextProvider<TDbCon
 
     private TDbContext CreateDbContext(IUnitOfWork unitOfWork)
     {
-        return unitOfWork.Options!.IsTransactional
-            ? CreateDbContextWithTransaction(unitOfWork)
-            : unitOfWork.ServiceProvider!.GetRequiredService<TDbContext>();
+        if (unitOfWork.Options?.IsTransactional == true)
+        {
+            return CreateDbContextWithTransaction(unitOfWork);
+        }
+        return unitOfWork.ServiceProvider!.GetRequiredService<TDbContext>();
     }
 
     public TDbContext CreateDbContextWithTransaction(IUnitOfWork unitOfWork)
