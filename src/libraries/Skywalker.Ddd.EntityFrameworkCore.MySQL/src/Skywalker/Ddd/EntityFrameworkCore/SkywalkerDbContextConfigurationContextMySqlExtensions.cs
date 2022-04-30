@@ -11,11 +11,11 @@ public static class SkywalkerDbContextConfigurationContextMySqlExtensions
     {
         if (context.ExistingConnection != null)
         {
-            return context.DbContextOptions.UseMySql(context.ExistingConnection, mySQLOptionsAction);
+            return context.DbContextOptions.UseMySql(context.ExistingConnection, mySQLOptionsAction).UseQueryTrackingBehavior(QueryTrackingBehavior.NoTracking);
         }
         else
         {
-            return context.DbContextOptions.UseMySql(context.ConnectionString, mySQLOptionsAction);
+            return context.DbContextOptions.UseMySql(context.ConnectionString, mySQLOptionsAction).UseQueryTrackingBehavior(QueryTrackingBehavior.NoTracking);
         }
     }
 
@@ -24,11 +24,13 @@ public static class SkywalkerDbContextConfigurationContextMySqlExtensions
     {
         if (context.ExistingConnection != null)
         {
-            return context.DbContextOptions.UseMySql(context.ExistingConnection, ServerVersion.AutoDetect(context.ExistingConnection.ConnectionString), mySQLOptionsAction);
+            var serverVersion = ServerVersion.AutoDetect(context.ExistingConnection.ConnectionString);
+            return context.DbContextOptions.UseMySql(context.ExistingConnection, serverVersion, mySQLOptionsAction).UseQueryTrackingBehavior(QueryTrackingBehavior.NoTracking);
         }
         else
         {
-            return context.DbContextOptions.UseMySql(context.ConnectionString, ServerVersion.AutoDetect(context.ConnectionString), mySQLOptionsAction);
+            var serverVersion = ServerVersion.AutoDetect(context.ConnectionString);
+            return context.DbContextOptions.UseMySql(context.ConnectionString, serverVersion, mySQLOptionsAction).UseQueryTrackingBehavior(QueryTrackingBehavior.NoTracking); ;
         }
     }
 #endif

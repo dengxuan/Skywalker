@@ -13,16 +13,16 @@ public class SnowflakeGenerator : IIdentifierGenerator<long>
 
     private long _latestTimestamp = -1L;
 
-    private uint _latestIndex = 0;
+    private long _latestIndex = 0;
 
     private readonly int _workIdLength;
-    private readonly int _maxWorkId;
+    private readonly long _maxWorkId;
 
     private readonly int _indexLength;
 
     private readonly int _maxIndex;
 
-    private int? _workId;
+    private long? _workId;
 
     private readonly IServiceProvider _serviceProvider;
 
@@ -32,8 +32,9 @@ public class SnowflakeGenerator : IIdentifierGenerator<long>
         _options = options.Value;
         _workIdLength = _options.WorkIdLength;
         _maxWorkId = 1 << _workIdLength;
-        _indexLength = 22 - _workIdLength;
+        _indexLength = 25 - _workIdLength;
         _maxIndex = 1 << _indexLength;
+        Console.WriteLine("SnowflakeGenerator");
     }
 
     private async Task Initialize()
@@ -51,7 +52,28 @@ public class SnowflakeGenerator : IIdentifierGenerator<long>
 
     private long Timestamp(long latestTimestamp = 0L)
     {
-        var current = (DateTime.Now.Ticks - _options.StartTimestamp.Ticks) / 1000;
+        var now = DateTime.Now;
+
+        //年12位，支持到4095年
+        var year = ((long)now.Year) << 51;
+
+        //月份4位
+        var mouth = ((long)now.Month) << 47;
+
+        //日5位
+        var day = ((long)now.Day) << 42;
+
+        //时5位
+        var hour = ((long)now.Hour) << 37;
+
+        //分6位
+        var minute = ((long)now.Minute) << 31;
+
+        //秒6位
+        var second = ((long)now.Second) << 25;
+
+        var current = year | mouth | day | hour | minute | second;
+
         if (latestTimestamp == current)
         {
             return Timestamp(latestTimestamp);
@@ -87,7 +109,7 @@ public class SnowflakeGenerator : IIdentifierGenerator<long>
                 Initialize().Wait();
                 return Create();
             }
-            return currentTimestamp << (_indexLength + _workIdLength) | (long)(_workId! << _indexLength) | _latestIndex++;
+            return currentTimestamp | _workId!.Value << _indexLength | _latestIndex++;
         }
     }
 }

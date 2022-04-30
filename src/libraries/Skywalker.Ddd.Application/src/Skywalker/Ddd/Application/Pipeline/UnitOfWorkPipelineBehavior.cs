@@ -19,23 +19,34 @@ public class UnitOfWorkPipelineBehavior : IPipelineBehavior
         _logger = logger;
     }
 
-    public async ValueTask<TResponse?> HandleAsync<TRequest, TResponse>(TRequest message, ApplicationHandlerDelegate<TRequest, TResponse> next, CancellationToken cancellationToken) where TRequest : notnull, IRequestDto where TResponse : notnull, IResponseDto
+    public async ValueTask<TResponse?> HandleAsync<TRequest, TResponse>(TRequest request, ApplicationHandlerDelegate<TRequest, TResponse> next, CancellationToken cancellationToken) where TRequest : notnull, IRequestDto where TResponse : notnull, IResponseDto
     {
         if (!UnitOfWorkHelper.IsUnitOfWorkMethod(next.Method, out var unitOfWorkAttribute))
         {
-            return await next(message, cancellationToken);
+            return await next(request, cancellationToken);
         }
 
         using var uow = _unitOfWorkManager.Begin(CreateOptions(next.Method.Name, unitOfWorkAttribute));
         _logger.LogDebug("Begin Unit of work:[{uow.Id}]", uow.Id);
-        var output = await next(message, cancellationToken);
+        var output = await next(request, cancellationToken);
         await uow.CompleteAsync(cancellationToken);
         _logger.LogDebug("Complete Unit of work:[{uow.Id}]", uow.Id);
         return output;
     }
 
-    public ValueTask HandleAsync<TRequest>(TRequest request, ApplicationHandlerDelegate<TRequest> next, CancellationToken cancellationToken) where TRequest : notnull, IRequestDto => throw new NotImplementedException();
-
+    public async ValueTask HandleAsync<TRequest>(TRequest request, ApplicationHandlerDelegate<TRequest> next, CancellationToken cancellationToken) where TRequest : notnull, IRequestDto
+    {
+        if (!UnitOfWorkHelper.IsUnitOfWorkMethod(next.Method, out var unitOfWorkAttribute))
+        {
+            await next(request, cancellationToken);
+            return;
+        }
+        using var uow = _unitOfWorkManager.Begin(CreateOptions(next.Method.Name, unitOfWorkAttribute));
+        _logger.LogDebug("Begin Unit of work:[{uow.Id}]", uow.Id);
+        await next(request, cancellationToken);
+        await uow.CompleteAsync(cancellationToken);
+        _logger.LogDebug("Complete Unit of work:[{uow.Id}]", uow.Id);
+    }
 
     private UnitOfWorkOptions CreateOptions(string methodName, UnitOfWorkAttribute? unitOfWorkAttribute)
     {

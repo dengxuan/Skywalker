@@ -1,6 +1,9 @@
-namespace Skywalker.Identifier.Abstractions;
 
-public interface IdistributedSupport
+using Skywalker.Extensions.DependencyInjection;
+
+namespace Skywalker.Identifier;
+
+public interface IdistributedSupport: ISingletonDependency
 {
     /// <summary>
     /// 获取下一个可用的机器Id

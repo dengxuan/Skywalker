@@ -51,7 +51,7 @@ public abstract class Repository<TDbContext, TEntity> : BasicRepository<TEntity>
 
     protected virtual async Task ApplySkywalkerConceptsForUpdatedEntityAsync(TEntity entity)
     {
-        if (entity is IDeleteable)
+        if (entity is IDeleteable deleteable && deleteable.IsDeleted)
         {
             await TriggerEntityDeleteEventsAsync(entity);
             await TriggerDomainEventsAsync(entity);
@@ -179,8 +179,6 @@ public abstract class Repository<TDbContext, TEntity> : BasicRepository<TEntity>
     public override async Task<TEntity> UpdateAsync(TEntity entity, CancellationToken cancellationToken = default)
     {
         await ApplySkywalkerConceptsForUpdatedEntityAsync(entity);
-
-        DbContext.Attach(entity);
 
         var updatedEntity = DbContext.Update(entity).Entity;
 

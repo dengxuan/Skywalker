@@ -1,9 +1,7 @@
-﻿using Abstractions;
-using Microsoft.Extensions.Options;
-using System;
-using System.IO;
-using System.Security.Cryptography;
+﻿using System.Security.Cryptography;
 using System.Text;
+using Abstractions;
+using Microsoft.Extensions.Options;
 
 namespace Skywalker.Extensions.AspNetCore.Security.Abstractions
 {
@@ -40,7 +38,9 @@ namespace Skywalker.Extensions.AspNetCore.Security.Abstractions
         /// <inheritdoc />
         public Stream CreateStream(Stream outputStream)
         {
-            return new CryptoStream(outputStream, new TripleDESCryptoServiceProvider().CreateEncryptor(Encoding.Default.GetBytes("123456781234567812345678"), Encoding.Default.GetBytes("12345678")), CryptoStreamMode.Write);
+            var tripleDES = TripleDES.Create();
+            var cryptoTransform = tripleDES.CreateEncryptor(Encoding.Default.GetBytes("123456781234567812345678"), Encoding.Default.GetBytes("12345678"));
+            return new CryptoStream(outputStream, cryptoTransform, CryptoStreamMode.Write);
         }
     }
 }
