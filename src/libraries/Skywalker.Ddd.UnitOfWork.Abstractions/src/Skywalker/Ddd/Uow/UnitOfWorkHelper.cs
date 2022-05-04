@@ -28,7 +28,7 @@ public static class UnitOfWorkHelper
     /// <param name="methodInfo"></param>
     /// <param name="unitOfWorkAttribute"></param>
     /// <returns></returns>
-    public static bool IsUnitOfWorkMethod(MethodInfo methodInfo, out UnitOfWorkAttribute? unitOfWorkAttribute)
+    public static bool IsUnitOfWorkMethod(Type methodInfo, out UnitOfWorkAttribute? unitOfWorkAttribute)
     {
         methodInfo.NotNull(nameof(methodInfo));
 
