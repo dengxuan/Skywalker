@@ -3,7 +3,6 @@
 
 using Skywalker.Ddd.Application;
 using Skywalker.Ddd.Application.Abstractions;
-using Skywalker.Ddd.Application.Pipeline;
 
 namespace Microsoft.Extensions.DependencyInjection;
 
@@ -12,8 +11,7 @@ public static class ApplicationIServiceCollectionExtensions
     public static IServiceCollection AddApplication(this IServiceCollection services)
     {
         services.AddSingleton<IApplication, DefaultApplication>();
-        services.AddSingleton(typeof(IApplicationHandlerProvider), typeof(DefaultApplicationHandlerProvider));
-        services.AddSingleton<IPipelineBehavior, UnitOfWorkPipelineBehavior>();
+        //services.AddSingleton<IApplicationHandlerProvider, DefaultApplicationHandlerProvider>();
         return services;
     }
 }

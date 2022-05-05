@@ -4,7 +4,8 @@
 using System.Linq.Expressions;
 using System.Reflection;
 using Microsoft.Extensions.DependencyInjection;
-using Skywalker.Ddd.Application.Abstractions;
+using Skywalker.Ddd.Application.Dtos.Abstractions;
+using Skywalker.Ddd.Application.Pipeline.Abstractions;
 using Skywalker.Extensions.DependencyInjection.Abstractions;
 
 namespace Skywalker.Ddd.Application.Pipeline;
@@ -14,9 +15,9 @@ namespace Skywalker.Ddd.Application.Pipeline;
 /// </summary>
 public sealed class PipelineChainBuilder : IPipelineChainBuilder
 {
-    private delegate ValueTask InvokeDelegate(object interceptor, PipelineContext context);
+    private delegate ValueTask InvokeDelegate(object pipeline, PipelineContext context);
 
-    private readonly ISet<PipelineDelegate> _interceptors;
+    private readonly List<PipelineDelegate> _pipelines = new();
 
     private readonly Dictionary<Type, InvokeDelegate> _invokers = new();
 
@@ -29,7 +30,7 @@ public sealed class PipelineChainBuilder : IPipelineChainBuilder
     public IServiceProvider ServiceProvider { get; }
 
     /// <summary>
-    /// Create a new <see cref="InterceptorChainBuilder"/>.
+    /// Create a new <see cref="IPipelineChainBuilder"/>.
     /// </summary>
     /// <param name="serviceProvider">The service provider to get dependency services.</param>
     /// <exception cref="ArgumentNullException">The argument <paramref name="serviceProvider"/> is null.</exception>
@@ -38,24 +39,23 @@ public sealed class PipelineChainBuilder : IPipelineChainBuilder
         Check.NotNull(serviceProvider, nameof(serviceProvider));
 
         ServiceProvider = serviceProvider;
-        _interceptors = new SortedSet<PipelineDelegate>();
     }
 
-    private bool TryGetInvoke(Type interceptorType, out InvokeDelegate? invoker)
+    private bool TryGetInvoke(Type pipelineType, out InvokeDelegate? invoker)
     {
-        if (_invokers.TryGetValue(interceptorType, out invoker))
+        if (_invokers.TryGetValue(pipelineType, out invoker))
         {
             return true;
         }
 
         lock (s_locker)
         {
-            if (_invokers.TryGetValue(interceptorType, out invoker))
+            if (_invokers.TryGetValue(pipelineType, out invoker))
             {
                 return true;
             }
 
-            var search = from it in interceptorType.GetTypeInfo().GetMethods()
+            var search = from it in pipelineType.GetTypeInfo().GetMethods()
                          let parameters = it.GetParameters()
                          where it.Name == "InvokeAsync" && it.ReturnType == typeof(ValueTask) && parameters.FirstOrDefault()?.ParameterType == typeof(PipelineContext)
                          select it;
@@ -65,106 +65,97 @@ public sealed class PipelineChainBuilder : IPipelineChainBuilder
                 return false;
             }
 
-            var interceptor = Expression.Parameter(typeof(object), "interceptor");
-            var invocationContext = Expression.Parameter(typeof(PipelineContext), "context");
+            var pipeline = Expression.Parameter(typeof(object), "pipeline");
+            var pipelineContext = Expression.Parameter(typeof(PipelineContext), "context");
 
-            Expression instance = Expression.Convert(interceptor, interceptorType);
-            var invoke = Expression.Call(instance, invokeAsync, invocationContext);
-            invoker = Expression.Lambda<InvokeDelegate>(invoke, interceptor, invocationContext).Compile();
-            _invokers[interceptorType] = invoker;
+            Expression instance = Expression.Convert(pipeline, pipelineType);
+            var invoke = Expression.Call(instance, invokeAsync, pipelineContext);
+            invoker = Expression.Lambda<InvokeDelegate>(invoke, pipeline, pipelineContext).Compile();
+            _invokers[pipelineType] = invoker;
         }
         return true;
     }
 
     /// <summary>
-    /// Register the interceptor of <paramref name="interceptorType"/> to specified interceptor chain builder.
+    /// Register the pipeline of <paramref name="pipelineType"/> to specified pipeline chain builder.
     /// </summary>
-    /// <param name="interceptorType">The interceptor type.</param>
-    /// <returns>The interceptor chain builder with registered interceptor.</returns>
-    /// <exception cref="ArgumentNullException">The argument <paramref name="interceptorType"/> is null.</exception>
-    private IPipelineChainBuilder Use(Type interceptorType)
+    /// <param name="pipelineType">The pipeline type.</param>
+    /// <returns>The pipeline chain builder with registered pipeline.</returns>
+    /// <exception cref="ArgumentNullException">The argument <paramref name="pipelineType"/> is null.</exception>
+    private IPipelineChainBuilder Use(Type pipelineType)
     {
-        Check.NotNull(interceptorType, nameof(interceptorType));
+        Check.NotNull(pipelineType, nameof(pipelineType));
 
         InterceptDelegate Intercept(InterceptDelegate next)
         {
             return async context =>
             {
                 var serviceProvider = ServiceProvider.GetService<IScopedServiceProviderAccesssor>()?.Current ?? ServiceProvider;
-                var interceptor = ActivatorUtilities.CreateInstance(serviceProvider, interceptorType, new object[] { next });
-                if (TryGetInvoke(interceptorType, out var invoker))
+                var pipeline = ActivatorUtilities.CreateInstance(serviceProvider, pipelineType, new object[] { next });
+                if (TryGetInvoke(pipelineType, out var invoker))
                 {
-                    await invoker!(interceptor, context);
+                    await invoker!(pipeline, context);
                 }
                 else
                 {
-                    throw new ArgumentException("Invalid interceptor type {interceptorType}", interceptor.GetType().Name);
+                    throw new ArgumentException("Invalid interceptor type {pipeline}", pipeline.GetType().Name);
                 }
             };
         }
-        return Use(Intercept);
+        return Add(Intercept);
     }
 
     /// <summary>
-    /// Register the interceptor of <typeparamref name="TInterceptor"/> type to specified interceptor chain builder.
+    /// Register the pipeline of <typeparamref name="TPipeline"/> type to specified pipeline chain builder.
     /// </summary>
-    /// <typeparam name="TInterceptor">The interceptor type.</typeparam>
-    /// <param name="builder">The interceptor chain builder to which the interceptor is registered.</param>
-    /// <returns>The interceptor chain builder with registered interceptor.</returns>
-    /// <exception cref="ArgumentNullException">The argument <paramref name="builder"/> is null.</exception>
-    public IPipelineChainBuilder Use<TInterceptor>()
+    /// <typeparam name="TPipeline">The pipeline type.</typeparam>
+    /// <returns>The pipeline chain builder with registered pipeline.</returns>
+    public IPipelineChainBuilder Add<TPipeline>()
     {
-        return Use(typeof(TInterceptor));
+        return Use(typeof(TPipeline));
     }
 
 
     /// <summary>
-    /// Register specified interceptor.
+    /// Register specified pipeline.
     /// </summary>
-    /// <param name="interceptor">The interceptor to register.</param>
-    /// <param name="order">The order for the registered interceptor in the interceptor chain.</param>
-    /// <returns>The interceptor chain builder with registered intercetor.</returns>
-    /// <exception cref="ArgumentNullException">The argument <paramref name="interceptor"/> is null.</exception>
-    public IPipelineChainBuilder Use(PipelineDelegate interceptor)
+    /// <param name="pipeline">The pipeline to register.</param>
+    /// <returns>The pipeline chain builder with registered pipeline.</returns>
+    /// <exception cref="ArgumentNullException">The argument <paramref name="pipeline"/> is null.</exception>
+    public IPipelineChainBuilder Add(PipelineDelegate pipeline)
     {
-        Check.NotNull(interceptor, nameof(interceptor));
-        _interceptors.Add(interceptor);
+        Check.NotNull(pipeline, nameof(pipeline));
+        _pipelines.Add(pipeline);
         return this;
     }
 
     /// <summary>
-    /// Build an interceptor chain using the registerd interceptors.
+    /// Build an pipeline chain using the registerd pipelines.
     /// </summary>
-    /// <returns>A composite interceptor representing the interceptor chain.</returns>
-    public PipelineDelegate Build()
+    /// <returns>A composite pipeline representing the pipeline chain.</returns>
+    public InterceptDelegate Build()
     {
-        if (_interceptors.IsNullOrEmpty())
+        InterceptDelegate current = async context => await context.Target(context);
+        for (var c = _pipelines.Count - 1; c >= 0; c--)
         {
-            return next => context => next(context);
+            current = _pipelines[c](current);
         }
-
-        if (_interceptors.Count == 1)
-        {
-            return _interceptors.Single();
-        }
-
-        var interceptors = _interceptors.Reverse().ToArray();
-
-        return next =>
-        {
-            var current = next;
-            for (var index = 0; index < interceptors.Length; index++)
-            {
-                current = interceptors[index](current);
-            }
-            return current;
-        };
+        return current;
+        //return next =>
+        //{
+        //    var current = next;
+        //    for (var c = _pipelines.Count - 1; c >= 0; c--)
+        //    {
+        //        current = _pipelines[c](current);
+        //    }
+        //    return current;
+        //};
     }
 
     /// <summary>
-    /// Create a new interceptor chain builder which owns the same service provider as the current one.
+    /// Create a new pipeline chain builder which owns the same service provider as the current one.
     /// </summary>
-    /// <returns>The new interceptor to create.</returns>
+    /// <returns>The new pipeline to create.</returns>
     public IPipelineChainBuilder New()
     {
         return new PipelineChainBuilder(ServiceProvider);

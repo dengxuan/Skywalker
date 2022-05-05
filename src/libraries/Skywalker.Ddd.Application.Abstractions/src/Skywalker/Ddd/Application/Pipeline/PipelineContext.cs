@@ -7,18 +7,13 @@ namespace Skywalker.Ddd.Application.Pipeline;
 
 public sealed class PipelineContext
 {
-    //public IEnumerable<Attribute> Attributes { get; set; }
-
-    /// <summary>
-    /// Gets the proxy object on which the intercepted method is invoked.
-    /// </summary>
-    public IApplicationHandler Handler { get; }
+    public IApplicationHandler Handler { get; set; }
 
     /// <summary>
     /// Gets the object on which the invocation is performed.
     /// </summary>
     /// <remarks>For virtual method based interception, the <see cref="Handler"/> and <see cref="Target"/> are the same.</remarks>
-    public Delegate Target { get; }
+    public InterceptDelegate Target { get; }
 
     /// <summary>
     /// Gets the arguments that target method has been invoked with.
@@ -50,11 +45,12 @@ public sealed class PipelineContext
     /// <exception cref="ArgumentNullException">The specified<paramref name="handler"/> is null.</exception>   
     /// <exception cref="ArgumentNullException">The specified<paramref name="target"/> is null.</exception>   
     /// <exception cref="ArgumentNullException">The specified<paramref name="arguments"/> is null.</exception>
-    public PipelineContext(IApplicationHandler handler, Delegate target, params object[] arguments)
+    public PipelineContext(IApplicationHandler handler, InterceptDelegate target, params object[] arguments)
     {
-        Handler = Check.NotNull(handler, nameof(handler));
+        Handler = handler;
         Target = Check.NotNull(target, nameof(target));
         Arguments = Check.NotNull(arguments, nameof(arguments));
+        ReturnValue = default;
         Properties = new Dictionary<string, object>();
     }
 }
