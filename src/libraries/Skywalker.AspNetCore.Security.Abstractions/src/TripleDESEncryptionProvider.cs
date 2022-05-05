@@ -3,44 +3,43 @@ using System.Text;
 using Abstractions;
 using Microsoft.Extensions.Options;
 
-namespace Skywalker.Extensions.AspNetCore.Security.Abstractions
+namespace Skywalker.Extensions.AspNetCore.Security.Abstractions;
+
+public class TripleDESEncryptionProvider : IEncryptionProvider
 {
-    public class TripleDESEncryptionProvider : IEncryptionProvider
+    /// <summary>
+    /// Creates a new instance of GzipCompressionProvider with options.
+    /// </summary>
+    /// <param name="options"></param>
+    public TripleDESEncryptionProvider(IOptions<TripleDESEncryptionProviderOptions> options)
     {
-        /// <summary>
-        /// Creates a new instance of GzipCompressionProvider with options.
-        /// </summary>
-        /// <param name="options"></param>
-        public TripleDESEncryptionProvider(IOptions<TripleDESEncryptionProviderOptions> options)
+        if (options == null)
         {
-            if (options == null)
-            {
-                throw new ArgumentNullException(nameof(options));
-            }
-
-            Options = options.Value;
+            throw new ArgumentNullException(nameof(options));
         }
 
-        private TripleDESEncryptionProviderOptions Options { get; }
+        Options = options.Value;
+    }
 
-        /// <inheritdoc />
-        public string EncodingName => "3des";
+    private TripleDESEncryptionProviderOptions Options { get; }
 
-        /// <inheritdoc />
-        public bool SupportsFlush
+    /// <inheritdoc />
+    public string EncodingName => "3des";
+
+    /// <inheritdoc />
+    public bool SupportsFlush
+    {
+        get
         {
-            get
-            {
-                return true;
-            }
+            return true;
         }
+    }
 
-        /// <inheritdoc />
-        public Stream CreateStream(Stream outputStream)
-        {
-            var tripleDES = TripleDES.Create();
-            var cryptoTransform = tripleDES.CreateEncryptor(Encoding.Default.GetBytes("123456781234567812345678"), Encoding.Default.GetBytes("12345678"));
-            return new CryptoStream(outputStream, cryptoTransform, CryptoStreamMode.Write);
-        }
+    /// <inheritdoc />
+    public Stream CreateStream(Stream outputStream)
+    {
+        var tripleDES = TripleDES.Create();
+        var cryptoTransform = tripleDES.CreateEncryptor(Encoding.Default.GetBytes("123456781234567812345678"), Encoding.Default.GetBytes("12345678"));
+        return new CryptoStream(outputStream, cryptoTransform, CryptoStreamMode.Write);
     }
 }
