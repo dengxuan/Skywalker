@@ -1,9 +1,12 @@
-﻿namespace Skywalker.ObjectMapper;
+﻿
+using Skywalker.Extensions.DependencyInjection;
+
+namespace Skywalker.ObjectMapper;
 
 /// <summary>
 /// Defines a simple interface to automatically map objects.
 /// </summary>
-public interface IObjectMapper
+public interface IObjectMapper : ITransientDependency
 {
     /// <summary>
     /// Gets the underlying <see cref="IAutoObjectMappingProvider"/> object that is used for auto object mapping.

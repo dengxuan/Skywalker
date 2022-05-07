@@ -4,7 +4,7 @@ using Skywalker.ObjectMapper.AutoMapper;
 
 namespace Microsoft.Extensions.DependencyInjection;
 
-public static class AutoMapperSkywalkerBuilderExtensions
+public static class AutoMapperIServiceCollectionExtensions
 {
     public static IServiceCollection AddAutoMapper(this IServiceCollection services, Action<SkywalkerAutoMapperOptions> optionsBuilder)
     {

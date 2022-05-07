@@ -1,0 +1,27 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <AnalyzerRoslynVersion>3.11</AnalyzerRoslynVersion>
+    <RoslynApiVersion>$(MicrosoftCodeAnalysisCSharpWorkspacesVersion_3_11)</RoslynApiVersion>
+    <AssemblyName>$(MSBuildThisFileName)</AssemblyName>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Debug|netstandard2.0|AnyCPU'">
+    <DefineConstants>$(DefineConstants)TRACE;ABC</DefineConstants>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Release|netstandard2.0|AnyCPU'">
+    <DefineConstants>$(DefineConstants)TRACE;ABC</DefineConstants>
+  </PropertyGroup>
+
+  <Import Project="Skywalker.Extensions.ObjectMapper.Generators.targets" />
+
+  <ItemGroup>
+    <Compile Remove="ObjectMapperGenerator.Roslyn4.0.cs" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Remove="Templates\ObjectMapper.sbn-cs" />
+  </ItemGroup>
+
+</Project>

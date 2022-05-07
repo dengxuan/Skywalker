@@ -5,7 +5,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\Skywalker.Identifier.Snowflake\src\Skywalker.Identifier.Snowflake.csproj" />
+    <ProjectReference Include="$(LibrariesProjectRoot)Skywalker.Identifier.Snowflake\src\Skywalker.Identifier.Snowflake.csproj" />
   </ItemGroup>
 
 </Project>

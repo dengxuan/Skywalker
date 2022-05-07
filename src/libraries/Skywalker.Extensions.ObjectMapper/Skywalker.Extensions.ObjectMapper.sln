@@ -1,0 +1,46 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.1.32421.90
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{63EA2F83-A8DD-4554-8AAE-B0EB6CB9913C}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "gen", "gen", "{F057896F-BC8C-46EE-BB29-1B8089884A11}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Skywalker.Extensions.ObjectMapper.Generators.Roslyn3.11", "gen\Skywalker.Extensions.ObjectMapper.Generators.Roslyn3.11.csproj", "{595F962A-F444-4090-BB22-5FF86E001EDB}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Skywalker.Extensions.ObjectMapper.Generators.Roslyn4.0", "gen\Skywalker.Extensions.ObjectMapper.Generators.Roslyn4.0.csproj", "{D75C907E-4233-45EC-B22A-FD80FCC5C389}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Skywalker.Extensions.ObjectMapper", "src\Skywalker.Extensions.ObjectMapper.csproj", "{59F16A13-CDB3-4EB9-B25D-391989DF1C4E}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{595F962A-F444-4090-BB22-5FF86E001EDB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{595F962A-F444-4090-BB22-5FF86E001EDB}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{595F962A-F444-4090-BB22-5FF86E001EDB}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{595F962A-F444-4090-BB22-5FF86E001EDB}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D75C907E-4233-45EC-B22A-FD80FCC5C389}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D75C907E-4233-45EC-B22A-FD80FCC5C389}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D75C907E-4233-45EC-B22A-FD80FCC5C389}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D75C907E-4233-45EC-B22A-FD80FCC5C389}.Release|Any CPU.Build.0 = Release|Any CPU
+		{59F16A13-CDB3-4EB9-B25D-391989DF1C4E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{59F16A13-CDB3-4EB9-B25D-391989DF1C4E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{59F16A13-CDB3-4EB9-B25D-391989DF1C4E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{59F16A13-CDB3-4EB9-B25D-391989DF1C4E}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{595F962A-F444-4090-BB22-5FF86E001EDB} = {F057896F-BC8C-46EE-BB29-1B8089884A11}
+		{D75C907E-4233-45EC-B22A-FD80FCC5C389} = {F057896F-BC8C-46EE-BB29-1B8089884A11}
+		{59F16A13-CDB3-4EB9-B25D-391989DF1C4E} = {63EA2F83-A8DD-4554-8AAE-B0EB6CB9913C}
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {87C8383D-8837-4787-B084-5A4B49FA40D3}
+	EndGlobalSection
+EndGlobal

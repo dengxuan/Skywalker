@@ -23,17 +23,17 @@ public class UnitOfWorkPipelineBehavior
 
     public async ValueTask InvokeAsync(PipelineContext context)
     {
-        if (UnitOfWorkHelper.IsUnitOfWorkMethod(context.Handler.GetType(), out var unitOfWorkAttribute))
+        if (!UnitOfWorkHelper.IsUnitOfWorkMethod(context.Handler.GetType(), out var unitOfWorkAttribute))
         {
-            _logger.LogInformation("Begin Invoke UnitOfWorkPipelineBehavior.InvokeAsync");
-            using var uow = _unitOfWorkManager.Begin(CreateOptions(context.Handler.GetType().Name, unitOfWorkAttribute));
-            _logger.LogDebug("Begin Unit of work:[{uow.Id}]", uow.Id);
             await _next(context);
-            await uow.CompleteAsync();
-            _logger.LogDebug("Complete Unit of work:[{uow.Id}]", uow.Id);
             return;
         }
+        _logger.LogInformation("Begin Invoke UnitOfWorkPipelineBehavior.InvokeAsync");
+        using var uow = _unitOfWorkManager.Begin(CreateOptions(context.Handler.GetType().Name, unitOfWorkAttribute));
+        _logger.LogDebug("Begin Unit of work:[{uow.Id}]", uow.Id);
         await _next(context);
+        await uow.CompleteAsync();
+        _logger.LogDebug("Complete Unit of work:[{uow.Id}]", uow.Id);
     }
 
     private UnitOfWorkOptions CreateOptions(string methodName, UnitOfWorkAttribute? unitOfWorkAttribute)

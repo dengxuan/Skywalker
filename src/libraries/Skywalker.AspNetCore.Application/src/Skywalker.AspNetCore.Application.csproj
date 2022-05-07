@@ -1,9 +1,7 @@
 <Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <TargetFramework>net6.0</TargetFramework>
-    <ImplicitUsings>enable</ImplicitUsings>
-    <Nullable>enable</Nullable>
+    <RootNamespace></RootNamespace>
   </PropertyGroup>
 
   <ItemGroup>
@@ -11,7 +9,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\Skywalker.Ddd.Application\src\Skywalker.Ddd.Application.csproj" />
+    <ProjectReference Include="$(LibrariesProjectRoot)Skywalker.Ddd.Application\src\Skywalker.Ddd.Application.csproj" />
   </ItemGroup>
 
 </Project>

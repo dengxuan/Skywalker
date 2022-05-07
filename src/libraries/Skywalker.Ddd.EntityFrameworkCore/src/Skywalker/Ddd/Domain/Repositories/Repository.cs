@@ -8,6 +8,7 @@ using Skywalker.Ddd.Domain.Entities.Events;
 using Skywalker.Ddd.Domain.Repositories;
 using Skywalker.EventBus;
 using Skywalker.EventBus.Abstractions;
+using Skywalker.Extensions.Collections.Generic;
 using Skywalker.Extensions.Timezone;
 using Skywalker.Identifier.Abstractions;
 
@@ -201,26 +202,22 @@ public abstract class Repository<TDbContext, TEntity> : BasicRepository<TEntity>
         return DbSet.LongCountAsync(GetCancellationToken(cancellationToken));
     }
 
-    public override async Task<List<TEntity>> GetPagedListAsync(int skipCount, int maxResultCount, string sorting, CancellationToken cancellationToken = default)
+    public override Task<PagedList<TEntity>> GetPagedListAsync(int skip, int limit, string sorting, CancellationToken cancellationToken = default)
     {
-        return await DbSet.OrderBy(sorting)
-                          .Page(skipCount, maxResultCount)
-                          .ToListAsync(GetCancellationToken(cancellationToken));
+        return DbSet.OrderBy(sorting).ToPagedListAsync(skip, limit);
     }
 
-    public override async Task<List<TEntity>> GetPagedListAsync(Expression<Func<TEntity, bool>> expression, int skipCount, int maxResultCount, string sorting, CancellationToken cancellationToken = default)
+    public override async Task<PagedList<TEntity>> GetPagedListAsync(Expression<Func<TEntity, bool>> expression, int skip, int limit, string sorting, CancellationToken cancellationToken = default)
     {
         return await DbSet.Where(expression)
                           .OrderBy(sorting)
-                          .Page(skipCount, maxResultCount)
-                          .ToListAsync(GetCancellationToken(cancellationToken));
+                          .ToPagedListAsync(skip, limit);
     }
 
     public IAsyncEnumerator<TEntity> GetAsyncEnumerator(CancellationToken cancellationToken = default)
     {
         return DbSet.AsAsyncEnumerable().GetAsyncEnumerator(cancellationToken);
     }
-
 
     public async Task EnsureCollectionLoadedAsync<TProperty>(TEntity entity, Expression<Func<TEntity, IEnumerable<TProperty>>> propertyExpression, CancellationToken cancellationToken) where TProperty : class
     {

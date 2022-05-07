@@ -4,6 +4,7 @@
 using System.Linq.Expressions;
 using Skywalker.Ddd.Domain.Entities;
 using Skywalker.Ddd.Domain.Repositories;
+using Skywalker.Extensions.Collections.Generic;
 
 namespace Skywalker.Ddd.Domain.Services;
 
@@ -47,12 +48,12 @@ public class DomainService<TEntity> : IDomainService<TEntity> where TEntity : cl
     /// <summary>
     /// <inheritdoc/>
     /// </summary>
-    public Task<List<TEntity>> GetPagedListAsync(int skipCount, int maxResultCount, string sorting, CancellationToken cancellationToken = default) => Repository.GetPagedListAsync(skipCount, maxResultCount, sorting, cancellationToken);
+    public Task<PagedList<TEntity>> GetPagedListAsync(int skip, int limit, string sorting, CancellationToken cancellationToken = default) => Repository.GetPagedListAsync(skip, limit, sorting, cancellationToken);
 
     /// <summary>
     /// <inheritdoc/>
     /// </summary>
-    public Task<List<TEntity>> GetPagedListAsync(Expression<Func<TEntity, bool>> expression, int skipCount, int maxResultCount, string sorting, CancellationToken cancellationToken = default) => Repository.GetPagedListAsync(expression, skipCount, maxResultCount, sorting, cancellationToken);
+    public Task<PagedList<TEntity>> GetPagedListAsync(Expression<Func<TEntity, bool>> expression, int skip, int limit, string sorting, CancellationToken cancellationToken = default) => Repository.GetPagedListAsync(expression, skip, limit, sorting, cancellationToken);
 
     /// <summary>
     /// <inheritdoc/>

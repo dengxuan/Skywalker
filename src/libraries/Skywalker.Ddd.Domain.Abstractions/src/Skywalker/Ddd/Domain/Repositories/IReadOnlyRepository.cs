@@ -1,5 +1,6 @@
 ﻿using System.Linq.Expressions;
 using Skywalker.Ddd.Domain.Entities;
+using Skywalker.Extensions.Collections.Generic;
 
 namespace Skywalker.Ddd.Domain.Repositories;
 
@@ -18,9 +19,9 @@ public interface IReadOnlyRepository<TEntity> : IRepository, IQueryable<TEntity>
     /// </summary>
     Task<long> GetCountAsync(CancellationToken cancellationToken = default);
 
-    Task<List<TEntity>> GetPagedListAsync(int skipCount, int maxResultCount, string sorting, CancellationToken cancellationToken = default);
+    Task<PagedList<TEntity>> GetPagedListAsync(int skip, int limit, string sorting, CancellationToken cancellationToken = default);
 
-    Task<List<TEntity>> GetPagedListAsync(Expression<Func<TEntity, bool>> expression, int skipCount, int maxResultCount, string sorting, CancellationToken cancellationToken = default);
+    Task<PagedList<TEntity>> GetPagedListAsync(Expression<Func<TEntity, bool>> expression, int skip, int limit, string sorting, CancellationToken cancellationToken = default);
 }
 
 public interface IReadOnlyRepository<TEntity, TKey> : IReadOnlyRepository<TEntity> where TEntity : class, IEntity<TKey> where TKey : notnull

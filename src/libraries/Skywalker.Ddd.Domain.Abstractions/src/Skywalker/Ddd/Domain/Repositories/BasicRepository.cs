@@ -3,6 +3,7 @@ using System.Linq.Expressions;
 using Skywalker.Ddd.Data;
 using Skywalker.Ddd.Data.Filtering;
 using Skywalker.Ddd.Domain.Entities;
+using Skywalker.Extensions.Collections.Generic;
 using Skywalker.Extensions.DependencyInjection.Abstractions;
 using Skywalker.Extensions.Threading;
 
@@ -58,9 +59,9 @@ public abstract class BasicRepository<TEntity> : IBasicRepository<TEntity>, ISer
 
     public abstract Task<long> GetCountAsync(CancellationToken cancellationToken = default);
 
-    public abstract Task<List<TEntity>> GetPagedListAsync(int skipCount, int maxResultCount, string sorting, CancellationToken cancellationToken = default);
+    public abstract Task<PagedList<TEntity>> GetPagedListAsync(int skipCount, int maxResultCount, string sorting, CancellationToken cancellationToken = default);
 
-    public abstract Task<List<TEntity>> GetPagedListAsync(Expression<Func<TEntity, bool>> expression, int skipCount, int maxResultCount, string sorting, CancellationToken cancellationToken = default);
+    public abstract Task<PagedList<TEntity>> GetPagedListAsync(Expression<Func<TEntity, bool>> expression, int skipCount, int maxResultCount, string sorting, CancellationToken cancellationToken = default);
 
     public abstract Task<TEntity?> FindAsync(Expression<Func<TEntity, bool>> predicate, CancellationToken cancellationToken = default);
 

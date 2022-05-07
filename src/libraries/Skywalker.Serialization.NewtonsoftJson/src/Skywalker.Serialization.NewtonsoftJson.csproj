@@ -9,7 +9,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\Skywalker.Serialization.Abstractions\src\Skywalker.Serialization.Abstractions.csproj" />
+    <ProjectReference Include="$(LibrariesProjectRoot)Skywalker.Serialization.Abstractions\src\Skywalker.Serialization.Abstractions.csproj" />
   </ItemGroup>
 
 </Project>

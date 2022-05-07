@@ -58,6 +58,3 @@ dotnet pack src/libraries/Skywalker.Ddd.UnitOfWork.Abstractions/Skywalker.Ddd.Un
 dotnet pack src/libraries/Skywalker.Ddd.Application.Abstractions/Skywalker.Ddd.Application.Abstractions.sln -c Release -p:IncludeSymbols=true -p:SymbolPackageFormat=snupkg --output nupkgs
 dotnet pack src/libraries/Skywalker.Ddd.Application/Skywalker.Ddd.Application.sln -c Release -p:IncludeSymbols=true -p:SymbolPackageFormat=snupkg --output nupkgs
 dotnet pack src/libraries/Skywalker.AspNetCore.Application/Skywalker.AspNetCore.Application.sln -c Release -p:IncludeSymbols=true -p:SymbolPackageFormat=snupkg --output nupkgs
-
-#dotnet pack src/libraries/Skywalker.Ddd.Application.Commands.Abstractions/Skywalker.Ddd.Application.Commands.Abstractions.sln -c Release -p:IncludeSymbols=true -p:SymbolPackageFormat=snupkg --output nupkgs
-#dotnet pack src/libraries/Skywalker.Ddd.Application.Queries.Abstractions/Skywalker.Ddd.Application.Queries.Abstractions.sln -c Release -p:IncludeSymbols=true -p:SymbolPackageFormat=snupkg --output nupkgs

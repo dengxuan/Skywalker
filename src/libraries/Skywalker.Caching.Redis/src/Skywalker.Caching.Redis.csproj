@@ -11,7 +11,7 @@
 
 	<ItemGroup>
 		<ProjectReference Include="$(LibrariesProjectRoot)Skywalker.Caching.Abstractions\src\Skywalker.Caching.Abstractions.csproj" />
-		<ProjectReference Include="..\..\Skywalker.Serialization.NewtonsoftJson\src\Skywalker.Serialization.NewtonsoftJson.csproj" />
+		<ProjectReference Include="$(LibrariesProjectRoot)Skywalker.Serialization.NewtonsoftJson\src\Skywalker.Serialization.NewtonsoftJson.csproj" />
 	</ItemGroup>
 
 </Project>

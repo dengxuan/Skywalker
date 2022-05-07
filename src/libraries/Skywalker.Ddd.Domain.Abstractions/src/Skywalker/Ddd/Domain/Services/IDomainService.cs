@@ -1,5 +1,6 @@
 using System.Linq.Expressions;
 using Skywalker.Ddd.Domain.Entities;
+using Skywalker.Extensions.Collections.Generic;
 using Skywalker.Extensions.DependencyInjection;
 
 namespace Skywalker.Ddd.Domain.Services;
@@ -60,23 +61,23 @@ public interface IDomainService<TEntity> : IDomainService where TEntity : class,
     /// <summary>
     /// 分页查询当前实体<see cref="TEntity"/>的数据集
     /// </summary>
-    /// <param name="skipCount">排序后跳过的数据行数</param>
-    /// <param name="maxResultCount">最大获取数据行数</param>
+    /// <param name="skip">排序后跳过的数据行数</param>
+    /// <param name="limit">最大获取数据行数</param>
     /// <param name="sorting">需要包含排序字段和可选的排序指令(ASC 或 DESC)，可包含多个字段，使用逗号(,)分割。 例如： "Name ASC, Age DESC"</param>
     /// <param name="cancellationToken">可取消操作的令牌</param>
     /// <returns>符合条件的数据集</returns>
-    Task<List<TEntity>> GetPagedListAsync(int skipCount, int maxResultCount, string sorting, CancellationToken cancellationToken = default);
+    Task<PagedList<TEntity>> GetPagedListAsync(int skip, int limit, string sorting, CancellationToken cancellationToken = default);
 
     /// <summary>
     /// 根据条件分页查询实体<see cref="TEntity"/>数据集
     /// </summary>
     /// <param name="expression">筛选条件</param>
-    /// <param name="skipCount">排序后跳过的数据行数</param>
-    /// <param name="maxResultCount">最大获取数据行数</param>
+    /// <param name="skip">排序后跳过的数据行数</param>
+    /// <param name="limit">最大获取数据行数</param>
     /// <param name="sorting">需要包含排序字段和可选的排序指令(ASC 或 DESC)，可包含多个字段，使用逗号(,)分割。 例如： "Name ASC, Age DESC"</param>
     /// <param name="cancellationToken">可取消操作的令牌</param>
     /// <returns></returns>
-    Task<List<TEntity>> GetPagedListAsync(Expression<Func<TEntity, bool>> expression, int skipCount, int maxResultCount, string sorting, CancellationToken cancellationToken = default);
+    Task<PagedList<TEntity>> GetPagedListAsync(Expression<Func<TEntity, bool>> expression, int skip, int limit, string sorting, CancellationToken cancellationToken = default);
 }
 
 /// <summary>
