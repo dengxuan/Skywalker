@@ -8,7 +8,7 @@ using Scriban;
 
 namespace Skywalker.Extensions.ObjectMapper.Generators;
 
-public partial class DddEntityFrameworkCoreGenerator
+public partial class ObjectMapperGenerator
 {
     private static readonly HashSet<string> s_namespaces = new()
     {

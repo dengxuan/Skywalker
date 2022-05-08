@@ -1,8 +1,10 @@
 ﻿using Microsoft.CodeAnalysis;
+using Microsoft.CodeAnalysis.CSharp;
+using Microsoft.CodeAnalysis.CSharp.Syntax;
 
 namespace Skywalker.Extensions.ObjectMapper.Generators;
 
-public partial class DddEntityFrameworkCoreGenerator
+public partial class ObjectMapperGenerator
 {
     protected static readonly SymbolEqualityComparer s_symbolComparer = SymbolEqualityComparer.IncludeNullability;
 
@@ -33,8 +35,8 @@ public partial class DddEntityFrameworkCoreGenerator
             _compilation = context.Compilation;
             _domainEntitieSymbol = _compilation.GetTypeByMetadataName(Constants.EntitySymbolName);
             _autoMapAttributeSymbol= _compilation.GetTypeByMetadataName(Constants.ObjectMapperAutoMapAttribute);
-            _autoMapToAttributeSymbol = _compilation.GetTypeByMetadataName(Constants.ObjectMapperAutoMapAttribute);
-            _autoMapFromAttributeSymbol = _compilation.GetTypeByMetadataName(Constants.ObjectMapperAutoMapAttribute);
+            _autoMapToAttributeSymbol = _compilation.GetTypeByMetadataName(Constants.ObjectMapperAutoMapToAttribute);
+            _autoMapFromAttributeSymbol = _compilation.GetTypeByMetadataName(Constants.ObjectMapperAutoMapFromAttribute);
         }
 
         private Queue<INamespaceOrTypeSymbol> FindGlobalNamespaces()
@@ -91,6 +93,8 @@ public partial class DddEntityFrameworkCoreGenerator
                             {
                                 break;
                             }
+                            var allNodes = _compilation.SyntaxTrees.SelectMany(s => s.GetRoot().DescendantNodes());
+                            var allAttributes = allNodes.Where((d) => d.IsKind(SyntaxKind.Attribute)).OfType<AttributeSyntax>();
 
                             //双向Mapping
                             var attributeDatas = namedTypeSymbol.GetAttributes();
@@ -98,6 +102,7 @@ public partial class DddEntityFrameworkCoreGenerator
                             if (autoMapAttributeData != null)
                             {
                                 var targetObjects = new HashSet<INamedTypeSymbol>(s_symbolComparer);
+                                var types = autoMapAttributeData.ConstructorArguments[0].Values;
                                 metadataClass.AutoMapperClasses.Add(namedTypeSymbol, targetObjects);
                             }
 

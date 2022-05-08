@@ -5,7 +5,7 @@ using Microsoft.CodeAnalysis;
 
 namespace Skywalker.Extensions.ObjectMapper.Generators;
 
-public partial class DddEntityFrameworkCoreGenerator
+public partial class ObjectMapperGenerator
 {
     internal class Parser
     {

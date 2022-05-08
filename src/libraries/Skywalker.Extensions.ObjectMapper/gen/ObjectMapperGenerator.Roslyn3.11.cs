@@ -3,7 +3,7 @@
 namespace Skywalker.Extensions.ObjectMapper.Generators;
 
 [Generator]
-public partial class DddEntityFrameworkCoreGenerator : ISourceGenerator
+public partial class ObjectMapperGenerator : ISourceGenerator
 {
     public void Execute(GeneratorExecutionContext context)
     {
