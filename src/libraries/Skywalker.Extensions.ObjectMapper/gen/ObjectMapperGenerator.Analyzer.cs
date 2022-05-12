@@ -1,4 +1,6 @@
 ﻿using Microsoft.CodeAnalysis;
+using Microsoft.CodeAnalysis.CSharp;
+using Microsoft.CodeAnalysis.CSharp.Syntax;
 
 namespace Skywalker.Extensions.ObjectMapper.Generators;
 
@@ -32,7 +34,7 @@ public partial class ObjectMapperGenerator
         {
             _compilation = context.Compilation;
             _domainEntitieSymbol = _compilation.GetTypeByMetadataName(Constants.EntitySymbolName);
-            _autoMapAttributeSymbol= _compilation.GetTypeByMetadataName(Constants.ObjectMapperAutoMapAttribute);
+            _autoMapAttributeSymbol = _compilation.GetTypeByMetadataName(Constants.ObjectMapperAutoMapAttribute);
             _autoMapToAttributeSymbol = _compilation.GetTypeByMetadataName(Constants.ObjectMapperAutoMapToAttribute);
             _autoMapFromAttributeSymbol = _compilation.GetTypeByMetadataName(Constants.ObjectMapperAutoMapFromAttribute);
         }
@@ -106,9 +108,11 @@ public partial class ObjectMapperGenerator
                             {
                                 break;
                             }
+                            var allNodes = _compilation.SyntaxTrees.SelectMany(s => s.GetRoot().DescendantNodes());
+                            var allAttributes = allNodes.Where((d) => d.IsKind(SyntaxKind.Attribute)).OfType<AttributeSyntax>();
 
                             var attributeDatas = namedTypeSymbol.GetAttributes();
-                            if(attributeDatas.Length == 0)
+                            if (attributeDatas.Length == 0)
                             {
                                 break;
                             }
@@ -119,7 +123,7 @@ public partial class ObjectMapperGenerator
                             {
                                 foreach (var typedConstant in autoMapAttributeData.ConstructorArguments[0].Values)
                                 {
-                                    if(typedConstant.Value is not INamedTypeSymbol targetNamedType)
+                                    if (typedConstant.Value is not INamedTypeSymbol targetNamedType)
                                     {
                                         continue;
                                     }
