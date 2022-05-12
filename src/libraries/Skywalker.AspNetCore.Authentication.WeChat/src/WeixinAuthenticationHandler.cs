@@ -1,29 +1,20 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Diagnostics.CodeAnalysis;
-using System.Linq;
-using System.Net.Http;
-using System.Security.Claims;
+﻿using System.Security.Claims;
 using System.Text.Encodings.Web;
+#if !NETSTANDARD
 using System.Text.Json;
-using System.Threading.Tasks;
+#endif
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.OAuth;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.WebUtilities;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
-using Newtonsoft.Json.Linq;
 
 namespace Skywalker.AspNetCore.Authentication.Weixin
 {
     public class WeixinAuthenticationHandler : OAuthHandler<WeixinAuthenticationOptions>
     {
-        public WeixinAuthenticationHandler(
-            [NotNull] IOptionsMonitor<WeixinAuthenticationOptions> options,
-            [NotNull] ILoggerFactory logger,
-            [NotNull] UrlEncoder encoder,
-            [NotNull] ISystemClock clock)
+        public WeixinAuthenticationHandler( IOptionsMonitor<WeixinAuthenticationOptions> options, ILoggerFactory logger,  UrlEncoder encoder, ISystemClock clock)
             : base(options, logger, encoder, clock)
         {
         }
@@ -49,15 +40,12 @@ namespace Skywalker.AspNetCore.Authentication.Weixin
             return await base.HandleRemoteAuthenticateAsync();
         }
 
-        protected override async Task<AuthenticationTicket> CreateTicketAsync(
-            [NotNull] ClaimsIdentity identity,
-            [NotNull] AuthenticationProperties properties,
-            [NotNull] OAuthTokenResponse tokens)
+        protected override async Task<AuthenticationTicket> CreateTicketAsync( ClaimsIdentity identity, AuthenticationProperties properties,  OAuthTokenResponse tokens)
         {
             string address = QueryHelpers.AddQueryString(Options.UserInformationEndpoint, new Dictionary<string, string>
             {
                 ["access_token"] = tokens.AccessToken,
-                ["openid"] = tokens.Response.RootElement.GetString("openid")
+                ["openid"] = tokens.Response.Value<string>("openid")
             });
 
             using var response = await Backchannel.GetAsync(address);
@@ -84,7 +72,7 @@ namespace Skywalker.AspNetCore.Authentication.Weixin
             return new AuthenticationTicket(context.Principal, context.Properties, Scheme.Name);
         }
 
-        protected override async Task<OAuthTokenResponse> ExchangeCodeAsync([NotNull] OAuthCodeExchangeContext context)
+        protected override async Task<OAuthTokenResponse> ExchangeCodeAsync(OAuthCodeExchangeContext context)
         {
             string address = QueryHelpers.AddQueryString(Options.TokenEndpoint, new Dictionary<string, string>()
             {
@@ -113,7 +101,7 @@ namespace Skywalker.AspNetCore.Authentication.Weixin
             return OAuthTokenResponse.Success(payload);
         }
 
-        protected override string BuildChallengeUrl([NotNull] AuthenticationProperties properties, [NotNull] string redirectUri)
+        protected override string BuildChallengeUrl(AuthenticationProperties properties, string redirectUri)
         {
             string stateValue = Options.StateDataFormat.Protect(properties);
             bool addRedirectHash = false;

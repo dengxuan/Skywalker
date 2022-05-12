@@ -5,40 +5,43 @@ using Microsoft.CodeAnalysis;
 
 namespace Skywalker.Extensions.ObjectMapper.Generators;
 
-public partial class DddEntityFrameworkCoreGenerator
+public partial class ObjectMapperGenerator
 {
     internal class Parser
     {
-        public static IReadOnlyList<DbContextClass> DbContextClasses(Dictionary<INamedTypeSymbol, HashSet<INamedTypeSymbol>> dbContextClasses, CancellationToken cancellationToken)
+        public static IReadOnlyList<SourceClass> AutoMapperClasses(Dictionary<INamedTypeSymbol, HashSet<INamedTypeSymbol>> autoMapperClasses, CancellationToken cancellationToken)
         {
-            var results = new List<DbContextClass>();
-            foreach (var dbContextClass in dbContextClasses)
+            var results = new List<SourceClass>();
+            foreach (var autoMapperClass in autoMapperClasses)
             {
                 cancellationToken.ThrowIfCancellationRequested();
 
-                var dbContexterClass = new DbContextClass
+                var sourceClass = new SourceClass
                 {
-                    Properties = new(),
-                    Name = dbContextClass.Key.Name,
-                    Namespace = dbContextClass.Key.ContainingNamespace.ToDisplayString()
+                    Targets = new(),
+                    Name = autoMapperClass.Key.Name,
+                    Namespace = autoMapperClass.Key.ContainingNamespace.ToDisplayString()
                 };
-                foreach (var entityNamedTypeSymbol in dbContextClass.Value)
+                foreach (var targetNamedTypeSymbol in autoMapperClass.Value)
                 {
-                    var primaryKey = string.Empty;
-                    if (entityNamedTypeSymbol.BaseType?.TypeArguments.Length > 0 && entityNamedTypeSymbol.BaseType?.TypeArguments[0] is INamedTypeSymbol primaryKeyNameTypeSymbol)
+                    var constructors = targetNamedTypeSymbol.Constructors[0].Parameters;
+                    var targetCLass = new TargetClass
                     {
-                        primaryKey = primaryKeyNameTypeSymbol.Name;
-                    }
-                    // The match conditions property like public DbSet<Entity> Entities {get; set;}
-                    var dbContextProperty = new DbContextProperty
-                    {
-                        PrimaryKey = primaryKey,
-                        Name = entityNamedTypeSymbol.Name,
-                        Namespace = entityNamedTypeSymbol.ContainingNamespace.ToDisplayString()
+                        Args = new(),
+                        Name = targetNamedTypeSymbol.Name,
+                        Namespace = targetNamedTypeSymbol.ContainingNamespace.ToDisplayString()
                     };
-                    dbContexterClass.Properties.Add(dbContextProperty);
+                    foreach (var constructor in constructors)
+                    {
+                        targetCLass.Args.Add(new TargetClass
+                        {
+                            Name = constructor.Name,
+                            Namespace = constructor.ContainingNamespace.ToDisplayString(),
+                        });
+                    }
+                    sourceClass.Targets.Add(targetCLass);
                 }
-                results.Add(dbContexterClass);
+                results.Add(sourceClass);
             }
             return results;
         }
@@ -48,10 +51,10 @@ public partial class DddEntityFrameworkCoreGenerator
     /// <summary>
     /// A DbContext struct holding a bunch of DbContext properties.
     /// </summary>
-    internal record struct DbContextClass(string Namespace, string Name, List<DbContextProperty> Properties);
+    internal record struct SourceClass(string Namespace, string Name, List<TargetClass> Targets);
 
     /// <summary>
     /// A DbContext property in a DbContext class.
     /// </summary>
-    internal record struct DbContextProperty(string Namespace, string Name, string PrimaryKey);
+    internal record struct TargetClass(string Namespace, string Name, bool IsValueType, List<TargetClass> Args);
 }

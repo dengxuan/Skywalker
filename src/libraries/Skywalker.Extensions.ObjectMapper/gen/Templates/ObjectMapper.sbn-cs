@@ -10,39 +10,11 @@ using {{namespace}};
 
 namespace {{Namespace}};
 
-{{~ if PrimaryKey == null || PrimaryKey == '' ~}}
-[GeneratedCode("Skywalker.Ddd.EntityFrameworkCore.Generators", "{{ GeneratorVersion }}")]
-public partial class {{Name}}Repository<TEntity> : Repository<{{DbContext}}, TEntity>, IRepository<TEntity>
-    where TEntity : {{Name}}, IEntity
+[GeneratedCode("Skywalker.Extensions.ObjectMapper.Generators", "{{ GeneratorVersion }}")]
+internal static class ObjectMapperExtensions
 {
-    public {{Name}}Repository(IDbContextProvider<{{DbContext}}> dbContextProvider, IClock clock) : base(dbContextProvider, clock)
+    {{~ for target in Targets ~}}
+    public static {{target.Name}} To{{target.Name}}(this {{sourceName}} {{sourceName}})
     {
     }
 }
-
-[GeneratedCode("Skywalker.Ddd.EntityFrameworkCore.Generators", "{{ GeneratorVersion }}")]
-public partial class {{Name}}Repository : {{Name}}Repository<{{Name}}>
-{
-    public {{Name}}Repository(IDbContextProvider<{{DbContext}}> dbContextProvider, IClock clock) : base(dbContextProvider, clock)
-    {
-    }
-}
-{{~ else ~}}
-[GeneratedCode("Skywalker.Ddd.EntityFrameworkCore.Generators", "{{ GeneratorVersion }}")]
-public partial class {{Name}}Repository<TEntity, TKey> : Repository<{{DbContext}}, TEntity, TKey>, IRepository<TEntity, TKey>
-    where TEntity : {{Name}}, IEntity<TKey>
-    where TKey : notnull
-{
-    public {{Name}}Repository(IDbContextProvider<{{DbContext}}> dbContextProvider, IClock clock, IIdentifierGenerator<TKey> identifierGenerator) : base(dbContextProvider, clock, identifierGenerator)
-    {
-    }
-}
-
-[GeneratedCode("Skywalker.Ddd.EntityFrameworkCore.Generators", "{{ GeneratorVersion }}")]
-public partial class {{Name}}Repository : {{Name}}Repository<{{Name}}, {{PrimaryKey}}>
-{
-    public {{Name}}Repository(IDbContextProvider<{{DbContext}}> dbContextProvider, IClock clock, IIdentifierGenerator<{{PrimaryKey}}> identifierGenerator) : base(dbContextProvider, clock, identifierGenerator)
-    {
-    }
-}
-{{~ end ~}}

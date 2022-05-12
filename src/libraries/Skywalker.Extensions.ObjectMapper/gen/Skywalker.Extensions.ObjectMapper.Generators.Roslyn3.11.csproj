@@ -19,9 +19,5 @@
   <ItemGroup>
     <Compile Remove="ObjectMapperGenerator.Roslyn4.0.cs" />
   </ItemGroup>
-
-  <ItemGroup>
-    <None Remove="Templates\ObjectMapper.sbn-cs" />
-  </ItemGroup>
-
+  
 </Project>

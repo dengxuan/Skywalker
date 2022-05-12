@@ -16,7 +16,7 @@ namespace Microsoft.Extensions.DependencyInjection
         /// </summary>
         /// <param name="builder">认证建造器.</param>
         /// <returns>当操作完成后返回当前引用的实例.</returns>
-        public static AuthenticationBuilder AddWeixin([NotNull] this AuthenticationBuilder builder)
+        public static AuthenticationBuilder AddWeixin(this AuthenticationBuilder builder)
         {
             return builder.AddWeixin(WeixinAuthenticationDefaults.AuthenticationScheme, options => { });
         }
@@ -28,9 +28,7 @@ namespace Microsoft.Extensions.DependencyInjection
         /// <param name="builder">认证建造器.</param>
         /// <param name="configuration">OpenID 2.0的选项配置委托</param>
         /// <returns>当操作完成后返回当前引用的实例.</returns>
-        public static AuthenticationBuilder AddWeixin(
-            [NotNull] this AuthenticationBuilder builder,
-            [NotNull] Action<WeixinAuthenticationOptions> configuration)
+        public static AuthenticationBuilder AddWeixin(this AuthenticationBuilder builder, Action<WeixinAuthenticationOptions> configuration)
         {
             return builder.AddWeixin(WeixinAuthenticationDefaults.AuthenticationScheme, configuration);
         }
@@ -44,9 +42,9 @@ namespace Microsoft.Extensions.DependencyInjection
         /// <param name="configuration">微信选项配置委托.</param>
         /// <returns> <see cref="AuthenticationBuilder"/>.</returns>
         public static AuthenticationBuilder AddWeixin(
-            [NotNull] this AuthenticationBuilder builder,
-            [NotNull] string scheme,
-            [NotNull] Action<WeixinAuthenticationOptions> configuration)
+           this AuthenticationBuilder builder,
+           string scheme,
+           Action<WeixinAuthenticationOptions> configuration)
         {
             return builder.AddWeixin(scheme, WeixinAuthenticationDefaults.DisplayName, configuration);
         }
@@ -61,10 +59,10 @@ namespace Microsoft.Extensions.DependencyInjection
         /// <param name="configuration">微信选项配置委托.</param>
         /// <returns><see cref="AuthenticationBuilder"/>.</returns>
         public static AuthenticationBuilder AddWeixin(
-            [NotNull] this AuthenticationBuilder builder,
-            [NotNull] string scheme,
+           this AuthenticationBuilder builder,
+           string scheme,
             string caption,
-            [NotNull] Action<WeixinAuthenticationOptions> configuration)
+           Action<WeixinAuthenticationOptions> configuration)
         {
             return builder.AddOAuth<WeixinAuthenticationOptions, WeixinAuthenticationHandler>(scheme, caption, configuration);
         }

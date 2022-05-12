@@ -2,7 +2,7 @@
 
 namespace Skywalker.Extensions.ObjectMapper.Generators;
 
-public partial class DddEntityFrameworkCoreGenerator
+public partial class ObjectMapperGenerator
 {
     protected static readonly SymbolEqualityComparer s_symbolComparer = SymbolEqualityComparer.IncludeNullability;
 
@@ -33,8 +33,8 @@ public partial class DddEntityFrameworkCoreGenerator
             _compilation = context.Compilation;
             _domainEntitieSymbol = _compilation.GetTypeByMetadataName(Constants.EntitySymbolName);
             _autoMapAttributeSymbol= _compilation.GetTypeByMetadataName(Constants.ObjectMapperAutoMapAttribute);
-            _autoMapToAttributeSymbol = _compilation.GetTypeByMetadataName(Constants.ObjectMapperAutoMapAttribute);
-            _autoMapFromAttributeSymbol = _compilation.GetTypeByMetadataName(Constants.ObjectMapperAutoMapAttribute);
+            _autoMapToAttributeSymbol = _compilation.GetTypeByMetadataName(Constants.ObjectMapperAutoMapToAttribute);
+            _autoMapFromAttributeSymbol = _compilation.GetTypeByMetadataName(Constants.ObjectMapperAutoMapFromAttribute);
         }
 
         private Queue<INamespaceOrTypeSymbol> FindGlobalNamespaces()
@@ -56,6 +56,21 @@ public partial class DddEntityFrameworkCoreGenerator
                 queue.Enqueue(assemblySymbol.GlobalNamespace);
             }
             return queue;
+        }
+
+        private void AddTargetObject(MetadataClass metadataClass, INamedTypeSymbol from, INamedTypeSymbol to)
+        {
+
+            if (!metadataClass.AutoMapperClasses.TryGetValue(from, out var toTargetObjects))
+            {
+                toTargetObjects = new HashSet<INamedTypeSymbol>(s_symbolComparer);
+                metadataClass.AutoMapperClasses.Add(from, toTargetObjects);
+            }
+            if (toTargetObjects.Contains(to))
+            {
+                return;
+            }
+            toTargetObjects.Add(to);
         }
 
         private MetadataClass PopulateMetadata(Queue<INamespaceOrTypeSymbol> queue)
@@ -92,29 +107,53 @@ public partial class DddEntityFrameworkCoreGenerator
                                 break;
                             }
 
-                            //双向Mapping
                             var attributeDatas = namedTypeSymbol.GetAttributes();
+                            if(attributeDatas.Length == 0)
+                            {
+                                break;
+                            }
+
+                            //双向Mapping
                             var autoMapAttributeData = attributeDatas.FirstOrDefault(predicate => s_symbolComparer.Equals(predicate.AttributeClass, _autoMapAttributeSymbol));
                             if (autoMapAttributeData != null)
                             {
-                                var targetObjects = new HashSet<INamedTypeSymbol>(s_symbolComparer);
-                                metadataClass.AutoMapperClasses.Add(namedTypeSymbol, targetObjects);
+                                foreach (var typedConstant in autoMapAttributeData.ConstructorArguments[0].Values)
+                                {
+                                    if(typedConstant.Value is not INamedTypeSymbol targetNamedType)
+                                    {
+                                        continue;
+                                    }
+                                    AddTargetObject(metadataClass, namedTypeSymbol, targetNamedType);
+                                    AddTargetObject(metadataClass, targetNamedType, namedTypeSymbol);
+                                }
                             }
 
                             //MapTo
                             var autoMapToAttributeData = attributeDatas.FirstOrDefault(predicate => s_symbolComparer.Equals(predicate.AttributeClass, _autoMapToAttributeSymbol));
                             if (autoMapToAttributeData != null)
                             {
-                                var targetObjects = new HashSet<INamedTypeSymbol>(s_symbolComparer);
-                                metadataClass.AutoMapperClasses.Add(namedTypeSymbol, targetObjects);
+                                foreach (var typedConstant in autoMapToAttributeData.ConstructorArguments[0].Values)
+                                {
+                                    if (typedConstant.Value is not INamedTypeSymbol targetNamedType)
+                                    {
+                                        continue;
+                                    }
+                                    AddTargetObject(metadataClass, namedTypeSymbol, targetNamedType);
+                                }
                             }
 
                             //MapFrom
                             var autoMapFromAttributeData = attributeDatas.FirstOrDefault(predicate => s_symbolComparer.Equals(predicate.AttributeClass, _autoMapFromAttributeSymbol));
                             if (autoMapFromAttributeData != null)
                             {
-                                var targetObjects = new HashSet<INamedTypeSymbol>(s_symbolComparer);
-                                metadataClass.AutoMapperClasses.Add(namedTypeSymbol, targetObjects);
+                                foreach (var typedConstant in autoMapFromAttributeData.ConstructorArguments[0].Values)
+                                {
+                                    if (typedConstant.Value is not INamedTypeSymbol targetNamedType)
+                                    {
+                                        continue;
+                                    }
+                                    AddTargetObject(metadataClass, targetNamedType, namedTypeSymbol);
+                                }
                             }
 
                             break;
