@@ -30,6 +30,9 @@ dotnet pack src/libraries/Skywalker.EventBus.Abstractions/Skywalker.EventBus.Abs
 dotnet pack src/libraries/Skywalker.Security.Abstractions/Skywalker.Security.Abstractions.sln -c Release -p:IncludeSymbols=true -p:SymbolPackageFormat=snupkg --output nupkgs
 dotnet pack src/libraries/Skywalker.Security/Skywalker.Security.sln -c Release -p:IncludeSymbols=true -p:SymbolPackageFormat=snupkg --output nupkgs
 
+#Authentication
+dotnet pack src/libraries/Skywalker.AspNetCore.Authentication.WeChat/Skywalker.AspNetCore.Authentication.WeChat.sln -c Release -p:IncludeSymbols=true -p:SymbolPackageFormat=snupkg --output nupkgs
+
 #Authorization
 dotnet pack src/libraries/Skywalker.Authorization.Abstractions/Skywalker.Authorization.Abstractions.sln -c Release -p:IncludeSymbols=true -p:SymbolPackageFormat=snupkg --output nupkgs
 dotnet pack src/libraries/Skywalker.AspNetCore.Authorization/Skywalker.AspNetCore.Authorization.sln -c Release -p:IncludeSymbols=true -p:SymbolPackageFormat=snupkg --output nupkgs

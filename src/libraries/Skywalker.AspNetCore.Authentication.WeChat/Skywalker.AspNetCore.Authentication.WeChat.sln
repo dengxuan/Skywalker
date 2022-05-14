@@ -7,6 +7,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{DCE7C365-E26
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Skywalker.AspNetCore.Authentication.WeChat", "src\Skywalker.AspNetCore.Authentication.WeChat.csproj", "{25E7823B-6229-42A5-9FF6-1A35A3CCA853}"
 EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Skywalker.Extensions.Universal", "..\Skywalker.Extensions.Universal\src\Skywalker.Extensions.Universal.csproj", "{06AFC99B-872A-482D-8CA3-5E99EE546041}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -17,12 +19,17 @@ Global
 		{25E7823B-6229-42A5-9FF6-1A35A3CCA853}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{25E7823B-6229-42A5-9FF6-1A35A3CCA853}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{25E7823B-6229-42A5-9FF6-1A35A3CCA853}.Release|Any CPU.Build.0 = Release|Any CPU
+		{06AFC99B-872A-482D-8CA3-5E99EE546041}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{06AFC99B-872A-482D-8CA3-5E99EE546041}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{06AFC99B-872A-482D-8CA3-5E99EE546041}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{06AFC99B-872A-482D-8CA3-5E99EE546041}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
 		{25E7823B-6229-42A5-9FF6-1A35A3CCA853} = {DCE7C365-E269-4002-BCC9-939265359857}
+		{06AFC99B-872A-482D-8CA3-5E99EE546041} = {DCE7C365-E269-4002-BCC9-939265359857}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {E15E2A83-6723-46EB-AD03-2AC1CE49DDC4}
