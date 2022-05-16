@@ -17,10 +17,73 @@ public interface IReadOnlyRepository<TEntity> : IRepository, IQueryable<TEntity>
     /// <summary>
     /// Gets total count of all entities.
     /// </summary>
-    Task<long> GetCountAsync(CancellationToken cancellationToken = default);
+    /// <returns></returns>
+    Task<int> GetCountAsync(CancellationToken cancellationToken = default);
 
+    /// <summary>
+    /// Gets total count of all entities.
+    /// </summary>
+    /// <returns></returns>
+    Task<long> GetLongCountAsync(CancellationToken cancellationToken = default);
+
+    /// <summary>
+    /// Gets total count of a condition to filter entities.
+    /// </summary>
+    /// <param name="expression">A condition to filter entities</param>
+    /// <param name="cancellationToken">A <see cref="CancellationToken" /> to observe while waiting for the task to complete.</param>
+    /// <returns></returns>
+    Task<int> GetCountAsync(Expression<Func<TEntity, bool>> expression, CancellationToken cancellationToken = default);
+
+    /// <summary>
+    /// Gets total count of a condition to filter entities.
+    /// </summary>
+    /// <param name="expression">A condition to filter entities</param>
+    /// <param name="cancellationToken">A <see cref="CancellationToken" /> to observe while waiting for the task to complete.</param>
+    /// <returns></returns>
+    Task<long> GetLongCountAsync(Expression<Func<TEntity, bool>> expression, CancellationToken cancellationToken = default);
+
+    /// <summary>
+    /// Gets a paged list of the entities sorted by default
+    /// if entity is <see cref="IHasCreationTime"/> the sorting by <see cref="IHasCreationTime.CreationTime"/>
+    /// else sorting by <see cref="IEntity{TKey}.Id"/>
+    /// </summary>
+    /// <param name="skip">To skiping count</param>
+    /// <param name="limit">A limit of the page size</param>
+    /// <param name="cancellationToken">A <see cref="CancellationToken" /> to observe while waiting for the task to complete.</param>
+    /// <returns>Entities with no more than <paramref name="limit"/> after skipping a <paramref name="skip"/> of rows</returns>
+    Task<PagedList<TEntity>> GetPagedListAsync(int skip, int limit, CancellationToken cancellationToken = default);
+
+    /// <summary>
+    /// Gets a paged list of the entities sorted by <paramref name="sorting"/>
+    /// </summary>
+    /// <param name="skip">To skiping count</param>
+    /// <param name="limit">A limit of the page size</param>
+    /// <param name="sorting">Sorting rules for this pagination</param>
+    /// <param name="cancellationToken">A <see cref="CancellationToken" /> to observe while waiting for the task to complete.</param>
+    /// <returns>Entities with no more than <paramref name="limit"/> after skipping a <paramref name="skip"/> of rows</returns>
     Task<PagedList<TEntity>> GetPagedListAsync(int skip, int limit, string sorting, CancellationToken cancellationToken = default);
 
+    /// <summary>
+    /// Gets a paged list of the entities by the given <paramref name="predicate"/> and sorted by default.
+    /// if entity is <see cref="IHasCreationTime"/> the sorting by <see cref="IHasCreationTime.CreationTime"/>
+    /// else sorting by <see cref="IEntity{TKey}.Id"/>
+    /// </summary>
+    /// <param name="expression">A condition to filter entities</param>
+    /// <param name="skip">To skiping count</param>
+    /// <param name="limit">A limit of the page size</param>
+    /// <param name="cancellationToken">A <see cref="CancellationToken" /> to observe while waiting for the task to complete.</param>
+    /// <returns></returns>
+    Task<PagedList<TEntity>> GetPagedListAsync(Expression<Func<TEntity, bool>> expression, int skip, int limit, CancellationToken cancellationToken = default);
+
+    /// <summary>
+    /// Gets a paged list of the entities by the given <paramref name="predicate"/> and sorted by <paramref name="sorting"/>
+    /// </summary>
+    /// <param name="expression">A condition to filter entities</param>
+    /// <param name="skip">To skiping count</param>
+    /// <param name="limit">A limit of the page size</param>
+    /// <param name="sorting">Sorting rules for this pagination</param>
+    /// <param name="cancellationToken">A <see cref="CancellationToken" /> to observe while waiting for the task to complete.</param>
+    /// <returns>Entities with no more than <paramref name="limit"/> after skipping a <paramref name="skip"/> of rows</returns>
     Task<PagedList<TEntity>> GetPagedListAsync(Expression<Func<TEntity, bool>> expression, int skip, int limit, string sorting, CancellationToken cancellationToken = default);
 }
 

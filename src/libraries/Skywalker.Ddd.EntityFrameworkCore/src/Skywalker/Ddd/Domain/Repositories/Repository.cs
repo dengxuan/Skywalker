@@ -14,6 +14,11 @@ using Skywalker.Identifier.Abstractions;
 
 namespace Skywalker.Ddd.EntityFrameworkCore.Repositories;
 
+/// <summary>
+/// 
+/// </summary>
+/// <typeparam name="TDbContext"></typeparam>
+/// <typeparam name="TEntity"></typeparam>
 public abstract class Repository<TDbContext, TEntity> : BasicRepository<TEntity>, IRepository<TEntity>, IAsyncEnumerable<TEntity>
     where TDbContext : DbContext
     where TEntity : class, IEntity
@@ -116,7 +121,6 @@ public abstract class Repository<TDbContext, TEntity> : BasicRepository<TEntity>
         hasConcurrencyStamp.ConcurrencyStamp = Guid.NewGuid().ToString("N");
     }
 
-
     protected override IQueryable<TEntity> GetQueryable()
     {
         return DbSet.AsQueryable();
@@ -197,9 +201,24 @@ public abstract class Repository<TDbContext, TEntity> : BasicRepository<TEntity>
         return DbSet.ToListAsync(GetCancellationToken(cancellationToken));
     }
 
-    public override Task<long> GetCountAsync(CancellationToken cancellationToken = default)
+    public override Task<int> GetCountAsync(CancellationToken cancellationToken = default)
+    {
+        return DbSet.CountAsync(GetCancellationToken(cancellationToken));
+    }
+
+    public override Task<int> GetCountAsync(Expression<Func<TEntity, bool>> expression, CancellationToken cancellationToken = default)
+    {
+        return DbSet.Where(expression).CountAsync(GetCancellationToken(cancellationToken));
+    }
+
+    public override Task<long> GetLongCountAsync(CancellationToken cancellationToken = default)
     {
         return DbSet.LongCountAsync(GetCancellationToken(cancellationToken));
+    }
+
+    public override Task<long> GetLongCountAsync(Expression<Func<TEntity, bool>> expression, CancellationToken cancellationToken = default)
+    {
+        return DbSet.Where(expression).LongCountAsync(GetCancellationToken(cancellationToken));
     }
 
     public override Task<PagedList<TEntity>> GetPagedListAsync(int skip, int limit, string sorting, CancellationToken cancellationToken = default)
@@ -287,5 +306,17 @@ public abstract class Repository<TDbContext, TEntity, TKey> : Repository<TDbCont
             throw new EntityNotFoundException();
         }
         return entity;
+    }
+
+    public override Task<PagedList<TEntity>> GetPagedListAsync(int skip, int limit, CancellationToken cancellationToken = default)
+    {
+        return DbSet.OrderBy(ordering => ((IHasCreationTime)ordering).CreationTime).ToPagedListAsync(skip, limit);
+    }
+
+    public override Task<PagedList<TEntity>> GetPagedListAsync(Expression<Func<TEntity, bool>> expression, int skip, int limit, CancellationToken cancellationToken = default)
+    {
+        return DbSet.Where(expression)
+                    .OrderBy(ordering => ((IHasCreationTime)ordering).CreationTime)
+                    .ToPagedListAsync(skip, limit);
     }
 }
