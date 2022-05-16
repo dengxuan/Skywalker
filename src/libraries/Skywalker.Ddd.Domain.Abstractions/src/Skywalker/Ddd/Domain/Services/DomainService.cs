@@ -33,7 +33,37 @@ public class DomainService<TEntity> : IDomainService<TEntity> where TEntity : cl
     /// <summary>
     /// <inheritdoc/>
     /// </summary>
+    public Task<TEntity> InsertAsync(TEntity entity, CancellationToken cancellationToken = default) => Repository.InsertAsync(entity, cancellationToken);
+
+    /// <summary>
+    /// <inheritdoc/>
+    /// </summary>
+    public Task<TEntity> UpdateAsync(TEntity entity, CancellationToken cancellationToken = default) => Repository.UpdateAsync(entity, cancellationToken);
+
+    /// <summary>
+    /// <inheritdoc/>
+    /// </summary>
     public Task DeleteAsync(TEntity entity, CancellationToken cancellationToken = default) => Repository.DeleteAsync(entity, cancellationToken);
+
+    /// <summary>
+    /// <inheritdoc/>
+    /// </summary>
+    public Task<int> CountAsync(CancellationToken cancellationToken = default) => throw new NotImplementedException();
+
+    /// <summary>
+    /// <inheritdoc/>
+    /// </summary>
+    public Task<long> LongCountAsync(CancellationToken cancellationToken = default) => throw new NotImplementedException();
+
+    /// <summary>
+    /// <inheritdoc/>
+    /// </summary>
+    public Task<int> CountAsync(Expression<Func<TEntity, bool>> expression, CancellationToken cancellationToken = default) => Repository.GetCountAsync(cancellationToken);
+
+    /// <summary>
+    /// <inheritdoc/>
+    /// </summary>
+    public Task<long> LongCountAsync(Expression<Func<TEntity, bool>> expression, CancellationToken cancellationToken = default) => throw new NotImplementedException();
 
     /// <summary>
     /// <inheritdoc/>
@@ -48,22 +78,23 @@ public class DomainService<TEntity> : IDomainService<TEntity> where TEntity : cl
     /// <summary>
     /// <inheritdoc/>
     /// </summary>
+    public Task<PagedList<TEntity>> GetPagedListAsync(int skip, int limit, CancellationToken cancellationToken = default) => Repository.GetPagedListAsync(skip, limit, cancellationToken);
+
+    /// <summary>
+    /// <inheritdoc/>
+    /// </summary>
     public Task<PagedList<TEntity>> GetPagedListAsync(int skip, int limit, string sorting, CancellationToken cancellationToken = default) => Repository.GetPagedListAsync(skip, limit, sorting, cancellationToken);
+
+    /// <summary>
+    /// <inheritdoc/>
+    /// </summary>
+    public Task<PagedList<TEntity>> GetPagedListAsync(Expression<Func<TEntity, bool>> expression, int skip, int limit, CancellationToken cancellationToken = default) => Repository.GetPagedListAsync(skip, limit, cancellationToken);
 
     /// <summary>
     /// <inheritdoc/>
     /// </summary>
     public Task<PagedList<TEntity>> GetPagedListAsync(Expression<Func<TEntity, bool>> expression, int skip, int limit, string sorting, CancellationToken cancellationToken = default) => Repository.GetPagedListAsync(expression, skip, limit, sorting, cancellationToken);
 
-    /// <summary>
-    /// <inheritdoc/>
-    /// </summary>
-    public Task<TEntity> InsertAsync(TEntity entity, CancellationToken cancellationToken = default) => Repository.InsertAsync(entity, cancellationToken);
-
-    /// <summary>
-    /// <inheritdoc/>
-    /// </summary>
-    public Task<TEntity> UpdateAsync(TEntity entity, CancellationToken cancellationToken = default) => Repository.UpdateAsync(entity, cancellationToken);
 }
 
 /// <summary>

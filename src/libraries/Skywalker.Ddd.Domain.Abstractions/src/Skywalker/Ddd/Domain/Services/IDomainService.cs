@@ -41,6 +41,14 @@ public interface IDomainService<TEntity> : IDomainService where TEntity : class,
     /// <returns></returns>
     Task DeleteAsync(TEntity entity, CancellationToken cancellationToken = default);
 
+    Task<int> CountAsync(CancellationToken cancellationToken = default);
+
+    Task<long> LongCountAsync(CancellationToken cancellationToken = default);
+
+    Task<int> CountAsync(Expression<Func<TEntity, bool>> expression, CancellationToken cancellationToken = default);
+
+    Task<long> LongCountAsync(Expression<Func<TEntity, bool>> expression, CancellationToken cancellationToken = default);
+
     /// <summary>
     /// 查询所有实体，慎重使用。
     /// 大表严禁使用此方法，推荐使用<see cref="IDomainService{TEntity, TKey}.GetPagedListAsync(int, int, string, CancellationToken)"/>进行分页读取
@@ -59,6 +67,17 @@ public interface IDomainService<TEntity> : IDomainService where TEntity : class,
     Task<List<TEntity>> GetListAsync(Expression<Func<TEntity, bool>> expression, CancellationToken cancellationToken = default);
 
     /// <summary>
+    /// 分页查询当前实体<see cref="TEntity"/>的数据集.
+    /// 默认按创建时间排序,如果实体未实现<see cref="IHasCreationTime"/>接口,则按照Id排序
+    /// </summary>
+    /// <param name="skip">排序后跳过的数据行数</param>
+    /// <param name="limit">最大获取数据行数</param>
+    /// <param name="sorting">需要包含排序字段和可选的排序指令(ASC 或 DESC)，可包含多个字段，使用逗号(,)分割。 例如： "Name ASC, Age DESC"</param>
+    /// <param name="cancellationToken">可取消操作的令牌</param>
+    /// <returns>符合条件的数据集</returns>
+    Task<PagedList<TEntity>> GetPagedListAsync(int skip, int limit, CancellationToken cancellationToken = default);
+
+    /// <summary>
     /// 分页查询当前实体<see cref="TEntity"/>的数据集
     /// </summary>
     /// <param name="skip">排序后跳过的数据行数</param>
@@ -67,6 +86,17 @@ public interface IDomainService<TEntity> : IDomainService where TEntity : class,
     /// <param name="cancellationToken">可取消操作的令牌</param>
     /// <returns>符合条件的数据集</returns>
     Task<PagedList<TEntity>> GetPagedListAsync(int skip, int limit, string sorting, CancellationToken cancellationToken = default);
+
+    /// <summary>
+    /// 根据条件分页查询实体<see cref="TEntity"/>数据集
+    /// 默认按创建时间排序,如果实体未实现<see cref="IHasCreationTime"/>接口,则按照Id排序
+    /// </summary>
+    /// <param name="expression">筛选条件</param>
+    /// <param name="skip">排序后跳过的数据行数</param>
+    /// <param name="limit">最大获取数据行数</param>
+    /// <param name="cancellationToken">可取消操作的令牌</param>
+    /// <returns></returns>
+    Task<PagedList<TEntity>> GetPagedListAsync(Expression<Func<TEntity, bool>> expression, int skip, int limit, CancellationToken cancellationToken = default);
 
     /// <summary>
     /// 根据条件分页查询实体<see cref="TEntity"/>数据集
