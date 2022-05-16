@@ -11,5 +11,5 @@ public interface IPagedRequest : ILimitedRequest
     /// <summary>
     /// 跳过数据条数(分页的开始行数)
     /// </summary>
-    int SkipCount { get; init; }
+    int Skip { get; init; }
 }

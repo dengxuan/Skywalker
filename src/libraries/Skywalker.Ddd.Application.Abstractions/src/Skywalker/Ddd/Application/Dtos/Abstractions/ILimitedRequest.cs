@@ -11,5 +11,5 @@ public interface ILimitedRequest
     /// <summary>
     /// 应返回最大查询结果计数，通常用于限制分页的查询结果计数
     /// </summary>
-    int MaxResultCount { get; init; }
+    int Limit { get; init; }
 }

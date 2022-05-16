@@ -7,6 +7,6 @@ namespace Skywalker.Ddd.Application.Dtos;
 
 /// <summary>
 /// <see cref="ILimitedRequest"/>接口的简单实现.
-/// <paramref name="MaxResultCount"><see cref="ILimitedRequest.MaxResultCount"/></paramref>
+/// <paramref name="MaxResultCount"><see cref="ILimitedRequest.Limit"/></paramref>
 /// </summary>
-public record class LimitedRequestDto(int MaxResultCount = 20) : IRequestDto, ILimitedRequest;
+public record class LimitedRequestDto(int Limit = 20) : IRequestDto, ILimitedRequest;
