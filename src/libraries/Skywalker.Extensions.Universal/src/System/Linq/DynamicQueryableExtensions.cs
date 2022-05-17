@@ -1541,8 +1541,8 @@ public static class DynamicQueryableExtensions
     public static IQueryable Page(this IQueryable source, int skip, int limit)
     {
         Check.NotNull(source, nameof(source));
-        Check.Condition(skip, p => p > 0, nameof(skip));
-        Check.Condition(limit, ps => ps > 0, nameof(limit));
+        Check.Condition(skip, x => x >= 0, nameof(skip));
+        Check.Condition(limit, x => x > 0, nameof(limit));
 
         return source.Skip(skip).Take(limit);
     }
@@ -1558,8 +1558,8 @@ public static class DynamicQueryableExtensions
     public static IQueryable<TSource> Page<TSource>(this IQueryable<TSource> source, int skip, int limit)
     {
         Check.NotNull(source, nameof(source));
-        Check.Condition(skip, p => p > 0, nameof(skip));
-        Check.Condition(limit, ps => ps > 0, nameof(limit));
+        Check.Condition(skip, x => x >= 0, nameof(skip));
+        Check.Condition(limit, x => x > 0, nameof(limit));
 
         return source.Skip(skip).Take(limit);
     }
