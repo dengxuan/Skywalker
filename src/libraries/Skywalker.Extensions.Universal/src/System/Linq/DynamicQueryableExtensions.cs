@@ -1561,7 +1561,7 @@ public static class DynamicQueryableExtensions
         Check.Condition(skip, p => p > 0, nameof(skip));
         Check.Condition(limit, ps => ps > 0, nameof(limit));
 
-        return source.Page(skip, limit);
+        return source.Skip(skip).Take(limit);
     }
     #endregion Page
 
