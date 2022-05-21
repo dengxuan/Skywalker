@@ -53,17 +53,22 @@ public class DomainService<TEntity> : IDomainService<TEntity> where TEntity : cl
     /// <summary>
     /// <inheritdoc/>
     /// </summary>
-    public Task<long> LongCountAsync(CancellationToken cancellationToken = default) => throw new NotImplementedException();
+    public Task<long> LongCountAsync(CancellationToken cancellationToken = default) => Repository.LongCountAsync(cancellationToken);
 
     /// <summary>
     /// <inheritdoc/>
     /// </summary>
-    public Task<int> CountAsync(Expression<Func<TEntity, bool>> expression, CancellationToken cancellationToken = default) => Repository.GetCountAsync(cancellationToken);
+    public Task<int> CountAsync(Expression<Func<TEntity, bool>> expression, CancellationToken cancellationToken = default) => Repository.CountAsync(cancellationToken);
 
     /// <summary>
     /// <inheritdoc/>
     /// </summary>
-    public Task<long> LongCountAsync(Expression<Func<TEntity, bool>> expression, CancellationToken cancellationToken = default) => throw new NotImplementedException();
+    public Task<long> LongCountAsync(Expression<Func<TEntity, bool>> expression, CancellationToken cancellationToken = default) => Repository.LongCountAsync(cancellationToken);
+
+    /// <summary>
+    /// <inheritdoc/>
+    /// </summary>
+    public Task<bool> AnyAsync(Expression<Func<TEntity, bool>> filter, CancellationToken cancellationToken = default) => Repository.AnyAsync(filter, cancellationToken);
 
     /// <summary>
     /// <inheritdoc/>
@@ -112,11 +117,15 @@ public class DomainService<TEntity, TKey> : DomainService<TEntity>, IDomainServi
     /// <summary>
     /// <inheritdoc/>
     /// </summary>
+    public Task<bool> AnyAsync(TKey id, CancellationToken cancellationToken = default) => Repository.AnyAsync(id, cancellationToken);
+
+    /// <summary>
+    /// <inheritdoc/>
+    /// </summary>
     public Task<TEntity?> FindAsync(TKey id, CancellationToken cancellationToken = default) => Repository.FindAsync(id, cancellationToken);
 
     /// <summary>
     /// <inheritdoc/>
     /// </summary>
     public Task<TEntity> GetAsync(TKey id, CancellationToken cancellationToken = default) => Repository.GetAsync(id, cancellationToken);
-
 }

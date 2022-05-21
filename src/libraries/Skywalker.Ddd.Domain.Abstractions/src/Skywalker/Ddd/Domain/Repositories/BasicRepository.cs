@@ -87,22 +87,22 @@ public abstract class BasicRepository<TEntity> : IBasicRepository<TEntity>, ISer
     /// <summary>
     /// <inheritdoc/>
     /// </summary>
-    public abstract Task<int> GetCountAsync(CancellationToken cancellationToken = default);
+    public abstract Task<int> CountAsync(CancellationToken cancellationToken = default);
 
     /// <summary>
     /// <inheritdoc/>
     /// </summary>
-    public abstract Task<int> GetCountAsync(Expression<Func<TEntity, bool>> expression, CancellationToken cancellationToken = default);
+    public abstract Task<int> CountAsync(Expression<Func<TEntity, bool>> expression, CancellationToken cancellationToken = default);
 
     /// <summary>
     /// <inheritdoc/>
     /// </summary>
-    public abstract Task<long> GetLongCountAsync(CancellationToken cancellationToken = default);
+    public abstract Task<long> LongCountAsync(CancellationToken cancellationToken = default);
 
     /// <summary>
     /// <inheritdoc/>
     /// </summary>
-    public abstract Task<long> GetLongCountAsync(Expression<Func<TEntity, bool>> expression, CancellationToken cancellationToken = default);
+    public abstract Task<long> LongCountAsync(Expression<Func<TEntity, bool>> expression, CancellationToken cancellationToken = default);
 
     /// <summary>
     /// <inheritdoc/>

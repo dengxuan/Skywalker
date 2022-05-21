@@ -8,39 +8,29 @@ public interface IReadOnlyRepository<TEntity> : IRepository, IQueryable<TEntity>
 {
 
     /// <summary>
+    /// Get a single entity by the given <paramref name="filter"/>.
+    /// It returns null if no entity with the given <paramref name="filter"/>.
+    /// It throws <see cref="InvalidOperationException"/> if there are multiple entities with the given <paramref name="filter"/>.
+    /// </summary>
+    /// <param name="filter">A condition to find the entity</param>
+    /// <param name="cancellationToken">A <see cref="CancellationToken" /> to observe while waiting for the task to complete.</param>
+    Task<TEntity?> FindAsync(Expression<Func<TEntity, bool>> filter, CancellationToken cancellationToken = default);
+
+    /// <summary>
+    /// Get a single entity by the given <paramref name="filter"/>.
+    /// It throws <see cref="EntityNotFoundException"/> if there is no entity with the given <paramref name="filter"/>.
+    /// It throws <see cref="InvalidOperationException"/> if there are multiple entities with the given <paramref name="filter"/>.
+    /// </summary>
+    /// <param name="filter">A condition to filter entities</param>
+    /// <param name="cancellationToken">A <see cref="CancellationToken"/> to observe while waiting for the task to complete.</param>
+    Task<TEntity> GetAsync(Expression<Func<TEntity, bool>> filter, CancellationToken cancellationToken = default);
+
+    /// <summary>
     /// Gets a list of all the entities.
     /// </summary>
     /// <param name="cancellationToken">A <see cref="CancellationToken" /> to observe while waiting for the task to complete.</param>
     /// <returns>Entity</returns>
     Task<List<TEntity>> GetListAsync(CancellationToken cancellationToken = default);
-
-    /// <summary>
-    /// Gets total count of all entities.
-    /// </summary>
-    /// <returns></returns>
-    Task<int> GetCountAsync(CancellationToken cancellationToken = default);
-
-    /// <summary>
-    /// Gets total count of all entities.
-    /// </summary>
-    /// <returns></returns>
-    Task<long> GetLongCountAsync(CancellationToken cancellationToken = default);
-
-    /// <summary>
-    /// Gets total count of a condition to filter entities.
-    /// </summary>
-    /// <param name="expression">A condition to filter entities</param>
-    /// <param name="cancellationToken">A <see cref="CancellationToken" /> to observe while waiting for the task to complete.</param>
-    /// <returns></returns>
-    Task<int> GetCountAsync(Expression<Func<TEntity, bool>> expression, CancellationToken cancellationToken = default);
-
-    /// <summary>
-    /// Gets total count of a condition to filter entities.
-    /// </summary>
-    /// <param name="expression">A condition to filter entities</param>
-    /// <param name="cancellationToken">A <see cref="CancellationToken" /> to observe while waiting for the task to complete.</param>
-    /// <returns></returns>
-    Task<long> GetLongCountAsync(Expression<Func<TEntity, bool>> expression, CancellationToken cancellationToken = default);
 
     /// <summary>
     /// Gets a paged list of the entities sorted by default
@@ -89,6 +79,7 @@ public interface IReadOnlyRepository<TEntity> : IRepository, IQueryable<TEntity>
 
 public interface IReadOnlyRepository<TEntity, TKey> : IReadOnlyRepository<TEntity> where TEntity : class, IEntity<TKey> where TKey : notnull
 {
+
     /// <summary>
     /// Gets an entity with given primary key.
     /// Throws <see cref="EntityNotFoundException"/> if can not find an entity with given id.

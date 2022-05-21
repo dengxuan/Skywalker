@@ -1,10 +1,10 @@
-﻿using Skywalker.Ddd.Domain.Entities;
+﻿using System.Linq.Expressions;
+using Skywalker.Ddd.Domain.Entities;
 
 namespace Skywalker.Ddd.Domain.Repositories;
 
 public interface IBasicRepository<TEntity> : IReadOnlyRepository<TEntity> where TEntity : class, IEntity
 {
-
     /// <summary>
     /// Inserts a new entity.
     /// </summary>
@@ -32,6 +32,16 @@ public interface IBasicRepository<TEntity> : IReadOnlyRepository<TEntity> where 
     /// <param name="entity">Entity to be deleted</param>
     /// <param name="cancellationToken">A <see cref="T:System.Threading.CancellationToken" /> to observe while waiting for the task to complete.</param>
     Task DeleteAsync(TEntity entity, CancellationToken cancellationToken = default);
+
+    /// <summary>
+    /// Deletes many entities by function.
+    /// Notice that: All entities fits to given filter are retrieved and deleted.
+    /// This may cause major performance problems if there are too many entities with
+    /// given filter.
+    /// </summary>
+    /// <param name="filter">A condition to filter entities</param>
+    /// <param name="cancellationToken">A <see cref="CancellationToken" /> to observe while waiting for the task to complete.</param>
+    Task DeleteAsync(Expression<Func<TEntity, bool>> filter, CancellationToken cancellationToken = default);
 }
 
 public interface IBasicRepository<TEntity, TKey> : IBasicRepository<TEntity>, IReadOnlyRepository<TEntity, TKey> where TEntity : class, IEntity<TKey> where TKey : notnull

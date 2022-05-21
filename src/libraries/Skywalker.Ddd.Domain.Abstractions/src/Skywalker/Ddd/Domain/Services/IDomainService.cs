@@ -41,13 +41,43 @@ public interface IDomainService<TEntity> : IDomainService where TEntity : class,
     /// <returns></returns>
     Task DeleteAsync(TEntity entity, CancellationToken cancellationToken = default);
 
+    /// <summary>
+    /// 获取实体数量
+    /// </summary>
+    /// <param name="cancellationToken"></param>
+    /// <returns></returns>
     Task<int> CountAsync(CancellationToken cancellationToken = default);
 
+    /// <summary>
+    /// 获取实体数量
+    /// </summary>
+    /// <param name="cancellationToken"></param>
+    /// <returns></returns>
     Task<long> LongCountAsync(CancellationToken cancellationToken = default);
 
-    Task<int> CountAsync(Expression<Func<TEntity, bool>> expression, CancellationToken cancellationToken = default);
+    /// <summary>
+    /// 获取符合条件<paramref name="filter"/>的实体数量
+    /// </summary>
+    /// <param name="filter">数据筛选条件</param>
+    /// <param name="cancellationToken"></param>
+    /// <returns></returns>
+    Task<int> CountAsync(Expression<Func<TEntity, bool>> filter, CancellationToken cancellationToken = default);
 
-    Task<long> LongCountAsync(Expression<Func<TEntity, bool>> expression, CancellationToken cancellationToken = default);
+    /// <summary>
+    /// 获取符合条件<paramref name="filter"/>的实体是否存在
+    /// </summary>
+    /// <param name="filter">筛选条件</param>
+    /// <param name="cancellationToken"></param>
+    /// <returns>存在返回true，否则返回false</returns>
+    Task<bool> AnyAsync(Expression<Func<TEntity, bool>> filter, CancellationToken cancellationToken = default);
+
+    /// <summary>
+    /// 获取符合条件<paramref name="expression"/>的实体数量
+    /// </summary>
+    /// <param name="expression">数据筛选条件</param>
+    /// <param name="cancellationToken"></param>
+    /// <returns></returns>
+    Task<long> LongCountAsync(Expression<Func<TEntity, bool>> filter, CancellationToken cancellationToken = default);
 
     /// <summary>
     /// 查询所有实体，慎重使用。
@@ -64,7 +94,7 @@ public interface IDomainService<TEntity> : IDomainService where TEntity : class,
     /// <param name="expression">查询条件</param>
     /// <param name="cancellationToken">可取消操作的令牌</param>
     /// <returns>当前实体<see cref="TEntity"/>的所有数据集，或者空集合</returns>
-    Task<List<TEntity>> GetListAsync(Expression<Func<TEntity, bool>> expression, CancellationToken cancellationToken = default);
+    Task<List<TEntity>> GetListAsync(Expression<Func<TEntity, bool>> filter, CancellationToken cancellationToken = default);
 
     /// <summary>
     /// 分页查询当前实体<see cref="TEntity"/>的数据集.
@@ -96,7 +126,7 @@ public interface IDomainService<TEntity> : IDomainService where TEntity : class,
     /// <param name="limit">最大获取数据行数</param>
     /// <param name="cancellationToken">可取消操作的令牌</param>
     /// <returns></returns>
-    Task<PagedList<TEntity>> GetPagedListAsync(Expression<Func<TEntity, bool>> expression, int skip, int limit, CancellationToken cancellationToken = default);
+    Task<PagedList<TEntity>> GetPagedListAsync(Expression<Func<TEntity, bool>> filter, int skip, int limit, CancellationToken cancellationToken = default);
 
     /// <summary>
     /// 根据条件分页查询实体<see cref="TEntity"/>数据集
@@ -107,7 +137,7 @@ public interface IDomainService<TEntity> : IDomainService where TEntity : class,
     /// <param name="sorting">需要包含排序字段和可选的排序指令(ASC 或 DESC)，可包含多个字段，使用逗号(,)分割。 例如： "Name ASC, Age DESC"</param>
     /// <param name="cancellationToken">可取消操作的令牌</param>
     /// <returns></returns>
-    Task<PagedList<TEntity>> GetPagedListAsync(Expression<Func<TEntity, bool>> expression, int skip, int limit, string sorting, CancellationToken cancellationToken = default);
+    Task<PagedList<TEntity>> GetPagedListAsync(Expression<Func<TEntity, bool>> filter, int skip, int limit, string sorting, CancellationToken cancellationToken = default);
 }
 
 /// <summary>
@@ -116,6 +146,14 @@ public interface IDomainService<TEntity> : IDomainService where TEntity : class,
 /// </summary>
 public interface IDomainService<TEntity, TKey> : IDomainService<TEntity> where TEntity : class, IEntity<TKey> where TKey : notnull
 {
+
+    /// <summary>
+    /// 获取给定主键<paramref name="id"/>的实体是否存在
+    /// </summary>
+    /// <param name="id">实体编号</param>
+    /// <param name="cancellationToken"></param>
+    /// <returns>存在返回true，否则返回false</returns>
+    Task<bool> AnyAsync(TKey id, CancellationToken cancellationToken = default);
 
     /// <summary>
     /// 获取给定主键的实体。

@@ -201,24 +201,24 @@ public abstract class Repository<TDbContext, TEntity> : BasicRepository<TEntity>
         return DbSet.ToListAsync(GetCancellationToken(cancellationToken));
     }
 
-    public override Task<int> GetCountAsync(CancellationToken cancellationToken = default)
+    public override Task<int> CountAsync(CancellationToken cancellationToken = default)
     {
         return DbSet.CountAsync(GetCancellationToken(cancellationToken));
     }
 
-    public override Task<int> GetCountAsync(Expression<Func<TEntity, bool>> expression, CancellationToken cancellationToken = default)
+    public override Task<int> CountAsync(Expression<Func<TEntity, bool>> filter, CancellationToken cancellationToken = default)
     {
-        return DbSet.Where(expression).CountAsync(GetCancellationToken(cancellationToken));
+        return DbSet.Where(filter).CountAsync(GetCancellationToken(cancellationToken));
     }
 
-    public override Task<long> GetLongCountAsync(CancellationToken cancellationToken = default)
+    public override Task<long> LongCountAsync(CancellationToken cancellationToken = default)
     {
         return DbSet.LongCountAsync(GetCancellationToken(cancellationToken));
     }
 
-    public override Task<long> GetLongCountAsync(Expression<Func<TEntity, bool>> expression, CancellationToken cancellationToken = default)
+    public override Task<long> LongCountAsync(Expression<Func<TEntity, bool>> filter, CancellationToken cancellationToken = default)
     {
-        return DbSet.Where(expression).LongCountAsync(GetCancellationToken(cancellationToken));
+        return DbSet.Where(filter).LongCountAsync(GetCancellationToken(cancellationToken));
     }
 
     public override Task<PagedList<TEntity>> GetPagedListAsync(int skip, int limit, string sorting, CancellationToken cancellationToken = default)
@@ -226,9 +226,9 @@ public abstract class Repository<TDbContext, TEntity> : BasicRepository<TEntity>
         return DbSet.OrderBy(sorting).ToPagedListAsync(skip, limit);
     }
 
-    public override async Task<PagedList<TEntity>> GetPagedListAsync(Expression<Func<TEntity, bool>> expression, int skip, int limit, string sorting, CancellationToken cancellationToken = default)
+    public override async Task<PagedList<TEntity>> GetPagedListAsync(Expression<Func<TEntity, bool>> filter, int skip, int limit, string sorting, CancellationToken cancellationToken = default)
     {
-        return await DbSet.Where(expression)
+        return await DbSet.Where(filter)
                           .OrderBy(sorting)
                           .ToPagedListAsync(skip, limit);
     }
@@ -251,6 +251,8 @@ public abstract class Repository<TDbContext, TEntity> : BasicRepository<TEntity>
                        .Reference(propertyExpression)
                        .LoadAsync(GetCancellationToken(cancellationToken));
     }
+
+    public Task<bool> AnyAsync(Expression<Func<TEntity, bool>> filter, CancellationToken cancellationToken = default) => DbSet.AnyAsync(filter, cancellationToken);
 }
 
 public abstract class Repository<TDbContext, TEntity, TKey> : Repository<TDbContext, TEntity>, IRepository<TEntity, TKey>, ISupportsExplicitLoading<TEntity, TKey>
@@ -295,7 +297,7 @@ public abstract class Repository<TDbContext, TEntity, TKey> : Repository<TDbCont
 
     public async Task<TEntity?> FindAsync(TKey id, CancellationToken cancellationToken = default)
     {
-        return await DbSet.FindAsync(new object[] { id! }, GetCancellationToken(cancellationToken));
+        return await DbSet.FindAsync(new object[] { id }, GetCancellationToken(cancellationToken));
     }
 
     public async Task<TEntity> GetAsync(TKey id, CancellationToken cancellationToken = default)
@@ -319,4 +321,6 @@ public abstract class Repository<TDbContext, TEntity, TKey> : Repository<TDbCont
                     .OrderBy(ordering => ((IHasCreationTime)ordering).CreationTime)
                     .ToPagedListAsync(skip, limit);
     }
+
+    public Task<bool> AnyAsync(TKey id, CancellationToken cancellationToken = default) => AnyAsync(filter => filter.Id.Equals(id), cancellationToken);
 }

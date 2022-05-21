@@ -7,40 +7,57 @@ namespace Skywalker.Ddd.Domain.Repositories;
 /// <summary>
 /// Just to mark a class as repository.
 /// </summary>
-public interface IRepository : ITransientDependency { }
+public interface IRepository : ITransientDependency
+{
+}
 
 public interface IRepository<TEntity> : IReadOnlyRepository<TEntity>, IBasicRepository<TEntity> where TEntity : class, IEntity
 {
 
     /// <summary>
-    /// Get a single entity by the given <paramref name="predicate"/>.
-    /// It returns null if no entity with the given <paramref name="predicate"/>.
-    /// It throws <see cref="InvalidOperationException"/> if there are multiple entities with the given <paramref name="predicate"/>.
+    /// Determine if an entity with a given primary key exists
     /// </summary>
-    /// <param name="predicate">A condition to find the entity</param>
-    /// <param name="cancellationToken">A <see cref="CancellationToken" /> to observe while waiting for the task to complete.</param>
-    Task<TEntity?> FindAsync(Expression<Func<TEntity, bool>> predicate, CancellationToken cancellationToken = default);
+    /// <param name="filter">The condition of the entity to determine</param>
+    /// <param name="cancellationToken">A <see cref="T:System.Threading.CancellationToken" /> to observe while waiting for the task to complete.</param>
+    /// <returns></returns>
+    Task<bool> AnyAsync(Expression<Func<TEntity, bool>> filter, CancellationToken cancellationToken = default);
 
     /// <summary>
-    /// Get a single entity by the given <paramref name="predicate"/>.
-    /// It throws <see cref="EntityNotFoundException"/> if there is no entity with the given <paramref name="predicate"/>.
-    /// It throws <see cref="InvalidOperationException"/> if there are multiple entities with the given <paramref name="predicate"/>.
+    /// Gets total count of all entities.
     /// </summary>
-    /// <param name="predicate">A condition to filter entities</param>
-    /// <param name="cancellationToken">A <see cref="CancellationToken"/> to observe while waiting for the task to complete.</param>
-    Task<TEntity> GetAsync(Expression<Func<TEntity, bool>> predicate, CancellationToken cancellationToken = default);
+    /// <returns></returns>
+    Task<int> CountAsync(CancellationToken cancellationToken = default);
 
     /// <summary>
-    /// Deletes many entities by function.
-    /// Notice that: All entities fits to given predicate are retrieved and deleted.
-    /// This may cause major performance problems if there are too many entities with
-    /// given predicate.
+    /// Gets total count of all entities.
     /// </summary>
-    /// <param name="predicate">A condition to filter entities</param>
-    /// <param name="cancellationToken">A <see cref="CancellationToken" /> to observe while waiting for the task to complete.</param>
-    Task DeleteAsync(Expression<Func<TEntity, bool>> predicate, CancellationToken cancellationToken = default);
+    /// <returns></returns>
+    Task<long> LongCountAsync(CancellationToken cancellationToken = default);
+
+    /// <summary>
+    /// Gets total count of entities with filter
+    /// </summary>
+    /// <param name="filter">The entities filter</param>
+    /// <param name="cancellationToken">A <see cref="T:System.Threading.CancellationToken" /> to observe while waiting for the task to complete.</param>
+    /// <returns></returns>
+    Task<int> CountAsync(Expression<Func<TEntity, bool>> filter, CancellationToken cancellationToken = default);
+
+    /// <summary>
+    /// Gets total count of entities with filter
+    /// </summary>
+    /// <param name="filter">The entities filter</param>
+    /// <param name="cancellationToken">A <see cref="T:System.Threading.CancellationToken" /> to observe while waiting for the task to complete.</param>
+    /// <returns></returns>
+    Task<long> LongCountAsync(Expression<Func<TEntity, bool>> filter, CancellationToken cancellationToken = default);
 }
 
 public interface IRepository<TEntity, TKey> : IRepository<TEntity>, IReadOnlyRepository<TEntity, TKey>, IBasicRepository<TEntity, TKey> where TEntity : class, IEntity<TKey> where TKey : notnull
 {
+    /// <summary>
+    /// Determine if an entity with a given primary key exists
+    /// </summary>
+    /// <param name="id">Primary key of the entity to determine</param>
+    /// <param name="cancellationToken">A <see cref="T:System.Threading.CancellationToken" /> to observe while waiting for the task to complete.</param>
+    /// <returns></returns>
+    Task<bool> AnyAsync(TKey id, CancellationToken cancellationToken = default);
 }
