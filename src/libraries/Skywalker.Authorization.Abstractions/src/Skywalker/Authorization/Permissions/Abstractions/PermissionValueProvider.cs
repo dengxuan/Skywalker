@@ -1,4 +1,4 @@
-﻿using Skywalker.Authorization.Permissions;
+﻿using Skywalker.Extensions.DependencyInjection;
 
 namespace Skywalker.Authorization.Permissions.Abstractions;
 

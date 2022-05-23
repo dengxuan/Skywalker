@@ -21,7 +21,9 @@ public static class AuthorizationIServiceCollectionExtensions
 
         services.TryAddTransient<DefaultAuthorizationPolicyProvider>();
         services.TryAddTransient<IPermissionChecker, PermissionChecker>();
+        services.TryAddTransient<IAuthorizationService, SkywalkerAuthorizationService>();
         services.TryAddTransient<ISkywalkerAuthorizationService, SkywalkerAuthorizationService>();
+        services.TryAddTransient<IAuthorizationPolicyProvider, SkywalkerAuthorizationPolicyProvider>();
         services.TryAddTransient<ISkywalkerAuthorizationPolicyProvider, SkywalkerAuthorizationPolicyProvider>();
         return services;
     }

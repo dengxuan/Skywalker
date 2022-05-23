@@ -1,9 +1,8 @@
-﻿using System.Collections.Generic;
-using System.Threading.Tasks;
+﻿using Skywalker.Extensions.DependencyInjection;
 
 namespace Skywalker.Authorization.Permissions.Abstractions;
 
-public interface IPermissionValueProvider
+public interface IPermissionValueProvider : ITransientDependency
 {
     string Name { get; }
 
