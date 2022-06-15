@@ -126,7 +126,7 @@ public abstract class Repository<TDbContext, TEntity> : BasicRepository<TEntity>
         return DbSet.AsQueryable();
     }
 
-    protected abstract void SetIdentifier(TEntity entity);
+    protected virtual void SetIdentifier(TEntity entity) { }
 
     public override async Task<TEntity?> FindAsync(Expression<Func<TEntity, bool>> predicate, CancellationToken cancellationToken = default)
     {
@@ -233,6 +233,18 @@ public abstract class Repository<TDbContext, TEntity> : BasicRepository<TEntity>
                           .ToPagedListAsync(skip, limit);
     }
 
+    public override Task<PagedList<TEntity>> GetPagedListAsync(int skip, int limit, CancellationToken cancellationToken = default)
+    {
+        return DbSet.OrderBy(ordering => ((IHasCreationTime)ordering).CreationTime).ToPagedListAsync(skip, limit);
+    }
+
+    public override Task<PagedList<TEntity>> GetPagedListAsync(Expression<Func<TEntity, bool>> expression, int skip, int limit, CancellationToken cancellationToken = default)
+    {
+        return DbSet.Where(expression)
+                    .OrderBy(ordering => ((IHasCreationTime)ordering).CreationTime)
+                    .ToPagedListAsync(skip, limit);
+    }
+
     public IAsyncEnumerator<TEntity> GetAsyncEnumerator(CancellationToken cancellationToken = default)
     {
         return DbSet.AsAsyncEnumerable().GetAsyncEnumerator(cancellationToken);
@@ -308,18 +320,6 @@ public abstract class Repository<TDbContext, TEntity, TKey> : Repository<TDbCont
             throw new EntityNotFoundException();
         }
         return entity;
-    }
-
-    public override Task<PagedList<TEntity>> GetPagedListAsync(int skip, int limit, CancellationToken cancellationToken = default)
-    {
-        return DbSet.OrderBy(ordering => ((IHasCreationTime)ordering).CreationTime).ToPagedListAsync(skip, limit);
-    }
-
-    public override Task<PagedList<TEntity>> GetPagedListAsync(Expression<Func<TEntity, bool>> expression, int skip, int limit, CancellationToken cancellationToken = default)
-    {
-        return DbSet.Where(expression)
-                    .OrderBy(ordering => ((IHasCreationTime)ordering).CreationTime)
-                    .ToPagedListAsync(skip, limit);
     }
 
     public Task<bool> AnyAsync(TKey id, CancellationToken cancellationToken = default) => AnyAsync(filter => filter.Id.Equals(id), cancellationToken);

@@ -1,0 +1,37 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.2.32526.322
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{62813A93-73FD-4E9A-A289-4A86B182C1B8}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Skywalker.Permissions.AuthorizeValidation", "src\Skywalker.Permissions.AuthorizeValidation.csproj", "{42FC86AE-8293-487A-9723-3040F0F4317E}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Skywalker.Permissions.Abstractions", "..\Skywalker.Permissions.Abstractions\src\Skywalker.Permissions.Abstractions.csproj", "{FA97C19B-9EBD-44AF-AF99-FD7AE75FEE36}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{42FC86AE-8293-487A-9723-3040F0F4317E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{42FC86AE-8293-487A-9723-3040F0F4317E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{42FC86AE-8293-487A-9723-3040F0F4317E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{42FC86AE-8293-487A-9723-3040F0F4317E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{FA97C19B-9EBD-44AF-AF99-FD7AE75FEE36}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{FA97C19B-9EBD-44AF-AF99-FD7AE75FEE36}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{FA97C19B-9EBD-44AF-AF99-FD7AE75FEE36}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{FA97C19B-9EBD-44AF-AF99-FD7AE75FEE36}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{42FC86AE-8293-487A-9723-3040F0F4317E} = {62813A93-73FD-4E9A-A289-4A86B182C1B8}
+		{FA97C19B-9EBD-44AF-AF99-FD7AE75FEE36} = {62813A93-73FD-4E9A-A289-4A86B182C1B8}
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {01C87F66-862A-48D8-A9E4-8570B7DCF6B9}
+	EndGlobalSection
+EndGlobal
