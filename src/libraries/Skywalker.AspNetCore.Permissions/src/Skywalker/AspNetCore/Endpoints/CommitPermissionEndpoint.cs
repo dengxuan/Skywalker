@@ -43,25 +43,24 @@ internal class CommitPermissionEndpoint : IEndpointHandler
         _permissionDefinitionManager = permissionDefinitionManager;
     }
 
-    public static List<PermissionDefinition> FromPermissions(List<Permission>? permissions)
+    public static IReadOnlyList<PermissionDefinition> FromPermissions(List<Permission>? permissions)
     {
-        var permissionDefinitions = new List<PermissionDefinition>();
         if (permissions is null)
         {
-            return permissionDefinitions;
+            return new List<PermissionDefinition>();
         }
+        var context = new PermissionDefinitionContext();
         foreach (var permission in permissions)
         {
             var diaplsyName = new LocalizedString(permission.LocalizedStringName, permission.LocalizedStringName);
-            var definition = PermissionDefinition.AddPermission(permission.Name, diaplsyName, permission.IsEnabled);
+            var definition = context.AddPermission(permission.Name, diaplsyName, permission.IsEnabled);
             foreach (var item in permission.Properties)
             {
                 definition[item.Key] = item.Value;
             }
-            permissionDefinitions.Add(definition);
             AddChildren(definition, permission);
         }
-        return permissionDefinitions;
+        return context.Permissions;
 
         static void AddChildren(PermissionDefinition definition, Permission permission)
         {

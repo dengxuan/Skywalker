@@ -44,8 +44,8 @@ public class PermissionDefinition : IHasSimpleStateCheckers<PermissionDefinition
     }
 
 
-    private static readonly List<PermissionDefinition> s_permissions = new();
-    public static IReadOnlyList<PermissionDefinition> Permissions => s_permissions.ToImmutableList();
+    private readonly List<PermissionDefinition> _permissions = new();
+    public IReadOnlyList<PermissionDefinition> Permissions => _permissions.ToImmutableList();
 
     private readonly List<PermissionDefinition> _children;
     public IReadOnlyList<PermissionDefinition> Children => _children.ToImmutableList();
@@ -94,11 +94,11 @@ public class PermissionDefinition : IHasSimpleStateCheckers<PermissionDefinition
     }
 
 
-    public static PermissionDefinition AddPermission(string name, LocalizedString? displayName = null, bool isEnabled = true)
+    public PermissionDefinition AddPermission(string name, LocalizedString? displayName = null, bool isEnabled = true)
     {
         var permission = new PermissionDefinition(name, displayName, isEnabled);
 
-        s_permissions.Add(permission);
+        _permissions.Add(permission);
 
         return permission;
     }

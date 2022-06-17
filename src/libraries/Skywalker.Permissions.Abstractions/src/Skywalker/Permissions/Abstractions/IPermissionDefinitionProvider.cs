@@ -1,13 +1,11 @@
 ﻿// Licensed to the Gordon under one or more agreements.
 // Gordon licenses this file to you under the MIT license.
 
+using Skywalker.Extensions.DependencyInjection;
+
 namespace Skywalker.Permissions.Abstractions;
 
-public interface IPermissionDefinitionProvider
+public interface IPermissionDefinitionProvider:ISingletonDependency
 {
-    void PreDefine(PermissionDefinition context);
-
-    void Define(PermissionDefinition context);
-
-    void PostDefine(PermissionDefinition context);
+    void Define(PermissionDefinitionContext context);
 }
