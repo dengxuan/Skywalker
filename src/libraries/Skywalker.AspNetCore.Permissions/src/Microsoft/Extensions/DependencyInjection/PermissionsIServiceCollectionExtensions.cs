@@ -2,10 +2,9 @@
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.DependencyInjection.Extensions;
 using Skywalker.AspNetCore;
-using Skywalker.AspNetCore.Abstractions;
+using Skywalker.AspNetCore.Endpoints;
 using Skywalker.AspNetCore.Permissions;
 using Skywalker.AspNetCore.Permissions.Abstractions;
-using Skywalker.AspNetCore.PermissionsEvaluator.Endpoints;
 using Skywalker.Extensions.SimpleStateChecking;
 using Skywalker.Permissions;
 using Skywalker.Permissions.Abstractions;
@@ -19,7 +18,7 @@ public static class PermissionsIServiceCollectionExtensions
         services.Configure(options);
         services.TryAddSingleton<IAuthorizationHandler, PermissionRequirementHandler>();
         services.TryAddSingleton<IAuthorizationHandler, PermissionsRequirementHandler>();
-        services.TryAddSingleton<IPermissionDefinitionManager, PermissionDefinitionManager>();
+        //services.TryAddSingleton<IPermissionDefinitionManager, PermissionDefinitionManager>();
         services.TryAddSingleton<IPermissionValueProviderManager, PermissionValueProviderManager>();
         services.TryAddSingleton(typeof(ISimpleStateCheckerManager<>), typeof(SimpleStateCheckerManager<>));
 
@@ -44,6 +43,7 @@ public static class PermissionsIServiceCollectionExtensions
         services.AddTransient<IEndpointRouter, EndpointRouter>();
 
         services.AddEndpoint<CheckPermissionEndpoint>(EndpointNames.CheckPermission, ProtocolRoutePaths.ChackPermission.EnsureLeadingSlash());
+        services.AddEndpoint<CommitPermissionEndpoint>(EndpointNames.CommitPermission, ProtocolRoutePaths.CommitPermission.EnsureLeadingSlash());
 
         return services;
     }

@@ -3,7 +3,7 @@
 
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Logging;
-using Skywalker.AspNetCore.PermissionsEvaluator.Endpoints;
+using Skywalker.AspNetCore.Endpoints;
 
 namespace Skywalker.AspNetCore;
 

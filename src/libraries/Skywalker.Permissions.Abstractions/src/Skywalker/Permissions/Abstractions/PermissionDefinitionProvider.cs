@@ -5,14 +5,14 @@ namespace Skywalker.Permissions.Abstractions;
 
 public abstract class PermissionDefinitionProvider : IPermissionDefinitionProvider
 {
-    public virtual void PreDefine(IPermissionDefinitionContext context)
+    public virtual void PreDefine(PermissionDefinition context)
     {
 
     }
 
-    public abstract void Define(IPermissionDefinitionContext context);
+    public abstract void Define(PermissionDefinition context);
 
-    public virtual void PostDefine(IPermissionDefinitionContext context)
+    public virtual void PostDefine(PermissionDefinition context)
     {
 
     }

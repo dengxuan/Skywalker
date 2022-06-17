@@ -3,7 +3,7 @@
 
 using Microsoft.AspNetCore.Http;
 
-namespace Skywalker.AspNetCore.PermissionsEvaluator.Endpoints;
+namespace Skywalker.AspNetCore.Endpoints;
 
 internal class ChackPermissionResult : IEndpointResult
 {
@@ -20,7 +20,7 @@ internal class ChackPermissionResult : IEndpointResult
     public async Task ExecuteAsync(HttpContext context)
     {
         var json = @$"{{ ""name"": {_name}, ""isGranted"": {_isGranted} }}";
-        
+
         var response = context.Response;
         if (!response.Headers.ContainsKey("Cache-Control"))
         {

@@ -2,7 +2,13 @@
 // Gordon licenses this file to you under the MIT license.
 
 using System.Collections.Immutable;
+#if NETCOREAPP3_1_OR_GREATER
+using System.Text.Json.Serialization;
+#endif
 using Microsoft.Extensions.Localization;
+#if NETSTANDARD
+using Newtonsoft.Json;
+#endif
 using Skywalker.Extensions.SimpleStateChecking;
 
 namespace Skywalker.Permissions;
@@ -18,7 +24,8 @@ public class PermissionDefinition : IHasSimpleStateCheckers<PermissionDefinition
     /// Parent of this permission if one exists.
     /// If set, this permission can be granted only if parent is granted.
     /// </summary>
-    public PermissionDefinition? Parent { get; private set; }
+    [JsonIgnore]
+    public PermissionDefinition? Parent { get; set; }
 
     /// <summary>
     /// A list of allowed providers to get/set value of this permission.
@@ -26,17 +33,22 @@ public class PermissionDefinition : IHasSimpleStateCheckers<PermissionDefinition
     /// </summary>
     public List<string> AllowedProviders { get; }
 
+    [JsonIgnore]
     public List<ISimpleStateChecker<PermissionDefinition>> StateCheckers { get; }
 
+    private LocalizedString _displayName;
     public LocalizedString DisplayName
     {
         get => _displayName;
         set => _displayName = value.NotNull(nameof(value));
     }
-    private LocalizedString _displayName;
 
-    public IReadOnlyList<PermissionDefinition> Children => _children.ToImmutableList();
+
+    private static readonly List<PermissionDefinition> s_permissions = new();
+    public static IReadOnlyList<PermissionDefinition> Permissions => s_permissions.ToImmutableList();
+
     private readonly List<PermissionDefinition> _children;
+    public IReadOnlyList<PermissionDefinition> Children => _children.ToImmutableList();
 
     /// <summary>
     /// Can be used to get/set custom properties for this permission definition.
@@ -72,14 +84,23 @@ public class PermissionDefinition : IHasSimpleStateCheckers<PermissionDefinition
 
     protected internal PermissionDefinition(string name, LocalizedString? displayName = null, bool isEnabled = true)
     {
-        Name = name.NotNull(nameof(name));
-        _displayName = displayName ?? new LocalizedString(name, name);
+        Name = name;
         IsEnabled = isEnabled;
-
-        Properties = new Dictionary<string, object?>();
         AllowedProviders = new List<string>();
+        Properties = new Dictionary<string, object?>();
         StateCheckers = new List<ISimpleStateChecker<PermissionDefinition>>();
         _children = new List<PermissionDefinition>();
+        _displayName = displayName ?? new LocalizedString(name, name);
+    }
+
+
+    public static PermissionDefinition AddPermission(string name, LocalizedString? displayName = null, bool isEnabled = true)
+    {
+        var permission = new PermissionDefinition(name, displayName, isEnabled);
+
+        s_permissions.Add(permission);
+
+        return permission;
     }
 
     public virtual PermissionDefinition AddChild(string name, LocalizedString? displayName = null, bool isEnabled = true)

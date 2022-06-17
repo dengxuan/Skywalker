@@ -3,7 +3,7 @@ using Microsoft.AspNetCore.Authorization;
 using Skywalker.AspNetCore.Permissions.Abstractions;
 using Skywalker.Security.Claims;
 
-namespace Skywalker.AspNetCore.Abstractions;
+namespace Skywalker.AspNetCore.Permissions;
 
 public class AlwaysAllowAuthorizationService : ISkywalkerAuthorizationService
 {

@@ -26,30 +26,20 @@ internal class RedisCaching : ICaching
 
     public byte[] Get(string key)
     {
-        try
+        return s_locker.ReadLocking(() =>
         {
-            s_locker.EnterReadLock();
             byte[] bytes = _database.StringGet($"{Name}@{key}");
             return bytes;
-        }
-        finally
-        {
-            s_locker.ExitReadLock();
-        }
+        });
     }
 
     public async ValueTask<byte[]> GetAsync(string key)
     {
-        try
+        return await s_locker.ReadLockingAsync(async () =>
         {
-            s_locker.EnterReadLock();
             byte[] bytes = await _database.StringGetAsync($"{Name}@{key}");
             return bytes;
-        }
-        finally
-        {
-            s_locker.ExitReadLock();
-        }
+        });
     }
 
     public TVaule? Get<TVaule>(string key)
@@ -98,20 +88,26 @@ internal class RedisCaching : ICaching
 
     public void Set(string key, byte[] value, TimeSpan? expireTime = null)
     {
-        if (value == null)
+        s_locker.WriteLocking(() =>
         {
-            throw new Exception("Can not insert null values to the cache!");
-        }
-        _database.StringSet($"{Name}@{key}", value, expireTime ?? DefaultExpireTime);
+            if (value == null)
+            {
+                throw new Exception("Can not insert null values to the cache!");
+            }
+            _database.StringSet($"{Name}@{key}", value, expireTime ?? DefaultExpireTime);
+        });
     }
 
-    public async Task SetAsync(string key, byte[] value, TimeSpan? expireTime = null)
+    public Task SetAsync(string key, byte[] value, TimeSpan? expireTime = null)
     {
-        if (value == null)
+        return s_locker.WriteLockingAsync(async () =>
         {
-            throw new Exception("Can not insert null values to the cache!");
-        }
-        await _database.StringSetAsync($"{Name}@{key}", value, expireTime ?? DefaultExpireTime);
+            if (value == null)
+            {
+                throw new Exception("Can not insert null values to the cache!");
+            }
+            await _database.StringSetAsync($"{Name}@{key}", value, expireTime ?? DefaultExpireTime);
+        });
     }
 
     public void Set<TVaule>(string key, TVaule value, TimeSpan? expireTime = null)
@@ -168,20 +164,16 @@ internal class RedisCaching : ICaching
     public async ValueTask<TValue> GetOrSetAsync<TValue>(string key, Func<Task<TValue>> factory) where TValue : notnull
     {
         var value = await GetAsync<TValue>(key);
-        if (value == null)
+        if (value != null)
         {
-            try
-            {
-                s_locker.EnterWriteLock();
-                value = await factory();
-                await SetAsync(key, value);
-            }
-            finally
-            {
-                s_locker.ExitWriteLock();
-            }
+            return value;
         }
-        return value;
+        return await s_locker.WriteLocking(async () =>
+        {
+            var data = await factory();
+            await SetAsync(key, data);
+            return data;
+        });
     }
 
     public void Remove(string key)

@@ -12,4 +12,6 @@ public interface IPermissionDefinitionManager
     Task<IReadOnlyList<PermissionDefinition>> GetPermissionsAsync();
     
     Task<IReadOnlyList<PermissionDefinition>> GetPermissionsAsync(params string[] names);
+
+    Task CreatePermissionsAsync(IReadOnlyList<PermissionDefinition> permissionDefinitions);
 }

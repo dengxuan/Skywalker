@@ -4,7 +4,7 @@
 using System.Net;
 using Microsoft.AspNetCore.Http;
 
-namespace Skywalker.AspNetCore.PermissionsEvaluator.Endpoints;
+namespace Skywalker.AspNetCore.Endpoints;
 
 /// <summary>
 /// Result for a raw HTTP status code

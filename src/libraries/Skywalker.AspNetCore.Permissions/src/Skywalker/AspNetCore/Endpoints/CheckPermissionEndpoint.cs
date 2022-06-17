@@ -6,17 +6,17 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Logging;
 using Skywalker.Permissions.Abstractions;
 
-namespace Skywalker.AspNetCore.PermissionsEvaluator.Endpoints;
+namespace Skywalker.AspNetCore.Endpoints;
 
 public class CheckPermissionEndpoint : IEndpointHandler
 {
-    private readonly IPermissionChecker _permissionChecker;
+    private readonly IPermissionValidator _permissionValidator;
 
     private readonly ILogger<CheckPermissionEndpoint> _logger;
 
-    public CheckPermissionEndpoint(IPermissionChecker permissionChecker, ILogger<CheckPermissionEndpoint> logger)
+    public CheckPermissionEndpoint(IPermissionValidator permissionValidator, ILogger<CheckPermissionEndpoint> logger)
     {
-        _permissionChecker = permissionChecker;
+        _permissionValidator = permissionValidator;
         _logger = logger;
     }
 
@@ -32,15 +32,16 @@ public class CheckPermissionEndpoint : IEndpointHandler
             _logger.LogWarning("Invalid HTTP method for checkpermission endpoint. Only GET is allowed.");
             return new StatusCodeResult(HttpStatusCode.MethodNotAllowed);
         }
-        var nameValues = context.Request.Query["name"];
-        if (nameValues.IsNullOrEmpty())
+        var name = context.Request.Query["name"].ToString();
+        var providerName = context.Request.Query["providerName"].ToString();
+        var providerKey = context.Request.Query["providerKey"].ToString();
+        if (name.IsNullOrEmpty() || providerName.IsNullOrEmpty() || providerKey.IsNullOrEmpty())
         {
-            _logger.LogWarning("Invalid HTTP method for checkpermission endpoint. Missing name query parameter.");
+            _logger.LogWarning("Invalid HTTP method for checkpermission endpoint. Missing name,providerName,providerKey query parameter.");
             return new StatusCodeResult(HttpStatusCode.BadRequest);
         }
-        var name = nameValues.ToString();
-        var isGranted = await _permissionChecker.IsGrantedAsync(name);
+        var isGranted = await _permissionValidator.IsGrantedAsync(name, providerName, providerKey);
         _logger.LogInformation("{name} is {isGranted}", name, isGranted ? "granted" : "denied");
-        return new ChackPermissionResult(name, isGranted);
+        return new StatusCodeResult(isGranted ? HttpStatusCode.NoContent : HttpStatusCode.Unauthorized);
     }
 }

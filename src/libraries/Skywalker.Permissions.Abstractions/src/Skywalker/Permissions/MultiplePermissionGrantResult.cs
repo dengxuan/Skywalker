@@ -30,8 +30,6 @@ public class MultiplePermissionGrantResult
 
     public MultiplePermissionGrantResult(string[] names, PermissionGrantResult grantResult = PermissionGrantResult.Undefined)
     {
-        names.NotNull(nameof(names));
-
         Result = new Dictionary<string, PermissionGrantResult>();
 
         foreach (var name in names)

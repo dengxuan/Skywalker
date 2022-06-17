@@ -14,7 +14,9 @@ public abstract class PermissionDefinitionManager : IPermissionDefinitionManager
         var displayName = new LocalizedString(localizedStringName, localizedStringName);
         return new PermissionDefinition(name, displayName, isEnabled);
     }
-
+    
+    public abstract Task CreatePermissionsAsync(IReadOnlyList<PermissionDefinition> permissionDefinitions);
+    
     public abstract Task<PermissionDefinition> GetAsync(string name);
 
     public abstract Task<PermissionDefinition?> GetOrNullAsync(string name);

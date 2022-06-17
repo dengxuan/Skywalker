@@ -5,9 +5,9 @@ namespace Skywalker.Permissions.Abstractions;
 
 public interface IPermissionDefinitionProvider
 {
-    void PreDefine(IPermissionDefinitionContext context);
+    void PreDefine(PermissionDefinition context);
 
-    void Define(IPermissionDefinitionContext context);
+    void Define(PermissionDefinition context);
 
-    void PostDefine(IPermissionDefinitionContext context);
+    void PostDefine(PermissionDefinition context);
 }
