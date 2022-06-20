@@ -5,9 +5,11 @@ namespace Skywalker.AspNetCore.Endpoints;
 
 internal class ProtocolRoutePaths
 {
-    public const string ConnectPathPrefix = "connect";
+    public const string PathPrefix = "connect";
 
-    public const string ChackPermission = $"{ConnectPathPrefix}/checkpermission";
+    public const string VerifyPermission = $"{PathPrefix}/verifypermission";
 
-    public const string CommitPermission = $"{ConnectPathPrefix}/commitpermission";
+    public const string PushPermissions = $"{PathPrefix}/pushpermissions";
+    
+    public const string PullPermissions = $"{PathPrefix}/pullpermissions";
 }

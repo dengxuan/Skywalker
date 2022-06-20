@@ -5,7 +5,9 @@ namespace Skywalker.AspNetCore.Endpoints;
 
 internal class EndpointNames
 {
-    public const string CheckPermission = "CheckPermission";
+    public const string VerifyPermission = "VerifyPermission";
 
-    public const string CommitPermission = "CommitPermission";
+    public const string PushPermissions = "PushPermissions";
+
+    public const string PullPermissions = "PullPermissions";
 }

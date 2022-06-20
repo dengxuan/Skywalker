@@ -18,7 +18,6 @@ public static class PermissionsIServiceCollectionExtensions
         services.Configure(options);
         services.TryAddSingleton<IAuthorizationHandler, PermissionRequirementHandler>();
         services.TryAddSingleton<IAuthorizationHandler, PermissionsRequirementHandler>();
-        //services.TryAddSingleton<IPermissionDefinitionManager, PermissionDefinitionManager>();
         services.TryAddSingleton<IPermissionValueProviderManager, PermissionValueProviderManager>();
         services.TryAddSingleton(typeof(ISimpleStateCheckerManager<>), typeof(SimpleStateCheckerManager<>));
 
@@ -42,8 +41,9 @@ public static class PermissionsIServiceCollectionExtensions
     {
         services.AddTransient<IEndpointRouter, EndpointRouter>();
 
-        services.AddEndpoint<CheckPermissionEndpoint>(EndpointNames.CheckPermission, ProtocolRoutePaths.ChackPermission.EnsureLeadingSlash());
-        services.AddEndpoint<CommitPermissionEndpoint>(EndpointNames.CommitPermission, ProtocolRoutePaths.CommitPermission.EnsureLeadingSlash());
+        services.AddEndpoint<VerifyPermissionEndpoint>(EndpointNames.VerifyPermission, ProtocolRoutePaths.VerifyPermission.EnsureLeadingSlash());
+        services.AddEndpoint<PushPermissionsEndpoint>(EndpointNames.PushPermissions, ProtocolRoutePaths.PushPermissions.EnsureLeadingSlash());
+        services.AddEndpoint<PushPermissionsEndpoint>(EndpointNames.PullPermissions, ProtocolRoutePaths.PullPermissions.EnsureLeadingSlash());
 
         return services;
     }

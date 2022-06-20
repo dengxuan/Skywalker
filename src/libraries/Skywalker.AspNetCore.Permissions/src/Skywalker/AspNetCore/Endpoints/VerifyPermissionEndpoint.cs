@@ -8,13 +8,13 @@ using Skywalker.Permissions.Abstractions;
 
 namespace Skywalker.AspNetCore.Endpoints;
 
-public class CheckPermissionEndpoint : IEndpointHandler
+public class VerifyPermissionEndpoint : IEndpointHandler
 {
     private readonly IPermissionValidator _permissionValidator;
 
-    private readonly ILogger<CheckPermissionEndpoint> _logger;
+    private readonly ILogger<VerifyPermissionEndpoint> _logger;
 
-    public CheckPermissionEndpoint(IPermissionValidator permissionValidator, ILogger<CheckPermissionEndpoint> logger)
+    public VerifyPermissionEndpoint(IPermissionValidator permissionValidator, ILogger<VerifyPermissionEndpoint> logger)
     {
         _permissionValidator = permissionValidator;
         _logger = logger;

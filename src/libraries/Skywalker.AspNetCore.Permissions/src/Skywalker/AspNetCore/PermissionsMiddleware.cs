@@ -29,7 +29,7 @@ public class PermissionsMiddleware
                 await _next(context);
                 return;
             }
-            _logger.LogInformation("Invoking {endpoint} endpoint: {endpointType} for {url}", EndpointNames.CheckPermission, endpoint.GetType().FullName, context.Request.Path.ToString());
+            _logger.LogInformation("Invoking {endpoint} endpoint: {endpointType} for {url}", EndpointNames.VerifyPermission, endpoint.GetType().FullName, context.Request.Path.ToString());
             
             var result = await endpoint.ProcessAsync(context);
 

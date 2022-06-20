@@ -26,18 +26,18 @@ internal record struct Permission
 
     public Dictionary<string, object?> Properties { get; init; }
 
-    public List<Permission> Children { get; init; }
+    public IReadOnlyList<Permission> Children { get; init; }
     
 }
 
 
-internal class CommitPermissionEndpoint : IEndpointHandler
+internal class PushPermissionsEndpoint : IEndpointHandler
 {
-    private readonly ILogger<CommitPermissionEndpoint> _logger;
+    private readonly ILogger<PushPermissionsEndpoint> _logger;
 
     private readonly IPermissionDefinitionManager _permissionDefinitionManager;
 
-    public CommitPermissionEndpoint(ILogger<CommitPermissionEndpoint> logger, IPermissionDefinitionManager permissionDefinitionManager)
+    public PushPermissionsEndpoint(ILogger<PushPermissionsEndpoint> logger, IPermissionDefinitionManager permissionDefinitionManager)
     {
         _logger = logger;
         _permissionDefinitionManager = permissionDefinitionManager;
@@ -86,9 +86,7 @@ internal class CommitPermissionEndpoint : IEndpointHandler
         }
         var ms = new MemoryStream();
         await context.Request.Body.CopyToAsync(ms);
-#if NET6_0_OR_GREATER
-        var permissions = await JsonSerializer.DeserializeAsync<List<Permission>>(ms);
-#elif NETCOREAPP3_1_OR_GREATER
+#if NETCOREAPP3_1_OR_GREATER
         var permissions = await JsonSerializer.DeserializeAsync<List<Permission>>(ms);
 #elif NETSTANDARD2_0_OR_GREATER
         var json = Encoding.UTF8.GetString(ms.ToArray());
