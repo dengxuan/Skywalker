@@ -54,7 +54,7 @@ public static class Check
         return argument;
     }
 
-    public static T NotNull<T>(this T argument, string parameterName, string message)
+    public static T NotNull<T>(this T? argument, string parameterName, string message)
     {
         if (argument == null)
         {
@@ -63,32 +63,32 @@ public static class Check
         return argument;
     }
 
-    public static string NotNullOrEmpty(this string argument, string argumentName)
+    public static string NotNullOrEmpty(this string? argument, string argumentName)
     {
         if (string.IsNullOrEmpty(argument))
         {
             throw new ArgumentNullException(argumentName, $"{argumentName} should not be null or empty.");
         }
-        return argument;
+        return argument!;
     }
 
-    public static ICollection<T> NotNullOrEmpty<T>(ICollection<T> argument, string argumentName)
+    public static ICollection<T> NotNullOrEmpty<T>(ICollection<T>? argument, string argumentName)
     {
         if (argument.IsNullOrEmpty())
         {
             throw new ArgumentException(argumentName + " can not be null or empty!", argumentName);
         }
 
-        return argument;
+        return argument!;
     }
 
-    public static string NotNullOrWhiteSpace(this string argument, string argumentName)
+    public static string NotNullOrWhiteSpace(this string? argument, string argumentName)
     {
         if (string.IsNullOrWhiteSpace(argument))
         {
             throw new ArgumentNullException(argumentName, $"{argumentName} should not be null or empty.");
         }
-        return argument;
+        return argument!;
     }
 
     public static int Positive(this int number, string argumentName)

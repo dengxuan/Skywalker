@@ -1,27 +1,21 @@
 ﻿// Licensed to the Gordon under one or more agreements.
 // Gordon licenses this file to you under the MIT license.
 
-using System.Collections.Immutable;
 using Microsoft.Extensions.Localization;
 
 namespace Skywalker.Permissions;
 
 public class PermissionDefinitionContext
 {
+    private readonly List<PermissionDefinition> _roots = new();
 
-    private readonly List<PermissionDefinition> _permissions;
-    public IReadOnlyList<PermissionDefinition> Permissions => _permissions.ToImmutableList();
+    public IReadOnlyList<PermissionDefinition> Permissions => _roots;
 
-    public PermissionDefinitionContext()
-    {
-        _permissions = new List<PermissionDefinition>();
-    }
-
-    public virtual PermissionDefinition AddPermission(string name, LocalizedString? displayName = null, bool isEnabled = true)
+    public PermissionDefinition AddPermission(string name, string? displayName = null, bool isEnabled = true)
     {
         var permission = new PermissionDefinition(name, displayName, isEnabled);
 
-        _permissions.Add(permission);
+        _roots.Add(permission);
 
         return permission;
     }

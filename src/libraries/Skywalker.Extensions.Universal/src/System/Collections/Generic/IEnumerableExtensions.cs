@@ -66,7 +66,7 @@ public static class IEnumerableExtensions
     /// <param name = "this"></param>
     /// <returns></returns>
     [DebuggerStepThrough]
-    public static bool IsNullOrEmpty(this IEnumerable @this)
+    public static bool IsNullOrEmpty(this IEnumerable? @this)
     {
         return @this == null || @this.GetEnumerator().MoveNext() == false;
     }

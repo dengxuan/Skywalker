@@ -24,20 +24,20 @@ internal class RedisCaching : ICaching
         DefaultExpireTime = TimeSpan.FromHours(1);
     }
 
-    public byte[] Get(string key)
+    public byte[]? Get(string key)
     {
         return s_locker.ReadLocking(() =>
         {
-            byte[] bytes = _database.StringGet($"{Name}@{key}");
+            var bytes = _database.StringGet($"{Name}@{key}");
             return bytes;
         });
     }
 
-    public async ValueTask<byte[]> GetAsync(string key)
+    public async ValueTask<byte[]?> GetAsync(string key)
     {
         return await s_locker.ReadLockingAsync(async () =>
         {
-            byte[] bytes = await _database.StringGetAsync($"{Name}@{key}");
+            var bytes = await _database.StringGetAsync($"{Name}@{key}");
             return bytes;
         });
     }

@@ -7,6 +7,7 @@ internal static class Constants
 {
 
     public const string DomainAssemblyName = "Skywalker.Ddd.Domain.Abstractions";
+    
     public const string EntityFrameworkCoreAssemblyName = "Skywalker.Ddd.EntityFrameworkCore";
 
     public const string DbSetSymblyName = "Microsoft.EntityFrameworkCore.DbSet`1";
@@ -14,4 +15,6 @@ internal static class Constants
     public const string DbContextSymblyName = "Skywalker.Ddd.EntityFrameworkCore.ISkywalkerDbContext";
 
     public const string DomainEntitySymbolName = "Skywalker.Ddd.Domain.Entities.IEntity";
+    
+    public const string DomainEntitySymbolNameWithPrimaryKey = "Skywalker.Ddd.Domain.Entities.IEntity`1";
 }

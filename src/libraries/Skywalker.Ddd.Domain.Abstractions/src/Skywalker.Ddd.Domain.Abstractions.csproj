@@ -13,7 +13,9 @@
     <ProjectReference Include="$(LibrariesProjectRoot)Skywalker.Extensions.Universal\src\Skywalker.Extensions.Universal.csproj" />
     <ProjectReference Include="$(LibrariesProjectRoot)Skywalker.Extensions.Specifications\src\Skywalker.Extensions.Specifications.csproj" />
     <ProjectReference Include="$(LibrariesProjectRoot)Skywalker.EventBus.Abstractions\src\Skywalker.EventBus.Abstractions.csproj" />
+    <ProjectReference Include="$(LibrariesProjectRoot)Skywalker.Ddd.UnitOfWork.Abstractions\src\Skywalker.Ddd.UnitOfWork.Abstractions.csproj" />
     <ProjectReference Include="$(LibrariesProjectRoot)Skywalker.ExceptionHandler.Abstractions\src\Skywalker.ExceptionHandler.Abstractions.csproj" />
+    <ProjectReference Include="$(LibrariesProjectRoot)Skywalker.Extensions.DependencyInjection.Abstractions\src\Skywalker.Extensions.DependencyInjection.Abstractions.csproj" />
   </ItemGroup>
 
 </Project>

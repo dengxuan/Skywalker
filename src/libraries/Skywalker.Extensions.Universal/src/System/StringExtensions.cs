@@ -1,4 +1,5 @@
-﻿using System.Diagnostics;
+﻿using System.Collections.Specialized;
+using System.Diagnostics;
 using System.Globalization;
 using System.Security.Cryptography;
 using System.Text;
@@ -554,15 +555,49 @@ public static class StringExtensions
     }
 
     [DebuggerStepThrough]
-    public static bool IsMissing(this string value)
+    public static bool IsMissing(this string? value)
     {
         return string.IsNullOrWhiteSpace(value);
     }
 
     [DebuggerStepThrough]
-    public static bool IsPresent(this string value)
+    public static bool IsPresent(this string? value)
     {
         return !string.IsNullOrWhiteSpace(value);
+    }
+
+    /// <summary>
+    /// 使用指定编码<paramref name="encoding"/>将 byte[] 转换为字符串, 使用不带 BOM（字节顺序标记）的 <paramref name="encoding"/> 编码。
+    /// </summary>
+    /// <param name="bytes">要转换为字符串的 byte[]</param>
+    /// <param name="encoding">获取字符串的编码.</param>
+    /// <returns>使用指定编码<paramref name="encoding"/>转换后的字符串</returns>
+    [DebuggerStepThrough]
+    public static string? ToStringWithoutBom(this byte[]? bytes, Encoding encoding)
+    {
+        if (bytes == null)
+        {
+            return null;
+        }
+
+        var hasBom = bytes.Length >= 3 && bytes[0] == 0xEF && bytes[1] == 0xBB && bytes[2] == 0xBF;
+
+        if (hasBom)
+        {
+            return encoding.GetString(bytes, 3, bytes.Length - 3);
+        }
+        return encoding.GetString(bytes);
+    }
+
+    /// <summary>
+    /// 将 byte[] 转换为字符串，使用不带 BOM（字节顺序标记）的 UTF 8 编码。
+    /// </summary>
+    /// <param name="bytes">要转换为字符串的 byte[]</param>
+    /// <returns>使用指定<see cref="Encoding.UTF8"/>编码转换后的字符串</returns>
+    [DebuggerStepThrough]
+    public static string? ToStringWithoutBom(this byte[]? bytes)
+    {
+        return ToStringWithoutBom(bytes, Encoding.UTF8);
     }
 
     [DebuggerStepThrough]
@@ -610,13 +645,13 @@ public static class StringExtensions
     }
 
     [DebuggerStepThrough]
-    public static bool IsMissingOrTooLong(this string value, int maxLength)
+    public static bool IsMissingOrTooLong(this string? value, int maxLength)
     {
         if (string.IsNullOrWhiteSpace(value))
         {
             return true;
         }
-        if (value.Length > maxLength)
+        if (value!.Length > maxLength)
         {
             return true;
         }

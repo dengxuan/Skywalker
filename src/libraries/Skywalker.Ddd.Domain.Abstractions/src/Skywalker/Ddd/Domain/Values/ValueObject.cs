@@ -4,16 +4,16 @@
 
 public abstract class ValueObject
 {
-    protected abstract IEnumerable<object> GetAtomicValues();
+    protected abstract IEnumerable<object?> GetAtomicValues();
 
-    public bool ValueEquals(object obj)
+    public bool ValueEquals(object? @object)
     {
-        if (obj == null || obj.GetType() != GetType())
+        if (@object == null || @object.GetType() != GetType())
         {
             return false;
         }
 
-        var other = (ValueObject)obj;
+        var other = (ValueObject)@object;
 
         var thisValues = GetAtomicValues().GetEnumerator();
         var otherValues = other.GetAtomicValues().GetEnumerator();

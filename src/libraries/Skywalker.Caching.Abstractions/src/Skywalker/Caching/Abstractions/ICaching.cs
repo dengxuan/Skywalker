@@ -20,7 +20,7 @@ public interface ICaching : IDisposable
     /// </summary>
     /// <param name="key">Key</param>
     /// <returns>Cached item</returns>
-    byte[] Get(string key);
+    byte[]? Get(string key);
 
     /// <summary>
     /// Gets an item from the cache.
@@ -29,7 +29,7 @@ public interface ICaching : IDisposable
     /// </summary>
     /// <param name="key">Key</param>
     /// <returns>Awaitable Cached item</returns>
-    ValueTask<byte[]> GetAsync(string key);
+    ValueTask<byte[]?> GetAsync(string key);
 
     /// <summary>
     /// Gets an item from the cache.

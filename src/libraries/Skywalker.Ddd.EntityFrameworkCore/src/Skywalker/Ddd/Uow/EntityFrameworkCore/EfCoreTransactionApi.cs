@@ -29,7 +29,7 @@ public class EfCoreTransactionApi : ITransactionApi, ISupportsRollback
 
         foreach (var dbContext in AttendedDbContexts)
         {
-            if (dbContext.As<DbContext>().HasRelationalTransactionManager())
+            if (dbContext.As<DbContext>()?.HasRelationalTransactionManager() == true)
             {
                 continue; //Relational databases use the shared transaction
             }
@@ -41,6 +41,7 @@ public class EfCoreTransactionApi : ITransactionApi, ISupportsRollback
     public void Dispose()
     {
         DbContextTransaction.Dispose();
+        GC.SuppressFinalize(this);
     }
 
     public void Rollback()

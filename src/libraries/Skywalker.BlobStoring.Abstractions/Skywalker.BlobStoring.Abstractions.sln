@@ -1,0 +1,51 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.3.32804.467
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Skywalker.BlobStoring.Abstractions", "src\Skywalker.BlobStoring.Abstractions.csproj", "{661EABB4-1F1F-4ECD-AC1B-5CA0AC4689B9}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Skywalker.Extensions.DependencyInjection.Abstractions", "..\Skywalker.Extensions.DependencyInjection.Abstractions\src\Skywalker.Extensions.DependencyInjection.Abstractions.csproj", "{AC757BD0-3ED9-42FE-B5DB-8A30115D766E}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Skywalker.ExceptionHandler.Abstractions", "..\Skywalker.ExceptionHandler.Abstractions\src\Skywalker.ExceptionHandler.Abstractions.csproj", "{E52B9024-860D-454D-9355-2360242A0623}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{661291E8-EC82-4CD4-AB27-1A874BBB804E}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Skywalker.Extensions.Universal", "..\Skywalker.Extensions.Universal\src\Skywalker.Extensions.Universal.csproj", "{8C4FA43C-1F2F-4A71-B5A3-34EA0FA1FE84}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{661EABB4-1F1F-4ECD-AC1B-5CA0AC4689B9}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{661EABB4-1F1F-4ECD-AC1B-5CA0AC4689B9}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{661EABB4-1F1F-4ECD-AC1B-5CA0AC4689B9}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{661EABB4-1F1F-4ECD-AC1B-5CA0AC4689B9}.Release|Any CPU.Build.0 = Release|Any CPU
+		{AC757BD0-3ED9-42FE-B5DB-8A30115D766E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{AC757BD0-3ED9-42FE-B5DB-8A30115D766E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{AC757BD0-3ED9-42FE-B5DB-8A30115D766E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{AC757BD0-3ED9-42FE-B5DB-8A30115D766E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{E52B9024-860D-454D-9355-2360242A0623}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E52B9024-860D-454D-9355-2360242A0623}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E52B9024-860D-454D-9355-2360242A0623}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E52B9024-860D-454D-9355-2360242A0623}.Release|Any CPU.Build.0 = Release|Any CPU
+		{8C4FA43C-1F2F-4A71-B5A3-34EA0FA1FE84}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{8C4FA43C-1F2F-4A71-B5A3-34EA0FA1FE84}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{8C4FA43C-1F2F-4A71-B5A3-34EA0FA1FE84}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{8C4FA43C-1F2F-4A71-B5A3-34EA0FA1FE84}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{661EABB4-1F1F-4ECD-AC1B-5CA0AC4689B9} = {661291E8-EC82-4CD4-AB27-1A874BBB804E}
+		{AC757BD0-3ED9-42FE-B5DB-8A30115D766E} = {661291E8-EC82-4CD4-AB27-1A874BBB804E}
+		{E52B9024-860D-454D-9355-2360242A0623} = {661291E8-EC82-4CD4-AB27-1A874BBB804E}
+		{8C4FA43C-1F2F-4A71-B5A3-34EA0FA1FE84} = {661291E8-EC82-4CD4-AB27-1A874BBB804E}
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {FFE13A51-AEF3-442D-BD8F-0B2E70C3CB73}
+	EndGlobalSection
+EndGlobal

@@ -26,7 +26,7 @@ internal class JsonCachingSerializer : ICachingSerializer
     }
 
     /// <inheritdoc />
-    public object? Deserialize(Type type, byte[] bytes)
+    public object? Deserialize(Type type, byte[]? bytes)
     {
         if (type == null)
         {

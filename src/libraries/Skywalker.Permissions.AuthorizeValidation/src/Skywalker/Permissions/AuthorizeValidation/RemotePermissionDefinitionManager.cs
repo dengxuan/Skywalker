@@ -13,35 +13,12 @@ internal class RemotePermissionDefinitionManager : IPermissionDefinitionManager
 {
     private readonly IMemoryCache _memoryCache;
     private readonly HttpClient _backChannel;
-    private readonly Dictionary<string, PermissionDefinition> _permissions = new Dictionary<string, PermissionDefinition>();
+    private readonly Dictionary<string, PermissionDefinition> _permissions = new();
 
     public RemotePermissionDefinitionManager(IHttpClientFactory httpClientFactory, IMemoryCache memoryCache)
     {
         _backChannel = httpClientFactory.CreateClient(Constants.HttpClientName);
         _memoryCache = memoryCache;
-    }
-
-    public async Task<bool> IsGrantedAsync(string name, string providerName, string providerKey)
-    {
-        var requestUri = QueryHelpers.AddQueryString("connect/checkpermission", new Dictionary<string, string>
-        {
-            { "name", name },
-            { "providerName", providerName },
-            { "providerKey", providerKey }
-        });
-        var response = await _backChannel.GetAsync(requestUri);
-        return response.IsSuccessStatusCode;
-    }
-
-    public async Task<MultiplePermissionGrantResult> IsGrantedAsync(string[] names, string providerName, string providerKey)
-    {
-        var result = new MultiplePermissionGrantResult(names);
-        foreach (var name in names)
-        {
-            var isGranted = await IsGrantedAsync(name, providerName, providerKey);
-            result.Result[name] = isGranted ? PermissionGrantResult.Granted : PermissionGrantResult.Prohibited;
-        }
-        return result;
     }
 
     public async Task CreatePermissionsAsync(IReadOnlyList<PermissionDefinition> permissionDefinitions)
@@ -70,7 +47,11 @@ internal class RemotePermissionDefinitionManager : IPermissionDefinitionManager
     public Task<PermissionDefinition?> GetOrNullAsync(string name)
     {
         _permissions.TryGetValue(name, out var definition);
+#if NETSTANDARD
+        return Task.FromResult((PermissionDefinition?)definition);
+#elif NETCOREAPP || NET
         return Task.FromResult(definition);
+#endif
     }
 
     public async Task<IReadOnlyList<PermissionDefinition>> GetPermissionsAsync()

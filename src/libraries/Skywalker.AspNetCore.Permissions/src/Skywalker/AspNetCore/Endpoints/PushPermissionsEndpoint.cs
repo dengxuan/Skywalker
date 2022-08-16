@@ -20,7 +20,7 @@ internal record struct Permission
 {
     public string Name { get; init; }
 
-    public string LocalizedStringName { get; init; }
+    public string? DisplayName { get; init; }
 
     public bool IsEnabled { get; init; }
 
@@ -52,8 +52,7 @@ internal class PushPermissionsEndpoint : IEndpointHandler
         var context = new PermissionDefinitionContext();
         foreach (var permission in permissions)
         {
-            var diaplsyName = new LocalizedString(permission.LocalizedStringName, permission.LocalizedStringName);
-            var definition = context.AddPermission(permission.Name, diaplsyName, permission.IsEnabled);
+            var definition = context.AddPermission(permission.Name, permission.DisplayName, permission.IsEnabled);
             foreach (var item in permission.Properties)
             {
                 definition[item.Key] = item.Value;
@@ -66,8 +65,7 @@ internal class PushPermissionsEndpoint : IEndpointHandler
         {
             foreach (var child in permission.Children)
             {
-                var diaplsyName = new LocalizedString(child.LocalizedStringName, child.LocalizedStringName);
-                var childDefinition = definition.AddChild(child.Name, diaplsyName, child.IsEnabled);
+                var childDefinition = definition.AddChild(child.Name, permission.DisplayName, child.IsEnabled);
                 foreach (var item in permission.Properties)
                 {
                     definition[item.Key] = item.Value;

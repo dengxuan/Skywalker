@@ -177,7 +177,7 @@ public abstract class SkywalkerDbContext<TDbContext> : DbContext, ISkywalkerDbCo
     {
         //UpdateConcurrencyStamp(entry);
 
-        if (entry.Entity is IDeleteable && entry.Entity.As<IDeleteable>().IsDeleted)
+        if (entry.Entity is IDeleteable && entry.Entity.As<IDeleteable>()!.IsDeleted)
         {
             changeReport.ChangedEntities.Add(new EntityChangeEntry(entry.Entity, EntityChangeType.Deleted));
         }
@@ -242,12 +242,12 @@ public abstract class SkywalkerDbContext<TDbContext> : DbContext, ISkywalkerDbCo
 
         entry.Reload();
         entry.State = EntityState.Modified;
-        entry.Entity.As<IDeleteable>().IsDeleted = true;
+        entry.Entity.As<IDeleteable>()!.IsDeleted = true;
         return true;
     }
 
     protected virtual void ConfigureBaseProperties<TEntity>(ModelBuilder modelBuilder, IMutableEntityType mutableEntityType)
-        where TEntity : class
+        where TEntity : class, IEntity
     {
         if (mutableEntityType.IsOwned())
         {
@@ -308,12 +308,12 @@ public abstract class SkywalkerDbContext<TDbContext> : DbContext, ISkywalkerDbCo
     protected virtual void ConfigureValueGenerated<TEntity>(ModelBuilder modelBuilder, IMutableEntityType mutableEntityType)
         where TEntity : class
     {
-        if (!typeof(IEntity<Guid>).IsAssignableFrom(typeof(TEntity)))
+        if (!typeof(IEntity<long>).IsAssignableFrom(typeof(TEntity)))
         {
             return;
         }
 
-        var idPropertyBuilder = modelBuilder.Entity<TEntity>().Property(x => ((IEntity<Guid>)x).Id);
+        var idPropertyBuilder = modelBuilder.Entity<TEntity>().Property(x => ((IEntity<long>)x).Id);
         if (idPropertyBuilder.Metadata.PropertyInfo!.IsDefined(typeof(DatabaseGeneratedAttribute), true))
         {
             return;
@@ -334,7 +334,7 @@ public abstract class SkywalkerDbContext<TDbContext> : DbContext, ISkywalkerDbCo
 
         if (typeof(IDeleteable).IsAssignableFrom(typeof(TEntity)))
         {
-            expression = e => !IsSoftDeleteFilterEnabled || !EF.Property<bool>(e, "IsDeleted");
+            expression = e => !IsSoftDeleteFilterEnabled || !EF.Property<bool>(e, nameof(IDeleteable.IsDeleted));
         }
 
         return expression;

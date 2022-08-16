@@ -1,4 +1,6 @@
-﻿namespace Skywalker.Ddd.Domain.Entities;
+﻿using System.ComponentModel.DataAnnotations.Schema;
+
+namespace Skywalker.Ddd.Domain.Entities;
 
 /// <summary>
 /// Defines an entity. It's primary key may not be "Id" or it may have a composite primary key.
@@ -17,7 +19,7 @@ public interface IEntity
 /// Defines an entity with a single primary key with "Id" property.
 /// </summary>
 /// <typeparam name="TKey">Type of the primary key of the entity</typeparam>
-public interface IEntity<TKey> : IEntity where TKey : notnull
+public interface IEntity<TKey> : IEntity, IEquatable<TKey> where TKey : notnull
 {
     /// <summary>
     /// Unique identifier for this entity.

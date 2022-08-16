@@ -14,7 +14,7 @@ public static class PermissionsIServiceCollectionExtensions
     {
         services.Configure(options);
         services.TryAddSingleton<IPermissionValidator, RemotePermissionValidator>();
-        services.TryAddSingleton<IPermissionDefinitionManager, PermissionDefinitionManager>();
+        services.TryAddSingleton<IPermissionDefinitionManager, RemotePermissionDefinitionManager>();
         services.AddHttpClient(Constants.HttpClientName, (serviceProvider, httpClient) =>
         {
             var validationOptions = serviceProvider.GetRequiredService<PermissionValidationOptions>();

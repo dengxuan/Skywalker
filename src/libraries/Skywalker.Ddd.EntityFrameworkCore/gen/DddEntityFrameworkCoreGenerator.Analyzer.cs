@@ -1,4 +1,5 @@
-﻿using Microsoft.CodeAnalysis;
+﻿using System.Diagnostics;
+using Microsoft.CodeAnalysis;
 
 namespace Skywalker.Ddd.EntityFrameworkCore.Generators;
 
@@ -10,7 +11,8 @@ public partial class DddEntityFrameworkCoreGenerator
     {
         private readonly INamedTypeSymbol? _dbContextSymbol;
         private readonly INamedTypeSymbol? _dbSetSymbol;
-        private readonly INamedTypeSymbol? _domainEntitieSymbol;
+        private readonly INamedTypeSymbol? _domainEntitiySymbol;
+        private readonly INamedTypeSymbol? _domainEntitiyWithPrimaryKeySymbol;
         private readonly Compilation _compilation;
 
         public Analyzer(in GeneratorExecutionContext context)
@@ -18,7 +20,8 @@ public partial class DddEntityFrameworkCoreGenerator
             _compilation = context.Compilation;
             _dbContextSymbol = _compilation.GetTypeByMetadataName(Constants.DbContextSymblyName);
             _dbSetSymbol = _compilation.GetTypeByMetadataName(Constants.DbSetSymblyName);
-            _domainEntitieSymbol = _compilation.GetTypeByMetadataName(Constants.DomainEntitySymbolName);
+            _domainEntitiySymbol = _compilation.GetTypeByMetadataName(Constants.DomainEntitySymbolName);
+            _domainEntitiyWithPrimaryKeySymbol = _compilation.GetBestTypeByMetadataName(Constants.DomainEntitySymbolNameWithPrimaryKey);
         }
 
         private Queue<INamespaceOrTypeSymbol> FindGlobalNamespaces()
@@ -78,7 +81,7 @@ public partial class DddEntityFrameworkCoreGenerator
 
                             if (namedTypeSymbol.AllInterfaces.Any(predicate => s_symbolComparer.Equals(predicate, _dbContextSymbol)))
                             {
-                                var dbContextProperties = new HashSet<INamedTypeSymbol>(s_symbolComparer);
+                                var dbContextProperties = new Dictionary<INamedTypeSymbol, string>(s_symbolComparer);
                                 foreach (var propertyMember in namedTypeSymbol.GetMembers())
                                 {
                                     if (propertyMember is not IPropertySymbol propertySymbol)
@@ -101,12 +104,22 @@ public partial class DddEntityFrameworkCoreGenerator
                                     {
                                         continue;
                                     }
-
-                                    if (!entityNameTypeSymbol.AllInterfaces.Any(predicate => s_symbolComparer.Equals(predicate, _domainEntitieSymbol)))
+                                    if (!entityNameTypeSymbol.AllInterfaces.Any(predicate => s_symbolComparer.Equals(predicate, _domainEntitiySymbol)))
                                     {
                                         continue;
                                     }
-                                    dbContextProperties.Add(entityNameTypeSymbol);
+                                    
+                                    var genericTypeEntity = entityNameTypeSymbol.AllInterfaces.FirstOrDefault(predicate => s_symbolComparer.Equals(predicate.OriginalDefinition, _domainEntitiyWithPrimaryKeySymbol));
+
+                                    var primaryKey = string.Empty;
+
+                                    //Todo: 判断主键泛型参数，只能是基础数据类型
+                                    if (genericTypeEntity is not null && genericTypeEntity.TypeArguments.First() is INamedTypeSymbol primaryKeyTypeSymbol)
+                                    {
+                                        primaryKey = primaryKeyTypeSymbol.Name;
+                                    }
+                                    
+                                    dbContextProperties.Add(entityNameTypeSymbol, primaryKey);
                                 }
                                 // The DbContext is not define any DbSet<Entity> properties
                                 if (dbContextProperties.Count == 0)
@@ -137,11 +150,11 @@ public partial class DddEntityFrameworkCoreGenerator
 
     internal readonly record struct MetadataClass
     {
-        internal Dictionary<INamedTypeSymbol, HashSet<INamedTypeSymbol>> DbContextClasses { get; }
+        internal Dictionary<INamedTypeSymbol, Dictionary<INamedTypeSymbol, string>> DbContextClasses { get; }
 
         public MetadataClass()
         {
-            DbContextClasses = new Dictionary<INamedTypeSymbol, HashSet<INamedTypeSymbol>>(s_symbolComparer);
+            DbContextClasses = new Dictionary<INamedTypeSymbol, Dictionary<INamedTypeSymbol, string>>(s_symbolComparer);
         }
     }
 }

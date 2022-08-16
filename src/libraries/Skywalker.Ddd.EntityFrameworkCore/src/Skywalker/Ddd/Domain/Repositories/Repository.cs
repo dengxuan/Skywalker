@@ -185,9 +185,9 @@ public abstract class Repository<TDbContext, TEntity> : BasicRepository<TEntity>
     {
         await ApplySkywalkerConceptsForUpdatedEntityAsync(entity);
 
-        var updatedEntity = DbContext.Update(entity).Entity;
+        var upgraded = DbContext.Update(entity).Entity;
 
-        return updatedEntity;
+        return upgraded;
     }
 
     public override async Task DeleteAsync(TEntity entity, CancellationToken cancellationToken = default)

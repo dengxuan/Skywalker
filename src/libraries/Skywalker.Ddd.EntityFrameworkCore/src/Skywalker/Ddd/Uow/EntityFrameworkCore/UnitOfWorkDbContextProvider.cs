@@ -101,7 +101,7 @@ public class UnitOfWorkDbContextProvider<TDbContext> : IDbContextProvider<TDbCon
 
             var dbContext = unitOfWork.ServiceProvider!.GetRequiredService<TDbContext>();
 
-            if (dbContext.As<DbContext>().HasRelationalTransactionManager())
+            if (dbContext.As<DbContext>()?.HasRelationalTransactionManager() == true)
             {
                 dbContext.Database.UseTransaction(activeTransaction.DbContextTransaction.GetDbTransaction());
             }

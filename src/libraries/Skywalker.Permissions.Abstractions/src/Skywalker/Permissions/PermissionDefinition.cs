@@ -24,28 +24,17 @@ public class PermissionDefinition : IHasSimpleStateCheckers<PermissionDefinition
     /// Parent of this permission if one exists.
     /// If set, this permission can be granted only if parent is granted.
     /// </summary>
-    [JsonIgnore]
     public PermissionDefinition? Parent { get; set; }
 
     /// <summary>
     /// A list of allowed providers to get/set value of this permission.
     /// An empty list indicates that all providers are allowed.
     /// </summary>
-    public List<string> AllowedProviders { get; }
+    public string[] AllowedProviders { get; }
 
-    [JsonIgnore]
-    public List<ISimpleStateChecker<PermissionDefinition>> StateCheckers { get; }
+    public List<ISimpleStateChecker<PermissionDefinition>> StateCheckers { get; } = new();
 
-    private LocalizedString _displayName;
-    public LocalizedString DisplayName
-    {
-        get => _displayName;
-        set => _displayName = value.NotNull(nameof(value));
-    }
-
-
-    private readonly List<PermissionDefinition> _permissions = new();
-    public IReadOnlyList<PermissionDefinition> Permissions => _permissions.ToImmutableList();
+    public string? DisplayName { get; }
 
     private readonly List<PermissionDefinition> _children;
     public IReadOnlyList<PermissionDefinition> Children => _children.ToImmutableList();
@@ -82,28 +71,17 @@ public class PermissionDefinition : IHasSimpleStateCheckers<PermissionDefinition
         set => Properties[name] = value;
     }
 
-    protected internal PermissionDefinition(string name, LocalizedString? displayName = null, bool isEnabled = true)
+    public PermissionDefinition(string name, string? displayName = null, bool isEnabled = true, Dictionary<string, object?>? properties = null, string[]? allowedProviders = null)
     {
         Name = name;
+        DisplayName = displayName;
         IsEnabled = isEnabled;
-        AllowedProviders = new List<string>();
-        Properties = new Dictionary<string, object?>();
-        StateCheckers = new List<ISimpleStateChecker<PermissionDefinition>>();
+        Properties = properties ?? new Dictionary<string, object?>();
+        AllowedProviders = allowedProviders ?? Array.Empty<string>();
         _children = new List<PermissionDefinition>();
-        _displayName = displayName ?? new LocalizedString(name, name);
     }
 
-
-    public PermissionDefinition AddPermission(string name, LocalizedString? displayName = null, bool isEnabled = true)
-    {
-        var permission = new PermissionDefinition(name, displayName, isEnabled);
-
-        _permissions.Add(permission);
-
-        return permission;
-    }
-
-    public virtual PermissionDefinition AddChild(string name, LocalizedString? displayName = null, bool isEnabled = true)
+    public virtual PermissionDefinition AddChild(string name, string? displayName = null, bool isEnabled = true)
     {
         var child = new PermissionDefinition(name, displayName, isEnabled)
         {
@@ -133,7 +111,7 @@ public class PermissionDefinition : IHasSimpleStateCheckers<PermissionDefinition
     {
         if (!providers.IsNullOrEmpty())
         {
-            AllowedProviders.AddRange(providers);
+            AllowedProviders.AddIfNotContains(providers);
         }
 
         return this;

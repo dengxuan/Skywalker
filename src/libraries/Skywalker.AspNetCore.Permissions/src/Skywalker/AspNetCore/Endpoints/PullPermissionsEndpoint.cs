@@ -33,7 +33,7 @@ internal class PullPermissionsEndpoint : IEndpointHandler
             var permission = new Permission
             {
                 Name = definition.Name,
-                LocalizedStringName = definition.DisplayName.Name,
+                DisplayName = definition.DisplayName,
                 IsEnabled = definition.IsEnabled,
                 Properties = definition.Properties,
                 Children = ToPermissions(definition.Children)

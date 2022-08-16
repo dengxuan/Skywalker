@@ -14,9 +14,9 @@ public static class ObjectExtensions
     /// <typeparam name="T">Type to be casted</typeparam>
     /// <param name="obj">Object to cast</param>
     /// <returns>Casted object</returns>
-    public static T As<T>(this object obj) where T : class
+    public static T? As<T>(this object @object) where T : class
     {
-        return (T)obj;
+        return @object as T;
     }
 
     /// <summary>

@@ -20,7 +20,7 @@
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>
     <PackageReference Include="Microsoft.CodeAnalysis.CSharp.Workspaces" Version="$(RoslynApiVersion)" PrivateAssets="all" />
-    <PackageReference Include="Scriban" Version="5.0.0" PrivateAssets="all">
+    <PackageReference Include="Scriban" Version="5.5.0" PrivateAssets="all">
       <IncludeAssets> build;</IncludeAssets>
     </PackageReference>
   </ItemGroup>

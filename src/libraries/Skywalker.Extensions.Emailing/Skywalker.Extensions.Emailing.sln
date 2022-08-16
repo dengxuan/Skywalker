@@ -1,0 +1,37 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.3.32804.467
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Skywalker.Extensions.Emailing", "src\Skywalker.Extensions.Emailing.csproj", "{B9C3D777-FE82-411F-AFF4-4E3D21A19BA5}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Skywalker.Extensions.DependencyInjection.Abstractions", "..\Skywalker.Extensions.DependencyInjection.Abstractions\src\Skywalker.Extensions.DependencyInjection.Abstractions.csproj", "{65D2DAAC-D985-488A-BD18-3B0796DC2E86}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{310F6DF7-35ED-4149-9654-6B3DB633EED7}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{B9C3D777-FE82-411F-AFF4-4E3D21A19BA5}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B9C3D777-FE82-411F-AFF4-4E3D21A19BA5}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B9C3D777-FE82-411F-AFF4-4E3D21A19BA5}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B9C3D777-FE82-411F-AFF4-4E3D21A19BA5}.Release|Any CPU.Build.0 = Release|Any CPU
+		{65D2DAAC-D985-488A-BD18-3B0796DC2E86}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{65D2DAAC-D985-488A-BD18-3B0796DC2E86}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{65D2DAAC-D985-488A-BD18-3B0796DC2E86}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{65D2DAAC-D985-488A-BD18-3B0796DC2E86}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{B9C3D777-FE82-411F-AFF4-4E3D21A19BA5} = {310F6DF7-35ED-4149-9654-6B3DB633EED7}
+		{65D2DAAC-D985-488A-BD18-3B0796DC2E86} = {310F6DF7-35ED-4149-9654-6B3DB633EED7}
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {AA750464-C18C-4235-82CC-0DEADF3659C5}
+	EndGlobalSection
+EndGlobal

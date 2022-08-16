@@ -11,7 +11,7 @@ public static class SerializerExtensions
     /// <param name="bytes">The data to deserialize</param>
     /// <typeparam name="T">The type to instantiate</typeparam>
     /// <returns>The deserialized object</returns>
-    public static T? Deserialize<T>(this ICachingSerializer serializer, byte[] bytes)
+    public static T? Deserialize<T>(this ICachingSerializer serializer, byte[]? bytes)
     {
         if (serializer == null)
         {

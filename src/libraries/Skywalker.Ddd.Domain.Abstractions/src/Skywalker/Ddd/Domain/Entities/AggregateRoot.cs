@@ -4,7 +4,7 @@ using System.ComponentModel.DataAnnotations;
 namespace Skywalker.Ddd.Domain.Entities;
 
 [Serializable]
-public abstract record class AggregateRoot : Entity, IAggregateRoot, IGeneratesDomainEvents, IHasConcurrencyStamp, IHasCreationTime
+public abstract class AggregateRoot : Entity, IAggregateRoot, IGeneratesDomainEvents, IHasConcurrencyStamp, IHasCreationTime
 {
     private readonly ICollection<object> _distributedEvents = new Collection<object>();
 
@@ -31,11 +31,13 @@ public abstract record class AggregateRoot : Entity, IAggregateRoot, IGeneratesD
 }
 
 [Serializable]
-public abstract record class AggregateRoot<TKey> : Entity<TKey>, IAggregateRoot<TKey>, IGeneratesDomainEvents, IHasConcurrencyStamp, IHasCreationTime where TKey : notnull
+public abstract class AggregateRoot<TKey> : Entity<TKey>, IAggregateRoot<TKey>, IGeneratesDomainEvents, IHasConcurrencyStamp, IHasCreationTime where TKey : notnull
 {
 
     private readonly ICollection<object> _distributedEvents = new Collection<object>();
 
+    protected AggregateRoot() : this(default!) { }
+    
     protected AggregateRoot(TKey id) : base(id)
     {
         ConcurrencyStamp = Guid.NewGuid().ToString("N");

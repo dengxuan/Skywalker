@@ -5,7 +5,7 @@ using Skywalker.Extensions.DependencyInjection;
 
 namespace Skywalker.Permissions.Abstractions;
 
-public interface IPermissionDefinitionProvider:ISingletonDependency
+public interface IPermissionDefinitionProvider : ISingletonDependency
 {
     void Define(PermissionDefinitionContext context);
 }

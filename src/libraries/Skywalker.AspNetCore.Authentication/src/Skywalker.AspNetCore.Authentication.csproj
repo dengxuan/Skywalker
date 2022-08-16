@@ -1,11 +1,11 @@
-﻿<Project Sdk="Microsoft.NET.Sdk">
+<Project Sdk="Microsoft.NET.Sdk">
 
 	<PropertyGroup>
 		<RootNamespace></RootNamespace>
 	</PropertyGroup>
 
 	<ItemGroup>
-		<ProjectReference Include="..\Skywalker.AspNetCore.Authentication.Abstractions\Skywalker.AspNetCore.Authentication.Abstractions.csproj" />
+		<ProjectReference Include="$(LibrariesProjectRoot)Skywalker.AspNetCore.Authentication.Abstractions\src\Skywalker.AspNetCore.Authentication.Abstractions.csproj" />
 	</ItemGroup>
 
 </Project>
