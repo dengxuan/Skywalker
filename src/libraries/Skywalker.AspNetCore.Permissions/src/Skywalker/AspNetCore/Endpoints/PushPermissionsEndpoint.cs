@@ -7,7 +7,6 @@ using Microsoft.Extensions.Logging;
 using Skywalker.Permissions;
 using Skywalker.Permissions.Abstractions;
 using System.Text;
-using Microsoft.Extensions.Localization;
 #if NETCOREAPP3_1_OR_GREATER
 using System.Text.Json;
 #else
@@ -20,7 +19,7 @@ internal record struct Permission
 {
     public string Name { get; init; }
 
-    public string? DisplayName { get; init; }
+    public string DisplayName { get; init; }
 
     public bool IsEnabled { get; init; }
 

@@ -1,4 +1,5 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using System;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Storage;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
@@ -52,7 +53,9 @@ public class UnitOfWorkDbContextProvider<TDbContext> : IDbContextProvider<TDbCon
         var creationContext = new SkywalkerDbContextCreationContext(connectionStringName, connectionString);
         using (SkywalkerDbContextCreationContext.Use(creationContext))
         {
-            var dbContext = CreateDbContext(unitOfWork);
+            var dbContext = unitOfWork.Options?.IsTransactional == true ?
+                CreateDbContextWithTransaction(unitOfWork) :
+                CreateDbContext(unitOfWork.ServiceProvider!);
             _logger.LogDebug("Create DbContext in unit of work: [{Id}]", unitOfWork.Id);
             if (dbContext is ISkywalkerDbContext skywalkerDbContext)
             {
@@ -64,13 +67,15 @@ public class UnitOfWorkDbContextProvider<TDbContext> : IDbContextProvider<TDbCon
         }
     }
 
-    private TDbContext CreateDbContext(IUnitOfWork unitOfWork)
+    private static TDbContext CreateDbContext(IServiceProvider services)
     {
-        if (unitOfWork.Options?.IsTransactional == true)
-        {
-            return CreateDbContextWithTransaction(unitOfWork);
-        }
-        return unitOfWork.ServiceProvider!.GetRequiredService<TDbContext>();
+        return services.GetRequiredService<TDbContext>();
+//#if NETSTANDARD2_0
+//        return services.GetRequiredService<TDbContext>();
+//#elif NETSTANDARD2_1_OR_GREATER || NET5_0_OR_GREATER || NETCOREAPP
+//        var dbContextFactory = services.GetRequiredService<IDbContextFactory<TDbContext>>();
+//        return dbContextFactory.CreateDbContext();
+//#endif
     }
 
     public TDbContext CreateDbContextWithTransaction(IUnitOfWork unitOfWork)
@@ -79,7 +84,7 @@ public class UnitOfWorkDbContextProvider<TDbContext> : IDbContextProvider<TDbCon
 
         if (unitOfWork.FindTransactionApi(transactionApiKey) is not EfCoreTransactionApi activeTransaction)
         {
-            var dbContext = unitOfWork.ServiceProvider!.GetRequiredService<TDbContext>();
+            var dbContext = CreateDbContext(unitOfWork.ServiceProvider!);
 
             var dbtransaction = unitOfWork.Options!.IsolationLevel.HasValue
                 ? dbContext.Database.BeginTransaction(isolationLevel: unitOfWork.Options!.IsolationLevel.Value)

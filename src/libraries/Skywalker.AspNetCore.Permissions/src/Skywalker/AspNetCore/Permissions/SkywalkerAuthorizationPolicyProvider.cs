@@ -2,6 +2,7 @@
 using Microsoft.Extensions.Options;
 using Skywalker.AspNetCore.Permissions.Abstractions;
 using Skywalker.Permissions.Abstractions;
+using System.Collections.Concurrent;
 
 namespace Skywalker.AspNetCore.Permissions;
 
@@ -9,6 +10,7 @@ public class SkywalkerAuthorizationPolicyProvider : DefaultAuthorizationPolicyPr
 {
     private readonly AuthorizationOptions _options;
     private readonly IPermissionDefinitionManager _permissionDefinitionManager;
+    private readonly ConcurrentDictionary<string, AuthorizationPolicy> _policies = new();
 
     public SkywalkerAuthorizationPolicyProvider(IOptions<AuthorizationOptions> options, IPermissionDefinitionManager permissionDefinitionManager) : base(options)
     {
@@ -24,16 +26,20 @@ public class SkywalkerAuthorizationPolicyProvider : DefaultAuthorizationPolicyPr
             return policy;
         }
 
-        var permission = _permissionDefinitionManager.GetOrNullAsync(policyName);
-        if (permission != null)
+        var permission = await _permissionDefinitionManager.GetOrNullAsync(policyName);
+        if (permission == null)
         {
-            //TODO: Optimize & Cache!
+            //权限发生更改后,尝试移除已经缓存的策略
+            _policies.TryRemove(policyName, out _);
+            return null;
+        }
+        //对于已经授权的策略, 构建权限验证策略,并缓存
+        return _policies.GetOrAdd(permission.Name, () =>
+        {
             var policyBuilder = new AuthorizationPolicyBuilder(Array.Empty<string>());
             policyBuilder.Requirements.Add(new PermissionRequirement(policyName));
             return policyBuilder.Build();
-        }
-
-        return null;
+        });
     }
 
     public async Task<List<string>> GetPoliciesNamesAsync()

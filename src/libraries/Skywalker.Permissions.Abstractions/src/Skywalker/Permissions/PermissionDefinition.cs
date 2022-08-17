@@ -5,7 +5,6 @@ using System.Collections.Immutable;
 #if NETCOREAPP3_1_OR_GREATER
 using System.Text.Json.Serialization;
 #endif
-using Microsoft.Extensions.Localization;
 #if NETSTANDARD
 using Newtonsoft.Json;
 #endif
@@ -34,7 +33,7 @@ public class PermissionDefinition : IHasSimpleStateCheckers<PermissionDefinition
 
     public List<ISimpleStateChecker<PermissionDefinition>> StateCheckers { get; } = new();
 
-    public string? DisplayName { get; }
+    public string DisplayName { get; }
 
     private readonly List<PermissionDefinition> _children;
     public IReadOnlyList<PermissionDefinition> Children => _children.ToImmutableList();
@@ -71,7 +70,7 @@ public class PermissionDefinition : IHasSimpleStateCheckers<PermissionDefinition
         set => Properties[name] = value;
     }
 
-    public PermissionDefinition(string name, string? displayName = null, bool isEnabled = true, Dictionary<string, object?>? properties = null, string[]? allowedProviders = null)
+    public PermissionDefinition(string name, string displayName, bool isEnabled = true, Dictionary<string, object?>? properties = null, string[]? allowedProviders = null)
     {
         Name = name;
         DisplayName = displayName;
@@ -81,7 +80,7 @@ public class PermissionDefinition : IHasSimpleStateCheckers<PermissionDefinition
         _children = new List<PermissionDefinition>();
     }
 
-    public virtual PermissionDefinition AddChild(string name, string? displayName = null, bool isEnabled = true)
+    public virtual PermissionDefinition AddChild(string name, string displayName, bool isEnabled = true)
     {
         var child = new PermissionDefinition(name, displayName, isEnabled)
         {

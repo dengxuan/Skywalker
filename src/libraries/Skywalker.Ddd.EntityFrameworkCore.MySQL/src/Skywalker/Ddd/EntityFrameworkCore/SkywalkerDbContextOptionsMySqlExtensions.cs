@@ -10,7 +10,7 @@ public static class SkywalkerDbContextOptionsMySqlExtensions
     public static SkywalkerDbContextOptions UseDbContext<TDbContext>(this SkywalkerDbContextOptions options, Action<MySqlDbContextOptionsBuilder>? mySQLOptionsAction = null) where TDbContext : SkywalkerDbContext<TDbContext>
     {
         options.Services.TryAddTransient(SkywalkerDbContextOptionsFactory.Create<TDbContext>);
-        options.Services.AddDbContext<TDbContext>();
+        options.Services.AddDbContext<TDbContext>(ServiceLifetime.Transient);
         options.Configure(context =>
         {
             context.UseMySql(mySQLOptionsAction);
