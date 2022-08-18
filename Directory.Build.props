@@ -55,6 +55,7 @@
   <PropertyGroup>
     <!-- default to allowing all language features -->
     <LangVersion>latest</LangVersion>
+    <Nullable>enable</Nullable>
     <ImplicitUsings>enable</ImplicitUsings>
     <!-- default to max warnlevel -->
     <AnalysisLevel Condition="'$(MSBuildProjectExtension)' == '.csproj'">latest</AnalysisLevel>

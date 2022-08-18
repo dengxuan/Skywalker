@@ -4,6 +4,7 @@
 using System.Linq.Expressions;
 using Skywalker.Ddd.Domain.Entities;
 using Skywalker.Ddd.Domain.Repositories;
+using Skywalker.Ddd.Uow;
 using Skywalker.Extensions.Collections.Generic;
 
 namespace Skywalker.Ddd.Domain.Services;
@@ -33,16 +34,19 @@ public class DomainService<TEntity> : IDomainService<TEntity> where TEntity : cl
     /// <summary>
     /// <inheritdoc/>
     /// </summary>
+    [UnitOfWork]
     public Task<TEntity> InsertAsync(TEntity entity, CancellationToken cancellationToken = default) => Repository.InsertAsync(entity, cancellationToken);
 
     /// <summary>
     /// <inheritdoc/>
     /// </summary>
+    [UnitOfWork]
     public Task<TEntity> UpdateAsync(TEntity entity, CancellationToken cancellationToken = default) => Repository.UpdateAsync(entity, cancellationToken);
 
     /// <summary>
     /// <inheritdoc/>
     /// </summary>
+    [UnitOfWork]
     public Task DeleteAsync(TEntity entity, CancellationToken cancellationToken = default) => Repository.DeleteAsync(entity, cancellationToken);
 
     /// <summary>
@@ -58,12 +62,12 @@ public class DomainService<TEntity> : IDomainService<TEntity> where TEntity : cl
     /// <summary>
     /// <inheritdoc/>
     /// </summary>
-    public Task<int> CountAsync(Expression<Func<TEntity, bool>> expression, CancellationToken cancellationToken = default) => Repository.CountAsync(cancellationToken);
+    public Task<int> CountAsync(Expression<Func<TEntity, bool>> expression, CancellationToken cancellationToken = default) => Repository.CountAsync(expression, cancellationToken);
 
     /// <summary>
     /// <inheritdoc/>
     /// </summary>
-    public Task<long> LongCountAsync(Expression<Func<TEntity, bool>> expression, CancellationToken cancellationToken = default) => Repository.LongCountAsync(cancellationToken);
+    public Task<long> LongCountAsync(Expression<Func<TEntity, bool>> expression, CancellationToken cancellationToken = default) => Repository.LongCountAsync(expression, cancellationToken);
 
     /// <summary>
     /// <inheritdoc/>

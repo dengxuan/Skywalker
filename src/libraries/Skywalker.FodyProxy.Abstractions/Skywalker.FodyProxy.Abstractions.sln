@@ -1,0 +1,37 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.3.32804.467
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{C28E05A8-3D28-411E-84B3-5E7F0B4B3533}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Skywalker.FodyProxy.Abstractions", "src\Skywalker.FodyProxy.Abstractions.csproj", "{18B0681D-EEBF-472E-A2A6-51706505D336}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Skywalker.Extensions.Universal", "..\Skywalker.Extensions.Universal\src\Skywalker.Extensions.Universal.csproj", "{B3008097-67A3-4D8C-A18D-EABF2D362208}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{18B0681D-EEBF-472E-A2A6-51706505D336}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{18B0681D-EEBF-472E-A2A6-51706505D336}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{18B0681D-EEBF-472E-A2A6-51706505D336}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{18B0681D-EEBF-472E-A2A6-51706505D336}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B3008097-67A3-4D8C-A18D-EABF2D362208}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B3008097-67A3-4D8C-A18D-EABF2D362208}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B3008097-67A3-4D8C-A18D-EABF2D362208}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B3008097-67A3-4D8C-A18D-EABF2D362208}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{18B0681D-EEBF-472E-A2A6-51706505D336} = {C28E05A8-3D28-411E-84B3-5E7F0B4B3533}
+		{B3008097-67A3-4D8C-A18D-EABF2D362208} = {C28E05A8-3D28-411E-84B3-5E7F0B4B3533}
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {25500106-4DF2-48AC-9A58-181F0DDB13E6}
+	EndGlobalSection
+EndGlobal
