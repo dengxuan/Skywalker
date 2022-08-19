@@ -1,14 +1,10 @@
 ﻿using Mono.Cecil;
 using System.Reflection;
 
-namespace Rougamo.Fody
+namespace Skywalker.Fody.Extensions;
+
+internal static class ReflectionExtensions
 {
-    internal static class ReflectionExtensions
-    {
-        #region Import
+    public static MethodReference ImportInto(this MethodBase methodInfo, ModuleDefinition moduleDef) => moduleDef.ImportReference(methodInfo);
 
-        public static MethodReference ImportInto(this MethodBase methodInfo, ModuleDefinition moduleDef) => moduleDef.ImportReference(methodInfo);
-
-        #endregion Import
-    }
 }

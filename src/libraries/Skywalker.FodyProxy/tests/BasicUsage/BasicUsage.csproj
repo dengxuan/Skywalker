@@ -1,0 +1,12 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <RootNamespace></RootNamespace>
+    <Nullable>disable</Nullable>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\..\Skywalker.FodyProxy.Abstractions\src\Skywalker.FodyProxy.Abstractions.csproj" />
+  </ItemGroup>
+
+</Project>

@@ -1,9 +1,8 @@
-﻿namespace Rougamo.Fody
+﻿namespace Skywalker.Fody.Models;
+
+internal enum ReturnType
 {
-    internal enum ReturnType
-    {
-        Void,
-        ValueType,
-        ReferenceType
-    }
+    Void,
+    ValueType,
+    ReferenceType
 }

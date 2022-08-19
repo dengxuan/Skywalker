@@ -1,21 +1,18 @@
 ﻿using Mono.Cecil;
-using System.Collections.Generic;
-using System.Linq;
 
-namespace Rougamo.Fody
+namespace Skywalker.Fody.Models;
+
+internal sealed class RouType
 {
-    internal sealed class RouType
+    public RouType(TypeDefinition typeDefinition)
     {
-        public RouType(TypeDefinition typeDefinition)
-        {
-            TypeDef = typeDefinition;
-            Methods = new List<RouMethod>();
-        }
-
-        public TypeDefinition TypeDef { get; }
-
-        public List<RouMethod> Methods { get; }
-
-        public bool HasMo => Methods.Any(rm => rm.Mos.Any());
+        TypeDef = typeDefinition;
+        Methods = new List<RouMethod>();
     }
+
+    public TypeDefinition TypeDef { get; }
+
+    public List<RouMethod> Methods { get; }
+
+    public bool HasMo => Methods.Any(rm => rm.Mos.Any());
 }

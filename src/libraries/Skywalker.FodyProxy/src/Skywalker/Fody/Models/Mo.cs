@@ -1,57 +1,57 @@
 ﻿using Mono.Cecil;
-using System.Collections.Generic;
+using Skywalker.Fody.Extensions;
+using Skywalker.FodyProxy;
 
-namespace Rougamo.Fody
+namespace Skywalker.Fody.Models;
+
+internal sealed class Mo
 {
-    internal sealed class Mo
+    private AccessFlags? _flags;
+
+    public Mo(CustomAttribute attribute, MoFrom from)
     {
-        private AccessFlags? _flags;
+        Attribute = attribute;
+        From = from;
+    }
 
-        public Mo(CustomAttribute attribute, MoFrom from)
+    public Mo(TypeDefinition typeDef, MoFrom from)
+    {
+        TypeDef = typeDef;
+        From = from;
+    }
+
+    public static IEqualityComparer<Mo> Comparer { get; } = new EqualityComparer();
+
+    public CustomAttribute? Attribute { get; }
+
+    public TypeDefinition? TypeDef { get; }
+
+    public MoFrom From { get; }
+
+    public AccessFlags Flags
+    {
+        get
         {
-            Attribute = attribute;
-            From = from;
+            if (!_flags.HasValue)
+            {
+                _flags = Attribute != null ? this.ExtractFlagsFromAttribute() : this.ExtractFlagsFromType();
+            }
+            return _flags.Value;
+        }
+    }
+
+    public string FullName => Attribute?.AttributeType?.FullName ?? TypeDef!.FullName;
+
+    class EqualityComparer : IEqualityComparer<Mo>
+    {
+        public bool Equals(Mo? x, Mo? y)
+        {
+            return x?.FullName == y?.FullName;
         }
 
-        public Mo(TypeDefinition typeDef, MoFrom from)
+        public int GetHashCode(Mo obj)
         {
-            TypeDef = typeDef;
-            From = from;
-        }
-
-        public static IEqualityComparer<Mo> Comparer { get; } = new EqualityComparer();
-
-        public CustomAttribute? Attribute { get; }
-
-        public TypeDefinition? TypeDef { get; }
-
-        public MoFrom From { get; }
-
-        public AccessFlags Flags
-        {
-            get
-            {
-                if (!_flags.HasValue)
-                {
-                    _flags = Attribute != null ? this.ExtractFlagsFromAttribute() : this.ExtractFlagsFromType();
-                }
-                return _flags.Value;
-            }
-        }
-
-        public string FullName => Attribute?.AttributeType?.FullName ?? TypeDef!.FullName;
-
-        class EqualityComparer : IEqualityComparer<Mo>
-        {
-            public bool Equals(Mo? x, Mo? y)
-            {
-                return x?.FullName == y?.FullName;
-            }
-
-            public int GetHashCode(Mo obj)
-            {
-                return obj.FullName.GetHashCode();
-            }
+            return obj.FullName.GetHashCode();
         }
     }
 }

@@ -1,69 +1,65 @@
-﻿using System;
-using System.Collections.Generic;
+﻿namespace Skywalker.Fody.Extensions;
 
-namespace Rougamo.Fody
+internal static class CollectionExtensions
 {
-    internal static class CollectionExtensions
+    public static bool TryAdd<TKey, TValue>(this IDictionary<TKey, TValue> dictionary, TKey key, TValue value) where TKey : notnull
     {
-        public static bool TryAdd<TKey, TValue>(this IDictionary<TKey, TValue> dictionary, TKey key, TValue value)where TKey : notnull
-        {
-            if (dictionary.ContainsKey(key)) return false;
-            dictionary.Add(key, value);
-            return true;
-        }
+        if (dictionary.ContainsKey(key)) return false;
+        dictionary.Add(key, value);
+        return true;
+    }
 
-        public static void AddRange<TKey, TValue>(this IDictionary<TKey, TValue> dictionary, IDictionary<TKey, TValue> more) where TKey : notnull
+    public static void AddRange<TKey, TValue>(this IDictionary<TKey, TValue> dictionary, IDictionary<TKey, TValue> more) where TKey : notnull
+    {
+        foreach (var item in more)
         {
-            foreach (var item in more)
-            {
-                dictionary.TryAdd(item.Key, item.Value);
-            }
+            dictionary.TryAdd(item.Key, item.Value);
         }
+    }
 
-        public static T AddAndGet<T>(this List<T> items, T item)
-        {
-            items.Add(item);
-            return item;
-        }
+    public static T AddAndGet<T>(this List<T> items, T item)
+    {
+        items.Add(item);
+        return item;
+    }
 
-        public static void Remove<T>(this List<T> items, Func<T, bool> predicate)
+    public static void Remove<T>(this List<T> items, Func<T, bool> predicate)
+    {
+        var stack = new Stack<int>();
+        for (var i = 0; i < items.Count; i++)
         {
-            var stack = new Stack<int>();
-            for (var i = 0; i < items.Count; i++)
+            if (predicate(items[i]))
             {
-                if (predicate(items[i]))
-                {
-                    stack.Push(i);
-                }
-            }
-            while (stack.Count > 0)
-            {
-                items.RemoveAt(stack.Pop());
+                stack.Push(i);
             }
         }
-
-        public static void Remove<TKey, TValue>(this Dictionary<TKey, TValue> dictionary, Func<TKey, TValue, bool> predicate) where TKey : notnull
+        while (stack.Count > 0)
         {
-            var list = new List<TKey>();
-            foreach (var item in dictionary)
+            items.RemoveAt(stack.Pop());
+        }
+    }
+
+    public static void Remove<TKey, TValue>(this Dictionary<TKey, TValue> dictionary, Func<TKey, TValue, bool> predicate) where TKey : notnull
+    {
+        var list = new List<TKey>();
+        foreach (var item in dictionary)
+        {
+            if (predicate(item.Key, item.Value))
             {
-                if(predicate(item.Key, item.Value))
-                {
-                    list.Add(item.Key);
-                }
-            }
-            foreach (var key in list)
-            {
-                dictionary.Remove(key);
+                list.Add(item.Key);
             }
         }
-
-        public static void AddRange<T>(this HashSet<T> hashSet, IEnumerable<T> more)
+        foreach (var key in list)
         {
-            foreach (var item in more)
-            {
-                hashSet.Add(item);
-            }
+            dictionary.Remove(key);
+        }
+    }
+
+    public static void AddRange<T>(this HashSet<T> hashSet, IEnumerable<T> more)
+    {
+        foreach (var item in more)
+        {
+            hashSet.Add(item);
         }
     }
 }
