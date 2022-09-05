@@ -1,12 +1,11 @@
 ﻿using System.Security.Claims;
-using Skywalker;
 using Skywalker.Security.Claims;
 
 namespace System.Security.Principal;
 
 public static class SkywalkerClaimsIdentityExtensions
 {
-    public static Guid? FindUserId(this ClaimsPrincipal principal)
+    public static long? FindUserId(this ClaimsPrincipal principal)
     {
         Check.NotNull(principal, nameof(principal));
 
@@ -15,14 +14,14 @@ public static class SkywalkerClaimsIdentityExtensions
         {
             return null;
         }
-        if (Guid.TryParse(userIdOrNull.Value, out var result))
+        if (long.TryParse(userIdOrNull.Value, out var result))
         {
             return result;
         }
         return null;
     }
 
-    public static Guid? FindUserId(this IIdentity identity)
+    public static long? FindUserId(this IIdentity identity)
     {
         Check.NotNull(identity, nameof(identity));
 
@@ -34,7 +33,11 @@ public static class SkywalkerClaimsIdentityExtensions
             return null;
         }
 
-        return Guid.Parse(userIdOrNull.Value);
+        if (long.TryParse(userIdOrNull.Value, out var result))
+        {
+            return result;
+        }
+        return null;
     }
 
     public static string? FindClientId(this ClaimsPrincipal principal)

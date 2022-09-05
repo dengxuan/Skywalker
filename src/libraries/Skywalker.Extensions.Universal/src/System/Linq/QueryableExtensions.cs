@@ -15,9 +15,9 @@ public static class QueryableExtensions
         return result;
     }
 
-    public static Task<PagedList<T>> ToPagedListAsync<T>(this IQueryable<T> source, int skip, int limit)
+    public static Task<PagedList<T>> ToPagedListAsync<T>(this IQueryable<T> source, int skip, int limit, CancellationToken cancellationToken = default)
     {
-        return Task.Run(() => source.ToPagedList(skip, limit));
+        return Task.Run(() => source.ToPagedList(skip, limit), cancellationToken);
     }
 
     /// <summary>

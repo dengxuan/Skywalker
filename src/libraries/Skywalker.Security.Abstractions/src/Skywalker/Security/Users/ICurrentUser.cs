@@ -4,9 +4,10 @@ namespace Skywalker.Security.Users;
 
 public interface ICurrentUser
 {
+
     bool IsAuthenticated { get; }
 
-    Guid? Id { get; }
+    long? Id { get; }
 
     string? Username { get; }
 

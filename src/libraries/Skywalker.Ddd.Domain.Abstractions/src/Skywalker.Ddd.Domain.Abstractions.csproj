@@ -19,7 +19,6 @@
     <ProjectReference Include="$(LibrariesProjectRoot)Skywalker.EventBus.Abstractions\src\Skywalker.EventBus.Abstractions.csproj" />
     <ProjectReference Include="$(LibrariesProjectRoot)Skywalker.ExceptionHandler.Abstractions\src\Skywalker.ExceptionHandler.Abstractions.csproj" />
     <ProjectReference Include="$(LibrariesProjectRoot)Skywalker.Extensions.DependencyInjection.Abstractions\src\Skywalker.Extensions.DependencyInjection.Abstractions.csproj" />
-    <ProjectReference Include="$(LibrariesProjectRoot)Skywalker.FodyProxy\src\Skywalker.FodyProxy.csproj" />
   </ItemGroup>
 
 </Project>

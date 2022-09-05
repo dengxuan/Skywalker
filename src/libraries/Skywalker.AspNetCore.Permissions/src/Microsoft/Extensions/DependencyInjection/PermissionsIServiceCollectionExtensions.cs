@@ -8,6 +8,7 @@ using Skywalker.AspNetCore.Permissions.Abstractions;
 using Skywalker.Extensions.SimpleStateChecking;
 using Skywalker.Permissions;
 using Skywalker.Permissions.Abstractions;
+using Skywalker.Security.Claims;
 
 namespace Microsoft.Extensions.DependencyInjection;
 
@@ -16,6 +17,7 @@ public static class PermissionsIServiceCollectionExtensions
     internal static IServiceCollection AddAuthorizationServices(this IServiceCollection services, Action<PermissionOptions> options)
     {
         services.Configure(options);
+        services.AddSingleton<ICurrentPrincipalAccessor, HttpContextCurrentPrincipalAccessor>();
         services.TryAddSingleton<IAuthorizationHandler, PermissionRequirementHandler>();
         services.TryAddSingleton<IAuthorizationHandler, PermissionsRequirementHandler>();
         services.TryAddSingleton<IPermissionValueProviderManager, PermissionValueProviderManager>();

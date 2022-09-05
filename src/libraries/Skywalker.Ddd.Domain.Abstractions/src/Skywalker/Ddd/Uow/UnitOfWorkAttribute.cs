@@ -2,7 +2,6 @@
 // Gordon licenses this file to you under the MIT license.
 
 using System.Data;
-using Rougamo;
 
 namespace Skywalker.Ddd.Uow;
 
@@ -13,7 +12,7 @@ namespace Skywalker.Ddd.Uow;
 /// This attribute has no effect if there is already a unit of work before calling this method. It uses the ambient UOW in this case.
 /// </remarks>
 [AttributeUsage(AttributeTargets.Method | AttributeTargets.Class | AttributeTargets.Interface)]
-public sealed class UnitOfWorkAttribute : MoAttribute
+public sealed class UnitOfWorkAttribute : Attribute
 {
     /// <summary>
     /// Is this UOW transactional?

@@ -29,10 +29,6 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Skywalker.Identifier.Abstra
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Skywalker.Extensions.Timezone", "..\Skywalker.Extensions.Timezone\src\Skywalker.Extensions.Timezone.csproj", "{24570ADB-9EAD-47E7-B9B6-037C8DB9A195}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Skywalker.FodyProxy", "..\Skywalker.FodyProxy\src\Skywalker.FodyProxy.csproj", "{D45C06E6-D3CF-4CCC-84D9-8F036BD6C6EE}"
-EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Skywalker.FodyProxy.Abstractions", "..\Skywalker.FodyProxy.Abstractions\src\Skywalker.FodyProxy.Abstractions.csproj", "{619C8ACA-9B89-4F3F-9442-973605FC4903}"
-EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -79,14 +75,6 @@ Global
 		{24570ADB-9EAD-47E7-B9B6-037C8DB9A195}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{24570ADB-9EAD-47E7-B9B6-037C8DB9A195}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{24570ADB-9EAD-47E7-B9B6-037C8DB9A195}.Release|Any CPU.Build.0 = Release|Any CPU
-		{D45C06E6-D3CF-4CCC-84D9-8F036BD6C6EE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{D45C06E6-D3CF-4CCC-84D9-8F036BD6C6EE}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{D45C06E6-D3CF-4CCC-84D9-8F036BD6C6EE}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{D45C06E6-D3CF-4CCC-84D9-8F036BD6C6EE}.Release|Any CPU.Build.0 = Release|Any CPU
-		{619C8ACA-9B89-4F3F-9442-973605FC4903}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{619C8ACA-9B89-4F3F-9442-973605FC4903}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{619C8ACA-9B89-4F3F-9442-973605FC4903}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{619C8ACA-9B89-4F3F-9442-973605FC4903}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -102,8 +90,6 @@ Global
 		{CFC2CF40-CE25-4766-BB09-ED14662B6ED6} = {B85045AC-C36D-4F83-AB31-7043617E5ADF}
 		{AF27CAE8-C5C2-439A-A945-4F559DC8AA4F} = {B85045AC-C36D-4F83-AB31-7043617E5ADF}
 		{24570ADB-9EAD-47E7-B9B6-037C8DB9A195} = {B85045AC-C36D-4F83-AB31-7043617E5ADF}
-		{D45C06E6-D3CF-4CCC-84D9-8F036BD6C6EE} = {B85045AC-C36D-4F83-AB31-7043617E5ADF}
-		{619C8ACA-9B89-4F3F-9442-973605FC4903} = {B85045AC-C36D-4F83-AB31-7043617E5ADF}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {BBFA199B-AFD2-4E05-B3C5-8C1B3FBD5F9A}

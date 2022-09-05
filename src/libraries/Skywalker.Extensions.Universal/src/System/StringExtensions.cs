@@ -847,20 +847,20 @@ public static class StringExtensions
 
     public static bool IsMatch(this string? value, string pattern)
     {
-        if (value.IsNullOrEmpty())
+        if(value == null)
         {
             return false;
         }
-        return Regex.IsMatch(value!, pattern);
+        return Regex.IsMatch(value, pattern);
     }
 
     public static bool IsMatch(this string? value, string pattern, RegexOptions regexOptions)
     {
-        if (value.IsNullOrEmpty())
+        if (value == null)
         {
             return false;
         }
-        return Regex.IsMatch(value!, pattern, regexOptions);
+        return Regex.IsMatch(value, pattern, regexOptions);
     }
 
     public static bool IsEmail(this string? value) => IsMatch(value, RegexConstants.Email.Any);
@@ -875,65 +875,65 @@ public static class StringExtensions
 
     public static bool IsBrazilMobileNumber(this string? value) => value.IsMatch(RegexConstants.MobileNumber.BR);
 
-    public static bool IsChinaMainlandMobileNumber(this string value) => value.IsMatch(RegexConstants.MobileNumber.CN);
+    public static bool IsChinaMainlandMobileNumber(this string? value) => value.IsMatch(RegexConstants.MobileNumber.CN);
 
-    public static bool IsCzechMobileNumber(this string value) => value.IsMatch(RegexConstants.MobileNumber.CZ);
+    public static bool IsCzechMobileNumber(this string? value) => value.IsMatch(RegexConstants.MobileNumber.CZ);
 
-    public static bool IsGermanyMobileNumber(this string value) => value.IsMatch(RegexConstants.MobileNumber.DE);
+    public static bool IsGermanyMobileNumber(this string? value) => value.IsMatch(RegexConstants.MobileNumber.DE);
 
-    public static bool IsDenmarkMobileNumber(this string value) => value.IsMatch(RegexConstants.MobileNumber.DK);
+    public static bool IsDenmarkMobileNumber(this string? value) => value.IsMatch(RegexConstants.MobileNumber.DK);
 
-    public static bool IsAlgeriaMobileNumber(this string value) => value.IsMatch(RegexConstants.MobileNumber.DZ);
+    public static bool IsAlgeriaMobileNumber(this string? value) => value.IsMatch(RegexConstants.MobileNumber.DZ);
 
-    public static bool IsSpainMobileNumber(this string value) => value.IsMatch(RegexConstants.MobileNumber.ES);
+    public static bool IsSpainMobileNumber(this string? value) => value.IsMatch(RegexConstants.MobileNumber.ES);
 
-    public static bool IsFinlandMobileNumber(this string value) => value.IsMatch(RegexConstants.MobileNumber.FI);
+    public static bool IsFinlandMobileNumber(this string? value) => value.IsMatch(RegexConstants.MobileNumber.FI);
 
-    public static bool IsFranceMobileNumber(this string value) => value.IsMatch(RegexConstants.MobileNumber.FR);
+    public static bool IsFranceMobileNumber(this string? value) => value.IsMatch(RegexConstants.MobileNumber.FR);
 
-    public static bool IsUnitedKingdomMobileNumber(this string value) => value.IsMatch(RegexConstants.MobileNumber.GB);
+    public static bool IsUnitedKingdomMobileNumber(this string? value) => value.IsMatch(RegexConstants.MobileNumber.GB);
 
-    public static bool IsGreeceMobileNumber(this string value) => value.IsMatch(RegexConstants.MobileNumber.GR);
+    public static bool IsGreeceMobileNumber(this string? value) => value.IsMatch(RegexConstants.MobileNumber.GR);
 
-    public static bool IsHongKongOfChinaMobileNumber(this string value) => value.IsMatch(RegexConstants.MobileNumber.HK);
+    public static bool IsHongKongOfChinaMobileNumber(this string? value) => value.IsMatch(RegexConstants.MobileNumber.HK);
 
-    public static bool IsHungaryMobileNumber(this string value) => value.IsMatch(RegexConstants.MobileNumber.HU);
+    public static bool IsHungaryMobileNumber(this string? value) => value.IsMatch(RegexConstants.MobileNumber.HU);
 
-    public static bool IsIndiaMobileNumber(this string value) => value.IsMatch(RegexConstants.MobileNumber.IN);
+    public static bool IsIndiaMobileNumber(this string? value) => value.IsMatch(RegexConstants.MobileNumber.IN);
 
-    public static bool IsItalyMobileNumber(this string value) => value.IsMatch(RegexConstants.MobileNumber.IT);
+    public static bool IsItalyMobileNumber(this string? value) => value.IsMatch(RegexConstants.MobileNumber.IT);
 
-    public static bool IsJapanMobileNumber(this string value) => value.IsMatch(RegexConstants.MobileNumber.JP);
+    public static bool IsJapanMobileNumber(this string? value) => value.IsMatch(RegexConstants.MobileNumber.JP);
 
-    public static bool IsMalaysiaMobileNumber(this string value) => value.IsMatch(RegexConstants.MobileNumber.MY);
+    public static bool IsMalaysiaMobileNumber(this string? value) => value.IsMatch(RegexConstants.MobileNumber.MY);
 
-    public static bool IsNorwayMobileNumber(this string value) => value.IsMatch(RegexConstants.MobileNumber.NO);
+    public static bool IsNorwayMobileNumber(this string? value) => value.IsMatch(RegexConstants.MobileNumber.NO);
 
-    public static bool IsNewZealandMobileNumber(this string value) => value.IsMatch(RegexConstants.MobileNumber.NZ);
+    public static bool IsNewZealandMobileNumber(this string? value) => value.IsMatch(RegexConstants.MobileNumber.NZ);
 
-    public static bool IsPolandMobileNumber(this string value) => value.IsMatch(RegexConstants.MobileNumber.PL);
+    public static bool IsPolandMobileNumber(this string? value) => value.IsMatch(RegexConstants.MobileNumber.PL);
 
-    public static bool IsPortugalMobileNumber(this string value) => value.IsMatch(RegexConstants.MobileNumber.PT);
+    public static bool IsPortugalMobileNumber(this string? value) => value.IsMatch(RegexConstants.MobileNumber.PT);
 
-    public static bool IsSerbiaMobileNumber(this string value) => value.IsMatch(RegexConstants.MobileNumber.RS);
+    public static bool IsSerbiaMobileNumber(this string? value) => value.IsMatch(RegexConstants.MobileNumber.RS);
 
-    public static bool IsRussianFederationMobileNumber(this string value) => value.IsMatch(RegexConstants.MobileNumber.RU);
+    public static bool IsRussianFederationMobileNumber(this string? value) => value.IsMatch(RegexConstants.MobileNumber.RU);
 
-    public static bool IsSaudiArabiaMobileNumber(this string value) => value.IsMatch(RegexConstants.MobileNumber.SA);
+    public static bool IsSaudiArabiaMobileNumber(this string? value) => value.IsMatch(RegexConstants.MobileNumber.SA);
 
-    public static bool IsSyrianArabMobileNumber(this string value) => value.IsMatch(RegexConstants.MobileNumber.SY);
+    public static bool IsSyrianArabMobileNumber(this string? value) => value.IsMatch(RegexConstants.MobileNumber.SY);
 
-    public static bool IsTurkeyMobileNumber(this string value) => value.IsMatch(RegexConstants.MobileNumber.TR);
+    public static bool IsTurkeyMobileNumber(this string? value) => value.IsMatch(RegexConstants.MobileNumber.TR);
 
-    public static bool IsTaiwanOfChinaMobileNumber(this string value) => value.IsMatch(RegexConstants.MobileNumber.TW);
+    public static bool IsTaiwanOfChinaMobileNumber(this string? value) => value.IsMatch(RegexConstants.MobileNumber.TW);
 
-    public static bool IsUnitedStatesMobileNumber(this string value) => value.IsMatch(RegexConstants.MobileNumber.US);
+    public static bool IsUnitedStatesMobileNumber(this string? value) => value.IsMatch(RegexConstants.MobileNumber.US);
 
-    public static bool IsVietNamMobileNumber(this string value) => value.IsMatch(RegexConstants.MobileNumber.VN);
+    public static bool IsVietNamMobileNumber(this string? value) => value.IsMatch(RegexConstants.MobileNumber.VN);
 
-    public static bool IsSouthAfricaMobileNumber(this string value) => value.IsMatch(RegexConstants.MobileNumber.ZA);
+    public static bool IsSouthAfricaMobileNumber(this string? value) => value.IsMatch(RegexConstants.MobileNumber.ZA);
 
-    public static bool IsZambiaMobileNumber(this string value) => value.IsMatch(RegexConstants.MobileNumber.ZM);
+    public static bool IsZambiaMobileNumber(this string? value) => value.IsMatch(RegexConstants.MobileNumber.ZM);
 
     public static string ToMd5(this string str)
     {

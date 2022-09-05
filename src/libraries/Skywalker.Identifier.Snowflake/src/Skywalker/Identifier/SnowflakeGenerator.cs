@@ -34,7 +34,6 @@ public class SnowflakeGenerator : IIdentifierGenerator<long>
         _maxWorkId = 1 << _workIdLength;
         _indexLength = 25 - _workIdLength;
         _maxIndex = 1 << _indexLength;
-        Console.WriteLine("SnowflakeGenerator");
     }
 
     private async Task Initialize()

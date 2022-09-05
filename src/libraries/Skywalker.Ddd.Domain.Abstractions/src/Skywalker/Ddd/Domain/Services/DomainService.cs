@@ -97,7 +97,7 @@ public class DomainService<TEntity> : IDomainService<TEntity> where TEntity : cl
     /// <summary>
     /// <inheritdoc/>
     /// </summary>
-    public Task<PagedList<TEntity>> GetPagedListAsync(Expression<Func<TEntity, bool>> expression, int skip, int limit, CancellationToken cancellationToken = default) => Repository.GetPagedListAsync(skip, limit, cancellationToken);
+    public Task<PagedList<TEntity>> GetPagedListAsync(Expression<Func<TEntity, bool>> expression, int skip, int limit, CancellationToken cancellationToken = default) => Repository.GetPagedListAsync(expression, skip, limit, cancellationToken);
 
     /// <summary>
     /// <inheritdoc/>

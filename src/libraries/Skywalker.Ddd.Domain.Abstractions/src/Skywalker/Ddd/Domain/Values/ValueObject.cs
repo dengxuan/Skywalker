@@ -25,8 +25,7 @@ public abstract class ValueObject
                 return false;
             }
 
-            if (thisValues.Current != null &&
-                !thisValues.Current.Equals(otherValues.Current))
+            if (thisValues.Current != null && !thisValues.Current.Equals(otherValues.Current))
             {
                 return false;
             }

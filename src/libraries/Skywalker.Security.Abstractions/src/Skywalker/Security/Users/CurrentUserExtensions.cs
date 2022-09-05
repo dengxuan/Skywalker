@@ -1,6 +1,4 @@
-﻿using System.Diagnostics;
-
-namespace Skywalker.Security.Users;
+﻿namespace Skywalker.Security.Users;
 
 public static class CurrentUserExtensions
 {
@@ -19,12 +17,5 @@ public static class CurrentUserExtensions
         }
 
         return value.To<T>();
-    }
-
-    public static Guid GetId(this ICurrentUser currentUser)
-    {
-        Debug.Assert(currentUser.Id != null, "currentUser.Id != null");
-
-        return currentUser.Id!.Value;
     }
 }
