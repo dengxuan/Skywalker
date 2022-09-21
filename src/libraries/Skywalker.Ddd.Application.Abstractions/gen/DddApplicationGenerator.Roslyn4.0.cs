@@ -1,53 +1,35 @@
-﻿using Microsoft.CodeAnalysis;
-using Microsoft.CodeAnalysis.Text;
-using Scriban;
-using Skywalker.Ddd.Application;
-using System.Text;
+﻿// Licensed to the Gordon under one or more agreements.
+// Gordon licenses this file to you under the MIT license.
 
-namespace Skywalker.CodeAnalyzers.Analyzers.SourceGenerator;
+using System.Diagnostics;
+using Microsoft.CodeAnalysis;
+
+namespace Skywalker.Ddd.Application.Generators;
 
 [Generator]
-public sealed partial class ApplicationGenerator : IIncrementalGenerator
+public partial class DddApplicationGenerator : ISourceGenerator
 {
     public void Execute(GeneratorExecutionContext context)
     {
-        try
+        Debugger.Launch();
+        if (context.SyntaxReceiver is Analyzer receiver)
         {
-            ExecuteInternal(in context);
-        }
-        catch (Exception exception)
-        {
-            context.ReportGenericError(exception);
-
-            throw;
+            var builders = receiver
+                .GetAspectsTypes(context.Compilation)
+                .Select(i => new Builder(i))
+                .Distinct();
+            foreach (var builder in builders)
+            {
+                var build =  builder.Build();
+                Emitter.Emit(context, build);
+                //context.AddSource($"{builder.AspectsTypeName}Proxy", builder.ToSourceText());
+            }
         }
     }
 
-    public void Initialize(IncrementalGeneratorInitializationContext context) => throw new NotImplementedException();
-
-    private void ExecuteInternal(in GeneratorExecutionContext context)
+    public void Initialize(GeneratorInitializationContext context)
     {
-        var generatorAssembly = GetType().Assembly;
-        var generatorVersion = generatorAssembly.GetName().Version!.ToString();
-
-        GenerateOptionsAttribute(in context, generatorVersion);
-
-        var compilationAnalyzer = new CompilationAnalyzer(in context, generatorVersion);
-        compilationAnalyzer.Analyze(context.CancellationToken);
-
-        if (compilationAnalyzer.HasErrors)
-        {
-            return;
-        }
-
-        var mediatorImplementationGenerator = new ApplicationImplementationGenerator();
-        mediatorImplementationGenerator.Generate(in context, compilationAnalyzer);
-    }
-
-    private void GenerateOptionsAttribute(in GeneratorExecutionContext context, string generatorVersion)
-    {
-        var model = new { GeneratorVersion = generatorVersion };
-
+        context.RegisterForSyntaxNotifications(() => new Analyzer());
     }
 
 }

@@ -1,4 +1,4 @@
-﻿<Project Sdk="Microsoft.NET.Sdk">
+<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
     <AnalyzerRoslynVersion>4.0</AnalyzerRoslynVersion>
@@ -13,6 +13,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Compile Remove="D:\Workspaces\Visual Studio Projects\dengxuan\Skywalker\src\libraries\Common\src\Microsoft\CodeAnalysis\RoslynExtensions.cs" />
+    <None Remove="Templates\DddApplication.sbn-cs" />
   </ItemGroup>
+
 </Project>

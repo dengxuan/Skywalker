@@ -5,4 +5,4 @@ using Skywalker.Ddd.Application.Dtos.Abstractions;
 
 namespace Skywalker.Ddd.Application.Dtos;
 
-public record class EntityDto<TKey>(TKey Id) : IEntityDto<TKey>;
+public record class EntityDto<TKey>(TKey Id) : IEntityDto<TKey>, IRequestDto, IResponseDto;

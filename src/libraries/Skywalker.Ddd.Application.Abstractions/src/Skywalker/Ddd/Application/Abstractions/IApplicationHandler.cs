@@ -17,6 +17,6 @@ public interface IApplicationHandler<in TRequest> : IApplicationHandler where TR
 
 public interface IApplicationHandler<in TRequest, TResponse> : IApplicationHandler where TRequest : IRequestDto where TResponse : IResponseDto
 {
-    ValueTask<TResponse?> HandleAsync(TRequest request, CancellationToken cancellationToken = default);
+    ValueTask<TResponse> HandleAsync(TRequest request, CancellationToken cancellationToken = default);
 }
 

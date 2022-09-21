@@ -30,7 +30,7 @@ internal class DefaultApplication : IApplication
         }, request, cancellationToken));
     }
 
-    public async ValueTask<TResponse?> ExecuteAsync<TRequest, TResponse>(TRequest request, CancellationToken cancellationToken = default) where TRequest : IRequestDto where TResponse : IResponseDto
+    public async ValueTask<TResponse> ExecuteAsync<TRequest, TResponse>(TRequest request, CancellationToken cancellationToken = default) where TRequest : IRequestDto where TResponse : IResponseDto
     {
         if (request == null)
         {
@@ -42,6 +42,6 @@ internal class DefaultApplication : IApplication
             context.ReturnValue = await handler.HandleAsync(request, cancellationToken);
         }, request, cancellationToken);
         await _pipeline(context);
-        return (TResponse?)context.ReturnValue!;
+        return (TResponse)context.ReturnValue;
     }
 }

@@ -19,7 +19,19 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Skywalker.EventBus.Abstract
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Skywalker.Extensions.DependencyInjection.Abstractions", "..\Skywalker.Extensions.DependencyInjection.Abstractions\src\Skywalker.Extensions.DependencyInjection.Abstractions.csproj", "{17BF0A27-3CC6-41FD-B012-0C375D67D3AD}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Skywalker.Ddd.UnitOfWork.Abstractions", "..\Skywalker.Ddd.UnitOfWork.Abstractions\src\Skywalker.Ddd.UnitOfWork.Abstractions.csproj", "{74306199-6CD0-43EA-A06D-C8DEFFCACA5C}"
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "gen", "gen", "{9F0A4770-D8CF-491E-BD81-6CF1CC46857D}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "tests", "tests", "{AB8ACBC5-D1FF-4109-A745-E60A65B01515}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Skywalker.Ddd.ApplicationService.Example", "example\Skywalker.Ddd.ApplicationService.Example\Skywalker.Ddd.ApplicationService.Example.csproj", "{8990AF17-9224-4CBC-A792-7AD2916B722C}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Skywalker.Ddd.ApplicationService.Example.Hosting", "example\Skywalker.Ddd.ApplicationService.Example.Hosting\Skywalker.Ddd.ApplicationService.Example.Hosting.csproj", "{C41F9A88-85C6-42C0-AA33-C8157AA61F12}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Skywalker.Ddd.ApplicationService.Example.Abstractions", "tests\Skywalker.Ddd.ApplicationService.Example.Abstractions\Skywalker.Ddd.ApplicationService.Example.Abstractions.csproj", "{23C306DD-5C19-4185-83F1-F86DFC798F56}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Skywalker.Extensions.DependencyInjection", "..\Skywalker.Extensions.DependencyInjection\src\Skywalker.Extensions.DependencyInjection.csproj", "{F16213B2-6D4C-4CD7-B677-3EB72A40FCF4}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Skywalker.Ddd.Application.Generators.Roslyn4.0", "..\Skywalker.Ddd.Application.Abstractions\gen\Skywalker.Ddd.Application.Generators.Roslyn4.0.csproj", "{C5FA146F-E640-4CF2-BE74-313F01501712}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -55,10 +67,26 @@ Global
 		{17BF0A27-3CC6-41FD-B012-0C375D67D3AD}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{17BF0A27-3CC6-41FD-B012-0C375D67D3AD}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{17BF0A27-3CC6-41FD-B012-0C375D67D3AD}.Release|Any CPU.Build.0 = Release|Any CPU
-		{74306199-6CD0-43EA-A06D-C8DEFFCACA5C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{74306199-6CD0-43EA-A06D-C8DEFFCACA5C}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{74306199-6CD0-43EA-A06D-C8DEFFCACA5C}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{74306199-6CD0-43EA-A06D-C8DEFFCACA5C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{8990AF17-9224-4CBC-A792-7AD2916B722C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{8990AF17-9224-4CBC-A792-7AD2916B722C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{8990AF17-9224-4CBC-A792-7AD2916B722C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{8990AF17-9224-4CBC-A792-7AD2916B722C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C41F9A88-85C6-42C0-AA33-C8157AA61F12}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C41F9A88-85C6-42C0-AA33-C8157AA61F12}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C41F9A88-85C6-42C0-AA33-C8157AA61F12}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C41F9A88-85C6-42C0-AA33-C8157AA61F12}.Release|Any CPU.Build.0 = Release|Any CPU
+		{23C306DD-5C19-4185-83F1-F86DFC798F56}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{23C306DD-5C19-4185-83F1-F86DFC798F56}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{23C306DD-5C19-4185-83F1-F86DFC798F56}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{23C306DD-5C19-4185-83F1-F86DFC798F56}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F16213B2-6D4C-4CD7-B677-3EB72A40FCF4}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F16213B2-6D4C-4CD7-B677-3EB72A40FCF4}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F16213B2-6D4C-4CD7-B677-3EB72A40FCF4}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F16213B2-6D4C-4CD7-B677-3EB72A40FCF4}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C5FA146F-E640-4CF2-BE74-313F01501712}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C5FA146F-E640-4CF2-BE74-313F01501712}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C5FA146F-E640-4CF2-BE74-313F01501712}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C5FA146F-E640-4CF2-BE74-313F01501712}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -71,7 +99,11 @@ Global
 		{097D3D04-2B24-4007-A7C4-925421287094} = {C3D4D567-C57A-42DF-A600-0A82FCA46E67}
 		{171C714F-3578-4989-B099-ED4857399F54} = {C3D4D567-C57A-42DF-A600-0A82FCA46E67}
 		{17BF0A27-3CC6-41FD-B012-0C375D67D3AD} = {C3D4D567-C57A-42DF-A600-0A82FCA46E67}
-		{74306199-6CD0-43EA-A06D-C8DEFFCACA5C} = {C3D4D567-C57A-42DF-A600-0A82FCA46E67}
+		{8990AF17-9224-4CBC-A792-7AD2916B722C} = {AB8ACBC5-D1FF-4109-A745-E60A65B01515}
+		{C41F9A88-85C6-42C0-AA33-C8157AA61F12} = {AB8ACBC5-D1FF-4109-A745-E60A65B01515}
+		{23C306DD-5C19-4185-83F1-F86DFC798F56} = {AB8ACBC5-D1FF-4109-A745-E60A65B01515}
+		{F16213B2-6D4C-4CD7-B677-3EB72A40FCF4} = {C3D4D567-C57A-42DF-A600-0A82FCA46E67}
+		{C5FA146F-E640-4CF2-BE74-313F01501712} = {9F0A4770-D8CF-491E-BD81-6CF1CC46857D}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {A39F4FA5-4B81-4619-8DAC-D893A367462F}
