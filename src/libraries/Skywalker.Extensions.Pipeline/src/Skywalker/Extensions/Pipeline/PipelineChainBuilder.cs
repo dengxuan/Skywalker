@@ -134,7 +134,13 @@ public sealed class PipelineChainBuilder : IPipelineChainBuilder
     /// <returns>A composite pipeline representing the pipeline chain.</returns>
     public InterceptDelegate Build()
     {
-        InterceptDelegate current = async context => await context.Intercept(context);
+        InterceptDelegate current = context =>
+        {
+            return Task.Run(() =>
+            {
+                context.ReturnValue = context.Method.Invoke(context.Target, context.Arguments);
+            });
+        };
         for (var c = _pipelines.Count - 1; c >= 0; c--)
         {
             current = _pipelines[c](current);

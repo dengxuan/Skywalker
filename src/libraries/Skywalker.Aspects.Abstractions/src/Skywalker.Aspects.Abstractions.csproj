@@ -6,5 +6,9 @@
     <ItemGroup>
       <PackageReference Include="Microsoft.Extensions.Options" Version="6.0.0" />
     </ItemGroup>
+	
+    <ItemGroup>
+      <Folder Include="Skywalker\Aspects\" />
+    </ItemGroup>
 
 </Project>

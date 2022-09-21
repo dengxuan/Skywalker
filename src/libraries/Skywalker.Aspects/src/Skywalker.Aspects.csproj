@@ -20,4 +20,8 @@
     <ProjectReference Include="..\Skywalker.Aspects.CodeAnalysis.Analyzers\Skywalker.Aspects.CodeAnalysis.Analyzers.csproj" OutputItemType="Analyzer" ReferenceOutputAssembly="false" />-->
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Skywalker\Aspects\" />
+  </ItemGroup>
+
 </Project>

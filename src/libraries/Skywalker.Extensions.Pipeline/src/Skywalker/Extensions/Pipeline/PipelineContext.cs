@@ -1,11 +1,18 @@
 ﻿// Licensed to the Gordon under one or more agreements.
 // Gordon licenses this file to you under the MIT license.
 
+using System.Reflection;
+
 namespace Skywalker.Ddd.Application.Pipeline;
 
 public sealed class PipelineContext
 {
-    public InterceptDelegate Intercept { get; }
+    /// <summary>
+    /// Gets the object on which the invocation is performed.
+    /// </summary>
+    public object Target { get; }
+
+    public MethodInfo Method { get; }
 
     /// <summary>
     /// Gets the arguments that target method has been invoked with.
@@ -18,7 +25,7 @@ public sealed class PipelineContext
     /// <summary>
     /// Gets or sets the return value of the method.
     /// </summary>
-    public object ReturnValue { get; set; } = default!;
+    public object? ReturnValue { get; set; }
 
     /// <summary>
     /// Gets the extended properties.
@@ -37,9 +44,11 @@ public sealed class PipelineContext
     /// <exception cref="ArgumentNullException">The specified<paramref name="handler"/> is null.</exception>   
     /// <exception cref="ArgumentNullException">The specified<paramref name="target"/> is null.</exception>   
     /// <exception cref="ArgumentNullException">The specified<paramref name="arguments"/> is null.</exception>
-    internal PipelineContext(InterceptDelegate intercept, params object[] arguments)
+    public PipelineContext(object target, MethodInfo method, /*InterceptDelegate intercept,*/ params object[] arguments)
     {
-        Intercept = intercept;
+        Target = target;
+        Method = method;
+        //Intercept = intercept;
         Arguments = arguments;
         Properties = new Dictionary<string, object>();
     }

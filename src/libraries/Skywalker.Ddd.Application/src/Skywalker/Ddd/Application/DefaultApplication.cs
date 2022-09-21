@@ -24,7 +24,8 @@ internal class DefaultApplication : IApplication
             throw new ArgumentNullException(nameof(request));
         }
         var handler = _serviceProvider.GetRequiredService<IApplicationHandler<TRequest>>();
-        await _pipeline(new PipelineContext(handler, async (PipelineContext context) =>
+        
+        await _pipeline(new PipelineContext(async (PipelineContext context) =>
         {
             await handler!.HandleAsync(request, cancellationToken);
         }, request, cancellationToken));
@@ -37,7 +38,8 @@ internal class DefaultApplication : IApplication
             throw new ArgumentNullException(nameof(request));
         }
         var handler = _serviceProvider.GetRequiredService<IApplicationHandler<TRequest, TResponse>>();
-        var context = new PipelineContext(handler, async (PipelineContext context) =>
+        
+        var context = new PipelineContext(async (PipelineContext context) =>
         {
             context.ReturnValue = await handler.HandleAsync(request, cancellationToken);
         }, request, cancellationToken);
