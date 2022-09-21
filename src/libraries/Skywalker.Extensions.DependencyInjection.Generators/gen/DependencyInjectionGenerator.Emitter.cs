@@ -1,7 +1,6 @@
 // Licensed to the Gordon under one or more agreements.
 // Gordon licenses this file to you under the MIT license.
 
-using System.Diagnostics;
 using System.Text;
 using Microsoft.CodeAnalysis;
 using Microsoft.CodeAnalysis.Text;
@@ -41,14 +40,14 @@ public partial class DependencyInjectionGenerator
                     {
                         continue;
                     }
-                    currentNamespaces.Add(method.ReturnType.OriginalDefinition.ToDisplayString());
+                    currentNamespaces.Add(method.ReturnType.ContainingNamespace.ToDisplayString());
                     //foreach (var item in method.Parameters)
                     //{
                     //    currentNamespaces.Add(item.OriginalDefinition.ToDisplayString());
                     //}
                     var arguments = method.Parameters.Select(selector => selector.Name);
                     var parameters = method.Parameters.Select(selector => $"{selector.OriginalDefinition.ToDisplayString()} {selector.Name}");
-                    methods.Add(new Method(method.Name, method.ReturnType.Name, string.Join(", ", arguments), string.Join(", ", parameters)));
+                    methods.Add(new Method(method.Name, method.ReturnType.ToDisplayString(), string.Join(", ", arguments), string.Join(", ", parameters)));
                 }
 
                 var orderdNamespaces = currentNamespaces.OrderBy(keySelector => keySelector).ToArray();
@@ -60,7 +59,6 @@ public partial class DependencyInjectionGenerator
                     ClassName = dbContextClass.Name,
                     Methods = methods,
                 }, member => member.Name);
-                Debugger.Launch();
                 context.AddSource($"{dbContextClass.Name}Proxy.g.cs", SourceText.From(output, Encoding.UTF8));
             }
         }

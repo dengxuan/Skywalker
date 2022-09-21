@@ -9,7 +9,7 @@ using Skywalker.Extensions.DependencyInjection.Generators;
 using Skywalker.Extensions.DependencyInjection.Interceptors;
 using Skywalker.Extensions.DependencyInjection.Interceptors.Abstractions;
 
-var builder = Host.CreateDefaultBuilder();
+var builder = Host.CreateDefaultBuilder(args);
 
 builder.ConfigureServices(configure =>
 {
@@ -24,5 +24,5 @@ chain.Use((next) =>
     return next;
 });
 var i = app.Services.GetRequiredService<IInterface1>();
-Console.WriteLine(await i.GetIdAsync(1));
-app.Run();
+Console.WriteLine(await i.GetIdAsync(10));
+await app.RunAsync();
