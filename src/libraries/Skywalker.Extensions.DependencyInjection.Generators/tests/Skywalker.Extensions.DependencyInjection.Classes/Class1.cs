@@ -10,11 +10,22 @@ public interface IInterface1 : IIntercepted
     Task<int> GetIdAsync(int id);
 }
 
-public class Class1 : IInterface1
+public interface IInterface2: IIntercepted
+{
+    Task SetIdAsync(int id);
+}
+
+public class Class1 : IInterface1, IInterface2
 {
     public Task<int> GetIdAsync(int id)
     {
         return Task.FromResult(id);
+    }
+
+    public Task SetIdAsync(int id)
+    {
+        Console.WriteLine(id);
+        return Task.CompletedTask;
     }
 }
 

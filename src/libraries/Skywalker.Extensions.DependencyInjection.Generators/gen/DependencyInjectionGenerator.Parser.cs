@@ -1,44 +1,67 @@
 // Licensed to the Gordon under one or more agreements.
 // Gordon licenses this file to you under the MIT license.
 
+using System.Collections.Generic;
 using Microsoft.CodeAnalysis;
 
 namespace Skywalker.Extensions.DependencyInjection.Generators;
 
 public partial class DependencyInjectionGenerator
 {
-    internal class Parser
+    internal readonly record struct Method
     {
-        public static IReadOnlyList<DbContextClass> DbContextClasses(ISet<INamedTypeSymbol> dbContextClasses, CancellationToken cancellationToken)
+        public Method(string name, string returnType)
         {
-            var results = new List<DbContextClass>();
-            foreach (var dbContextClass in dbContextClasses)
-            {
-                cancellationToken.ThrowIfCancellationRequested();
+            Name = name;
+            ReturnType = returnType;
+        }
 
-                var dbContexterClass = new DbContextClass
-                {
-                    Name = dbContextClass.Name,
-                    Namespace = dbContextClass.ContainingNamespace.ToDisplayString(),
-                    Interfaces = string.Join(", ", dbContextClass.AllInterfaces.Select(selector => selector.ToDisplayString())),
-                    Methods = new HashSet<IMethodSymbol>(s_symbolComparer)
-                };
-                foreach (var item in dbContextClass.GetMembers())
-                {
-                    if (item is IMethodSymbol method)
-                    {
-                        dbContexterClass.Methods.Add(method);
-                    }
-                }
-                results.Add(dbContexterClass);
-            }
-            return results;
+        public List<KeyValuePair<string, string>> Arguments { get; } = new();
+
+        public string ReturnType { get; }
+
+        public string Name { get; }
+    }
+
+    internal readonly record struct Dependency
+    {
+
+        public string Name { get; }
+
+        public ISet<string> Interfaces { get; } = new HashSet<string>();
+
+        public Dependency(string name)
+        {
+            Name = name;
         }
     }
 
+    internal readonly record struct Intecepter
+    {
+        public string Name { get; }
 
-    /// <summary>
-    /// A DbContext struct holding a bunch of DbContext properties.
-    /// </summary>
-    internal record struct DbContextClass(string Namespace, string Name, string Interfaces, ISet<IMethodSymbol> Methods);
+        public ISet<string> Interfaces { get; } = new HashSet<string>();
+
+        public List<Method> Methods { get; } = new();
+
+        public Intecepter(string name)
+        {
+            Name = name;
+        }
+    }
+
+    internal readonly record struct Metadata
+    {
+        public Metadata() { }
+
+        public ISet<string> Namespaces { get; } = new HashSet<string>();
+
+        public ISet<Dependency> ScopedDepedency { get; } = new HashSet<Dependency>();
+
+        public ISet<Dependency> SingletonDepedency { get; } = new HashSet<Dependency>();
+
+        public ISet<Dependency> TransientDepedency { get; } = new HashSet<Dependency>();
+
+        public ISet<Intecepter> Intecepters { get; } = new HashSet<Intecepter>();
+    }
 }

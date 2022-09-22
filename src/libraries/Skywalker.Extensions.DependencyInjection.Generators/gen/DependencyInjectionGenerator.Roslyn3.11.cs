@@ -1,6 +1,6 @@
 ﻿using Microsoft.CodeAnalysis;
 
-namespace Skywalker.Ddd.EntityFrameworkCore.Generators;
+namespace Skywalker.Extensions.DependencyInjection.Generators;
 
 [Generator]
 public partial class DependencyInjectionGenerator : ISourceGenerator

@@ -3,7 +3,8 @@
 
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using Skywalker.Aspects;
+using Skywalker.Extensions.DependencyInjection;
+using Skywalker.Extensions.DependencyInjection.Abstractions;
 using Skywalker.Extensions.DependencyInjection.Classes;
 using Skywalker.Extensions.DependencyInjection.Generators;
 using Skywalker.Extensions.DependencyInjection.Interceptors;
@@ -14,15 +15,26 @@ var builder = Host.CreateDefaultBuilder(args);
 builder.ConfigureServices(configure =>
 {
     configure.AddSingleton<IInterceptorChainBuilder, InterceptorChainBuilder>();
-    configure.AddTransient<IInterface1, Class1>().DecorateWithDispatchProxy<IInterface1, Class1Proxy>();
+    configure.AddSingleton<IObjectAccessor<InterceptorDelegate>>(sp =>
+    {
+        var chain = sp.GetRequiredService<IInterceptorChainBuilder>();
+       return new ObjectAccessor<InterceptorDelegate>(chain.Build());
+    });
+    configure.AddSkywalker();
 });
+
 var app = builder.Build();
-var chain = app.Services.GetRequiredService<IInterceptorChainBuilder>();
-chain.Use((next) =>
+app.UseAspects(chain =>
 {
-    Console.WriteLine("AAA");
-    return next;
+    chain.Use((next) => async context =>
+    {
+        Console.WriteLine("AAA");
+        await next(context);
+        Console.WriteLine("BBB");
+    });
 });
 var i = app.Services.GetRequiredService<IInterface1>();
+var j = app.Services.GetRequiredService<IInterface2>();
+await j.SetIdAsync(100);
 Console.WriteLine(await i.GetIdAsync(10));
 await app.RunAsync();

@@ -1,4 +1,7 @@
-﻿using Microsoft.CodeAnalysis;
+﻿using System.Collections.Generic;
+using System.Diagnostics;
+using Microsoft.CodeAnalysis;
+using static Skywalker.Extensions.DependencyInjection.Generators.DependencyInjectionGenerator;
 
 namespace Skywalker.Extensions.DependencyInjection.Generators;
 
@@ -8,12 +11,18 @@ public partial class DependencyInjectionGenerator
 
     internal class Analyzer
     {
-        private readonly INamedTypeSymbol? _interceptorSymbol;
         private readonly Compilation _compilation;
+        private readonly INamedTypeSymbol? _interceptorSymbol;
+        private readonly INamedTypeSymbol? _scopedSymbol;
+        private readonly INamedTypeSymbol? _singletonSymbol;
+        private readonly INamedTypeSymbol? _transientSymbol;
 
         public Analyzer(in GeneratorExecutionContext context)
         {
             _compilation = context.Compilation;
+            _scopedSymbol = _compilation.GetTypeByMetadataName(Constants.ScopedSymbolName);
+            _singletonSymbol = _compilation.GetTypeByMetadataName(Constants.SingletonSymbolName);
+            _transientSymbol = _compilation.GetTypeByMetadataName(Constants.TransientSymbolName);
             _interceptorSymbol = _compilation.GetTypeByMetadataName(Constants.InterceptorSymbolName);
         }
 
@@ -29,7 +38,7 @@ public partial class DependencyInjectionGenerator
                     continue;
                 }
 
-                if (!assemblySymbol.Modules.Any(m => m.ReferencedAssemblies.Any(ra => ra.Name is Constants.DependencyInjectionAssemblyName)))
+                if (!assemblySymbol.Modules.Any(m => m.ReferencedAssemblies.Any(ra => ra.Name is Constants.AssemblyName)))
                 {
                     continue;
                 }
@@ -38,9 +47,9 @@ public partial class DependencyInjectionGenerator
             return queue;
         }
 
-        private MetadataClass PopulateMetadata(Queue<INamespaceOrTypeSymbol> queue)
+        private Metadata PopulateMetadata(Queue<INamespaceOrTypeSymbol> queue)
         {
-            var metadataClass = new MetadataClass();
+            var classes = new Metadata();
             while (queue.Count > 0)
             {
                 var nsOrTypeSymbol = queue.Dequeue();
@@ -74,7 +83,80 @@ public partial class DependencyInjectionGenerator
 
                             if (namedTypeSymbol.AllInterfaces.Any(predicate => s_symbolComparer.Equals(predicate, _interceptorSymbol)))
                             {
-                                metadataClass.InterceptedClasses.Add(namedTypeSymbol);
+                                var intecepter = new Intecepter(namedTypeSymbol.Name);
+                                foreach (var item in namedTypeSymbol.AllInterfaces)
+                                {
+                                    if (s_symbolComparer.Equals(item, _interceptorSymbol))
+                                    {
+                                        continue;
+                                    }
+                                    intecepter.Interfaces.Add(item.Name);
+                                    classes.Namespaces.Add(item.ContainingNamespace.ToDisplayString());
+                                }
+                                foreach (var item in namedTypeSymbol.GetMembers())
+                                {
+                                    if (item is not IMethodSymbol methodSymbol ||
+                                        methodSymbol.IsStatic ||
+                                        methodSymbol.MethodKind == MethodKind.Constructor ||
+                                        methodSymbol.DeclaredAccessibility != Accessibility.Public)
+                                    {
+                                        continue;
+                                    }
+                                    classes.Namespaces.Add(methodSymbol.ReturnType.ContainingNamespace.ToDisplayString());
+                                    var method = new Method(methodSymbol.Name, methodSymbol.ReturnType.ToDisplayString());
+                                    foreach (var parameterSymbol in methodSymbol.Parameters)
+                                    {
+                                        classes.Namespaces.Add(parameterSymbol.Type.ContainingNamespace.ToDisplayString());
+                                        method.Arguments.Add(new KeyValuePair<string, string>(parameterSymbol.Type.ToDisplayString(), parameterSymbol.Name));
+                                    }
+                                    intecepter.Methods.Add(method);
+                                }
+                                classes.Intecepters.Add(intecepter);
+                                break;
+                            }
+                            if (namedTypeSymbol.AllInterfaces.Any(predicate => s_symbolComparer.Equals(predicate, _scopedSymbol)))
+                            {
+                                var dependency = new Dependency(namedTypeSymbol.Name);
+                                foreach (var item in namedTypeSymbol.AllInterfaces)
+                                {
+                                    if (s_symbolComparer.Equals(item, _scopedSymbol))
+                                    {
+                                        continue;
+                                    }
+                                    dependency.Interfaces.Add(item.Name);
+                                    classes.Namespaces.Add(item.ContainingNamespace.ToDisplayString());
+                                }
+                                classes.ScopedDepedency.Add(dependency);
+                                break;
+                            }
+                            if (namedTypeSymbol.AllInterfaces.Any(predicate => s_symbolComparer.Equals(predicate, _singletonSymbol)))
+                            {
+                                var dependency = new Dependency(namedTypeSymbol.Name);
+                                foreach (var item in namedTypeSymbol.AllInterfaces)
+                                {
+                                    if (s_symbolComparer.Equals(item, _singletonSymbol))
+                                    {
+                                        continue;
+                                    }
+                                    dependency.Interfaces.Add(item.Name);
+                                    classes.Namespaces.Add(item.ContainingNamespace.ToDisplayString());
+                                }
+                                classes.SingletonDepedency.Add(dependency);
+                                break;
+                            }
+                            if (namedTypeSymbol.AllInterfaces.Any(predicate => s_symbolComparer.Equals(predicate, _transientSymbol)))
+                            {
+                                var dependency = new Dependency(namedTypeSymbol.Name);
+                                foreach (var item in namedTypeSymbol.AllInterfaces)
+                                {
+                                    if (s_symbolComparer.Equals(item, _transientSymbol))
+                                    {
+                                        continue;
+                                    }
+                                    dependency.Interfaces.Add(item.ContainingNamespace.Name);
+                                    classes.Namespaces.Add(item.ToDisplayString());
+                                }
+                                classes.TransientDepedency.Add(dependency);
                                 break;
                             }
                             break;
@@ -82,25 +164,14 @@ public partial class DependencyInjectionGenerator
                     default: break;
                 }
             }
-            return metadataClass;
+            return classes;
         }
 
-        public MetadataClass Analyze()
+        public Metadata Analyze()
         {
             var queue = FindGlobalNamespaces();
             return PopulateMetadata(queue);
-
         }
 
-    }
-
-    internal readonly record struct MetadataClass
-    {
-        internal ISet<INamedTypeSymbol> InterceptedClasses { get; }
-
-        public MetadataClass()
-        {
-            InterceptedClasses = new HashSet<INamedTypeSymbol>(s_symbolComparer);
-        }
     }
 }

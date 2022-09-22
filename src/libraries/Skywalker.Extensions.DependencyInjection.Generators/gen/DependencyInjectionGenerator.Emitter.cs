@@ -1,6 +1,7 @@
 // Licensed to the Gordon under one or more agreements.
 // Gordon licenses this file to you under the MIT license.
 
+using System.Diagnostics;
 using System.Text;
 using Microsoft.CodeAnalysis;
 using Microsoft.CodeAnalysis.Text;
@@ -14,6 +15,8 @@ public partial class DependencyInjectionGenerator
     {
         "Microsoft.Extensions.DependencyInjection",
         "Microsoft.Extensions.DependencyInjection.Extensions",
+        "Skywalker.Extensions.DependencyInjection",
+        "Skywalker.Extensions.DependencyInjection.Abstractions",
         "Skywalker.Extensions.DependencyInjection.Interceptors",
         "Skywalker.Extensions.DependencyInjection.Interceptors.Abstractions",
         "System.CodeDom.Compiler",
@@ -22,47 +25,47 @@ public partial class DependencyInjectionGenerator
 
     internal class Emitter
     {
-        public static void Emit(GeneratorExecutionContext context, IReadOnlyList<DbContextClass> dbContextClasses)
+        public static void Emit(GeneratorExecutionContext context, Metadata metadata)
         {
             var generatorVersion = typeof(Emitter).Assembly.GetName().Version;
-            var file = @"Templates/DependencyInjectionGenerator.sbn-cs";
+            var file = @"Templates/InterceptorGenerator.sbn-cs";
             var template = Template.Parse(EmbeddedResource.GetContent(file), file);
-            foreach (var dbContextClass in dbContextClasses)
+            var intecepters = new HashSet<Dependency>();
+            var classes = new List<string>();
+            foreach (var intecepter in metadata.Intecepters)
             {
-                var methods = new List<Method>();
-                var currentNamespaces = new HashSet<string>(s_namespaces)
+                var proxy = template.Render(new
                 {
-                    dbContextClass.Namespace,
-                };
-                foreach (var method in dbContextClass.Methods)
-                {
-                    if (method.IsStatic || method.MethodKind == MethodKind.Constructor)
+                    intecepter.Name,
+                    Interfaces = string.Join(", ", intecepter.Interfaces),
+                    Methods = intecepter.Methods.Select(selector => new
                     {
-                        continue;
-                    }
-                    currentNamespaces.Add(method.ReturnType.ContainingNamespace.ToDisplayString());
-                    //foreach (var item in method.Parameters)
-                    //{
-                    //    currentNamespaces.Add(item.OriginalDefinition.ToDisplayString());
-                    //}
-                    var arguments = method.Parameters.Select(selector => selector.Name);
-                    var parameters = method.Parameters.Select(selector => $"{selector.OriginalDefinition.ToDisplayString()} {selector.Name}");
-                    methods.Add(new Method(method.Name, method.ReturnType.ToDisplayString(), string.Join(", ", arguments), string.Join(", ", parameters)));
-                }
-
-                var orderdNamespaces = currentNamespaces.OrderBy(keySelector => keySelector).ToArray();
-                var output = template.Render(new
-                {
-                    GeneratorVersion = generatorVersion,
-                    Namespaces = orderdNamespaces,
-                    Interfaces = dbContextClass.Interfaces,
-                    ClassName = dbContextClass.Name,
-                    Methods = methods,
+                        selector.Name,
+                        selector.ReturnType,
+                        Arguments = string.Join(", ", selector.Arguments.Select(selector => $"{selector.Value}")),
+                        Parameters = string.Join(", ", selector.Arguments.Select(selector => $"{selector.Key} {selector.Value}"))
+                    })
                 }, member => member.Name);
-                context.AddSource($"{dbContextClass.Name}Proxy.g.cs", SourceText.From(output, Encoding.UTF8));
+                classes.Add(proxy);
+                var dependency = new Dependency($"{intecepter.Name}Proxy");
+                foreach (var item in intecepter.Interfaces)
+                {
+                    dependency.Interfaces.Add(item);
+                }
+                intecepters.Add(dependency);
             }
+            var dependencyFile = @"Templates/DependencyInjectionGenerator.sbn-cs";
+            var dependencyTemplate = Template.Parse(EmbeddedResource.GetContent(dependencyFile), dependencyFile);
+            var output = dependencyTemplate.Render(new
+            {
+                Namespaces = s_namespaces.Union(metadata.Namespaces).OrderBy(keySelector => keySelector).ToArray(),
+                Classes = classes,
+                metadata.ScopedDepedency,
+                metadata.SingletonDepedency,
+                metadata.TransientDepedency,
+                IntecepterDepedency = intecepters
+            }, member => member.Name);
+            context.AddSource($"DependencyInjectionIServiceCollectionExtensions.g.cs", SourceText.From(output, Encoding.UTF8));
         }
-
-        record class Method(string Name, string ReturnType, string Arguments, string Parameters);
     }
 }
