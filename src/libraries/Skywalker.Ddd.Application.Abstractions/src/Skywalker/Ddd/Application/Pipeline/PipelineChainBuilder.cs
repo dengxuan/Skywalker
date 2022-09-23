@@ -4,7 +4,6 @@
 using System.Linq.Expressions;
 using System.Reflection;
 using Microsoft.Extensions.DependencyInjection;
-using Skywalker.Ddd.Application.Dtos.Abstractions;
 using Skywalker.Ddd.Application.Pipeline.Abstractions;
 using Skywalker.Extensions.DependencyInjection.Abstractions;
 
@@ -135,7 +134,7 @@ public sealed class PipelineChainBuilder : IPipelineChainBuilder
     /// <returns>A composite pipeline representing the pipeline chain.</returns>
     public InterceptDelegate Build()
     {
-        InterceptDelegate current = async context => await context.Target(context);
+        InterceptDelegate current = async context => await context.Intercept(context);
         for (var c = _pipelines.Count - 1; c >= 0; c--)
         {
             current = _pipelines[c](current);

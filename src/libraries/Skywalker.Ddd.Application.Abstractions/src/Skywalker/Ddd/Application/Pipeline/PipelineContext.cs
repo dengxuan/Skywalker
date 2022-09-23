@@ -1,19 +1,11 @@
 ﻿// Licensed to the Gordon under one or more agreements.
 // Gordon licenses this file to you under the MIT license.
 
-using Skywalker.Ddd.Application.Abstractions;
-
 namespace Skywalker.Ddd.Application.Pipeline;
 
 public sealed class PipelineContext
 {
-    public IApplicationHandler Handler { get; }
-
-    /// <summary>
-    /// Gets the object on which the invocation is performed.
-    /// </summary>
-    /// <remarks>For virtual method based interception, the <see cref="Handler"/> and <see cref="Target"/> are the same.</remarks>
-    public InterceptDelegate Target { get; }
+    public InterceptDelegate Intercept { get; }
 
     /// <summary>
     /// Gets the arguments that target method has been invoked with.
@@ -45,12 +37,10 @@ public sealed class PipelineContext
     /// <exception cref="ArgumentNullException">The specified<paramref name="handler"/> is null.</exception>   
     /// <exception cref="ArgumentNullException">The specified<paramref name="target"/> is null.</exception>   
     /// <exception cref="ArgumentNullException">The specified<paramref name="arguments"/> is null.</exception>
-    public PipelineContext(IApplicationHandler handler, InterceptDelegate target, params object[] arguments)
+    internal PipelineContext(InterceptDelegate intercept, params object[] arguments)
     {
-        Handler = handler;
-        Target = Check.NotNull(target, nameof(target));
-        Arguments = Check.NotNull(arguments, nameof(arguments));
-        ReturnValue = default!;
+        Intercept = intercept;
+        Arguments = arguments;
         Properties = new Dictionary<string, object>();
     }
 }

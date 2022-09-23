@@ -1,0 +1,12 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFrameworks>netstandard2.0</TargetFrameworks>
+    <RootNamespace></RootNamespace>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <AnalyzerReference Include="..\gen\Skywalker.Extensions.DependencyInjection.Generators.Roslyn3.11.csproj" Condition="'$(DotNetBuildFromSource)' != 'true'" />
+    <AnalyzerReference Include="..\gen\Skywalker.Extensions.DependencyInjection.Generators.Roslyn4.0.csproj" />
+  </ItemGroup>
+</Project>

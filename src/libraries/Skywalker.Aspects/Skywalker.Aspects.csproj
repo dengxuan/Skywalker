@@ -1,8 +1,0 @@
-<Project Sdk="Microsoft.NET.Sdk">
-
-  <PropertyGroup>
-    <RootNamespace></RootNamespace>
-    <Nullable>disable</Nullable>
-  </PropertyGroup>
-
-</Project>

@@ -17,7 +17,7 @@ public interface IApplicationHandler : ITransientDependency
 /// 
 /// </summary>
 /// <typeparam name="TRequest"></typeparam>
-public interface IApplicationHandler< TRequest> : IApplicationHandler where TRequest : IRequestDto
+public interface IApplicationHandler<TRequest> : IApplicationHandler where TRequest : IRequestDto
 {
     /// <summary>
     /// 

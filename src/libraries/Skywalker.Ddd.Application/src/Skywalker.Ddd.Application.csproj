@@ -1,4 +1,4 @@
-<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
     <RootNamespace></RootNamespace>
@@ -7,7 +7,6 @@
   <ItemGroup>
     <ProjectReference Include="$(LibrariesProjectRoot)Skywalker.Ddd.Application.Abstractions\src\Skywalker.Ddd.Application.Abstractions.csproj" />
     <ProjectReference Include="$(LibrariesProjectRoot)Skywalker.Caching.Abstractions\src\Skywalker.Caching.Abstractions.csproj" />
-    <ProjectReference Include="$(LibrariesProjectRoot)Skywalker.Ddd.UnitOfWork.Abstractions\src\Skywalker.Ddd.UnitOfWork.Abstractions.csproj" />
   </ItemGroup>
 
 </Project>

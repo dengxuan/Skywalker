@@ -1,0 +1,30 @@
+
+[GeneratedCode("Skywalker.Extensions.InterceptorGenerator.Generators", "{{ GeneratorVersion }}")]
+class {{Name}}Proxy : {{Interfaces}}
+{
+    private readonly {{Name}} _target;
+    private readonly IServiceProvider _services;
+    private readonly InterceptorDelegate _interceptor;
+
+    public {{Name}}Proxy(IServiceProvider services, IObjectAccessor<InterceptorDelegate> interceptorAccessor)
+    {
+        _target = ActivatorUtilities.GetServiceOrCreateInstance<{{Name}}>(services);
+        _services = services;
+        _interceptor = interceptorAccessor.Value;
+    }
+    
+    {{~ for method in Methods ~}}
+    public {{method.ReturnType}} {{method.Name}}({{method.Parameters}})
+    {
+        InvocationContext invocationContext = new DefaultInvocationContext(_services, {{method.Arguments}});
+        _interceptor(Warpper)(invocationContext);
+        return ({{method.ReturnType}})invocationContext.ReturnValue;
+        
+        Task Warpper(InvocationContext context)
+        {
+            context.ReturnValue = _target.{{method.Name}}({{method.Arguments}});
+            return Task.CompletedTask;
+        }
+    }
+    {{~ end ~}}
+}

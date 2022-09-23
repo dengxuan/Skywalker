@@ -1,0 +1,12 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <RootNamespace></RootNamespace>
+    <TargetFrameworks>net6.0</TargetFrameworks>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="$(LibrariesProjectRoot)Skywalker.Ddd.Application.Abstractions\src\Skywalker.Ddd.Application.Abstractions.csproj" />
+    <ProjectReference Include="..\..\tests\Skywalker.Ddd.ApplicationService.Example.Abstractions\Skywalker.Ddd.ApplicationService.Example.Abstractions.csproj" />
+  </ItemGroup>
+</Project>

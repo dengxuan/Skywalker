@@ -1,0 +1,33 @@
+<Project>
+  <PropertyGroup>
+    <TargetFrameworks>netstandard2.0</TargetFrameworks>
+    <AssemblyName>$(MSBuildThisFileName)</AssemblyName>
+    <RootNamespace>$(MSBuildThisFileName)</RootNamespace>
+    <Nullable>enable</Nullable>
+    <EnableDefaultItems>true</EnableDefaultItems>
+    <EnableDefaultEmbeddedResourceItems>false</EnableDefaultEmbeddedResourceItems>
+    <UsingToolXliff>true</UsingToolXliff>
+    <CLSCompliant>false</CLSCompliant>
+    <IsPackable>false</IsPackable>
+    <AnalyzerLanguage>cs</AnalyzerLanguage>
+    <PackageScribanIncludeSource>true</PackageScribanIncludeSource>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.CSharp" Version="4.7.0" PrivateAssets="all"/>
+    <PackageReference Include="Microsoft.CodeAnalysis.Analyzers" Version="3.3.3">
+      <PrivateAssets>all</PrivateAssets>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+    </PackageReference>
+    <PackageReference Include="Microsoft.CodeAnalysis.CSharp.Workspaces" Version="$(RoslynApiVersion)" PrivateAssets="all" />
+    <PackageReference Include="Scriban" Version="5.5.0" PrivateAssets="all">
+      <IncludeAssets> build;</IncludeAssets>
+    </PackageReference>
+  </ItemGroup>
+
+  <ItemGroup>
+    <EmbeddedResource Include="Templates\InterceptorGenerator.sbn-cs" />
+    <EmbeddedResource Include="Templates\DependencyInjectionGenerator.sbn-cs" />
+  </ItemGroup>
+
+</Project>
