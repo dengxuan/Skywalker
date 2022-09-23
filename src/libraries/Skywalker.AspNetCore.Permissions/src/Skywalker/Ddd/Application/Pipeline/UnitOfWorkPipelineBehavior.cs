@@ -1,4 +1,5 @@
-﻿using Microsoft.Extensions.Logging;
+﻿using System.Reflection;
+using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 using Skywalker.Ddd.Uow;
 using Skywalker.Ddd.Uow.Abstractions;
@@ -23,13 +24,15 @@ public class UnitOfWorkPipelineBehavior
 
     public async ValueTask InvokeAsync(PipelineContext context)
     {
-        if (!UnitOfWorkHelper.IsUnitOfWorkMethod(context.Handler.GetType(), out var unitOfWorkAttribute))
+        var handlerType = context.Properties["HandlerType"] as Type;
+        var method = context.Properties["Method"] as MethodInfo;
+        if (!UnitOfWorkHelper.IsUnitOfWorkMethod(method!, out var unitOfWorkAttribute))
         {
             await _next(context);
             return;
         }
         _logger.LogInformation("Begin Invoke UnitOfWorkPipelineBehavior.InvokeAsync");
-        using var uow = _unitOfWorkManager.Begin(CreateOptions(context.Handler.GetType().Name, unitOfWorkAttribute));
+        using var uow = _unitOfWorkManager.Begin(CreateOptions(handlerType!.Name, unitOfWorkAttribute));
         _logger.LogDebug("Begin Unit of work:[{uow.Id}]", uow.Id);
         await _next(context);
         await uow.CompleteAsync();

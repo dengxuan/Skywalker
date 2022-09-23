@@ -25,7 +25,7 @@ public class AuthorizationPipelineBehavior
 
     protected virtual bool AllowAnonymous(PipelineContext context)
     {
-        return context.Handler.GetType().GetCustomAttributes(true).OfType<IAllowAnonymous>().Any();
+        return (context.Properties["handlerType"] as Type)?.GetCustomAttributes(true).OfType<IAllowAnonymous>().Any() == true;
     }
 
     /// <summary>

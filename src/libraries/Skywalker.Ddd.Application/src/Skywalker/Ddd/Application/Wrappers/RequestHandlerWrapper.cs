@@ -39,7 +39,8 @@ public class RequestHandlerWrapper<TRequest> : RequestHandlerWrapper
     public override async ValueTask Handle(IRequestDto request, CancellationToken cancellationToken)
     {
         var handler = GetHandler<IApplicationHandler<TRequest>>();
-        var method = s_methods.GetOrAdd((handler.GetType(), typeof(TRequest)), key =>
+        var handlerType = handler.GetType();
+        var method = s_methods.GetOrAdd((handlerType, typeof(TRequest)), key =>
         {
             var search = from it in handler.GetType().GetMethods()
                          let parameters = it.GetParameters()
@@ -49,11 +50,13 @@ public class RequestHandlerWrapper<TRequest> : RequestHandlerWrapper
             var handleAsync = search.FirstOrDefault();
             return handleAsync;
         });
-        var context = new PipelineContext(handler, async (PipelineContext context) =>
+        var context = new PipelineContext(async (PipelineContext context) =>
         {
             await handler.HandleAsync((TRequest)request, cancellationToken);
         }, request, cancellationToken);
         context.Properties["Method"] = method;
+        context.Properties["Handler"] = handler;
+        context.Properties["HandlerType"] = handlerType;
         await _pipeline(context);
 
     }
@@ -97,7 +100,8 @@ public class ResponseHandlerWrapper<TRequest, TResponse> : ResponseHandlerWrappe
     public override async ValueTask<TResponse> Handle(IRequestDto<TResponse> request, CancellationToken cancellationToken)
     {
         var handler = GetHandler<IApplicationHandler<TRequest, TResponse>>();
-        var method = s_methods.GetOrAdd((handler.GetType(), typeof(TRequest)), key =>
+        var handlerType = handler.GetType();
+        var method = s_methods.GetOrAdd((handlerType, typeof(TRequest)), key =>
         {
             var search = from it in handler.GetType().GetMethods()
                          let parameters = it.GetParameters()
@@ -107,11 +111,13 @@ public class ResponseHandlerWrapper<TRequest, TResponse> : ResponseHandlerWrappe
             var handleAsync = search.FirstOrDefault();
             return handleAsync;
         });
-        PipelineContext context = new PipelineContext(handler, async (PipelineContext context) =>
+        PipelineContext context = new PipelineContext(async (PipelineContext context) =>
         {
             context.ReturnValue = await handler.HandleAsync((TRequest)request, cancellationToken);
         }, request, cancellationToken);
         context.Properties["Method"] = method;
+        context.Properties["Handler"] = handler;
+        context.Properties["HandlerType"] = handlerType;
         await _pipeline(context);
         return (TResponse)context.ReturnValue;
     }
