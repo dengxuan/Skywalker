@@ -5,18 +5,41 @@ using Skywalker.Ddd.Application.Dtos.Abstractions;
 using Skywalker.Extensions.DependencyInjection;
 namespace Skywalker.Ddd.Application.Abstractions;
 
+/// <summary>
+/// 
+/// </summary>
 public interface IApplicationHandler : ITransientDependency
 {
 
 }
 
-public interface IApplicationHandler<in TRequest> : IApplicationHandler where TRequest : IRequestDto
+/// <summary>
+/// 
+/// </summary>
+/// <typeparam name="TRequest"></typeparam>
+public interface IApplicationHandler< TRequest> : IApplicationHandler where TRequest : IRequestDto
 {
+    /// <summary>
+    /// 
+    /// </summary>
+    /// <param name="request"></param>
+    /// <param name="cancellationToken"></param>
+    /// <returns></returns>
     ValueTask HandleAsync(TRequest request, CancellationToken cancellationToken);
 }
 
-public interface IApplicationHandler<in TRequest, TResponse> : IApplicationHandler where TRequest : IRequestDto where TResponse : IResponseDto
+/// <summary>
+/// 
+/// </summary>
+/// <typeparam name="TRequest"></typeparam>
+/// <typeparam name="TResponse"></typeparam>
+public interface IApplicationHandler<TRequest, TResponse> : IApplicationHandler where TRequest : IRequestDto<TResponse>
 {
-    ValueTask<TResponse?> HandleAsync(TRequest request, CancellationToken cancellationToken = default);
+    /// <summary>
+    /// 
+    /// </summary>
+    /// <param name="request"></param>
+    /// <param name="cancellationToken"></param>
+    /// <returns></returns>
+    ValueTask<TResponse> HandleAsync(TRequest request, CancellationToken cancellationToken = default);
 }
-

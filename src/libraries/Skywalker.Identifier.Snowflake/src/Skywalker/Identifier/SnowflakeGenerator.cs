@@ -1,10 +1,14 @@
-using Skywalker.Identifier.Abstractions;
-using Microsoft.Extensions.Options;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Options;
+using Skywalker.Extensions.DependencyInjection;
+using Skywalker.Identifier.Abstractions;
 
 namespace Skywalker.Identifier;
 
-public class SnowflakeGenerator : IIdentifierGenerator<long>
+/// <summary>
+/// —©ª®À„∑®
+/// </summary>
+public class SnowflakeGenerator : IIdentifierGenerator<long>, ISingletonDependency
 {
 
     private static readonly object s_locker = new();
@@ -22,7 +26,7 @@ public class SnowflakeGenerator : IIdentifierGenerator<long>
 
     private readonly int _maxIndex;
 
-    private long? _workId;
+    private ushort? _workId;
 
     private readonly IServiceProvider _serviceProvider;
 
@@ -38,7 +42,7 @@ public class SnowflakeGenerator : IIdentifierGenerator<long>
 
     private async Task Initialize()
     {
-        var distributed = _serviceProvider.GetRequiredService<IdistributedSupport>();
+        var distributed = _serviceProvider.GetRequiredService<IDistributedSupport>();
         if (distributed != null)
         {
             _workId = await distributed.GetNextMechineId();
@@ -80,7 +84,7 @@ public class SnowflakeGenerator : IIdentifierGenerator<long>
         return current;
     }
 
-    public long Create()
+    public long Generate()
     {
         if (_workId > _maxWorkId)
         {
@@ -106,9 +110,9 @@ public class SnowflakeGenerator : IIdentifierGenerator<long>
             else if (currentTimestamp < _latestTimestamp)
             {
                 Initialize().Wait();
-                return Create();
+                return Generate();
             }
-            return currentTimestamp | _workId!.Value << _indexLength | _latestIndex++;
+            return currentTimestamp | (long)_workId!.Value << _indexLength | _latestIndex++;
         }
     }
 }

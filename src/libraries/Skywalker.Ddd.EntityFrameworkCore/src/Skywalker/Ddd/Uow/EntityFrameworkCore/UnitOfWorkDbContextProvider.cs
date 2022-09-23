@@ -1,5 +1,4 @@
-﻿using System;
-using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Storage;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
@@ -11,12 +10,22 @@ using Skywalker.ExceptionHandler;
 
 namespace Skywalker.Ddd.Uow.EntityFrameworkCore;
 
+/// <summary>
+/// 
+/// </summary>
+/// <typeparam name="TDbContext"></typeparam>
 public class UnitOfWorkDbContextProvider<TDbContext> : IDbContextProvider<TDbContext> where TDbContext : DbContext
 {
     private readonly IUnitOfWorkManager _unitOfWorkManager;
     private readonly IConnectionStringResolver _connectionStringResolver;
     private readonly ILogger<UnitOfWorkDbContextProvider<TDbContext>> _logger;
 
+    /// <summary>
+    /// 
+    /// </summary>
+    /// <param name="unitOfWorkManager"></param>
+    /// <param name="connectionStringResolver"></param>
+    /// <param name="logger"></param>
     public UnitOfWorkDbContextProvider(IUnitOfWorkManager unitOfWorkManager, IConnectionStringResolver connectionStringResolver, ILogger<UnitOfWorkDbContextProvider<TDbContext>> logger)
     {
         _unitOfWorkManager = unitOfWorkManager;
@@ -24,6 +33,11 @@ public class UnitOfWorkDbContextProvider<TDbContext> : IDbContextProvider<TDbCon
         _logger = logger;
     }
 
+    /// <summary>
+    /// 
+    /// </summary>
+    /// <returns></returns>
+    /// <exception cref="SkywalkerException"></exception>
     public TDbContext GetDbContext()
     {
         var unitOfWork = _unitOfWorkManager.Current;
@@ -78,6 +92,11 @@ public class UnitOfWorkDbContextProvider<TDbContext> : IDbContextProvider<TDbCon
 //#endif
     }
 
+    /// <summary>
+    /// 
+    /// </summary>
+    /// <param name="unitOfWork"></param>
+    /// <returns></returns>
     public TDbContext CreateDbContextWithTransaction(IUnitOfWork unitOfWork)
     {
         var transactionApiKey = $"EntityFrameworkCore_{SkywalkerDbContextCreationContext.Current.ConnectionString}";

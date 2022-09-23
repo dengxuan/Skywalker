@@ -205,7 +205,14 @@ public static class EntityHelper
         return Expression.Lambda<Func<TEntity, bool>>(lambdaBody, lambdaParam);
     }
 
-    public static void TrySetEntityId<TKey>(IEntity<TKey> entity, Func<TKey> idFactory, bool checkForDisableIdGenerationAttribute = false) where TKey : notnull
+    /// <summary>
+    /// 
+    /// </summary>
+    /// <typeparam name="TKey"></typeparam>
+    /// <param name="entity"></param>
+    /// <param name="idFactory"></param>
+    /// <param name="checkForDisableIdGenerationAttribute"></param>
+    public static void TrySetEntityId<TKey>(IEntity<TKey> entity, Func<TKey?> idFactory, bool checkForDisableIdGenerationAttribute = false) where TKey : notnull
     {
         var property = s_cachedIdProperties!.GetOrAdd($"{entity.GetType().FullName}-{checkForDisableIdGenerationAttribute}", () =>
         {

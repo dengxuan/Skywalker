@@ -5,4 +5,9 @@ using Skywalker.Ddd.Application.Dtos.Abstractions;
 
 namespace Skywalker.Ddd.Application.Dtos;
 
+/// <summary>
+/// 
+/// </summary>
+/// <typeparam name="T"></typeparam>
+/// <param name="Items"></param>
 public record class ListResponseDto<T>(IReadOnlyList<T> Items) :IResponseDto, IListResponse<T>;

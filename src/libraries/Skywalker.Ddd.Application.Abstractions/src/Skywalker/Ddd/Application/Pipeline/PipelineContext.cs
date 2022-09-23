@@ -7,7 +7,7 @@ namespace Skywalker.Ddd.Application.Pipeline;
 
 public sealed class PipelineContext
 {
-    public IApplicationHandler Handler { get; set; }
+    public IApplicationHandler Handler { get; }
 
     /// <summary>
     /// Gets the object on which the invocation is performed.
@@ -26,7 +26,7 @@ public sealed class PipelineContext
     /// <summary>
     /// Gets or sets the return value of the method.
     /// </summary>
-    public object? ReturnValue { get; set; }
+    public object ReturnValue { get; set; }
 
     /// <summary>
     /// Gets the extended properties.
@@ -50,7 +50,7 @@ public sealed class PipelineContext
         Handler = handler;
         Target = Check.NotNull(target, nameof(target));
         Arguments = Check.NotNull(arguments, nameof(arguments));
-        ReturnValue = default;
+        ReturnValue = default!;
         Properties = new Dictionary<string, object>();
     }
 }

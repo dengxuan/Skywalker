@@ -33,7 +33,7 @@ public partial class {{Name}}Repository<TEntity, TKey> : Repository<{{DbContext}
     where TEntity : {{Name}}, IEntity<TKey>
     where TKey : notnull
 {
-    public {{Name}}Repository(IDbContextProvider<{{DbContext}}> dbContextProvider, IClock clock, IIdentifierGenerator<TKey> identifierGenerator) : base(dbContextProvider, clock, identifierGenerator)
+    public {{Name}}Repository(IDbContextProvider<{{DbContext}}> dbContextProvider, IClock clock, IIdentifier identifier) : base(dbContextProvider, clock, identifier)
     {
     }
 }
@@ -41,7 +41,7 @@ public partial class {{Name}}Repository<TEntity, TKey> : Repository<{{DbContext}
 [GeneratedCode("Skywalker.Ddd.EntityFrameworkCore.Generators", "{{ GeneratorVersion }}")]
 public partial class {{Name}}Repository : {{Name}}Repository<{{Name}}, {{PrimaryKey}}>
 {
-    public {{Name}}Repository(IDbContextProvider<{{DbContext}}> dbContextProvider, IClock clock, IIdentifierGenerator<{{PrimaryKey}}> identifierGenerator) : base(dbContextProvider, clock, identifierGenerator)
+    public {{Name}}Repository(IDbContextProvider<{{DbContext}}> dbContextProvider, IClock clock, IIdentifier identifier) : base(dbContextProvider, clock, identifier)
     {
     }
 }

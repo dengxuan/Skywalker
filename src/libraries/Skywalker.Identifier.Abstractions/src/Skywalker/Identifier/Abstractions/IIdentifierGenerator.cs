@@ -1,11 +1,17 @@
-using Skywalker.Extensions.DependencyInjection;
+﻿// Licensed to the Gordon under one or more agreements.
+// Gordon licenses this file to you under the MIT license.
 
 namespace Skywalker.Identifier.Abstractions;
 
 /// <summary>
-/// Used to generate Identifier.
+/// 
 /// </summary>
-public interface IIdentifierGenerator<TIdentifier> : ISingletonDependency where TIdentifier : notnull
+/// <typeparam name="TIdentifier"></typeparam>
+public interface IIdentifierGenerator<out TIdentifier>
 {
-    TIdentifier Create();
+    /// <summary>
+    /// 
+    /// </summary>
+    /// <returns></returns>
+    TIdentifier? Generate();
 }

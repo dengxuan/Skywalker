@@ -10,13 +10,14 @@ using Skywalker.Extensions.Collections.Generic;
 namespace Skywalker.Ddd.Domain.Services;
 
 /// <summary>
-/// <inheritdoc/>
+/// 
 /// </summary>
+/// <typeparam name="TEntity"></typeparam>
 public class DomainService<TEntity> : IDomainService<TEntity> where TEntity : class, IEntity
 {
     /// <summary>
     /// 仓储实例，<see cref="IRepository{TEntity, TKey}"/>
-    /// 提供对<see cref="TEntity"/>的CRUD操作
+    /// 提供对<typeparamref name="TEntity"/>的CRUD操作
     /// </summary>
     protected virtual IRepository<TEntity> Repository { get; }
 
@@ -25,6 +26,11 @@ public class DomainService<TEntity> : IDomainService<TEntity> where TEntity : cl
     /// </summary>
     protected virtual IAsyncQueryableExecuter AsyncExecuter { get; }
 
+    /// <summary>
+    /// 
+    /// </summary>
+    /// <param name="repository"></param>
+    /// <param name="asyncExecuter"></param>
     public DomainService(IRepository<TEntity> repository, IAsyncQueryableExecuter asyncExecuter)
     {
         Repository = repository;
@@ -111,8 +117,10 @@ public class DomainService<TEntity> : IDomainService<TEntity> where TEntity : cl
 /// </summary>
 public class DomainService<TEntity, TKey> : DomainService<TEntity>, IDomainService<TEntity, TKey> where TEntity : class, IEntity<TKey> where TKey : notnull
 {
+    /// <inheritdoc/>
     protected new virtual IRepository<TEntity, TKey> Repository { get; }
 
+    /// <inheritdoc/>
     public DomainService(IRepository<TEntity, TKey> repository, IAsyncQueryableExecuter asyncExecuter) : base(repository, asyncExecuter)
     {
         Repository = repository;

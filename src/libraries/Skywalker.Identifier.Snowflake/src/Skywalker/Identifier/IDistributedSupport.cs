@@ -3,13 +3,16 @@ using Skywalker.Extensions.DependencyInjection;
 
 namespace Skywalker.Identifier;
 
-public interface IdistributedSupport: ISingletonDependency
+/// <summary>
+/// 分布式支持
+/// </summary>
+public interface IDistributedSupport : ISingletonDependency
 {
     /// <summary>
     /// 获取下一个可用的机器Id
     /// </summary>
     /// <returns></returns>
-    Task<int> GetNextMechineId();
+    Task<ushort> GetNextMechineId();
 
     /// <summary>
     /// 刷新机器Id的存活状态
