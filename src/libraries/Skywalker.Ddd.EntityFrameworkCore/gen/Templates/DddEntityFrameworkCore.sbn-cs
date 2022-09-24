@@ -15,7 +15,7 @@ namespace {{Namespace}};
 public partial class {{Name}}Repository<TEntity> : Repository<{{DbContext}}, TEntity>, IRepository<TEntity>
     where TEntity : {{Name}}, IEntity
 {
-    public {{Name}}Repository(IDbContextProvider<{{DbContext}}> dbContextProvider, IClock clock) : base(dbContextProvider, clock)
+    public {{Name}}Repository(IClock clock, IDbContextProvider<{{DbContext}}> dbContextProvider) : base(clock, dbContextProvider)
     {
     }
 }
@@ -23,7 +23,7 @@ public partial class {{Name}}Repository<TEntity> : Repository<{{DbContext}}, TEn
 [GeneratedCode("Skywalker.Ddd.EntityFrameworkCore.Generators", "{{ GeneratorVersion }}")]
 public partial class {{Name}}Repository : {{Name}}Repository<{{Name}}>
 {
-    public {{Name}}Repository(IDbContextProvider<{{DbContext}}> dbContextProvider, IClock clock) : base(dbContextProvider, clock)
+    public {{Name}}Repository(IClock clock, IDbContextProvider<{{DbContext}}> dbContextProvider, ) : base(clock, dbContextProvider)
     {
     }
 }
@@ -33,7 +33,7 @@ public partial class {{Name}}Repository<TEntity, TKey> : Repository<{{DbContext}
     where TEntity : {{Name}}, IEntity<TKey>
     where TKey : notnull
 {
-    public {{Name}}Repository(IDbContextProvider<{{DbContext}}> dbContextProvider, IClock clock, IIdentifierGenerator<TKey> identifierGenerator) : base(dbContextProvider, clock, identifierGenerator)
+    public {{Name}}Repository(IClock clock, IIdentifierGenerator<TKey> identifierGenerator, IDbContextProvider<{{DbContext}}> dbContextProvider) : base(clock, identifierGenerator, dbContextProvider)
     {
     }
 }
@@ -41,7 +41,7 @@ public partial class {{Name}}Repository<TEntity, TKey> : Repository<{{DbContext}
 [GeneratedCode("Skywalker.Ddd.EntityFrameworkCore.Generators", "{{ GeneratorVersion }}")]
 public partial class {{Name}}Repository : {{Name}}Repository<{{Name}}, {{PrimaryKey}}>
 {
-    public {{Name}}Repository(IDbContextProvider<{{DbContext}}> dbContextProvider, IClock clock, IIdentifierGenerator<{{PrimaryKey}}> identifierGenerator) : base(dbContextProvider, clock, identifierGenerator)
+    public {{Name}}Repository(IClock clock, IIdentifierGenerator<{{PrimaryKey}}> identifierGenerator, IDbContextProvider<{{DbContext}}> dbContextProvider) : base(clock, identifierGenerator, dbContextProvider)
     {
     }
 }

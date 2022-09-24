@@ -31,11 +31,11 @@ public abstract class Repository<TDbContext, TEntity> : BasicRepository<TEntity>
 
     protected IEntityChangeEventHelper EntityChangeEventHelper { get; set; }
 
-    public DbSet<TEntity> DbSet => DbContext.Set<TEntity>();
+    protected DbSet<TEntity> DbSet => DbContext.Set<TEntity>();
 
-    public DbContext DbContext => _dbContextProvider.GetDbContext();
+    protected DbContext DbContext => _dbContextProvider.GetDbContext();
 
-    public Repository(IDbContextProvider<TDbContext> dbContextProvider, IClock clock)
+    public Repository(IClock clock, IDbContextProvider<TDbContext> dbContextProvider)
     {
         _clock = clock;
         _eventBus = NullEventBus.Instance;
@@ -223,26 +223,26 @@ public abstract class Repository<TDbContext, TEntity> : BasicRepository<TEntity>
 
     public override Task<PagedList<TEntity>> GetPagedListAsync(int skip, int limit, string sorting, CancellationToken cancellationToken = default)
     {
-        return DbSet.OrderBy(sorting).ToPagedListAsync(skip, limit);
+        return DbSet.OrderBy(sorting).ToPagedListAsync(skip, limit, cancellationToken: cancellationToken);
     }
 
     public override async Task<PagedList<TEntity>> GetPagedListAsync(Expression<Func<TEntity, bool>> filter, int skip, int limit, string sorting, CancellationToken cancellationToken = default)
     {
         return await DbSet.Where(filter)
                           .OrderBy(sorting)
-                          .ToPagedListAsync(skip, limit);
+                          .ToPagedListAsync(skip, limit, cancellationToken: cancellationToken);
     }
 
     public override Task<PagedList<TEntity>> GetPagedListAsync(int skip, int limit, CancellationToken cancellationToken = default)
     {
-        return DbSet.OrderBy(ordering => ((IHasCreationTime)ordering).CreationTime).ToPagedListAsync(skip, limit);
+        return DbSet.OrderBy(ordering => ((IHasCreationTime)ordering).CreationTime).ToPagedListAsync(skip, limit, cancellationToken: cancellationToken);
     }
 
     public override Task<PagedList<TEntity>> GetPagedListAsync(Expression<Func<TEntity, bool>> expression, int skip, int limit, CancellationToken cancellationToken = default)
     {
         return DbSet.Where(expression)
                     .OrderBy(ordering => ((IHasCreationTime)ordering).CreationTime)
-                    .ToPagedListAsync(skip, limit);
+                    .ToPagedListAsync(skip, limit, cancellationToken: cancellationToken);
     }
 
     public IAsyncEnumerator<TEntity> GetAsyncEnumerator(CancellationToken cancellationToken = default)
@@ -264,7 +264,10 @@ public abstract class Repository<TDbContext, TEntity> : BasicRepository<TEntity>
                        .LoadAsync(GetCancellationToken(cancellationToken));
     }
 
-    public Task<bool> AnyAsync(Expression<Func<TEntity, bool>> filter, CancellationToken cancellationToken = default) => DbSet.AnyAsync(filter, cancellationToken);
+    public Task<bool> AnyAsync(Expression<Func<TEntity, bool>> filter, CancellationToken cancellationToken = default)
+    {
+        return DbSet.AnyAsync(filter, cancellationToken);
+    }
 }
 
 public abstract class Repository<TDbContext, TEntity, TKey> : Repository<TDbContext, TEntity>, IRepository<TEntity, TKey>, ISupportsExplicitLoading<TEntity, TKey>
@@ -290,8 +293,8 @@ public abstract class Repository<TDbContext, TEntity, TKey> : Repository<TDbCont
         EntityHelper.TrySetEntityId(entity, () => _identifierGenerator.Create(), true);
     }
 
-    public Repository(IDbContextProvider<TDbContext> dbContextProvider, IClock clock, IIdentifierGenerator<TKey> identifierGenerator)
-        : base(dbContextProvider, clock)
+    public Repository(IClock clock, IIdentifierGenerator<TKey> identifierGenerator, IDbContextProvider<TDbContext> dbContextProvider)
+        : base(clock, dbContextProvider)
     {
         _identifierGenerator = identifierGenerator;
     }
@@ -322,5 +325,8 @@ public abstract class Repository<TDbContext, TEntity, TKey> : Repository<TDbCont
         return entity;
     }
 
-    public Task<bool> AnyAsync(TKey id, CancellationToken cancellationToken = default) => AnyAsync(filter => filter.Id.Equals(id), cancellationToken);
+    public Task<bool> AnyAsync(TKey id, CancellationToken cancellationToken = default)
+    {
+        return AnyAsync(filter => filter.Id.Equals(id), cancellationToken);
+    }
 }

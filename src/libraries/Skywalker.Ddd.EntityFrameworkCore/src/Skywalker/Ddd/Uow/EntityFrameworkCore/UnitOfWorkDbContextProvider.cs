@@ -26,7 +26,7 @@ public class UnitOfWorkDbContextProvider<TDbContext> : IDbContextProvider<TDbCon
 
     public TDbContext GetDbContext()
     {
-        var unitOfWork = _unitOfWorkManager.Current;
+        var unitOfWork = _unitOfWorkManager.Current?? _unitOfWorkManager.Begin();
         if (unitOfWork == null)
         {
             throw new SkywalkerException("A DbContext can only be created inside a unit of work!");
