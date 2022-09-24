@@ -5,6 +5,7 @@
     <TargetFrameworks>net6.0</TargetFrameworks>
     <ImplicitUsings>enable</ImplicitUsings>
     <Nullable>enable</Nullable>
+    <NoWarn>CS1591</NoWarn>
   </PropertyGroup>
 
   <ItemGroup>
@@ -14,13 +15,13 @@
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>
-    <PackageReference Include="Pomelo.EntityFrameworkCore.MySql" Version="6.0.1" />
+    <!--<PackageReference Include="Pomelo.EntityFrameworkCore.MySql" Version="6.0.2" />-->
   </ItemGroup>
 
   <ItemGroup>
     <!--<ProjectReference Include="..\..\gen\Skywalker.Ddd.EntityFrameworkCore.Generators.Roslyn3.11.csproj" OutputItemType="Analyzer" ReferenceOutputAssembly="true" />-->
     <ProjectReference Include="..\..\..\Skywalker.Ddd.EntityFrameworkCore.MySQL\src\Skywalker.Ddd.EntityFrameworkCore.MySQL.csproj" />
-    <ProjectReference Include="..\..\gen\Skywalker.Ddd.EntityFrameworkCore.Generators.Roslyn4.0.csproj" OutputItemType="Analyzer" ReferenceOutputAssembly="true" />
+    <ProjectReference Include="..\..\gen\Skywalker.Ddd.EntityFrameworkCore.Generators.Roslyn4.0.csproj" OutputItemType="Analyzer" ReferenceOutputAssembly="false" />
     <ProjectReference Include="..\..\src\Skywalker.Ddd.EntityFrameworkCore.csproj" />
   </ItemGroup>
 

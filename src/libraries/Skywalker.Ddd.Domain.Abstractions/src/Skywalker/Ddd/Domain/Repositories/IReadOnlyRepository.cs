@@ -4,6 +4,10 @@ using Skywalker.Extensions.Collections.Generic;
 
 namespace Skywalker.Ddd.Domain.Repositories;
 
+/// <summary>
+/// 
+/// </summary>
+/// <typeparam name="TEntity"></typeparam>
 public interface IReadOnlyRepository<TEntity> : IRepository, IQueryable<TEntity> where TEntity : class, IEntity
 {
 
@@ -54,7 +58,7 @@ public interface IReadOnlyRepository<TEntity> : IRepository, IQueryable<TEntity>
     Task<PagedList<TEntity>> GetPagedListAsync(int skip, int limit, string sorting, CancellationToken cancellationToken = default);
 
     /// <summary>
-    /// Gets a paged list of the entities by the given <paramref name="predicate"/> and sorted by default.
+    /// Gets a paged list of the entities by the given <paramref name="expression"/> and sorted by default.
     /// if entity is <see cref="IHasCreationTime"/> the sorting by <see cref="IHasCreationTime.CreationTime"/>
     /// else sorting by <see cref="IEntity{TKey}.Id"/>
     /// </summary>
@@ -66,7 +70,7 @@ public interface IReadOnlyRepository<TEntity> : IRepository, IQueryable<TEntity>
     Task<PagedList<TEntity>> GetPagedListAsync(Expression<Func<TEntity, bool>> expression, int skip, int limit, CancellationToken cancellationToken = default);
 
     /// <summary>
-    /// Gets a paged list of the entities by the given <paramref name="predicate"/> and sorted by <paramref name="sorting"/>
+    /// Gets a paged list of the entities by the given <paramref name="expression"/> and sorted by <paramref name="sorting"/>
     /// </summary>
     /// <param name="expression">A condition to filter entities</param>
     /// <param name="skip">To skiping count</param>
@@ -77,6 +81,11 @@ public interface IReadOnlyRepository<TEntity> : IRepository, IQueryable<TEntity>
     Task<PagedList<TEntity>> GetPagedListAsync(Expression<Func<TEntity, bool>> expression, int skip, int limit, string sorting, CancellationToken cancellationToken = default);
 }
 
+/// <summary>
+/// 
+/// </summary>
+/// <typeparam name="TEntity"></typeparam>
+/// <typeparam name="TKey"></typeparam>
 public interface IReadOnlyRepository<TEntity, TKey> : IReadOnlyRepository<TEntity> where TEntity : class, IEntity<TKey> where TKey : notnull
 {
 

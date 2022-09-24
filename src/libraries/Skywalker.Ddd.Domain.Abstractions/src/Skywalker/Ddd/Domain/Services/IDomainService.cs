@@ -12,7 +12,7 @@ namespace Skywalker.Ddd.Domain.Services;
 /// 仅标记一个类是一个领域服务
 /// </summary>
 [UnitOfWork]
-public interface IDomainService : IUnitOfWorkEnabled, ITransientDependency { }
+public interface IDomainService : ITransientDependency { }
 
 /// <summary>
 /// 所有域服务都可以实现此接口，以按约定识别它们.
@@ -80,7 +80,7 @@ public interface IDomainService<TEntity> : IDomainService where TEntity : class,
     /// <param name="expression">数据筛选条件</param>
     /// <param name="cancellationToken"></param>
     /// <returns></returns>
-    Task<long> LongCountAsync(Expression<Func<TEntity, bool>> filter, CancellationToken cancellationToken = default);
+    Task<long> LongCountAsync(Expression<Func<TEntity, bool>> expression, CancellationToken cancellationToken = default);
 
     /// <summary>
     /// 查询所有实体，慎重使用。
@@ -97,7 +97,7 @@ public interface IDomainService<TEntity> : IDomainService where TEntity : class,
     /// <param name="expression">查询条件</param>
     /// <param name="cancellationToken">可取消操作的令牌</param>
     /// <returns>当前实体<see cref="TEntity"/>的所有数据集，或者空集合</returns>
-    Task<List<TEntity>> GetListAsync(Expression<Func<TEntity, bool>> filter, CancellationToken cancellationToken = default);
+    Task<List<TEntity>> GetListAsync(Expression<Func<TEntity, bool>> expression, CancellationToken cancellationToken = default);
 
     /// <summary>
     /// 分页查询当前实体<see cref="TEntity"/>的数据集.

@@ -83,7 +83,7 @@ public partial class DependencyInjectionGenerator
 
                             if (namedTypeSymbol.AllInterfaces.Any(predicate => s_symbolComparer.Equals(predicate, _interceptorSymbol)))
                             {
-                                var intecepter = new Intecepter(namedTypeSymbol.Name);
+                                var intecepter = new Intecepter(namedTypeSymbol.Name);  
                                 foreach (var item in namedTypeSymbol.AllInterfaces)
                                 {
                                     if (s_symbolComparer.Equals(item, _interceptorSymbol))

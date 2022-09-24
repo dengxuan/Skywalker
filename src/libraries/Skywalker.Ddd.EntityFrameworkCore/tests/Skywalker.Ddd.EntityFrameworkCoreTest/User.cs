@@ -5,18 +5,20 @@ using Skywalker.Ddd.Domain.Entities;
 
 namespace Skywalker.Ddd.EntityFrameworkCoreTest.Domain.Entities;
 
-public record class User(Guid Id, string Name) : AggregateRoot<Guid>(Id);
+public class User : AggregateRoot<Guid>
+{
+    public string Name { get; set; }
+}
 
-public record class Username(int Id, string Name) : AggregateRoot<int>(Id);
+public class Username : AggregateRoot<int>
+{
+    public string Name { get; set; }
+}
 
 
-public record class Schoole : AggregateRoot
+public class Schoole : AggregateRoot
 {
     public int Id { get; set; }
-
-    public Schoole(AggregateRoot original) : base(original)
-    {
-    }
 
     public override object[] GetKeys() => new[] { "1", "2" };
 }

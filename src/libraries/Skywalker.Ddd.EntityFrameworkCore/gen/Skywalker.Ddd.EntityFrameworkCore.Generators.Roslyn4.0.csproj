@@ -9,7 +9,7 @@
   <Import Project="Skywalker.Ddd.EntityFrameworkCore.Generators.targets" />
 
   <ItemGroup>
-    <Compile Remove="DddEntityFrameworkCoreGenerator.Roslyn3.11.cs" />
+    <Compile Remove="EntityFrameworkCoreGenerator.Roslyn3.11.cs" />
   </ItemGroup>
-
+  
 </Project>

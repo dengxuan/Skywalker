@@ -26,8 +26,9 @@
   </ItemGroup>
 
   <ItemGroup>
-    <None Remove="Templates\DddEntityFrameworkCore.sbn-cs" />
-    <EmbeddedResource Include="Templates\DddEntityFrameworkCore.sbn-cs" />
+    <EmbeddedResource Include="Templates\DependencyInjection.sbn-cs" />
+    <EmbeddedResource Include="Templates\EntityFrameworkCore.sbn-cs" />
+    <EmbeddedResource Include="Templates\InterceptorGenerator.sbn-cs" />
   </ItemGroup>
 
 </Project>

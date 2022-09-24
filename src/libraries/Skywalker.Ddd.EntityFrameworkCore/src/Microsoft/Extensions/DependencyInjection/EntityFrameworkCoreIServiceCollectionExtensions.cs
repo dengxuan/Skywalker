@@ -1,7 +1,10 @@
-﻿using Skywalker.Ddd.EntityFrameworkCore;
+﻿using Skywalker.Ddd.Data;
+using Skywalker.Ddd.EntityFrameworkCore;
 using Skywalker.Ddd.Uow;
 using Skywalker.Ddd.Uow.Abstractions;
 using Skywalker.Ddd.Uow.EntityFrameworkCore;
+using Skywalker.Extensions.DependencyInjection;
+using Skywalker.Extensions.DependencyInjection.Abstractions;
 
 namespace Microsoft.Extensions.DependencyInjection;
 
@@ -14,6 +17,7 @@ public static class EntityFrameworkCoreIServiceCollectionExtensions
         services.AddSingleton(typeof(IDbContextProvider<>), typeof(UnitOfWorkDbContextProvider<>));
         services.AddSingleton<IAmbientUnitOfWork, AmbientUnitOfWork>();
         services.AddSingleton<IUnitOfWorkManager, UnitOfWorkManager>();
+        services.AddSingleton<IConnectionStringResolver, DefaultConnectionStringResolver>();
         services.AddScoped<IUnitOfWork, UnitOfWork>();
         optionsAction(options);
         return services;

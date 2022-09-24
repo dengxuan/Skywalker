@@ -9,4 +9,10 @@ namespace Skywalker.Ddd.EntityFrameworkCoreTest;
 public interface IUserDomainService : IDomainService<User>
 {
     Task<User> GetEnabledAsync();
+
+    Task SetEnabledAsync();
+
+    User GetUser();
+
+    void SetUser();
 }

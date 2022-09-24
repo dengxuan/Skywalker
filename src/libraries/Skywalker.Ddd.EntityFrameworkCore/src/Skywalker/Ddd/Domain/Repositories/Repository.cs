@@ -143,7 +143,7 @@ public abstract class Repository<TDbContext, TEntity> : BasicRepository<TEntity>
     /// 
     /// </summary>
     /// <param name="entity"></param>
-    protected abstract void SetIdentifier(TEntity entity);
+    protected virtual void SetIdentifier(TEntity entity) { }
 
     /// <inheritdoc/>
     public override async Task<TEntity?> FindAsync(Expression<Func<TEntity, bool>> predicate, CancellationToken cancellationToken = default)

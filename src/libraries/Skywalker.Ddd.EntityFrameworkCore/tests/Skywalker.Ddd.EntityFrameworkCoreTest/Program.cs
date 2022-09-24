@@ -10,12 +10,15 @@ using Skywalker.Ddd.EntityFrameworkCoreTest.Domain.Entities;
 
 var host = Host.CreateDefaultBuilder(args).ConfigureServices(services =>
 {
+    services.AddSkywalker();
     services.AddEntityFrameworkCore(options =>
     {
-        options.UseMySql<TestDbContext>();
+        //options.UseDbContext<TestDbContext>();
+        //options.UsePooledDbContextFactory<TestDbContext>(options =>
+        //{
+        //});
     });
-
-    services.TryAddTransient(typeof(IDbContextProvider<>), typeof(DbContextProvider<>));
+    services.AddDependencyServices();
     services.AddPooledDbContextFactory<TestDbContext>(options =>
     {
         options.UseMySql("Server=47.108.173.4;Database=Test;UserId=root;Password=QrBl&X0@NZZJ^ohnw33I;MaximumPoolSize=1024;", ServerVersion.AutoDetect("Server=47.108.173.4;Database=Test;UserId=root;Password=QrBl&X0@NZZJ^ohnw33I;MaximumPoolSize=1024;"));
@@ -28,13 +31,11 @@ var host = Host.CreateDefaultBuilder(args).ConfigureServices(services =>
 .Build();
 var result= Parallel.For(1, 1000, async i =>
 {
-    var _dbContextFactory = host.Services.GetRequiredService<IDbContextFactory<TestDbContext>>();
-    using var context = await _dbContextFactory.CreateDbContextAsync();
+    var _dbContextFactory = host.Services.GetRequiredService<IUserDomainService>();
     for (int j = 1; j <= 1000; j++)
     {
-        var users = context.Users.Add(new User(Guid.NewGuid(), (i*j).ToString()));
+        await _dbContextFactory.InsertAsync(new User());
     }
-    await context.SaveChangesAsync();
 });
 Console.WriteLine(result.IsCompleted);
 await host.RunAsync();

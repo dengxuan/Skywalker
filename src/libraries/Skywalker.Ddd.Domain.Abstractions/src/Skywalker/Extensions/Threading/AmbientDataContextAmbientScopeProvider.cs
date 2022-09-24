@@ -4,21 +4,35 @@ using Microsoft.Extensions.Logging.Abstractions;
 
 namespace Skywalker.Extensions.Threading;
 
+/// <summary>
+/// 
+/// </summary>
+/// <typeparam name="T"></typeparam>
 public class AmbientDataContextAmbientScopeProvider<T> : IAmbientScopeProvider<T>
 {
-    public ILogger<AmbientDataContextAmbientScopeProvider<T>> Logger { get; set; }
 
-    private static readonly ConcurrentDictionary<string, ScopeItem> ScopeDictionary = new();
+    private static readonly ConcurrentDictionary<string, ScopeItem> s_scopeDictionary = new();
+
+    private readonly ILogger<AmbientDataContextAmbientScopeProvider<T>> _logger;
 
     private readonly IAmbientDataContext _dataContext;
 
-    public AmbientDataContextAmbientScopeProvider(IAmbientDataContext dataContext)
+    /// <summary>
+    /// 
+    /// </summary>
+    /// <param name="dataContext"></param>
+    public AmbientDataContextAmbientScopeProvider(IAmbientDataContext dataContext, ILogger<AmbientDataContextAmbientScopeProvider<T>> logger)
     {
         _dataContext = dataContext;
 
-        Logger = NullLogger<AmbientDataContextAmbientScopeProvider<T>>.Instance;
+        _logger = logger;
     }
 
+    /// <summary>
+    /// 
+    /// </summary>
+    /// <param name="contextKey"></param>
+    /// <returns></returns>
     public T? GetValue(string contextKey)
     {
         var item = GetCurrentItem(contextKey);
@@ -30,20 +44,27 @@ public class AmbientDataContextAmbientScopeProvider<T> : IAmbientScopeProvider<T
         return item.Value;
     }
 
+    /// <summary>
+    /// 
+    /// </summary>
+    /// <param name="contextKey"></param>
+    /// <param name="value"></param>
+    /// <returns></returns>
+    /// <exception cref="Exception"></exception>
     public IDisposable BeginScope(string contextKey, T value)
     {
         var item = new ScopeItem(value, GetCurrentItem(contextKey));
 
-        if (!ScopeDictionary.TryAdd(item.Id, item))
+        if (!s_scopeDictionary.TryAdd(item.Id, item))
         {
             throw new Exception("Can not add item! ScopeDictionary.TryAdd returns false!");
         }
-
+        _logger.LogDebug("BeginScope add item: {Id}", item.Id);
         _dataContext.SetData(contextKey, item.Id);
 
         return new DisposeAction(() =>
         {
-            ScopeDictionary.TryRemove(item.Id, out item);
+            s_scopeDictionary.TryRemove(item.Id, out item);
 
             if (item?.Outer == null)
             {
@@ -57,7 +78,7 @@ public class AmbientDataContextAmbientScopeProvider<T> : IAmbientScopeProvider<T
 
     private ScopeItem? GetCurrentItem(string contextKey)
     {
-        return _dataContext.GetData(contextKey) is string objKey ? ScopeDictionary.GetOrDefault(objKey) : null;
+        return _dataContext.GetData(contextKey) is string objKey ? s_scopeDictionary.GetOrDefault(objKey) : null;
     }
 
     private class ScopeItem
