@@ -1,49 +1,54 @@
-﻿using Microsoft.Extensions.DependencyInjection;
+﻿using System.Collections.Concurrent;
+using MediatR.Wrappers;
+using Microsoft.Extensions.DependencyInjection;
 using Skywalker.Ddd.Application.Abstractions;
 using Skywalker.Ddd.Application.Dtos.Abstractions;
-using Skywalker.Ddd.Application.Pipeline;
-using Skywalker.Ddd.Application.Pipeline.Abstractions;
 
 namespace Skywalker.Ddd.Application;
 
 internal class DefaultApplication : IApplication
 {
-    private readonly InterceptDelegate _pipeline;
+    private static readonly ConcurrentDictionary<Type, RequestHandlerWrapper> _requestHandlers = new();
+    private static readonly ConcurrentDictionary<Type, ResponseHandlerWrapper> _responseHandlers = new();
     private readonly IServiceProvider _serviceProvider;
 
-    public DefaultApplication(IServiceProvider serviceProvider, IPipelineChainBuilder pipelineChainBuilder)
+    public DefaultApplication(IServiceProvider serviceProvider)
     {
         _serviceProvider = serviceProvider;
-        _pipeline = pipelineChainBuilder.Build();
     }
 
-    public async ValueTask ExecuteAsync<TRequest>(TRequest request, CancellationToken cancellationToken = default) where TRequest : IRequestDto
+    public ValueTask<TResponse> ExecuteAsync<TResponse>(IRequestDto<TResponse> request, CancellationToken cancellationToken = default)
     {
         if (request == null)
         {
             throw new ArgumentNullException(nameof(request));
         }
-        var handler = _serviceProvider.GetRequiredService<IApplicationHandler<TRequest>>();
-        
-        await _pipeline(new PipelineContext(async (PipelineContext context) =>
-        {
-            await handler!.HandleAsync(request, cancellationToken);
-        }, request, cancellationToken));
+
+        var requestType = request.GetType();
+
+        var handler = (ResponseHandlerWrapper<TResponse>)_responseHandlers.GetOrAdd(requestType,
+            t => (ResponseHandlerWrapper)(ActivatorUtilities.CreateInstance(_serviceProvider, typeof(ResponseHandlerWrapper<,>).MakeGenericType(t, typeof(TResponse)))
+                                             ?? throw new InvalidOperationException($"Could not create wrapper type for {t}")));
+
+        return handler.Handle(request, cancellationToken);
     }
 
-    public async ValueTask<TResponse> ExecuteAsync<TRequest, TResponse>(TRequest request, CancellationToken cancellationToken = default) where TRequest : IRequestDto where TResponse : IResponseDto
+    public ValueTask ExecuteAsync(IRequestDto request, CancellationToken cancellationToken = default)
     {
         if (request == null)
         {
             throw new ArgumentNullException(nameof(request));
         }
-        var handler = _serviceProvider.GetRequiredService<IApplicationHandler<TRequest, TResponse>>();
-        
-        var context = new PipelineContext(async (PipelineContext context) =>
-        {
-            context.ReturnValue = await handler.HandleAsync(request, cancellationToken);
-        }, request, cancellationToken);
-        await _pipeline(context);
-        return (TResponse)context.ReturnValue;
+
+        var requestType = request.GetType();
+
+        var handler = _requestHandlers.GetOrAdd(requestType,
+            requestTypeKey =>
+            {
+                return (RequestHandlerWrapper)(ActivatorUtilities.CreateInstance(_serviceProvider, typeof(RequestHandlerWrapper<>).MakeGenericType(requestTypeKey))
+                                                             ?? throw new InvalidOperationException($"Could not create wrapper type for {requestTypeKey}"));
+            });
+
+        return handler.Handle(request, cancellationToken);
     }
 }

@@ -5,7 +5,7 @@ using Microsoft.Extensions.Options;
 
 namespace Skywalker.Identifier;
 
-internal class DefaultDistributedSupport : IdistributedSupport
+internal class DefaultDistributedSupport : IDistributedSupport
 {
     private readonly IdentifierGeneratorOptions _options;
 
@@ -14,7 +14,7 @@ internal class DefaultDistributedSupport : IdistributedSupport
         _options = options.Value;
     }
 
-    public Task<int> GetNextMechineId() => Task.FromResult(_options.WorkId);
+    public Task<ushort> GetNextMechineId() => Task.FromResult(_options.WorkId);
 
     public Task RefreshAlive() => Task.CompletedTask;
 }

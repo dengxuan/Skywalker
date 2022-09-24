@@ -25,11 +25,20 @@ public class AuthorizationPipelineBehavior
 
     protected virtual bool AllowAnonymous(PipelineContext context)
     {
-        return context.Handler.GetType().GetCustomAttributes(true).OfType<IAllowAnonymous>().Any();
+        return (context.Properties["handlerType"] as Type)?.GetCustomAttributes(true).OfType<IAllowAnonymous>().Any() == true;
     }
 
-    protected virtual IEnumerable<IAuthorizeData> GetAuthorizationDataAttributes(MethodInfo methodInfo)
+    /// <summary>
+    /// 
+    /// </summary>
+    /// <param name="methodInfo"></param>
+    /// <returns></returns>
+    protected virtual IEnumerable<IAuthorizeData> GetAuthorizationDataAttributes(MethodInfo? methodInfo)
     {
+        if(methodInfo == null)
+        {
+            return Array.Empty<IAuthorizeData>();
+        }
         var attributes = methodInfo
             .GetCustomAttributes(true)
             .OfType<IAuthorizeData>();
@@ -47,6 +56,11 @@ public class AuthorizationPipelineBehavior
         return attributes;
     }
 
+    /// <summary>
+    /// 
+    /// </summary>
+    /// <param name="context"></param>
+    /// <returns></returns>
     public async ValueTask InvokeAsync(PipelineContext context)
     {
         _logger.LogInformation("Begin AuthorizationPipelineBehavior");
@@ -55,7 +69,7 @@ public class AuthorizationPipelineBehavior
             await _next(context);
             return;
         }
-        var authorizeDatas = GetAuthorizationDataAttributes(context.Handler.GetType().GetMethod("HandleAsync")!);
+        var authorizeDatas = GetAuthorizationDataAttributes(context.Properties["Method"] as MethodInfo);
         var authorizationPolicy = await AuthorizationPolicy.CombineAsync(_authorizationPolicyProvider, authorizeDatas);
 
         if (authorizationPolicy == null)

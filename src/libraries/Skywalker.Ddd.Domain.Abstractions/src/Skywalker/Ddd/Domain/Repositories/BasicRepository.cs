@@ -15,16 +15,34 @@ namespace Skywalker.Ddd.Domain.Repositories;
 public abstract class BasicRepository<TEntity> : IBasicRepository<TEntity>, IServiceProviderAccessor where TEntity : class, IEntity
 {
 
+    /// <summary>
+    /// <inheritdoc/>
+    /// </summary>
     public IServiceProvider? ServiceProvider { get; set; }
 
+    /// <summary>
+    /// <inheritdoc/>
+    /// </summary>
     public IDataFilter? DataFilter { get; set; }
 
+    /// <summary>
+    /// <inheritdoc/>
+    /// </summary>
     public ICancellationTokenProvider CancellationTokenProvider { get; set; }
 
+    /// <summary>
+    /// <inheritdoc/>
+    /// </summary>
     public Type ElementType => GetQueryable().ElementType;
 
+    /// <summary>
+    /// <inheritdoc/>
+    /// </summary>
     public Expression Expression => GetQueryable().Expression;
 
+    /// <summary>
+    /// <inheritdoc/>
+    /// </summary>
     public IQueryProvider Provider => GetQueryable().Provider;
 
     /// <summary>
@@ -43,12 +61,17 @@ public abstract class BasicRepository<TEntity> : IBasicRepository<TEntity>, ISer
         return GetQueryable().GetEnumerator();
     }
 
+    /// <summary>
+    /// <inheritdoc/>
+    /// </summary>
     protected BasicRepository()
     {
         CancellationTokenProvider = NullCancellationTokenProvider.Instance;
     }
 
-
+    /// <summary>
+    /// <inheritdoc/>
+    /// </summary>
     protected virtual CancellationToken GetCancellationToken(CancellationToken preferredValue = default)
     {
         return CancellationTokenProvider.FallbackToProvider(preferredValue);
@@ -134,7 +157,7 @@ public abstract class BasicRepository<TEntity> : IBasicRepository<TEntity>, ISer
     /// </summary>
     public async Task<TEntity> GetAsync(Expression<Func<TEntity, bool>> predicate, CancellationToken cancellationToken = default)
     {
-        var entity = await FindAsync(predicate, cancellationToken);
+        var entity = await FindAsync(predicate, GetCancellationToken(cancellationToken));
 
         if (entity == null)
         {
@@ -149,6 +172,9 @@ public abstract class BasicRepository<TEntity> : IBasicRepository<TEntity>, ISer
     /// </summary>
     public abstract Task DeleteAsync(Expression<Func<TEntity, bool>> predicate, CancellationToken cancellationToken = default);
 
+    /// <summary>
+    /// <inheritdoc/>
+    /// </summary>
     protected virtual TQueryable ApplyDataFilters<TQueryable>(TQueryable query) where TQueryable : IQueryable<TEntity>
     {
         if (typeof(IDeleteable).IsAssignableFrom(typeof(TEntity)))
@@ -170,7 +196,7 @@ public abstract class BasicRepository<TEntity, TKey> : BasicRepository<TEntity>,
     /// </summary>
     public virtual async Task<TEntity> GetAsync(TKey id, CancellationToken cancellationToken = default)
     {
-        var entity = await FindAsync(id, cancellationToken);
+        var entity = await FindAsync(id, GetCancellationToken(cancellationToken));
 
         if (entity == null)
         {
@@ -190,12 +216,12 @@ public abstract class BasicRepository<TEntity, TKey> : BasicRepository<TEntity>,
     /// </summary>
     public virtual async Task DeleteAsync(TKey id, CancellationToken cancellationToken = default)
     {
-        var entity = await FindAsync(id, cancellationToken: cancellationToken);
+        var entity = await FindAsync(id, GetCancellationToken(cancellationToken));
         if (entity == null)
         {
             return;
         }
 
-        await DeleteAsync(entity, cancellationToken);
+        await DeleteAsync(entity, GetCancellationToken(cancellationToken));
     }
 }

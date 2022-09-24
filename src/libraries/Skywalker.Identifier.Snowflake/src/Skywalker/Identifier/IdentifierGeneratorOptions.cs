@@ -2,9 +2,9 @@ namespace Skywalker.Identifier;
 
 public class IdentifierGeneratorOptions
 {
-    public int WorkId { get; set; }
+    public ushort WorkId { get; set; }
 
-    public int WorkIdLength { get; set; } = 10;
+    public sbyte WorkIdLength { get; set; } = 10;
 
     public TimeSpan RefreshAliveInterval { get; set; }
 

@@ -18,7 +18,7 @@ public sealed class PipelineContext
     /// <summary>
     /// Gets or sets the return value of the method.
     /// </summary>
-    public object ReturnValue { get; set; } = default!;
+    public object ReturnValue { get; set; }
 
     /// <summary>
     /// Gets the extended properties.
