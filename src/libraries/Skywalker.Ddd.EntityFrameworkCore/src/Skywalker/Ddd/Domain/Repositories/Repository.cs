@@ -32,10 +32,13 @@ public abstract class Repository<TDbContext, TEntity> : BasicRepository<TEntity>
     /// <inheritdoc/>
     protected IEntityChangeEventHelper EntityChangeEventHelper { get; set; }
 
+    /// <inheritdoc/>
     protected DbSet<TEntity> DbSet => DbContext.Set<TEntity>();
 
+    /// <inheritdoc/>
     protected DbContext DbContext => _dbContextProvider.GetDbContext();
 
+    /// <inheritdoc/>
     public Repository(IClock clock, IDbContextProvider<TDbContext> dbContextProvider)
     {
         _clock = clock;
@@ -322,7 +325,7 @@ public abstract class Repository<TDbContext, TEntity, TKey> : BasicRepository<TE
     private readonly IDbContextProvider<TDbContext> _dbContextProvider;
 
     /// <inheritdoc/>
-    public Repository(IDbContextProvider<TDbContext> dbContextProvider, IClock clock, IIdentifier identifier)
+    public Repository(IClock clock, IIdentifier identifier, IDbContextProvider<TDbContext> dbContextProvider)
     {
         _clock = clock;
         _identifier = identifier;
