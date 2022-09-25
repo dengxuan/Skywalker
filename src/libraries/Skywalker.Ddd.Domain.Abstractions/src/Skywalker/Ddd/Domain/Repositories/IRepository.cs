@@ -7,10 +7,14 @@ namespace Skywalker.Ddd.Domain.Repositories;
 /// <summary>
 /// Just to mark a class as repository.
 /// </summary>
-public interface IRepository : ITransientDependency
+public interface IRepository
 {
 }
 
+/// <summary>
+/// 
+/// </summary>
+/// <typeparam name="TEntity"></typeparam>
 public interface IRepository<TEntity> : IReadOnlyRepository<TEntity>, IBasicRepository<TEntity> where TEntity : class, IEntity
 {
 
@@ -51,6 +55,11 @@ public interface IRepository<TEntity> : IReadOnlyRepository<TEntity>, IBasicRepo
     Task<long> LongCountAsync(Expression<Func<TEntity, bool>> filter, CancellationToken cancellationToken = default);
 }
 
+/// <summary>
+/// 
+/// </summary>
+/// <typeparam name="TEntity"></typeparam>
+/// <typeparam name="TKey"></typeparam>
 public interface IRepository<TEntity, TKey> : IRepository<TEntity>, IReadOnlyRepository<TEntity, TKey>, IBasicRepository<TEntity, TKey> where TEntity : class, IEntity<TKey> where TKey : notnull
 {
     /// <summary>

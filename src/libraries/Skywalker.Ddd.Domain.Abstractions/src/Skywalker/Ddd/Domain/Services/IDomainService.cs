@@ -1,9 +1,7 @@
 using System.Linq.Expressions;
 using Skywalker.Ddd.Domain.Entities;
 using Skywalker.Ddd.Uow;
-using Skywalker.Ddd.Uow.Abstractions;
 using Skywalker.Extensions.Collections.Generic;
-using Skywalker.Extensions.DependencyInjection;
 
 namespace Skywalker.Ddd.Domain.Services;
 
@@ -12,7 +10,7 @@ namespace Skywalker.Ddd.Domain.Services;
 /// 仅标记一个类是一个领域服务
 /// </summary>
 [UnitOfWork]
-public interface IDomainService : ITransientDependency { }
+public interface IDomainService { }
 
 /// <summary>
 /// 所有域服务都可以实现此接口，以按约定识别它们.
