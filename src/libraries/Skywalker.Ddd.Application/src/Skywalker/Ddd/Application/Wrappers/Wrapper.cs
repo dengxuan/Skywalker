@@ -1,7 +1,6 @@
-﻿namespace MediatR.Wrappers;
+﻿using Microsoft.Extensions.DependencyInjection;
 
-using System;
-using Microsoft.Extensions.DependencyInjection;
+namespace Skywalker.Ddd.Application.Wrappers;
 
 public abstract class Wrapper
 {
