@@ -256,7 +256,7 @@ public partial class EntityFrameworkCoreGenerator
         {
             get
             {
-                return ReturnType.ContainingSymbol.ToDisplayString() == "System.Threading.Tasks" && ReturnType.Name == "Task";
+                return ReturnType.ContainingSymbol.ToDisplayString() == "System.Threading.Tasks" && (ReturnType.Name == "Task" || ReturnType.Name == "ValueTask");
             }
         }
 

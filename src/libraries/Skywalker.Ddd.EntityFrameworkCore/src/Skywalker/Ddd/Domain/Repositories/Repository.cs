@@ -160,7 +160,6 @@ public abstract class Repository<TDbContext, TEntity> : BasicRepository<TEntity>
         {
             DbSet.Remove(entity);
         }
-        await DbContext.SaveChangesAsync(GetCancellationToken(cancellationToken));
     }
 
     /// <inheritdoc/>
@@ -179,7 +178,6 @@ public abstract class Repository<TDbContext, TEntity> : BasicRepository<TEntity>
 
         var savedEntity = DbSet.Add(entity).Entity;
 
-        await DbContext.SaveChangesAsync(GetCancellationToken(cancellationToken));
         return savedEntity;
     }
 
@@ -200,7 +198,7 @@ public abstract class Repository<TDbContext, TEntity> : BasicRepository<TEntity>
             await ApplySkywalkerConceptsForAddedEntityAsync(entity);
         }
         await DbSet.AddRangeAsync(entities, GetCancellationToken(cancellationToken));
-        await DbContext.SaveChangesAsync(GetCancellationToken(cancellationToken));
+
         return entities.Count();
     }
 
@@ -210,7 +208,7 @@ public abstract class Repository<TDbContext, TEntity> : BasicRepository<TEntity>
         await ApplySkywalkerConceptsForUpdatedEntityAsync(entity);
 
         var upgraded = DbContext.Update(entity).Entity;
-        await DbContext.SaveChangesAsync(GetCancellationToken(cancellationToken));
+
         return upgraded;
     }
 
@@ -219,7 +217,6 @@ public abstract class Repository<TDbContext, TEntity> : BasicRepository<TEntity>
     {
         await ApplySkywalkerConceptsForDeletedEntityAsync(entity);
         DbSet.Remove(entity);
-        await DbContext.SaveChangesAsync(GetCancellationToken(cancellationToken));
     }
 
     /// <inheritdoc/>
@@ -472,7 +469,6 @@ public abstract class Repository<TDbContext, TEntity, TKey> : BasicRepository<TE
         {
             DbSet.Remove(entity);
         }
-        await DbContext.SaveChangesAsync(GetCancellationToken(cancellationToken));
     }
 
     /// <inheritdoc/>
@@ -491,7 +487,6 @@ public abstract class Repository<TDbContext, TEntity, TKey> : BasicRepository<TE
 
         var savedEntity = DbSet.Add(entity).Entity;
 
-        await DbContext.SaveChangesAsync(GetCancellationToken(cancellationToken));
         return savedEntity;
     }
 
@@ -512,7 +507,6 @@ public abstract class Repository<TDbContext, TEntity, TKey> : BasicRepository<TE
             await ApplySkywalkerConceptsForAddedEntityAsync(entity);
         }
         await DbSet.AddRangeAsync(entities, GetCancellationToken(cancellationToken));
-        await DbContext.SaveChangesAsync(GetCancellationToken(cancellationToken));
         return entities.Count();
     }
 
@@ -522,7 +516,6 @@ public abstract class Repository<TDbContext, TEntity, TKey> : BasicRepository<TE
         await ApplySkywalkerConceptsForUpdatedEntityAsync(entity);
 
         var upgraded = DbContext.Update(entity).Entity;
-        await DbContext.SaveChangesAsync(GetCancellationToken(cancellationToken));
         return upgraded;
     }
 
@@ -531,7 +524,6 @@ public abstract class Repository<TDbContext, TEntity, TKey> : BasicRepository<TE
     {
         await ApplySkywalkerConceptsForDeletedEntityAsync(entity);
         DbSet.Remove(entity);
-        await DbContext.SaveChangesAsync(GetCancellationToken(cancellationToken));
     }
 
     /// <inheritdoc/>
