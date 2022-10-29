@@ -1,4 +1,4 @@
-﻿<Project Sdk="Microsoft.NET.Sdk">
+<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
     <RootNamespace></RootNamespace>
@@ -6,7 +6,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\..\Skywalker.Ddd.Application.Abstractions\gen\Skywalker.Ddd.Application.Generators.Roslyn4.0.csproj" OutputItemType="Analyzer" ReferenceOutputAssembly="true" />
+    <ProjectReference Include="..\gen\Skywalker.Ddd.Application.Generators.Roslyn4.0.csproj" OutputItemType="Analyzer" ReferenceOutputAssembly="true" />
     <ProjectReference Include="$(LibrariesProjectRoot)Skywalker.Ddd.Application.Abstractions\src\Skywalker.Ddd.Application.Abstractions.csproj" />
     <ProjectReference Include="..\..\..\Skywalker.Ddd.Domain.Abstractions\src\Skywalker.Ddd.Domain.Abstractions.csproj" />
     <ProjectReference Include="..\..\tests\Skywalker.Ddd.ApplicationService.Example.Abstractions\Skywalker.Ddd.ApplicationService.Example.Abstractions.csproj" />

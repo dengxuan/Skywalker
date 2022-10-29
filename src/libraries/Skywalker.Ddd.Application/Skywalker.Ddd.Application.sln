@@ -31,9 +31,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Skywalker.Ddd.ApplicationSe
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Skywalker.Extensions.DependencyInjection", "..\Skywalker.Extensions.DependencyInjection\src\Skywalker.Extensions.DependencyInjection.csproj", "{F16213B2-6D4C-4CD7-B677-3EB72A40FCF4}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Skywalker.Ddd.Application.Generators.Roslyn4.0", "..\Skywalker.Ddd.Application.Abstractions\gen\Skywalker.Ddd.Application.Generators.Roslyn4.0.csproj", "{C5FA146F-E640-4CF2-BE74-313F01501712}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Skywalker.Ddd.Application.Generators.Roslyn4.0", "gen\Skywalker.Ddd.Application.Generators.Roslyn4.0.csproj", "{C5FA146F-E640-4CF2-BE74-313F01501712}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Skywalker.Ddd.Application.Generators.Roslyn3.11", "..\Skywalker.Ddd.Application.Abstractions\gen\Skywalker.Ddd.Application.Generators.Roslyn3.11.csproj", "{C42A89A2-3A15-490C-8BC8-EFDF217CBE7F}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Skywalker.Ddd.Application.Generators.Roslyn3.11", "gen\Skywalker.Ddd.Application.Generators.Roslyn3.11.csproj", "{C42A89A2-3A15-490C-8BC8-EFDF217CBE7F}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
