@@ -8,6 +8,7 @@ namespace Skywalker.Ddd.Application.Abstractions;
 /// </summary>
 public interface IApplication : ISingletonDependency
 {
+
     /// <summary>
     /// 将命令异步发送到单个处理程序
     /// </summary>

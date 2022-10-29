@@ -12,8 +12,4 @@
     <Compile Remove="DddApplicationGenerator.Roslyn3.11.cs" />
   </ItemGroup>
 
-  <ItemGroup>
-    <None Remove="Templates\DddApplication.sbn-cs" />
-  </ItemGroup>
-
 </Project>

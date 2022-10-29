@@ -3,15 +3,12 @@
 
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using Skywalker.Ddd.Application.Abstractions;
-using Skywalker.Ddd.Application.Dtos;
 
 var builder = Host.CreateDefaultBuilder(args);
 builder.ConfigureServices((context, services) =>
 {
-    services.AddSkywalker();
+    services.AddApplication();
 });
 var host = builder.Build();
-var application = host.Services.GetRequiredService<IApplication>();
-await application.ExecuteAsync(new EntityDto<long>(1));
+
 await host.RunAsync();

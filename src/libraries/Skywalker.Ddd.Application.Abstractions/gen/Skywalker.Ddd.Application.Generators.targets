@@ -26,7 +26,8 @@
   </ItemGroup>
 
   <ItemGroup>
-    <EmbeddedResource Include="Templates\DddApplication.sbn-cs" />
+    <EmbeddedResource Include="Templates\DependencyInjection.sbn-cs" />
+    <EmbeddedResource Include="Templates\InterceptorGenerator.sbn-cs" />
   </ItemGroup>
 
 </Project>

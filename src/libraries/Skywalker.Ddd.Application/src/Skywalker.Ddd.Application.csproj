@@ -9,4 +9,9 @@
     <ProjectReference Include="$(LibrariesProjectRoot)Skywalker.Caching.Abstractions\src\Skywalker.Caching.Abstractions.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <AnalyzerReference Include="..\gen\Skywalker.Ddd.Application.Generators.Roslyn3.11.csproj" Condition="'$(DotNetBuildFromSource)' != 'true'" />
+    <AnalyzerReference Include="..\gen\Skywalker.Ddd.Application.Generators.Roslyn4.0.csproj" />
+  </ItemGroup>
+
 </Project>
