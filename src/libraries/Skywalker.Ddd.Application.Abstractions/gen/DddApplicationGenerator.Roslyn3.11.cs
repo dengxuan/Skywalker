@@ -3,17 +3,19 @@
 namespace Skywalker.Ddd.Application.Generators;
 
 [Generator]
-public partial class DddApplicationGenerator : ISourceGenerator
+internal partial class DddApplicationGenerator : ISourceGenerator
 {
     public void Execute(GeneratorExecutionContext context)
     {
-        var compilationAnalyzer = new Analyzer(in context);
-        var metadataClass = compilationAnalyzer.Analyze();
-        var dbContextClasses = Builder.DbContextClasses(metadataClass.DbContextClasses, context.CancellationToken);
-        Emitter.Emit(context, dbContextClasses);
+        if (context.SyntaxContextReceiver is Analyzer receiver)
+        {
+            Emitter.Emit(context, receiver.Intecepters);
+            Emitter.Emit(context, receiver.Dependencies);
+        }
     }
 
     public void Initialize(GeneratorInitializationContext context)
     {
+        context.RegisterForSyntaxNotifications(() => new Analyzer());
     }
 }
