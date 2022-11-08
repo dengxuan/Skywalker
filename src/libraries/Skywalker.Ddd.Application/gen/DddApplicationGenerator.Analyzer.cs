@@ -32,7 +32,7 @@ internal partial class DddApplicationGenerator
             var applicationServiceSymbol = context.SemanticModel.Compilation.GetTypeByMetadataName(ApplicationServiceSymbolName);
             if (namedTypeSymbol.AllInterfaces.Any(x => s_symbolComparer.Equals(applicationServiceSymbol, x)))
             {
-                var intecepter = GetIntecepter(namedTypeSymbol);
+                var intecepter = GetIntecepter(applicationServiceSymbol!, namedTypeSymbol);
                 Intecepters.Add(intecepter);
                 return;
             }
@@ -42,7 +42,7 @@ internal partial class DddApplicationGenerator
         /// 获取所有IAspects符号
         /// </summary>
         /// <returns></returns>
-        public Intecepter GetIntecepter(INamedTypeSymbol domainServiceSymbol)
+        public Intecepter GetIntecepter(INamedTypeSymbol applicationServiceSymbol, INamedTypeSymbol domainServiceSymbol)
         {
             var intecepter = new Intecepter(domainServiceSymbol.Name);
             intecepter.Namespaces.Add(domainServiceSymbol.ContainingNamespace.ToDisplayString());
@@ -82,59 +82,58 @@ internal partial class DddApplicationGenerator
                 }
             }
 
-            foreach (var item in domainServiceSymbol.GetMembers())
+            //foreach (var item in domainServiceSymbol.GetMembers())
+            //{
+            //    if (item is not IMethodSymbol methodSymbol ||
+            //        methodSymbol.IsStatic ||
+            //        methodSymbol.MethodKind == MethodKind.Constructor ||
+            //        methodSymbol.DeclaredAccessibility != Accessibility.Public)
+            //    {
+            //        continue;
+            //    }
+            //    intecepter.Namespaces.Add(methodSymbol.ReturnType.ContainingNamespace.ToDisplayString());
+            //    var method = new Method(methodSymbol.Name, true, methodSymbol.ReturnType);
+            //    foreach (var parameterSymbol in methodSymbol.Parameters)
+            //    {
+            //        if ((parameterSymbol.Type is IArrayTypeSymbol arrayTypeSymbol))
+            //        {
+            //            intecepter.Namespaces.Add(arrayTypeSymbol.ElementType.ContainingNamespace.ToDisplayString());
+            //        }
+            //        else
+            //        {
+            //            intecepter.Namespaces.Add(parameterSymbol.Type.ContainingNamespace.ToDisplayString());
+            //        }
+            //        method.TypedParameters.Add(new KeyValuePair<string, string>(parameterSymbol.Type.ToDisplayString(), parameterSymbol.Name));
+            //    }
+            //    intecepter.Methods.Add(method);
+            //}
+            for (var baseSymbol = domainServiceSymbol; baseSymbol is not null && baseSymbol.AllInterfaces.Any(x => s_symbolComparer.Equals(applicationServiceSymbol, x)); baseSymbol = baseSymbol.BaseType)
             {
-                if (item is not IMethodSymbol methodSymbol ||
-                    methodSymbol.IsStatic ||
-                    methodSymbol.MethodKind == MethodKind.Constructor ||
-                    methodSymbol.DeclaredAccessibility != Accessibility.Public)
+                foreach (var item in baseSymbol.GetMembers())
                 {
-                    continue;
-                }
-                intecepter.Namespaces.Add(methodSymbol.ReturnType.ContainingNamespace.ToDisplayString());
-                var method = new Method(methodSymbol.Name, true, methodSymbol.ReturnType);
-                foreach (var parameterSymbol in methodSymbol.Parameters)
-                {
-                    if ((parameterSymbol.Type is IArrayTypeSymbol arrayTypeSymbol))
+                    if (item is not IMethodSymbol methodSymbol ||
+                        methodSymbol.IsStatic ||
+                        methodSymbol.MethodKind == MethodKind.Constructor ||
+                        methodSymbol.DeclaredAccessibility != Accessibility.Public)
                     {
-                        intecepter.Namespaces.Add(arrayTypeSymbol.ElementType.ContainingNamespace.ToDisplayString());
+                        continue;
                     }
-                    else
+                    intecepter.Namespaces.Add(methodSymbol.ReturnType.ContainingNamespace.ToDisplayString());
+                    var method = new Method(methodSymbol.Name, true, methodSymbol.ReturnType);
+                    foreach (var parameterSymbol in methodSymbol.Parameters)
                     {
-                        intecepter.Namespaces.Add(parameterSymbol.Type.ContainingNamespace.ToDisplayString());
+                        if ((parameterSymbol.Type is IArrayTypeSymbol arrayTypeSymbol))
+                        {
+                            intecepter.Namespaces.Add(arrayTypeSymbol.ElementType.ContainingNamespace.ToDisplayString());
+                        }
+                        else
+                        {
+                            intecepter.Namespaces.Add(parameterSymbol.Type.ContainingNamespace.ToDisplayString());
+                        }
+                        method.TypedParameters.Add(new KeyValuePair<string, string>(parameterSymbol.Type.ToDisplayString(), parameterSymbol.Name));
                     }
-                    method.TypedParameters.Add(new KeyValuePair<string, string>(parameterSymbol.Type.ToDisplayString(), parameterSymbol.Name));
+                    intecepter.Methods.Add(method);
                 }
-                intecepter.Methods.Add(method);
-            }
-            if (domainServiceSymbol.BaseType == null)
-            {
-                return intecepter;
-            }
-            foreach (var item in domainServiceSymbol.BaseType.GetMembers())
-            {
-                if (item is not IMethodSymbol methodSymbol ||
-                    methodSymbol.IsStatic ||
-                    methodSymbol.MethodKind == MethodKind.Constructor ||
-                    methodSymbol.DeclaredAccessibility != Accessibility.Public)
-                {
-                    continue;
-                }
-                intecepter.Namespaces.Add(methodSymbol.ReturnType.ContainingNamespace.ToDisplayString());
-                var method = new Method(methodSymbol.Name, true, methodSymbol.ReturnType);
-                foreach (var parameterSymbol in methodSymbol.Parameters)
-                {
-                    if ((parameterSymbol.Type is IArrayTypeSymbol arrayTypeSymbol))
-                    {
-                        intecepter.Namespaces.Add(arrayTypeSymbol.ElementType.ContainingNamespace.ToDisplayString());
-                    }
-                    else
-                    {
-                        intecepter.Namespaces.Add(parameterSymbol.Type.ContainingNamespace.ToDisplayString());
-                    }
-                    method.TypedParameters.Add(new KeyValuePair<string, string>(parameterSymbol.Type.ToDisplayString(), parameterSymbol.Name));
-                }
-                intecepter.Methods.Add(method);
             }
             return intecepter;
         }

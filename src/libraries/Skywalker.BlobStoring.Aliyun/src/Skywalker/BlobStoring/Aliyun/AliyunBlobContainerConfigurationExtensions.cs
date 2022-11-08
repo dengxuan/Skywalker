@@ -1,7 +1,7 @@
-﻿using System;
-using Skywalker.BlobStoring.Abstractions;
+﻿using Skywalker.BlobStoring.Abstractions;
 
 namespace Skywalker.BlobStoring.Aliyun;
+
 
 public static class AliyunBlobContainerConfigurationExtensions
 {
