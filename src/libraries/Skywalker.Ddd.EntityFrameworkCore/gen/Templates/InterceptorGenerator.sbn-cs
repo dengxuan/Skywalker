@@ -9,7 +9,7 @@
 using {{namespace}};
 {{~ end ~}}
 
-namespace Skywalker.Ddd.EntityFrameworkCore.Generators;
+namespace {{Intecepter.Namespace}};
 
 [GeneratedCode("Skywalker.Ddd.EntityFrameworkCore.Generators", "{{ GeneratorVersion }}")]
 sealed class {{Intecepter.Name}}Intecepter : {{Intecepter.Interfaces | array.join ", " }}

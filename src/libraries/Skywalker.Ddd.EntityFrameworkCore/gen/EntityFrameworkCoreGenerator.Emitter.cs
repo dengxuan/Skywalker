@@ -2,12 +2,10 @@
 // Gordon licenses this file to you under the MIT license.
 
 using System.Collections.Immutable;
-using System.Diagnostics;
 using System.Text;
 using Microsoft.CodeAnalysis;
 using Microsoft.CodeAnalysis.Text;
 using Scriban;
-using static Skywalker.Ddd.EntityFrameworkCore.Generators.EntityFrameworkCoreGenerator;
 
 namespace Skywalker.Ddd.EntityFrameworkCore.Generators;
 
@@ -51,6 +49,7 @@ public partial class EntityFrameworkCoreGenerator
                     {
                         GeneratorVersion = generatorVersion,
                         Namespaces = namespaces,
+                        repository.Namespace,
                         repository.DbContextName,
                         entity.EntityName,
                         entity.PrimaryKeyName

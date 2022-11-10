@@ -8,7 +8,7 @@
 using {{namespace}};
 {{~ end ~}}
 
-namespace Skywalker.Ddd.EntityFrameworkCore.Generators;
+namespace {{Namespace}};
 
 {{~ if PrimaryKeyName == null || PrimaryKeyName == '' ~}}
 [GeneratedCode("Skywalker.Ddd.EntityFrameworkCore.Generators", "{{ GeneratorVersion }}")]

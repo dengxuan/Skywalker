@@ -10,10 +10,6 @@ internal partial class DddApplicationGenerator
     internal class Analyzer : ISyntaxContextReceiver
     {
         private const string ApplicationServiceSymbolName = "Skywalker.Ddd.Application.Abstractions.IApplicationService";
-        /// <summary>
-        /// 接口列表
-        /// </summary>
-        private readonly List<InterfaceDeclarationSyntax> _applicationServiceSyntaxs = new();
 
         public ISet<Dependency> Dependencies = new HashSet<Dependency>();
         public IList<Intecepter> Intecepters = new List<Intecepter>();
@@ -52,7 +48,8 @@ internal partial class DddApplicationGenerator
                 intecepter.Namespaces.Add(@interface.ContainingNamespace.ToDisplayString());
                 var dependency = new Dependency(@interface.Name, $"{intecepter.Name}Intecepter", new HashSet<string>
                 {
-                    @interface.ContainingNamespace.ToDisplayString()
+                    intecepter.Namespace,
+                    @interface.ContainingNamespace.ToDisplayString(),
                 });
                 Dependencies.Add(dependency);
                 foreach (var item in @interface.GetMembers())
@@ -82,31 +79,6 @@ internal partial class DddApplicationGenerator
                 }
             }
 
-            //foreach (var item in domainServiceSymbol.GetMembers())
-            //{
-            //    if (item is not IMethodSymbol methodSymbol ||
-            //        methodSymbol.IsStatic ||
-            //        methodSymbol.MethodKind == MethodKind.Constructor ||
-            //        methodSymbol.DeclaredAccessibility != Accessibility.Public)
-            //    {
-            //        continue;
-            //    }
-            //    intecepter.Namespaces.Add(methodSymbol.ReturnType.ContainingNamespace.ToDisplayString());
-            //    var method = new Method(methodSymbol.Name, true, methodSymbol.ReturnType);
-            //    foreach (var parameterSymbol in methodSymbol.Parameters)
-            //    {
-            //        if ((parameterSymbol.Type is IArrayTypeSymbol arrayTypeSymbol))
-            //        {
-            //            intecepter.Namespaces.Add(arrayTypeSymbol.ElementType.ContainingNamespace.ToDisplayString());
-            //        }
-            //        else
-            //        {
-            //            intecepter.Namespaces.Add(parameterSymbol.Type.ContainingNamespace.ToDisplayString());
-            //        }
-            //        method.TypedParameters.Add(new KeyValuePair<string, string>(parameterSymbol.Type.ToDisplayString(), parameterSymbol.Name));
-            //    }
-            //    intecepter.Methods.Add(method);
-            //}
             for (var baseSymbol = domainServiceSymbol; baseSymbol is not null && baseSymbol.AllInterfaces.Any(x => s_symbolComparer.Equals(applicationServiceSymbol, x)); baseSymbol = baseSymbol.BaseType)
             {
                 foreach (var item in baseSymbol.GetMembers())
@@ -213,6 +185,7 @@ internal partial class DddApplicationGenerator
 
     internal readonly record struct Intecepter(string Name)
     {
+        public string Namespace { get; } = "Skywalker.Ddd.Application.Generators";
 
         public ISet<string> Namespaces { get; } = new HashSet<string>();
 

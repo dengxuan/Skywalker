@@ -7,7 +7,6 @@
 {{~ for namespace in Namespaces ~}}
 using {{namespace}};
 {{~ end ~}}
-using Skywalker.Ddd.EntityFrameworkCore.Generators;
 
 namespace Microsoft.Extensions.DependencyInjection;
 

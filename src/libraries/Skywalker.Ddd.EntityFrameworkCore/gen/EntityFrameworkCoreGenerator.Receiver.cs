@@ -1,13 +1,8 @@
 // Licensed to the Gordon under one or more agreements.
 // Gordon licenses this file to you under the MIT license.
 
-using System.Collections.Generic;
-using System.Diagnostics;
-using System.Reflection.Metadata;
-using System.Runtime.InteropServices.ComTypes;
 using Microsoft.CodeAnalysis;
 using Microsoft.CodeAnalysis.CSharp.Syntax;
-using static Skywalker.Ddd.EntityFrameworkCore.Generators.EntityFrameworkCoreGenerator;
 
 namespace Skywalker.Ddd.EntityFrameworkCore.Generators;
 
@@ -85,7 +80,8 @@ public partial class EntityFrameworkCoreGenerator
                 intecepter.Namespaces.Add(@interface.ContainingNamespace.ToDisplayString());
                 var dependency = new Dependency(@interface.Name, $"{intecepter.Name}Intecepter", new HashSet<string>
                 {
-                    @interface.ContainingNamespace.ToDisplayString()
+                    intecepter.Namespace,
+                    @interface.ContainingNamespace.ToDisplayString(),
                 });
                 Dependencies.Add(dependency);
                 foreach (var item in @interface.GetMembers())
@@ -244,6 +240,8 @@ public partial class EntityFrameworkCoreGenerator
 
     internal readonly record struct Repository(string DbContextName)
     {
+        public string Namespace { get; } = "Skywalker.Ddd.EntityFrameworkCore.Generators";
+
         public ISet<Entity> Entitiess { get; } = new HashSet<Entity>();
 
         public ISet<string> Namespaces { get; } = new HashSet<string>();
@@ -293,6 +291,7 @@ public partial class EntityFrameworkCoreGenerator
 
     internal readonly record struct Intecepter(string Name)
     {
+        public string Namespace { get; } = "Skywalker.Ddd.EntityFrameworkCore.Generators";
 
         public ISet<string> Namespaces { get; } = new HashSet<string>();
 
