@@ -5,6 +5,7 @@ using System.Security.Cryptography;
 using System.Text;
 using System.Text.Encodings.Web;
 using System.Text.RegularExpressions;
+using System.Diagnostics.CodeAnalysis;
 
 namespace System;
 
@@ -555,13 +556,22 @@ public static class StringExtensions
     }
 
     [DebuggerStepThrough]
-    public static bool IsMissing(this string? value)
+#if NETSTANDARD2_0
+    public static bool IsMissing(this string value)
+#else
+    public static bool IsMissing([NotNullWhen(false)] this string? value)
+#endif
     {
         return string.IsNullOrWhiteSpace(value);
     }
 
     [DebuggerStepThrough]
-    public static bool IsPresent(this string? value)
+
+#if NETSTANDARD2_0
+    public static bool IsPresent(this string value)
+#else
+    public static bool IsPresent([NotNullWhen(true)] this string? value)
+#endif
     {
         return !string.IsNullOrWhiteSpace(value);
     }
@@ -660,7 +670,12 @@ public static class StringExtensions
     }
 
     [DebuggerStepThrough]
-    public static string? EnsureLeadingSlash(this string url)
+#if NETSTANDARD2_0
+    public static string EnsureLeadingSlash(this string url)
+#else
+    [return: NotNullIfNotNull("url")]
+    public static string? EnsureLeadingSlash(this string? url)
+#endif
     {
         if (url != null && !url.StartsWith("/"))
         {
@@ -671,7 +686,12 @@ public static class StringExtensions
     }
 
     [DebuggerStepThrough]
-    public static string? EnsureTrailingSlash(this string url)
+#if NETSTANDARD2_0
+    public static string EnsureTrailingSlash(this string url)
+#else
+    [return: NotNullIfNotNull("url")]
+    public static string? EnsureTrailingSlash(this string? url)
+#endif
     {
         if (url != null && !url.EndsWith("/"))
         {
@@ -682,7 +702,12 @@ public static class StringExtensions
     }
 
     [DebuggerStepThrough]
-    public static string? RemoveLeadingSlash(this string url)
+#if NETSTANDARD2_0
+    public static string RemoveLeadingSlash(this string url)
+#else
+    [return: NotNullIfNotNull("url")]
+    public static string? RemoveLeadingSlash(this string? url)
+#endif
     {
         if (url != null && url.StartsWith("/"))
         {
@@ -697,7 +722,12 @@ public static class StringExtensions
     }
 
     [DebuggerStepThrough]
-    public static string? RemoveTrailingSlash(this string url)
+#if NETSTANDARD2_0
+    public static string RemoveTrailingSlash(this string url)
+#else
+    [return: NotNullIfNotNull("url")]
+    public static string? RemoveTrailingSlash(this string? url)
+#endif
     {
         if (url != null && url.EndsWith("/"))
         {
@@ -712,7 +742,12 @@ public static class StringExtensions
     }
 
     [DebuggerStepThrough]
+#if NETSTANDARD2_0
     public static string CleanUrlPath(this string url)
+#else
+    [return: NotNullIfNotNull("url")]
+    public static string? CleanUrlPath(this string? url)
+#endif
     {
         if (string.IsNullOrWhiteSpace(url)) url = "/";
 
