@@ -1,4 +1,5 @@
 ﻿using System.Diagnostics;
+using System.Diagnostics.CodeAnalysis;
 
 namespace System.Collections.Generic;
 
@@ -66,7 +67,11 @@ public static class IEnumerableExtensions
     /// <param name = "this"></param>
     /// <returns></returns>
     [DebuggerStepThrough]
+#if NETSTANDARD2_0
     public static bool IsNullOrEmpty(this IEnumerable? @this)
+#else
+    public static bool IsNullOrEmpty([NotNullWhen(false)] this IEnumerable? @this)
+#endif
     {
         return @this == null || @this.GetEnumerator().MoveNext() == false;
     }
