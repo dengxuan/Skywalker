@@ -5,9 +5,6 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="Microsoft.Extensions.Options" Version="6.0.0" />
-  </ItemGroup>
-  <ItemGroup>
     <ProjectReference Include="$(LibrariesProjectRoot)Skywalker.Extensions.Timezone\src\Skywalker.Extensions.Timezone.csproj" />
   </ItemGroup>
 

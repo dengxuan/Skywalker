@@ -1,9 +1,9 @@
 ﻿using System.Security.Cryptography;
 using System.Text;
-using Abstractions;
 using Microsoft.Extensions.Options;
+using Skywalker.AspNetCore.Security.Abstractions;
 
-namespace Skywalker.Extensions.AspNetCore.Security.Abstractions;
+namespace Skywalker.AspNetCore.Security;
 
 public class TripleDESEncryptionProvider : IEncryptionProvider
 {

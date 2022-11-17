@@ -1,13 +1,20 @@
-﻿using System.Security.Claims;
+﻿// Licensed to the Gordon under one or more agreements.
+// Gordon licenses this file to you under the MIT license.
+
+using System.Security.Claims;
 using System.Text.Encodings.Web;
-using System.Text.Json;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.OAuth;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.WebUtilities;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
+
+#if NETSTANDARD
 using Newtonsoft.Json.Linq;
+#else
+using System.Text.Json;
+#endif
 
 namespace Skywalker.AspNetCore.Authentication.WeChat;
 
@@ -81,7 +88,7 @@ public class WeChatAuthenticationHandler : OAuthHandler<WeChatAuthenticationOpti
         return OAuthTokenResponse.Success(payload);
     }
 
-#elif NETCOREAPP3_1_OR_GREATER
+#else
 
     protected override async Task<AuthenticationTicket> CreateTicketAsync(ClaimsIdentity identity, AuthenticationProperties properties, OAuthTokenResponse tokens)
     {

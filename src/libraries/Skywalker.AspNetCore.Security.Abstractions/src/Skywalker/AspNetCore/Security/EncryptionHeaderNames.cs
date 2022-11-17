@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace Skywalker.Extensions.AspNetCore.Security.Abstractions
+namespace Skywalker.AspNetCore.Security
 {
     internal class EncryptionHeaderNames
     {

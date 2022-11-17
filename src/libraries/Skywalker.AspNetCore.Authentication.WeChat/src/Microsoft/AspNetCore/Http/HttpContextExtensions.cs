@@ -1,10 +1,14 @@
 ﻿// Licensed to the Gordon under one or more agreements.
 // Gordon licenses this file to you under the MIT license.
 
-using System.Text.Json;
 using Microsoft.AspNetCore.Authentication;
-using Newtonsoft.Json.Linq;
 using Skywalker.AspNetCore.Authentication.WeChat;
+
+#if NETSTANDARD
+using Newtonsoft.Json.Linq;
+#else
+using System.Text.Json;
+#endif
 
 namespace Microsoft.AspNetCore.Http;
 
@@ -37,14 +41,14 @@ public static class HttpContextExtensions
     {
         var userInfos = new Dictionary<string, string?>();
 
-#if NETSTANDARD2_0
+#if NETSTANDARD
         var jObject = JObject.Parse(json);
 
         foreach (var item in jObject)
         {
             userInfos[item.Key] = item.Value.ToString();
         }
-#elif NETCOREAPP3_0_OR_GREATER
+#else
         var document = JsonDocument.Parse(json);
 
         foreach (var item in document.RootElement.EnumerateObject())

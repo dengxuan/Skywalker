@@ -1,8 +1,15 @@
-﻿using System.Security.Claims;
-using System.Text.Json;
+﻿// Licensed to the Gordon under one or more agreements.
+// Gordon licenses this file to you under the MIT license.
+
+using System.Security.Claims;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.OAuth;
+
+#if NETSTANDARD
 using Newtonsoft.Json.Linq;
+#else
+using System.Text.Json;
+#endif
 
 namespace Skywalker.AspNetCore.Authentication.WeChat;
 
@@ -42,7 +49,7 @@ public class WeChatAuthenticationOptions : OAuthOptions
             }
             return string.Join(",", value.AsJEnumerable().Select(element => element.Value<string>()));
         });
-#elif NETCOREAPP3_1_OR_GREATER
+#else
         ClaimActions.MapCustomJson(WeChatClaimTypes.Privilege, user =>
         {
             if (!user.TryGetProperty("privilege", out var value) || value.ValueKind != JsonValueKind.Array)
