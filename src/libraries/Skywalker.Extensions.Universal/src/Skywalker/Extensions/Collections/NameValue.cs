@@ -11,18 +11,14 @@ namespace Skywalker.Extensions.Collections;
 [Serializable]
 public class NameValue : NameValue<string>
 {
-    /// <summary>
-    /// Creates a new <see cref="NameValue"/>.
-    /// The <see cref="Name"/>  and the <see cref="Value"/> is null.
-    /// </summary>
-    public NameValue() { }
+    ///// <summary>
+    ///// Creates a new <see cref="NameValue"/>.
+    ///// The <see cref="Name"/>  and the <see cref="Value"/> is null.
+    ///// </summary>
+    //public NameValue() { }
 
     /// <summary>
     /// Creates a new <see cref="NameValue"/>.
     /// </summary>
-    public NameValue(string name, string value)
-    {
-        Name = name;
-        Value = value;
-    }
+    public NameValue(string name, string value) : base(name, value) { }
 }

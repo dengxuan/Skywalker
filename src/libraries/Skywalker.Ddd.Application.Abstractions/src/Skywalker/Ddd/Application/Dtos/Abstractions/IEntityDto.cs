@@ -9,5 +9,8 @@ namespace Skywalker.Ddd.Application.Dtos.Abstractions;
 /// <typeparam name="TKey"></typeparam>
 public interface IEntityDto<TKey> : IDto
 {
+    /// <summary>
+    /// 
+    /// </summary>
     TKey Id { get; init; }
 }

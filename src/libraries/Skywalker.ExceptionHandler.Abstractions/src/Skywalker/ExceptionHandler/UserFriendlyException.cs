@@ -1,4 +1,6 @@
-﻿namespace Skywalker.ExceptionHandler;
+﻿using System.Runtime.Serialization;
+
+namespace Skywalker.ExceptionHandler;
 
 /// <summary>
 /// 
@@ -26,6 +28,15 @@ public class UserFriendlyException : SkywalkerException, IHasErrorCode
     public UserFriendlyException(string? code, string message) : base(message)
     {
         Code = code;
+    }
+
+    /// <summary>
+    /// Constructor for serializing.
+    /// </summary>
+    public UserFriendlyException(SerializationInfo serializationInfo, StreamingContext context)
+        : base(serializationInfo, context)
+    {
+
     }
 
     /// <summary>

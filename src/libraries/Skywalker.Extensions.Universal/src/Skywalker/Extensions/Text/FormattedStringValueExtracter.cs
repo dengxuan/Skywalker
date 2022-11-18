@@ -105,7 +105,7 @@ public class FormattedStringValueExtracter
     }
 
     /// <summary>
-    /// Checks if given <see cref="str"/> fits to given <see cref="format"/>.
+    /// Checks if given <paramref name="str"/> fits to given <paramref name="format"/>.
     /// Also gets extracted values.
     /// </summary>
     /// <param name="str">String including dynamic values</param>
@@ -113,7 +113,7 @@ public class FormattedStringValueExtracter
     /// <param name="values">Array of extracted values if matched</param>
     /// <param name="ignoreCase">True, to search case-insensitive</param>
     /// <returns>True, if matched.</returns>
-    public static bool IsMatch(string str, string format, out string?[] values, bool ignoreCase = false)
+    public static bool IsMatch(string str, string format, out string[] values, bool ignoreCase = false)
     {
         var result = Extract(str, format, ignoreCase);
         if (!result.IsMatch)
