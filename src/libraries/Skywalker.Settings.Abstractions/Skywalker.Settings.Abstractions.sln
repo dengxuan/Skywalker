@@ -1,0 +1,44 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.4.33110.190
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{3E8CB50C-5008-47C3-A444-811BC16FC426}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Skywalker.Settings.Abstractions", "src\Skywalker.Settings.Abstractions.csproj", "{5B297E6E-165C-436D-BCCA-0A0D407659FA}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Skywalker.Extensions.Universal", "..\Skywalker.Extensions.Universal\src\Skywalker.Extensions.Universal.csproj", "{9D042817-D7C4-4189-839E-28C6D87EF811}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Skywalker.Security.Abstractions", "..\Skywalker.Security.Abstractions\src\Skywalker.Security.Abstractions.csproj", "{9FB041B6-7A8D-41EA-B94B-4FBA864AB69A}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{5B297E6E-165C-436D-BCCA-0A0D407659FA}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{5B297E6E-165C-436D-BCCA-0A0D407659FA}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{5B297E6E-165C-436D-BCCA-0A0D407659FA}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{5B297E6E-165C-436D-BCCA-0A0D407659FA}.Release|Any CPU.Build.0 = Release|Any CPU
+		{9D042817-D7C4-4189-839E-28C6D87EF811}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{9D042817-D7C4-4189-839E-28C6D87EF811}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{9D042817-D7C4-4189-839E-28C6D87EF811}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{9D042817-D7C4-4189-839E-28C6D87EF811}.Release|Any CPU.Build.0 = Release|Any CPU
+		{9FB041B6-7A8D-41EA-B94B-4FBA864AB69A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{9FB041B6-7A8D-41EA-B94B-4FBA864AB69A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{9FB041B6-7A8D-41EA-B94B-4FBA864AB69A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{9FB041B6-7A8D-41EA-B94B-4FBA864AB69A}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{5B297E6E-165C-436D-BCCA-0A0D407659FA} = {3E8CB50C-5008-47C3-A444-811BC16FC426}
+		{9D042817-D7C4-4189-839E-28C6D87EF811} = {3E8CB50C-5008-47C3-A444-811BC16FC426}
+		{9FB041B6-7A8D-41EA-B94B-4FBA864AB69A} = {3E8CB50C-5008-47C3-A444-811BC16FC426}
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {A1D004AD-D1A3-435F-884D-8EC16A8F97F7}
+	EndGlobalSection
+EndGlobal
