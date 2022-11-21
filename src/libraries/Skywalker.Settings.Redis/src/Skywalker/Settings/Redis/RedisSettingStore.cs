@@ -1,6 +1,5 @@
 ﻿using Microsoft.Extensions.Caching.Distributed;
 using Skywalker.Settings.Abstractions;
-using Volo.Abp.Settings;
 
 namespace Skywalker.Settings.Redis;
 

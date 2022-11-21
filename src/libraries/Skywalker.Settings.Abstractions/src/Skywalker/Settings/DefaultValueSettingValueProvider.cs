@@ -3,7 +3,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Skywalker.Settings.Abstractions;
 
-namespace Volo.Abp.Settings;
+namespace Skywalker.Settings;
 
 public class DefaultValueSettingValueProvider : SettingValueProvider
 {

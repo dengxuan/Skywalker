@@ -3,7 +3,7 @@
 
 using System.Text;
 
-namespace Skywalker.Security.Cryptography;
+namespace Skywalker.Settings;
 
 /// <summary>
 /// 

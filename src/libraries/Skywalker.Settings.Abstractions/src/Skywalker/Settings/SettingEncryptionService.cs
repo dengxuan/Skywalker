@@ -2,10 +2,9 @@
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Logging.Abstractions;
 using Microsoft.Extensions.Options;
-using Skywalker.Security.Cryptography;
 using Skywalker.Settings.Abstractions;
 
-namespace Volo.Abp.Settings;
+namespace Skywalker.Settings;
 
 public class SettingEncryptionService : ISettingEncryptionService//, ITransientDependency
 {
@@ -23,7 +22,7 @@ public class SettingEncryptionService : ISettingEncryptionService//, ITransientD
             return plainValue;
         }
 
-        return plainValue.ToAes(_options.DefaultPassPhrase,_options.DefaultSalt ,_options.InitVectorBytes,_options.Keysize);
+        return plainValue.ToAes(_options.DefaultPassPhrase, _options.DefaultSalt, _options.InitVectorBytes, _options.Keysize);
     }
 
     public virtual string Decrypt(SettingDefinition settingDefinition, string encryptedValue)

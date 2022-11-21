@@ -2,7 +2,7 @@
 using Microsoft.Extensions.Options;
 using Skywalker.Settings.Abstractions;
 
-namespace Volo.Abp.Settings;
+namespace Skywalker.Settings;
 
 public class SettingValueProviderManager : ISettingValueProviderManager//, ISingletonDependency
 {

@@ -1,6 +1,4 @@
-﻿using Volo.Abp.Settings;
-
-namespace Skywalker.Settings.Abstractions;
+﻿namespace Skywalker.Settings.Abstractions;
 
 public interface ISettingStore
 {

@@ -1,7 +1,7 @@
 ﻿using Skywalker.Extensions.Collections.Generic;
 using Skywalker.Settings.Abstractions;
 
-namespace Volo.Abp.Settings;
+namespace Skywalker.Settings;
 
 public class SkywalkerSettingOptions
 {

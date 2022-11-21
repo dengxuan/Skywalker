@@ -2,9 +2,16 @@
 
 namespace Microsoft.Extensions.DependencyInjection;
 
+/// <summary>
+/// 
+/// </summary>
 public static class SkywalkerDependencyInjectionIServiceCollectionExtensions
 {
-
+    /// <summary>
+    /// 
+    /// </summary>
+    /// <param name="services"></param>
+    /// <returns></returns>
     public static IServiceCollection AddSkywalker(this IServiceCollection services)
     {
         services.Scan(scanner =>

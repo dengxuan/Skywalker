@@ -1,6 +1,6 @@
 using Skywalker.Settings.Abstractions;
 
-namespace Volo.Abp.Settings;
+namespace Skywalker.Settings;
 
 public class SettingProvider : ISettingProvider//, ITransientDependency
 {

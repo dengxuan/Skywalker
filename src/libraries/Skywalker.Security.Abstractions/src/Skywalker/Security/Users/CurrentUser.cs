@@ -15,7 +15,7 @@ public class CurrentUser : ICurrentUser, ITransientDependency
 
     public virtual long? Id => _principalAccessor.Principal?.FindUserId();
 
-    public virtual string? Username => this.FindClaimValue(SkywalkerClaimTypes.Username);
+    public virtual string? Username => this.FindClaimValue(SkywalkerClaimTypes.UserName);
 
     public virtual string? PhoneNumber => this.FindClaimValue(SkywalkerClaimTypes.PhoneNumber);
 
