@@ -62,7 +62,7 @@ public static class PermissionsIServiceCollectionExtensions
         where T : class, IEndpointHandler
     {
         services.AddTransient<T>();
-        services.AddSingleton(new Endpoint(name, path, typeof(T)));
+        services.AddSingleton(new Skywalker.AspNetCore.Endpoint(name, path, typeof(T)));
 
         return services;
     }

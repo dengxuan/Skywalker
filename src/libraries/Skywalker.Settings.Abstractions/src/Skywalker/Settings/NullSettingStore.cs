@@ -14,12 +14,19 @@ public class NullSettingStore : ISettingStore//, ISingletonDependency
         Logger = NullLogger<NullSettingStore>.Instance;
     }
 
-    public Task<string> GetOrNullAsync(string name, string providerName, string providerKey)
+    /// <summary>
+    /// 
+    /// </summary>
+    /// <param name="name"></param>
+    /// <param name="providerName"></param>
+    /// <param name="providerKey"></param>
+    /// <returns></returns>
+    public Task<string?> GetOrNullAsync(string name, string? providerName, string? providerKey)
     {
-        return Task.FromResult((string)null);
+        return Task.FromResult<string?>(null);
     }
 
-    public Task<List<SettingValue>> GetAllAsync(string[] names, string providerName, string providerKey)
+    public Task<List<SettingValue>> GetAllAsync(string[] names, string? providerName, string? providerKey)
     {
         return Task.FromResult(names.Select(x => new SettingValue(x, null)).ToList());
     }

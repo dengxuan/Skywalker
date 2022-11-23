@@ -24,7 +24,7 @@ public static class RedisCachingIServiceCollectionExtensions
     public static IServiceCollection AddRedisCaching(this IServiceCollection services)
     {
         var configuration = services.GetConfiguration();
-        services.Configure<RedisOptions>(configuration?.GetSection(nameof(RedisOptions)));
+        services.Configure<RedisOptions>(configuration!.GetSection(nameof(RedisOptions)));
         return services.AddRedisCachingServices();
     }
 }

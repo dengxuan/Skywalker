@@ -18,7 +18,7 @@ public class ConfigurationSettingValueProvider : ISettingValueProvider//, ITrans
         Configuration = configuration;
     }
 
-    public virtual Task<string> GetOrNullAsync(SettingDefinition setting)
+    public virtual Task<string?> GetOrNullAsync(SettingDefinition setting)
     {
         return Task.FromResult(Configuration[ConfigurationNamePrefix + setting.Name]);
     }

@@ -20,7 +20,7 @@ public class SettingValueProviderManager : ISettingValueProviderManager//, ISing
         _lazyProviders = new Lazy<List<ISettingValueProvider>>(
             () => Options
                 .ValueProviders
-                .Select(type => serviceProvider.GetRequiredService(type) as ISettingValueProvider)
+                .Select(type => (ISettingValueProvider)serviceProvider.GetRequiredService(type))
                 .ToList(),
             true
         );

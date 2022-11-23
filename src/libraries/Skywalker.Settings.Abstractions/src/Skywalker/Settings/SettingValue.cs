@@ -13,5 +13,5 @@ public class SettingValue : NameValue
     /// </summary>
     /// <param name="name"></param>
     /// <param name="value"></param>
-    public SettingValue(string name, string value) : base(name, value) { }
+    public SettingValue(string name, string? value) : base(name, value) { }
 }

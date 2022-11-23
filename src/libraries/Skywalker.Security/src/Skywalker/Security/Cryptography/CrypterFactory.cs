@@ -25,7 +25,7 @@ public class CrypterFactory : ICrypterFactory
             SymmetricCrypterAlgorithms.DES => new SymmetricCrypter(DES.Create()),
             SymmetricCrypterAlgorithms.TripleDES => new SymmetricCrypter(TripleDES.Create()),
             SymmetricCrypterAlgorithms.RC2 => new SymmetricCrypter(RC2.Create()),
-            SymmetricCrypterAlgorithms.Rijndeal => new SymmetricCrypter(Aes.Create("Rijndeal")!),
+            SymmetricCrypterAlgorithms.Rijndeal => new SymmetricCrypter(Rijndael.Create()),
             _ => throw new ArgumentOutOfRangeException(nameof(algorithm)),
         };
     }
@@ -38,7 +38,7 @@ public class CrypterFactory : ICrypterFactory
             SymmetricCrypterAlgorithms.DES => new SymmetricCrypter(DES.Create()),
             SymmetricCrypterAlgorithms.TripleDES => new SymmetricCrypter(TripleDES.Create()),
             SymmetricCrypterAlgorithms.RC2 => new SymmetricCrypter(RC2.Create()),
-            SymmetricCrypterAlgorithms.Rijndeal => new SymmetricCrypter(Aes.Create("Rijndeal")!),
+            SymmetricCrypterAlgorithms.Rijndeal => new SymmetricCrypter(Rijndael.Create()),
             _ => throw new ArgumentOutOfRangeException(nameof(algorithm)),
         };
     }

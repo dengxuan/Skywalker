@@ -15,8 +15,7 @@
 
   <ItemGroup>
     <ProjectReference Include="$(LibrariesProjectRoot)Skywalker.Security.Abstractions\src\Skywalker.Security.Abstractions.csproj" />
-    <ProjectReference Include="$(LibrariesProjectRoot)Skywalker.Extensions.SimpleStateChecking\src\Skywalker.Extensions.SimpleStateChecking.csproj" />
-    <ProjectReference Include="$(LibrariesProjectRoot)Skywalker.ExceptionHandler.Abstractions\src\Skywalker.ExceptionHandler.Abstractions.csproj" />
+    <ProjectReference Include="..\..\Skywalker.Extensions.SimpleStateChecking\src\Skywalker.Extensions.SimpleStateChecking.csproj" />
   </ItemGroup>
 
 </Project>

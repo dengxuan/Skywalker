@@ -1,12 +1,8 @@
-<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
     <RootNamespace></RootNamespace>
   </PropertyGroup>
-
-  <ItemGroup>
-    <ProjectReference Include="..\..\Skywalker.Settings.Abstractions\src\Skywalker.Settings.Abstractions.csproj" />
-  </ItemGroup>
 
 
   <ItemGroup Condition="$(TargetFramework) == 'netstandard2.0'">
@@ -31,6 +27,10 @@
 
   <ItemGroup Condition="$(TargetFramework) == 'net7.0'">
     <PackageReference Include="Microsoft.Extensions.Caching.StackExchangeRedis" Version="7.0.0" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\Skywalker.Settings.Abstractions\src\Skywalker.Settings.Abstractions.csproj" />
   </ItemGroup>
 
 </Project>

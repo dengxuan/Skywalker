@@ -13,7 +13,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="$(LibrariesProjectRoot)Skywalker.Permissions.Abstractions\src\Skywalker.Permissions.Abstractions.csproj" />
+    <ProjectReference Include="..\..\Skywalker.Permissions.Abstractions\src\Skywalker.Permissions.Abstractions.csproj" />
   </ItemGroup>
 
 </Project>

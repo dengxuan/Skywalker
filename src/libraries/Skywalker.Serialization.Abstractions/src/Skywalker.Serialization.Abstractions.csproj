@@ -4,8 +4,4 @@
     <RootNamespace></RootNamespace>
   </PropertyGroup>
 
-  <ItemGroup>
-    <ProjectReference Include="$(LibrariesProjectRoot)Skywalker.Extensions.Timezone\src\Skywalker.Extensions.Timezone.csproj" />
-  </ItemGroup>
-
 </Project>

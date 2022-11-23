@@ -19,6 +19,6 @@ public class HttpContextCurrentPrincipalAccessor : ThreadCurrentPrincipalAccesso
 
     protected override ClaimsPrincipal? GetClaimsPrincipal()
     {
-        return _httpContextAccessor.HttpContext.User ?? base.GetClaimsPrincipal();
+        return _httpContextAccessor.HttpContext?.User ?? base.GetClaimsPrincipal();
     }
 }

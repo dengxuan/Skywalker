@@ -3,8 +3,6 @@ using Skywalker.Ddd.EntityFrameworkCore;
 using Skywalker.Ddd.Uow;
 using Skywalker.Ddd.Uow.Abstractions;
 using Skywalker.Ddd.Uow.EntityFrameworkCore;
-using Skywalker.Extensions.DependencyInjection;
-using Skywalker.Extensions.DependencyInjection.Abstractions;
 
 namespace Microsoft.Extensions.DependencyInjection;
 

@@ -18,7 +18,7 @@ public class SettingProvider : ISettingProvider//, ITransientDependency
         SettingValueProviderManager = settingValueProviderManager;
     }
 
-    public virtual async Task<string> GetOrNullAsync(string name)
+    public virtual async Task<string?> GetOrNullAsync(string name)
     {
         var setting = SettingDefinitionManager.Get(name);
         var providers = Enumerable
@@ -92,7 +92,7 @@ public class SettingProvider : ISettingProvider//, ITransientDependency
         return settingValues;
     }
 
-    protected virtual async Task<string> GetOrNullValueFromProvidersAsync(
+    protected virtual async Task<string?> GetOrNullValueFromProvidersAsync(
         IEnumerable<ISettingValueProvider> providers,
         SettingDefinition setting)
     {

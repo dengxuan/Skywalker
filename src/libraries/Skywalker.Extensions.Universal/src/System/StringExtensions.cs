@@ -634,8 +634,11 @@ public static class StringExtensions
         input = input.Trim();
         return input.Split(new[] { ' ' }, StringSplitOptions.RemoveEmptyEntries).ToList();
     }
-
+#if NETSTANDARD2_0
+    public static List<string> ParseScopesString(this string scopes)
+#else
     public static List<string>? ParseScopesString(this string? scopes)
+#endif
     {
         if (scopes.IsMissing())
         {

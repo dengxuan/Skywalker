@@ -16,9 +16,9 @@ public class SkywalkerAuthenticationHandler : AuthenticationHandler<SkywalkerAut
 {
     private readonly ISkywalkerTokenValidator _skywalkerTokenValidator;
 
-    protected new SkywalkerAuthenticationEvents Events
+    protected new SkywalkerAuthenticationEvents? Events
     {
-        get => (SkywalkerAuthenticationEvents)base.Events;
+        get => (SkywalkerAuthenticationEvents?)base.Events;
         set => base.Events = value;
     }
 
@@ -36,7 +36,10 @@ public class SkywalkerAuthenticationHandler : AuthenticationHandler<SkywalkerAut
         {
             AuthenticateFailure = authResult?.Failure
         };
-        await Events.Challenge(eventContext!);
+        if(Events != null)
+        {
+            await Events.Challenge(eventContext!);
+        }
         if (eventContext.Handled)
         {
             return;
@@ -47,7 +50,7 @@ public class SkywalkerAuthenticationHandler : AuthenticationHandler<SkywalkerAut
 
     protected override async Task<AuthenticateResult> HandleAuthenticateAsync()
     {
-        string skywalker = Request.Headers[SkywalkerAuthenticationDefaults.AuthenticationScheme];
+        var skywalker = Request.Headers[SkywalkerAuthenticationDefaults.AuthenticationScheme];
         if (string.IsNullOrEmpty(skywalker))
         {
             return AuthenticateResult.NoResult();

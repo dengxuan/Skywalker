@@ -1,6 +1,4 @@
-﻿using Skywalker.Extensions.DependencyInjection;
-
-namespace Skywalker.Extensions.Emailing;
+﻿namespace Skywalker.Extensions.Emailing;
 
 public class SmtpEmailSenderConfiguration
 {

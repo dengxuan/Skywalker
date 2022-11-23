@@ -6,5 +6,5 @@ public interface ISettingDefinitionManager
 
     IReadOnlyList<SettingDefinition> GetAll();
 
-    SettingDefinition GetOrNull(string name);
+    SettingDefinition? GetOrNull(string name);
 }

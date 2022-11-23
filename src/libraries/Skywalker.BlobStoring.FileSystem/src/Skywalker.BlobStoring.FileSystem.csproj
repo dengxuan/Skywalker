@@ -9,6 +9,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="$(LibrariesProjectRoot)Skywalker.BlobStoring.Abstractions/src/Skywalker.BlobStoring.Abstractions.csproj" />
+    <ProjectReference Include="..\..\Skywalker.BlobStoring.Abstractions\src\Skywalker.BlobStoring.Abstractions.csproj" />
   </ItemGroup>
 </Project>

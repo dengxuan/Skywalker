@@ -6,7 +6,6 @@
 
   <ItemGroup>
     <ProjectReference Include="$(LibrariesProjectRoot)Skywalker.Ddd.Application.Abstractions\src\Skywalker.Ddd.Application.Abstractions.csproj" />
-    <ProjectReference Include="$(LibrariesProjectRoot)Skywalker.Caching.Abstractions\src\Skywalker.Caching.Abstractions.csproj" />
   </ItemGroup>
 
   <ItemGroup>

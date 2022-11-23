@@ -113,7 +113,7 @@ public class FormattedStringValueExtracter
     /// <param name="values">Array of extracted values if matched</param>
     /// <param name="ignoreCase">True, to search case-insensitive</param>
     /// <returns>True, if matched.</returns>
-    public static bool IsMatch(string str, string format, out string[] values, bool ignoreCase = false)
+    public static bool IsMatch(string str, string format, out string?[] values, bool ignoreCase = false)
     {
         var result = Extract(str, format, ignoreCase);
         if (!result.IsMatch)

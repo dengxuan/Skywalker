@@ -27,8 +27,11 @@ public static class StringExtensions
         }
 
         var plainTextBytes = Encoding.UTF8.GetBytes(plainText);
+#if NETSTANDARD2_0
         using var password = new Rfc2898DeriveBytes(passPhrase, salt);
-
+#else
+        using var password = new Rfc2898DeriveBytes(passPhrase, salt, 100000, HashAlgorithmName.SHA256);
+#endif
         var keyBytes = password.GetBytes(keySize / 8);
 
         using var symmetricKey = Aes.Create();
@@ -63,7 +66,11 @@ public static class StringExtensions
         }
 
         var cipherTextBytes = Convert.FromBase64String(cipherText);
+#if NETSTANDARD2_0
         using var password = new Rfc2898DeriveBytes(passPhrase, salt);
+#else
+        using var password = new Rfc2898DeriveBytes(passPhrase, salt, 100000, HashAlgorithmName.SHA256);
+#endif
 
         var keyBytes = password.GetBytes(keySize / 8);
         using var symmetricKey = Aes.Create();

@@ -1,11 +1,12 @@
-﻿using System.Collections.Immutable;
+﻿using System.Collections.Generic;
+using System.Collections.Immutable;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Options;
 using Skywalker.Settings.Abstractions;
 
 namespace Skywalker.Settings;
 
-public class SettingDefinitionManager : ISettingDefinitionManager//, ISingletonDependency
+public class SettingDefinitionManager : ISettingDefinitionManager
 {
     protected Lazy<IDictionary<string, SettingDefinition>> SettingDefinitions { get; }
 
@@ -25,8 +26,6 @@ public class SettingDefinitionManager : ISettingDefinitionManager//, ISingletonD
 
     public virtual SettingDefinition Get(string name)
     {
-        name.NotNull(nameof(name));
-
         var setting = GetOrNull(name);
 
         if (setting == null)
@@ -42,7 +41,7 @@ public class SettingDefinitionManager : ISettingDefinitionManager//, ISingletonD
         return SettingDefinitions.Value.Values.ToImmutableList();
     }
 
-    public virtual SettingDefinition GetOrNull(string name)
+    public virtual SettingDefinition? GetOrNull(string name)
     {
         return SettingDefinitions.Value.GetOrDefault(name);
     }
@@ -55,7 +54,7 @@ public class SettingDefinitionManager : ISettingDefinitionManager//, ISingletonD
         {
             var providers = Options
                 .DefinitionProviders
-                .Select(p => scope.ServiceProvider.GetRequiredService(p) as ISettingDefinitionProvider)
+                .Select(p => (ISettingDefinitionProvider)scope.ServiceProvider.GetRequiredService(p))
                 .ToList();
 
             foreach (var provider in providers)

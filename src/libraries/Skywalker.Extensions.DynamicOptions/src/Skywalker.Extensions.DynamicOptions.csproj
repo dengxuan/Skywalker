@@ -4,7 +4,6 @@
     <RootNamespace></RootNamespace>
   </PropertyGroup>
 
-
   <ItemGroup Condition="$(TargetFramework) == 'netstandard2.0'">
     <PackageReference Include="Microsoft.Extensions.Options" Version="7.0.0" />
   </ItemGroup>

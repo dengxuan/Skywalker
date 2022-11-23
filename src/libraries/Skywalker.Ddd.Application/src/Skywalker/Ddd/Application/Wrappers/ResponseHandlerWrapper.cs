@@ -64,6 +64,6 @@ public class ResponseHandlerWrapper<TRequest, TResponse> : ResponseHandlerWrappe
         context.Properties["Handler"] = handler;
         context.Properties["HandlerType"] = handlerType;
         await _pipeline(context);
-        return (TResponse)context.ReturnValue;
+        return (TResponse?)context.ReturnValue;
     }
 }

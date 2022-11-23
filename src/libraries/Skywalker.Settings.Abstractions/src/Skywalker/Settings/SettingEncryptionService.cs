@@ -15,7 +15,7 @@ public class SettingEncryptionService : ISettingEncryptionService//, ITransientD
         _options = options.Value;
     }
 
-    public virtual string? Encrypt(SettingDefinition settingDefinition, string plainValue)
+    public virtual string? Encrypt(SettingDefinition settingDefinition, string? plainValue)
     {
         if (plainValue.IsNullOrEmpty())
         {
@@ -25,7 +25,7 @@ public class SettingEncryptionService : ISettingEncryptionService//, ITransientD
         return plainValue.ToAes(_options.DefaultPassPhrase, _options.DefaultSalt, _options.InitVectorBytes, _options.Keysize);
     }
 
-    public virtual string Decrypt(SettingDefinition settingDefinition, string encryptedValue)
+    public virtual string? Decrypt(SettingDefinition settingDefinition, string? encryptedValue)
     {
         if (encryptedValue.IsNullOrEmpty())
         {
@@ -36,9 +36,9 @@ public class SettingEncryptionService : ISettingEncryptionService//, ITransientD
         {
             return encryptedValue.FromAes(_options.DefaultPassPhrase, _options.DefaultSalt, _options.InitVectorBytes, _options.Keysize);
         }
-        catch (Exception e)
+        catch
         {
-            return string.Empty;
+            return null;
         }
     }
 }

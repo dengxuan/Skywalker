@@ -1,4 +1,4 @@
-﻿<Project Sdk="Microsoft.NET.Sdk">
+<Project Sdk="Microsoft.NET.Sdk">
 
 	<PropertyGroup>
 		<RootNamespace></RootNamespace>
@@ -22,9 +22,8 @@
     </PackageReference>
   </ItemGroup>
 
-
   <ItemGroup>
-	  <ProjectReference Include="$(LibrariesProjectRoot)Skywalker.Ddd.EntityFrameworkCore\src\Skywalker.Ddd.EntityFrameworkCore.csproj" />
-	</ItemGroup>
+    <ProjectReference Include="..\..\Skywalker.Ddd.EntityFrameworkCore\src\Skywalker.Ddd.EntityFrameworkCore.csproj" />
+  </ItemGroup>
 
 </Project>
