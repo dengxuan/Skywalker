@@ -634,8 +634,11 @@ public static class StringExtensions
         input = input.Trim();
         return input.Split(new[] { ' ' }, StringSplitOptions.RemoveEmptyEntries).ToList();
     }
-
+#if NETSTANDARD2_0
+    public static List<string>? ParseScopesString(this string scopes)
+#else
     public static List<string>? ParseScopesString(this string? scopes)
+#endif
     {
         if (scopes.IsMissing())
         {
@@ -671,7 +674,7 @@ public static class StringExtensions
 
     [DebuggerStepThrough]
 #if NETSTANDARD2_0
-    public static string EnsureLeadingSlash(this string url)
+    public static string? EnsureLeadingSlash(this string url)
 #else
     [return: NotNullIfNotNull("url")]
     public static string? EnsureLeadingSlash(this string? url)
@@ -687,7 +690,7 @@ public static class StringExtensions
 
     [DebuggerStepThrough]
 #if NETSTANDARD2_0
-    public static string EnsureTrailingSlash(this string url)
+    public static string? EnsureTrailingSlash(this string url)
 #else
     [return: NotNullIfNotNull("url")]
     public static string? EnsureTrailingSlash(this string? url)
@@ -703,7 +706,7 @@ public static class StringExtensions
 
     [DebuggerStepThrough]
 #if NETSTANDARD2_0
-    public static string RemoveLeadingSlash(this string url)
+    public static string? RemoveLeadingSlash(this string url)
 #else
     [return: NotNullIfNotNull("url")]
     public static string? RemoveLeadingSlash(this string? url)
@@ -723,7 +726,7 @@ public static class StringExtensions
 
     [DebuggerStepThrough]
 #if NETSTANDARD2_0
-    public static string RemoveTrailingSlash(this string url)
+    public static string? RemoveTrailingSlash(this string url)
 #else
     [return: NotNullIfNotNull("url")]
     public static string? RemoveTrailingSlash(this string? url)
@@ -749,7 +752,10 @@ public static class StringExtensions
     public static string? CleanUrlPath(this string? url)
 #endif
     {
-        if (string.IsNullOrWhiteSpace(url)) url = "/";
+        if (string.IsNullOrWhiteSpace(url))
+        {
+            url = "/";
+        }
 
         if (url != "/" && url.EndsWith("/"))
         {

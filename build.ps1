@@ -9,6 +9,7 @@ dotnet pack src/libraries/Skywalker.Extensions.Logging.File/Skywalker.Extensions
 dotnet pack src/libraries/Skywalker.Extensions.HtmlAgilityPack/Skywalker.Extensions.HtmlAgilityPack.sln -c Release -p:IncludeSymbols=true -p:SymbolPackageFormat=snupkg --output nupkgs
 dotnet pack src/libraries/Skywalker.Extensions.HashedWheelTimer/Skywalker.Extensions.HashedWheelTimer.sln -c Release -p:IncludeSymbols=true -p:SymbolPackageFormat=snupkg --output nupkgs
 dotnet pack src/libraries/Skywalker.Extensions.Emailing/Skywalker.Extensions.Emailing.sln -c Release -p:IncludeSymbols=true -p:SymbolPackageFormat=snupkg --output nupkgs
+dotnet pack src/libraries/Skywalker.Extensions.SimpleStateChecking/Skywalker.Extensions.SimpleStateChecking.sln -c Release -p:IncludeSymbols=true -p:SymbolPackageFormat=snupkg --output nupkgs
 
 #DependencyInjection
 dotnet pack src/libraries/Skywalker.Extensions.DependencyInjection.Abstractions/Skywalker.Extensions.DependencyInjection.Abstractions.sln -c Release -p:IncludeSymbols=true -p:SymbolPackageFormat=snupkg --output nupkgs
@@ -27,6 +28,7 @@ dotnet pack src/libraries/Skywalker.EventBus.Abstractions/Skywalker.EventBus.Abs
 #Security
 dotnet pack src/libraries/Skywalker.Security.Abstractions/Skywalker.Security.Abstractions.sln -c Release -p:IncludeSymbols=true -p:SymbolPackageFormat=snupkg --output nupkgs
 dotnet pack src/libraries/Skywalker.Security/Skywalker.Security.sln -c Release -p:IncludeSymbols=true -p:SymbolPackageFormat=snupkg --output nupkgs
+dotnet pack src/libraries/Skywalker.AspNetCore.Security.Abstractions/Skywalker.AspNetCore.Security.Abstractions.sln -c Release -p:IncludeSymbols=true -p:SymbolPackageFormat=snupkg --output nupkgs
 
 #Authentication
 dotnet pack src/libraries/Skywalker.AspNetCore.Authentication.WeChat/Skywalker.AspNetCore.Authentication.WeChat.sln -c Release -p:IncludeSymbols=true -p:SymbolPackageFormat=snupkg --output nupkgs
@@ -59,6 +61,10 @@ dotnet pack src/libraries/Skywalker.BlobStoring.FileSystem/Skywalker.BlobStoring
 #Sms
 dotnet pack src/libraries/Skywalker.Sms.Abstractions/Skywalker.Sms.Abstractions.sln -c Release -p:IncludeSymbols=true -p:SymbolPackageFormat=snupkg --output nupkgs
 dotnet pack src/libraries/Skywalker.Sms.Aliyun/Skywalker.Sms.Aliyun.sln -c Release -p:IncludeSymbols=true -p:SymbolPackageFormat=snupkg --output nupkgs
+
+#Settings
+dotnet pack src/libraries/Skywalker.Settings.Abstractions/Skywalker.Settings.Abstractions.sln -c Release -p:IncludeSymbols=true -p:SymbolPackageFormat=snupkg --output nupkgs
+dotnet pack src/libraries/Skywalker.Settings.Redis/Skywalker.Settings.Redis.sln -c Release -p:IncludeSymbols=true -p:SymbolPackageFormat=snupkg --output nupkgs
 
 #Ddd
 dotnet pack src/libraries/Skywalker.Ddd.Domain.Abstractions/Skywalker.Ddd.Domain.Abstractions.sln -c Release -p:IncludeSymbols=true -p:SymbolPackageFormat=snupkg --output nupkgs
