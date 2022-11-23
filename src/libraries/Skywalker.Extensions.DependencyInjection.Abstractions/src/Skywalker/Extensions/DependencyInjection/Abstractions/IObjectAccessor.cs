@@ -1,7 +1,13 @@
 ﻿namespace Skywalker.Extensions.DependencyInjection.Abstractions;
 
+/// <summary>
+/// 
+/// </summary>
+/// <typeparam name="T"></typeparam>
 public interface IObjectAccessor<out T>
 {
-
-    T Value { get; }
+    /// <summary>
+    /// 
+    /// </summary>
+    T? Value { get; }
 }

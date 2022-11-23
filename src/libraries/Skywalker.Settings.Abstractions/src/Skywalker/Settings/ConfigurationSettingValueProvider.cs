@@ -1,7 +1,7 @@
 ﻿using Microsoft.Extensions.Configuration;
 using Skywalker.Settings.Abstractions;
 
-namespace Volo.Abp.Settings;
+namespace Skywalker.Settings;
 
 public class ConfigurationSettingValueProvider : ISettingValueProvider//, ITransientDependency
 {

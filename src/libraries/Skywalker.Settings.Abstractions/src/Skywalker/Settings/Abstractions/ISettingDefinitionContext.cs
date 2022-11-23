@@ -1,5 +1,4 @@
 using System.Collections.Generic;
-using Volo.Abp.Settings;
 
 namespace Skywalker.Settings.Abstractions;
 

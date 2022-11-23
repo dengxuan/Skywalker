@@ -1,6 +1,6 @@
 ﻿using Skywalker.Extensions.Collections;
 
-namespace Volo.Abp.Settings;
+namespace Skywalker.Settings;
 
 /// <summary>
 /// 

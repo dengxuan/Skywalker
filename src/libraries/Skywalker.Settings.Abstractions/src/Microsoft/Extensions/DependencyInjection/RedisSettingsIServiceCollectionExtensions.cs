@@ -3,7 +3,6 @@
 
 using Skywalker.Settings;
 using Skywalker.Settings.Abstractions;
-using Volo.Abp.Settings;
 
 namespace Microsoft.Extensions.DependencyInjection;
 

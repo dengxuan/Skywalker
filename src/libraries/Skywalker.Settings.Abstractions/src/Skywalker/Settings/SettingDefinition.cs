@@ -1,4 +1,4 @@
-﻿namespace Volo.Abp.Settings;
+﻿namespace Skywalker.Settings;
 
 public class SettingDefinition
 {

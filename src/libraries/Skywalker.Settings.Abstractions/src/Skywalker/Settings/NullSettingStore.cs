@@ -2,7 +2,7 @@
 using Microsoft.Extensions.Logging.Abstractions;
 using Skywalker.Settings.Abstractions;
 
-namespace Volo.Abp.Settings;
+namespace Skywalker.Settings;
 
 //[Dependency(TryRegister = true)]
 public class NullSettingStore : ISettingStore//, ISingletonDependency

@@ -3,7 +3,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Options;
 using Skywalker.Settings.Abstractions;
 
-namespace Volo.Abp.Settings;
+namespace Skywalker.Settings;
 
 public class SettingDefinitionManager : ISettingDefinitionManager//, ISingletonDependency
 {
@@ -25,7 +25,7 @@ public class SettingDefinitionManager : ISettingDefinitionManager//, ISingletonD
 
     public virtual SettingDefinition Get(string name)
     {
-        Check.NotNull(name, nameof(name));
+        name.NotNull(nameof(name));
 
         var setting = GetOrNull(name);
 
