@@ -2,7 +2,7 @@
 
   <PropertyGroup>
     <RootNamespace></RootNamespace>
-    <NoWarn>SYSLIB0045;</NoWarn>
+    <NoWarn>SYSLIB0045;CP0002</NoWarn>
   </PropertyGroup>
 
   <ItemGroup Condition="$(TargetFramework) == 'netstandard2.0'">
