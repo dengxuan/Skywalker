@@ -1,4 +1,5 @@
 using System.Diagnostics;
+using System.Diagnostics.CodeAnalysis;
 using Skywalker.Extensions.Collections;
 using Skywalker.Extensions.Text.Formatting;
 
@@ -113,7 +114,11 @@ public class FormattedStringValueExtracter
     /// <param name="values">Array of extracted values if matched</param>
     /// <param name="ignoreCase">True, to search case-insensitive</param>
     /// <returns>True, if matched.</returns>
+#if NETSTANDARD2_0
     public static bool IsMatch(string str, string format, out string?[] values, bool ignoreCase = false)
+#else
+    public static bool IsMatch(string str, string format, [NotNullWhen(false)] out string?[] values, bool ignoreCase = false)
+#endif
     {
         var result = Extract(str, format, ignoreCase);
         if (!result.IsMatch)

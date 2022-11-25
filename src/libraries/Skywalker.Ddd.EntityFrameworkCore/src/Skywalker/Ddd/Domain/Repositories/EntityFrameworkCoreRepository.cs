@@ -19,7 +19,7 @@ namespace Skywalker.Ddd.EntityFrameworkCore.Repositories;
 /// </summary>
 /// <typeparam name="TDbContext"></typeparam>
 /// <typeparam name="TEntity"></typeparam>
-public abstract class Repository<TDbContext, TEntity> : BasicRepository<TEntity>, IRepository<TEntity>, IAsyncEnumerable<TEntity>
+public abstract class EntityFrameworkCoreRepository<TDbContext, TEntity> : BasicRepository<TEntity>, IRepository<TEntity>, IAsyncEnumerable<TEntity>, IEntityFrameworkCoreRepository<TEntity>
     where TDbContext : DbContext
     where TEntity : class, IEntity
 {
@@ -39,7 +39,7 @@ public abstract class Repository<TDbContext, TEntity> : BasicRepository<TEntity>
     protected DbContext DbContext => _dbContextProvider.GetDbContext();
 
     /// <inheritdoc/>
-    public Repository(IClock clock, IDbContextProvider<TDbContext> dbContextProvider)
+    public EntityFrameworkCoreRepository(IClock clock, IDbContextProvider<TDbContext> dbContextProvider)
     {
         _clock = clock;
         _eventBus = NullEventBus.Instance;
@@ -144,6 +144,11 @@ public abstract class Repository<TDbContext, TEntity> : BasicRepository<TEntity>
     /// </summary>
     /// <param name="entity"></param>
     protected virtual void SetIdentifier(TEntity entity) { }
+
+
+    Task<DbContext> IEntityFrameworkCoreRepository<TEntity>.GetDbContextAsync() => Task.FromResult(DbContext);
+
+    Task<DbSet<TEntity>> IEntityFrameworkCoreRepository<TEntity>.GetDbSetAsync() => Task.FromResult(DbSet);
 
     /// <inheritdoc/>
     public override async Task<TEntity?> FindAsync(Expression<Func<TEntity, bool>> predicate, CancellationToken cancellationToken = default)
