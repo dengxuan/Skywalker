@@ -21,8 +21,8 @@ public class SkywalkerDbContextConfigurationContext : IServiceProviderAccessor
     public SkywalkerDbContextConfigurationContext(
         string connectionString,
         IServiceProvider serviceProvider,
-         string connectionStringName,
-         DbConnection? existingConnection)
+        string connectionStringName,
+        DbConnection? existingConnection)
     {
         ConnectionString = connectionString;
         ServiceProvider = serviceProvider;

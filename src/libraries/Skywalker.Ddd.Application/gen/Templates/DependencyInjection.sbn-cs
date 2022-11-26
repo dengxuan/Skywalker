@@ -12,7 +12,7 @@ using {{namespace}};
 namespace Microsoft.Extensions.DependencyInjection;
 
 [GeneratedCode("Skywalker.Ddd.Application.Generators", "{{ GeneratorVersion }}")]
-public static class IntecepterIServiceCollectionExtensions 
+internal static class IntecepterIServiceCollectionExtensions 
 {
     public static IServiceCollection AddApplication(this IServiceCollection services, ServiceLifetime lifetime)
     {

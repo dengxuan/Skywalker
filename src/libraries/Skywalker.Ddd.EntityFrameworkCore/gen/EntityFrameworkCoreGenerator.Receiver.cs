@@ -21,7 +21,9 @@ public partial class EntityFrameworkCoreGenerator
 
         public IList<Intecepter> Intecepters = new List<Intecepter>();
         public IList<Repository> Repositories = new List<Repository>();
-        public ISet<Dependency> Dependencies = new HashSet<Dependency>();
+
+        public ISet<Dependency> RepositoryDependencies = new HashSet<Dependency>();
+        public ISet<Dependency> DomainServiceDependencies = new HashSet<Dependency>();
 
         public void OnVisitSyntaxNode(GeneratorSyntaxContext context)
         {
@@ -83,7 +85,7 @@ public partial class EntityFrameworkCoreGenerator
                     intecepter.Namespace,
                     @interface.ContainingNamespace.ToDisplayString(),
                 });
-                Dependencies.Add(dependency);
+                DomainServiceDependencies.Add(dependency);
                 foreach (var item in @interface.GetMembers())
                 {
                     if (item is not IMethodSymbol methodSymbol ||
@@ -153,7 +155,7 @@ public partial class EntityFrameworkCoreGenerator
                 var method = new Method(methodSymbol.Name, true, methodSymbol.ReturnType);
                 foreach (var parameterSymbol in methodSymbol.Parameters)
                 {
-                    if ((parameterSymbol.Type is IArrayTypeSymbol arrayTypeSymbol))
+                    if (parameterSymbol.Type is IArrayTypeSymbol arrayTypeSymbol)
                     {
                         intecepter.Namespaces.Add(arrayTypeSymbol.ElementType.ContainingNamespace.ToDisplayString());
                     }
@@ -213,19 +215,20 @@ public partial class EntityFrameworkCoreGenerator
                 var dependencyNamespaces = new HashSet<string>
                 {
                     entityNameTypeSymbol!.ContainingNamespace.ToDisplayString(),
+                    repository.Namespace,
                 };
                 if (!string.IsNullOrEmpty(primaryKeyNamespace))
                 {
                     dependencyNamespaces.Add(primaryKeyNamespace!);
                 }
-                Dependencies.Add(new Dependency($"IRepository<{entity.EntityName}>", $"{entity.EntityName}Repository", dependencyNamespaces));
-                Dependencies.Add(new Dependency($"IBasicRepository<{entity.EntityName}>", $"{entity.EntityName}Repository", dependencyNamespaces));
-                Dependencies.Add(new Dependency($"IReadOnlyRepository<{entity.EntityName}>", $"{entity.EntityName}Repository", dependencyNamespaces));
+                RepositoryDependencies.Add(new Dependency($"IRepository<{entity.EntityName}>", $"{entity.EntityName}Repository", dependencyNamespaces));
+                RepositoryDependencies.Add(new Dependency($"IBasicRepository<{entity.EntityName}>", $"{entity.EntityName}Repository", dependencyNamespaces));
+                RepositoryDependencies.Add(new Dependency($"IReadOnlyRepository<{entity.EntityName}>", $"{entity.EntityName}Repository", dependencyNamespaces));
                 if (!string.IsNullOrEmpty(entity.PrimaryKeyName))
                 {
-                    Dependencies.Add(new Dependency($"IRepository<{entity.EntityName}, {entity.PrimaryKeyName}>", $"{entity.EntityName}Repository", dependencyNamespaces));
-                    Dependencies.Add(new Dependency($"IBasicRepository<{entity.EntityName}, {entity.PrimaryKeyName}>", $"{entity.EntityName}Repository", dependencyNamespaces));
-                    Dependencies.Add(new Dependency($"IReadOnlyRepository<{entity.EntityName}, {entity.PrimaryKeyName}>", $"{entity.EntityName}Repository", dependencyNamespaces));
+                    RepositoryDependencies.Add(new Dependency($"IRepository<{entity.EntityName}, {entity.PrimaryKeyName}>", $"{entity.EntityName}Repository", dependencyNamespaces));
+                    RepositoryDependencies.Add(new Dependency($"IBasicRepository<{entity.EntityName}, {entity.PrimaryKeyName}>", $"{entity.EntityName}Repository", dependencyNamespaces));
+                    RepositoryDependencies.Add(new Dependency($"IReadOnlyRepository<{entity.EntityName}, {entity.PrimaryKeyName}>", $"{entity.EntityName}Repository", dependencyNamespaces));
                 }
             }
             return repository;

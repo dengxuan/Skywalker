@@ -37,7 +37,7 @@ public partial class EntityFrameworkCoreGenerator
         public static void Emit(GeneratorExecutionContext context, IEnumerable<Repository> repositories)
         {
             var generatorVersion = typeof(Emitter).Assembly.GetName().Version;
-            var file = @"Templates/EntityFrameworkCore.sbn-cs";
+            var file = @"Templates/Repository.sbn-cs";
             var template = Template.Parse(EmbeddedResource.GetContent(file), file);
 
             foreach (var repository in repositories)
@@ -62,7 +62,7 @@ public partial class EntityFrameworkCoreGenerator
         public static void Emit(GeneratorExecutionContext context, IEnumerable<Intecepter> intecepters)
         {
             var generatorVersion = typeof(Emitter).Assembly.GetName().Version;
-            var file = @"Templates/InterceptorGenerator.sbn-cs";
+            var file = @"Templates/DomainServiceInterceptorGenerator.sbn-cs";
             var template = Template.Parse(EmbeddedResource.GetContent(file), file);
             foreach (var intecepter in intecepters)
             {
@@ -76,10 +76,11 @@ public partial class EntityFrameworkCoreGenerator
                 context.AddSource($"Skywalker.Ddd.Domain.Services.{intecepter.Name}Intecepter.Generated.cs", SourceText.From(output, Encoding.UTF8));
             }
         }
-        public static void Emit(GeneratorExecutionContext context, IEnumerable<Dependency> dependencies)
+
+        public static void EmitDomainServiceDependencies(GeneratorExecutionContext context, IEnumerable<Dependency> dependencies)
         {
             var generatorVersion = typeof(Emitter).Assembly.GetName().Version;
-            var file = @"Templates/DependencyInjection.sbn-cs";
+            var file = @"Templates/DomainServiceIServiceCollectionExtensions.sbn-cs";
             var template = Template.Parse(EmbeddedResource.GetContent(file), file);
             var namespaces = new List<string>();
             foreach (var dependency in dependencies)
@@ -92,8 +93,26 @@ public partial class EntityFrameworkCoreGenerator
                 Namespaces = s_namespaces.Union(namespaces).OrderBy(keySelector => keySelector),
                 Dependencies = dependencies.Where(predicate => !new string[] { "IDomainService", "ITransientDependency", "ITransientDependency", "ITransientDependency" }.Contains(predicate.Interface)).ToList(),
             }, member => member.Name);
-            context.AddSource($"EntityFrameworkCoreIServiceCollectionExtensions.Generated.cs", SourceText.From(output, Encoding.UTF8));
+            context.AddSource($"DomainServiceIServiceCollectionExtensions.Generated.cs", SourceText.From(output, Encoding.UTF8));
         }
 
+        public static void EmitRepositoryDependencies(GeneratorExecutionContext context, IEnumerable<Dependency> dependencies)
+        {
+            var generatorVersion = typeof(Emitter).Assembly.GetName().Version;
+            var file = @"Templates/RepositoryIServiceCollectionExtensions.sbn-cs";
+            var template = Template.Parse(EmbeddedResource.GetContent(file), file);
+            var namespaces = new List<string>();
+            foreach (var dependency in dependencies)
+            {
+                namespaces.AddRange(dependency.Namespaces);
+            }
+            var output = template.Render(new
+            {
+                GeneratorVersion = generatorVersion,
+                Namespaces = s_namespaces.Union(namespaces).OrderBy(keySelector => keySelector),
+                Dependencies = dependencies.Where(predicate => !new string[] { "IDomainService", "ITransientDependency", "ITransientDependency", "ITransientDependency" }.Contains(predicate.Interface)).ToList(),
+            }, member => member.Name);
+            context.AddSource($"RepositoryIServiceCollectionExtensions.Generated.cs", SourceText.From(output, Encoding.UTF8));
+        }
     }
 }

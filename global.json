@@ -1,19 +1,19 @@
 {
-  "sdk": {
-    "version": "6.0.101",
-    "allowPrerelease": true,
-    "rollForward": "major"
-  },
-  "tools": {
-    "dotnet": "6.0.101"
-  },
-  "msbuild-sdks": {
-    "Microsoft.DotNet.Build.Tasks.TargetFramework.Sdk": "6.0.101",
-    "Microsoft.DotNet.Arcade.Sdk": "6.0.101",
-    "Microsoft.DotNet.Helix.Sdk": "6.0.101",
-    "Microsoft.DotNet.SharedFramework.Sdk": "6.0.101",
-    "Microsoft.Build.NoTargets": "3.1.0",
-    "Microsoft.Build.Traversal": "3.0.23",
-    "Microsoft.NET.Sdk.IL": "6.0.101"
-  }
+    "sdk": {
+        "version": "7.0.100",
+        "allowPrerelease": true,
+        "rollForward": "major"
+    },
+    "tools": {
+        "dotnet": "7.0.100"
+    },
+    "msbuild-sdks": {
+        "Microsoft.DotNet.Build.Tasks.TargetFramework.Sdk": "7.0.100",
+        "Microsoft.DotNet.Arcade.Sdk": "7.0.100",
+        "Microsoft.DotNet.Helix.Sdk": "7.0.100",
+        "Microsoft.DotNet.SharedFramework.Sdk": "7.0.100",
+        "Microsoft.Build.NoTargets": "3.1.0",
+        "Microsoft.Build.Traversal": "3.0.23",
+        "Microsoft.NET.Sdk.IL": "7.0.100"
+    }
 }

@@ -13,16 +13,16 @@ public static class EntityFrameworkCoreRepositoryExtensions
     public static Task<DbContext> GetDbContextAsync<TEntity>(this IReadOnlyRepository<TEntity> repository)
         where TEntity : class, IEntity
     {
-        return repository.ToEfCoreRepository().GetDbContextAsync();
+        return repository.ToEntityFrameworkCoreRepository().GetDbContextAsync();
     }
 
     public static Task<DbSet<TEntity>> GetDbSetAsync<TEntity>(this IReadOnlyRepository<TEntity> repository)
         where TEntity : class, IEntity
     {
-        return repository.ToEfCoreRepository().GetDbSetAsync();
+        return repository.ToEntityFrameworkCoreRepository().GetDbSetAsync();
     }
 
-    public static IEntityFrameworkCoreRepository<TEntity> ToEfCoreRepository<TEntity>(this IReadOnlyRepository<TEntity> repository)
+    public static IEntityFrameworkCoreRepository<TEntity> ToEntityFrameworkCoreRepository<TEntity>(this IReadOnlyRepository<TEntity> repository)
         where TEntity : class, IEntity
     {
         if (repository is IEntityFrameworkCoreRepository<TEntity> efCoreRepository)

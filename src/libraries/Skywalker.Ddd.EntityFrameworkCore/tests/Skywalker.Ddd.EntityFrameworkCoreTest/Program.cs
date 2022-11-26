@@ -10,7 +10,6 @@ using Skywalker.Ddd.EntityFrameworkCoreTest.Domain.Entities;
 
 var host = Host.CreateDefaultBuilder(args).ConfigureServices(services =>
 {
-    services.AddSkywalker();
     services.AddEntityFrameworkCore(options =>
     {
         //options.UseDbContext<TestDbContext>();
@@ -18,7 +17,6 @@ var host = Host.CreateDefaultBuilder(args).ConfigureServices(services =>
         //{
         //});
     });
-    services.AddDependencyServices();
     services.AddPooledDbContextFactory<TestDbContext>(options =>
     {
         options.UseMySql("Server=47.108.173.4;Database=Test;UserId=root;Password=QrBl&X0@NZZJ^ohnw33I;MaximumPoolSize=1024;", ServerVersion.AutoDetect("Server=47.108.173.4;Database=Test;UserId=root;Password=QrBl&X0@NZZJ^ohnw33I;MaximumPoolSize=1024;"));

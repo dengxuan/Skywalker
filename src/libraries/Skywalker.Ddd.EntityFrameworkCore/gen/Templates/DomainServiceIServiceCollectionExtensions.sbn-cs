@@ -12,9 +12,9 @@ using {{namespace}};
 namespace Microsoft.Extensions.DependencyInjection;
 
 [GeneratedCode("Skywalker.Ddd.EntityFrameworkCore.Generators", "{{ GeneratorVersion }}")]
-public static class IntecepterIServiceCollectionExtensions 
+internal static class DomainServiceIServiceCollectionExtensions 
 {
-    public static IServiceCollection AddDependencyServices(this IServiceCollection services)
+    public static IServiceCollection AddDomainServices(this IServiceCollection services)
     {
     {{~ for dependency in Dependencies ~}}
         services.AddSingleton<{{dependency.Interface}}, {{dependency.ImplementationName}}>();

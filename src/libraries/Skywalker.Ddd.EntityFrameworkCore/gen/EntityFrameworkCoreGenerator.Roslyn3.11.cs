@@ -19,7 +19,8 @@ public partial class EntityFrameworkCoreGenerator : ISourceGenerator
         {
             Emitter.Emit(context, receiver.Intecepters);
             Emitter.Emit(context, receiver.Repositories);
-            Emitter.Emit(context, receiver.Dependencies);
+            Emitter.EmitDomainServiceDependencies(context, receiver.DomainServiceDependencies);
+            Emitter.EmitRepositoryDependencies(context, receiver.RepositoryDependencies);
         }
     }
 

@@ -26,9 +26,10 @@
   </ItemGroup>
 
   <ItemGroup>
-    <EmbeddedResource Include="Templates\DependencyInjection.sbn-cs" />
-    <EmbeddedResource Include="Templates\EntityFrameworkCore.sbn-cs" />
-    <EmbeddedResource Include="Templates\InterceptorGenerator.sbn-cs" />
+    <EmbeddedResource Include="Templates\DomainServiceInterceptorGenerator.sbn-cs" />
+    <EmbeddedResource Include="Templates\DomainServiceIServiceCollectionExtensions.sbn-cs" />
+    <EmbeddedResource Include="Templates\Repository.sbn-cs" />
+    <EmbeddedResource Include="Templates\RepositoryIServiceCollectionExtensions.sbn-cs" />
   </ItemGroup>
 
 </Project>

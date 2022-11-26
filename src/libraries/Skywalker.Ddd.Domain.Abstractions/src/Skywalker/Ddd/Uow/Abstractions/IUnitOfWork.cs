@@ -4,7 +4,7 @@
 using Skywalker.Extensions.DependencyInjection;
 namespace Skywalker.Ddd.Uow.Abstractions;
 
-public interface IUnitOfWork : ITransientDependency, IDatabaseApiContainer, ITransactionApiContainer, IDisposable
+public interface IUnitOfWork : IDatabaseApiContainer, ITransactionApiContainer, IDisposable, ITransientDependency
 {
     Guid Id { get; }
 
