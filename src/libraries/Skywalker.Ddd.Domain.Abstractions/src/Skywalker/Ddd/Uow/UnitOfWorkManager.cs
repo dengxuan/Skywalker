@@ -4,7 +4,6 @@
 using Microsoft.Extensions.DependencyInjection;
 using Skywalker.Ddd.Uow.Abstractions;
 using Skywalker.ExceptionHandler;
-using Skywalker.Extensions.DependencyInjection.Abstractions;
 
 namespace Skywalker.Ddd.Uow;
 
@@ -12,12 +11,12 @@ public class UnitOfWorkManager : IUnitOfWorkManager
 {
     public IUnitOfWork? Current => GetCurrentUnitOfWork();
 
-    private readonly IHybridServiceScopeFactory _serviceScopeFactory;
+    private readonly IServiceScopeFactory _serviceScopeFactory;
     private readonly IAmbientUnitOfWork _ambientUnitOfWork;
 
     public UnitOfWorkManager(
         IAmbientUnitOfWork ambientUnitOfWork,
-        IHybridServiceScopeFactory serviceScopeFactory)
+        IServiceScopeFactory serviceScopeFactory)
     {
         _ambientUnitOfWork = ambientUnitOfWork;
         _serviceScopeFactory = serviceScopeFactory;

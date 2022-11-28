@@ -1,12 +1,11 @@
 ﻿using Skywalker.Ddd.Application.Dtos.Abstractions;
-using Skywalker.Extensions.DependencyInjection;
 
 namespace Skywalker.Ddd.Application.Abstractions;
 
 /// <summary>
 /// Send a request through the mediator pipeline to be handled by a single handler.
 /// </summary>
-public interface IApplication : ISingletonDependency
+public interface IApplication //: ISingletonDependency
 {
 
     /// <summary>

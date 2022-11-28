@@ -1,11 +1,10 @@
 ﻿using System.Security.Claims;
 using System.Security.Principal;
-using Skywalker.Extensions.DependencyInjection;
 using Skywalker.Security.Claims;
 
 namespace Skywalker.Security.Users;
 
-public class CurrentUser : ICurrentUser, ITransientDependency
+public class CurrentUser : ICurrentUser
 {
     private static readonly Claim[] s_emptyClaimsArray = Array.Empty<Claim>();
 

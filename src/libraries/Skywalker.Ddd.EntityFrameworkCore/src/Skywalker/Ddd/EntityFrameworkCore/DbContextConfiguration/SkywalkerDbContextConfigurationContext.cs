@@ -2,7 +2,7 @@
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
-using Skywalker.Extensions.DependencyInjection.Abstractions;
+using Skywalker.Ddd.Abstractions;
 
 namespace Skywalker.Ddd.EntityFrameworkCore.DbContextConfiguration;
 

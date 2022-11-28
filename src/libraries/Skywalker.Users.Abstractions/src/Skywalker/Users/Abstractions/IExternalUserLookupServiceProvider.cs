@@ -14,7 +14,7 @@ public interface IExternalUserLookupServiceProvider
     /// <param name="id"></param>
     /// <param name="cancellationToken"></param>
     /// <returns></returns>
-    Task<IUserData> FindByIdAsync(long id, CancellationToken cancellationToken = default);
+    Task<IUserData?> FindByIdAsync(long id, CancellationToken cancellationToken = default);
 
     /// <summary>
     /// 
@@ -22,7 +22,7 @@ public interface IExternalUserLookupServiceProvider
     /// <param name="userName"></param>
     /// <param name="cancellationToken"></param>
     /// <returns></returns>
-    Task<IUserData> FindByUserNameAsync(string userName, CancellationToken cancellationToken = default);
+    Task<IUserData?> FindByUserNameAsync(string userName, CancellationToken cancellationToken = default);
 
     /// <summary>
     /// 
@@ -33,7 +33,7 @@ public interface IExternalUserLookupServiceProvider
     /// <param name="skipCount"></param>
     /// <param name="cancellationToken"></param>
     /// <returns></returns>
-    Task<List<IUserData>> SearchAsync(  string? sorting = null,  string? filter = null,   int maxResultCount = int.MaxValue,   int skipCount = 0,  CancellationToken cancellationToken = default);
+    Task<List<IUserData>> SearchAsync(string? sorting = null, string? filter = null, int maxResultCount = int.MaxValue, int skipCount = 0, CancellationToken cancellationToken = default);
 
     /// <summary>
     /// 
@@ -41,5 +41,5 @@ public interface IExternalUserLookupServiceProvider
     /// <param name="filter"></param>
     /// <param name="cancellationToken"></param>
     /// <returns></returns>
-    Task<long> GetCountAsync(  string? filter = null,  CancellationToken cancellationToken = default  );
+    Task<long> GetCountAsync(string? filter = null, CancellationToken cancellationToken = default);
 }

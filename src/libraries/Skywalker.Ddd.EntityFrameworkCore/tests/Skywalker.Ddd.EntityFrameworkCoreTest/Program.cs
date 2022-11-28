@@ -10,8 +10,14 @@ using Skywalker.Ddd.EntityFrameworkCoreTest.Domain.Entities;
 
 var host = Host.CreateDefaultBuilder(args).ConfigureServices(services =>
 {
+    services.AddSkywalker()
+    .AddEntityFrameworkCore().AddDbContext<TestDbContext>(options =>
+    {
+        options.UseMySql("",ServerVersion.AutoDetect(""));
+    });
     services.AddEntityFrameworkCore(options =>
     {
+        options.UseDbContext<TestDbContext>();
         //options.UseDbContext<TestDbContext>();
         //options.UsePooledDbContextFactory<TestDbContext>(options =>
         //{

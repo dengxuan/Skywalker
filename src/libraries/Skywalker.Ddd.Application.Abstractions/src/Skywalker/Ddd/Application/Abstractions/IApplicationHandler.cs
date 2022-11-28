@@ -2,13 +2,12 @@
 // Gordon licenses this file to you under the MIT license.
 
 using Skywalker.Ddd.Application.Dtos.Abstractions;
-using Skywalker.Extensions.DependencyInjection;
 namespace Skywalker.Ddd.Application.Abstractions;
 
 /// <summary>
 /// 
 /// </summary>
-public interface IApplicationHandler : ITransientDependency
+public interface IApplicationHandler //: ITransientDependency
 {
 
 }

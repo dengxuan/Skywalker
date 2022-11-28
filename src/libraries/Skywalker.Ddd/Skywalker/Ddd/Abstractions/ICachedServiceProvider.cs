@@ -1,7 +1,7 @@
 ﻿// Licensed to the Gordon under one or more agreements.
 // Gordon licenses this file to you under the MIT license.
 
-namespace Skywalker.Extensions.DependencyInjection.Abstractions;
+namespace Skywalker.Ddd.Abstractions;
 
 /// <summary>
 /// 通过缓存解析的服务来提供服务。

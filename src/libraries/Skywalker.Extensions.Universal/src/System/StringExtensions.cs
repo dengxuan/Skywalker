@@ -635,7 +635,7 @@ public static class StringExtensions
         return input.Split(new[] { ' ' }, StringSplitOptions.RemoveEmptyEntries).ToList();
     }
 #if NETSTANDARD2_0
-    public static List<string> ParseScopesString(this string scopes)
+    public static List<string>? ParseScopesString(this string scopes)
 #else
     public static List<string>? ParseScopesString(this string? scopes)
 #endif

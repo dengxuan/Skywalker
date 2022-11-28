@@ -1,6 +1,5 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Options;
-using Skywalker.Extensions.DependencyInjection.Abstractions;
 
 namespace Skywalker.Extensions.SimpleStateChecking;
 
@@ -35,7 +34,7 @@ public class SimpleStateCheckerManager<TState> : ISimpleStateCheckerManager<TSta
 
             foreach (var stateChecker in batchStateCheckers)
             {
-                var cachedServiceProvider = scope.ServiceProvider.GetRequiredService<ICachedServiceProvider>();
+                var cachedServiceProvider = scope.ServiceProvider.GetRequiredService<IServiceProvider>();
                 var stateCheckers = states.Where(x => x.StateCheckers.Contains(stateChecker)).ToArray();
                 var context = new SimpleBatchStateCheckerContext<TState>(cachedServiceProvider, stateCheckers);
 
@@ -55,7 +54,7 @@ public class SimpleStateCheckerManager<TState> : ISimpleStateCheckerManager<TSta
                 .Select(x => ServiceProvider.GetRequiredService(x)))
             {
                 var context = new SimpleBatchStateCheckerContext<TState>(
-                    scope.ServiceProvider.GetRequiredService<ICachedServiceProvider>(),
+                    scope.ServiceProvider.GetRequiredService<IServiceProvider>(),
                     states.Where(x => result.Any(y => y.Key.Equals(x) && y.Value)).ToArray());
 
                 foreach (var x in await globalStateChecker.IsEnabledAsync(context))
@@ -80,7 +79,7 @@ public class SimpleStateCheckerManager<TState> : ISimpleStateCheckerManager<TSta
     {
         using (var scope = ServiceProvider.CreateScope())
         {
-            var cachedServiceProvider = scope.ServiceProvider.GetRequiredService<ICachedServiceProvider>();
+            var cachedServiceProvider = scope.ServiceProvider.GetRequiredService<IServiceProvider>();
             var context = new SimpleStateCheckerContext<TState>(cachedServiceProvider, state);
 
             foreach (var provider in state.StateCheckers.WhereIf(!useBatchChecker, x => x is not ISimpleBatchStateChecker<TState>))

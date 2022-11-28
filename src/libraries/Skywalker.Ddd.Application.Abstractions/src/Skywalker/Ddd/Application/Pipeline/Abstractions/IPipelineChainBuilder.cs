@@ -1,14 +1,12 @@
 ﻿// Licensed to the Gordon under one or more agreements.
 // Gordon licenses this file to you under the MIT license.
 
-using Skywalker.Extensions.DependencyInjection;
-
 namespace Skywalker.Ddd.Application.Pipeline.Abstractions;
 
 /// <summary>
 /// Represents a builder to build an pipeline chain.
 /// </summary>
-public interface IPipelineChainBuilder : ISingletonDependency
+public interface IPipelineChainBuilder
 {
     /// <summary>
     /// Gets the service provider to get dependency services.

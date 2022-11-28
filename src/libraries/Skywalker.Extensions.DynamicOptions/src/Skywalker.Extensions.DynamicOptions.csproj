@@ -31,6 +31,7 @@
   <ItemGroup>
     <ProjectReference Include="..\..\Skywalker.ExceptionHandler.Abstractions\src\Skywalker.ExceptionHandler.Abstractions.csproj" />
     <ProjectReference Include="..\..\Skywalker.Extensions.DependencyInjection.Abstractions\src\Skywalker.Extensions.DependencyInjection.Abstractions.csproj" />
+    <ProjectReference Include="..\..\Skywalker.Extensions.ObjectAccessor\Skywalker.Extensions.ObjectAccessor.csproj" />
   </ItemGroup>
   
 </Project>

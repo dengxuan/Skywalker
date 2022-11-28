@@ -1,11 +1,11 @@
 ﻿// Licensed to the Gordon under one or more agreements.
 // Gordon licenses this file to you under the MIT license.
 
-using Skywalker.Extensions.DependencyInjection.Abstractions;
+using Skywalker.Ddd.Abstractions;
 
-namespace Skywalker.Extensions.DependencyInjection;
+namespace Skywalker.Ddd;
 
-public class CachedServiceProvider : ICachedServiceProvider, IScopedDependency
+internal class CachedServiceProvider : ICachedServiceProvider//, IScopedDependency
 {
     protected IServiceProvider ServiceProvider { get; }
 

@@ -1,4 +1,4 @@
-﻿namespace Skywalker.Extensions.DependencyInjection.Abstractions;
+﻿namespace Skywalker.Ddd.Abstractions;
 
 public interface IServiceProviderAccessor
 {

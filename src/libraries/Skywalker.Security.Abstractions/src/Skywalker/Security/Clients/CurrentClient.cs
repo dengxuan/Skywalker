@@ -2,12 +2,11 @@
 // Gordon licenses this file to you under the MIT license.
 
 using System.Security.Principal;
-using Skywalker.Extensions.DependencyInjection;
 using Skywalker.Security.Claims;
 
 namespace Skywalker.Security.Clients;
 
-public class CurrentClient : ICurrentClient, ITransientDependency
+public class CurrentClient : ICurrentClient
 {
     public virtual bool IsAuthenticated => _principalAccessor.Principal?.Identity?.IsAuthenticated == true;
 

@@ -1,6 +1,5 @@
 ﻿using System.Collections.Concurrent;
 using Microsoft.Extensions.Logging;
-using Microsoft.Extensions.Logging.Abstractions;
 
 namespace Skywalker.Extensions.Threading;
 

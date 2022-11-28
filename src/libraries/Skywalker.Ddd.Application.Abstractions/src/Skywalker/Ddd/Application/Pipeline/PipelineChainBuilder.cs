@@ -4,8 +4,8 @@
 using System.Linq.Expressions;
 using System.Reflection;
 using Microsoft.Extensions.DependencyInjection;
+using Skywalker.Ddd.Abstractions;
 using Skywalker.Ddd.Application.Pipeline.Abstractions;
-using Skywalker.Extensions.DependencyInjection.Abstractions;
 
 namespace Skywalker.Ddd.Application.Pipeline;
 

@@ -1,10 +1,10 @@
 ﻿using System.Collections;
 using System.Linq.Expressions;
+using Skywalker.Ddd.Abstractions;
 using Skywalker.Ddd.Data;
 using Skywalker.Ddd.Data.Filtering;
 using Skywalker.Ddd.Domain.Entities;
 using Skywalker.Extensions.Collections.Generic;
-using Skywalker.Extensions.DependencyInjection.Abstractions;
 using Skywalker.Extensions.Threading;
 
 namespace Skywalker.Ddd.Domain.Repositories;
