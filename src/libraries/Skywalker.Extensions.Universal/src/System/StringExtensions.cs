@@ -211,7 +211,11 @@ public static class StringExtensions
     /// <param name="str">The string.</param>
     /// <param name="postFixes">one or more postfix.</param>
     /// <returns>Modified string or the same string if it has not any of given postfixes</returns>
+#if NETSTANDARD2_0
     public static string? RemovePostFix(this string str, params string[] postFixes)
+#else
+    public static string? RemovePostFix([NotNullIfNotNull("str")] this string? str, params string[] postFixes)
+#endif
     {
         if (str == null)
         {
