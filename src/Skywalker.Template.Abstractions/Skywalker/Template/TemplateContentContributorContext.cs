@@ -1,4 +1,4 @@
-﻿namespace Volo.Abp.TextTemplating;
+﻿namespace Skywalker.Template;
 
 public class TemplateContentContributorContext
 {
@@ -10,8 +10,8 @@ public class TemplateContentContributorContext
 
     public TemplateContentContributorContext(TemplateDefinition templateDefinition, IServiceProvider serviceProvider, string? culture)
     {
-        TemplateDefinition = Check.NotNull(templateDefinition, nameof(templateDefinition));
-        ServiceProvider = Check.NotNull(serviceProvider, nameof(serviceProvider));
+        TemplateDefinition = templateDefinition.NotNull(nameof(templateDefinition));
+        ServiceProvider = serviceProvider.NotNull(nameof(serviceProvider));
         Culture = culture;
     }
 }

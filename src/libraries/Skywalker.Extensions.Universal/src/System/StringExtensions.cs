@@ -1,19 +1,22 @@
-﻿using System.Collections.Specialized;
-using System.Diagnostics;
+﻿using System.Diagnostics;
+using System.Diagnostics.CodeAnalysis;
 using System.Globalization;
 using System.Security.Cryptography;
 using System.Text;
 using System.Text.Encodings.Web;
 using System.Text.RegularExpressions;
-using System.Diagnostics.CodeAnalysis;
 
 namespace System;
 
 /// <summary>
 /// Extension methods for String class.
 /// </summary>
-public static class StringExtensions
+public static partial class StringExtensions
 {
+#if NET7_0
+    [GeneratedRegex("[a-z][A-Z]")]
+    private static partial Regex LettersRegex();
+#endif
 
     private static string ToHash(this string str, HashAlgorithm algorithm, Encoding encoding)
     {
@@ -34,7 +37,7 @@ public static class StringExtensions
     /// </summary>
     public static string EnsureEndsWith(this string str, char c)
     {
-        return EnsureEndsWith(str, c, StringComparison.Ordinal);
+        return str.EnsureEndsWith(c, StringComparison.Ordinal);
     }
 
     /// <summary>
@@ -78,7 +81,7 @@ public static class StringExtensions
     /// </summary>
     public static string EnsureStartsWith(this string str, char c)
     {
-        return EnsureStartsWith(str, c, StringComparison.Ordinal);
+        return str.EnsureStartsWith(c, StringComparison.Ordinal);
     }
 
     /// <summary>
@@ -195,7 +198,7 @@ public static class StringExtensions
                 continue;
             }
 
-            if ((++count) == n)
+            if (++count == n)
             {
                 return i;
             }
@@ -212,8 +215,11 @@ public static class StringExtensions
     /// <param name="postFixes">one or more postfix.</param>
     /// <returns>Modified string or the same string if it has not any of given postfixes</returns>
 #if NETSTANDARD2_0
-    public static string? RemovePostFix(this string str, params string[] postFixes)
+#nullable disable
+    public static string RemovePostFix(this string str, params string[] postFixes)
+#nullable enable
 #else
+    [return: NotNullIfNotNull("str")]
     public static string? RemovePostFix([NotNullIfNotNull("str")] this string? str, params string[] postFixes)
 #endif
     {
@@ -250,7 +256,14 @@ public static class StringExtensions
     /// <param name="str">The string.</param>
     /// <param name="preFixes">one or more prefix.</param>
     /// <returns>Modified string or the same string if it has not any of given prefixes</returns>
-    public static string? RemovePreFix(this string str, params string[] preFixes)
+#if NETSTANDARD2_0
+#nullable disable
+    public static string RemovePreFix(this string str, params string[] preFixes)
+#nullable enable
+#else
+    [return: NotNullIfNotNull("str")]
+    public static string? RemovePreFix(this string? str, params string[] preFixes)
+#endif
     {
         if (str == null)
         {
@@ -392,10 +405,17 @@ public static class StringExtensions
             return str;
         }
 
-        return Regex.Replace(str, "[a-z][A-Z]", evaluator =>
+#if NET7_0
+        return LettersRegex().Replace(str, evaluator =>
         {
             return $"{evaluator.Value[0]} {(invariantCulture ? char.ToLowerInvariant(evaluator.Value[1]) : char.ToLower(evaluator.Value[1]))}";
         });
+#else
+        return new Regex("[a-z][A-Z]").Replace(str, evaluator =>
+        {
+            return $"{evaluator.Value[0]} {(invariantCulture ? char.ToLowerInvariant(evaluator.Value[1]) : char.ToLower(evaluator.Value[1]))}";
+        });
+#endif
     }
 
     /// <summary>
@@ -410,11 +430,17 @@ public static class StringExtensions
         {
             return str;
         }
-
-        return Regex.Replace(str, "[a-z][A-Z]", evaluator =>
+#if NET7_0
+        return LettersRegex().Replace(str, evaluator =>
         {
             return $"{evaluator.Value[0]} {char.ToLower(evaluator.Value[1], culture)}";
         });
+#else
+        return new Regex("[a-z][A-Z]").Replace(str, evaluator =>
+        {
+            return $"{evaluator.Value[0]} {char.ToLower(evaluator.Value[1], culture)}";
+        });
+#endif
     }
 
     /// <summary>
@@ -525,7 +551,7 @@ public static class StringExtensions
     /// <exception cref="ArgumentNullException">Thrown if <paramref name="str"/> is null</exception>
     public static string? TruncateWithPostfix(this string str, int maxLength)
     {
-        return TruncateWithPostfix(str, maxLength, "...");
+        return str.TruncateWithPostfix(maxLength, "...");
     }
 
     /// <summary>
@@ -611,7 +637,7 @@ public static class StringExtensions
     [DebuggerStepThrough]
     public static string? ToStringWithoutBom(this byte[]? bytes)
     {
-        return ToStringWithoutBom(bytes, Encoding.UTF8);
+        return bytes.ToStringWithoutBom(Encoding.UTF8);
     }
 
     [DebuggerStepThrough]
@@ -908,7 +934,7 @@ public static class StringExtensions
         return Regex.IsMatch(value, pattern, regexOptions);
     }
 
-    public static bool IsEmail(this string? value) => IsMatch(value, RegexConstants.Email.Any);
+    public static bool IsEmail(this string? value) => value.IsMatch(RegexConstants.Email.Any);
 
     public static bool IsIp4Address(this string? value) => value.IsMatch(RegexConstants.Ipv4Address.Any);
 

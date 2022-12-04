@@ -1,7 +1,7 @@
 ﻿using System.Threading.Tasks;
 using Microsoft.Extensions.FileProviders;
 
-namespace Volo.Abp.TextTemplating.VirtualFiles;
+namespace Skywalker.Template.VirtualFiles;
 
 public class FileInfoLocalizedTemplateContentReader : ILocalizedTemplateContentReader
 {

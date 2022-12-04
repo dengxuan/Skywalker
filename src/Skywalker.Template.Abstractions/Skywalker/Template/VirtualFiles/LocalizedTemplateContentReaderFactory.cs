@@ -1,20 +1,22 @@
 ﻿using System.Collections.Concurrent;
 using Skywalker.ExceptionHandler;
-using Volo.Abp.VirtualFileSystem;
+using Skywalker.Extensions.VirtualFileSystem;
 
-namespace Volo.Abp.TextTemplating.VirtualFiles;
+namespace Skywalker.Template.VirtualFiles;
 
 public class LocalizedTemplateContentReaderFactory : ILocalizedTemplateContentReaderFactory//, ISingletonDependency
 {
+    protected SemaphoreSlim SemaphoreSlim { get; }
+
     protected IVirtualFileProvider VirtualFileProvider { get; }
+
     protected ConcurrentDictionary<string, ILocalizedTemplateContentReader> ReaderCache { get; }
-    protected SemaphoreSlim SyncObj;
 
     public LocalizedTemplateContentReaderFactory(IVirtualFileProvider virtualFileProvider)
     {
         VirtualFileProvider = virtualFileProvider;
         ReaderCache = new ConcurrentDictionary<string, ILocalizedTemplateContentReader>();
-        SyncObj = new SemaphoreSlim(1, 1);
+        SemaphoreSlim = new SemaphoreSlim(1, 1);
     }
 
     public virtual async Task<ILocalizedTemplateContentReader> CreateAsync(TemplateDefinition templateDefinition)
@@ -24,7 +26,7 @@ public class LocalizedTemplateContentReaderFactory : ILocalizedTemplateContentRe
             return reader;
         }
 
-        using (await SyncObj.LockAsync())
+        using (await SemaphoreSlim.LockAsync())
         {
             if (ReaderCache.TryGetValue(templateDefinition.Name, out reader))
             {

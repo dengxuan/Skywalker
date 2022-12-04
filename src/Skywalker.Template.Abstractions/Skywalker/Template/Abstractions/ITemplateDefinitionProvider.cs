@@ -1,4 +1,4 @@
-﻿namespace Volo.Abp.TextTemplating;
+﻿namespace Skywalker.Template.Abstractions;
 
 public interface ITemplateDefinitionProvider
 {

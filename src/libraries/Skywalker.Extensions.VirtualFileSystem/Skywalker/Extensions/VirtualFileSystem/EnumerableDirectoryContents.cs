@@ -1,7 +1,7 @@
 ﻿using System.Collections;
 using Microsoft.Extensions.FileProviders;
 
-namespace Volo.Abp.VirtualFileSystem;
+namespace Skywalker.Extensions.VirtualFileSystem;
 
 internal class EnumerableDirectoryContents : IDirectoryContents
 {
@@ -9,7 +9,7 @@ internal class EnumerableDirectoryContents : IDirectoryContents
 
     public EnumerableDirectoryContents(IEnumerable<IFileInfo> entries)
     {
-        Check.NotNull(entries, nameof(entries));
+        entries.NotNull(nameof(entries));
 
         _entries = entries;
     }

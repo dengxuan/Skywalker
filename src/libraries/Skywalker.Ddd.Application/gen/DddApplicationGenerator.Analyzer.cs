@@ -26,6 +26,10 @@ internal partial class DddApplicationGenerator
             }
 
             var applicationServiceSymbol = context.SemanticModel.Compilation.GetTypeByMetadataName(ApplicationServiceSymbolName);
+            if (applicationServiceSymbol == null || applicationServiceSymbol.IsAbstract)
+            {
+                return;
+            }
             if (namedTypeSymbol.AllInterfaces.Any(x => s_symbolComparer.Equals(applicationServiceSymbol, x)))
             {
                 var intecepter = GetIntecepter(applicationServiceSymbol!, namedTypeSymbol);
@@ -35,7 +39,7 @@ internal partial class DddApplicationGenerator
         }
 
         /// <summary>
-        /// 获取所有IAspects符号
+        /// 获取所有IApplicationService符号
         /// </summary>
         /// <returns></returns>
         public Intecepter GetIntecepter(INamedTypeSymbol applicationServiceSymbol, INamedTypeSymbol domainServiceSymbol)

@@ -3,7 +3,7 @@ using System.IO;
 using System.Reflection;
 using Microsoft.Extensions.FileProviders;
 
-namespace Volo.Abp.VirtualFileSystem.Embedded;
+namespace Skywalker.Extensions.VirtualFileSystem.Embedded;
 
 /// <summary>
 /// Represents a file embedded in an assembly.
@@ -12,8 +12,10 @@ public class EmbeddedResourceFileInfo : IFileInfo
 {
     public bool Exists => true;
 
-    public long Length {
-        get {
+    public long Length
+    {
+        get
+        {
             if (!_length.HasValue)
             {
                 using (var stream = _assembly.GetManifestResourceStream(_resourcePath))
@@ -73,6 +75,6 @@ public class EmbeddedResourceFileInfo : IFileInfo
 
     public override string ToString()
     {
-        return $"[EmbeddedResourceFileInfo] {Name} ({this.VirtualPath})";
+        return $"[EmbeddedResourceFileInfo] {Name} ({VirtualPath})";
     }
 }

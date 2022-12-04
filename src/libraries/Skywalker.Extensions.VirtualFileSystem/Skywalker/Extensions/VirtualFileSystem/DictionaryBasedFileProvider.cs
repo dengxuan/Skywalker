@@ -1,7 +1,7 @@
 ﻿using Microsoft.Extensions.FileProviders;
 using Microsoft.Extensions.Primitives;
 
-namespace Volo.Abp.VirtualFileSystem;
+namespace Skywalker.Extensions.VirtualFileSystem;
 
 public abstract class DictionaryBasedFileProvider : IFileProvider
 {

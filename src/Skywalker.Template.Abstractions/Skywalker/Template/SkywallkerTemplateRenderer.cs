@@ -1,16 +1,19 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Options;
 using Skywalker.ExceptionHandler;
+using Skywalker.Template.Abstractions;
 
-namespace Volo.Abp.TextTemplating;
+namespace Skywalker.Template;
 
-public class AbpTemplateRenderer : ITemplateRenderer//, ITransientDependency
+public class SkywallkerTemplateRenderer : ITemplateRenderer//, ITransientDependency
 {
-    protected IServiceScopeFactory ServiceScopeFactory { get; }
-    protected ITemplateDefinitionManager TemplateDefinitionManager { get; }
-    protected AbpTextTemplatingOptions Options { get; }
+    protected SkywalkerTextTemplatingOptions Options { get; }
 
-    public AbpTemplateRenderer(IServiceScopeFactory serviceScopeFactory,ITemplateDefinitionManager templateDefinitionManager,IOptions<AbpTextTemplatingOptions> options)
+    protected IServiceScopeFactory ServiceScopeFactory { get; }
+
+    protected ITemplateDefinitionManager TemplateDefinitionManager { get; }
+
+    public SkywallkerTemplateRenderer(IServiceScopeFactory serviceScopeFactory, ITemplateDefinitionManager templateDefinitionManager, IOptions<SkywalkerTextTemplatingOptions> options)
     {
         ServiceScopeFactory = serviceScopeFactory;
         TemplateDefinitionManager = templateDefinitionManager;
@@ -28,7 +31,7 @@ public class AbpTemplateRenderer : ITemplateRenderer//, ITransientDependency
             renderEngine = Options.DefaultRenderingEngine;
         }
 
-        var providerType = Options.RenderingEngines.GetOrDefault(renderEngine);
+        var providerType = Options.RenderingEngines.GetOrDefault(renderEngine!);
 
         if (providerType != null && typeof(ITemplateRenderingEngine).IsAssignableFrom(providerType))
         {

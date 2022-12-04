@@ -1,6 +1,6 @@
 ﻿using Microsoft.Extensions.FileProviders;
 
-namespace Volo.Abp.VirtualFileSystem;
+namespace Skywalker.Extensions.VirtualFileSystem;
 
 public class VirtualFileSetInfo
 {
@@ -8,6 +8,6 @@ public class VirtualFileSetInfo
 
     public VirtualFileSetInfo(IFileProvider fileProvider)
     {
-        FileProvider = Check.NotNull(fileProvider, nameof(fileProvider));
+        FileProvider = fileProvider.NotNull(nameof(fileProvider));
     }
 }

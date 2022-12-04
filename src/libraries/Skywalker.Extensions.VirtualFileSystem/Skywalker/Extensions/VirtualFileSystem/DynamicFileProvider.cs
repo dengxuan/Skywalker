@@ -2,7 +2,7 @@
 using Microsoft.Extensions.FileProviders;
 using Microsoft.Extensions.Primitives;
 
-namespace Volo.Abp.VirtualFileSystem;
+namespace Skywalker.Extensions.VirtualFileSystem;
 
 //TODO: Work with directory & wildcard watches!
 //TODO: Work with dictionaries!

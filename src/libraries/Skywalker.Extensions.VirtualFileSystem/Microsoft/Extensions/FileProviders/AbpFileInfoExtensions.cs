@@ -1,6 +1,6 @@
 ﻿using System.Text;
-using Volo.Abp.VirtualFileSystem;
-using Volo.Abp.VirtualFileSystem.Embedded;
+using Skywalker.Extensions.VirtualFileSystem;
+using Skywalker.Extensions.VirtualFileSystem.Embedded;
 
 namespace Microsoft.Extensions.FileProviders;
 

@@ -3,7 +3,6 @@
 
 using Microsoft.EntityFrameworkCore;
 using Skywalker.Ddd.Domain.Entities;
-using Skywalker.Ddd.EntityFrameworkCore;
 
 namespace Skywalker.Ddd.Domain.Repositories;
 

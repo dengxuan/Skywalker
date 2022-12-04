@@ -1,7 +1,7 @@
 ﻿using System.Reflection;
 using Microsoft.Extensions.FileProviders;
 
-namespace Volo.Abp.VirtualFileSystem.Embedded;
+namespace Skywalker.Extensions.VirtualFileSystem.Embedded;
 
 public class AbpEmbeddedFileProvider : DictionaryBasedFileProvider
 {
@@ -14,7 +14,7 @@ public class AbpEmbeddedFileProvider : DictionaryBasedFileProvider
 
     public AbpEmbeddedFileProvider(Assembly assembly, string? baseNamespace = null)
     {
-        Check.NotNull(assembly, nameof(assembly));
+        assembly.NotNull(nameof(assembly));
 
         Assembly = assembly;
         BaseNamespace = baseNamespace;

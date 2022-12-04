@@ -1,6 +1,7 @@
 ﻿using System.Collections.Immutable;
+using Skywalker.Template.Abstractions;
 
-namespace Volo.Abp.TextTemplating;
+namespace Skywalker.Template;
 
 public class TemplateDefinitionContext : ITemplateDefinitionContext
 {

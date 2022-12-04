@@ -1,4 +1,7 @@
-﻿namespace Volo.Abp.TextTemplating.VirtualFiles;
+﻿using Skywalker.Template;
+using Skywalker.Template.Abstractions;
+
+namespace Skywalker.Template.VirtualFiles;
 
 public class VirtualFileTemplateContentContributor : ITemplateContentContributor//, ITransientDependency
 {

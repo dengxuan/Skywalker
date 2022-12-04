@@ -1,13 +1,13 @@
-﻿using Volo.Abp.TextTemplating.VirtualFiles;
+﻿using Skywalker.Template.VirtualFiles;
 
-namespace Volo.Abp.TextTemplating;
+namespace Skywalker.Template;
 
 public static class TemplateDefinitionExtensions
 {
-    public static TemplateDefinition WithVirtualFilePath( this TemplateDefinition templateDefinition, string virtualPath,
+    public static TemplateDefinition WithVirtualFilePath(this TemplateDefinition templateDefinition, string virtualPath,
         bool isInlineLocalized)
     {
-        Check.NotNull(templateDefinition, nameof(templateDefinition));
+        templateDefinition.NotNull(nameof(templateDefinition));
 
         templateDefinition.IsInlineLocalized = isInlineLocalized;
 
@@ -17,9 +17,9 @@ public static class TemplateDefinitionExtensions
         );
     }
 
-    public static string? GetVirtualFilePathOrNull( this TemplateDefinition templateDefinition)
+    public static string? GetVirtualFilePathOrNull(this TemplateDefinition templateDefinition)
     {
-        Check.NotNull(templateDefinition, nameof(templateDefinition));
+        templateDefinition.NotNull(nameof(templateDefinition));
 
         return templateDefinition
             .Properties

@@ -1,6 +1,6 @@
 ﻿using Microsoft.Extensions.FileProviders;
 
-namespace Volo.Abp.VirtualFileSystem;
+namespace Skywalker.Extensions.VirtualFileSystem;
 
 public interface IVirtualFileProvider : IFileProvider
 {

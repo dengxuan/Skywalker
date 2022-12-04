@@ -2,19 +2,20 @@
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Options;
 using Skywalker.ExceptionHandler;
+using Skywalker.Template.Abstractions;
 
-namespace Volo.Abp.TextTemplating;
+namespace Skywalker.Template;
 
 public class TemplateContentProvider : ITemplateContentProvider//, ITransientDependency
 {
     public IServiceScopeFactory ServiceScopeFactory { get; }
-    public AbpTextTemplatingOptions Options { get; }
+    public SkywalkerTextTemplatingOptions Options { get; }
     private readonly ITemplateDefinitionManager _templateDefinitionManager;
 
     public TemplateContentProvider(
         ITemplateDefinitionManager templateDefinitionManager,
         IServiceScopeFactory serviceScopeFactory,
-        IOptions<AbpTextTemplatingOptions> options)
+        IOptions<SkywalkerTextTemplatingOptions> options)
     {
         ServiceScopeFactory = serviceScopeFactory;
         Options = options.Value;
@@ -29,12 +30,12 @@ public class TemplateContentProvider : ITemplateContentProvider//, ITransientDep
 
     public virtual async Task<string?> GetContentOrNullAsync(TemplateDefinition templateDefinition, string? cultureName = null, bool tryDefaults = true, bool useCurrentCultureIfCultureNameIsNull = true)
     {
-        Check.NotNull(templateDefinition, nameof(templateDefinition));
+        templateDefinition.NotNull(nameof(templateDefinition));
 
         if (!Options.ContentContributors.Any())
         {
             throw new SkywalkerException(
-                $"No template content contributor was registered. Use {nameof(AbpTextTemplatingOptions)} to register contributors!"
+                $"No template content contributor was registered. Use {nameof(SkywalkerTextTemplatingOptions)} to register contributors!"
             );
         }
 

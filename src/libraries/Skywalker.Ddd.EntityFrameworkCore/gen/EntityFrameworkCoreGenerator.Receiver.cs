@@ -36,6 +36,10 @@ public partial class EntityFrameworkCoreGenerator
                 return;
             }
             var dbContextSymbol = context.SemanticModel.Compilation.GetTypeByMetadataName(DbContextSymbolName);
+            if (dbContextSymbol == null|| dbContextSymbol.IsAbstract)
+            {
+                return;
+            }
             if (namedTypeSymbol.AllInterfaces.Any(x => s_symbolComparer.Equals(dbContextSymbol, x)))
             {
                 var dbSetSymbol = context.SemanticModel.Compilation.GetTypeByMetadataName(DbSetSymbolName);
@@ -59,6 +63,10 @@ public partial class EntityFrameworkCoreGenerator
                 return;
             }
             var domainServiceSymbol = context.SemanticModel.Compilation.GetTypeByMetadataName(DomainServiceSymblyName);
+            if (domainServiceSymbol == null || domainServiceSymbol.IsAbstract)
+            {
+                return;
+            }
             if (namedTypeSymbol.AllInterfaces.Any(x => s_symbolComparer.Equals(domainServiceSymbol, x)))
             {
                 var intecepter = GetIntecepter(namedTypeSymbol);

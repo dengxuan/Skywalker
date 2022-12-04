@@ -2,19 +2,20 @@
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Options;
 using Skywalker.ExceptionHandler;
+using Skywalker.Template.Abstractions;
 
-namespace Volo.Abp.TextTemplating;
+namespace Skywalker.Template;
 
 public class TemplateDefinitionManager : ITemplateDefinitionManager//, ISingletonDependency
 {
     protected Lazy<IDictionary<string, TemplateDefinition>> TemplateDefinitions { get; }
 
-    protected AbpTextTemplatingOptions Options { get; }
+    protected SkywalkerTextTemplatingOptions Options { get; }
 
     protected IServiceProvider ServiceProvider { get; }
 
     public TemplateDefinitionManager(
-        IOptions<AbpTextTemplatingOptions> options,
+        IOptions<SkywalkerTextTemplatingOptions> options,
         IServiceProvider serviceProvider)
     {
         ServiceProvider = serviceProvider;
@@ -26,7 +27,7 @@ public class TemplateDefinitionManager : ITemplateDefinitionManager//, ISingleto
 
     public virtual TemplateDefinition Get(string name)
     {
-        Check.NotNull(name, nameof(name));
+        name.NotNull(nameof(name));
 
         var template = GetOrNull(name);
 

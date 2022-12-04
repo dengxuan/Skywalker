@@ -1,8 +1,8 @@
 ﻿using Microsoft.Extensions.FileProviders;
 using Skywalker.ExceptionHandler;
-using Volo.Abp.VirtualFileSystem;
+using Skywalker.Extensions.VirtualFileSystem;
 
-namespace Volo.Abp.TextTemplating.VirtualFiles;
+namespace Skywalker.Template.VirtualFiles;
 
 public class VirtualFolderLocalizedTemplateContentReader : ILocalizedTemplateContentReader
 {

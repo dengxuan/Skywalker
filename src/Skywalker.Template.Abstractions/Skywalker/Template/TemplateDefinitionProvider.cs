@@ -1,4 +1,6 @@
-﻿namespace Volo.Abp.TextTemplating;
+﻿using Skywalker.Template.Abstractions;
+
+namespace Skywalker.Template;
 
 public abstract class TemplateDefinitionProvider : ITemplateDefinitionProvider//, ITransientDependency
 {

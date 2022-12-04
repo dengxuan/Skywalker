@@ -3,9 +3,8 @@
 
 using Microsoft.EntityFrameworkCore;
 using Skywalker.Ddd.Domain.Entities;
-using Skywalker.Ddd.Domain.Repositories;
 
-namespace Skywalker.Ddd.EntityFrameworkCore;
+namespace Skywalker.Ddd.Domain.Repositories;
 
 public interface IEntityFrameworkCoreRepository<TEntity> : IRepository<TEntity> where TEntity : class, IEntity
 {

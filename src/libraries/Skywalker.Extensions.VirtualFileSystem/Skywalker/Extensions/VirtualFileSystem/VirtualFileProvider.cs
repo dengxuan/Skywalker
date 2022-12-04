@@ -2,7 +2,7 @@
 using Microsoft.Extensions.Options;
 using Microsoft.Extensions.Primitives;
 
-namespace Volo.Abp.VirtualFileSystem;
+namespace Skywalker.Extensions.VirtualFileSystem;
 
 public class VirtualFileProvider : IVirtualFileProvider//, ISingletonDependency
 {

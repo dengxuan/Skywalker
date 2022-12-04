@@ -1,6 +1,7 @@
 ﻿using Microsoft.Extensions.Localization;
+using Skywalker.Template.Abstractions;
 
-namespace Volo.Abp.TextTemplating;
+namespace Skywalker.Template;
 
 public abstract class TemplateRenderingEngineBase : ITemplateRenderingEngine
 {

@@ -2,7 +2,7 @@
 using System.IO;
 using Microsoft.Extensions.FileProviders;
 
-namespace Volo.Abp.VirtualFileSystem;
+namespace Skywalker.Extensions.VirtualFileSystem;
 
 public class VirtualDirectoryFileInfo : IFileInfo
 {

@@ -6,7 +6,7 @@ using System.Collections.Generic;
 using System.Runtime.CompilerServices;
 using System.Text;
 using Microsoft.Extensions.DependencyInjection.Extensions;
-using Volo.Abp.VirtualFileSystem;
+using Skywalker.Extensions.VirtualFileSystem;
 
 namespace Microsoft.Extensions.DependencyInjection;
 

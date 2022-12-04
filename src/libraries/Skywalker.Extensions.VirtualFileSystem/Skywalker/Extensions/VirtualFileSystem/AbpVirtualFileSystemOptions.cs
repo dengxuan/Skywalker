@@ -1,4 +1,4 @@
-﻿namespace Volo.Abp.VirtualFileSystem;
+﻿namespace Skywalker.Extensions.VirtualFileSystem;
 
 public class AbpVirtualFileSystemOptions
 {

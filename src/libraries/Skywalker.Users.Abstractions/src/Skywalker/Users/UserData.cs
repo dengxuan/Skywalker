@@ -13,7 +13,7 @@ public class UserData : IUserData
     /// <summary>
     /// <inheritdoc/>
     /// </summary>
-    public long Id { get; set; }
+    public string Id { get; set; }
 
 
     /// <summary>

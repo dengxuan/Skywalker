@@ -1,4 +1,6 @@
-﻿namespace Volo.Abp.TextTemplating.VirtualFiles;
+﻿using Skywalker.Template;
+
+namespace Skywalker.Template.VirtualFiles;
 
 public interface ILocalizedTemplateContentReaderFactory
 {

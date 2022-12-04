@@ -1,8 +1,9 @@
 ﻿using Skywalker.Extensions.Collections.Generic;
+using Skywalker.Template.Abstractions;
 
-namespace Volo.Abp.TextTemplating;
+namespace Skywalker.Template;
 
-public class AbpTextTemplatingOptions
+public class SkywalkerTextTemplatingOptions
 {
     public ITypeList<ITemplateDefinitionProvider> DefinitionProviders { get; }
     public ITypeList<ITemplateContentContributor> ContentContributors { get; }
@@ -10,7 +11,7 @@ public class AbpTextTemplatingOptions
 
     public string DefaultRenderingEngine { get; set; } = default!;
 
-    public AbpTextTemplatingOptions()
+    public SkywalkerTextTemplatingOptions()
     {
         DefinitionProviders = new TypeList<ITemplateDefinitionProvider>();
         ContentContributors = new TypeList<ITemplateContentContributor>();

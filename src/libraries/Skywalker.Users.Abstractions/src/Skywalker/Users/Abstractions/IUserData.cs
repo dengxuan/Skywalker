@@ -8,7 +8,7 @@ public interface IUserData
     /// <summary>
     /// Id
     /// </summary>
-    long Id { get; }
+    string Id { get; }
 
     /// <summary>
     /// 用户名

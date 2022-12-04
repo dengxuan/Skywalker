@@ -1,6 +1,6 @@
 ﻿using System.Globalization;
 
-namespace Volo.Abp.TextTemplating;
+namespace Skywalker.Template.Abstractions;
 
 public interface ITemplateRenderer
 {

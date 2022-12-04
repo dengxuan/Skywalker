@@ -1,6 +1,6 @@
 ﻿using Microsoft.Extensions.Localization;
 
-namespace Volo.Abp.TextTemplating;
+namespace Skywalker.Template;
 
 public class TemplateDefinition //: IHasNameWithLocalizableDisplayName
 {
