@@ -4,57 +4,49 @@ using Skywalker.Security.Claims;
 namespace System.Security.Principal;
 
 /// <summary>
-/// 
+///
 /// </summary>
 public static class SkywalkerClaimsIdentityExtensions
 {
     /// <summary>
-    /// 
+    ///
     /// </summary>
     /// <param name="principal"></param>
     /// <returns></returns>
-    public static long? FindUserId(this ClaimsPrincipal principal)
+    public static string? FindUserId(this ClaimsPrincipal principal)
     {
         Check.NotNull(principal, nameof(principal));
 
         var userIdOrNull = principal.Claims?.FirstOrDefault(c => c.Type == SkywalkerClaimTypes.UserId);
-        if (userIdOrNull == null || userIdOrNull.Value.IsNullOrWhiteSpace())
+        if (userIdOrNull == null)
         {
             return null;
         }
-        if (long.TryParse(userIdOrNull.Value, out var result))
-        {
-            return result;
-        }
-        return null;
+        return userIdOrNull.Value;
     }
 
     /// <summary>
-    /// 
+    ///
     /// </summary>
     /// <param name="identity"></param>
     /// <returns></returns>
-    public static long? FindUserId(this IIdentity identity)
+    public static string? FindUserId(this IIdentity identity)
     {
         Check.NotNull(identity, nameof(identity));
 
         var claimsIdentity = identity as ClaimsIdentity;
 
         var userIdOrNull = claimsIdentity?.Claims?.FirstOrDefault(c => c.Type == SkywalkerClaimTypes.UserId);
-        if (userIdOrNull == null || userIdOrNull.Value.IsNullOrWhiteSpace())
+        if (userIdOrNull == null)
         {
             return null;
         }
 
-        if (long.TryParse(userIdOrNull.Value, out var result))
-        {
-            return result;
-        }
-        return null;
+        return userIdOrNull.Value;
     }
 
     /// <summary>
-    /// 
+    ///
     /// </summary>
     /// <param name="principal"></param>
     /// <returns></returns>
@@ -72,7 +64,7 @@ public static class SkywalkerClaimsIdentityExtensions
     }
 
     /// <summary>
-    /// 
+    ///
     /// </summary>
     /// <param name="identity"></param>
     /// <returns></returns>
@@ -92,7 +84,7 @@ public static class SkywalkerClaimsIdentityExtensions
     }
 
     /// <summary>
-    /// 
+    ///
     /// </summary>
     /// <param name="principal"></param>
     /// <returns></returns>
@@ -114,7 +106,7 @@ public static class SkywalkerClaimsIdentityExtensions
     }
 
     /// <summary>
-    /// 
+    ///
     /// </summary>
     /// <param name="identity"></param>
     /// <returns></returns>
@@ -138,7 +130,7 @@ public static class SkywalkerClaimsIdentityExtensions
     }
 
     /// <summary>
-    /// 
+    ///
     /// </summary>
     /// <param name="claimsIdentity"></param>
     /// <param name="claim"></param>
@@ -156,7 +148,7 @@ public static class SkywalkerClaimsIdentityExtensions
     }
 
     /// <summary>
-    /// 
+    ///
     /// </summary>
     /// <param name="claimsIdentity"></param>
     /// <param name="claim"></param>
@@ -176,7 +168,7 @@ public static class SkywalkerClaimsIdentityExtensions
     }
 
     /// <summary>
-    /// 
+    ///
     /// </summary>
     /// <param name="principal"></param>
     /// <param name="identity"></param>

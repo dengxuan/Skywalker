@@ -12,7 +12,7 @@ public class CurrentUser : ICurrentUser
 
     public virtual bool IsAuthenticated => _principalAccessor.Principal?.Identity?.IsAuthenticated == true;
 
-    public virtual long? Id => _principalAccessor.Principal?.FindUserId();
+    public virtual string? Id => _principalAccessor.Principal?.FindUserId();
 
     public virtual string? Username => this.FindClaimValue(SkywalkerClaimTypes.UserName);
 

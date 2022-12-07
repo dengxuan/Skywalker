@@ -20,16 +20,12 @@ internal partial class DddApplicationGenerator
             {
                 return;
             }
-            if (context.SemanticModel.GetDeclaredSymbol(context.Node) is not INamedTypeSymbol namedTypeSymbol)
+            if (context.SemanticModel.GetDeclaredSymbol(context.Node) is not INamedTypeSymbol namedTypeSymbol || namedTypeSymbol.IsAbstract)
             {
                 return;
             }
 
             var applicationServiceSymbol = context.SemanticModel.Compilation.GetTypeByMetadataName(ApplicationServiceSymbolName);
-            if (applicationServiceSymbol == null || applicationServiceSymbol.IsAbstract)
-            {
-                return;
-            }
             if (namedTypeSymbol.AllInterfaces.Any(x => s_symbolComparer.Equals(applicationServiceSymbol, x)))
             {
                 var intecepter = GetIntecepter(applicationServiceSymbol!, namedTypeSymbol);

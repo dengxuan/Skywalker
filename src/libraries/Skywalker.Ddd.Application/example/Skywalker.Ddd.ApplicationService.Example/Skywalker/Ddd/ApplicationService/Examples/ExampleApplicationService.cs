@@ -2,7 +2,7 @@
 
 namespace Skywalker.Ddd.ApplicationService.Examples;
 
-internal class ExampleApplicationService : Application.ApplicationService, IExampleApplicationService, IExample1ApplicationService
+internal class ExampleApplicationService : IExampleApplicationService, IExample1ApplicationService
 {
     public ValueTask<GetExampleResponseDto> GetValue1Async(GetExampleRequestDto request)
     {

@@ -9,15 +9,15 @@ namespace Skywalker.Users.Abstractions;
 public interface IExternalUserLookupServiceProvider
 {
     /// <summary>
-    /// 
+    ///
     /// </summary>
     /// <param name="id"></param>
     /// <param name="cancellationToken"></param>
     /// <returns></returns>
-    Task<IUserData?> FindByIdAsync(long id, CancellationToken cancellationToken = default);
+    Task<IUserData?> FindByIdAsync(string id, CancellationToken cancellationToken = default);
 
     /// <summary>
-    /// 
+    ///
     /// </summary>
     /// <param name="userName"></param>
     /// <param name="cancellationToken"></param>
@@ -25,7 +25,7 @@ public interface IExternalUserLookupServiceProvider
     Task<IUserData?> FindByUserNameAsync(string userName, CancellationToken cancellationToken = default);
 
     /// <summary>
-    /// 
+    ///
     /// </summary>
     /// <param name="sorting"></param>
     /// <param name="filter"></param>
@@ -36,7 +36,7 @@ public interface IExternalUserLookupServiceProvider
     Task<List<IUserData>> SearchAsync(string? sorting = null, string? filter = null, int maxResultCount = int.MaxValue, int skipCount = 0, CancellationToken cancellationToken = default);
 
     /// <summary>
-    /// 
+    ///
     /// </summary>
     /// <param name="filter"></param>
     /// <param name="cancellationToken"></param>

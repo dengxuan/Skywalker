@@ -1,6 +1,4 @@
-﻿using System.ComponentModel.DataAnnotations.Schema;
-using System.Linq.Expressions;
-using System.Reflection;
+﻿using System.Linq.Expressions;
 using Microsoft.EntityFrameworkCore;
 using Skywalker.Ddd.Data;
 using Skywalker.Ddd.Domain.Entities;
@@ -10,7 +8,6 @@ using Skywalker.EventBus;
 using Skywalker.EventBus.Abstractions;
 using Skywalker.Extensions.Collections.Generic;
 using Skywalker.Extensions.Timezone;
-using Skywalker.Identifier.Abstractions;
 
 namespace Skywalker.Ddd.EntityFrameworkCore.Repositories;
 
@@ -139,13 +136,6 @@ public abstract class EntityFrameworkCoreRepository<TDbContext, TEntity> : Basic
         return DbSet.AsQueryable();
     }
 
-    /// <summary>
-    /// 
-    /// </summary>
-    /// <param name="entity"></param>
-    protected virtual void SetIdentifier(TEntity entity) { }
-
-
     Task<DbContext> IEntityFrameworkCoreRepository<TEntity>.GetDbContextAsync() => Task.FromResult(DbContext);
 
     Task<DbSet<TEntity>> IEntityFrameworkCoreRepository<TEntity>.GetDbSetAsync() => Task.FromResult(DbSet);
@@ -175,8 +165,6 @@ public abstract class EntityFrameworkCoreRepository<TDbContext, TEntity> : Basic
             objectWithCreationTime.CreationTime = _clock.Now;
         }
 
-        SetIdentifier(entity);
-
         SetConcurrencyStampIfNull(entity);
 
         await ApplySkywalkerConceptsForAddedEntityAsync(entity);
@@ -195,8 +183,6 @@ public abstract class EntityFrameworkCoreRepository<TDbContext, TEntity> : Basic
             {
                 objectWithCreationTime.CreationTime = _clock.Now;
             }
-
-            SetIdentifier(entity);
 
             SetConcurrencyStampIfNull(entity);
 
@@ -322,40 +308,14 @@ public abstract class Repository<TDbContext, TEntity, TKey> : BasicRepository<TE
 
     private readonly IEventBus _eventBus = NullEventBus.Instance;
 
-    private readonly IIdentifier _identifier;
-
     private readonly IDbContextProvider<TDbContext> _dbContextProvider;
 
     /// <inheritdoc/>
-    public Repository(IClock clock, IIdentifier identifier, IDbContextProvider<TDbContext> dbContextProvider)
+    public Repository(IClock clock, IDbContextProvider<TDbContext> dbContextProvider)
     {
         _clock = clock;
-        _identifier = identifier;
         _dbContextProvider = dbContextProvider;
         EntityChangeEventHelper = NullEntityChangeEventHelper.Instance;
-    }
-
-    /// <summary>
-    /// 
-    /// </summary>
-    /// <param name="entity"></param>
-    protected void SetIdentifier(TEntity entity)
-    {
-        if (entity == null)
-        {
-            return;
-        }
-        var identifier = typeof(TEntity).GetProperty(nameof(entity.Id));
-
-        //Check for DatabaseGeneratedAttribute
-        var dbGeneratedAttr = ReflectionHelper.GetSingleAttributeOrDefault<DatabaseGeneratedAttribute>(identifier!);
-
-        if (dbGeneratedAttr != null && dbGeneratedAttr.DatabaseGeneratedOption != DatabaseGeneratedOption.None)
-        {
-            return;
-        }
-
-        EntityHelper.TrySetEntityId(entity, () => _identifier.GetIdentifier<TKey>(), true);
     }
 
     /// <inheritdoc/>
@@ -484,8 +444,6 @@ public abstract class Repository<TDbContext, TEntity, TKey> : BasicRepository<TE
             objectWithCreationTime.CreationTime = _clock.Now;
         }
 
-        SetIdentifier(entity);
-
         SetConcurrencyStampIfNull(entity);
 
         await ApplySkywalkerConceptsForAddedEntityAsync(entity);
@@ -504,8 +462,6 @@ public abstract class Repository<TDbContext, TEntity, TKey> : BasicRepository<TE
             {
                 objectWithCreationTime.CreationTime = _clock.Now;
             }
-
-            SetIdentifier(entity);
 
             SetConcurrencyStampIfNull(entity);
 

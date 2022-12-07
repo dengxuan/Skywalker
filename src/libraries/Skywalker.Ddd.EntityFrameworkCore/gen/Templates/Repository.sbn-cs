@@ -24,7 +24,7 @@ sealed class {{EntityName}}Repository : Repository<{{DbContextName}}, {{EntityNa
 [GeneratedCode("Skywalker.Ddd.EntityFrameworkCore.Generators", "{{ GeneratorVersion }}")]
 sealed class {{EntityName}}Repository : Repository<{{DbContextName}}, {{EntityName}}, {{PrimaryKeyName}}>, IRepository<{{EntityName}}, {{PrimaryKeyName}}>
 {
-    public {{EntityName}}Repository(IClock clock, IIdentifier identifier, IDbContextProvider<{{DbContextName}}> dbContextProvider) : base(clock, identifier, dbContextProvider)
+    public {{EntityName}}Repository(IClock clock, IDbContextProvider<{{DbContextName}}> dbContextProvider) : base(clock, dbContextProvider)
     {
     }
 }

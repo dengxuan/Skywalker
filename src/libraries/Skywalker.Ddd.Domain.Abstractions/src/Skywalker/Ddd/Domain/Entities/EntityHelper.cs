@@ -10,8 +10,6 @@ namespace Skywalker.Ddd.Domain.Entities;
 /// </summary>
 public static class EntityHelper
 {
-    private static readonly ConcurrentDictionary<string, PropertyInfo> s_cachedIdProperties = new();
-
     public static bool EntityEquals(IEntity? entity1, IEntity? entity2)
     {
         if (entity1 == null || entity2 == null)
@@ -89,59 +87,11 @@ public static class EntityHelper
         return typeof(IEntity).IsAssignableFrom(type);
     }
 
-    public static bool IsEntityWithId(Type type)
-    {
-        foreach (var interfaceType in type.GetInterfaces())
-        {
-            if (interfaceType.GetTypeInfo().IsGenericType &&
-                interfaceType.GetGenericTypeDefinition() == typeof(IEntity<>))
-            {
-                return true;
-            }
-        }
-
-        return false;
-    }
-
-    public static bool HasDefaultId<TKey>(IEntity<TKey> entity) where TKey : notnull
-    {
-        if (EqualityComparer<TKey?>.Default.Equals(entity.Id, default))
-        {
-            return true;
-        }
-
-        //Workaround for EF Core since it sets int/long to min value when attaching to dbcontext
-        if (typeof(TKey) == typeof(int))
-        {
-            return Convert.ToInt32(entity.Id) <= 0;
-        }
-
-        if (typeof(TKey) == typeof(long))
-        {
-            return Convert.ToInt64(entity.Id) <= 0;
-        }
-
-        return false;
-    }
-
     private static bool IsDefaultKeyValue(object value)
     {
         if (value == null)
         {
             return true;
-        }
-
-        var type = value.GetType();
-
-        //Workaround for EF Core since it sets int/long to min value when attaching to DbContext
-        if (type == typeof(int))
-        {
-            return Convert.ToInt32(value) <= 0;
-        }
-
-        if (type == typeof(long))
-        {
-            return Convert.ToInt64(value) <= 0;
         }
 
         return TypeHelper.IsDefaultValue(value);
@@ -160,76 +110,5 @@ public static class EntityHelper
         }
 
         return true;
-    }
-
-    /// <summary>
-    /// Tries to find the primary key type of the given entity type.
-    /// May return null if given type does not implement <see cref="IEntity{TKey}"/>
-    /// </summary>
-    public static Type? FindPrimaryKeyType<TEntity>() where TEntity : IEntity
-    {
-        return FindPrimaryKeyType(typeof(TEntity));
-    }
-
-    /// <summary>
-    /// Tries to find the primary key type of the given entity type.
-    /// May return null if given type does not implement <see cref="IEntity{TKey}"/>
-    /// </summary>
-    public static Type? FindPrimaryKeyType(Type entityType)
-    {
-        if (!typeof(IEntity).IsAssignableFrom(entityType))
-        {
-            throw new SkywalkerException($"Given {nameof(entityType)} is not an entity. It should implement {typeof(IEntity).AssemblyQualifiedName}!");
-        }
-
-        foreach (var interfaceType in entityType.GetTypeInfo().GetInterfaces())
-        {
-            if (interfaceType.GetTypeInfo().IsGenericType && interfaceType.GetGenericTypeDefinition() == typeof(IEntity<>))
-            {
-                return interfaceType.GenericTypeArguments[0];
-            }
-        }
-
-        return null;
-    }
-
-    public static Expression<Func<TEntity, bool>> CreateEqualityExpressionForId<TEntity, TKey>(TKey id) where TKey : notnull
-        where TEntity : IEntity<TKey>
-    {
-        var lambdaParam = Expression.Parameter(typeof(TEntity));
-        var leftExpression = Expression.PropertyOrField(lambdaParam, "Id");
-        var idValue = Convert.ChangeType(id, typeof(TKey));
-        Expression<Func<object>> closure = () => idValue;
-        var rightExpression = Expression.Convert(closure.Body, leftExpression.Type);
-        var lambdaBody = Expression.Equal(leftExpression, rightExpression);
-        return Expression.Lambda<Func<TEntity, bool>>(lambdaBody, lambdaParam);
-    }
-
-    /// <summary>
-    /// 
-    /// </summary>
-    /// <typeparam name="TKey"></typeparam>
-    /// <param name="entity"></param>
-    /// <param name="idFactory"></param>
-    /// <param name="checkForDisableIdGenerationAttribute"></param>
-    public static void TrySetEntityId<TKey>(IEntity<TKey> entity, Func<TKey?> idFactory, bool checkForDisableIdGenerationAttribute = false) where TKey : notnull
-    {
-        var property = s_cachedIdProperties!.GetOrAdd($"{entity.GetType().FullName}-{checkForDisableIdGenerationAttribute}", () =>
-        {
-            var idProperty = entity.GetType().GetProperties().FirstOrDefault(x => x.Name == nameof(entity.Id) && x.GetSetMethod(true) != null);
-
-            if (idProperty == null)
-            {
-                return null;
-            }
-
-            if (checkForDisableIdGenerationAttribute && idProperty.IsDefined(typeof(DisableIdGenerationAttribute), true))
-            {
-                return null;
-            }
-            return idProperty;
-        });
-
-        property?.SetValue(entity, idFactory());
     }
 }

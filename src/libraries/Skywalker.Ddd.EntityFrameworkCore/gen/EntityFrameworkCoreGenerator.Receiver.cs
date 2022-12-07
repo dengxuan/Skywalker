@@ -31,15 +31,11 @@ public partial class EntityFrameworkCoreGenerator
             {
                 return;
             }
-            if (context.SemanticModel.GetDeclaredSymbol(context.Node) is not INamedTypeSymbol namedTypeSymbol)
+            if (context.SemanticModel.GetDeclaredSymbol(context.Node) is not INamedTypeSymbol namedTypeSymbol || namedTypeSymbol.IsAbstract)
             {
                 return;
             }
             var dbContextSymbol = context.SemanticModel.Compilation.GetTypeByMetadataName(DbContextSymbolName);
-            if (dbContextSymbol == null|| dbContextSymbol.IsAbstract)
-            {
-                return;
-            }
             if (namedTypeSymbol.AllInterfaces.Any(x => s_symbolComparer.Equals(dbContextSymbol, x)))
             {
                 var dbSetSymbol = context.SemanticModel.Compilation.GetTypeByMetadataName(DbSetSymbolName);

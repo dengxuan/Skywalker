@@ -10,23 +10,11 @@ using Skywalker.Ddd.EntityFrameworkCoreTest.Domain.Entities;
 
 var host = Host.CreateDefaultBuilder(args).ConfigureServices(services =>
 {
-    services.AddSkywalker()
-    .AddEntityFrameworkCore().AddDbContext<TestDbContext>(options =>
+    services.AddSkywalkerCore()
+    .AddEntityFrameworkCore()
+    .AddDbContext<TestDbContext>(options =>
     {
-        options.UseMySql("",ServerVersion.AutoDetect(""));
     });
-    services.AddEntityFrameworkCore(options =>
-    {
-        options.UseDbContext<TestDbContext>();
-        //options.UseDbContext<TestDbContext>();
-        //options.UsePooledDbContextFactory<TestDbContext>(options =>
-        //{
-        //});
-    });
-    services.AddPooledDbContextFactory<TestDbContext>(options =>
-    {
-        options.UseMySql("Server=47.108.173.4;Database=Test;UserId=root;Password=QrBl&X0@NZZJ^ohnw33I;MaximumPoolSize=1024;", ServerVersion.AutoDetect("Server=47.108.173.4;Database=Test;UserId=root;Password=QrBl&X0@NZZJ^ohnw33I;MaximumPoolSize=1024;"));
-    },1024);
 }).ConfigureLogging(logging =>
 {
     logging.SetMinimumLevel(LogLevel.Warning);

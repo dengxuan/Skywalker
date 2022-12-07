@@ -13,7 +13,7 @@ public class UserData : IUserData
     /// <summary>
     /// <inheritdoc/>
     /// </summary>
-    public string Id { get; set; }
+    public string Id { get; set; } = default!;
 
 
     /// <summary>
@@ -68,7 +68,7 @@ public class UserData : IUserData
     /// <summary>
     /// <inheritdoc/>
     /// </summary>
-    public UserData(long id, string userName, string? email = null, bool emailConfirmed = false, string? phoneNumber = null, bool phoneNumberConfirmed = false, bool isActive = true)
+    public UserData(string id, string userName, string? email = null, bool emailConfirmed = false, string? phoneNumber = null, bool phoneNumberConfirmed = false, bool isActive = true)
     {
         Id = id;
         UserName = userName;
