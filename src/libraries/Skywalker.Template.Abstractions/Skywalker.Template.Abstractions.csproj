@@ -1,4 +1,4 @@
-﻿<Project Sdk="Microsoft.NET.Sdk">
+<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
     <RootNamespace></RootNamespace>
@@ -45,9 +45,9 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\libraries\Skywalker.ExceptionHandler.Abstractions\src\Skywalker.ExceptionHandler.Abstractions.csproj" />
-    <ProjectReference Include="..\libraries\Skywalker.Extensions.Universal\src\Skywalker.Extensions.Universal.csproj" />
-    <ProjectReference Include="..\libraries\Skywalker.Extensions.VirtualFileSystem\Skywalker.Extensions.VirtualFileSystem.csproj" />
+    <ProjectReference Include="..\Skywalker.Extensions.VirtualFileSystem\Skywalker.Extensions.VirtualFileSystem.csproj" />
+    <ProjectReference Include="..\Skywalker.ExceptionHandler.Abstractions\src\Skywalker.ExceptionHandler.Abstractions.csproj" />
+    <ProjectReference Include="..\Skywalker.Extensions.Universal\src\Skywalker.Extensions.Universal.csproj" />
   </ItemGroup>
 
 </Project>

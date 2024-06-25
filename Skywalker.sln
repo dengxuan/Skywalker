@@ -95,13 +95,13 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Skywalker.Extensions.Object
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Skywalker.Ddd", "src\libraries\Skywalker.Ddd\Skywalker.Ddd.csproj", "{75B1B5DA-F69B-452F-9CB0-F5AF969A8D3E}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Skywalker.Template.Abstractions", "src\Skywalker.Template.Abstractions\Skywalker.Template.Abstractions.csproj", "{79E80DFB-EB09-49C0-8B34-C563655234B7}"
-EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Skywalker.Extensions.VirtualFileSystem", "src\libraries\Skywalker.Extensions.VirtualFileSystem\Skywalker.Extensions.VirtualFileSystem.csproj", "{B40F158B-F234-4C29-8828-D98FF6818DBB}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Skywalker.Extensions.GuidGenerator", "src\libraries\Skywalker.Extensions.GuidGenerator\Skywalker.Extensions.GuidGenerator.csproj", "{145F03E2-36AF-44EA-85DA-953024ED8928}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Skywalker.Extensions.Snowflake", "src\libraries\Skywalker.Extensions.Snowflake\Skywalker.Extensions.Snowflake.csproj", "{6B97DBD8-4219-4FDD-ACB2-DFF7C94930B4}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Skywalker.Template.Abstractions", "src\libraries\Skywalker.Template.Abstractions\Skywalker.Template.Abstractions.csproj", "{9FFB737D-1C4F-4B3A-805E-7C474806539E}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -277,10 +277,6 @@ Global
 		{75B1B5DA-F69B-452F-9CB0-F5AF969A8D3E}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{75B1B5DA-F69B-452F-9CB0-F5AF969A8D3E}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{75B1B5DA-F69B-452F-9CB0-F5AF969A8D3E}.Release|Any CPU.Build.0 = Release|Any CPU
-		{79E80DFB-EB09-49C0-8B34-C563655234B7}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{79E80DFB-EB09-49C0-8B34-C563655234B7}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{79E80DFB-EB09-49C0-8B34-C563655234B7}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{79E80DFB-EB09-49C0-8B34-C563655234B7}.Release|Any CPU.Build.0 = Release|Any CPU
 		{B40F158B-F234-4C29-8828-D98FF6818DBB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{B40F158B-F234-4C29-8828-D98FF6818DBB}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{B40F158B-F234-4C29-8828-D98FF6818DBB}.Release|Any CPU.ActiveCfg = Release|Any CPU
@@ -293,6 +289,10 @@ Global
 		{6B97DBD8-4219-4FDD-ACB2-DFF7C94930B4}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{6B97DBD8-4219-4FDD-ACB2-DFF7C94930B4}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{6B97DBD8-4219-4FDD-ACB2-DFF7C94930B4}.Release|Any CPU.Build.0 = Release|Any CPU
+		{9FFB737D-1C4F-4B3A-805E-7C474806539E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{9FFB737D-1C4F-4B3A-805E-7C474806539E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{9FFB737D-1C4F-4B3A-805E-7C474806539E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{9FFB737D-1C4F-4B3A-805E-7C474806539E}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -341,10 +341,10 @@ Global
 		{6131A7EB-5926-493C-A495-D5F49CA709F8} = {710E6E99-C7D0-4AF8-BB95-BFBCC6C76675}
 		{024FEE1F-4B1E-4876-BEF2-27F55E1AE69C} = {710E6E99-C7D0-4AF8-BB95-BFBCC6C76675}
 		{75B1B5DA-F69B-452F-9CB0-F5AF969A8D3E} = {710E6E99-C7D0-4AF8-BB95-BFBCC6C76675}
-		{79E80DFB-EB09-49C0-8B34-C563655234B7} = {710E6E99-C7D0-4AF8-BB95-BFBCC6C76675}
 		{B40F158B-F234-4C29-8828-D98FF6818DBB} = {710E6E99-C7D0-4AF8-BB95-BFBCC6C76675}
 		{145F03E2-36AF-44EA-85DA-953024ED8928} = {710E6E99-C7D0-4AF8-BB95-BFBCC6C76675}
 		{6B97DBD8-4219-4FDD-ACB2-DFF7C94930B4} = {710E6E99-C7D0-4AF8-BB95-BFBCC6C76675}
+		{9FFB737D-1C4F-4B3A-805E-7C474806539E} = {710E6E99-C7D0-4AF8-BB95-BFBCC6C76675}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {1448BD59-570D-4D37-831B-C0872E82B643}
