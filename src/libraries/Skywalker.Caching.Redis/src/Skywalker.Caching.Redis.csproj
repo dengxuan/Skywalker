@@ -34,7 +34,12 @@
     <PackageReference Include="StackExchange.Redis" Version="2.6.70" />
   </ItemGroup>
 
-	<ItemGroup>
+  <ItemGroup Condition="$(TargetFramework) == 'net8.0'">
+    <PackageReference Include="Microsoft.Extensions.Options.ConfigurationExtensions" Version="7.0.0" />
+    <PackageReference Include="StackExchange.Redis" Version="2.6.70" />
+  </ItemGroup>
+
+  <ItemGroup>
 		<ProjectReference Include="$(LibrariesProjectRoot)Skywalker.Serialization.NewtonsoftJson\src\Skywalker.Serialization.NewtonsoftJson.csproj" />
 		<ProjectReference Include="$(LibrariesProjectRoot)Skywalker.Caching.Abstractions\src\Skywalker.Caching.Abstractions.csproj" />
 	</ItemGroup>
