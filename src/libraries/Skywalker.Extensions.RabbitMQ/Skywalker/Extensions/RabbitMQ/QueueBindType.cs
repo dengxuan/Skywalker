@@ -1,0 +1,1 @@
+﻿namespace Skywalker.Extensions.RabbitMQ;

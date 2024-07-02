@@ -1,0 +1,11 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <RootNamespace></RootNamespace>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Skywalker.ExceptionHandler.Abstractions\src\Skywalker.ExceptionHandler.Abstractions.csproj" />
+  </ItemGroup>
+
+</Project>

@@ -34,7 +34,7 @@
 
   <ItemGroup>
     <ProjectReference Include="$(LibrariesProjectRoot)Skywalker.Serialization.Abstractions\src\Skywalker.Serialization.Abstractions.csproj" />
-    <ProjectReference Include="..\..\Skywalker.Extensions.Timezone\src\Skywalker.Extensions.Timezone.csproj" />
+    <ProjectReference Include="$(LibrariesProjectRoot)Skywalker.Extensions.Timezone\src\Skywalker.Extensions.Timezone.csproj" />
   </ItemGroup>
 
 </Project>

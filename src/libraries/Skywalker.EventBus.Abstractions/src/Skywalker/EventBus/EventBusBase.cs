@@ -1,12 +1,13 @@
 using System.Reflection;
 using System.Runtime.CompilerServices;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Hosting;
 using Skywalker.EventBus.Abstractions;
 using Skywalker.Extensions.Collections.Generic;
 
 namespace Skywalker.EventBus;
 
-public abstract class EventBusBase : IEventBus
+public abstract class EventBusBase : BackgroundService, IEventBus
 {
     protected IServiceScopeFactory ServiceScopeFactory { get; }
 
@@ -146,6 +147,27 @@ public abstract class EventBusBase : IEventBus
                 if (genericArgs.Length == 1)
                 {
                     Subscribe(genericArgs[0], new IocEventHandlerFactory(ServiceScopeFactory, handler));
+                }
+            }
+        }
+    }
+
+    protected virtual void UnsubscribeHandlers(ITypeList<IEventHandler> handlers)
+    {
+        foreach (var handler in handlers)
+        {
+            var interfaces = handler.GetInterfaces();
+            foreach (var @interface in interfaces)
+            {
+                if (!typeof(IEventHandler).GetTypeInfo().IsAssignableFrom(@interface))
+                {
+                    continue;
+                }
+
+                var genericArgs = @interface.GetGenericArguments();
+                if (genericArgs.Length == 1)
+                {
+                    Unsubscribe(genericArgs[0], new IocEventHandlerFactory(ServiceScopeFactory, handler));
                 }
             }
         }

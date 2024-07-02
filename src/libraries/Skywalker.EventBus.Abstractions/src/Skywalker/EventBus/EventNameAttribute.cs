@@ -1,7 +1,4 @@
-﻿using System;
-using System.Diagnostics.CodeAnalysis;
-using System.Linq;
-using Skywalker.EventBus.Abstractions;
+﻿using Skywalker.EventBus.Abstractions;
 
 namespace Skywalker.EventBus;
 
