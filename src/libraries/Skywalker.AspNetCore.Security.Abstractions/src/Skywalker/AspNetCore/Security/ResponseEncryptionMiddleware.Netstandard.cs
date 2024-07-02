@@ -6,6 +6,7 @@ using Skywalker.AspNetCore.Security.Abstractions;
 using Skywalker.AspNetCore.Security.Streams;
 
 namespace Skywalker.AspNetCore.Security;
+
 #if NETSTANDARD
 public class ResponseEncryptionMiddleware
 {

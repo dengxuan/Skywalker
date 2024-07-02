@@ -5,7 +5,7 @@ using Skywalker.AspNetCore.Security.Abstractions;
 
 namespace Skywalker.AspNetCore.Security;
 
-#if NETCOREAPP3_1
+#if NET8_0
 public class ResponseEncryptionMiddleware
 {
     private readonly ILogger _logger;

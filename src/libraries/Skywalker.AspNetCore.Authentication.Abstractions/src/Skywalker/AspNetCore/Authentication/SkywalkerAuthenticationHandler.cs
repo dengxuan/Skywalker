@@ -64,7 +64,7 @@ public class SkywalkerAuthenticationHandler : AuthenticationHandler<SkywalkerAut
         return validatedContext.Result;
     }
 
-    public Task SignInAsync(ClaimsPrincipal claimsPrincipal, AuthenticationProperties properties)
+    public Task SignInAsync(ClaimsPrincipal claimsPrincipal, AuthenticationProperties? properties)
     {
         var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes("secretKey123..jackyfei"));
         var credentials = new SigningCredentials(key, SecurityAlgorithms.HmacSha256);
@@ -81,7 +81,7 @@ public class SkywalkerAuthenticationHandler : AuthenticationHandler<SkywalkerAut
         return Task.CompletedTask;
     }
 
-    public Task SignOutAsync(AuthenticationProperties properties)
+    public Task SignOutAsync(AuthenticationProperties? properties)
     {
         return Task.CompletedTask;
     }

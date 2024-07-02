@@ -91,7 +91,7 @@ public abstract class EventBusBase : BackgroundService, IEventBus
 
         await TriggerHandlersAsync(eventType, eventArgs, exceptions);
 
-        if (exceptions.Any())
+        if (exceptions.Count != 0)
         {
             if (exceptions.Count == 1)
             {
