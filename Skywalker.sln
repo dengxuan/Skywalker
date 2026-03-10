@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio Version 17
-VisualStudioVersion = 17.3.32804.467
+# Visual Studio Version 18
+VisualStudioVersion = 18.3.11520.95 d18.3
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{F826DC92-8708-41A4-B0DF-0F3156254DCC}"
 EndProject
@@ -146,6 +146,7 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Skywalker.SourceGenerators.Tests", "tests\Skywalker.SourceGenerators.Tests\Skywalker.SourceGenerators.Tests.csproj", "{B66A362F-711B-4E72-8C2F-9D76B691AFCD}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Skywalker.Settings.AspNetCore", "src\Skywalker.Settings.AspNetCore\Skywalker.Settings.AspNetCore.csproj", "{CD67B8D7-B728-4B36-80EB-A6F6DCA940AF}"
+EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Skywalker.Extensions.DependencyInjection.SourceGenerators", "src\Skywalker.Extensions.DependencyInjection.SourceGenerators\Skywalker.Extensions.DependencyInjection.SourceGenerators.csproj", "{6449C5A9-167D-459D-AA40-8B91C6E16124}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Skywalker.Extensions.DynamicProxies.SourceGenerators", "src\Skywalker.Extensions.DynamicProxies.SourceGenerators\Skywalker.Extensions.DynamicProxies.SourceGenerators.csproj", "{AECA93CA-6AAF-4EE8-AC51-F76F5A52C70E}"
@@ -155,6 +156,8 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Skywalker.Extensions.DependencyInjection.Abstractions", "src\Skywalker.Extensions.DependencyInjection.Abstractions\Skywalker.Extensions.DependencyInjection.Abstractions.csproj", "{6CD8E6E7-2B65-4F4C-AC99-36ADFDD7675D}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Skywalker.Extensions.DynamicProxies.Abstractions", "src\Skywalker.Extensions.DynamicProxies.Abstractions\Skywalker.Extensions.DynamicProxies.Abstractions.csproj", "{39ABD2E0-ED50-4F6F-9CA2-C283248A74F3}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Skywalker.Ddd.Exceptions.Abstractions", "src\Skywalker.Ddd.Exceptions.Abstractions\Skywalker.Ddd.Exceptions.Abstractions.csproj", "{93B43A40-64C9-ADED-F6FD-53DF90B73668}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -1042,6 +1045,18 @@ Global
 		{39ABD2E0-ED50-4F6F-9CA2-C283248A74F3}.Release|x64.Build.0 = Release|Any CPU
 		{39ABD2E0-ED50-4F6F-9CA2-C283248A74F3}.Release|x86.ActiveCfg = Release|Any CPU
 		{39ABD2E0-ED50-4F6F-9CA2-C283248A74F3}.Release|x86.Build.0 = Release|Any CPU
+		{93B43A40-64C9-ADED-F6FD-53DF90B73668}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{93B43A40-64C9-ADED-F6FD-53DF90B73668}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{93B43A40-64C9-ADED-F6FD-53DF90B73668}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{93B43A40-64C9-ADED-F6FD-53DF90B73668}.Debug|x64.Build.0 = Debug|Any CPU
+		{93B43A40-64C9-ADED-F6FD-53DF90B73668}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{93B43A40-64C9-ADED-F6FD-53DF90B73668}.Debug|x86.Build.0 = Debug|Any CPU
+		{93B43A40-64C9-ADED-F6FD-53DF90B73668}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{93B43A40-64C9-ADED-F6FD-53DF90B73668}.Release|Any CPU.Build.0 = Release|Any CPU
+		{93B43A40-64C9-ADED-F6FD-53DF90B73668}.Release|x64.ActiveCfg = Release|Any CPU
+		{93B43A40-64C9-ADED-F6FD-53DF90B73668}.Release|x64.Build.0 = Release|Any CPU
+		{93B43A40-64C9-ADED-F6FD-53DF90B73668}.Release|x86.ActiveCfg = Release|Any CPU
+		{93B43A40-64C9-ADED-F6FD-53DF90B73668}.Release|x86.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -1122,6 +1137,7 @@ Global
 		{FE3464DC-B515-47BE-9A6E-160FD593842E} = {F826DC92-8708-41A4-B0DF-0F3156254DCC}
 		{6CD8E6E7-2B65-4F4C-AC99-36ADFDD7675D} = {F826DC92-8708-41A4-B0DF-0F3156254DCC}
 		{39ABD2E0-ED50-4F6F-9CA2-C283248A74F3} = {F826DC92-8708-41A4-B0DF-0F3156254DCC}
+		{93B43A40-64C9-ADED-F6FD-53DF90B73668} = {A06A6246-2AB9-4E73-A425-64FAA0D5E9CA}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {1448BD59-570D-4D37-831B-C0872E82B643}
