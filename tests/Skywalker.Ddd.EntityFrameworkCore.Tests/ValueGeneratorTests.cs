@@ -11,7 +11,7 @@ public class ValueGeneratorTests
     {
         // Arrange
         var generator = new GuidIdValueGenerator();
-        var entry = CreateMockEntityEntry();
+        var entry = CreateMockEntityEntry(useEmptyId: true);
 
         // Act
         var result = generator.Next(entry);
@@ -21,15 +21,29 @@ public class ValueGeneratorTests
     }
 
     [Fact]
+    public void GuidIdValueGenerator_ShouldReturnExistingGuid()
+    {
+        // Arrange
+        var generator = new GuidIdValueGenerator();
+        var existingId = Guid.NewGuid();
+        var entry = CreateMockEntityEntry(existingId);
+
+        // Act
+        var result = generator.Next(entry);
+
+        // Assert
+        Assert.Equal(existingId, result);
+    }
+
+    [Fact]
     public void GuidIdValueGenerator_ShouldGenerateUniqueGuids()
     {
         // Arrange
         var generator = new GuidIdValueGenerator();
-        var entry = CreateMockEntityEntry();
 
         // Act
         var guids = Enumerable.Range(0, 100)
-            .Select(_ => generator.Next(entry))
+            .Select(_ => generator.Next(CreateMockEntityEntry(useEmptyId: true)))
             .ToList();
 
         // Assert
@@ -104,14 +118,19 @@ public class ValueGeneratorTests
         Assert.False(generator.GeneratesTemporaryValues);
     }
 
-    private static EntityEntry CreateMockEntityEntry()
+    private static EntityEntry CreateMockEntityEntry(bool useEmptyId = false)
+    {
+        return CreateMockEntityEntry(useEmptyId ? Guid.Empty : Guid.NewGuid());
+    }
+
+    private static EntityEntry CreateMockEntityEntry(Guid id)
     {
         var options = new DbContextOptionsBuilder<TestDbContext>()
             .UseInMemoryDatabase(Guid.NewGuid().ToString())
             .Options;
 
         using var context = new TestDbContext(options);
-        var entity = new TestEntity(Guid.NewGuid());
+        var entity = new TestEntity(id);
         return context.Entry(entity);
     }
 }
