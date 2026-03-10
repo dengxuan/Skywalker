@@ -35,6 +35,15 @@ jobs:
           if [[ $GITHUB_REF == refs/tags/* ]]; then
             # 如果是推送 Tag，直接使用 Tag 版本
             VERSION=${GITHUB_REF#refs/tags/v}
+            MAJOR=$(echo "$VERSION" | cut -d. -f1)
+            MINOR=$(echo "$VERSION" | cut -d. -f2)
+            PATCH=$(echo "$VERSION" | cut -d. -f3 | cut -d- -f1)
+
+            # 更新 Versions.props 确保文件中的版本号与 Tag 一致
+            sed -i "s|<MajorVersion>.*</MajorVersion>|<MajorVersion>$MAJOR</MajorVersion>|" $VERSION_FILE
+            sed -i "s|<MinorVersion>.*</MinorVersion>|<MinorVersion>$MINOR</MinorVersion>|" $VERSION_FILE
+            sed -i "s|<PatchVersion>.*</PatchVersion>|<PatchVersion>$PATCH</PatchVersion>|" $VERSION_FILE
+
             echo "Triggered by tag: $VERSION"
             echo "version=$VERSION" >> "$GITHUB_ENV"
             echo "version=$VERSION" >> "$GITHUB_OUTPUT"
