@@ -9,16 +9,17 @@
 		<Description>Skywalker 依赖注入抽象，包含自动注册标记接口和特性</Description>
 	</PropertyGroup>
 
-	<!-- 
-		Source Generator 引用：
-		- OutputItemType="Analyzer" : 本地开发时作为分析器工作
-		- PackAsAnalyzer="true" : 发 NuGet 包时自动放到 analyzers/dotnet/cs 目录
-	-->
+	<!-- Source Generator 引用：本地开发时作为分析器工作 -->
 	<ItemGroup>
 		<ProjectReference Include="$(LibrariesProjectRoot)Skywalker.Extensions.DependencyInjection.SourceGenerators\Skywalker.Extensions.DependencyInjection.SourceGenerators.csproj" 
 						  ReferenceOutputAssembly="false"
 						  OutputItemType="Analyzer"
-						  PackAsAnalyzer="true" />
+						  PrivateAssets="all" />
+	</ItemGroup>
+
+	<!-- 发 NuGet 包时将生成器 DLL 打包到 analyzers 目录，兼容所有 SDK 版本 -->
+	<ItemGroup>
+		<None Include="$(LibrariesProjectRoot)Skywalker.Extensions.DependencyInjection.SourceGenerators\bin\$(Configuration)\netstandard2.0\Skywalker.Extensions.DependencyInjection.SourceGenerators.dll" Pack="true" PackagePath="analyzers/dotnet/cs" Visible="false" />
 	</ItemGroup>
 
 </Project>
