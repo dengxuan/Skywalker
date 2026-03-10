@@ -1,0 +1,20 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <RootNamespace></RootNamespace>
+    <!-- 临时：输出 Source Generator 生成的代码 -->
+    <EmitCompilerGeneratedFiles>true</EmitCompilerGeneratedFiles>
+    <CompilerGeneratedFilesOutputPath>$(BaseIntermediateOutputPath)\GeneratedFiles</CompilerGeneratedFilesOutputPath>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="$(LibrariesProjectRoot)Skywalker.Localization.Abstractions\Skywalker.Localization.Abstractions.csproj" />
+    <ProjectReference Include="$(LibrariesProjectRoot)Skywalker.Ddd.EntityFrameworkCore\Skywalker.Ddd.EntityFrameworkCore.csproj" />
+    <ProjectReference Include="$(LibrariesProjectRoot)Skywalker.Caching.Abstractions\Skywalker.Caching.Abstractions.csproj" />
+    <ProjectReference Include="$(LibrariesProjectRoot)Skywalker.Extensions.DependencyInjection.SourceGenerators\Skywalker.Extensions.DependencyInjection.SourceGenerators.csproj"
+                      ReferenceOutputAssembly="false"
+                      OutputItemType="Analyzer" />
+  </ItemGroup>
+
+</Project>
+

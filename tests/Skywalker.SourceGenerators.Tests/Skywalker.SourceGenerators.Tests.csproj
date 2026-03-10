@@ -1,0 +1,42 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net8.0</TargetFramework>
+    <OutputType>Exe</OutputType>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+    <IsPackable>false</IsPackable>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="coverlet.collector" Version="6.0.4" />
+    <PackageReference Include="Microsoft.NET.Test.Sdk" Version="17.14.1" />
+    <PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="9.0.2" />
+    <PackageReference Include="xunit" Version="2.9.3" />
+    <PackageReference Include="xunit.runner.visualstudio" Version="3.1.4" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Using Include="Xunit" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\src\Skywalker.Extensions.DependencyInjection.Abstractions\Skywalker.Extensions.DependencyInjection.Abstractions.csproj" />
+    <ProjectReference Include="..\..\src\Skywalker.Extensions.DynamicProxies.Abstractions\Skywalker.Extensions.DynamicProxies.Abstractions.csproj" />
+    <ProjectReference Include="..\..\src\Skywalker.EventBus.Local\Skywalker.EventBus.Local.csproj" />
+    <ProjectReference Include="..\..\src\Skywalker.Caching.Redis\Skywalker.Caching.Redis.csproj" />
+    <ProjectReference Include="..\..\src\Skywalker.Extensions.GuidGenerator\Skywalker.Extensions.GuidGenerator.csproj" />
+    <ProjectReference Include="..\..\src\Skywalker.Extensions.Timezone\Skywalker.Extensions.Timezone.csproj" />
+    <ProjectReference Include="..\..\src\Skywalker.Ddd\Skywalker.Ddd.csproj" />
+    <ProjectReference Include="..\..\src\Skywalker.Security.Abstractions\Skywalker.Security.Abstractions.csproj" />
+    <ProjectReference Include="..\..\src\Skywalker.Validation.Abstractions\Skywalker.Validation.Abstractions.csproj" />
+    <ProjectReference Include="..\..\src\Skywalker.Extensions.DependencyInjection.SourceGenerators\Skywalker.Extensions.DependencyInjection.SourceGenerators.csproj"
+                      ReferenceOutputAssembly="false"
+                      OutputItemType="Analyzer" />
+    <ProjectReference Include="..\..\src\Skywalker.Extensions.DynamicProxies.SourceGenerators\Skywalker.Extensions.DynamicProxies.SourceGenerators.csproj"
+                      ReferenceOutputAssembly="false"
+                      OutputItemType="Analyzer" />
+  </ItemGroup>
+
+</Project>
+

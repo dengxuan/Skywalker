@@ -1,0 +1,16 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <RootNamespace></RootNamespace>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="$(LibrariesProjectRoot)Skywalker.Extensions.DependencyInjection.Abstractions\Skywalker.Extensions.DependencyInjection.Abstractions.csproj" />
+    <ProjectReference Include="$(LibrariesProjectRoot)Skywalker.Ddd.Application\Skywalker.Ddd.Application.csproj" />
+    <ProjectReference Include="$(LibrariesProjectRoot)Skywalker.Ddd.Domain\Skywalker.Ddd.Domain.csproj" />
+    <ProjectReference Include="$(LibrariesProjectRoot)Skywalker.Ddd.EntityFrameworkCore\Skywalker.Ddd.EntityFrameworkCore.csproj" />
+    <ProjectReference Include="$(LibrariesProjectRoot)Skywalker.Ddd.Uow\Skywalker.Ddd.Uow.csproj" />
+    <ProjectReference Include="$(LibrariesProjectRoot)Skywalker.Extensions.DependencyInjection.SourceGenerators\Skywalker.Extensions.DependencyInjection.SourceGenerators.csproj" OutputItemType="Analyzer" ReferenceOutputAssembly="false" />
+  </ItemGroup>
+
+</Project>

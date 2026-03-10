@@ -1,0 +1,21 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <RootNamespace></RootNamespace>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="RabbitMQ.Client" Version="6.8.1" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="$(LibrariesProjectRoot)Skywalker.Extensions.DependencyInjection.Abstractions\Skywalker.Extensions.DependencyInjection.Abstractions.csproj" />
+    <ProjectReference Include="$(LibrariesProjectRoot)Skywalker.Extensions.Threading\Skywalker.Extensions.Threading.csproj" />
+    <ProjectReference Include="$(LibrariesProjectRoot)Skywalker.Extensions.Universal\Skywalker.Extensions.Universal.csproj" />
+    <ProjectReference Include="$(LibrariesProjectRoot)Skywalker.Serialization.Abstractions\Skywalker.Serialization.Abstractions.csproj" />
+    <ProjectReference Include="$(LibrariesProjectRoot)Skywalker.Extensions.DependencyInjection.SourceGenerators\Skywalker.Extensions.DependencyInjection.SourceGenerators.csproj"
+                      ReferenceOutputAssembly="false"
+                      OutputItemType="Analyzer" />
+  </ItemGroup>
+
+</Project>

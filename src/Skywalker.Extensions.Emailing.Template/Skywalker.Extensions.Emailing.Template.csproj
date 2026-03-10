@@ -1,0 +1,21 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <RootNamespace></RootNamespace>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="$(LibrariesProjectRoot)Skywalker.Extensions.DependencyInjection.Abstractions\Skywalker.Extensions.DependencyInjection.Abstractions.csproj" />
+    <ProjectReference Include="$(LibrariesProjectRoot)Skywalker.Extensions.Emailing\Skywalker.Extensions.Emailing.csproj" />
+    <ProjectReference Include="$(LibrariesProjectRoot)Skywalker.Template.Abstractions\Skywalker.Template.Abstractions.csproj" />
+    <ProjectReference Include="$(LibrariesProjectRoot)Skywalker.Extensions.DependencyInjection.SourceGenerators\Skywalker.Extensions.DependencyInjection.SourceGenerators.csproj"
+                      ReferenceOutputAssembly="false"
+                      OutputItemType="Analyzer" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <EmbeddedResource Include="Skywalker\Extensions\Emailing\Template\Templates\*.tpl" />
+  </ItemGroup>
+
+</Project>
+

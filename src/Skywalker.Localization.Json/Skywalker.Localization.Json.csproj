@@ -1,0 +1,13 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <RootNamespace></RootNamespace>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="$(LibrariesProjectRoot)Skywalker.Localization.Abstractions\Skywalker.Localization.Abstractions.csproj" />
+    <ProjectReference Include="$(LibrariesProjectRoot)Skywalker.Extensions.VirtualFileSystem\Skywalker.Extensions.VirtualFileSystem.csproj" />
+  </ItemGroup>
+
+</Project>
+

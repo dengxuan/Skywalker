@@ -1,0 +1,16 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <RootNamespace></RootNamespace>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.Extensions.Options" Version="9.0.0" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="$(LibrariesProjectRoot)Skywalker.Extensions.ObjectAccessor\Skywalker.Extensions.ObjectAccessor.csproj" />
+    <ProjectReference Include="$(LibrariesProjectRoot)Skywalker.Extensions.Universal\Skywalker.Extensions.Universal.csproj" />
+  </ItemGroup>
+  
+</Project>

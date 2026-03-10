@@ -1,0 +1,19 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <RootNamespace></RootNamespace>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="$(LibrariesProjectRoot)Skywalker.Ddd.Core\Skywalker.Ddd.Core.csproj" />
+    <ProjectReference Include="$(LibrariesProjectRoot)Skywalker.Extensions.DependencyInjection.Abstractions\Skywalker.Extensions.DependencyInjection.Abstractions.csproj" />
+    <ProjectReference Include="$(LibrariesProjectRoot)Skywalker.Extensions.DynamicProxies.Abstractions\Skywalker.Extensions.DynamicProxies.Abstractions.csproj" />
+    <ProjectReference Include="$(LibrariesProjectRoot)Skywalker.Extensions.DependencyInjection.SourceGenerators\Skywalker.Extensions.DependencyInjection.SourceGenerators.csproj"
+                      ReferenceOutputAssembly="false"
+                      OutputItemType="Analyzer" />
+    <ProjectReference Include="$(LibrariesProjectRoot)Skywalker.Extensions.DynamicProxies.SourceGenerators\Skywalker.Extensions.DynamicProxies.SourceGenerators.csproj"
+                      ReferenceOutputAssembly="false"
+                      OutputItemType="Analyzer" />
+  </ItemGroup>
+
+</Project>

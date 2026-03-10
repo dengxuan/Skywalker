@@ -1,75 +1,51 @@
 <Project>
-
   <PropertyGroup>
-    <TargetFrameworks>netstandard2.0;netstandard2.1;netcoreapp3.1;net5.0;net6.0;net7.0;net8.0;</TargetFrameworks>
-  </PropertyGroup>
-
-  <!-- The TFMs to build and test against. -->
-  <PropertyGroup>
-    <AppendTargetFrameworkToOutputPath>false</AppendTargetFrameworkToOutputPath>
-  </PropertyGroup>
-  <PropertyGroup>
-    <LibrariesProjectRoot>$([MSBuild]::NormalizeDirectory('$(MSBuildThisFileDirectory)', 'src', 'libraries'))</LibrariesProjectRoot>
-    <SharedSourceDir>$([MSBuild]::NormalizeDirectory('$(LibrariesProjectRoot)', 'Common', 'src'))</SharedSourceDir>
-    <ArtifactsRoot>$([MSBuild]::NormalizeDirectory('$(MSBuildThisFileDirectory)', 'artifacts'))</ArtifactsRoot>
-    <XmlDocDir>$([MSBuild]::NormalizeDirectory('$(ArtifactsBinDir)', 'docs'))</XmlDocDir>
-    <XmlDocFileRoot>$([MSBuild]::NormalizeDirectory('$(NuGetPackageRoot)', 'microsoft.private.intellisense', '$(MicrosoftPrivateIntellisenseVersion)', 'IntellisenseFiles', 'net'))</XmlDocFileRoot>
-    <DocsDir>$([MSBuild]::NormalizeDirectory('$(MSBuildThisFileDirectory)', 'docs'))</DocsDir>
-    <ManPagesDir>$([MSBuild]::NormalizeDirectory('$(DocsDir)', 'manpages'))</ManPagesDir>
-    <RepositoryEngineeringRoot>$([MSBuild]::NormalizeDirectory('$(MSBuildThisFileDirectory)', 'eng'))</RepositoryEngineeringRoot>
-    <BaseIntermediateOutputPath>$([MSBuild]::NormalizeDirectory('$(ArtifactsRoot)', 'obj', '$(MSBuildProjectName)'))</BaseIntermediateOutputPath>
-    <BaseOutputPath>$([MSBuild]::NormalizeDirectory('$(ArtifactsRoot)', 'bin', '$(MSBuildProjectName)'))</BaseOutputPath>
-  </PropertyGroup>
-
-  <Import Project="$(RepositoryEngineeringRoot)Versions.props" />
-
-  <!-- Packaging -->
-  <PropertyGroup>
-    <GitHubRepositoryName>runtime</GitHubRepositoryName>
-    <RepositoryUrl>https://github.com/dengxuan/skywalker</RepositoryUrl>
-    <PackageProjectUrl>https://www.tankswar.com</PackageProjectUrl>
-    <Owners>Gordon</Owners>
-    <IncludeSymbols>true</IncludeSymbols>
-    <RuntimeIdGraphDefinitionFile>$([MSBuild]::NormalizePath('$(LibrariesProjectRoot)', 'Microsoft.NETCore.Platforms', 'src', 'runtime.json'))</RuntimeIdGraphDefinitionFile>
-    <LicenseFile>$(MSBuildThisFileDirectory)LICENSE.TXT</LicenseFile>
-    <PackageLicenseExpression>MIT</PackageLicenseExpression>
-    <PackageRequireLicenseAcceptance>false</PackageRequireLicenseAcceptance>
-    <Copyright>$(CopyrightNetFoundation)</Copyright>
-    <PackageThirdPartyNoticesFile>$(MSBuildThisFileDirectory)THIRD-PARTY-NOTICES.TXT</PackageThirdPartyNoticesFile>
-    <PackageReleaseNotes></PackageReleaseNotes>
-    <!-- Indicates this is not an officially supported release. Release branches should set this to false. -->
-    <!-- Keep it in sync with PRERELEASE in eng/native/configureplatform.cmake -->
-    <IsPrerelease>true</IsPrerelease>
-    <IsPrivateAssembly>$(MSBuildProjectName.Contains('Private'))</IsPrivateAssembly>
-    <!-- Private packages should not be stable -->
-    <SuppressFinalPackageVersion Condition="'$(SuppressFinalPackageVersion)' == '' and $(IsPrivateAssembly)">true</SuppressFinalPackageVersion>
-    <!-- We don't want Private packages to be shipped to NuGet.org -->
-    <IsShippingPackage Condition="$(IsPrivateAssembly)">false</IsShippingPackage>
-    <!-- <PlaceholderFile>$(RepositoryEngineeringRoot)_._</PlaceholderFile> -->
-  </PropertyGroup>
-
-  <!-- Language configuration -->
-  <PropertyGroup>
-    <!-- default to allowing all language features -->
+    <TargetFramework>net8.0</TargetFramework>
     <LangVersion>latest</LangVersion>
-    <Nullable>enable</Nullable>
     <ImplicitUsings>enable</ImplicitUsings>
-    <!-- default to max warnlevel -->
     <AnalysisLevel Condition="'$(MSBuildProjectExtension)' == '.csproj'">latest</AnalysisLevel>
-    <!-- Enables Strict mode for Roslyn compiler -->
+    <!-- 启用Roslyn编译器严格模式 -->
     <Features>strict;nullablePublicOnly</Features>
-    <TreatWarningsAsErrors>false</TreatWarningsAsErrors>
-    <!-- Always pass portable to override arcade sdk which uses embedded for local builds -->
+    <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
     <DebugType>portable</DebugType>
     <DebugSymbols>true</DebugSymbols>
-    <!-- Default to discarding symbols if not explicitly set -->
-    <KeepNativeSymbols Condition="'$(KeepNativeSymbols)' == ''">false</KeepNativeSymbols>
-    <!-- Used for launchSettings.json and runtime config files. -->
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <!-- By default the SDK produces ref assembly for 5.0 or later -->
+    <!-- 默认情况下，SDK 为 5.0 或更高版本生成 ref 程序集 -->
     <ProduceReferenceAssembly>false</ProduceReferenceAssembly>
     <GenerateDocumentationFile>false</GenerateDocumentationFile>
-    <SuppressTfmSupportBuildWarnings>true</SuppressTfmSupportBuildWarnings>
+    <Nullable>enable</Nullable>
+    <NoWarn>CS1951</NoWarn>
+    <IsPackable>true</IsPackable>
+    <!-- 将 Source Generator 生成的代码写入磁盘以便调试 -->
+    <EmitCompilerGeneratedFiles>true</EmitCompilerGeneratedFiles>
+    <CompilerGeneratedFilesOutputPath>$(MSBuildProjectDirectory)\obj\Generated</CompilerGeneratedFilesOutputPath>
   </PropertyGroup>
+
+  <PropertyGroup>
+    <SharedSourceDir>$([MSBuild]::NormalizeDirectory('$(MSBuildThisFileDirectory)', 'src\Common'))</SharedSourceDir>
+    <LibrariesProjectRoot>$([MSBuild]::NormalizeDirectory('$(MSBuildThisFileDirectory)', 'src'))</LibrariesProjectRoot>
+    <RepositoryEngineeringRoot>$([MSBuild]::NormalizeDirectory('$(MSBuildThisFileDirectory)', 'eng'))</RepositoryEngineeringRoot>
+  </PropertyGroup>
+
+  <PropertyGroup>
+    <PublishRepositoryUrl>true</PublishRepositoryUrl>
+    <EmbedUntrackedSources>true</EmbedUntrackedSources>
+    <ContinuousIntegrationBuild>true</ContinuousIntegrationBuild>
+    <IncludeSymbols>true</IncludeSymbols>
+    <SymbolPackageFormat>snupkg</SymbolPackageFormat>
+    <RepositoryUrl>https://github.com/feivoo-group/Skywalker</RepositoryUrl>
+    <RepositoryType>git</RepositoryType>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.SourceLink.GitHub" Version="8.0.0" PrivateAssets="All" />
+  </ItemGroup>
+
+  <!-- 暴露 MSBuild 属性给 Source Generator -->
+  <ItemGroup>
+    <CompilerVisibleProperty Include="OutputType" />
+  </ItemGroup>
+
+  <Import Project="$(RepositoryEngineeringRoot)Versions.props" />
 
 </Project>

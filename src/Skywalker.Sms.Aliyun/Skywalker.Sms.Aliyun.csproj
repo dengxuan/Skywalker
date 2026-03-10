@@ -1,0 +1,18 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <RootNamespace></RootNamespace>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="AlibabaCloud.SDK.Dysmsapi20170525" Version="3.0.0" />
+    <PackageReference Include="Microsoft.Extensions.Options" Version="9.0.0" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="$(LibrariesProjectRoot)Skywalker.Sms.Abstractions\Skywalker.Sms.Abstractions.csproj" />
+    <ProjectReference Include="$(LibrariesProjectRoot)Skywalker.Extensions.Universal\Skywalker.Extensions.Universal.csproj" />
+  </ItemGroup>
+  
+</Project>
+

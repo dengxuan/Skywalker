@@ -1,0 +1,17 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <RootNamespace></RootNamespace>
+    <AllowUnsafeBlocks>False</AllowUnsafeBlocks>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <FrameworkReference Include="Microsoft.AspNetCore.App" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="$(LibrariesProjectRoot)Skywalker.Ddd.Uow/Skywalker.Ddd.Uow.csproj" />
+    <ProjectReference Include="$(LibrariesProjectRoot)Skywalker.Ddd.Exceptions.Abstractions\Skywalker.Ddd.Exceptions.Abstractions.csproj" />
+  </ItemGroup>
+  
+</Project>

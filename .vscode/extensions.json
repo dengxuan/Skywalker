@@ -1,0 +1,12 @@
+{
+    "recommendations": [
+        "ms-dotnettools.vscode-dotnet-runtime",
+        "ms-dotnettools.csharp",
+        "github.copilot-chat",
+        "github.copilot",
+        "ms-dotnettools.csdevkit",
+        "ms-vscode-remote.remote-containers",
+        "github.vscode-pull-request-github",
+        "github.vscode-github-actions"
+    ]
+}
