@@ -107,7 +107,7 @@ jobs:
         run: dotnet restore Skywalker.sln
 
       - name: Build and pack
-        run: dotnet pack Skywalker.sln --configuration Release --output ./nupkgs --include-symbols --include-source /p:PackageVersion=${{ needs.update-version.outputs.version }}
+        run: dotnet pack Skywalker.sln --configuration Release --output ./nupkgs /p:PackageVersion=${{ needs.update-version.outputs.version }}
 
       - name: Publish to GitHub Packages
         run: dotnet nuget push "./nupkgs/*.nupkg" --api-key ${{ secrets.GITHUB_TOKEN }} --source "https://nuget.pkg.github.com/${{ github.repository_owner }}/index.json" --symbol-source "https://nuget.pkg.github.com/${{ github.repository_owner }}/index.json" --skip-duplicate
