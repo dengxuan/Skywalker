@@ -17,7 +17,7 @@
 | **对象映射** | [objectmapping.md](./objectmapping.md) | AutoMapper |
 | **模板引擎** | [template.md](./template.md) | Scriban、Razor |
 | **数据验证** | [validation.md](./validation.md) | FluentValidation |
-| **序列化** | [serialization.md](./serialization.md) | Json、MessagePack |
+| **序列化** | [serialization.md](./serialization.md) | Json |
 | **短信服务** | [sms.md](./sms.md) | Aliyun |
 | **邮件服务** | [emailing.md](./emailing.md) | Emailing、Template |
 | **健康检查** | [healthchecks.md](./healthchecks.md) | AspNetCore、EF、Redis、RabbitMQ |

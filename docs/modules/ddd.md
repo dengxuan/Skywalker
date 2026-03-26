@@ -59,14 +59,13 @@ Skywalker.Ddd.EntityFrameworkCore
 ### 安装
 
 ```bash
-dotnet add package Skywalker.Ddd
+dotnet add package Skywalker.Ddd.Core
 ```
 
 ### 注册服务
 
 ```csharp
-builder.Services.AddSkywalker()
-    .AddDdd();
+builder.Services.AddDddCore();
 ```
 
 ---
@@ -657,9 +656,8 @@ public sealed class UnitOfWorkAttribute : Attribute
 ### 注册服务
 
 ```csharp
-builder.Services.AddSkywalker()
-    .AddDynamicProxies()
-    .AddUnitOfWork();
+builder.Services.AddDddCore();
+builder.Services.AddUnitOfWork();
 ```
 
 ### 使用示例
@@ -839,9 +837,12 @@ builder.Services.AddDbContext<OrderDbContext>(options =>
 });
 
 // 注册 EF Core 仓储
-builder.Services.AddSkywalker()
-    .AddDdd()
-    .AddEntityFrameworkCore<OrderDbContext>();
+builder.Services.AddDddCore();
+builder.Services.AddEntityFrameworkCore();
+builder.Services.AddSkywalkerDbContext<OrderDbContext>(options =>
+{
+    options.UseMySql(connectionString, ServerVersion.AutoDetect(connectionString));
+});
 ```
 
 ### 使用示例
@@ -932,9 +933,9 @@ dotnet add package Skywalker.Ddd.AspNetCore
 ### 注册服务
 
 ```csharp
-builder.Services.AddSkywalker()
-    .AddDdd()
-    .AddAspNetCore();
+builder.Services.AddDddCore();
+builder.Services.AddSkywalkerExceptionHandling();
+builder.Services.AddResponseWrapper();
 ```
 
 ---

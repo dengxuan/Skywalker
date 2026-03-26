@@ -155,7 +155,7 @@ builder.Services.AddDbContext<AppDbContext>(options =>
 // ============================================
 // 2. Skywalker 核心服务
 // ============================================
-builder.Services.AddSkywalkerCore();
+builder.Services.AddDddCore();
 
 // ============================================
 // 3. DDD 领域层服务
