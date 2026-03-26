@@ -1,7 +1,6 @@
 using Skywalker.Template;
 using Skywalker.Template.Razor;
 
-[assembly: Skywalker.SkywalkerModule("RazorTemplate")]
 
 namespace Microsoft.Extensions.DependencyInjection;
 

@@ -1,15 +1,12 @@
 using Microsoft.Extensions.DependencyInjection;
-using Skywalker.DependencyInjection;
-using Skywalker.SourceGenerators.Tests;
 
 namespace Skywalker.SourceGenerators.Tests;
 
 /// <summary>
-/// Integration tests for the generated AddSkywalker() and AddAutoServices() methods.
-/// AddSkywalker() aggregates all Skywalker modules.
+/// Integration tests for the generated AddAutoServices() method.
 /// AddAutoServices() registers services defined in this test project.
 /// </summary>
-public class AddSkywalkerIntegrationTests
+public class AddAutoServicesIntegrationTests
 {
     [Fact]
     public void AddAutoServices_RegistersTestProjectServices()
@@ -129,32 +126,5 @@ public class AddSkywalkerIntegrationTests
         Assert.NotNull(noInterfaceService);
     }
 
-    [Fact]
-    public void AddSkywalker_AggregatesAllModules()
-    {
-        // Arrange
-        var services = new ServiceCollection();
-        services.AddLogging();
-
-        // Act - AddSkywalker aggregates all Skywalker modules
-        services.AddSkywalker();
-
-        // Assert - should have registered services from modules
-        // Just verify the method is callable and returns the collection
-        Assert.NotEmpty(services);
-    }
-
-    [Fact]
-    public void AddSkywalker_ReturnsServiceCollection()
-    {
-        // Arrange
-        var services = new ServiceCollection();
-
-        // Act
-        var result = services.AddSkywalker();
-
-        // Assert
-        Assert.Same(services, result);
-    }
 }
 

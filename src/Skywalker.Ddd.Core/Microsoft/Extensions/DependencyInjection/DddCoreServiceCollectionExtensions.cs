@@ -1,24 +1,23 @@
-ï»¿// Licensed to the Gordon under one or more agreements.
+// Licensed to the Gordon under one or more agreements.
 // Gordon licenses this file to you under the MIT license.
 
 using Microsoft.Extensions.DependencyInjection.Extensions;
 using Skywalker.Ddd;
 using Skywalker.Ddd.Abstractions;
 
-[assembly: Skywalker.SkywalkerModule("DddCore")]
 
 namespace Microsoft.Extensions.DependencyInjection;
 
 /// <summary>
-/// DDD Core æœåŠ¡æ‰©å±•æ–¹æ³•ã€‚
+/// DDD Core ·şÎñÀ©Õ¹·½·¨¡£
 /// </summary>
 public static class DddCoreServiceCollectionExtensions
 {
     /// <summary>
-    /// æ·»åŠ  DDD Core æœåŠ¡ã€‚
+    /// Ìí¼Ó DDD Core ·şÎñ¡£
     /// </summary>
-    /// <param name="services">æœåŠ¡é›†åˆã€‚</param>
-    /// <returns>æœåŠ¡é›†åˆã€‚</returns>
+    /// <param name="services">·şÎñ¼¯ºÏ¡£</param>
+    /// <returns>·şÎñ¼¯ºÏ¡£</returns>
     public static IServiceCollection AddDddCore(this IServiceCollection services)
     {
         ArgumentNullException.ThrowIfNull(services);

@@ -1,7 +1,6 @@
-﻿using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.DependencyInjection;
 using Skywalker.Extensions.Timezone;
 
-[assembly: Skywalker.SkywalkerModule("Timezone")]
 
 namespace Microsoft.Extensions.DependencyInjection;
 

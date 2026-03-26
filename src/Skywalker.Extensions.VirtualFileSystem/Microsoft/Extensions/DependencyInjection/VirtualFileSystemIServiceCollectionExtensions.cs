@@ -1,15 +1,14 @@
-Ôªø// Licensed to the Gordon under one or more agreements.
+// Licensed to the Gordon under one or more agreements.
 // Gordon licenses this file to you under the MIT license.
 
 using Microsoft.Extensions.DependencyInjection.Extensions;
 using Skywalker.Extensions.VirtualFileSystem;
 
-[assembly: Skywalker.SkywalkerModule("VirtualFileSystem")]
 
 namespace Microsoft.Extensions.DependencyInjection;
 
 /// <summary>
-/// VirtualFileSystem ÊúçÂä°Êâ©Â±ïÊñπÊ≥ï„ÄÇ
+/// VirtualFileSystem ∑˛ŒÒ¿©’π∑Ω∑®°£
 /// </summary>
 public static class VirtualFileSystemIServiceCollectionExtensions
 {

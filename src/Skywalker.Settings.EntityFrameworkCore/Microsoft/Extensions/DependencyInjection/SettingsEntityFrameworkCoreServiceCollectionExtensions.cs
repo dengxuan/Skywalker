@@ -5,7 +5,6 @@ using Skywalker.Settings;
 using Skywalker.Settings.Abstractions;
 using Skywalker.Settings.EntityFrameworkCore;
 
-[assembly: Skywalker.SkywalkerModule("SettingsEntityFrameworkCore")]
 
 namespace Microsoft.Extensions.DependencyInjection;
 

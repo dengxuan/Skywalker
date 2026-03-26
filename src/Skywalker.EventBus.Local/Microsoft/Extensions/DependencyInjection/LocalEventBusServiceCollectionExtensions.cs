@@ -3,7 +3,6 @@ using Skywalker.EventBus;
 using Skywalker.EventBus.Abstractions;
 using Skywalker.EventBus.Local;
 
-[assembly: Skywalker.SkywalkerModule("EventBusLocal")]
 
 namespace Microsoft.Extensions.DependencyInjection;
 
@@ -34,7 +33,7 @@ public static class LocalEventBusServiceCollectionExtensions
         }
         else
         {
-            // 没有配置时使用默认值
+            // 没有配置时使用默认�?
             services.AddOptions<LocalEventBusOptions>()
                 .ValidateDataAnnotations()
                 .ValidateOnStart();
@@ -78,7 +77,7 @@ public static class LocalEventBusServiceCollectionExtensions
     private static IServiceCollection AddEventBusLocalServices(this IServiceCollection services)
     {
         services.AddAutoServices();
-        // 注册 IEventBus 指向 ILocalEventBus 的实例
+        // 注册 IEventBus 指向 ILocalEventBus 的实�?
         services.AddSingleton<IEventBus>(sp => sp.GetRequiredService<ILocalEventBus>());
 
         return services;

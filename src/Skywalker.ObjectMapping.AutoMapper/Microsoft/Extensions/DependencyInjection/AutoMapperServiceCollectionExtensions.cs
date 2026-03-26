@@ -8,7 +8,6 @@ using Microsoft.Extensions.Options;
 using Skywalker.ObjectMapping;
 using Skywalker.ObjectMapping.AutoMapper;
 
-[assembly: Skywalker.SkywalkerModule("AutoMapperObjectMapping")]
 
 namespace Microsoft.Extensions.DependencyInjection;
 
@@ -25,7 +24,7 @@ public static class AutoMapperServiceCollectionExtensions
     /// <returns>The service collection.</returns>
     public static IServiceCollection AddAutoMapperObjectMapping(this IServiceCollection services)
     {
-        // 延迟注册 AutoMapper，等待 Options 配置完成
+        // 延迟注册 AutoMapper，等�?Options 配置完成
         services.AddSingleton(sp =>
         {
             var options = sp.GetRequiredService<IOptions<AutoMapperOptions>>().Value;

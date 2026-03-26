@@ -1,4 +1,4 @@
-ï»¿// Licensed to the Gordon under one or more agreements.
+// Licensed to the Gordon under one or more agreements.
 // Gordon licenses this file to you under the MIT license.
 
 using Microsoft.Extensions.DependencyInjection;
@@ -6,7 +6,6 @@ using Skywalker.EventBus;
 using Skywalker.EventBus.Abstractions;
 using Skywalker.EventBus.RabbitMQ;
 
-[assembly: Skywalker.SkywalkerModule("EventBusRabbitMQ")]
 
 namespace Microsoft.Extensions.DependencyInjection;
 
@@ -23,10 +22,10 @@ public static class EventBusRabbitMQServiceCollectionExtensions
     /// <returns>The service collection.</returns>
     public static IServiceCollection AddEventBusRabbitMQ(this IServiceCollection services)
     {
-        // æ·»åŠ  EventBus æ ¸å¿ƒæœåŠ¡
+        // Ìí¼Ó EventBus ºËĞÄ·şÎñ
         services.AddEventBusCore();
 
-        // ä»é…ç½®æ–‡ä»¶ç»‘å®šé€‰é¡¹
+        // ´ÓÅäÖÃÎÄ¼ş°ó¶¨Ñ¡Ïî
         var configuration = services.GetConfiguration();
         if (configuration != null)
         {
@@ -53,10 +52,10 @@ public static class EventBusRabbitMQServiceCollectionExtensions
     /// <returns>The service collection.</returns>
     public static IServiceCollection AddEventBusRabbitMQ(this IServiceCollection services, Action<RabbitMqEventBusOptions> configure)
     {
-        // æ·»åŠ  EventBus æ ¸å¿ƒæœåŠ¡
+        // Ìí¼Ó EventBus ºËĞÄ·şÎñ
         services.AddEventBusCore();
 
-        // å…ˆä»é…ç½®æ–‡ä»¶ç»‘å®šï¼Œå†åº”ç”¨ä»£ç é…ç½®
+        // ÏÈ´ÓÅäÖÃÎÄ¼ş°ó¶¨£¬ÔÙÓ¦ÓÃ´úÂëÅäÖÃ
         var configuration = services.GetConfiguration();
         if (configuration != null)
         {

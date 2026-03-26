@@ -1,9 +1,8 @@
-ï»¿using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.DependencyInjection.Extensions;
 using Skywalker.Extensions.Emailing;
 using Skywalker.Extensions.Emailing.Smtp;
 
-[assembly: Skywalker.SkywalkerModule("Emailing")]
 
 namespace Microsoft.Extensions.DependencyInjection;
 
@@ -15,7 +14,7 @@ public static class EmailingIServiceCollectionExtensions
     /// </summary>
     public static IServiceCollection AddEmailing(this IServiceCollection services)
     {
-        // é»˜è®¤ä½¿ç”¨ NullEmailSenderï¼Œå¦‚æœé…ç½®äº† SMTP åˆ™ä½¿ç”¨ SmtpEmailSender
+        // Ä¬ÈÏÊ¹ÓÃ NullEmailSender£¬Èç¹ûÅäÖÃÁË SMTP ÔòÊ¹ÓÃ SmtpEmailSender
         services.TryAddSingleton<IEmailSender, NullEmailSender>();
         return services;
     }

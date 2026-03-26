@@ -2,7 +2,6 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.DependencyInjection.Extensions;
 using Skywalker.Validation;
 
-[assembly: Skywalker.SkywalkerModule("Validation")]
 
 namespace Microsoft.Extensions.DependencyInjection;
 

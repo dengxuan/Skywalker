@@ -1,8 +1,20 @@
-﻿// Licensed to the Gordon under one or more agreements.
+// Licensed to the Gordon under one or more agreements.
 // Gordon licenses this file to you under the MIT license.
 
-[assembly: Skywalker.SkywalkerModule("UnitOfWork")]
+namespace Microsoft.Extensions.DependencyInjection;
 
-// 此文件仅保留 [SkywalkerModule] 特性声明。
-// 所有服务注册代码由 Source Generator 自动生成。
-// 包括 AmbientUnitOfWork 的共享实例注册（通过 [SharedInstance] 特性）。
+/// <summary>
+/// UnitOfWork 服务扩展方法。
+/// </summary>
+public static class UowServiceCollectionExtensions
+{
+    /// <summary>
+    /// 添加 UnitOfWork 模块服务到服务集合。
+    /// </summary>
+    /// <param name="services">服务集合。</param>
+    /// <returns>服务集合。</returns>
+    public static IServiceCollection AddUnitOfWork(this IServiceCollection services)
+    {
+        return services.AddAutoServices();
+    }
+}

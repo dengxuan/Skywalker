@@ -2,7 +2,6 @@ using Skywalker.Extensions.Emailing.Template;
 using Skywalker.Extensions.VirtualFileSystem;
 using Skywalker.Template;
 
-[assembly: Skywalker.SkywalkerModule("EmailTemplate")]
 
 namespace Microsoft.Extensions.DependencyInjection;
 

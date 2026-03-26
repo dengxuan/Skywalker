@@ -1,7 +1,6 @@
 using Skywalker.Template;
 using Skywalker.Template.Scriban;
 
-[assembly: Skywalker.SkywalkerModule("ScribanTemplate")]
 
 namespace Microsoft.Extensions.DependencyInjection;
 
