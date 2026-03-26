@@ -2,6 +2,8 @@
 // Gordon licenses this file to you under the MIT license.
 
 using System.Reflection;
+using Microsoft.Extensions.Logging;
+using Microsoft.Extensions.Logging.Abstractions;
 using Microsoft.Extensions.Options;
 using Skywalker.ObjectMapping;
 using Skywalker.ObjectMapping.AutoMapper;
@@ -31,10 +33,11 @@ public static class AutoMapperServiceCollectionExtensions
                 ? options.ProfileAssemblies.ToArray()
                 : AppDomain.CurrentDomain.GetAssemblies();
 
+            var loggerFactory = sp.GetService<ILoggerFactory>() ?? NullLoggerFactory.Instance;
             var config = new global::AutoMapper.MapperConfiguration(cfg =>
             {
                 cfg.AddMaps(assemblies);
-            });
+            }, loggerFactory);
             return config.CreateMapper();
         });
 
@@ -55,7 +58,7 @@ public static class AutoMapperServiceCollectionExtensions
         var config = new global::AutoMapper.MapperConfiguration(cfg =>
         {
             cfg.AddMaps(assemblies);
-        });
+        }, NullLoggerFactory.Instance);
         services.AddSingleton(config.CreateMapper());
         services.AddSingleton<IObjectMapper, AutoMapperObjectMapper>();
         return services;
@@ -82,7 +85,7 @@ public static class AutoMapperServiceCollectionExtensions
         this IServiceCollection services,
         Action<global::AutoMapper.IMapperConfigurationExpression> configAction)
     {
-        var config = new global::AutoMapper.MapperConfiguration(configAction);
+        var config = new global::AutoMapper.MapperConfiguration(configAction, NullLoggerFactory.Instance);
         services.AddSingleton(config.CreateMapper());
         services.AddSingleton<IObjectMapper, AutoMapperObjectMapper>();
         return services;

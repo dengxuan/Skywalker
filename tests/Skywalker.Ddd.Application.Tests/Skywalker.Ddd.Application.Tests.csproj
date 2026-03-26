@@ -23,7 +23,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\src\Skywalker.Ddd.Application.Abstractions\Skywalker.Ddd.Application.Abstractions.csproj" />
+    <ProjectReference Include="..\..\src\Skywalker.Ddd.Application\Skywalker.Ddd.Application.csproj" />
   </ItemGroup>
 
 </Project>

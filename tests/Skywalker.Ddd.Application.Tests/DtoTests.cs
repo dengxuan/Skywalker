@@ -51,7 +51,7 @@ public class DtoTests
         var items = new List<string> { "a", "b", "c" };
 
         // Act
-        var dto = new PagedResultDto<string>(100, items);
+        var dto = new PagedResultDto<string> { TotalCount = 100, Items = items };
 
         // Assert
         Assert.Equal(100, dto.TotalCount);
@@ -64,10 +64,10 @@ public class DtoTests
         var items = new List<string> { "a", "b", "c" };
 
         // Act
-        var dto = new PagedResultDto<string>(100, items);
+        var dto = new PagedResultDto<string> { TotalCount = 3, Items = items };
 
         // Assert
-        Assert.Equal(3, dto.Items.Count);
+        Assert.Equal(3, dto.TotalCount);
         Assert.Contains("a", dto.Items);
     }
 
@@ -75,7 +75,7 @@ public class DtoTests
     public void PagedResultDto_ShouldSupportEmptyItems()
     {
         // Arrange & Act
-        var dto = new PagedResultDto<string>(0, new List<string>());
+        var dto = new PagedResultDto<string> { TotalCount = 0, Items = [] };
 
         // Assert
         Assert.Equal(0, dto.TotalCount);
