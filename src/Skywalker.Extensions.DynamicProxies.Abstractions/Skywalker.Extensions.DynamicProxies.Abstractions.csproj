@@ -1,10 +1,6 @@
 <Project Sdk="Microsoft.NET.Sdk">
 
 	<PropertyGroup>
-		<TargetFramework>netstandard2.0</TargetFramework>
-		<LangVersion>latest</LangVersion>
-		<Nullable>enable</Nullable>
-		<ImplicitUsings>disable</ImplicitUsings>
 		<RootNamespace></RootNamespace>
 		<Description>Skywalker 动态代理抽象，包含拦截器接口和特性</Description>
 		<SkipAutoAnalyzers>true</SkipAutoAnalyzers>
