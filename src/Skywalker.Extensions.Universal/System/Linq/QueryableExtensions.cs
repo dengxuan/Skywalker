@@ -11,7 +11,7 @@ public static class QueryableExtensions
     public static PagedList<T> ToPagedList<T>(this IQueryable<T> source, int skip, int limit)
     {
         var totalCount = source.Count();
-        var items = source.Page(skip, limit);
+        var items = source.Skip(skip).Take(limit);
         var result = new PagedList<T>(totalCount, items);
         return result;
     }

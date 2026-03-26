@@ -47,8 +47,8 @@
     <SystemComponentModelAnnotationsVersion>5.0.0</SystemComponentModelAnnotationsVersion>
     <SystemCollectionsImmutableVersion>8.0.0</SystemCollectionsImmutableVersion>
     <SystemTextEncodingsWebVersion>8.0.0</SystemTextEncodingsWebVersion>
-    <SystemReflectionEmitVersion>4.7.0</SystemReflectionEmitVersion>
     <SystemTextJsonVersion>9.0.0</SystemTextJsonVersion>
+    <SystemLinqDynamicCoreVersion>1.6.2</SystemLinqDynamicCoreVersion>
   </PropertyGroup>
 
   <PropertyGroup Label="Third-Party">
