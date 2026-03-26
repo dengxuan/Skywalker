@@ -5,12 +5,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="System.Diagnostics.Tools" Version="4.3.0" />
     <PackageReference Include="AutoMapper" Version="$(AutoMapperVersion)" />
-  </ItemGroup>
-
-  <ItemGroup Condition="'$(TargetFramework)' == 'netstandard2.0'">
-    <PackageReference Include="System.Threading.Tasks.Extensions" Version="4.5.4" />
   </ItemGroup>
   
   <ItemGroup>
