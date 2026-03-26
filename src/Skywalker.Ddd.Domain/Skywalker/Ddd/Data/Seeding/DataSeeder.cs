@@ -20,7 +20,7 @@ public class DataSeeder : IDataSeeder, ISingletonDependency
     public virtual async Task SeedAsync(DataSeedContext context)
     {
         var unitOfWorkManager = ServiceScopeFactory.CreateScope().ServiceProvider.GetRequiredService<IUnitOfWorkManager>();
-        using var uow = unitOfWorkManager.Begin();
+        using var uow = unitOfWorkManager.Begin(isTransactional: true);
 
         // 从 UoW 的 ServiceProvider 解析 DataSeedContributor，确保使用同一个 DbContext
         foreach (var contributorType in Options.Contributors)

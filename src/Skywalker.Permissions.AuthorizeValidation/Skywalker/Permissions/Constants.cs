@@ -3,7 +3,10 @@
 
 namespace Skywalker.Permissions;
 
-internal sealed class Constants
+internal static class Constants
 {
-    internal const string HttpClientName = "AuthorizeValidationHttpClient";
+    internal const string PermissionHttpClientName = "PermissionHttpClient";
+
+    // 同步相关的缓存 Key
+    internal const string VersionCacheKey = "permissions:version";
 }

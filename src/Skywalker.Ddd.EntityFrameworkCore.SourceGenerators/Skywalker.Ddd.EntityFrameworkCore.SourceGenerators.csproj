@@ -9,21 +9,11 @@
 		<IsRoslynComponent>true</IsRoslynComponent>
 		<RootNamespace>Skywalker.Ddd.EntityFrameworkCore.SourceGenerators</RootNamespace>
 		<Description>Skywalker EF Core Source Generator - 自动生成仓储注册代码</Description>
-		<!-- 源码生成器打包配置：DLL 放入 analyzers 目录，不作为普通 lib 引用 -->
-		<IncludeBuildOutput>false</IncludeBuildOutput>
-		<SuppressDependenciesWhenPacking>true</SuppressDependenciesWhenPacking>
-		<DevelopmentDependency>true</DevelopmentDependency>
-		<IncludeSymbols>false</IncludeSymbols>
 	</PropertyGroup>
 
 	<ItemGroup>
 		<PackageReference Include="Microsoft.CodeAnalysis.Analyzers" Version="3.3.4" PrivateAssets="all" />
 		<PackageReference Include="Microsoft.CodeAnalysis.CSharp" Version="4.8.0" PrivateAssets="all" />
-	</ItemGroup>
-
-	<!-- 将生成器 DLL 打包到 analyzers/dotnet/cs 目录 -->
-	<ItemGroup>
-		<None Include="$(OutputPath)\$(AssemblyName).dll" Pack="true" PackagePath="analyzers/dotnet/cs" Visible="false" />
 	</ItemGroup>
 
 </Project>

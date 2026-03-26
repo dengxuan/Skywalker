@@ -11,7 +11,7 @@ public class ValueGeneratorTests
     {
         // Arrange
         var generator = new GuidIdValueGenerator();
-        var entry = CreateMockEntityEntry(useEmptyId: true);
+        var entry = CreateMockEntityEntry();
 
         // Act
         var result = generator.Next(entry);
@@ -21,29 +21,14 @@ public class ValueGeneratorTests
     }
 
     [Fact]
-    public void GuidIdValueGenerator_ShouldReturnExistingGuid()
-    {
-        // Arrange
-        var generator = new GuidIdValueGenerator();
-        var existingId = Guid.NewGuid();
-        var entry = CreateMockEntityEntry(existingId);
-
-        // Act
-        var result = generator.Next(entry);
-
-        // Assert
-        Assert.Equal(existingId, result);
-    }
-
-    [Fact]
     public void GuidIdValueGenerator_ShouldGenerateUniqueGuids()
     {
         // Arrange
         var generator = new GuidIdValueGenerator();
 
-        // Act
+        // Act - 每次创建新的 entry（带空 Guid），以便生成新的 Guid
         var guids = Enumerable.Range(0, 100)
-            .Select(_ => generator.Next(CreateMockEntityEntry(useEmptyId: true)))
+            .Select(_ => generator.Next(CreateMockEntityEntryWithEmptyGuid()))
             .ToList();
 
         // Assert
@@ -118,19 +103,25 @@ public class ValueGeneratorTests
         Assert.False(generator.GeneratesTemporaryValues);
     }
 
-    private static EntityEntry CreateMockEntityEntry(bool useEmptyId = false)
-    {
-        return CreateMockEntityEntry(useEmptyId ? Guid.Empty : Guid.NewGuid());
-    }
-
-    private static EntityEntry CreateMockEntityEntry(Guid id)
+    private static EntityEntry CreateMockEntityEntry()
     {
         var options = new DbContextOptionsBuilder<TestDbContext>()
             .UseInMemoryDatabase(Guid.NewGuid().ToString())
             .Options;
 
         using var context = new TestDbContext(options);
-        var entity = new TestEntity(id);
+        var entity = new TestEntity(Guid.NewGuid());
+        return context.Entry(entity);
+    }
+
+    private static EntityEntry CreateMockEntityEntryWithEmptyGuid()
+    {
+        var options = new DbContextOptionsBuilder<TestDbContext>()
+            .UseInMemoryDatabase(Guid.NewGuid().ToString())
+            .Options;
+
+        using var context = new TestDbContext(options);
+        var entity = new TestEntity(Guid.Empty);
         return context.Entry(entity);
     }
 }

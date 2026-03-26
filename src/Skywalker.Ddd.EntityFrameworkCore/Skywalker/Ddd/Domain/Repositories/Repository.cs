@@ -16,7 +16,7 @@ using Skywalker.Extensions.Timezone;
 namespace Skywalker.Ddd.Domain.Repositories;
 
 /// <summary>
-/// 
+///
 /// </summary>
 /// <typeparam name="TDbContext"></typeparam>
 /// <typeparam name="TEntity"></typeparam>
@@ -124,20 +124,6 @@ public class Repository<TDbContext, TEntity>(IClock clock, IEventBus eventBus, I
     }
 
     /// <inheritdoc/>
-    protected virtual void SetConcurrencyStampIfNull(TEntity entity)
-    {
-        if (entity is not IHasConcurrencyStamp hasConcurrencyStamp)
-        {
-            return;
-        }
-        if (hasConcurrencyStamp.ConcurrencyStamp != null)
-        {
-            return;
-        }
-        hasConcurrencyStamp.ConcurrencyStamp = Guid.NewGuid().ToString("N");
-    }
-
-    /// <inheritdoc/>
     protected override IQueryable<TEntity> GetQueryable()
     {
         return DbSet.AsQueryable();
@@ -170,11 +156,7 @@ public class Repository<TDbContext, TEntity>(IClock clock, IEventBus eventBus, I
     /// <inheritdoc/>
     public override async Task<TEntity> InsertAsync(TEntity entity, bool autoSave = false, CancellationToken cancellationToken = default)
     {
-        if (entity is IHasCreationTime objectWithCreationTime)
-        {
-            objectWithCreationTime.CreationTime = _clock.Now;
-        }
-        SetConcurrencyStampIfNull(entity);
+        // CreationTime 和 ConcurrencyStamp 统一在 SkywalkerDbContext.ApplySkywalkerConceptsForAddedEntity 中设置
         await ApplySkywalkerConceptsForAddedEntityAsync(entity);
         var savedEntity = DbSet.Add(entity).Entity;
         if (autoSave)
@@ -189,11 +171,7 @@ public class Repository<TDbContext, TEntity>(IClock clock, IEventBus eventBus, I
     {
         foreach (var entity in entities)
         {
-            if (entity is IHasCreationTime objectWithCreationTime)
-            {
-                objectWithCreationTime.CreationTime = _clock.Now;
-            }
-            SetConcurrencyStampIfNull(entity);
+            // CreationTime 和 ConcurrencyStamp 统一在 SkywalkerDbContext.ApplySkywalkerConceptsForAddedEntity 中设置
             await ApplySkywalkerConceptsForAddedEntityAsync(entity);
         }
         await DbSet.AddRangeAsync(entities, GetCancellationToken(cancellationToken));
@@ -405,11 +383,7 @@ public class Repository<TDbContext, TEntity, TKey> : Repository<TDbContext, TEnt
     /// <inheritdoc/>
     public override async Task<TEntity> InsertAsync(TEntity entity, bool autoSave = false, CancellationToken cancellationToken = default)
     {
-        if (entity is IHasCreationTime objectWithCreationTime)
-        {
-            objectWithCreationTime.CreationTime = _clock.Now;
-        }
-        SetConcurrencyStampIfNull(entity);
+        // CreationTime 和 ConcurrencyStamp 统一在 SkywalkerDbContext.ApplySkywalkerConceptsForAddedEntity 中设置
         await ApplySkywalkerConceptsForAddedEntityAsync(entity);
         var savedEntity = DbSet.Add(entity).Entity;
         if (autoSave)
@@ -424,11 +398,7 @@ public class Repository<TDbContext, TEntity, TKey> : Repository<TDbContext, TEnt
     {
         foreach (var entity in entities)
         {
-            if (entity is IHasCreationTime objectWithCreationTime)
-            {
-                objectWithCreationTime.CreationTime = _clock.Now;
-            }
-            SetConcurrencyStampIfNull(entity);
+            // CreationTime 和 ConcurrencyStamp 统一在 SkywalkerDbContext.ApplySkywalkerConceptsForAddedEntity 中设置
             await ApplySkywalkerConceptsForAddedEntityAsync(entity);
         }
         await DbSet.AddRangeAsync(entities, GetCancellationToken(cancellationToken));

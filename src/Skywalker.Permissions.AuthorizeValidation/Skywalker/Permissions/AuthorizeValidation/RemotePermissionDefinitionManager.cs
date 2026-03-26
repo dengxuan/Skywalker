@@ -15,7 +15,7 @@ internal class RemotePermissionDefinitionManager : IPermissionDefinitionManager
 
     public RemotePermissionDefinitionManager(IHttpClientFactory httpClientFactory, IMemoryCache memoryCache)
     {
-        _backChannel = httpClientFactory.CreateClient(Constants.HttpClientName);
+        _backChannel = httpClientFactory.CreateClient(Constants.PermissionHttpClientName);
         _memoryCache = memoryCache;
     }
 

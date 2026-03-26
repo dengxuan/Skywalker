@@ -5,15 +5,13 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="Scriban" Version="5.10.0" />
+    <PackageReference Include="Scriban" Version="7.0.3" />
   </ItemGroup>
 
   <ItemGroup>
     <ProjectReference Include="$(LibrariesProjectRoot)Skywalker.Extensions.DependencyInjection.Abstractions\Skywalker.Extensions.DependencyInjection.Abstractions.csproj" />
     <ProjectReference Include="..\Skywalker.Template.Abstractions\Skywalker.Template.Abstractions.csproj" />
-    <ProjectReference Include="$(LibrariesProjectRoot)Skywalker.Extensions.DependencyInjection.SourceGenerators\Skywalker.Extensions.DependencyInjection.SourceGenerators.csproj"
-                      ReferenceOutputAssembly="false"
-                      OutputItemType="Analyzer" />
+    <ProjectReference Include="$(LibrariesProjectRoot)Skywalker.Extensions.DependencyInjection.SourceGenerators\Skywalker.Extensions.DependencyInjection.SourceGenerators.csproj" ReferenceOutputAssembly="false" OutputItemType="Analyzer" />
   </ItemGroup>
 
 </Project>

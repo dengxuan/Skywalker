@@ -170,6 +170,18 @@ public abstract class SkywalkerDbContext<TDbContext>(DbContextOptions<TDbContext
 
     protected virtual void ApplySkywalkerConceptsForAddedEntity(EntityEntry entry, EntityChangeReport changeReport)
     {
+        // è‡ªåŠ¨è®¾ç½® CreationTimeï¼ˆå¤„ç†çº§è”æ’å…¥çš„å…³è”å®žä½“ï¼‰
+        if (entry.Entity is IHasCreationTime hasCreationTime && hasCreationTime.CreationTime == default)
+        {
+            hasCreationTime.CreationTime = Clock?.Now ?? DateTime.UtcNow;
+        }
+
+        // è‡ªåŠ¨è®¾ç½® ConcurrencyStamp
+        if (entry.Entity is IHasConcurrencyStamp hasConcurrencyStamp && string.IsNullOrEmpty(hasConcurrencyStamp.ConcurrencyStamp))
+        {
+            hasConcurrencyStamp.ConcurrencyStamp = Guid.NewGuid().ToString("N");
+        }
+
         changeReport.ChangedEntities.Add(new EntityChangeEntry(entry.Entity, EntityChangeType.Created));
     }
 
@@ -310,13 +322,13 @@ public abstract class SkywalkerDbContext<TDbContext>(DbContextOptions<TDbContext
     {
         var entityType = typeof(TEntity);
 
-        // Ö»´¦ÀíÊµÏÖÁË IEntity<TPrimaryKey> µÄÊµÌå
+        // Ö»ï¿½ï¿½ï¿½ï¿½Êµï¿½ï¿½ï¿½ï¿½ IEntity<TPrimaryKey> ï¿½ï¿½Êµï¿½ï¿½
         if (entityType.IsAssignableFrom(typeof(IEntity<>)))
         {
             return;
         }
 
-        // »ñÈ¡Ö÷¼üÀàÐÍ
+        // ï¿½ï¿½È¡ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
         var primaryKeyName = nameof(IEntity<object>.Id);
         var idProperty = mutableEntityType.FindProperty(primaryKeyName);
 
