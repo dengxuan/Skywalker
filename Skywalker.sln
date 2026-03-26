@@ -59,7 +59,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Skywalker.Security", "src\S
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Skywalker.Serialization.Abstractions", "src\Skywalker.Serialization.Abstractions\Skywalker.Serialization.Abstractions.csproj", "{E2C552F5-9593-4FA7-9322-74189D09C37B}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Skywalker.Serialization.NewtonsoftJson", "src\Skywalker.Serialization.NewtonsoftJson\Skywalker.Serialization.NewtonsoftJson.csproj", "{72AEDCB6-2A2B-4FA3-978A-34CEAAFA4FEE}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Skywalker.Serialization.SystemTextJson", "src\Skywalker.Serialization.SystemTextJson\Skywalker.Serialization.SystemTextJson.csproj", "{72AEDCB6-2A2B-4FA3-978A-34CEAAFA4FEE}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Skywalker.Settings.Redis", "src\Skywalker.Settings.Redis\Skywalker.Settings.Redis.csproj", "{D08217F8-73F2-47EF-B068-2A539CD6D491}"
 EndProject

@@ -54,7 +54,6 @@
   <PropertyGroup Label="Third-Party">
     <AutoMapperVersion>16.1.1</AutoMapperVersion>
     <FluentValidationVersion>11.9.0</FluentValidationVersion>
-    <NewtonsoftJsonVersion>13.0.1</NewtonsoftJsonVersion>
     <PomeloEntityFrameworkCoreMySqlVersion>9.0.0</PomeloEntityFrameworkCoreMySqlVersion>
     <RabbitMQClientVersion>6.8.1</RabbitMQClientVersion>
     <RazorLightVersion>2.3.1</RazorLightVersion>
