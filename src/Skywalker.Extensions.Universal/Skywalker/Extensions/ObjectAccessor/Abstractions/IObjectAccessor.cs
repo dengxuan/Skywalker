@@ -1,4 +1,4 @@
-﻿namespace Skywalker.Extensions.ObjectAccessor.Abstractions;
+namespace Skywalker.Extensions.ObjectAccessor.Abstractions;
 
 /// <summary>
 /// 
