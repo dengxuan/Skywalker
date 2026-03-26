@@ -143,8 +143,6 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Skywalker.Extensions.Depend
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Skywalker.Extensions.DynamicProxies.SourceGenerators", "src\Skywalker.Extensions.DynamicProxies.SourceGenerators\Skywalker.Extensions.DynamicProxies.SourceGenerators.csproj", "{AECA93CA-6AAF-4EE8-AC51-F76F5A52C70E}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Skywalker.Ddd.EntityFrameworkCore.SourceGenerators", "src\Skywalker.Ddd.EntityFrameworkCore.SourceGenerators\Skywalker.Ddd.EntityFrameworkCore.SourceGenerators.csproj", "{FE3464DC-B515-47BE-9A6E-160FD593842E}"
-EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Skywalker.Extensions.DependencyInjection.Abstractions", "src\Skywalker.Extensions.DependencyInjection.Abstractions\Skywalker.Extensions.DependencyInjection.Abstractions.csproj", "{6CD8E6E7-2B65-4F4C-AC99-36ADFDD7675D}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Skywalker.Extensions.DynamicProxies.Abstractions", "src\Skywalker.Extensions.DynamicProxies.Abstractions\Skywalker.Extensions.DynamicProxies.Abstractions.csproj", "{39ABD2E0-ED50-4F6F-9CA2-C283248A74F3}"
@@ -979,18 +977,6 @@ Global
 		{AECA93CA-6AAF-4EE8-AC51-F76F5A52C70E}.Release|x64.Build.0 = Release|Any CPU
 		{AECA93CA-6AAF-4EE8-AC51-F76F5A52C70E}.Release|x86.ActiveCfg = Release|Any CPU
 		{AECA93CA-6AAF-4EE8-AC51-F76F5A52C70E}.Release|x86.Build.0 = Release|Any CPU
-		{FE3464DC-B515-47BE-9A6E-160FD593842E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{FE3464DC-B515-47BE-9A6E-160FD593842E}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{FE3464DC-B515-47BE-9A6E-160FD593842E}.Debug|x64.ActiveCfg = Debug|Any CPU
-		{FE3464DC-B515-47BE-9A6E-160FD593842E}.Debug|x64.Build.0 = Debug|Any CPU
-		{FE3464DC-B515-47BE-9A6E-160FD593842E}.Debug|x86.ActiveCfg = Debug|Any CPU
-		{FE3464DC-B515-47BE-9A6E-160FD593842E}.Debug|x86.Build.0 = Debug|Any CPU
-		{FE3464DC-B515-47BE-9A6E-160FD593842E}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{FE3464DC-B515-47BE-9A6E-160FD593842E}.Release|Any CPU.Build.0 = Release|Any CPU
-		{FE3464DC-B515-47BE-9A6E-160FD593842E}.Release|x64.ActiveCfg = Release|Any CPU
-		{FE3464DC-B515-47BE-9A6E-160FD593842E}.Release|x64.Build.0 = Release|Any CPU
-		{FE3464DC-B515-47BE-9A6E-160FD593842E}.Release|x86.ActiveCfg = Release|Any CPU
-		{FE3464DC-B515-47BE-9A6E-160FD593842E}.Release|x86.Build.0 = Release|Any CPU
 		{6CD8E6E7-2B65-4F4C-AC99-36ADFDD7675D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{6CD8E6E7-2B65-4F4C-AC99-36ADFDD7675D}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{6CD8E6E7-2B65-4F4C-AC99-36ADFDD7675D}.Debug|x64.ActiveCfg = Debug|Any CPU
@@ -1256,7 +1242,6 @@ Global
 		{CD67B8D7-B728-4B36-80EB-A6F6DCA940AF} = {F826DC92-8708-41A4-B0DF-0F3156254DCC}
 		{6449C5A9-167D-459D-AA40-8B91C6E16124} = {F826DC92-8708-41A4-B0DF-0F3156254DCC}
 		{AECA93CA-6AAF-4EE8-AC51-F76F5A52C70E} = {F826DC92-8708-41A4-B0DF-0F3156254DCC}
-		{FE3464DC-B515-47BE-9A6E-160FD593842E} = {A06A6246-2AB9-4E73-A425-64FAA0D5E9CA}
 		{6CD8E6E7-2B65-4F4C-AC99-36ADFDD7675D} = {F826DC92-8708-41A4-B0DF-0F3156254DCC}
 		{39ABD2E0-ED50-4F6F-9CA2-C283248A74F3} = {F826DC92-8708-41A4-B0DF-0F3156254DCC}
 		{DAA63474-AC1B-4EB3-AC0E-D66CACB6D118} = {F826DC92-8708-41A4-B0DF-0F3156254DCC}
