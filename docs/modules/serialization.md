@@ -58,12 +58,12 @@ public interface ISerializer
     /// <param name="camelCase">是否使用驼峰命名</param>
     /// <param name="indented">是否格式化输出</param>
     string Serialize(object @object, bool camelCase = true, bool indented = false);
-    
+
     /// <summary>
     /// 将字节数组反序列化为对象
     /// </summary>
     T? Deserialize<T>(byte[] bytes, bool camelCase = true);
-    
+
     /// <summary>
     /// 将字节数组反序列化为指定类型的对象
     /// </summary>
@@ -111,7 +111,7 @@ namespace Skywalker.Serialization.NewtonsoftJson;
 public class NewtonsoftJsonIsoDateTimeConverter : IsoDateTimeConverter
 {
     public NewtonsoftJsonIsoDateTimeConverter(IClock clock, IOptions<SerializationOptions> options);
-    
+
     public override bool CanConvert(Type objectType);
     public override object? ReadJson(JsonReader reader, Type objectType, object? existingValue, JsonSerializer serializer);
     public override void WriteJson(JsonWriter writer, object? value, JsonSerializer serializer);
@@ -130,18 +130,18 @@ services.AddJsonSerializer();
 public class OrderService
 {
     private readonly ISerializer _serializer;
-    
+
     public OrderService(ISerializer serializer)
     {
         _serializer = serializer;
     }
-    
+
     public string SerializeOrder(Order order)
     {
         // 使用驼峰命名，格式化输出
         return _serializer.Serialize(order, camelCase: true, indented: true);
     }
-    
+
     public Order? DeserializeOrder(byte[] data)
     {
         return _serializer.Deserialize<Order>(data);

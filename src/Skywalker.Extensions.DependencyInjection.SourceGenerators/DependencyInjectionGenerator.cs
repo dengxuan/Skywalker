@@ -78,10 +78,10 @@ public sealed class DependencyInjectionGenerator : IIncrementalGenerator
             {
                 // 检查是否还有其他需要注册的接口（排除已通过 KeyedService 注册的接口）
                 var hasOtherInterfaces = classSymbol.Interfaces
-                    .Any(i => 
+                    .Any(i =>
                         !i.ToDisplayString().StartsWith("Skywalker.DependencyInjection.I", StringComparison.Ordinal) &&
                         !keyedServiceTypes.Contains(i.ToDisplayString()));
-                
+
                 if (!hasOtherInterfaces)
                 {
                     continue; // 跳过常规注册

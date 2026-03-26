@@ -12,5 +12,5 @@
   <ItemGroup>
     <ProjectReference Include="$(LibrariesProjectRoot)Skywalker.Ddd.Uow/Skywalker.Ddd.Uow.csproj" />
   </ItemGroup>
-  
+
 </Project>

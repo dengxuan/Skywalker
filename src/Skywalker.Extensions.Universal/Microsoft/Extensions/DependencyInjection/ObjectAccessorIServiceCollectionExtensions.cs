@@ -8,12 +8,12 @@ using Skywalker.Extensions.ObjectAccessor.Abstractions;
 namespace Microsoft.Extensions.DependencyInjection;
 
 /// <summary>
-/// 
+///
 /// </summary>
 public static class ObjectAccessorIServiceCollectionExtensions
 {
     /// <summary>
-    /// 
+    ///
     /// </summary>
     /// <typeparam name="TInstance"></typeparam>
     /// <param name="services"></param>
@@ -26,7 +26,7 @@ public static class ObjectAccessorIServiceCollectionExtensions
     }
 
     /// <summary>
-    /// 
+    ///
     /// </summary>
     /// <typeparam name="TInstance"></typeparam>
     /// <param name="services"></param>

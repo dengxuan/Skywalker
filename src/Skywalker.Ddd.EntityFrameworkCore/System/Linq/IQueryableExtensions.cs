@@ -6,7 +6,7 @@ using System.Linq.Dynamic.Core;
 namespace System.Linq;
 
 /// <summary>
-/// IQueryable扩展 
+/// IQueryable扩展
 /// </summary>
 public static class IQueryableExtensions
 {

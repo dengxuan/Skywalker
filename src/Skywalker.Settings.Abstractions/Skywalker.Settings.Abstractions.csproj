@@ -8,7 +8,7 @@
     <PackageReference Include="Microsoft.Extensions.Configuration.Json" Version="$(MicrosoftExtensionsVersion)" />
     <PackageReference Include="System.Collections.Immutable" Version="$(SystemCollectionsImmutableVersion)" />
   </ItemGroup>
-  
+
   <ItemGroup>
     <ProjectReference Include="$(LibrariesProjectRoot)Skywalker.Extensions.Universal\Skywalker.Extensions.Universal.csproj" />
     <ProjectReference Include="$(LibrariesProjectRoot)Skywalker.Security.Abstractions\Skywalker.Security.Abstractions.csproj" />
