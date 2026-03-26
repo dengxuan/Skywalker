@@ -7,4 +7,17 @@
   <ItemGroup Condition="'$(LangVersion)' == 'latest'">
     <Compile Include="$(SharedSourceDir)System\Runtime\CompilerServices\IsExternalInit.cs" Link="System\Runtime\CompilerServices\IsExternalInit.cs" />
   </ItemGroup>
+
+  <!--
+    自动注入 DI Source Generator：
+    所有项目（除 Source Generator 自身和使用 PackAsAnalyzer 的 Abstractions 项目）
+    自动获得 DependencyInjection.SourceGenerators 分析器引用。
+    如需跳过，在 csproj 中设置 <SkipAutoAnalyzers>true</SkipAutoAnalyzers>。
+  -->
+  <ItemGroup Condition="'$(IsRoslynComponent)' != 'true' AND '$(SkipAutoAnalyzers)' != 'true'">
+    <ProjectReference Include="$(LibrariesProjectRoot)Skywalker.Extensions.DependencyInjection.SourceGenerators\Skywalker.Extensions.DependencyInjection.SourceGenerators.csproj"
+                      ReferenceOutputAssembly="false"
+                      OutputItemType="Analyzer" />
+  </ItemGroup>
+
 </Project>
