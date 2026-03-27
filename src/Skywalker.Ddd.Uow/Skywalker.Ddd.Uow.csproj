@@ -6,8 +6,8 @@
 
   <ItemGroup>
     <ProjectReference Include="$(LibrariesProjectRoot)Skywalker.Ddd.Core\Skywalker.Ddd.Core.csproj" />
-    <ProjectReference Include="$(LibrariesProjectRoot)Skywalker.Extensions.DependencyInjection.Abstractions\Skywalker.Extensions.DependencyInjection.Abstractions.csproj" />
-    <ProjectReference Include="$(LibrariesProjectRoot)Skywalker.Extensions.DynamicProxies.Abstractions\Skywalker.Extensions.DynamicProxies.Abstractions.csproj" />
+    <ProjectReference Include="$(LibrariesProjectRoot)Skywalker.Extensions.DependencyInjection\Skywalker.Extensions.DependencyInjection.csproj" />
+    <ProjectReference Include="$(LibrariesProjectRoot)Skywalker.Extensions.DynamicProxies\Skywalker.Extensions.DynamicProxies.csproj" />
     <ProjectReference Include="$(LibrariesProjectRoot)Skywalker.Extensions.DynamicProxies.SourceGenerators\Skywalker.Extensions.DynamicProxies.SourceGenerators.csproj"
                       ReferenceOutputAssembly="false"
                       OutputItemType="Analyzer" />

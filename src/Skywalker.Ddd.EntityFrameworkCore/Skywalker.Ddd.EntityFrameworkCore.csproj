@@ -12,7 +12,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="$(LibrariesProjectRoot)Skywalker.Extensions.DependencyInjection.Abstractions\Skywalker.Extensions.DependencyInjection.Abstractions.csproj" />
+    <ProjectReference Include="$(LibrariesProjectRoot)Skywalker.Extensions.DependencyInjection\Skywalker.Extensions.DependencyInjection.csproj" />
     <ProjectReference Include="$(LibrariesProjectRoot)Skywalker.Ddd.Domain\Skywalker.Ddd.Domain.csproj" />
     <ProjectReference Include="$(LibrariesProjectRoot)Skywalker.Extensions.GuidGenerator\Skywalker.Extensions.GuidGenerator.csproj" />
     <ProjectReference Include="$(LibrariesProjectRoot)Skywalker.Extensions.Timezone\Skywalker.Extensions.Timezone.csproj" />
