@@ -34,20 +34,6 @@ public sealed class InterceptorContext : IMethodInvocation
     /// 初始化 <see cref="InterceptorContext"/> 类的新实例。
     /// </summary>
     /// <param name="target">目标对象。</param>
-    /// <param name="methodName">方法名称。</param>
-    public InterceptorContext(object target, string methodName)
-    {
-        Target = target ?? throw new ArgumentNullException(nameof(target));
-        MethodName = methodName ?? throw new ArgumentNullException(nameof(methodName));
-        Arguments = Array.Empty<object?>();
-        Method = null!; // 简化实现，不需要 MethodInfo
-        ReturnType = typeof(object);
-    }
-
-    /// <summary>
-    /// 初始化 <see cref="InterceptorContext"/> 类的新实例。
-    /// </summary>
-    /// <param name="target">目标对象。</param>
     /// <param name="method">方法信息。</param>
     /// <param name="arguments">方法参数。</param>
     public InterceptorContext(object target, MethodInfo method, object?[] arguments)

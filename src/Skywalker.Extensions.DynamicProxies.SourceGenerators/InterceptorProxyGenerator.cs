@@ -277,6 +277,22 @@ public sealed class InterceptorProxyGenerator : IIncrementalGenerator
         sb.AppendLine("    private readonly InterceptorChainBuilder _interceptorChainBuilder;");
         sb.AppendLine();
 
+        // 缓存 MethodInfo 为静态字段
+        foreach (var method in service.Methods)
+        {
+            var fieldName = GetMethodInfoFieldName(method);
+            if (method.Parameters.Count > 0)
+            {
+                var paramTypes = string.Join(", ", method.Parameters.Select(p => $"typeof({StripNullableAnnotation(p.Type)})"));
+                sb.AppendLine($"    private static readonly MethodInfo {fieldName} = typeof({service.ImplementationType}).GetMethod(\"{method.MethodName}\", [{paramTypes}])!;");
+            }
+            else
+            {
+                sb.AppendLine($"    private static readonly MethodInfo {fieldName} = typeof({service.ImplementationType}).GetMethod(\"{method.MethodName}\", Type.EmptyTypes)!;");
+            }
+        }
+        sb.AppendLine();
+
         // 构造函数 - 从 DI 容器获取所有 IInterceptor
         sb.AppendLine($"    public {service.ClassName}Proxy({service.ImplementationType} target, IServiceProvider serviceProvider)");
         sb.AppendLine("    {");
@@ -317,8 +333,12 @@ public sealed class InterceptorProxyGenerator : IIncrementalGenerator
         sb.AppendLine($"    public {asyncModifier}{method.ReturnType} {method.MethodName}{typeParams}({parameters}){constraints}");
         sb.AppendLine("    {");
 
-        // 创建简化的方法调用上下文
-        sb.AppendLine($"        var context = new InterceptorContext(_target, \"{method.MethodName}\");");
+        // 创建方法调用上下文，包含 MethodInfo 和参数
+        var fieldName = GetMethodInfoFieldName(method);
+        var argsArray = method.Parameters.Count > 0
+            ? $"new object?[] {{ {string.Join(", ", method.Parameters.Select(p => p.Name))} }}"
+            : "Array.Empty<object?>()";
+        sb.AppendLine($"        var context = new InterceptorContext(_target, {fieldName}, {argsArray});");
         sb.AppendLine();
 
         // 创建目标调用委托
@@ -394,6 +414,14 @@ public sealed class InterceptorProxyGenerator : IIncrementalGenerator
             return returnType.Substring(33, returnType.Length - 34);
         }
         return "object";
+    }
+
+    private static string GetMethodInfoFieldName(ProxyMethodInfo method)
+    {
+        var paramSuffix = method.Parameters.Count > 0
+            ? "_" + string.Join("_", method.Parameters.Select(p => StripNullableAnnotation(p.Type).Replace(".", "").Replace("<", "").Replace(">", "").Replace(",", "").Replace(" ", "")))
+            : "";
+        return $"s_{method.MethodName}{paramSuffix}_MethodInfo";
     }
 
     private static string GenerateProxyRegistration(string assemblyName, List<ProxyServiceInfo> services)

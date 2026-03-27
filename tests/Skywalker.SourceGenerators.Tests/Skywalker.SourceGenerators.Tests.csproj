@@ -24,6 +24,7 @@
   <ItemGroup>
     <ProjectReference Include="..\..\src\Skywalker.Extensions.DependencyInjection\Skywalker.Extensions.DependencyInjection.csproj" />
     <ProjectReference Include="..\..\src\Skywalker.Extensions.DynamicProxies\Skywalker.Extensions.DynamicProxies.csproj" />
+    <ProjectReference Include="..\..\src\Skywalker.Ddd.Uow\Skywalker.Ddd.Uow.csproj" />
     <ProjectReference Include="..\..\src\Skywalker.EventBus.Local\Skywalker.EventBus.Local.csproj" />
     <ProjectReference Include="..\..\src\Skywalker.Caching.Redis\Skywalker.Caching.Redis.csproj" />
     <ProjectReference Include="..\..\src\Skywalker.Extensions.GuidGenerator\Skywalker.Extensions.GuidGenerator.csproj" />

@@ -16,7 +16,7 @@ public class AddAutoServicesIntegrationTests
         services.AddLogging();
 
         // Act - AddAutoServices registers local services
-        services.AddAutoServices();
+        SkywalkerSourceGeneratorsTestsAutoServiceExtensions.AddAutoServices(services);
         using var provider = services.BuildServiceProvider();
 
         // Assert - verify services defined in this test project are registered
@@ -36,7 +36,7 @@ public class AddAutoServicesIntegrationTests
         // Arrange
         var services = new ServiceCollection();
         services.AddLogging();
-        services.AddAutoServices();
+        SkywalkerSourceGeneratorsTestsAutoServiceExtensions.AddAutoServices(services);
 
         // Assert - check service descriptors
         var emailDescriptor = services.FirstOrDefault(d => d.ServiceType == typeof(ITestEmailService));
@@ -58,7 +58,7 @@ public class AddAutoServicesIntegrationTests
         // Arrange
         var services = new ServiceCollection();
         services.AddLogging();
-        services.AddAutoServices();
+        SkywalkerSourceGeneratorsTestsAutoServiceExtensions.AddAutoServices(services);
         using var provider = services.BuildServiceProvider();
 
         // Act & Assert - verify services actually work
@@ -75,8 +75,8 @@ public class AddAutoServicesIntegrationTests
         services.AddLogging();
 
         // Act - calling multiple times should not throw
-        services.AddAutoServices();
-        services.AddAutoServices();
+        SkywalkerSourceGeneratorsTestsAutoServiceExtensions.AddAutoServices(services);
+        SkywalkerSourceGeneratorsTestsAutoServiceExtensions.AddAutoServices(services);
 
         using var provider = services.BuildServiceProvider();
 
@@ -92,7 +92,7 @@ public class AddAutoServicesIntegrationTests
         var services = new ServiceCollection();
 
         // Act
-        var result = services.AddAutoServices();
+        var result = SkywalkerSourceGeneratorsTestsAutoServiceExtensions.AddAutoServices(services);
 
         // Assert
         Assert.Same(services, result);
@@ -104,7 +104,7 @@ public class AddAutoServicesIntegrationTests
         // Arrange
         var services = new ServiceCollection();
         services.AddLogging();
-        services.AddAutoServices();
+        SkywalkerSourceGeneratorsTestsAutoServiceExtensions.AddAutoServices(services);
 
         // Assert - TestDisabledService should NOT be registered
         var disabledDescriptor = services.FirstOrDefault(d => 
@@ -118,7 +118,7 @@ public class AddAutoServicesIntegrationTests
         // Arrange
         var services = new ServiceCollection();
         services.AddLogging();
-        services.AddAutoServices();
+        SkywalkerSourceGeneratorsTestsAutoServiceExtensions.AddAutoServices(services);
         using var provider = services.BuildServiceProvider();
 
         // Assert - TestNoInterfaceService should be registered as itself

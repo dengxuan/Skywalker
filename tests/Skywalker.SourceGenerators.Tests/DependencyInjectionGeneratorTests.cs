@@ -139,7 +139,6 @@ public class TestOrderService : ITestOrderService, IScopedDependency
 /// </summary>
 public class DependencyInjectionGeneratorTests
 {
-    private const string GeneratedClassName = "SkywalkerSourceGeneratorsTestsAutoServiceExtensions";
 
     [Fact]
     public void Generator_GeneratesAddAutoServicesMethod()
@@ -149,7 +148,7 @@ public class DependencyInjectionGeneratorTests
 
         // Find the generated class
         var extensionClass = assembly.GetTypes()
-            .FirstOrDefault(t => t.Name == GeneratedClassName);
+            .FirstOrDefault(t => t.Name == nameof(SkywalkerSourceGeneratorsTestsAutoServiceExtensions));
 
         Assert.NotNull(extensionClass);
 
@@ -166,7 +165,7 @@ public class DependencyInjectionGeneratorTests
     {
         // Arrange
         var services = new ServiceCollection();
-        AddAutoServices(services);
+        SkywalkerSourceGeneratorsTestsAutoServiceExtensions.AddAutoServices(services);
         var provider = services.BuildServiceProvider();
 
         // Act
@@ -184,7 +183,7 @@ public class DependencyInjectionGeneratorTests
     {
         // Arrange
         var services = new ServiceCollection();
-        AddAutoServices(services);
+        SkywalkerSourceGeneratorsTestsAutoServiceExtensions.AddAutoServices(services);
         var provider = services.BuildServiceProvider();
 
         // Act
@@ -203,7 +202,7 @@ public class DependencyInjectionGeneratorTests
     {
         // Arrange
         var services = new ServiceCollection();
-        AddAutoServices(services);
+        SkywalkerSourceGeneratorsTestsAutoServiceExtensions.AddAutoServices(services);
         var provider = services.BuildServiceProvider();
 
         // Act
@@ -226,7 +225,7 @@ public class DependencyInjectionGeneratorTests
         var services = new ServiceCollection();
 
         // AddAutoServices 自动注册所有 DI 服务 + 调用 AddProxyServices 注册代理
-        AddAutoServices(services);
+        SkywalkerSourceGeneratorsTestsAutoServiceExtensions.AddAutoServices(services);
 
         var provider = services.BuildServiceProvider();
 
@@ -238,16 +237,6 @@ public class DependencyInjectionGeneratorTests
         Assert.Equal("Order: Product x 5", result);
         Assert.Contains("Before: CreateOrderAsync", TestLoggingInterceptor.Log);
         Assert.Contains("After: CreateOrderAsync", TestLoggingInterceptor.Log);
-    }
-
-    private static void AddAutoServices(IServiceCollection services)
-    {
-        // Use reflection to call the generated method (internal 方法)
-        var assembly = typeof(DependencyInjectionGeneratorTests).Assembly;
-        var extensionClass = assembly.GetTypes()
-            .First(t => t.Name == GeneratedClassName);
-        var method = extensionClass.GetMethod("AddAutoServices", BindingFlags.NonPublic | BindingFlags.Static)!;
-        method.Invoke(null, new object[] { services });
     }
 }
 
