@@ -11,16 +11,16 @@ using Skywalker.Identity.Domain.Repositories;
 namespace Microsoft.Extensions.DependencyInjection;
 
 /// <summary>
-/// Entity Framework Core ·þÎñÀ©Õ¹·½·¨¡£
+/// Entity Framework Core ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Õ¹ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 /// </summary>
 public static class EntityFrameworkCoreIServiceCollectionExtensions
 {
     /// <summary>
-    /// Í¨¹ý DbContext ÀàÐÍÌí¼Ó²Ö´¢£¬·´Éä»ñÈ¡ËùÓÐµÄ DbSet È»ºó¹¹½¨²Ö´¢¡£
+    /// Í¨ï¿½ï¿½ DbContext ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ó²Ö´ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½È¡ï¿½ï¿½ï¿½Ðµï¿½ DbSet È»ï¿½ó¹¹½ï¿½ï¿½Ö´ï¿½ï¿½ï¿½
     /// </summary>
-    /// <typeparam name="TDbContext">DbContext ÀàÐÍ¡£</typeparam>
-    /// <param name="services">·þÎñ¼¯ºÏ¡£</param>
-    /// <returns>·þÎñ¼¯ºÏ¡£</returns>
+    /// <typeparam name="TDbContext">DbContext ï¿½ï¿½ï¿½Í¡ï¿½</typeparam>
+    /// <param name="services">ï¿½ï¿½ï¿½ñ¼¯ºÏ¡ï¿½</param>
+    /// <returns>ï¿½ï¿½ï¿½ñ¼¯ºÏ¡ï¿½</returns>
     private static IServiceCollection AddDefaultServices<TDbContext>(this IServiceCollection services) where TDbContext : SkywalkerDbContext<TDbContext>
     {
         var dbContextType = typeof(TDbContext);
@@ -49,10 +49,10 @@ public static class EntityFrameworkCoreIServiceCollectionExtensions
     }
 
     /// <summary>
-    /// Ìí¼Ó Entity Framework Core Ö§³Ö¡£
+    /// ï¿½ï¿½ï¿½ï¿½ Entity Framework Core Ö§ï¿½Ö¡ï¿½
     /// </summary>
-    /// <param name="services">·þÎñ¼¯ºÏ¡£</param>
-    /// <returns>·þÎñ¼¯ºÏ¡£</returns>
+    /// <param name="services">ï¿½ï¿½ï¿½ñ¼¯ºÏ¡ï¿½</param>
+    /// <returns>ï¿½ï¿½ï¿½ñ¼¯ºÏ¡ï¿½</returns>
     public static IServiceCollection AddEntityFrameworkCore(this IServiceCollection services)
     {
         services.AddDataFilter();
@@ -66,14 +66,15 @@ public static class EntityFrameworkCoreIServiceCollectionExtensions
     }
 
     /// <summary>
-    /// Ìí¼Ó DbContext¡£
+    /// ï¿½ï¿½ï¿½ï¿½ DbContextï¿½ï¿½
     /// </summary>
-    /// <typeparam name="TDbContext">DbContext ÀàÐÍ¡£</typeparam>
-    /// <param name="services">·þÎñ¼¯ºÏ¡£</param>
-    /// <param name="options">DbContext ÅäÖÃ¡£</param>
-    /// <returns>·þÎñ¼¯ºÏ¡£</returns>
+    /// <typeparam name="TDbContext">DbContext ï¿½ï¿½ï¿½Í¡ï¿½</typeparam>
+    /// <param name="services">ï¿½ï¿½ï¿½ñ¼¯ºÏ¡ï¿½</param>
+    /// <param name="options">DbContext ï¿½ï¿½ï¿½Ã¡ï¿½</param>
+    /// <returns>ï¿½ï¿½ï¿½ñ¼¯ºÏ¡ï¿½</returns>
     public static IServiceCollection AddSkywalkerDbContext<TDbContext>(this IServiceCollection services, Action<SkywalkerDbContextOptions> options) where TDbContext : SkywalkerDbContext<TDbContext>
     {
+        services.AddEntityFrameworkCore();
         services.Configure(options);
         services.AddDefaultServices<TDbContext>();
         services.AddTransient(SkywalkerDbContextOptionsFactory.Create<TDbContext>);
@@ -82,12 +83,12 @@ public static class EntityFrameworkCoreIServiceCollectionExtensions
     }
 
     /// <summary>
-    /// Ìí¼Ó DbContext Á¬½Ó³Ø¡£
+    /// ï¿½ï¿½ï¿½ï¿½ DbContext ï¿½ï¿½ï¿½Ó³Ø¡ï¿½
     /// </summary>
-    /// <typeparam name="TDbContext">DbContext ÀàÐÍ¡£</typeparam>
-    /// <param name="services">·þÎñ¼¯ºÏ¡£</param>
-    /// <param name="options">DbContext ÅäÖÃ¡£</param>
-    /// <returns>·þÎñ¼¯ºÏ¡£</returns>
+    /// <typeparam name="TDbContext">DbContext ï¿½ï¿½ï¿½Í¡ï¿½</typeparam>
+    /// <param name="services">ï¿½ï¿½ï¿½ñ¼¯ºÏ¡ï¿½</param>
+    /// <param name="options">DbContext ï¿½ï¿½ï¿½Ã¡ï¿½</param>
+    /// <returns>ï¿½ï¿½ï¿½ñ¼¯ºÏ¡ï¿½</returns>
     public static IServiceCollection AddSkywalkerDbContextPool<TDbContext>(this IServiceCollection services, Action<DbContextOptionsBuilder> options) where TDbContext : SkywalkerDbContext<TDbContext>
     {
         services.Configure(options);

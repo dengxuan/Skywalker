@@ -107,7 +107,7 @@ public class AddAutoServicesIntegrationTests
         SkywalkerSourceGeneratorsTestsAutoServiceExtensions.AddAutoServices(services);
 
         // Assert - TestDisabledService should NOT be registered
-        var disabledDescriptor = services.FirstOrDefault(d => 
+        var disabledDescriptor = services.FirstOrDefault(d =>
             d.ImplementationType == typeof(TestDisabledService));
         Assert.Null(disabledDescriptor);
     }
