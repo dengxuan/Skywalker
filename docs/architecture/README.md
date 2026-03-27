@@ -721,12 +721,8 @@ public class SendWelcomeEmailHandler : ILocalEventHandler<UserRegisteredEvent>
     }
 }
 
-// 3. 注册处理器
-builder.Services.AddEventBus()
-    .AddLocalEventBus(options =>
-    {
-        options.Handlers.Add(typeof(SendWelcomeEmailHandler));
-    });
+// 3. 注册本地事件总线
+builder.Services.AddEventBusLocal();
 ```
 
 ### 自定义设置提供者

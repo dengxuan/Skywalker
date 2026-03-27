@@ -76,43 +76,50 @@ dotnet add package Skywalker.Caching.Redis
 
 ```csharp
 // Program.cs
-using Skywalker.Ddd.Domain.Entities;
-using Skywalker.Ddd.Domain.Repositories;
-
 var builder = WebApplication.CreateBuilder(args);
 
-// 1. 添加 DbContext
-builder.Services.AddDbContext<AppDbContext>(options =>
+// ==========================================
+// 1. 添加 Skywalker 核心服务 + ASP.NET Core 集成
+// ==========================================
+// AddSkywalker()  → 注册 UnitOfWork、拦截器等核心基础设施
+// AddAspNetCore() → 注册异常处理、响应包装等 Web 特有服务
+builder.Services.AddSkywalker()
+    .AddAspNetCore();
+
+// ==========================================
+// 2. 添加 DbContext（自动注册 EF Core 仓储和领域服务）
+// ==========================================
+builder.Services.AddSkywalkerDbContext<AppDbContext>(options =>
+{
     options.UseMySql(
         builder.Configuration.GetConnectionString("Default"),
-        ServerVersion.AutoDetect(builder.Configuration.GetConnectionString("Default"))));
+        ServerVersion.AutoDetect(builder.Configuration.GetConnectionString("Default")));
+});
 
-// 2. 添加 Skywalker 核心服务
-builder.Services.AddSkywalkerCore();
+// ==========================================
+// 3. 添加事件总线（可选）
+// ==========================================
+builder.Services.AddEventBusLocal();
 
-// 3. 添加 DDD 领域层服务
-builder.Services.AddDddDomain();
-
-// 4. 添加 DDD 应用层服务
-builder.Services.AddDddApplication();
-
-// 5. 添加工作单元（关联到 DbContext）
-builder.Services.AddUnitOfWork<AppDbContext>();
-
-// 6. 添加事件总线（可选）
-builder.Services.AddEventBus()
-    .AddLocalEventBus();
-
-// 7. 添加缓存（可选）
-builder.Services.AddCaching()
-    .AddRedisCaching(options =>
-    {
-        options.Configuration = builder.Configuration.GetConnectionString("Redis");
-    });
+// ==========================================
+// 4. 添加 Redis 缓存（可选）
+// ==========================================
+builder.Services.AddRedisCaching(options =>
+{
+    options.Configuration = builder.Configuration.GetConnectionString("Redis");
+});
 
 var app = builder.Build();
+
+// ==========================================
+// 5. 启用 Skywalker 中间件（异常处理 + 工作单元）
+// ==========================================
+app.UseSkywalker();
+
 app.Run();
 ```
+
+> **控制台 / Worker Service 项目** 不需要 `AddAspNetCore()` 和 `UseSkywalker()`，直接使用 `AddSkywalker()` 即可。
 
 ### 配置文件 (appsettings.json)
 
