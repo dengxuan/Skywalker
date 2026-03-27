@@ -151,5 +151,53 @@ public class UnitOfWorkManagerTests
         // Assert
         Assert.Null(_manager.Current);
     }
+
+    [Fact]
+    public void Reserve_ThenTryBeginReserved_ShouldInitializeUow()
+    {
+        // Arrange — 模拟中间件预留 UoW
+        using var uow = _manager.Reserve("TestReservation");
+        Assert.True(uow.IsReserved);
+        Assert.Null(uow.Options);
+
+        // Act — 模拟拦截器认领并设置方法级选项
+        var options = new UnitOfWorkOptions { IsTransactional = true };
+        var result = _manager.TryBeginReserved("TestReservation", options);
+
+        // Assert — UoW 被认领并初始化
+        Assert.True(result);
+        Assert.False(uow.IsReserved);
+        Assert.NotNull(uow.Options);
+    }
+
+    [Fact]
+    public void After_Reserved_Claimed_Begin_ShouldCreateChildUnitOfWork()
+    {
+        // Arrange — 中间件预留，第一个拦截器认领
+        using var uow = _manager.Reserve("TestReservation");
+        _manager.TryBeginReserved("TestReservation", new UnitOfWorkOptions());
+
+        // Act — 第二个拦截器调用 Begin，应创建 ChildUnitOfWork
+        using var innerUow = _manager.Begin(new UnitOfWorkOptions());
+
+        // Assert — ChildUnitOfWork 共享父级 Id
+        Assert.Equal(uow.Id, innerUow.Id);
+    }
+
+    [Fact]
+    public async Task Reserve_Unclaimed_ShouldAllowMiddlewareInitializeAndComplete()
+    {
+        // Arrange — 中间件预留，但没有拦截器认领（Controller 直接操作 DbContext）
+        using var uow = _manager.Reserve("TestReservation");
+        Assert.True(uow.IsReserved);
+
+        // Act — 中间件用自己的选项兜底初始化并完成
+        uow.Initialize(new UnitOfWorkOptions());
+        await uow.CompleteAsync();
+
+        // Assert
+        Assert.False(uow.IsReserved);
+        Assert.True(uow.IsCompleted);
+    }
 }
 
