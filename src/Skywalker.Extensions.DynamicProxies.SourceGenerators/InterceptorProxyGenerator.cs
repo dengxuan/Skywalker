@@ -24,7 +24,7 @@ public sealed class InterceptorProxyGenerator : IIncrementalGenerator
         // 收集所有非静态、非抽象的类（实现了 IInterceptable 接口）
         var classDeclarations = context.SyntaxProvider
             .CreateSyntaxProvider(
-                predicate: static (node, _) => node is ClassDeclarationSyntax cds && 
+                predicate: static (node, _) => node is ClassDeclarationSyntax cds &&
                     cds.BaseList != null,
                 transform: static (ctx, _) => (ClassDeclarationSyntax)ctx.Node)
             .Where(static c => c is not null);
@@ -36,7 +36,7 @@ public sealed class InterceptorProxyGenerator : IIncrementalGenerator
         context.RegisterSourceOutput(compilationAndClasses, (sourceContext, source) =>
         {
             var (compilation, classes) = source;
-            
+
             var proxyServices = CollectProxyServices(compilation, classes);
 
             foreach (var service in proxyServices)
@@ -205,8 +205,8 @@ public sealed class InterceptorProxyGenerator : IIncrementalGenerator
     private static string GetMethodSignature(IMethodSymbol method)
     {
         var parameters = string.Join(",", method.Parameters.Select(p => p.Type.ToDisplayString()));
-        var typeParams = method.TypeParameters.Length > 0 
-            ? $"<{string.Join(",", method.TypeParameters.Select(t => t.Name))}>" 
+        var typeParams = method.TypeParameters.Length > 0
+            ? $"<{string.Join(",", method.TypeParameters.Select(t => t.Name))}>"
             : "";
         return $"{method.Name}{typeParams}({parameters})";
     }
@@ -238,7 +238,7 @@ public sealed class InterceptorProxyGenerator : IIncrementalGenerator
         {
             return typeName.TrimEnd('?');
         }
-        
+
         // 处理泛型中的 nullable 类型参数，如 "List<string?>" -> "List<string>"
         // 使用正则替换或简单的字符串处理
         return typeName.Replace("?", "");
@@ -407,17 +407,15 @@ public sealed class InterceptorProxyGenerator : IIncrementalGenerator
         sb.AppendLine();
         sb.AppendLine("namespace Microsoft.Extensions.DependencyInjection;");
         sb.AppendLine();
-        sb.AppendLine("/// <summary>");
-        sb.AppendLine("/// 代理服务注册扩展方法（自动生成）。");
-        sb.AppendLine("/// </summary>");
 
-        var className = assemblyName.Replace(".", "").Replace("-", "").Replace(" ", "");
-        sb.AppendLine($"public static class {className}ProxyServiceExtensions");
+        // 与 DI SourceGenerator 生成的类名一致，通过 partial 方法协作
+        var className = assemblyName.Replace(".", "").Replace("-", "").Replace(" ", "") + "AutoServiceExtensions";
+        sb.AppendLine($"public static partial class {className}");
         sb.AppendLine("{");
         sb.AppendLine("    /// <summary>");
-        sb.AppendLine("    /// 添加代理服务到服务集合。");
+        sb.AppendLine("    /// 注册代理服务（由 DynamicProxies SourceGenerator 生成）。");
         sb.AppendLine("    /// </summary>");
-        sb.AppendLine("    public static IServiceCollection AddProxyServices(this IServiceCollection services)");
+        sb.AppendLine("    static partial void RegisterProxyServices(IServiceCollection services)");
         sb.AppendLine("    {");
 
         foreach (var service in services)
@@ -425,17 +423,16 @@ public sealed class InterceptorProxyGenerator : IIncrementalGenerator
             var lifetime = service.Lifetime.ToString();
             var proxyType = $"{service.Namespace}.{service.ClassName}Proxy";
 
-            // 先注册原始实现
+            // 注册原始实现
             sb.AppendLine($"        services.TryAdd{lifetime}<{service.ImplementationType}>();");
 
-            // 注册代理类
+            // 用代理替换接口注册
             foreach (var iface in service.ServiceInterfaces)
             {
-                sb.AppendLine($"        services.Add{lifetime}<{iface}>(sp => new {proxyType}(sp.GetRequiredService<{service.ImplementationType}>(), sp));");
+                sb.AppendLine($"        services.Replace(ServiceDescriptor.{lifetime}<{iface}>(sp => new {proxyType}(sp.GetRequiredService<{service.ImplementationType}>(), sp)));");
             }
         }
 
-        sb.AppendLine("        return services;");
         sb.AppendLine("    }");
         sb.AppendLine("}");
 

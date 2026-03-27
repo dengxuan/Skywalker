@@ -336,7 +336,7 @@ public sealed class DependencyInjectionGenerator : IIncrementalGenerator
 
         // 使用程序集名称生成唯一的类名
         var className = GetSafeClassName(assemblyName) + "AutoServiceExtensions";
-        sb.AppendLine($"public static class {className}");
+        sb.AppendLine($"public static partial class {className}");
         sb.AppendLine("{");
         sb.AppendLine("    /// <summary>");
         sb.AppendLine("    /// 添加自动发现的服务到服务集合（内部方法）。");
@@ -380,8 +380,18 @@ public sealed class DependencyInjectionGenerator : IIncrementalGenerator
             sb.AppendLine();
         }
 
+        // 调用代理注册（由 DynamicProxies SourceGenerator 的 partial 方法实现）
+        // 如果 DynamicProxies SourceGenerator 未激活，partial 方法调用为空操作
+        sb.AppendLine("        RegisterProxyServices(services);");
+        sb.AppendLine();
+
         sb.AppendLine("        return services;");
         sb.AppendLine("    }");
+        sb.AppendLine();
+        sb.AppendLine("    /// <summary>");
+        sb.AppendLine("    /// 注册代理服务（由 DynamicProxies SourceGenerator 实现）。");
+        sb.AppendLine("    /// </summary>");
+        sb.AppendLine("    static partial void RegisterProxyServices(IServiceCollection services);");
         sb.AppendLine("}");
 
         return sb.ToString();
