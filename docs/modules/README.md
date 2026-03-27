@@ -14,7 +14,6 @@
 | **设置管理** | [settings.md](./settings.md) | Settings 全系列 |
 | **权限管理** | [permissions.md](./permissions.md) | Permissions 全系列 |
 | **本地化** | [localization.md](./localization.md) | Json、EntityFrameworkCore |
-| **对象映射** | [objectmapping.md](./objectmapping.md) | AutoMapper |
 | **模板引擎** | [template.md](./template.md) | Scriban、Razor |
 | **数据验证** | [validation.md](./validation.md) | FluentValidation |
 | **序列化** | [serialization.md](./serialization.md) | Json |
