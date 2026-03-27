@@ -93,7 +93,8 @@ public class TemplateEmailSenderTests
         await _sut.SendAsync(recipients, templateName);
 
         // Assert
-        await _emailSender.Received(1).SendAsync(Arg.Any<System.Net.Mail.MailMessage>(), true);
+        await _emailSender.Received(1).SendAsync(
+            Arg.Is<System.Net.Mail.MailMessage>(msg => msg.To.Count == 3), true);
     }
 }
 

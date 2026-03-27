@@ -111,7 +111,7 @@ public class UnitOfWorkInterceptorIntegrationTests
 
         // Assert — 验证 SourceGenerator 为 TestUowOrderService 生成了代理类
         var proxyType = assembly.GetTypes()
-            .FirstOrDefault(t => t.Name == "TestUowOrderServiceProxy");
+            .FirstOrDefault(t => t.Name == $"{nameof(TestUowOrderService)}Proxy");
         Assert.NotNull(proxyType);
     }
 
@@ -120,7 +120,7 @@ public class UnitOfWorkInterceptorIntegrationTests
     {
         // Arrange
         var assembly = typeof(UnitOfWorkInterceptorIntegrationTests).Assembly;
-        var proxyType = assembly.GetTypes().First(t => t.Name == "TestUowOrderServiceProxy");
+        var proxyType = assembly.GetTypes().First(t => t.Name == $"{nameof(TestUowOrderService)}Proxy");
 
         // Assert — 验证代理类缓存了 MethodInfo（static readonly 字段）
         var methodInfoFields = proxyType.GetFields(BindingFlags.NonPublic | BindingFlags.Static)
