@@ -8,16 +8,12 @@ using System.Text;
 namespace System.Security.Cryptography;
 
 /// <summary>
-/// 
+///
 /// </summary>
 public static class Rfc6238AuthenticationService
 {
     private static readonly TimeSpan s_timestep = TimeSpan.FromMinutes(3);
     private static readonly Encoding s_encoding = new UTF8Encoding(false, true);
-#if NETSTANDARD2_0 || NETFRAMEWORK
-    private static readonly DateTime s_unixEpoch = new(1970, 1, 1, 0, 0, 0, DateTimeKind.Utc);
-    private static readonly RandomNumberGenerator s_rng = RandomNumberGenerator.Create();
-#endif
 
     /// <summary>
     /// Generates a new 80-bit security token
@@ -26,27 +22,19 @@ public static class Rfc6238AuthenticationService
     public static byte[] GenerateRandomKey()
     {
         var bytes = new byte[20];
-#if NETSTANDARD2_0 || NETFRAMEWORK
-        s_rng.GetBytes(bytes);
-#else
         RandomNumberGenerator.Fill(bytes);
-#endif
         return bytes;
     }
 
     /// <summary>
-    /// 
+    ///
     /// </summary>
     /// <param name="hashAlgorithm"></param>
     /// <param name="timestepNumber"></param>
     /// <param name="modifier"></param>
     /// <returns></returns>
     public static int ComputeTotp(
-#if NET6_0_OR_GREATER
         byte[] key,
-#else
-        HashAlgorithm hashAlgorithm,
-#endif
         ulong timestepNumber,
         string? modifier)
     {
@@ -57,11 +45,7 @@ public static class Rfc6238AuthenticationService
         // We can add an optional modifier
         var timestepAsBytes = BitConverter.GetBytes(IPAddress.HostToNetworkOrder((long)timestepNumber));
 
-#if NET6_0_OR_GREATER
         var hash = HMACSHA1.HashData(key, ApplyModifier(timestepAsBytes, modifier));
-#else
-        var hash = hashAlgorithm.ComputeHash(ApplyModifier(timestepAsBytes, modifier));
-#endif
 
         // Generate DT string
         var offset = hash[hash.Length - 1] & 0xf;
@@ -91,16 +75,12 @@ public static class Rfc6238AuthenticationService
     // More info: https://tools.ietf.org/html/rfc6238#section-4
     private static ulong GetCurrentTimeStepNumber()
     {
-#if NETSTANDARD2_0 || NETFRAMEWORK
-        var delta = DateTime.UtcNow - s_unixEpoch;
-#else
         var delta = DateTimeOffset.UtcNow - DateTimeOffset.UnixEpoch;
-#endif
         return (ulong)(delta.Ticks / s_timestep.Ticks);
     }
 
     /// <summary>
-    /// 
+    ///
     /// </summary>
     /// <param name="securityToken"></param>
     /// <param name="modifier"></param>
@@ -116,18 +96,11 @@ public static class Rfc6238AuthenticationService
         // Allow a variance of no greater than 9 minutes in either direction
         var currentTimeStep = GetCurrentTimeStepNumber();
 
-#if NET6_0_OR_GREATER
         return ComputeTotp(securityToken, currentTimeStep, modifier);
-#else
-        using (var hashAlgorithm = new HMACSHA1(securityToken))
-        {
-            return ComputeTotp(hashAlgorithm, currentTimeStep, modifier);
-        }
-#endif
     }
 
     /// <summary>
-    /// 
+    ///
     /// </summary>
     /// <param name="securityToken"></param>
     /// <param name="code"></param>
@@ -144,17 +117,10 @@ public static class Rfc6238AuthenticationService
         // Allow a variance of no greater than 9 minutes in either direction
         var currentTimeStep = GetCurrentTimeStepNumber();
 
-#if !NET6_0_OR_GREATER
-        using (var hashAlgorithm = new HMACSHA1(securityToken))
-#endif
         {
             for (var i = -2; i <= 2; i++)
             {
-#if NET6_0_OR_GREATER
                 var computedTotp = ComputeTotp(securityToken, (ulong)((long)currentTimeStep + i), modifier);
-#else
-                var computedTotp = ComputeTotp(hashAlgorithm, (ulong)((long)currentTimeStep + i), modifier);
-#endif
                 if (computedTotp == code)
                 {
                     return true;

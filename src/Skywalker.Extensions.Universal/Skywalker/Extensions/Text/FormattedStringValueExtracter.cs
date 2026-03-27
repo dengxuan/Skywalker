@@ -11,7 +11,7 @@ namespace Skywalker.Extensions.Text;
 /// </summary>
 /// <example>
 /// Say that str is "My name is Neo." and format is "My name is {name}.".
-/// Then Extract method gets "Neo" as "name".  
+/// Then Extract method gets "Neo" as "name".
 /// </example>
 public class FormattedStringValueExtracter
 {
@@ -51,11 +51,7 @@ public class FormattedStringValueExtracter
                 {
                     if (str.StartsWith(currentToken.Text, stringComparison))
                     {
-#if NETSTANDARD2_0
-                        str = str.Substring(currentToken.Text.Length);
-#else
                         str = str[currentToken.Text.Length..];
-#endif
                     }
                 }
                 else
@@ -65,13 +61,8 @@ public class FormattedStringValueExtracter
                     {
                         Debug.Assert(previousToken != null, "previousToken can not be null since i > 0 here");
                         result.IsMatch = true;
-#if NETSTANDARD2_0
-                        result.Matches.Add(new NameValue(previousToken!.Text, str.Substring(0, matchIndex)));
-                        str = str.Substring(matchIndex + currentToken.Text.Length);
-#else
                         result.Matches.Add(new NameValue(previousToken!.Text, str[..matchIndex]));
                         str = str[(matchIndex + currentToken.Text.Length)..];
-#endif
                     }
                 }
             }
@@ -114,11 +105,7 @@ public class FormattedStringValueExtracter
     /// <param name="values">Array of extracted values if matched</param>
     /// <param name="ignoreCase">True, to search case-insensitive</param>
     /// <returns>True, if matched.</returns>
-#if NETSTANDARD2_0
-    public static bool IsMatch(string str, string format, out string?[] values, bool ignoreCase = false)
-#else
     public static bool IsMatch(string str, string format, [NotNullWhen(false)] out string?[] values, bool ignoreCase = false)
-#endif
     {
         var result = Extract(str, format, ignoreCase);
         if (!result.IsMatch)

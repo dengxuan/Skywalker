@@ -1,19 +1,17 @@
-﻿using System.Runtime.Serialization;
-
-namespace Skywalker.Ddd.Exceptions;
+﻿namespace Skywalker.Ddd.Exceptions;
 
 /// <summary>
-/// 
+///
 /// </summary>
 public class UserFriendlyException : SkywalkerException, IHasErrorCode
 {
     /// <summary>
-    /// 
+    ///
     /// </summary>
     public string? Code { get; }
 
     /// <summary>
-    /// 
+    ///
     /// </summary>
     /// <param name="code"></param>
     public UserFriendlyException(string? code) : this(code, string.Empty)
@@ -21,7 +19,7 @@ public class UserFriendlyException : SkywalkerException, IHasErrorCode
     }
 
     /// <summary>
-    /// 
+    ///
     /// </summary>
     /// <param name="code"></param>
     /// <param name="message"></param>
@@ -30,19 +28,8 @@ public class UserFriendlyException : SkywalkerException, IHasErrorCode
         Code = code;
     }
 
-#if !NET8_0_OR_GREATER
     /// <summary>
-    /// Constructor for serializing.
-    /// </summary>
-    public UserFriendlyException(SerializationInfo serializationInfo, StreamingContext context)
-        : base(serializationInfo, context)
-    {
-
-    }
-#endif
-
-    /// <summary>
-    /// 
+    ///
     /// </summary>
     /// <param name="name"></param>
     /// <param name="value"></param>

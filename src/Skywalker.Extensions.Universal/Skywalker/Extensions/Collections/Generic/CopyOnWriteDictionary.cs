@@ -1,7 +1,5 @@
 ﻿using System.Collections;
-#if NETCOREAPP || NET5_0_OR_GREATER
 using System.Diagnostics.CodeAnalysis;
-#endif
 
 namespace Skywalker.Extensions.Collections.Generic;
 
@@ -100,17 +98,10 @@ public class CopyOnWriteDictionary<TKey, TValue> : IDictionary<TKey, TValue> whe
         return WriteDictionary.Remove(key);
     }
 
-#if NETCOREAPP || NET5_0_OR_GREATER
     public virtual bool TryGetValue(TKey key, [MaybeNullWhen(false)] out TValue value)
     {
         return ReadDictionary.TryGetValue(key, out value);
     }
-#else
-    public virtual bool TryGetValue(TKey key, out TValue value)
-    {
-        return ReadDictionary.TryGetValue(key, out value);
-    }
-#endif
 
     public virtual void Add(KeyValuePair<TKey, TValue> item)
     {

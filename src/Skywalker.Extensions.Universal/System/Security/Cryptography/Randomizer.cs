@@ -4,9 +4,6 @@ public static class Randomizer
 {
     private const string Digits = "0123456789ABCDEFGHJKMNPRSTUVWXYZabcdefghigklmnopqrstuvwxyz";
 
-#if NETSTANDARD2_0
-    private static readonly Random s_random = new();
-#endif
     public static byte[] Generate(int length)
     {
         if (length < 1)
@@ -22,20 +19,12 @@ public static class Randomizer
 
     public static int GenerateInt32(int toExclusive = int.MaxValue)
     {
-#if NETSTANDARD2_0
-        return s_random.Next(0, toExclusive);
-#else
         return RandomNumberGenerator.GetInt32(0, toExclusive);
-#endif
     }
 
     public static int GenerateInt32(int fromInclusive = 0, int toExclusive = int.MaxValue)
     {
-#if NETSTANDARD2_0
-        return s_random.Next(fromInclusive, toExclusive);
-#else
         return RandomNumberGenerator.GetInt32(fromInclusive, toExclusive);
-#endif
     }
 
     public static long GenerateInt64()
@@ -95,7 +84,7 @@ public static class Randomizer
             // increase weight sum
             totalWeight += weight;
         }
-        // when iterations end, selected is some element of sequence. 
+        // when iterations end, selected is some element of sequence.
         return selected;
     }
 }

@@ -43,9 +43,5 @@ public abstract class Entity<TKey> : Entity, IEntity<TKey> where TKey : notnull
     /// <inheritdoc/>
     public override string ToString() => $"[ENTITY: {GetType().Name}] Id = {Id}";
 
-#if NETSTANDARD
-    public bool Equals(TKey other) => Id.Equals(other);
-#elif NETCOREAPP3_1_OR_GREATER
     public bool Equals(TKey? other) => Id.Equals(other);
-#endif
 }
