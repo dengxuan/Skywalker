@@ -14,7 +14,6 @@
     <ProjectReference Include="$(LibrariesProjectRoot)Skywalker.Ddd.Core\Skywalker.Ddd.Core.csproj" />
     <ProjectReference Include="$(LibrariesProjectRoot)Skywalker.Ddd.Uow\Skywalker.Ddd.Uow.csproj" />
     <ProjectReference Include="$(LibrariesProjectRoot)Skywalker.Extensions.Specifications\Skywalker.Extensions.Specifications.csproj" />
-    <ProjectReference Include="$(LibrariesProjectRoot)Skywalker.Extensions.Timezone\Skywalker.Extensions.Timezone.csproj" />
   </ItemGroup>
 
 </Project>
