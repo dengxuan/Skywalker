@@ -199,5 +199,63 @@ public class UnitOfWorkManagerTests
         Assert.False(uow.IsReserved);
         Assert.True(uow.IsCompleted);
     }
+
+    [Fact]
+    public void BeginReserved_ShouldThrowWhenNoReservedUow()
+    {
+        // Act & Assert
+        var ex = Assert.ThrowsAny<Exception>(
+            () => _manager.BeginReserved("NonExistent", new UnitOfWorkOptions()));
+        Assert.Contains("Could not find a reserved unit of work", ex.Message);
+    }
+
+    [Fact]
+    public void BeginReserved_ShouldSucceedWhenReservedUowExists()
+    {
+        // Arrange
+        using var uow = _manager.Reserve("TestReservation");
+
+        // Act — 不抛异常即成功
+        _manager.BeginReserved("TestReservation", new UnitOfWorkOptions());
+
+        // Assert
+        Assert.False(uow.IsReserved);
+    }
+
+    [Fact]
+    public void Reserve_WithExistingReservation_SameKey_ShouldReturnChildUnitOfWork()
+    {
+        // Arrange — 同名 Reserve 已存在
+        using var outerUow = _manager.Reserve("TestReservation");
+
+        // Act — 再次 Reserve 同名，应返回 ChildUnitOfWork
+        using var innerUow = _manager.Reserve("TestReservation");
+
+        // Assert — ChildUnitOfWork 共享父级 Id
+        Assert.Equal(outerUow.Id, innerUow.Id);
+    }
+
+    [Fact]
+    public void Reserve_WithRequiresNew_ShouldCreateNewUnitOfWork()
+    {
+        // Arrange
+        using var outerUow = _manager.Reserve("TestReservation");
+
+        // Act — requiresNew 强制创建新 UoW
+        using var innerUow = _manager.Reserve("TestReservation", requiresNew: true);
+
+        // Assert — 不同 Id
+        Assert.NotEqual(outerUow.Id, innerUow.Id);
+    }
+
+    [Fact]
+    public void Current_ShouldSkipReservedUnitOfWork()
+    {
+        // Arrange — Reserve 创建的 UoW 未初始化，Current 应跳过
+        using var uow = _manager.Reserve("TestReservation");
+
+        // Assert
+        Assert.Null(_manager.Current);
+    }
 }
 
