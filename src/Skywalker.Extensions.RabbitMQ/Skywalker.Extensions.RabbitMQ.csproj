@@ -12,7 +12,6 @@
     <ProjectReference Include="$(LibrariesProjectRoot)Skywalker.Extensions.DependencyInjection.Abstractions\Skywalker.Extensions.DependencyInjection.Abstractions.csproj" />
     <ProjectReference Include="$(LibrariesProjectRoot)Skywalker.Extensions.Threading\Skywalker.Extensions.Threading.csproj" />
     <ProjectReference Include="$(LibrariesProjectRoot)Skywalker.Extensions.Universal\Skywalker.Extensions.Universal.csproj" />
-    <ProjectReference Include="$(LibrariesProjectRoot)Skywalker.Serialization.Abstractions\Skywalker.Serialization.Abstractions.csproj" />
   </ItemGroup>
 
 </Project>
