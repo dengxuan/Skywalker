@@ -32,12 +32,13 @@
 ```
 Skywalker.Ddd (整合包)
 ├── Skywalker.Ddd.Domain
-│   └── Skywalker.Ddd.Core
+│   ├── Skywalker.Exceptions.Abstractions
+│   └── Skywalker.EventBus.Abstractions
 ├── Skywalker.Ddd.Application
-│   ├── Skywalker.Ddd.Core
+│   ├── Skywalker.Exceptions.Abstractions
 │   └── Skywalker.Ddd.Uow
 └── Skywalker.Ddd.Uow
-    ├── Skywalker.Ddd.Core
+    ├── Skywalker.Exceptions.Abstractions
     └── Skywalker.Extensions.DynamicProxies
 
 Skywalker.Ddd.EntityFrameworkCore
@@ -59,7 +60,7 @@ Skywalker.Ddd.EntityFrameworkCore
 ### 安装
 
 ```bash
-dotnet add package Skywalker.Ddd.Core
+dotnet add package Skywalker.Ddd
 ```
 
 ### 注册服务
