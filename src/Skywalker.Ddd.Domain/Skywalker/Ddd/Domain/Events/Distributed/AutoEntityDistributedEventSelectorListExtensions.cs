@@ -1,5 +1,5 @@
 ﻿using Skywalker.Ddd.Domain.Entities;
-using Skywalker.Ddd.Exceptions;
+using Skywalker.Exceptions;
 using Skywalker.Extensions.Collections;
 
 namespace Skywalker.Ddd.Domain.Events.Distributed;

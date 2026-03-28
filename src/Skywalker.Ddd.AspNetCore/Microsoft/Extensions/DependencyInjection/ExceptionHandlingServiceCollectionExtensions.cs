@@ -1,5 +1,5 @@
 using Skywalker.Ddd.AspNetCore.ExceptionHandling;
-using Skywalker.Ddd.Exceptions;
+using Skywalker.Exceptions;
 
 namespace Microsoft.Extensions.DependencyInjection;
 

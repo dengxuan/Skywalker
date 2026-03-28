@@ -9,7 +9,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="$(LibrariesProjectRoot)Skywalker.Ddd.Core\Skywalker.Ddd.Core.csproj" />
+    <ProjectReference Include="$(LibrariesProjectRoot)Skywalker.Exceptions.Abstractions\Skywalker.Exceptions.Abstractions.csproj" />
     <ProjectReference Include="$(LibrariesProjectRoot)Skywalker.Ddd.Uow\Skywalker.Ddd.Uow.csproj" />
     <ProjectReference Include="$(LibrariesProjectRoot)Skywalker.Extensions.DynamicProxies\Skywalker.Extensions.DynamicProxies.csproj" />
     <ProjectReference Include="..\Skywalker.Extensions.DynamicProxies.SourceGenerators\Skywalker.Extensions.DynamicProxies.SourceGenerators.csproj" ReferenceOutputAssembly="false" OutputItemType="Analyzer" />

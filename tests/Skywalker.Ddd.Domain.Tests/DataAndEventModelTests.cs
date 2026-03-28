@@ -3,7 +3,7 @@ using Skywalker.Ddd.Data;
 using Skywalker.Ddd.Data.Seeding;
 using Skywalker.Ddd.Domain.Entities;
 using Skywalker.Ddd.Domain.Events;
-using Skywalker.Ddd.Exceptions;
+using Skywalker.Exceptions;
 
 namespace Skywalker.Ddd.Domain.Tests;
 

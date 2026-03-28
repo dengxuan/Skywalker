@@ -1,6 +1,6 @@
 using System.ComponentModel.DataAnnotations;
 using Microsoft.Extensions.Logging;
-using Skywalker.Ddd.Exceptions;
+using Skywalker.Exceptions;
 using Xunit;
 
 namespace Skywalker.Ddd.AspNetCore.Tests.ExceptionHandling;

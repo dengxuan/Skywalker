@@ -3,7 +3,7 @@ using System.Diagnostics.CodeAnalysis;
 using System.Linq.Expressions;
 using System.Reflection;
 using Skywalker.Ddd.Domain.Values;
-using Skywalker.Ddd.Exceptions;
+using Skywalker.Exceptions;
 
 namespace Skywalker.Ddd.Domain.Entities;
 

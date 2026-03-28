@@ -3,7 +3,7 @@
 
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
-using Skywalker.Ddd.Exceptions;
+using Skywalker.Exceptions;
 using Skywalker.Ddd.Uow.Abstractions;
 using Skywalker.DependencyInjection;
 
