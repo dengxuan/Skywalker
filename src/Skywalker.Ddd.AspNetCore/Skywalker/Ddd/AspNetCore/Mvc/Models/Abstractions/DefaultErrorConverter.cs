@@ -1,6 +1,6 @@
 ﻿using System.Net;
 using System.Text;
-using Skywalker.Ddd.Exceptions;
+using Skywalker.Exceptions;
 
 namespace Skywalker.Ddd.AspNetCore.Mvc.Models.Abstractions;
 

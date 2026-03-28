@@ -309,7 +309,7 @@ public class EntityHelperTests
     [Fact]
     public void CheckEntity_WithNonEntity_ShouldThrow()
     {
-        Assert.Throws<Skywalker.Ddd.Exceptions.SkywalkerException>(() => EntityHelper.CheckEntity(typeof(string)));
+        Assert.Throws<Skywalker.Exceptions.SkywalkerException>(() => EntityHelper.CheckEntity(typeof(string)));
     }
 
     [Fact]
@@ -373,7 +373,7 @@ public class EntityHelperTests
     [Fact]
     public void FindPrimaryKeyType_WithNonEntity_ShouldThrow()
     {
-        Assert.Throws<Skywalker.Ddd.Exceptions.SkywalkerException>(
+        Assert.Throws<Skywalker.Exceptions.SkywalkerException>(
             () => EntityHelper.FindPrimaryKeyType(typeof(string)));
     }
 

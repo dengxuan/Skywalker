@@ -1,6 +1,6 @@
 ﻿using System.Collections;
 using System.Linq.Expressions;
-using Skywalker.Ddd.Abstractions;
+using Skywalker.Extensions.DependencyInjection;
 using Skywalker.Ddd.Data;
 using Skywalker.Ddd.Data.Filtering;
 using Skywalker.Ddd.Domain.Entities;

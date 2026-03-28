@@ -4,7 +4,7 @@
 using System.Collections.Immutable;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
-using Skywalker.Ddd.Exceptions;
+using Skywalker.Exceptions;
 using Skywalker.Ddd.Uow.Abstractions;
 using Skywalker.DependencyInjection;
 

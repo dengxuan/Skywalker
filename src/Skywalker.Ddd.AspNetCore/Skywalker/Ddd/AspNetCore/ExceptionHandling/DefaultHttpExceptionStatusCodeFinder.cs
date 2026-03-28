@@ -1,5 +1,5 @@
 using System.Net;
-using Skywalker.Ddd.Exceptions;
+using Skywalker.Exceptions;
 
 namespace Skywalker.Ddd.AspNetCore.ExceptionHandling;
 

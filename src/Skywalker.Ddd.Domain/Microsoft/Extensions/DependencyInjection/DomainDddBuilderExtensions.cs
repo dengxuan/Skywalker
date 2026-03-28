@@ -24,6 +24,8 @@ public static class DomainDddBuilderExtensions
     /// <returns>服务集合。</returns>
     public static IServiceCollection AddDddDomain(this IServiceCollection services)
     {
+        services.AddDddExceptions();
+        services.AddEventBusCore();
         return services.AddAutoServices();
     }
 

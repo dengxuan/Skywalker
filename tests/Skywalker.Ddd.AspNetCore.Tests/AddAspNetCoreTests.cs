@@ -3,7 +3,7 @@ using NSubstitute;
 using Skywalker;
 using Skywalker.Ddd.AspNetCore.ExceptionHandling;
 using Skywalker.Ddd.AspNetCore.Mvc.Models.Abstractions;
-using Skywalker.Ddd.Exceptions;
+using Skywalker.Exceptions;
 using Xunit;
 
 namespace Skywalker.Ddd.AspNetCore.Tests;

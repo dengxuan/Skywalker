@@ -2,8 +2,8 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using Skywalker.Ddd.AspNetCore.Mvc.Models.Abstractions;
-using Skywalker.Ddd.Exceptions;
-using Skywalker.Ddd.Exceptions.Abstractions;
+using Skywalker.Exceptions;
+using Skywalker.Exceptions.Abstractions;
 
 namespace Skywalker.Ddd.AspNetCore.ExceptionHandling;
 
