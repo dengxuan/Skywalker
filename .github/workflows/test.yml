@@ -37,7 +37,7 @@ jobs:
         run: dotnet build Skywalker.sln --configuration Release --no-restore
 
       - name: Run tests
-        run: dotnet test Skywalker.sln --configuration Release --no-build --verbosity normal --collect:"XPlat Code Coverage" --results-directory ./coverage
+        run: dotnet test Skywalker.sln --configuration Release --no-build --verbosity normal --collect:"XPlat Code Coverage" --results-directory ./coverage --settings coverlet.runsettings
 
       - name: Generate coverage report
         uses: danielpalme/ReportGenerator-GitHub-Action@5
