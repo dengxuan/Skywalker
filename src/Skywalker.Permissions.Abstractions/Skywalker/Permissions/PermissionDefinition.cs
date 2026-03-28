@@ -2,12 +2,7 @@
 // Gordon licenses this file to you under the MIT license.
 
 using System.Collections.Immutable;
-#if NETCOREAPP3_1_OR_GREATER
 using System.Text.Json.Serialization;
-#endif
-#if NETSTANDARD
-using Newtonsoft.Json;
-#endif
 using Skywalker.Extensions.SimpleStateChecking;
 
 namespace Skywalker.Permissions;

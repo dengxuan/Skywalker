@@ -1,9 +1,8 @@
-﻿using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.DependencyInjection.Extensions;
 using Skywalker.Extensions.Emailing;
 using Skywalker.Extensions.Emailing.Smtp;
 
-[assembly: Skywalker.SkywalkerModule("Emailing")]
 
 namespace Microsoft.Extensions.DependencyInjection;
 

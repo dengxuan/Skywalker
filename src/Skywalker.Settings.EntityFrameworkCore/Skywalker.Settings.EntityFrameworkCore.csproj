@@ -10,8 +10,4 @@
 	  <ProjectReference Include="..\Skywalker.Settings.Abstractions\Skywalker.Settings.Abstractions.csproj" />
 	</ItemGroup>
 
-	<ItemGroup>
-		<ProjectReference Include="..\Skywalker.Extensions.DependencyInjection.SourceGenerators\Skywalker.Extensions.DependencyInjection.SourceGenerators.csproj" OutputItemType="Analyzer" ReferenceOutputAssembly="false" />
-	</ItemGroup>
-
 </Project>

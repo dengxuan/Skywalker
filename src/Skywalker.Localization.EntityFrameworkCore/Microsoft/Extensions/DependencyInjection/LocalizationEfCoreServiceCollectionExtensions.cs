@@ -1,7 +1,6 @@
 using Microsoft.EntityFrameworkCore;
 using Skywalker.Localization.EntityFrameworkCore;
 
-[assembly: Skywalker.SkywalkerModule("LocalizationEfCore")]
 
 namespace Microsoft.Extensions.DependencyInjection;
 

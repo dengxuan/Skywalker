@@ -9,7 +9,7 @@ namespace Skywalker.Extensions.DependencyInjection.SourceGenerators;
 
 /// <summary>
 /// 依赖注入 Source Generator。
-/// 扫描所有实现了规约接口的类，生成 AddAutoServices() 和 Add{ModuleName}() 扩展方法。
+/// 扫描所有实现了规约接口的类，生成 AddAutoServices() 扩展方法。
 /// </summary>
 [Generator(LanguageNames.CSharp)]
 public sealed class DependencyInjectionGenerator : IIncrementalGenerator
@@ -22,7 +22,6 @@ public sealed class DependencyInjectionGenerator : IIncrementalGenerator
     private const string ReplaceServiceAttribute = "Skywalker.DependencyInjection.ReplaceServiceAttribute";
     private const string KeyedServiceAttribute = "Skywalker.DependencyInjection.KeyedServiceAttribute";
     private const string SharedInstanceAttribute = "Skywalker.DependencyInjection.SharedInstanceAttribute";
-    private const string SkywalkerModuleAttributeName = "Skywalker.SkywalkerModuleAttribute";
 
     public void Initialize(IncrementalGeneratorInitializationContext context)
     {
@@ -45,76 +44,10 @@ public sealed class DependencyInjectionGenerator : IIncrementalGenerator
             if (services.Count == 0 && keyedServices.Count == 0) return;
 
             var assemblyName = compilation.AssemblyName ?? "Generated";
-            var moduleName = GetModuleName(compilation);
-            var hasUserDefinedMethod = moduleName != null && HasUserDefinedAddMethod(compilation, moduleName);
 
-            var sourceCode = GenerateSource(assemblyName, services, keyedServices, moduleName, hasUserDefinedMethod);
+            var sourceCode = GenerateSource(assemblyName, services, keyedServices);
             sourceContext.AddSource($"{assemblyName}.AutoDependencyInjection.g.cs", sourceCode);
         });
-    }
-
-    /// <summary>
-    /// 从 [SkywalkerModule] 特性获取模块名称。
-    /// </summary>
-    private static string? GetModuleName(Compilation compilation)
-    {
-        var assembly = compilation.Assembly;
-        
-        // 检查 [SkywalkerModule] 特性
-        foreach (var attribute in assembly.GetAttributes())
-        {
-            var attrClass = attribute.AttributeClass;
-            if (attrClass is null) continue;
-
-            if (attrClass.ToDisplayString() == SkywalkerModuleAttributeName)
-            {
-                // 获取构造函数参数（模块名称）
-                if (attribute.ConstructorArguments.Length > 0 &&
-                    attribute.ConstructorArguments[0].Value is string moduleName)
-                {
-                    return moduleName;
-                }
-            }
-        }
-        
-        // 没有 [SkywalkerModule] 特性则不生成 Add{ModuleName} 方法
-        // 入口程序的 AddSkywalker 由 SkywalkerModuleGenerator 负责生成
-        return null;
-    }
-
-    /// <summary>
-    /// 检查用户是否已定义 Add{ModuleName}() 方法。
-    /// </summary>
-    private static bool HasUserDefinedAddMethod(Compilation compilation, string moduleName)
-    {
-        var methodName = $"Add{moduleName}";
-
-        // 遍历所有源代码中的类型
-        foreach (var syntaxTree in compilation.SyntaxTrees)
-        {
-            var semanticModel = compilation.GetSemanticModel(syntaxTree);
-            var root = syntaxTree.GetRoot();
-
-            foreach (var classDecl in root.DescendantNodes().OfType<ClassDeclarationSyntax>())
-            {
-                var classSymbol = semanticModel.GetDeclaredSymbol(classDecl) as INamedTypeSymbol;
-                if (classSymbol is null) continue;
-
-                foreach (var member in classSymbol.GetMembers())
-                {
-                    if (member is IMethodSymbol method &&
-                        method.IsStatic &&
-                        method.IsExtensionMethod &&
-                        method.Name == methodName &&
-                        method.Parameters.Length >= 1 &&
-                        method.Parameters[0].Type.ToDisplayString().EndsWith("IServiceCollection"))
-                    {
-                        return true;
-                    }
-                }
-            }
-        }
-        return false;
     }
 
     private static (List<ServiceInfo> services, List<KeyedServiceInfo> keyedServices) CollectServices(
@@ -145,10 +78,10 @@ public sealed class DependencyInjectionGenerator : IIncrementalGenerator
             {
                 // 检查是否还有其他需要注册的接口（排除已通过 KeyedService 注册的接口）
                 var hasOtherInterfaces = classSymbol.Interfaces
-                    .Any(i => 
+                    .Any(i =>
                         !i.ToDisplayString().StartsWith("Skywalker.DependencyInjection.I", StringComparison.Ordinal) &&
                         !keyedServiceTypes.Contains(i.ToDisplayString()));
-                
+
                 if (!hasOtherInterfaces)
                 {
                     continue; // 跳过常规注册
@@ -386,7 +319,7 @@ public sealed class DependencyInjectionGenerator : IIncrementalGenerator
         }
     }
 
-    private static string GenerateSource(string assemblyName, List<ServiceInfo> services, List<KeyedServiceInfo> keyedServices, string? moduleName, bool hasUserDefinedMethod)
+    private static string GenerateSource(string assemblyName, List<ServiceInfo> services, List<KeyedServiceInfo> keyedServices)
     {
         var sb = new StringBuilder();
         sb.AppendLine("// <auto-generated/>");
@@ -403,7 +336,7 @@ public sealed class DependencyInjectionGenerator : IIncrementalGenerator
 
         // 使用程序集名称生成唯一的类名
         var className = GetSafeClassName(assemblyName) + "AutoServiceExtensions";
-        sb.AppendLine($"public static class {className}");
+        sb.AppendLine($"public static partial class {className}");
         sb.AppendLine("{");
         sb.AppendLine("    /// <summary>");
         sb.AppendLine("    /// 添加自动发现的服务到服务集合（内部方法）。");
@@ -447,23 +380,18 @@ public sealed class DependencyInjectionGenerator : IIncrementalGenerator
             sb.AppendLine();
         }
 
+        // 调用代理注册（由 DynamicProxies SourceGenerator 的 partial 方法实现）
+        // 如果 DynamicProxies SourceGenerator 未激活，partial 方法调用为空操作
+        sb.AppendLine("        RegisterProxyServices(services);");
+        sb.AppendLine();
+
         sb.AppendLine("        return services;");
         sb.AppendLine("    }");
-
-        // 如果有 [SkywalkerModule] 特性且用户没有手写 Add{ModuleName}() 方法，则生成
-        if (moduleName != null && !hasUserDefinedMethod)
-        {
-            sb.AppendLine();
-            sb.AppendLine("    /// <summary>");
-            sb.AppendLine($"    /// 添加 {moduleName} 模块服务到服务集合。");
-            sb.AppendLine("    /// </summary>");
-            sb.AppendLine("    /// <param name=\"services\">服务集合。</param>");
-            sb.AppendLine("    /// <returns>服务集合。</returns>");
-            sb.AppendLine($"    public static IServiceCollection Add{moduleName}(this IServiceCollection services)");
-            // 使用完整的类名来避免二义性
-            sb.AppendLine($"        => {className}.AddAutoServices(services);");
-        }
-
+        sb.AppendLine();
+        sb.AppendLine("    /// <summary>");
+        sb.AppendLine("    /// 注册代理服务（由 DynamicProxies SourceGenerator 实现）。");
+        sb.AppendLine("    /// </summary>");
+        sb.AppendLine("    static partial void RegisterProxyServices(IServiceCollection services);");
         sb.AppendLine("}");
 
         return sb.ToString();

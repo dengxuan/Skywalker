@@ -1,5 +1,5 @@
-﻿using Microsoft.Extensions.Options;
-using Newtonsoft.Json;
+﻿using System.Text.Json;
+using Microsoft.Extensions.Options;
 using Skywalker.Caching.Abstractions;
 using Skywalker.DependencyInjection;
 
@@ -22,7 +22,7 @@ internal class JsonCachingSerializer : ICachingSerializer, ISingletonDependency
             throw new ArgumentNullException(nameof(@object));
         }
 
-        var @string = JsonConvert.SerializeObject(@object);
+        var @string = JsonSerializer.Serialize(@object);
         return _options.Encoding.GetBytes(@string);
     }
 
@@ -39,6 +39,6 @@ internal class JsonCachingSerializer : ICachingSerializer, ISingletonDependency
         }
 
         var @string = _options.Encoding.GetString(bytes);
-        return JsonConvert.DeserializeObject(@string, type);
+        return JsonSerializer.Deserialize(@string, type);
     }
 }

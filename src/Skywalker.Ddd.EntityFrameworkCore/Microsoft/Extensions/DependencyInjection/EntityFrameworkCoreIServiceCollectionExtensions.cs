@@ -1,4 +1,4 @@
-﻿using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore;
 using Skywalker.Ddd.Data;
 using Skywalker.Ddd.Domain.Entities;
 using Skywalker.Ddd.Domain.Repositories;
@@ -7,21 +7,20 @@ using Skywalker.Ddd.EntityFrameworkCore.DbContextConfiguration;
 using Skywalker.Ddd.Uow.EntityFrameworkCore;
 using Skywalker.Identity.Domain.Repositories;
 
-[assembly: Skywalker.SkywalkerModule("EntityFrameworkCore")]
 
 namespace Microsoft.Extensions.DependencyInjection;
 
 /// <summary>
-/// Entity Framework Core 服务扩展方法。
+/// Entity Framework Core ������չ������
 /// </summary>
 public static class EntityFrameworkCoreIServiceCollectionExtensions
 {
     /// <summary>
-    /// 通过 DbContext 类型添加仓储，反射获取所有的 DbSet 然后构建仓储。
+    /// ͨ�� DbContext �������Ӳִ��������ȡ���е� DbSet Ȼ�󹹽��ִ���
     /// </summary>
-    /// <typeparam name="TDbContext">DbContext 类型。</typeparam>
-    /// <param name="services">服务集合。</param>
-    /// <returns>服务集合。</returns>
+    /// <typeparam name="TDbContext">DbContext ���͡�</typeparam>
+    /// <param name="services">���񼯺ϡ�</param>
+    /// <returns>���񼯺ϡ�</returns>
     private static IServiceCollection AddDefaultServices<TDbContext>(this IServiceCollection services) where TDbContext : SkywalkerDbContext<TDbContext>
     {
         var dbContextType = typeof(TDbContext);
@@ -50,10 +49,10 @@ public static class EntityFrameworkCoreIServiceCollectionExtensions
     }
 
     /// <summary>
-    /// 添加 Entity Framework Core 支持。
+    /// ���� Entity Framework Core ֧�֡�
     /// </summary>
-    /// <param name="services">服务集合。</param>
-    /// <returns>服务集合。</returns>
+    /// <param name="services">���񼯺ϡ�</param>
+    /// <returns>���񼯺ϡ�</returns>
     public static IServiceCollection AddEntityFrameworkCore(this IServiceCollection services)
     {
         services.AddDataFilter();
@@ -67,14 +66,15 @@ public static class EntityFrameworkCoreIServiceCollectionExtensions
     }
 
     /// <summary>
-    /// 添加 DbContext。
+    /// ���� DbContext��
     /// </summary>
-    /// <typeparam name="TDbContext">DbContext 类型。</typeparam>
-    /// <param name="services">服务集合。</param>
-    /// <param name="options">DbContext 配置。</param>
-    /// <returns>服务集合。</returns>
+    /// <typeparam name="TDbContext">DbContext ���͡�</typeparam>
+    /// <param name="services">���񼯺ϡ�</param>
+    /// <param name="options">DbContext ���á�</param>
+    /// <returns>���񼯺ϡ�</returns>
     public static IServiceCollection AddSkywalkerDbContext<TDbContext>(this IServiceCollection services, Action<SkywalkerDbContextOptions> options) where TDbContext : SkywalkerDbContext<TDbContext>
     {
+        services.AddEntityFrameworkCore();
         services.Configure(options);
         services.AddDefaultServices<TDbContext>();
         services.AddTransient(SkywalkerDbContextOptionsFactory.Create<TDbContext>);
@@ -83,12 +83,12 @@ public static class EntityFrameworkCoreIServiceCollectionExtensions
     }
 
     /// <summary>
-    /// 添加 DbContext 连接池。
+    /// ���� DbContext ���ӳء�
     /// </summary>
-    /// <typeparam name="TDbContext">DbContext 类型。</typeparam>
-    /// <param name="services">服务集合。</param>
-    /// <param name="options">DbContext 配置。</param>
-    /// <returns>服务集合。</returns>
+    /// <typeparam name="TDbContext">DbContext ���͡�</typeparam>
+    /// <param name="services">���񼯺ϡ�</param>
+    /// <param name="options">DbContext ���á�</param>
+    /// <returns>���񼯺ϡ�</returns>
     public static IServiceCollection AddSkywalkerDbContextPool<TDbContext>(this IServiceCollection services, Action<DbContextOptionsBuilder> options) where TDbContext : SkywalkerDbContext<TDbContext>
     {
         services.Configure(options);

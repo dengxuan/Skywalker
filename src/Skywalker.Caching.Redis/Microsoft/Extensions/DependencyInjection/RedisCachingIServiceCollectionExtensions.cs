@@ -1,6 +1,5 @@
-﻿using Skywalker.Caching.Redis;
+using Skywalker.Caching.Redis;
 
-[assembly: Skywalker.SkywalkerModule("RedisCaching")]
 
 namespace Microsoft.Extensions.DependencyInjection;
 

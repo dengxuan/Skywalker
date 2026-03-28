@@ -59,15 +59,20 @@ Skywalker.Ddd.EntityFrameworkCore
 ### 安装
 
 ```bash
-dotnet add package Skywalker.Ddd
+dotnet add package Skywalker.Ddd.Core
 ```
 
 ### 注册服务
 
 ```csharp
-builder.Services.AddSkywalker()
-    .AddDdd();
+// 注册 Skywalker 核心服务（包含 UoW、拦截器等基础设施）
+builder.Services.AddSkywalker();
+
+// ASP.NET Core 项目还需注册 Web 集成
+builder.Services.AddSkywalker().AddAspNetCore();
 ```
+
+> **说明**：`AddSkywalker()` 是所有 Skywalker 项目的唯一入口，领域服务和应用服务通过 SourceGenerator 自动注册（实现 `ISingletonDependency` / `ITransientDependency` / `IScopedDependency` 接口即可），无需手动调用。
 
 ---
 
@@ -95,13 +100,13 @@ public abstract class Entity : IEntity, IHasConcurrencyStamp, IHasCreationTime
 {
     // 乐观并发控制戳
     public virtual string? ConcurrencyStamp { get; set; }
-    
+
     // 创建时间
     public virtual DateTime CreationTime { get; set; }
-    
+
     // 获取主键数组
     public abstract object[] GetKeys();
-    
+
     // 实体相等性比较
     public bool EntityEquals(IEntity other);
 }
@@ -110,10 +115,10 @@ public abstract class Entity : IEntity, IHasConcurrencyStamp, IHasCreationTime
 public abstract class Entity<TKey> : Entity, IEntity<TKey> where TKey : notnull
 {
     public const int MaxIdLength = 40;
-    
+
     // 实体主键
     public virtual TKey Id { get; protected set; }
-    
+
     protected Entity(TKey id) => Id = id;
     protected Entity() : this(default!) { }
 }
@@ -126,15 +131,15 @@ public class Product : Entity<Guid>
 {
     public string Name { get; private set; } = null!;
     public decimal Price { get; private set; }
-    
+
     protected Product() { }
-    
+
     public Product(Guid id, string name, decimal price) : base(id)
     {
         Name = name;
         Price = price;
     }
-    
+
     public void UpdatePrice(decimal newPrice)
     {
         if (newPrice <= 0)
@@ -150,33 +155,33 @@ public class Product : Entity<Guid>
 namespace Skywalker.Ddd.Domain.Entities;
 
 [Serializable]
-public abstract class AggregateRoot<TKey> : Entity<TKey>, 
-    IAggregateRoot<TKey>, 
+public abstract class AggregateRoot<TKey> : Entity<TKey>,
+    IAggregateRoot<TKey>,
     IGeneratesDomainEvents,
-    IHasConcurrencyStamp, 
-    IHasCreationTime 
+    IHasConcurrencyStamp,
+    IHasCreationTime
     where TKey : notnull
 {
     private readonly ICollection<object> _distributedEvents = new Collection<object>();
-    
+
     // 添加分布式领域事件
     protected virtual void AddDistributedEvent(object eventData)
     {
         _distributedEvents.Add(eventData);
     }
-    
+
     // 获取所有待发布的分布式事件
     public virtual IEnumerable<object> GetDistributedEvents()
     {
         return _distributedEvents;
     }
-    
+
     // 清除所有待发布的分布式事件
     public virtual void ClearDistributedEvents()
     {
         _distributedEvents.Clear();
     }
-    
+
     // 验证聚合根状态
     public virtual IEnumerable<ValidationResult> Validate(ValidationContext validationContext)
     {
@@ -657,9 +662,8 @@ public sealed class UnitOfWorkAttribute : Attribute
 ### 注册服务
 
 ```csharp
-builder.Services.AddSkywalker()
-    .AddDynamicProxies()
-    .AddUnitOfWork();
+// AddSkywalker() 已包含 UoW 注册，无需额外调用
+builder.Services.AddSkywalker();
 ```
 
 ### 使用示例
@@ -832,17 +836,17 @@ public class EfCoreRepository<TDbContext, TEntity, TKey> : EfCoreRepository<TDbC
 ### 注册服务
 
 ```csharp
-// 配置 DbContext
-builder.Services.AddDbContext<OrderDbContext>(options =>
+// 注册核心服务
+builder.Services.AddSkywalker();
+
+// 注册 EF Core DbContext（自动注册仓储和 EntityFrameworkCore 基础设施）
+builder.Services.AddSkywalkerDbContext<OrderDbContext>(options =>
 {
     options.UseMySql(connectionString, ServerVersion.AutoDetect(connectionString));
 });
-
-// 注册 EF Core 仓储
-builder.Services.AddSkywalker()
-    .AddDdd()
-    .AddEntityFrameworkCore<OrderDbContext>();
 ```
+
+> **说明**：`AddSkywalkerDbContext<T>()` 内部自动调用 `AddEntityFrameworkCore()`，无需单独注册。
 
 ### 使用示例
 
@@ -932,10 +936,14 @@ dotnet add package Skywalker.Ddd.AspNetCore
 ### 注册服务
 
 ```csharp
-builder.Services.AddSkywalker()
-    .AddDdd()
-    .AddAspNetCore();
+// AddAspNetCore() 自动注册异常处理和响应包装
+builder.Services.AddSkywalker().AddAspNetCore();
+
+// 在中间件管道中启用 Skywalker
+app.UseSkywalker();
 ```
+
+> **说明**：`AddAspNetCore()` 包含异常处理和响应包装的注册；`UseSkywalker()` 启用异常捕获中间件和工作单元中间件。
 
 ---
 

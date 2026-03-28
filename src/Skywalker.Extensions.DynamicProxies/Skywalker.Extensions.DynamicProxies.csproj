@@ -1,0 +1,25 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+	<PropertyGroup>
+		<RootNamespace></RootNamespace>
+		<Description>Skywalker 动态代理抽象，包含拦截器接口和特性</Description>
+		<SkipAutoAnalyzers>true</SkipAutoAnalyzers>
+	</PropertyGroup>
+
+	<ItemGroup>
+		<PackageReference Include="Microsoft.Extensions.DependencyInjection.Abstractions" Version="$(MicrosoftExtensionsVersion)" />
+	</ItemGroup>
+
+	<!--
+		Source Generator 引用：
+		- OutputItemType="Analyzer" : 本地开发时作为分析器工作
+		- PackAsAnalyzer="true" : 发 NuGet 包时自动放到 analyzers/dotnet/cs 目录
+	-->
+	<ItemGroup>
+		<ProjectReference Include="$(LibrariesProjectRoot)Skywalker.Extensions.DynamicProxies.SourceGenerators\Skywalker.Extensions.DynamicProxies.SourceGenerators.csproj"
+						  ReferenceOutputAssembly="false"
+						  OutputItemType="Analyzer"
+						  PackAsAnalyzer="true" />
+	</ItemGroup>
+
+</Project>

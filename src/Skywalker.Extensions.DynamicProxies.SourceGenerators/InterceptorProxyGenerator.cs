@@ -24,7 +24,7 @@ public sealed class InterceptorProxyGenerator : IIncrementalGenerator
         // 收集所有非静态、非抽象的类（实现了 IInterceptable 接口）
         var classDeclarations = context.SyntaxProvider
             .CreateSyntaxProvider(
-                predicate: static (node, _) => node is ClassDeclarationSyntax cds && 
+                predicate: static (node, _) => node is ClassDeclarationSyntax cds &&
                     cds.BaseList != null,
                 transform: static (ctx, _) => (ClassDeclarationSyntax)ctx.Node)
             .Where(static c => c is not null);
@@ -36,7 +36,7 @@ public sealed class InterceptorProxyGenerator : IIncrementalGenerator
         context.RegisterSourceOutput(compilationAndClasses, (sourceContext, source) =>
         {
             var (compilation, classes) = source;
-            
+
             var proxyServices = CollectProxyServices(compilation, classes);
 
             foreach (var service in proxyServices)
@@ -205,8 +205,8 @@ public sealed class InterceptorProxyGenerator : IIncrementalGenerator
     private static string GetMethodSignature(IMethodSymbol method)
     {
         var parameters = string.Join(",", method.Parameters.Select(p => p.Type.ToDisplayString()));
-        var typeParams = method.TypeParameters.Length > 0 
-            ? $"<{string.Join(",", method.TypeParameters.Select(t => t.Name))}>" 
+        var typeParams = method.TypeParameters.Length > 0
+            ? $"<{string.Join(",", method.TypeParameters.Select(t => t.Name))}>"
             : "";
         return $"{method.Name}{typeParams}({parameters})";
     }
@@ -238,7 +238,7 @@ public sealed class InterceptorProxyGenerator : IIncrementalGenerator
         {
             return typeName.TrimEnd('?');
         }
-        
+
         // 处理泛型中的 nullable 类型参数，如 "List<string?>" -> "List<string>"
         // 使用正则替换或简单的字符串处理
         return typeName.Replace("?", "");
@@ -275,6 +275,24 @@ public sealed class InterceptorProxyGenerator : IIncrementalGenerator
         // 字段
         sb.AppendLine($"    private readonly {service.ImplementationType} _target;");
         sb.AppendLine("    private readonly InterceptorChainBuilder _interceptorChainBuilder;");
+        sb.AppendLine();
+
+        // 缓存 MethodInfo 为静态字段（仅非泛型方法）
+        foreach (var method in service.Methods)
+        {
+            if (method.TypeParameters.Count > 0) continue; // 泛型方法在方法内部解析
+
+            var fieldName = GetMethodInfoFieldName(method);
+            if (method.Parameters.Count > 0)
+            {
+                var paramTypes = string.Join(", ", method.Parameters.Select(p => $"typeof({StripNullableAnnotation(p.Type)})"));
+                sb.AppendLine($"    private static readonly MethodInfo {fieldName} = typeof({service.ImplementationType}).GetMethod(\"{method.MethodName}\", [{paramTypes}])!;");
+            }
+            else
+            {
+                sb.AppendLine($"    private static readonly MethodInfo {fieldName} = typeof({service.ImplementationType}).GetMethod(\"{method.MethodName}\", Type.EmptyTypes)!;");
+            }
+        }
         sb.AppendLine();
 
         // 构造函数 - 从 DI 容器获取所有 IInterceptor
@@ -317,8 +335,26 @@ public sealed class InterceptorProxyGenerator : IIncrementalGenerator
         sb.AppendLine($"    public {asyncModifier}{method.ReturnType} {method.MethodName}{typeParams}({parameters}){constraints}");
         sb.AppendLine("    {");
 
-        // 创建简化的方法调用上下文
-        sb.AppendLine($"        var context = new InterceptorContext(_target, \"{method.MethodName}\");");
+        // 创建方法调用上下文，包含 MethodInfo 和参数
+        var argsArray = method.Parameters.Count > 0
+            ? $"new object?[] {{ {string.Join(", ", method.Parameters.Select(p => p.Name))} }}"
+            : "Array.Empty<object?>()";
+
+        if (method.TypeParameters.Count > 0)
+        {
+            // 泛型方法：在方法内部解析 MethodInfo（类型参数在此作用域可用）
+            var genericArity = method.TypeParameters.Count;
+            var makeGenericArgs = string.Join(", ", method.TypeParameters.Select(tp => $"typeof({tp})"));
+            sb.AppendLine($"        var methodInfo = typeof({service.ImplementationType}).GetMethods()");
+            sb.AppendLine($"            .First(m => m.Name == \"{method.MethodName}\" && m.IsGenericMethodDefinition && m.GetGenericArguments().Length == {genericArity})");
+            sb.AppendLine($"            .MakeGenericMethod({makeGenericArgs});");
+            sb.AppendLine($"        var context = new InterceptorContext(_target, methodInfo, {argsArray});");
+        }
+        else
+        {
+            var fieldName = GetMethodInfoFieldName(method);
+            sb.AppendLine($"        var context = new InterceptorContext(_target, {fieldName}, {argsArray});");
+        }
         sb.AppendLine();
 
         // 创建目标调用委托
@@ -396,6 +432,14 @@ public sealed class InterceptorProxyGenerator : IIncrementalGenerator
         return "object";
     }
 
+    private static string GetMethodInfoFieldName(ProxyMethodInfo method)
+    {
+        var paramSuffix = method.Parameters.Count > 0
+            ? "_" + string.Join("_", method.Parameters.Select(p => StripNullableAnnotation(p.Type).Replace(".", "").Replace("<", "").Replace(">", "").Replace(",", "").Replace(" ", "")))
+            : "";
+        return $"s_{method.MethodName}{paramSuffix}_MethodInfo";
+    }
+
     private static string GenerateProxyRegistration(string assemblyName, List<ProxyServiceInfo> services)
     {
         var sb = new StringBuilder();
@@ -407,17 +451,15 @@ public sealed class InterceptorProxyGenerator : IIncrementalGenerator
         sb.AppendLine();
         sb.AppendLine("namespace Microsoft.Extensions.DependencyInjection;");
         sb.AppendLine();
-        sb.AppendLine("/// <summary>");
-        sb.AppendLine("/// 代理服务注册扩展方法（自动生成）。");
-        sb.AppendLine("/// </summary>");
 
-        var className = assemblyName.Replace(".", "").Replace("-", "").Replace(" ", "");
-        sb.AppendLine($"public static class {className}ProxyServiceExtensions");
+        // 与 DI SourceGenerator 生成的类名一致，通过 partial 方法协作
+        var className = assemblyName.Replace(".", "").Replace("-", "").Replace(" ", "") + "AutoServiceExtensions";
+        sb.AppendLine($"public static partial class {className}");
         sb.AppendLine("{");
         sb.AppendLine("    /// <summary>");
-        sb.AppendLine("    /// 添加代理服务到服务集合。");
+        sb.AppendLine("    /// 注册代理服务（由 DynamicProxies SourceGenerator 生成）。");
         sb.AppendLine("    /// </summary>");
-        sb.AppendLine("    public static IServiceCollection AddProxyServices(this IServiceCollection services)");
+        sb.AppendLine("    static partial void RegisterProxyServices(IServiceCollection services)");
         sb.AppendLine("    {");
 
         foreach (var service in services)
@@ -425,17 +467,16 @@ public sealed class InterceptorProxyGenerator : IIncrementalGenerator
             var lifetime = service.Lifetime.ToString();
             var proxyType = $"{service.Namespace}.{service.ClassName}Proxy";
 
-            // 先注册原始实现
+            // 注册原始实现
             sb.AppendLine($"        services.TryAdd{lifetime}<{service.ImplementationType}>();");
 
-            // 注册代理类
+            // 用代理替换接口注册
             foreach (var iface in service.ServiceInterfaces)
             {
-                sb.AppendLine($"        services.Add{lifetime}<{iface}>(sp => new {proxyType}(sp.GetRequiredService<{service.ImplementationType}>(), sp));");
+                sb.AppendLine($"        services.Replace(ServiceDescriptor.{lifetime}<{iface}>(sp => new {proxyType}(sp.GetRequiredService<{service.ImplementationType}>(), sp)));");
             }
         }
 
-        sb.AppendLine("        return services;");
         sb.AppendLine("    }");
         sb.AppendLine("}");
 

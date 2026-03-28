@@ -4,7 +4,7 @@ using System.Linq;
 
 namespace System.Collections.Generic;
 
-/// <summary> 
+/// <summary>
 /// Extension methods for <see cref="IEnumerable{T}"/>.
 /// </summary>
 public static class IEnumerableExtensions
@@ -68,11 +68,7 @@ public static class IEnumerableExtensions
     /// <param name = "this"></param>
     /// <returns></returns>
     [DebuggerStepThrough]
-#if NETSTANDARD2_0
-    public static bool IsNullOrEmpty(this IEnumerable? @this)
-#else
     public static bool IsNullOrEmpty([NotNullWhen(false)] this IEnumerable? @this)
-#endif
     {
         return @this == null || @this.GetEnumerator().MoveNext() == false;
     }
@@ -110,7 +106,7 @@ public static class IEnumerableExtensions
     /// <param name="getDependencies">Function to resolve the dependencies</param>
     /// <returns>
     /// Returns a new list ordered by dependencies.
-    /// If A depends on B, then B will come before than A in the resulting list. 
+    /// If A depends on B, then B will come before than A in the resulting list.
     /// </returns>
     public static List<T> SortByDependencies<T>(this IEnumerable<T> source, Func<T, IEnumerable<T>> getDependencies) where T : notnull
     {
@@ -130,7 +126,7 @@ public static class IEnumerableExtensions
     }
 
     /// <summary>
-    /// 
+    ///
     /// </summary>
     /// <typeparam name="T">The type of the members of values.</typeparam>
     /// <param name="item">Item to resolve</param>

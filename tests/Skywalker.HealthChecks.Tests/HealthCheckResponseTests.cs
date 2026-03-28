@@ -83,14 +83,8 @@ public class HealthCheckResponseTests
         var response = report.ToSimpleResponse();
 
         Assert.NotNull(response);
-        var type = response.GetType();
-        var statusProperty = type.GetProperty("status");
-        var durationProperty = type.GetProperty("totalDuration");
-
-        Assert.NotNull(statusProperty);
-        Assert.NotNull(durationProperty);
-        Assert.Equal("Healthy", statusProperty.GetValue(response));
-        Assert.Equal(150.0, durationProperty.GetValue(response));
+        Assert.Equal("Healthy", response.Status);
+        Assert.Equal(150.0, response.TotalDuration);
     }
 
     [Theory]

@@ -8,12 +8,9 @@
     <SdkBandVersion>1.0.0</SdkBandVersion>
     <PreReleaseVersionLabel>beta</PreReleaseVersionLabel>
     <PreReleaseVersionIteration>1</PreReleaseVersionIteration>
-    <!-- 设置程序集版本以与主要和次要版本保持一致，至于补丁和修订，如果提供服务，则应手动更新每个程序集。 -->
     <AssemblyVersion>$(MajorVersion).$(MinorVersion).0.0</AssemblyVersion>
-    <!-- 启用以删除预发布标签 -->
     <StabilizePackageVersion Condition="'$(StabilizePackageVersion)' == ''">false</StabilizePackageVersion>
     <DotNetFinalVersionKind Condition="'$(StabilizePackageVersion)' == 'true'">release</DotNetFinalVersionKind>
-
     <UsingToolMicrosoftNetILLinkTasks>true</UsingToolMicrosoftNetILLinkTasks>
     <UsingToolIbcOptimization>false</UsingToolIbcOptimization>
     <UsingToolXliff>false</UsingToolXliff>
@@ -25,18 +22,45 @@
   <ItemGroup>
     <ProjectServicingConfiguration Include="Microsoft.NETCore.App.Ref" PatchVersion="0" />
   </ItemGroup>
-  <PropertyGroup>
-    <!-- For source generator support we need to target multiple versions of Rolsyn in order to be able to run on older versions of Roslyn -->
-    <MicrosoftCodeAnalysisCSharpWorkspacesVersion_3_11>3.11.0</MicrosoftCodeAnalysisCSharpWorkspacesVersion_3_11>
-    <MicrosoftCodeAnalysisCSharpWorkspacesVersion>4.0.1</MicrosoftCodeAnalysisCSharpWorkspacesVersion>
-    <MicrosoftCodeAnalysisVersion>4.0.1</MicrosoftCodeAnalysisVersion>
+
+  <!-- ==================== 集中管理 NuGet 包版本 ==================== -->
+
+  <PropertyGroup Label="Microsoft.Extensions">
+    <MicrosoftExtensionsVersion>9.0.0</MicrosoftExtensionsVersion>
   </PropertyGroup>
-  <PropertyGroup>
-    <!-- Code analysis dependencies -->
-    <MicrosoftCodeAnalysisAnalyzersVersion>3.3.2</MicrosoftCodeAnalysisAnalyzersVersion>
-    <MicrosoftCodeAnalysisNetAnalyzersVersion>6.0.0</MicrosoftCodeAnalysisNetAnalyzersVersion>
-    <MicrosoftCodeAnalysisCSharpCodeStyleVersion>4.1.0</MicrosoftCodeAnalysisCSharpCodeStyleVersion>
-    <MicrosoftCodeAnalysisCSharpVersion>4.1.0</MicrosoftCodeAnalysisCSharpVersion>
-    <StyleCopAnalyzersVersion>1.1.118</StyleCopAnalyzersVersion>
+
+  <PropertyGroup Label="Microsoft.EntityFrameworkCore">
+    <MicrosoftEntityFrameworkCoreVersion>9.0.0</MicrosoftEntityFrameworkCoreVersion>
   </PropertyGroup>
+
+  <PropertyGroup Label="Microsoft.AspNetCore">
+    <MicrosoftAspNetCoreWebUtilitiesVersion>8.0.11</MicrosoftAspNetCoreWebUtilitiesVersion>
+  </PropertyGroup>
+
+  <PropertyGroup Label="Roslyn">
+    <MicrosoftCodeAnalysisCSharpVersion>4.8.0</MicrosoftCodeAnalysisCSharpVersion>
+    <MicrosoftCodeAnalysisAnalyzersVersion>3.3.4</MicrosoftCodeAnalysisAnalyzersVersion>
+    <MicrosoftSourceLinkVersion>8.0.0</MicrosoftSourceLinkVersion>
+  </PropertyGroup>
+
+  <PropertyGroup Label="System">
+    <SystemComponentModelAnnotationsVersion>5.0.0</SystemComponentModelAnnotationsVersion>
+    <SystemCollectionsImmutableVersion>8.0.0</SystemCollectionsImmutableVersion>
+    <SystemTextEncodingsWebVersion>8.0.0</SystemTextEncodingsWebVersion>
+    <SystemTextJsonVersion>9.0.0</SystemTextJsonVersion>
+    <SystemLinqDynamicCoreVersion>1.6.2</SystemLinqDynamicCoreVersion>
+  </PropertyGroup>
+
+  <PropertyGroup Label="Third-Party">
+    <AutoMapperVersion>16.1.1</AutoMapperVersion>
+    <FluentValidationVersion>11.9.0</FluentValidationVersion>
+    <PomeloEntityFrameworkCoreMySqlVersion>9.0.0</PomeloEntityFrameworkCoreMySqlVersion>
+    <RabbitMQClientVersion>6.8.1</RabbitMQClientVersion>
+    <RazorLightVersion>2.3.1</RazorLightVersion>
+    <ScribanVersion>7.0.3</ScribanVersion>
+    <StackExchangeRedisVersion>2.8.22</StackExchangeRedisVersion>
+    <TimeZoneConverterVersion>6.1.0</TimeZoneConverterVersion>
+    <AlibabaCloudDysmsapiVersion>3.0.0</AlibabaCloudDysmsapiVersion>
+  </PropertyGroup>
+
 </Project>

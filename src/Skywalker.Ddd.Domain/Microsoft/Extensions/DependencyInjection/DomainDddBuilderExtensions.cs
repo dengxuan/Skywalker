@@ -1,4 +1,4 @@
-﻿// Licensed to the Gordon under one or more agreements.
+// Licensed to the Gordon under one or more agreements.
 // Gordon licenses this file to you under the MIT license.
 
 using Microsoft.Extensions.DependencyInjection.Extensions;
@@ -9,15 +9,24 @@ using Skywalker.Ddd.Domain.Repositories;
 using Skywalker.Ddd.Domain.Services;
 using Skywalker.Extensions.Threading;
 
-[assembly: Skywalker.SkywalkerModule("DddDomain")]
 
 namespace Microsoft.Extensions.DependencyInjection;
 
 /// <summary>
-/// DDD Domain 服务扩展方法。
+/// DDD Domain ������չ������
 /// </summary>
 public static class DomainDddBuilderExtensions
 {
+    /// <summary>
+    /// 添加 DDD Domain 模块服务到服务集合。
+    /// </summary>
+    /// <param name="services">服务集合。</param>
+    /// <returns>服务集合。</returns>
+    public static IServiceCollection AddDddDomain(this IServiceCollection services)
+    {
+        return services.AddAutoServices();
+    }
+
     private static void RegisterService(IServiceCollection services, Type serviceType, Type implementationType, bool replaceExisting, bool isReadOnlyRepository = false)
     {
         var descriptor = ServiceDescriptor.Transient(serviceType, implementationType);

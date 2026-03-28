@@ -84,30 +84,25 @@ public class UnitOfWorkMiddleware(
             return;
         }
 
-        logger.LogDebug("The action is a unit of work action. Trying to start a unit of work.");
+        logger.LogDebug("The action is a unit of work action. Reserving a unit of work for interceptors.");
         using var scope = serviceScopeFactory.CreateScope();
         var options = CreateOptions(scope.ServiceProvider, unitOfWorkAttribute);
 
-        //Trying to begin a reserved UOW by UnitOfWorkMiddleware
-        if (unitOfWorkManager.TryBeginReserved(UnitOfWork.UnitOfWorkReservationName, options))
-        {
-            logger.LogDebug("A reserved unit of work is started.");
-            await next(context);
-
-            //if (unitOfWorkManager.Current != null)
-            //{
-            //    await unitOfWorkManager.Current.SaveChangesAsync();
-            //}
-            logger.LogDebug("The reserved unit of work is completed.");
-            return;
-        }
-
-        //Begin a new UOW
-        logger.LogDebug("No reserved unit of work is found. Starting a new unit of work.");
-        using var uow = unitOfWorkManager.Begin(options);
+        // Reserve a UoW — interceptors will claim it via TryBeginReserved with method-level options.
+        // This separates lifecycle ownership (middleware) from option determination (interceptor).
+        using var uow = unitOfWorkManager.Reserve(UnitOfWork.UnitOfWorkReservationName);
         try
         {
             await next(context);
+
+            // If no interceptor claimed the reserved UoW (e.g., no proxied service calls),
+            // initialize it with middleware-determined options as fallback.
+            if (uow.IsReserved)
+            {
+                logger.LogDebug("Reserved unit of work was not claimed by any interceptor. Initializing with middleware options.");
+                uow.Initialize(options);
+            }
+
             await uow.CompleteAsync();
             logger.LogDebug("The unit of work is completed.");
         }

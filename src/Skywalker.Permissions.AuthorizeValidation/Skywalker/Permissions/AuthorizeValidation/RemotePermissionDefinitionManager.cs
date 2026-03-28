@@ -45,11 +45,7 @@ internal class RemotePermissionDefinitionManager : IPermissionDefinitionManager
     public Task<PermissionDefinition?> GetOrNullAsync(string name)
     {
         _permissions.TryGetValue(name, out var definition);
-#if NETSTANDARD
-        return Task.FromResult((PermissionDefinition?)definition);
-#elif NETCOREAPP || NET
         return Task.FromResult(definition);
-#endif
     }
 
     public async Task<IReadOnlyList<PermissionDefinition>> GetPermissionsAsync()

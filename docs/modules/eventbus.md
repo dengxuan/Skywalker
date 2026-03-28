@@ -62,7 +62,7 @@ public interface IEventBus
     /// <typeparam name="TEvent">事件类型</typeparam>
     /// <param name="eventArgs">事件数据</param>
     Task PublishAsync<TEvent>(TEvent eventArgs) where TEvent : class;
-    
+
     /// <summary>
     /// 发布事件（非泛型）
     /// </summary>
@@ -106,7 +106,7 @@ namespace Skywalker.EventBus;
 public sealed class EventBusOptions
 {
     internal TypeList<IEventHandler> Handlers { get; set; } = [];
-    
+
     /// <summary>
     /// 添加事件处理器
     /// </summary>
@@ -147,7 +147,7 @@ public class OrderCreatedEventHandler : IEventHandler<OrderCreatedEvent>
 {
     private readonly ILogger<OrderCreatedEventHandler> _logger;
     private readonly IEmailService _emailService;
-    
+
     public OrderCreatedEventHandler(
         ILogger<OrderCreatedEventHandler> logger,
         IEmailService emailService)
@@ -155,15 +155,15 @@ public class OrderCreatedEventHandler : IEventHandler<OrderCreatedEvent>
         _logger = logger;
         _emailService = emailService;
     }
-    
+
     public async Task HandleEventAsync(OrderCreatedEvent eventData)
     {
-        _logger.LogInformation("订单 {OrderNo} 已创建，金额: {Amount}", 
+        _logger.LogInformation("订单 {OrderNo} 已创建，金额: {Amount}",
             eventData.OrderNo, eventData.TotalAmount);
-        
+
         // 发送订单确认邮件
         await _emailService.SendOrderConfirmationAsync(
-            eventData.OrderId, 
+            eventData.OrderId,
             eventData.CustomerId);
     }
 }
@@ -172,12 +172,12 @@ public class OrderCreatedEventHandler : IEventHandler<OrderCreatedEvent>
 public class InventoryDeductionHandler : IEventHandler<OrderCreatedEvent>
 {
     private readonly IInventoryService _inventoryService;
-    
+
     public InventoryDeductionHandler(IInventoryService inventoryService)
     {
         _inventoryService = inventoryService;
     }
-    
+
     public async Task HandleEventAsync(OrderCreatedEvent eventData)
     {
         await _inventoryService.DeductInventoryAsync(eventData.OrderId);
@@ -214,19 +214,19 @@ public interface ILocalEventBus : IEventBus
     void Subscribe<TEvent, THandler>()
         where TEvent : class
         where THandler : IEventHandler<TEvent>;
-    
+
     /// <summary>
     /// 订阅事件（非泛型）
     /// </summary>
     void Subscribe(Type eventType, Type handlerType);
-    
+
     /// <summary>
     /// 取消订阅
     /// </summary>
     void Unsubscribe<TEvent, THandler>()
         where TEvent : class
         where THandler : IEventHandler<TEvent>;
-    
+
     /// <summary>
     /// 取消订阅（非泛型）
     /// </summary>
@@ -354,17 +354,10 @@ public class LocalEventBusOptions : EventBusOptions
 
 ```csharp
 // 注册本地事件总线
-builder.Services.AddEventBus()
-    .AddLocalChannel(options =>
-    {
-        options.ChannelCapacity = 2000; // 设置通道容量
-
-        // 注册事件处理器
-        options.AddEventHandler<OrderCreatedEventHandler>();
-        options.AddEventHandler<InventoryDeductionHandler>();
-        options.AddEventHandler<OrderConfirmedEventHandler>();
-    });
+builder.Services.AddEventBusLocal();
 ```
+
+> **说明**：事件处理器通过实现 `ILocalEventHandler<TEvent>` 接口并通过 SourceGenerator 自动注册，无需手动添加。
 
 ### 使用示例
 
@@ -584,29 +577,10 @@ public class EventNameAttribute : Attribute
 
 ```csharp
 // 注册 RabbitMQ 事件总线
-builder.Services.AddEventBus()
-    .AddRabbitMQ(options =>
-    {
-        options.ExchangeName = "skywalker.events";
-        options.QueueNamePrefix = "order-service";
-
-        // 注册事件处理器
-        options.AddEventHandler<OrderCreatedEventHandler>();
-        options.AddEventHandler<PaymentCompletedEventHandler>();
-    });
-
-// 配置 RabbitMQ 连接
-builder.Services.AddRabbitMQ(options =>
-{
-    options.Connections.Add("Default", new RabbitMqConnectionOptions
-    {
-        HostName = "localhost",
-        Port = 5672,
-        UserName = "guest",
-        Password = "guest"
-    });
-});
+builder.Services.AddEventBusRabbitMQ();
 ```
+
+> **说明**：RabbitMQ 连接配置通过 `appsettings.json` 的 `RabbitMQ` 节点注入，事件处理器通过 SourceGenerator 自动注册。
 
 ### 使用示例
 

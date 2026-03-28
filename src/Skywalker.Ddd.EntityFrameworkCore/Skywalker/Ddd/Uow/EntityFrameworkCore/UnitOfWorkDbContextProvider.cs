@@ -11,7 +11,7 @@ using Skywalker.Ddd.Uow.Abstractions;
 namespace Skywalker.Ddd.Uow.EntityFrameworkCore;
 
 /// <summary>
-/// 
+///
 /// </summary>
 /// <typeparam name="TDbContext"></typeparam>
 public class UnitOfWorkDbContextProvider<TDbContext> : IDbContextProvider<TDbContext> where TDbContext : DbContext
@@ -21,7 +21,7 @@ public class UnitOfWorkDbContextProvider<TDbContext> : IDbContextProvider<TDbCon
     private readonly ILogger<UnitOfWorkDbContextProvider<TDbContext>> _logger;
 
     /// <summary>
-    /// 
+    ///
     /// </summary>
     /// <param name="unitOfWorkManager"></param>
     /// <param name="connectionStringResolver"></param>
@@ -34,7 +34,7 @@ public class UnitOfWorkDbContextProvider<TDbContext> : IDbContextProvider<TDbCon
     }
 
     /// <summary>
-    /// 
+    ///
     /// </summary>
     /// <returns></returns>
     /// <exception cref="SkywalkerException"></exception>
@@ -84,16 +84,10 @@ public class UnitOfWorkDbContextProvider<TDbContext> : IDbContextProvider<TDbCon
     private static TDbContext CreateDbContext(IServiceProvider services)
     {
         return services.GetRequiredService<TDbContext>();
-//#if NETSTANDARD2_0
-//        return services.GetRequiredService<TDbContext>();
-//#elif NETSTANDARD2_1_OR_GREATER || NET5_0_OR_GREATER || NETCOREAPP
-//        var dbContextFactory = services.GetRequiredService<IDbContextFactory<TDbContext>>();
-//        return dbContextFactory.CreateDbContext();
-//#endif
     }
 
     /// <summary>
-    /// 
+    ///
     /// </summary>
     /// <param name="unitOfWork"></param>
     /// <returns></returns>

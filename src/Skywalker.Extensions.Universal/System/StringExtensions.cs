@@ -13,10 +13,8 @@ namespace System;
 /// </summary>
 public static partial class StringExtensions
 {
-#if NET7_0
     [GeneratedRegex("[a-z][A-Z]")]
     private static partial Regex LettersRegex();
-#endif
 
     private static string ToHash(this string str, HashAlgorithm algorithm, Encoding encoding)
     {
@@ -159,11 +157,7 @@ public static partial class StringExtensions
         {
             throw new ArgumentException("len argument can not be bigger than given string's length!");
         }
-#if NETSTANDARD2_0
-        return str.Substring(0, len);
-#else
         return str[..len];
-#endif
     }
 
     /// <summary>
@@ -211,14 +205,8 @@ public static partial class StringExtensions
     /// <param name="str">The string.</param>
     /// <param name="postFixes">one or more postfix.</param>
     /// <returns>Modified string or the same string if it has not any of given postfixes</returns>
-#if NETSTANDARD2_0
-#nullable disable
-    public static string RemovePostFix(this string str, params string[] postFixes)
-#nullable enable
-#else
     [return: NotNullIfNotNull("str")]
     public static string? RemovePostFix([NotNullIfNotNull("str")] this string? str, params string[] postFixes)
-#endif
     {
         if (str == null)
         {
@@ -253,14 +241,8 @@ public static partial class StringExtensions
     /// <param name="str">The string.</param>
     /// <param name="preFixes">one or more prefix.</param>
     /// <returns>Modified string or the same string if it has not any of given prefixes</returns>
-#if NETSTANDARD2_0
-#nullable disable
-    public static string RemovePreFix(this string str, params string[] preFixes)
-#nullable enable
-#else
     [return: NotNullIfNotNull("str")]
     public static string? RemovePreFix(this string? str, params string[] preFixes)
-#endif
     {
         if (str == null)
         {
@@ -357,11 +339,7 @@ public static partial class StringExtensions
         {
             return invariantCulture ? str.ToLowerInvariant() : str.ToLower();
         }
-#if NETSTANDARD2_0
-        return (invariantCulture ? char.ToLowerInvariant(str[0]) : char.ToLower(str[0])) + str.Substring(1);
-#else
         return (invariantCulture ? char.ToLowerInvariant(str[0]) : char.ToLower(str[0])) + str[1..];
-#endif
     }
 
     /// <summary>
@@ -382,11 +360,7 @@ public static partial class StringExtensions
             return str.ToLower(culture);
         }
 
-#if NETSTANDARD2_0
-        return char.ToLower(str[0], culture) + str.Substring(1);
-#else
         return char.ToLower(str[0], culture) + str[1..];
-#endif
     }
 
     /// <summary>
@@ -402,17 +376,10 @@ public static partial class StringExtensions
             return str;
         }
 
-#if NET7_0
         return LettersRegex().Replace(str, evaluator =>
         {
             return $"{evaluator.Value[0]} {(invariantCulture ? char.ToLowerInvariant(evaluator.Value[1]) : char.ToLower(evaluator.Value[1]))}";
         });
-#else
-        return new Regex("[a-z][A-Z]").Replace(str, evaluator =>
-        {
-            return $"{evaluator.Value[0]} {(invariantCulture ? char.ToLowerInvariant(evaluator.Value[1]) : char.ToLower(evaluator.Value[1]))}";
-        });
-#endif
     }
 
     /// <summary>
@@ -427,17 +394,10 @@ public static partial class StringExtensions
         {
             return str;
         }
-#if NET7_0
         return LettersRegex().Replace(str, evaluator =>
         {
             return $"{evaluator.Value[0]} {char.ToLower(evaluator.Value[1], culture)}";
         });
-#else
-        return new Regex("[a-z][A-Z]").Replace(str, evaluator =>
-        {
-            return $"{evaluator.Value[0]} {char.ToLower(evaluator.Value[1], culture)}";
-        });
-#endif
     }
 
     /// <summary>
@@ -490,11 +450,7 @@ public static partial class StringExtensions
         {
             return invariantCulture ? str.ToUpperInvariant() : str.ToUpper();
         }
-#if NETSTANDARD2_0
-        return (invariantCulture ? char.ToUpperInvariant(str[0]) : char.ToUpper(str[0])) + str.Substring(1);
-#else
         return (invariantCulture ? char.ToUpperInvariant(str[0]) : char.ToUpper(str[0])) + str[1..];
-#endif
     }
 
     /// <summary>
@@ -514,11 +470,7 @@ public static partial class StringExtensions
         {
             return str.ToUpper(culture);
         }
-#if NETSTANDARD2_0
-        return char.ToUpper(str[0], culture) + str.Substring(1);
-#else
         return char.ToUpper(str[0], culture) + str[1..];
-#endif
     }
 
     /// <summary>
@@ -583,22 +535,13 @@ public static partial class StringExtensions
     }
 
     [DebuggerStepThrough]
-#if NETSTANDARD2_0
-    public static bool IsMissing(this string value)
-#else
     public static bool IsMissing([NotNullWhen(false)] this string? value)
-#endif
     {
         return string.IsNullOrWhiteSpace(value);
     }
 
     [DebuggerStepThrough]
-
-#if NETSTANDARD2_0
-    public static bool IsPresent(this string value)
-#else
     public static bool IsPresent([NotNullWhen(true)] this string? value)
-#endif
     {
         return !string.IsNullOrWhiteSpace(value);
     }
@@ -661,11 +604,7 @@ public static partial class StringExtensions
         input = input.Trim();
         return input.Split(new[] { ' ' }, StringSplitOptions.RemoveEmptyEntries).ToList();
     }
-#if NETSTANDARD2_0
-    public static List<string>? ParseScopesString(this string scopes)
-#else
     public static List<string>? ParseScopesString(this string? scopes)
-#endif
     {
         if (scopes.IsMissing())
         {
@@ -700,12 +639,8 @@ public static partial class StringExtensions
     }
 
     [DebuggerStepThrough]
-#if NETSTANDARD2_0
-    public static string? EnsureLeadingSlash(this string url)
-#else
     [return: NotNullIfNotNull("url")]
     public static string? EnsureLeadingSlash(this string? url)
-#endif
     {
         if (url != null && !url.StartsWith("/"))
         {
@@ -716,12 +651,8 @@ public static partial class StringExtensions
     }
 
     [DebuggerStepThrough]
-#if NETSTANDARD2_0
-    public static string? EnsureTrailingSlash(this string url)
-#else
     [return: NotNullIfNotNull("url")]
     public static string? EnsureTrailingSlash(this string? url)
-#endif
     {
         if (url != null && !url.EndsWith("/"))
         {
@@ -732,52 +663,32 @@ public static partial class StringExtensions
     }
 
     [DebuggerStepThrough]
-#if NETSTANDARD2_0
-    public static string? RemoveLeadingSlash(this string url)
-#else
     [return: NotNullIfNotNull("url")]
     public static string? RemoveLeadingSlash(this string? url)
-#endif
     {
         if (url != null && url.StartsWith("/"))
         {
-#if NETSTANDARD2_0
-            url = url.Substring(1);
-#else
             url = url[1..];
-#endif
         }
 
         return url;
     }
 
     [DebuggerStepThrough]
-#if NETSTANDARD2_0
-    public static string? RemoveTrailingSlash(this string url)
-#else
     [return: NotNullIfNotNull("url")]
     public static string? RemoveTrailingSlash(this string? url)
-#endif
     {
         if (url != null && url.EndsWith("/"))
         {
-#if NETSTANDARD2_0
-            url = url.Substring(0, url.Length - 1);
-#else
             url = url[0..^1];
-#endif
         }
 
         return url;
     }
 
     [DebuggerStepThrough]
-#if NETSTANDARD2_0
-    public static string CleanUrlPath(this string url)
-#else
     [return: NotNullIfNotNull("url")]
     public static string? CleanUrlPath(this string? url)
-#endif
     {
         if (string.IsNullOrWhiteSpace(url))
         {
@@ -786,11 +697,7 @@ public static partial class StringExtensions
 
         if (url != "/" && url.EndsWith("/"))
         {
-#if NETSTANDARD2_0
-            url = url.Substring(0, url.Length - 1);
-#else
             url = url[0..^1];
-#endif
         }
 
         return url;
@@ -903,11 +810,7 @@ public static partial class StringExtensions
         var last4Chars = "****";
         if (value.IsPresent() && value.Length > 4)
         {
-#if NETSTANDARD2_0
-            last4Chars = value.Substring(value.Length - 4);
-#else
             last4Chars = value[^4..];
-#endif
         }
 
         return $"****{last4Chars}";

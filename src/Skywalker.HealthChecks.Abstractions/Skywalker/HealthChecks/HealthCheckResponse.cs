@@ -1,3 +1,4 @@
+using System.Text.Json.Serialization;
 using Microsoft.Extensions.Diagnostics.HealthChecks;
 
 namespace Skywalker.HealthChecks;
@@ -65,6 +66,24 @@ public class HealthCheckEntry
 }
 
 /// <summary>
+/// Simple health check status response.
+/// </summary>
+public class HealthCheckSimpleResponse
+{
+    /// <summary>
+    /// Overall health status.
+    /// </summary>
+    [JsonPropertyName("status")]
+    public string Status { get; set; } = "Healthy";
+
+    /// <summary>
+    /// Total duration in milliseconds.
+    /// </summary>
+    [JsonPropertyName("totalDuration")]
+    public double TotalDuration { get; set; }
+}
+
+/// <summary>
 /// Extension methods for creating health check responses.
 /// </summary>
 public static class HealthCheckResponseExtensions
@@ -94,12 +113,12 @@ public static class HealthCheckResponseExtensions
     /// <summary>
     /// Creates a simple status response from a HealthReport.
     /// </summary>
-    public static object ToSimpleResponse(this HealthReport report)
+    public static HealthCheckSimpleResponse ToSimpleResponse(this HealthReport report)
     {
-        return new
+        return new HealthCheckSimpleResponse
         {
-            status = report.Status.ToString(),
-            totalDuration = report.TotalDuration.TotalMilliseconds
+            Status = report.Status.ToString(),
+            TotalDuration = report.TotalDuration.TotalMilliseconds
         };
     }
 }

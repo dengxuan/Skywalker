@@ -1,31 +1,31 @@
-﻿using System.Text;
+﻿using System.Text.Json;
+using Microsoft.Extensions.Options;
 using Skywalker.DependencyInjection;
 using Skywalker.Extensions.RabbitMQ.Abstractions;
-using Skywalker.Serialization.Abstractions;
 
 namespace Skywalker.Extensions.RabbitMQ;
 
 public class Utf8JsonRabbitMqSerializer : IRabbitMqSerializer, ISingletonDependency
 {
-    private readonly ISerializer _jsonSerializer;
+    private readonly JsonSerializerOptions _options;
 
-    public Utf8JsonRabbitMqSerializer(ISerializer jsonSerializer)
+    public Utf8JsonRabbitMqSerializer(IOptions<JsonSerializerOptions>? options = null)
     {
-        _jsonSerializer = jsonSerializer;
+        _options = options?.Value ?? new JsonSerializerOptions();
     }
 
     public byte[] Serialize(object obj)
     {
-        return Encoding.UTF8.GetBytes(_jsonSerializer.Serialize(obj));
+        return JsonSerializer.SerializeToUtf8Bytes(obj, _options);
     }
 
     public object? Deserialize(byte[] value, Type type)
     {
-        return _jsonSerializer.Deserialize(type, value);
+        return JsonSerializer.Deserialize(value, type, _options);
     }
 
     public T? Deserialize<T>(byte[] value)
     {
-        return _jsonSerializer.Deserialize<T>(value);
+        return JsonSerializer.Deserialize<T>(value, _options);
     }
 }

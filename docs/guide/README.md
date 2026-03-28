@@ -136,70 +136,45 @@ dotnet add package Skywalker.Caching.Redis
 ```csharp
 using Microsoft.EntityFrameworkCore;
 using MyApp.Infrastructure;
-using Skywalker.Ddd.Domain;
-using Skywalker.Ddd.Application;
-using Skywalker.Ddd.Uow;
-using Skywalker.EventBus.Local;
 
 var builder = WebApplication.CreateBuilder(args);
 
 // ============================================
-// 1. 数据库配置
+// 1. Skywalker 核心服务 + ASP.NET Core 集成
 // ============================================
-builder.Services.AddDbContext<AppDbContext>(options =>
+// AddSkywalker()  → 注册 UnitOfWork、拦截器等核心基础设施
+// AddAspNetCore() → 注册异常处理、响应包装等 Web 特有服务
+builder.Services.AddSkywalker()
+    .AddAspNetCore();
+
+// ============================================
+// 2. 数据库配置（自动注册 EF Core 仓储和领域服务）
+// ============================================
+builder.Services.AddSkywalkerDbContext<AppDbContext>(options =>
 {
-    var connectionString = builder.Configuration.GetConnectionString("Default");
-    options.UseMySql(connectionString, ServerVersion.AutoDetect(connectionString));
+    options.UseMySql(
+        builder.Configuration.GetConnectionString("Default"),
+        ServerVersion.AutoDetect(builder.Configuration.GetConnectionString("Default")));
 });
 
 // ============================================
-// 2. Skywalker 核心服务
+// 3. 事件总线（可选）
 // ============================================
-builder.Services.AddSkywalkerCore();
+builder.Services.AddEventBusLocal();
 
 // ============================================
-// 3. DDD 领域层服务
-// ============================================
-builder.Services.AddDddDomain();
-
-// ============================================
-// 4. DDD 应用层服务
-// ============================================
-builder.Services.AddDddApplication();
-
-// ============================================
-// 5. 工作单元（关联 DbContext）
-// ============================================
-builder.Services.AddUnitOfWork<AppDbContext>();
-
-// ============================================
-// 6. 事件总线（可选）
-// ============================================
-builder.Services.AddEventBus()
-    .AddLocalEventBus(options =>
-    {
-        // 配置事件处理器
-        options.Handlers.Add(typeof(OrderCreatedEventHandler));
-    });
-
-// ============================================
-// 7. 注册仓储
-// ============================================
-builder.Services.AddScoped<IOrderRepository, OrderRepository>();
-
-// ============================================
-// 8. 注册应用服务
-// ============================================
-builder.Services.AddScoped<IOrderAppService, OrderAppService>();
-
-// ============================================
-// 9. 其他 ASP.NET Core 服务
+// 4. ASP.NET Core 服务
 // ============================================
 builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
 var app = builder.Build();
+
+// ============================================
+// 5. 启用 Skywalker 中间件（异常处理 + 工作单元）
+// ============================================
+app.UseSkywalker();
 
 // 开发环境启用 Swagger
 if (app.Environment.IsDevelopment())
@@ -1070,14 +1045,8 @@ public class OrderCreatedEventHandler : ILocalEventHandler<OrderCreatedEvent>
     }
 }
 
-// 3. 注册事件处理器（Program.cs）
-builder.Services.AddEventBus()
-    .AddLocalEventBus(options =>
-    {
-        options.Handlers.Add(typeof(OrderCreatedEventHandler));
-        options.Handlers.Add(typeof(OrderConfirmedEventHandler));
-        options.ChannelCapacity = 1000;  // 通道容量
-    });
+// 3. 注册本地事件总线（Program.cs）
+builder.Services.AddEventBusLocal();
 
 // 4. 发布事件
 public class OrderAppService : ApplicationService
@@ -1116,14 +1085,12 @@ _eventBus.Unsubscribe<OrderCreatedEvent, OrderCreatedEventHandler>();
 #### 配置缓存
 
 ```csharp
-// Program.cs
-builder.Services.AddCaching()
-    .AddMemoryCaching()  // 内存缓存
-    .AddRedisCaching(options =>
-    {
-        options.Configuration = builder.Configuration.GetConnectionString("Redis");
-        options.InstanceName = "MyApp:";
-    });
+// Program.cs — Redis 缓存
+builder.Services.AddRedisCaching(options =>
+{
+    options.Configuration = builder.Configuration.GetConnectionString("Redis");
+    options.InstanceName = "MyApp:";
+});
 ```
 
 #### 使用缓存

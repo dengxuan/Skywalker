@@ -750,13 +750,8 @@ public class OrderCreatedEventHandler : ILocalEventHandler<OrderCreatedEvent>
     }
 }
 
-// 3. 注册（Program.cs）
-builder.Services.AddEventBus()
-    .AddLocalEventBus(options =>
-    {
-        options.Handlers.Add(typeof(OrderCreatedEventHandler));
-        options.ChannelCapacity = 2000;
-    });
+// 3. 注册本地事件总线（Program.cs）
+builder.Services.AddEventBusLocal();
 
 // 4. 发布事件
 public class OrderAppService

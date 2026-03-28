@@ -762,45 +762,30 @@ using OrderManagement.Infrastructure.Repositories;
 
 var builder = WebApplication.CreateBuilder(args);
 
-// 添加数据库上下文
-builder.Services.AddDbContext<AppDbContext>(options =>
+// 1. Skywalker 核心 + ASP.NET Core 集成
+builder.Services.AddSkywalker().AddAspNetCore();
+
+// 2. 数据库配置（自动注册 EF Core 仓储）
+builder.Services.AddSkywalkerDbContext<AppDbContext>(options =>
 {
     options.UseMySql(
         builder.Configuration.GetConnectionString("Default"),
         ServerVersion.AutoDetect(builder.Configuration.GetConnectionString("Default")));
 });
 
-// 添加 Skywalker 服务
-builder.Services.AddSkywalker()
-    .AddDdd()
-    .AddEntityFrameworkCore<AppDbContext>()
-    .AddEventBus()
-    .AddLocalEventBus(options =>
-    {
-        options.Handlers.Add(typeof(OrderCreatedEventHandler));
-        options.Handlers.Add(typeof(OrderConfirmedEventHandler));
-    })
-    .AddCaching()
-    .AddMemoryCaching()
-    .AddObjectMapping()
-    .AddAutoMapper(typeof(OrderProfile).Assembly);
+// 3. 本地事件总线
+builder.Services.AddEventBusLocal();
 
-// 注册仓储
-builder.Services.AddTransient<IOrderRepository, OrderRepository>();
-builder.Services.AddTransient<IProductRepository, ProductRepository>();
-
-// 注册应用服务
-builder.Services.AddTransient<IOrderAppService, OrderAppService>();
-builder.Services.AddTransient<IProductAppService, ProductAppService>();
-
-// 添加控制器
+// 4. ASP.NET Core 服务
 builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
 var app = builder.Build();
 
-// 配置中间件
+// 5. 启用 Skywalker 中间件（异常处理 + 工作单元）
+app.UseSkywalker();
+
 if (app.Environment.IsDevelopment())
 {
     app.UseSwagger();

@@ -6,19 +6,14 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="Microsoft.Extensions.Options.ConfigurationExtensions" Version="8.0.0" />
-    <PackageReference Include="System.ComponentModel.Annotations" Version="5.0.0" />
+    <PackageReference Include="Microsoft.Extensions.Options.ConfigurationExtensions" Version="$(MicrosoftExtensionsVersion)" />
+    <PackageReference Include="System.ComponentModel.Annotations" Version="$(SystemComponentModelAnnotationsVersion)" />
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="$(LibrariesProjectRoot)Skywalker.Caching.Abstractions\Skywalker.Caching.Abstractions.csproj" />
     <ProjectReference Include="$(LibrariesProjectRoot)Skywalker.Ddd.Core\Skywalker.Ddd.Core.csproj" />
     <ProjectReference Include="$(LibrariesProjectRoot)Skywalker.Ddd.Uow\Skywalker.Ddd.Uow.csproj" />
     <ProjectReference Include="$(LibrariesProjectRoot)Skywalker.Extensions.Specifications\Skywalker.Extensions.Specifications.csproj" />
-    <ProjectReference Include="$(LibrariesProjectRoot)Skywalker.Extensions.Timezone\Skywalker.Extensions.Timezone.csproj" />
-    <ProjectReference Include="$(LibrariesProjectRoot)Skywalker.Extensions.DependencyInjection.SourceGenerators\Skywalker.Extensions.DependencyInjection.SourceGenerators.csproj"
-                      ReferenceOutputAssembly="false"
-                      OutputItemType="Analyzer" />
   </ItemGroup>
 
 </Project>
