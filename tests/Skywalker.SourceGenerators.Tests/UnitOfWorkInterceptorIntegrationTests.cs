@@ -139,7 +139,7 @@ public class UnitOfWorkInterceptorIntegrationTests
     }
 
     [Fact]
-    public async Task UnitOfWorkInterceptor_IsRegistered_AsInterceptor()
+    public void UnitOfWorkInterceptor_IsRegistered_AsInterceptor()
     {
         // Arrange
         using var provider = BuildConsoleAppProvider();
