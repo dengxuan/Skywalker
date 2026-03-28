@@ -277,9 +277,11 @@ public sealed class InterceptorProxyGenerator : IIncrementalGenerator
         sb.AppendLine("    private readonly InterceptorChainBuilder _interceptorChainBuilder;");
         sb.AppendLine();
 
-        // 缓存 MethodInfo 为静态字段
+        // 缓存 MethodInfo 为静态字段（仅非泛型方法）
         foreach (var method in service.Methods)
         {
+            if (method.TypeParameters.Count > 0) continue; // 泛型方法在方法内部解析
+
             var fieldName = GetMethodInfoFieldName(method);
             if (method.Parameters.Count > 0)
             {
@@ -334,11 +336,25 @@ public sealed class InterceptorProxyGenerator : IIncrementalGenerator
         sb.AppendLine("    {");
 
         // 创建方法调用上下文，包含 MethodInfo 和参数
-        var fieldName = GetMethodInfoFieldName(method);
         var argsArray = method.Parameters.Count > 0
             ? $"new object?[] {{ {string.Join(", ", method.Parameters.Select(p => p.Name))} }}"
             : "Array.Empty<object?>()";
-        sb.AppendLine($"        var context = new InterceptorContext(_target, {fieldName}, {argsArray});");
+
+        if (method.TypeParameters.Count > 0)
+        {
+            // 泛型方法：在方法内部解析 MethodInfo（类型参数在此作用域可用）
+            var genericArity = method.TypeParameters.Count;
+            var makeGenericArgs = string.Join(", ", method.TypeParameters.Select(tp => $"typeof({tp})"));
+            sb.AppendLine($"        var methodInfo = typeof({service.ImplementationType}).GetMethods()");
+            sb.AppendLine($"            .First(m => m.Name == \"{method.MethodName}\" && m.IsGenericMethodDefinition && m.GetGenericArguments().Length == {genericArity})");
+            sb.AppendLine($"            .MakeGenericMethod({makeGenericArgs});");
+            sb.AppendLine($"        var context = new InterceptorContext(_target, methodInfo, {argsArray});");
+        }
+        else
+        {
+            var fieldName = GetMethodInfoFieldName(method);
+            sb.AppendLine($"        var context = new InterceptorContext(_target, {fieldName}, {argsArray});");
+        }
         sb.AppendLine();
 
         // 创建目标调用委托

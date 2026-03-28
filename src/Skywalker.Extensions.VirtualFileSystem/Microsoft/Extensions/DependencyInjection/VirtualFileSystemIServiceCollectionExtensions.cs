@@ -8,7 +8,7 @@ using Skywalker.Extensions.VirtualFileSystem;
 namespace Microsoft.Extensions.DependencyInjection;
 
 /// <summary>
-/// VirtualFileSystem ·şÎñÀ©Õ¹·½·¨¡£
+/// VirtualFileSystem æœåŠ¡æ‰©å±•æ–¹æ³•ã€‚
 /// </summary>
 public static class VirtualFileSystemIServiceCollectionExtensions
 {

@@ -26,7 +26,12 @@ public class DbContextProvider<TDbContext> : IDbContextProvider<TDbContext> wher
     /// <returns></returns>
     public TDbContext GetDbContext()
     {
-        var dbContextFactory = _serviceProvider.GetRequiredService<IDbContextFactory<TDbContext>>();
-        return dbContextFactory.CreateDbContext();
+        var dbContextFactory = _serviceProvider.GetService<IDbContextFactory<TDbContext>>();
+        if (dbContextFactory != null)
+        {
+            return dbContextFactory.CreateDbContext();
+        }
+
+        return _serviceProvider.GetRequiredService<TDbContext>();
     }
 }

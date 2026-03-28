@@ -22,10 +22,10 @@ public static class EventBusRabbitMQServiceCollectionExtensions
     /// <returns>The service collection.</returns>
     public static IServiceCollection AddEventBusRabbitMQ(this IServiceCollection services)
     {
-        // 添加 EventBus 核心服务
+        // 娣诲姞 EventBus 鏍稿績鏈嶅姟
         services.AddEventBusCore();
 
-        // 从配置文件绑定选项
+        // 浠庨厤缃枃浠剁粦瀹氶�夐」
         var configuration = services.GetConfiguration();
         if (configuration != null)
         {
@@ -52,10 +52,10 @@ public static class EventBusRabbitMQServiceCollectionExtensions
     /// <returns>The service collection.</returns>
     public static IServiceCollection AddEventBusRabbitMQ(this IServiceCollection services, Action<RabbitMqEventBusOptions> configure)
     {
-        // 添加 EventBus 核心服务
+        // 娣诲姞 EventBus 鏍稿績鏈嶅姟
         services.AddEventBusCore();
 
-        // 先从配置文件绑定，再应用代码配置
+        // 鍏堜粠閰嶇疆鏂囦欢缁戝畾锛屽啀搴旂敤浠ｇ爜閰嶇疆
         var configuration = services.GetConfiguration();
         if (configuration != null)
         {

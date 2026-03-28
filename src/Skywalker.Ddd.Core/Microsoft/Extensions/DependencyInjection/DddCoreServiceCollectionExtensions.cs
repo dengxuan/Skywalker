@@ -9,15 +9,15 @@ using Skywalker.Ddd.Abstractions;
 namespace Microsoft.Extensions.DependencyInjection;
 
 /// <summary>
-/// DDD Core ·şÎñÀ©Õ¹·½·¨¡£
+/// DDD Core æœåŠ¡æ‰©å±•æ–¹æ³•ã€‚
 /// </summary>
 public static class DddCoreServiceCollectionExtensions
 {
     /// <summary>
-    /// Ìí¼Ó DDD Core ·şÎñ¡£
+    /// æ·»åŠ  DDD Core æœåŠ¡ã€‚
     /// </summary>
-    /// <param name="services">·şÎñ¼¯ºÏ¡£</param>
-    /// <returns>·şÎñ¼¯ºÏ¡£</returns>
+    /// <param name="services">æœåŠ¡é›†åˆã€‚</param>
+    /// <returns>æœåŠ¡é›†åˆã€‚</returns>
     public static IServiceCollection AddDddCore(this IServiceCollection services)
     {
         ArgumentNullException.ThrowIfNull(services);

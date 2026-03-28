@@ -1,3 +1,4 @@
+using System.Text.Json.Serialization;
 using Microsoft.Extensions.Diagnostics.HealthChecks;
 
 namespace Skywalker.HealthChecks;
@@ -72,11 +73,13 @@ public class HealthCheckSimpleResponse
     /// <summary>
     /// Overall health status.
     /// </summary>
+    [JsonPropertyName("status")]
     public string Status { get; set; } = "Healthy";
 
     /// <summary>
     /// Total duration in milliseconds.
     /// </summary>
+    [JsonPropertyName("totalDuration")]
     public double TotalDuration { get; set; }
 }
 

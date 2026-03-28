@@ -580,7 +580,7 @@ public class EventNameAttribute : Attribute
 builder.Services.AddEventBusRabbitMQ();
 ```
 
-> **说明**：RabbitMQ 连接配置通过 `appsettings.json` 的 `RabbitMQ` 节点酋入，事件处理器通过 SourceGenerator 自动注册。
+> **说明**：RabbitMQ 连接配置通过 `appsettings.json` 的 `RabbitMQ` 节点注入，事件处理器通过 SourceGenerator 自动注册。
 
 ### 使用示例
 
