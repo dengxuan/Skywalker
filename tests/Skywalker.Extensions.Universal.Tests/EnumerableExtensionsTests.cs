@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using Xunit;
 
-namespace Skywalker.Extensions.Tests;
+namespace Skywalker.Extensions.Universal.Tests;
 
 public class EnumerableExtensionsTests
 {

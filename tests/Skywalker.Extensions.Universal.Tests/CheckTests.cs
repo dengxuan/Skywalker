@@ -2,7 +2,7 @@ using System;
 using System.Collections.Generic;
 using Xunit;
 
-namespace Skywalker.Extensions.Tests;
+namespace Skywalker.Extensions.Universal.Tests;
 
 public class CheckTests
 {
