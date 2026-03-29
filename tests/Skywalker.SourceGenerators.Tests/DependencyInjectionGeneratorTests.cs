@@ -88,12 +88,13 @@ public class TestNoInterfaceService : ITransientDependency
 public class TestLoggingInterceptor : IInterceptor, ITransientDependency
 {
     public static readonly List<string> Log = new();
+    private static readonly object _lock = new();
 
     public async Task InterceptAsync(IMethodInvocation invocation)
     {
-        Log.Add($"Before: {invocation.MethodName}");
+        lock (_lock) { Log.Add($"Before: {invocation.MethodName}"); }
         await invocation.ProceedAsync();
-        Log.Add($"After: {invocation.MethodName}");
+        lock (_lock) { Log.Add($"After: {invocation.MethodName}"); }
     }
 }
 
