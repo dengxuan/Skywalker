@@ -2,7 +2,7 @@ using System.Globalization;
 using System.Text;
 using Xunit;
 
-namespace Skywalker.Extensions.Tests;
+namespace Skywalker.Extensions.Universal.Tests;
 
 public class StringExtensionsTests
 {

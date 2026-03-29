@@ -1,6 +1,6 @@
 using Xunit;
 
-namespace Skywalker.Extensions.Tests;
+namespace Skywalker.Extensions.Universal.Tests;
 
 public class ReaderWriterLockSlimExtensionsTests
 {

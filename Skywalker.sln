@@ -95,7 +95,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Skywalker.Extensions.Emaili
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Skywalker.Security.Tests", "tests\Skywalker.Security.Tests\Skywalker.Security.Tests.csproj", "{721FD39B-E9FA-417B-9F07-75AA1C4E1D43}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Skywalker.Extensions.Tests", "tests\Skywalker.Extensions.Tests\Skywalker.Extensions.Tests.csproj", "{2DD090F0-6EC6-47E6-85A3-6F4850B60069}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Skywalker.Extensions.Universal.Tests", "tests\Skywalker.Extensions.Universal.Tests\Skywalker.Extensions.Universal.Tests.csproj", "{2DD090F0-6EC6-47E6-85A3-6F4850B60069}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Skywalker.EventBus.Tests", "tests\Skywalker.EventBus.Tests\Skywalker.EventBus.Tests.csproj", "{7FC085D4-05BE-4EDA-9678-936944D9B242}"
 EndProject
