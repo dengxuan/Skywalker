@@ -220,8 +220,8 @@ public class DependencyInjectionGeneratorTests
     [Fact]
     public async Task Interceptor_InterceptsServiceMethods()
     {
-        // Arrange
-        TestLoggingInterceptor.Log.Clear();
+        // Arrange — 记录当前 Log 长度，不依赖 Clear()（避免并行测试竞争）
+        var logCountBefore = TestLoggingInterceptor.Log.Count;
 
         var services = new ServiceCollection();
 
@@ -234,10 +234,11 @@ public class DependencyInjectionGeneratorTests
         var service = provider.GetRequiredService<ITestOrderService>();
         var result = await service.CreateOrderAsync("Product", 5);
 
-        // Assert - 验证拦截器被调用
+        // Assert - 验证拦截器被调用（检查 logCountBefore 之后新增的条目）
         Assert.Equal("Order: Product x 5", result);
-        Assert.Contains("Before: CreateOrderAsync", TestLoggingInterceptor.Log);
-        Assert.Contains("After: CreateOrderAsync", TestLoggingInterceptor.Log);
+        var newEntries = TestLoggingInterceptor.Log.Skip(logCountBefore).ToList();
+        Assert.Contains("Before: CreateOrderAsync", newEntries);
+        Assert.Contains("After: CreateOrderAsync", newEntries);
     }
 }
 
