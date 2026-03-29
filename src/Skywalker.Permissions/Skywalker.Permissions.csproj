@@ -11,6 +11,8 @@
   <ItemGroup>
     <ProjectReference Include="$(LibrariesProjectRoot)Skywalker.Permissions.Abstractions\Skywalker.Permissions.Abstractions.csproj" />
     <ProjectReference Include="$(LibrariesProjectRoot)Skywalker.Extensions.DependencyInjection\Skywalker.Extensions.DependencyInjection.csproj" />
+    <ProjectReference Include="$(LibrariesProjectRoot)Skywalker.Security.Abstractions\Skywalker.Security.Abstractions.csproj" />
+    <ProjectReference Include="$(LibrariesProjectRoot)Skywalker.Extensions.SimpleStateChecking\Skywalker.Extensions.SimpleStateChecking.csproj" />
   </ItemGroup>
 
 </Project>
