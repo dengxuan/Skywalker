@@ -6,12 +6,12 @@ using Skywalker.Permissions.Abstractions;
 namespace Skywalker.Permissions;
 
 /// <summary>
-/// 
+///
 /// </summary>
 public class AlwaysAllowPermissionsAuthorizationService : IPermissionsAuthorizationService
 {
     /// <summary>
-    /// 
+    ///
     /// </summary>
     /// <param name="context"></param>
     /// <returns></returns>

@@ -251,6 +251,7 @@ public sealed class InterceptorProxyGenerator : IIncrementalGenerator
         sb.AppendLine("#nullable enable");
         sb.AppendLine();
         sb.AppendLine("using System;");
+        sb.AppendLine("using System.Collections.Concurrent;");
         sb.AppendLine("using System.Collections.Generic;");
         sb.AppendLine("using System.Linq;");
         sb.AppendLine("using System.Reflection;");
@@ -264,7 +265,6 @@ public sealed class InterceptorProxyGenerator : IIncrementalGenerator
         sb.AppendLine($"/// {service.ClassName} 的代理类（自动生成）。");
         sb.AppendLine("/// </summary>");
 
-        // 生成代理类，实现相同的接口，使用与原类相同的可访问性
         var interfaces = service.ServiceInterfaces.Count > 0
             ? $" : {string.Join(", ", service.ServiceInterfaces)}"
             : "";
@@ -272,35 +272,61 @@ public sealed class InterceptorProxyGenerator : IIncrementalGenerator
         sb.AppendLine($"{accessibility} sealed class {service.ClassName}Proxy{interfaces}");
         sb.AppendLine("{");
 
-        // 字段
+        // 实例字段
         sb.AppendLine($"    private readonly {service.ImplementationType} _target;");
         sb.AppendLine("    private readonly InterceptorChainBuilder _interceptorChainBuilder;");
         sb.AppendLine();
 
-        // 缓存 MethodInfo 为静态字段（仅非泛型方法）
+        // 静态缓存：非泛型方法的 MethodInfo
         foreach (var method in service.Methods)
         {
-            if (method.TypeParameters.Count > 0) continue; // 泛型方法在方法内部解析
+            if (method.TypeParameters.Count > 0) continue;
 
             var fieldName = GetMethodInfoFieldName(method);
             if (method.Parameters.Count > 0)
             {
                 var paramTypes = string.Join(", ", method.Parameters.Select(p => $"typeof({StripNullableAnnotation(p.Type)})"));
-                sb.AppendLine($"    private static readonly MethodInfo {fieldName} = typeof({service.ImplementationType}).GetMethod(\"{method.MethodName}\", [{paramTypes}])!;");
+                sb.AppendLine($"    private static readonly MethodInfo {fieldName} = typeof({service.ImplementationType}).GetMethod(\"{method.MethodName}\", new Type[] {{ {paramTypes} }})!;");
             }
             else
             {
                 sb.AppendLine($"    private static readonly MethodInfo {fieldName} = typeof({service.ImplementationType}).GetMethod(\"{method.MethodName}\", Type.EmptyTypes)!;");
             }
         }
+
+        // 静态缓存：泛型方法的开放 MethodInfo 和泛型实例缓存
+        foreach (var method in service.Methods)
+        {
+            if (method.TypeParameters.Count == 0) continue;
+
+            var baseName = GetMethodBaseName(method);
+            var genericArity = method.TypeParameters.Count;
+            sb.AppendLine($"    private static readonly MethodInfo s_{baseName}_OpenGeneric = typeof({service.ImplementationType}).GetMethods()");
+            sb.AppendLine($"        .First(m => m.Name == \"{method.MethodName}\" && m.IsGenericMethodDefinition && m.GetGenericArguments().Length == {genericArity} && m.GetParameters().Length == {method.Parameters.Count});");
+            sb.AppendLine($"    private static readonly ConcurrentDictionary<string, MethodInfo> s_{baseName}_GenericMethodCache = new();");
+        }
         sb.AppendLine();
 
-        // 构造函数 - 从 DI 容器获取所有 IInterceptor
+        // 实例缓存：拦截器管道委托（每个方法构建一次，懒加载）
+        foreach (var method in service.Methods)
+        {
+            var baseName = GetMethodBaseName(method);
+            if (method.TypeParameters.Count > 0)
+            {
+                sb.AppendLine($"    private readonly ConcurrentDictionary<string, InterceptorDelegate> _pipelineCache_{baseName} = new();");
+            }
+            else
+            {
+                sb.AppendLine($"    private InterceptorDelegate? _pipeline_{baseName};");
+            }
+        }
+        sb.AppendLine();
+
+        // 构造函数
         sb.AppendLine($"    public {service.ClassName}Proxy({service.ImplementationType} target, IServiceProvider serviceProvider)");
         sb.AppendLine("    {");
         sb.AppendLine("        _target = target ?? throw new ArgumentNullException(nameof(target));");
         sb.AppendLine("        _interceptorChainBuilder = new InterceptorChainBuilder(serviceProvider);");
-        sb.AppendLine("        // 注入所有注册的拦截器，每个拦截器自己决定是否处理");
         sb.AppendLine("        foreach (var interceptor in serviceProvider.GetServices<IInterceptor>())");
         sb.AppendLine("        {");
         sb.AppendLine("            _interceptorChainBuilder.UseInterceptor(interceptor);");
@@ -321,7 +347,6 @@ public sealed class InterceptorProxyGenerator : IIncrementalGenerator
 
     private static void GenerateProxyMethod(StringBuilder sb, ProxyServiceInfo service, ProxyMethodInfo method)
     {
-        // 方法签名
         var typeParams = method.TypeParameters.Count > 0
             ? $"<{string.Join(", ", method.TypeParameters)}>"
             : "";
@@ -330,24 +355,28 @@ public sealed class InterceptorProxyGenerator : IIncrementalGenerator
             ? " " + string.Join(" ", method.TypeConstraints)
             : "";
 
-        // 异步方法需要 async 修饰符
         var asyncModifier = method.IsAsync ? "async " : "";
         sb.AppendLine($"    public {asyncModifier}{method.ReturnType} {method.MethodName}{typeParams}({parameters}){constraints}");
         sb.AppendLine("    {");
 
-        // 创建方法调用上下文，包含 MethodInfo 和参数
         var argsArray = method.Parameters.Count > 0
             ? $"new object?[] {{ {string.Join(", ", method.Parameters.Select(p => p.Name))} }}"
             : "Array.Empty<object?>()";
 
+        // 从 context 中读取参数并转换类型（使 target delegate 可缓存）
+        var callArgsFromCtx = method.Parameters.Count > 0
+            ? string.Join(", ", method.Parameters.Select((p, i) => $"({p.Type})ctx.Arguments[{i}]!"))
+            : "";
+
+        var baseName = GetMethodBaseName(method);
+
         if (method.TypeParameters.Count > 0)
         {
-            // 泛型方法：在方法内部解析 MethodInfo（类型参数在此作用域可用）
-            var genericArity = method.TypeParameters.Count;
+            // 泛型方法：从缓存获取或构建具体化的 MethodInfo
             var makeGenericArgs = string.Join(", ", method.TypeParameters.Select(tp => $"typeof({tp})"));
-            sb.AppendLine($"        var methodInfo = typeof({service.ImplementationType}).GetMethods()");
-            sb.AppendLine($"            .First(m => m.Name == \"{method.MethodName}\" && m.IsGenericMethodDefinition && m.GetGenericArguments().Length == {genericArity})");
-            sb.AppendLine($"            .MakeGenericMethod({makeGenericArgs});");
+            var typeKeyParts = string.Join(" + \",\" + ", method.TypeParameters.Select(tp => $"(typeof({tp}).FullName ?? typeof({tp}).Name)"));
+            sb.AppendLine($"        var typeKey = {typeKeyParts};");
+            sb.AppendLine($"        var methodInfo = s_{baseName}_GenericMethodCache.GetOrAdd(typeKey, _ => s_{baseName}_OpenGeneric.MakeGenericMethod({makeGenericArgs}));");
             sb.AppendLine($"        var context = new InterceptorContext(_target, methodInfo, {argsArray});");
         }
         else
@@ -357,30 +386,27 @@ public sealed class InterceptorProxyGenerator : IIncrementalGenerator
         }
         sb.AppendLine();
 
-        // 创建目标调用委托
-        var callArgs = method.Parameters.Count > 0
-            ? string.Join(", ", method.Parameters.Select(p => p.Name))
-            : "";
-
-        // 使用缓存的 InterceptorChainBuilder 构建拦截器管道
-
+        // 管道构建：懒加载缓存，target delegate 从 ctx.Arguments 读取参数
         if (method.IsAsync)
         {
-            // 构建目标委托
-            sb.AppendLine("        InterceptorDelegate target = async ctx =>");
-            sb.AppendLine("        {");
-            if (method.HasReturnValue)
+            if (method.TypeParameters.Count > 0)
             {
-                sb.AppendLine($"            ctx.ReturnValue = await _target.{method.MethodName}{typeParams}({callArgs});");
+                sb.AppendLine($"        var pipeline = _pipelineCache_{baseName}.GetOrAdd(typeKey, _ => _interceptorChainBuilder.Build(async ctx =>");
             }
             else
             {
-                sb.AppendLine($"            await _target.{method.MethodName}{typeParams}({callArgs});");
+                sb.AppendLine($"        var pipeline = _pipeline_{baseName} ??= _interceptorChainBuilder.Build(async ctx =>");
             }
-            sb.AppendLine("        };");
-            sb.AppendLine();
-
-            sb.AppendLine("        var pipeline = _interceptorChainBuilder.Build(target);");
+            sb.AppendLine("        {");
+            if (method.HasReturnValue)
+            {
+                sb.AppendLine($"            ctx.ReturnValue = await _target.{method.MethodName}{typeParams}({callArgsFromCtx});");
+            }
+            else
+            {
+                sb.AppendLine($"            await _target.{method.MethodName}{typeParams}({callArgsFromCtx});");
+            }
+            sb.AppendLine(method.TypeParameters.Count > 0 ? "        }));" : "        });");
             sb.AppendLine("        await pipeline(context);");
 
             if (method.HasReturnValue)
@@ -391,22 +417,26 @@ public sealed class InterceptorProxyGenerator : IIncrementalGenerator
         }
         else
         {
-            // 同步方法包装为异步
-            sb.AppendLine("        InterceptorDelegate target = ctx =>");
-            sb.AppendLine("        {");
-            if (method.HasReturnValue)
+            // 同步方法：管道仍为异步（拦截器接口为 async），通过 GetAwaiter().GetResult() 同步等待
+            if (method.TypeParameters.Count > 0)
             {
-                sb.AppendLine($"            ctx.ReturnValue = _target.{method.MethodName}{typeParams}({callArgs});");
+                sb.AppendLine($"        var pipeline = _pipelineCache_{baseName}.GetOrAdd(typeKey, _ => _interceptorChainBuilder.Build(ctx =>");
             }
             else
             {
-                sb.AppendLine($"            _target.{method.MethodName}{typeParams}({callArgs});");
+                sb.AppendLine($"        var pipeline = _pipeline_{baseName} ??= _interceptorChainBuilder.Build(ctx =>");
+            }
+            sb.AppendLine("        {");
+            if (method.HasReturnValue)
+            {
+                sb.AppendLine($"            ctx.ReturnValue = _target.{method.MethodName}{typeParams}({callArgsFromCtx});");
+            }
+            else
+            {
+                sb.AppendLine($"            _target.{method.MethodName}{typeParams}({callArgsFromCtx});");
             }
             sb.AppendLine("            return Task.CompletedTask;");
-            sb.AppendLine("        };");
-            sb.AppendLine();
-
-            sb.AppendLine("        var pipeline = _interceptorChainBuilder.Build(target);");
+            sb.AppendLine(method.TypeParameters.Count > 0 ? "        }));" : "        });");
             sb.AppendLine("        pipeline(context).GetAwaiter().GetResult();");
 
             if (method.HasReturnValue)
@@ -432,12 +462,39 @@ public sealed class InterceptorProxyGenerator : IIncrementalGenerator
         return "object";
     }
 
-    private static string GetMethodInfoFieldName(ProxyMethodInfo method)
+    private static string SanitizeIdentifier(string typeName)
+    {
+        // 将类型名转为合法的 C# 标识符片段
+        // 需要处理的特殊字符：. < > , [ ] ? + ( ) 空格
+        var sb = new StringBuilder(typeName.Length);
+        foreach (var c in typeName)
+        {
+            switch (c)
+            {
+                case '[': sb.Append("Array"); break;
+                case '.': case '<': case '>': case ',': case ' ':
+                case ']': case '?': case '(': case ')': case '+':
+                    break; // 跳过
+                default: sb.Append(c); break;
+            }
+        }
+        return sb.ToString();
+    }
+
+    private static string GetMethodBaseName(ProxyMethodInfo method)
     {
         var paramSuffix = method.Parameters.Count > 0
-            ? "_" + string.Join("_", method.Parameters.Select(p => StripNullableAnnotation(p.Type).Replace(".", "").Replace("<", "").Replace(">", "").Replace(",", "").Replace(" ", "")))
+            ? "_" + string.Join("_", method.Parameters.Select(p => SanitizeIdentifier(StripNullableAnnotation(p.Type))))
             : "";
-        return $"s_{method.MethodName}{paramSuffix}_MethodInfo";
+        var typeParamSuffix = method.TypeParameters.Count > 0
+            ? $"_{method.TypeParameters.Count}"
+            : "";
+        return $"{method.MethodName}{typeParamSuffix}{paramSuffix}";
+    }
+
+    private static string GetMethodInfoFieldName(ProxyMethodInfo method)
+    {
+        return $"s_{GetMethodBaseName(method)}_MethodInfo";
     }
 
     private static string GenerateProxyRegistration(string assemblyName, List<ProxyServiceInfo> services)
