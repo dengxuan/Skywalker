@@ -21,6 +21,8 @@
 
   <ItemGroup>
     <ProjectReference Include="..\..\src\Skywalker.Permissions.Abstractions\Skywalker.Permissions.Abstractions.csproj" />
+    <ProjectReference Include="..\..\src\Skywalker.Permissions\Skywalker.Permissions.csproj" />
+    <ProjectReference Include="..\..\src\Skywalker.Permissions.AuthorizeValidation\Skywalker.Permissions.AuthorizeValidation.csproj" />
   </ItemGroup>
 
 </Project>
