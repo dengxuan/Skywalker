@@ -127,7 +127,7 @@ public class PermissionSyncHostedService : BackgroundService
     {
         var grantDict = new Dictionary<string, HashSet<(string, string)>>();
 
-        foreach (var grant in grants)
+        foreach (var grant in grants.Where(g => g.IsGranted))
         {
             if (!grantDict.TryGetValue(grant.Name, out var set))
             {

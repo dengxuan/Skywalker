@@ -10,8 +10,9 @@ public class PermissionModelTests
     [Fact]
     public void PermissionGrantInfo_SetsProperties()
     {
-        var info = new PermissionGrantInfo { Name = "read", ProviderName = "Role", ProviderKey = "admin" };
+        var info = new PermissionGrantInfo("read", true, "Role", "admin");
         Assert.Equal("read", info.Name);
+        Assert.True(info.IsGranted);
         Assert.Equal("Role", info.ProviderName);
         Assert.Equal("admin", info.ProviderKey);
     }

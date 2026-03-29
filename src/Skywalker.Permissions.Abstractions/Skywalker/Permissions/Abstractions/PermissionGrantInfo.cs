@@ -1,6 +1,8 @@
 ﻿// Licensed to the Gordon under one or more agreements.
 // Gordon licenses this file to you under the MIT license.
 
+using System.Text.Json.Serialization;
+
 namespace Skywalker.Permissions.Abstractions;
 
 /// <summary>
@@ -8,18 +10,22 @@ namespace Skywalker.Permissions.Abstractions;
 /// </summary>
 public class PermissionGrantInfo
 {
-    /// <summary>
-    /// 权限名称
-    /// </summary>
-    public required string Name { get; set; }
+    public string Name { get; }
 
-    /// <summary>
-    /// 提供者名称：U (User), R (Role), C (Client)
-    /// </summary>
-    public required string ProviderName { get; set; }
+    public bool IsGranted { get; }
 
-    /// <summary>
-    /// 提供者键
-    /// </summary>
-    public required string ProviderKey { get; set; }
+    public string? ProviderName { get; }
+
+    public string? ProviderKey { get; }
+
+    [JsonConstructor]
+    public PermissionGrantInfo(string name, bool isGranted, string? providerName = null, string? providerKey = null)
+    {
+        ArgumentException.ThrowIfNullOrEmpty(name);
+
+        Name = name;
+        IsGranted = isGranted;
+        ProviderName = providerName;
+        ProviderKey = providerKey;
+    }
 }
