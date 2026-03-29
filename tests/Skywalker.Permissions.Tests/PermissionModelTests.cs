@@ -1,4 +1,5 @@
 using Skywalker.Permissions;
+using Skywalker.Permissions.Abstractions;
 using System.Security.Claims;
 
 namespace Skywalker.Permissions.Tests;
@@ -7,21 +8,12 @@ public class PermissionModelTests
 {
     // PermissionGrantInfo
     [Fact]
-    public void PermissionGrantInfo_Granted()
+    public void PermissionGrantInfo_SetsProperties()
     {
-        var info = new PermissionGrantInfo("read", true, "Role", "admin");
+        var info = new PermissionGrantInfo { Name = "read", ProviderName = "Role", ProviderKey = "admin" };
         Assert.Equal("read", info.Name);
-        Assert.True(info.IsGranted);
         Assert.Equal("Role", info.ProviderName);
         Assert.Equal("admin", info.ProviderKey);
-    }
-
-    [Fact]
-    public void PermissionGrantInfo_NotGranted()
-    {
-        var info = new PermissionGrantInfo("write", false);
-        Assert.False(info.IsGranted);
-        Assert.Null(info.ProviderName);
     }
 
     // MultiplePermissionGrantResult
