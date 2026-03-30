@@ -1,6 +1,9 @@
 // Licensed to the Gordon under one or more agreements.
 // Gordon licenses this file to you under the MIT license.
 
+using Microsoft.Extensions.DependencyInjection.Extensions;
+using Skywalker.Extensions.DependencyInjection;
+
 namespace Microsoft.Extensions.DependencyInjection;
 
 /// <summary>
@@ -15,7 +18,7 @@ public static class DddExceptionsServiceCollectionExtensions
     {
         ArgumentNullException.ThrowIfNull(services);
 
-        services.AddAutoServices();
+        services.TryAddScoped<ICachedServiceProvider, CachedServiceProvider>();
 
         return services;
     }

@@ -1,4 +1,3 @@
-using Skywalker.DependencyInjection;
 using Skywalker.Template;
 using Skywalker.Template.Abstractions;
 using Skywalker.Template.VirtualFiles;
@@ -8,7 +7,7 @@ namespace Skywalker.Extensions.Emailing.Template;
 /// <summary>
 /// Provides email template definitions.
 /// </summary>
-public class EmailTemplateDefinitionProvider : TemplateDefinitionProvider, ITransientDependency
+public class EmailTemplateDefinitionProvider : TemplateDefinitionProvider
 {
     public override void Define(ITemplateDefinitionContext context)
     {

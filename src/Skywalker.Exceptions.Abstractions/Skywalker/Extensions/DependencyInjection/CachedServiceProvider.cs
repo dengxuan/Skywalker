@@ -1,11 +1,9 @@
 // Licensed to the Gordon under one or more agreements.
 // Gordon licenses this file to you under the MIT license.
 
-using Skywalker.DependencyInjection;
-
 namespace Skywalker.Extensions.DependencyInjection;
 
-internal class CachedServiceProvider : ICachedServiceProvider, IScopedDependency
+internal class CachedServiceProvider : ICachedServiceProvider
 {
     protected IServiceProvider ServiceProvider { get; }
 

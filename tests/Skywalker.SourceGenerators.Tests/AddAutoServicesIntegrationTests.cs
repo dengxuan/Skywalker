@@ -3,20 +3,19 @@ using Microsoft.Extensions.DependencyInjection;
 namespace Skywalker.SourceGenerators.Tests;
 
 /// <summary>
-/// Integration tests for the generated AddAutoServices() method.
-/// AddAutoServices() registers services defined in this test project.
+/// Integration tests for reflection-based service registration via AddSkywalker().
 /// </summary>
 public class AddAutoServicesIntegrationTests
 {
     [Fact]
-    public void AddAutoServices_RegistersTestProjectServices()
+    public void AddSkywalker_RegistersTestProjectServices()
     {
         // Arrange
         var services = new ServiceCollection();
         services.AddLogging();
 
-        // Act - AddAutoServices registers local services
-        SkywalkerSourceGeneratorsTestsAutoServiceExtensions.AddAutoServices(services);
+        // Act - AddSkywalker performs reflection-based scanning
+        services.AddSkywalker(typeof(AddAutoServicesIntegrationTests).Assembly);
         using var provider = services.BuildServiceProvider();
 
         // Assert - verify services defined in this test project are registered
@@ -31,12 +30,12 @@ public class AddAutoServicesIntegrationTests
     }
 
     [Fact]
-    public void AddAutoServices_RegistersServicesWithCorrectLifetime()
+    public void AddSkywalker_RegistersServicesWithCorrectLifetime()
     {
         // Arrange
         var services = new ServiceCollection();
         services.AddLogging();
-        SkywalkerSourceGeneratorsTestsAutoServiceExtensions.AddAutoServices(services);
+        services.AddSkywalker(typeof(AddAutoServicesIntegrationTests).Assembly);
 
         // Assert - check service descriptors
         var emailDescriptor = services.FirstOrDefault(d => d.ServiceType == typeof(ITestEmailService));
@@ -53,12 +52,12 @@ public class AddAutoServicesIntegrationTests
     }
 
     [Fact]
-    public void AddAutoServices_ServicesAreFunctional()
+    public void AddSkywalker_ServicesAreFunctional()
     {
         // Arrange
         var services = new ServiceCollection();
         services.AddLogging();
-        SkywalkerSourceGeneratorsTestsAutoServiceExtensions.AddAutoServices(services);
+        services.AddSkywalker(typeof(AddAutoServicesIntegrationTests).Assembly);
         using var provider = services.BuildServiceProvider();
 
         // Act & Assert - verify services actually work
@@ -68,43 +67,12 @@ public class AddAutoServicesIntegrationTests
     }
 
     [Fact]
-    public void AddAutoServices_CanBeCalledMultipleTimes()
+    public void AddSkywalker_DoesNotRegisterDisabledServices()
     {
         // Arrange
         var services = new ServiceCollection();
         services.AddLogging();
-
-        // Act - calling multiple times should not throw
-        SkywalkerSourceGeneratorsTestsAutoServiceExtensions.AddAutoServices(services);
-        SkywalkerSourceGeneratorsTestsAutoServiceExtensions.AddAutoServices(services);
-
-        using var provider = services.BuildServiceProvider();
-
-        // Assert - services should still work
-        var emailService = provider.GetService<ITestEmailService>();
-        Assert.NotNull(emailService);
-    }
-
-    [Fact]
-    public void AddAutoServices_ReturnsServiceCollection()
-    {
-        // Arrange
-        var services = new ServiceCollection();
-
-        // Act
-        var result = SkywalkerSourceGeneratorsTestsAutoServiceExtensions.AddAutoServices(services);
-
-        // Assert
-        Assert.Same(services, result);
-    }
-
-    [Fact]
-    public void AddAutoServices_DoesNotRegisterDisabledServices()
-    {
-        // Arrange
-        var services = new ServiceCollection();
-        services.AddLogging();
-        SkywalkerSourceGeneratorsTestsAutoServiceExtensions.AddAutoServices(services);
+        services.AddSkywalker(typeof(AddAutoServicesIntegrationTests).Assembly);
 
         // Assert - TestDisabledService should NOT be registered
         var disabledDescriptor = services.FirstOrDefault(d =>
@@ -113,18 +81,17 @@ public class AddAutoServicesIntegrationTests
     }
 
     [Fact]
-    public void AddAutoServices_RegistersServiceWithoutInterface()
+    public void AddSkywalker_RegistersServiceWithoutInterface()
     {
         // Arrange
         var services = new ServiceCollection();
         services.AddLogging();
-        SkywalkerSourceGeneratorsTestsAutoServiceExtensions.AddAutoServices(services);
+        services.AddSkywalker(typeof(AddAutoServicesIntegrationTests).Assembly);
         using var provider = services.BuildServiceProvider();
 
         // Assert - TestNoInterfaceService should be registered as itself
         var noInterfaceService = provider.GetService<TestNoInterfaceService>();
         Assert.NotNull(noInterfaceService);
     }
-
 }
 

@@ -1,11 +1,10 @@
-﻿using System.Text.Json;
+using System.Text.Json;
 using Microsoft.Extensions.Options;
-using Skywalker.DependencyInjection;
 using Skywalker.Extensions.RabbitMQ.Abstractions;
 
 namespace Skywalker.Extensions.RabbitMQ;
 
-public class Utf8JsonRabbitMqSerializer : IRabbitMqSerializer, ISingletonDependency
+public class Utf8JsonRabbitMqSerializer : IRabbitMqSerializer
 {
     private readonly JsonSerializerOptions _options;
 

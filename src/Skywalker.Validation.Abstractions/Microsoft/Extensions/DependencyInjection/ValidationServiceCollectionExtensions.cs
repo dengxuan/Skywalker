@@ -17,7 +17,7 @@ public static class ValidationServiceCollectionExtensions
     /// <returns>The service collection.</returns>
     public static IServiceCollection AddValidation(this IServiceCollection services)
     {
-        services.AddAutoServices();
+        services.TryAddTransient<IValidator, DataAnnotationsValidator>();
         services.TryAddTransient(typeof(IValidator<>), typeof(DataAnnotationsValidator<>));
 
         return services;

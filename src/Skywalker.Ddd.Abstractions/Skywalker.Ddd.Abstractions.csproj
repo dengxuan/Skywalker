@@ -2,18 +2,12 @@
 
   <PropertyGroup>
     <RootNamespace></RootNamespace>
-    <Description>Skywalker DDD 抽象层，包含统一服务注册入口和程序集发现机制</Description>
+    <Description>Skywalker DDD 核心，包含 DI 标记接口、动态代理、服务注册和程序集发现</Description>
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="Microsoft.Extensions.Caching.Memory" Version="$(MicrosoftExtensionsVersion)" />
+    <PackageReference Include="Castle.Core" Version="$(CastleCoreVersion)" />
     <PackageReference Include="Microsoft.Extensions.DependencyInjection.Abstractions" Version="$(MicrosoftExtensionsVersion)" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <ProjectReference Include="$(LibrariesProjectRoot)Skywalker.Extensions.DependencyInjection\Skywalker.Extensions.DependencyInjection.csproj" />
-    <ProjectReference Include="$(LibrariesProjectRoot)Skywalker.Extensions.DynamicProxies\Skywalker.Extensions.DynamicProxies.csproj" />
-    <ProjectReference Include="$(LibrariesProjectRoot)Skywalker.EventBus.Local\Skywalker.EventBus.Local.csproj" />
   </ItemGroup>
 
 </Project>

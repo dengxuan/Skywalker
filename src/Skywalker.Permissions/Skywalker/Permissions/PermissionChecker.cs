@@ -1,15 +1,14 @@
-﻿// Licensed to the Gordon under one or more agreements.
+// Licensed to the Gordon under one or more agreements.
 // Gordon licenses this file to you under the MIT license.
 
 using System.Security.Claims;
-using Skywalker.DependencyInjection;
 using Skywalker.Extensions.SimpleStateChecking;
 using Skywalker.Permissions.Abstractions;
 using Skywalker.Security.Claims;
 
 namespace Skywalker.Permissions;
 
-public class PermissionChecker : IPermissionChecker, ITransientDependency
+public class PermissionChecker : IPermissionChecker
 {
     private readonly ICurrentPrincipalAccessor _principalAccessor;
     private readonly IPermissionDefinitionManager _permissionDefinitionManager;

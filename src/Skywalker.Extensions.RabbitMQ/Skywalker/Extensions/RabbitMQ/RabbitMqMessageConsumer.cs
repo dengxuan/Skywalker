@@ -1,15 +1,14 @@
-﻿using System.Collections.Concurrent;
+using System.Collections.Concurrent;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Logging.Abstractions;
 using RabbitMQ.Client;
 using RabbitMQ.Client.Events;
-using Skywalker.DependencyInjection;
 using Skywalker.Extensions.RabbitMQ.Abstractions;
 using Skywalker.Extensions.Threading;
 
 namespace Skywalker.Extensions.RabbitMQ;
 
-public class RabbitMqMessageConsumer : IRabbitMqMessageConsumer, IDisposable, ITransientDependency
+public class RabbitMqMessageConsumer : IRabbitMqMessageConsumer, IDisposable
 {
     public ILogger<RabbitMqMessageConsumer> Logger { get; set; }
 

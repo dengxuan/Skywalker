@@ -1,7 +1,9 @@
 // Licensed to the Gordon under one or more agreements.
 // Gordon licenses this file to you under the MIT license.
 
+using Microsoft.Extensions.DependencyInjection.Extensions;
 using Skywalker.Extensions.RabbitMQ;
+using Skywalker.Extensions.RabbitMQ.Abstractions;
 
 
 namespace Microsoft.Extensions.DependencyInjection;
@@ -64,7 +66,11 @@ public static class RabbitMQICollectionExtensions
     private static IServiceCollection AddRabbitMQServices(this IServiceCollection services)
     {
         services.AddThreading();
-        SkywalkerExtensionsRabbitMQAutoServiceExtensions.AddAutoServices(services);
+        services.TryAddSingleton<IRabbitMqSerializer, Utf8JsonRabbitMqSerializer>();
+        services.TryAddSingleton<IConnectionPool, ConnectionPool>();
+        services.TryAddSingleton<IChannelPool, ChannelPool>();
+        services.TryAddSingleton<IRabbitMqMessageConsumerFactory, RabbitMqMessageConsumerFactory>();
+        services.TryAddTransient<IRabbitMqMessageConsumer, RabbitMqMessageConsumer>();
 
         return services;
     }

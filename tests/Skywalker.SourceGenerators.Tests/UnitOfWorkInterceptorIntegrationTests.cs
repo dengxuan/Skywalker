@@ -1,4 +1,3 @@
-using System.Reflection;
 using Microsoft.Extensions.DependencyInjection;
 using Skywalker.Ddd.Uow;
 using Skywalker.Ddd.Uow.Abstractions;
@@ -46,10 +45,8 @@ public class UnitOfWorkInterceptorIntegrationTests
     {
         var services = new ServiceCollection();
         services.AddLogging();
-        // 注册 UoW 服务（与真实 Console/Worker 应用一样使用公开 API）
-        services.AddUnitOfWork();
-        // 注册本测试项目的服务（TestUowOrderService + 生成的代理）
-        SkywalkerSourceGeneratorsTestsAutoServiceExtensions.AddAutoServices(services);
+        // 使用 AddSkywalker 进行反射扫描注册（传入测试程序集以发现 DDD 模块）
+        services.AddSkywalker(typeof(UnitOfWorkInterceptorIntegrationTests).Assembly);
         return services.BuildServiceProvider();
     }
 
@@ -104,54 +101,20 @@ public class UnitOfWorkInterceptorIntegrationTests
     }
 
     [Fact]
-    public void ProxyClass_IsGenerated_ForUowService()
+    public void CastleProxy_IsCreated_ForUowService()
     {
-        // Arrange
-        var assembly = typeof(UnitOfWorkInterceptorIntegrationTests).Assembly;
-
-        // Assert — 验证 SourceGenerator 为 TestUowOrderService 生成了代理类
-        var proxyType = assembly.GetTypes()
-            .FirstOrDefault(t => t.Name == $"{nameof(TestUowOrderService)}Proxy");
-        Assert.NotNull(proxyType);
-    }
-
-    [Fact]
-    public void ProxyClass_HasCachedMethodInfo()
-    {
-        // Arrange
-        var assembly = typeof(UnitOfWorkInterceptorIntegrationTests).Assembly;
-        var proxyType = assembly.GetTypes().First(t => t.Name == $"{nameof(TestUowOrderService)}Proxy");
-
-        // Assert — 验证代理类缓存了 MethodInfo（static readonly 字段）
-        var methodInfoFields = proxyType.GetFields(BindingFlags.NonPublic | BindingFlags.Static)
-            .Where(f => f.FieldType == typeof(MethodInfo) && f.Name.Contains("MethodInfo"))
-            .ToList();
-
-        Assert.NotEmpty(methodInfoFields);
-
-        // 每个 MethodInfo 字段都不为 null
-        var proxyInstance = CreateProxyInstance(proxyType);
-        foreach (var field in methodInfoFields)
-        {
-            var value = field.GetValue(null);
-            Assert.NotNull(value);
-        }
-    }
-
-    [Fact]
-    public void UnitOfWorkInterceptor_IsRegistered_AsInterceptor()
-    {
-        // Arrange
         using var provider = BuildConsoleAppProvider();
-
-        // Assert — UnitOfWorkInterceptor 通过 DI 自动注册为 IInterceptor
-        var interceptors = provider.GetServices<IInterceptor>().ToList();
-        Assert.Contains(interceptors, i => i is UnitOfWorkInterceptor);
+        using var scope = provider.CreateScope();
+        var service = scope.ServiceProvider.GetRequiredService<ITestUowOrderService>();
+        // Castle.DynamicProxy creates a runtime proxy — type differs from the concrete class
+        Assert.NotEqual(typeof(TestUowOrderService), service.GetType());
     }
 
-    private static object? CreateProxyInstance(Type proxyType)
+    [Fact]
+    public void UnitOfWorkInterceptor_IsRegistered()
     {
-        // 只用于读取静态字段，不需要实际实例
-        return null;
+        using var provider = BuildConsoleAppProvider();
+        var interceptor = provider.GetService<UnitOfWorkInterceptor>();
+        Assert.NotNull(interceptor);
     }
 }

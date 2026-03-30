@@ -14,7 +14,8 @@ public static class VirtualFileSystemIServiceCollectionExtensions
 {
     public static IServiceCollection AddVirtualFileSystem(this IServiceCollection services)
     {
-        services.AddAutoServices();
+        services.TryAddSingleton<IDynamicFileProvider, DynamicFileProvider>();
+        services.TryAddSingleton<IVirtualFileProvider, VirtualFileProvider>();
         return services;
     }
 }

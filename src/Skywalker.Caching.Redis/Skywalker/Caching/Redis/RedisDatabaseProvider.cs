@@ -1,11 +1,10 @@
-﻿using Microsoft.Extensions.Options;
+using Microsoft.Extensions.Options;
 using Skywalker.Caching.Redis.Abstractions;
-using Skywalker.DependencyInjection;
 using StackExchange.Redis;
 
 namespace Skywalker.Caching.Redis;
 
-public class RedisDatabaseProvider : IRedisDatabaseProvider, ISingletonDependency
+public class RedisDatabaseProvider : IRedisDatabaseProvider
 {
     private readonly RedisOptions _options;
     private readonly Lazy<ConnectionMultiplexer> _connectionMultiplexer;

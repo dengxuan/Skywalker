@@ -1,4 +1,5 @@
 using Skywalker.Template;
+using Skywalker.Template.Abstractions;
 using Skywalker.Template.Scriban;
 
 
@@ -24,7 +25,7 @@ public static class ScribanTemplateServiceCollectionExtensions
             services.Configure(configureOptions);
         }
 
-        SkywalkerTemplateScribanAutoServiceExtensions.AddAutoServices(services);
+        services.AddTransient<ITemplateRenderingEngine, ScribanTemplateRenderingEngine>();
 
         // Register the engine in template options
         services.Configure<SkywalkerTextTemplatingOptions>(options =>

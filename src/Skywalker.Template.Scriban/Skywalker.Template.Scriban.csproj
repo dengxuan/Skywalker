@@ -9,7 +9,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="$(LibrariesProjectRoot)Skywalker.Extensions.DependencyInjection\Skywalker.Extensions.DependencyInjection.csproj" />
     <ProjectReference Include="..\Skywalker.Template.Abstractions\Skywalker.Template.Abstractions.csproj" />
   </ItemGroup>
 

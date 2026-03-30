@@ -13,7 +13,7 @@ namespace Microsoft.Extensions.DependencyInjection;
 public static class SkywalkerServiceCollectionExtensions
 {
     /// <summary>
-    /// 添加 Skywalker 核心服务，自动发现并注册所有引用程序集中的服务。
+    /// 添加 Skywalker DDD 核心服务，自动发现并注册所有引用程序集中的服务。
     /// </summary>
     /// <param name="services">服务集合。</param>
     /// <returns>Skywalker 构建器，支持链式调用。</returns>
@@ -21,16 +21,16 @@ public static class SkywalkerServiceCollectionExtensions
     /// 此方法会：
     /// <list type="bullet">
     /// <item>发现所有引用了 Skywalker 的程序集</item>
-    /// <item>基于反射扫描并注册所有服务</item>
+    /// <item>基于反射扫描并注册所有标记了 DI 接口的服务</item>
     /// <item>注册动态代理服务 (Castle.DynamicProxy)</item>
-    /// <item>注册默认内存缓存 (IMemoryCache)</item>
-    /// <item>注册默认本地事件总线 (Local EventBus)</item>
     /// </list>
     /// <para>
-    /// 使用示例：
+    /// 外部模块通过 Builder 扩展方法按需添加：
     /// <code>
     /// services.AddSkywalker()
-    ///     .AddEntityFramework&lt;MyDbContext&gt;(options => options.UseSqlServer(...));
+    ///     .AddEntityFramework&lt;MyDbContext&gt;(options => options.UseSqlServer(...))
+    ///     .AddRedisCaching()
+    ///     .AddRabbitMQEventBus();
     /// </code>
     /// </para>
     /// </remarks>
@@ -40,7 +40,7 @@ public static class SkywalkerServiceCollectionExtensions
     }
 
     /// <summary>
-    /// 添加 Skywalker 核心服务，从指定程序集开始发现并注册所有服务。
+    /// 添加 Skywalker DDD 核心服务，从指定程序集开始发现并注册所有服务。
     /// </summary>
     /// <param name="services">服务集合。</param>
     /// <param name="entryAssembly">入口程序集。</param>
@@ -60,12 +60,6 @@ public static class SkywalkerServiceCollectionExtensions
         // 4. 注册动态代理服务
         services.AddDynamicProxies();
         services.AddInterceptedServices(partManager.Assemblies.ToArray());
-
-        // 5. 注册默认内存缓存
-        services.AddMemoryCache();
-
-        // 6. 注册默认本地事件总线
-        services.AddEventBusLocal();
 
         return new SkywalkerBuilder(services, partManager);
     }

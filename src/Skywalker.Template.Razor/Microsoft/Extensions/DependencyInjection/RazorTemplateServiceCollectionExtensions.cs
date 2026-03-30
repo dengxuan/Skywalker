@@ -1,4 +1,5 @@
 using Skywalker.Template;
+using Skywalker.Template.Abstractions;
 using Skywalker.Template.Razor;
 
 
@@ -24,7 +25,7 @@ public static class RazorTemplateServiceCollectionExtensions
             services.Configure(configureOptions);
         }
 
-        SkywalkerTemplateRazorAutoServiceExtensions.AddAutoServices(services);
+        services.AddTransient<ITemplateRenderingEngine, RazorTemplateRenderingEngine>();
 
         // Register the engine in template options
         services.Configure<SkywalkerTextTemplatingOptions>(options =>

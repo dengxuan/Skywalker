@@ -1,6 +1,5 @@
 using System.Net.Mail;
 using Microsoft.Extensions.Options;
-using Skywalker.DependencyInjection;
 using Skywalker.Template.Abstractions;
 
 namespace Skywalker.Extensions.Emailing.Template;
@@ -8,7 +7,7 @@ namespace Skywalker.Extensions.Emailing.Template;
 /// <summary>
 /// Default implementation of <see cref="ITemplateEmailSender"/>.
 /// </summary>
-public class TemplateEmailSender : ITemplateEmailSender, ITransientDependency
+public class TemplateEmailSender : ITemplateEmailSender
 {
     protected IEmailSender EmailSender { get; }
     protected ITemplateRenderer TemplateRenderer { get; }

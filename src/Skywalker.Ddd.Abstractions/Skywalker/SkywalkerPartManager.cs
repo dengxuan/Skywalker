@@ -32,7 +32,31 @@ public sealed class SkywalkerPartManager
             return;
         }
 
-        DiscoverAssembliesRecursive(entryAssembly);
+        // 入口程序集始终包含在扫描范围内
+        var entryName = entryAssembly.GetName().Name;
+        if (entryName != null && _processedAssemblies.Add(entryName))
+        {
+            _skywalkerAssemblies.Add(entryAssembly);
+        }
+
+        // 递归发现引用的 Skywalker 程序集
+        foreach (var referencedName in entryAssembly.GetReferencedAssemblies())
+        {
+            if (!ShouldProcessReference(referencedName))
+            {
+                continue;
+            }
+
+            try
+            {
+                var referencedAssembly = Assembly.Load(referencedName);
+                DiscoverAssembliesRecursive(referencedAssembly);
+            }
+            catch
+            {
+                // 忽略无法加载的程序集
+            }
+        }
     }
 
     private void DiscoverAssembliesRecursive(Assembly assembly)
@@ -43,8 +67,8 @@ public sealed class SkywalkerPartManager
             return;
         }
 
-        // 检查是否有 SkywalkerServicesAttribute 特性
-        if (assembly.GetCustomAttribute<SkywalkerServicesAttribute>() != null)
+        // 检查是否有 SkywalkerServicesAttribute 特性 或 是 DDD 内部模块（按命名约定）
+        if (assembly.GetCustomAttribute<SkywalkerServicesAttribute>() != null || IsDddAssembly(name))
         {
             _skywalkerAssemblies.Add(assembly);
         }
@@ -93,6 +117,14 @@ public sealed class SkywalkerPartManager
         }
 
         return true;
+    }
+
+    /// <summary>
+    /// 判断程序集是否为 DDD 内部模块（按命名约定自动发现）。
+    /// </summary>
+    private static bool IsDddAssembly(string? assemblyName)
+    {
+        return assemblyName != null && assemblyName.StartsWith("Skywalker.Ddd.", StringComparison.OrdinalIgnoreCase);
     }
 
     /// <summary>

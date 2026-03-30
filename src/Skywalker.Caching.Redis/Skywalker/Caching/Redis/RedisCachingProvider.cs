@@ -1,12 +1,10 @@
-﻿using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.DependencyInjection;
 using Skywalker.Caching.Abstractions;
 using Skywalker.Caching.Redis.Abstractions;
-using Skywalker.DependencyInjection;
 
 namespace Skywalker.Caching.Redis;
 
-[ExposeServices(typeof(ICachingProvider))]
-public class RedisCachingProvider : CachingProvider, ISingletonDependency
+public class RedisCachingProvider : CachingProvider
 {
     private readonly IServiceProvider _iocResolver;
 

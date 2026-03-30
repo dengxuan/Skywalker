@@ -1,6 +1,5 @@
 ﻿using System.Security.Claims;
 using System.Security.Principal;
-using Skywalker.DependencyInjection;
 using Skywalker.Security.Claims;
 
 namespace Skywalker.Security.Users;
@@ -8,7 +7,7 @@ namespace Skywalker.Security.Users;
 /// <summary>
 /// 当前用户信息实现类。
 /// </summary>
-public class CurrentUser : ICurrentUser, ITransientDependency
+public class CurrentUser : ICurrentUser
 {
     private static readonly Claim[] s_emptyClaimsArray = Array.Empty<Claim>();
 

@@ -22,8 +22,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\src\Skywalker.Extensions.DependencyInjection\Skywalker.Extensions.DependencyInjection.csproj" />
-    <ProjectReference Include="..\..\src\Skywalker.Extensions.DynamicProxies\Skywalker.Extensions.DynamicProxies.csproj" />
+    <ProjectReference Include="..\..\src\Skywalker.Ddd.Abstractions\Skywalker.Ddd.Abstractions.csproj" />
     <ProjectReference Include="..\..\src\Skywalker.Ddd.Uow\Skywalker.Ddd.Uow.csproj" />
     <ProjectReference Include="..\..\src\Skywalker.EventBus.Local\Skywalker.EventBus.Local.csproj" />
     <ProjectReference Include="..\..\src\Skywalker.Caching.Redis\Skywalker.Caching.Redis.csproj" />
@@ -31,12 +30,6 @@
     <ProjectReference Include="..\..\src\Skywalker.Extensions.Timezone\Skywalker.Extensions.Timezone.csproj" />
     <ProjectReference Include="..\..\src\Skywalker.Security.Abstractions\Skywalker.Security.Abstractions.csproj" />
     <ProjectReference Include="..\..\src\Skywalker.Validation.Abstractions\Skywalker.Validation.Abstractions.csproj" />
-    <ProjectReference Include="..\..\src\Skywalker.Extensions.DependencyInjection.SourceGenerators\Skywalker.Extensions.DependencyInjection.SourceGenerators.csproj"
-                      ReferenceOutputAssembly="false"
-                      OutputItemType="Analyzer" />
-    <ProjectReference Include="..\..\src\Skywalker.Extensions.DynamicProxies.SourceGenerators\Skywalker.Extensions.DynamicProxies.SourceGenerators.csproj"
-                      ReferenceOutputAssembly="false"
-                      OutputItemType="Analyzer" />
   </ItemGroup>
 
 </Project>

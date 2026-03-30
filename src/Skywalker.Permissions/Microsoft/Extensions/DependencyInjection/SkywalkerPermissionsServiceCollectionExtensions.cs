@@ -26,7 +26,10 @@ public static class SkywalkerPermissionsServiceCollectionExtensions
         // 注册 SimpleStateCheckerManager<PermissionDefinition>
         services.TryAddSingleton<ISimpleStateCheckerManager<PermissionDefinition>, SimpleStateCheckerManager<PermissionDefinition>>();
 
-        // 调用自动生成的服务注册方法
-        return SkywalkerPermissionsAutoServiceExtensions.AddAutoServices(services);
+        services.TryAddSingleton<IPermissionDefinitionManager, DefaultPermissionDefinitionManager>();
+        services.TryAddSingleton<IPermissionValidator, InMemoryPermissionValidator>();
+        services.TryAddTransient<IPermissionChecker, PermissionChecker>();
+        services.TryAddSingleton<IPermissionValueProviderManager, PermissionValueProviderManager>();
+        return services;
     }
 }

@@ -1,9 +1,9 @@
-﻿using Skywalker.Template;
+using Skywalker.Template;
 using Skywalker.Template.Abstractions;
 
 namespace Skywalker.Template.VirtualFiles;
 
-public class VirtualFileTemplateContentContributor : ITemplateContentContributor//, ITransientDependency
+public class VirtualFileTemplateContentContributor : ITemplateContentContributor//
 {
     public const string VirtualPathPropertyName = "VirtualPath";
 

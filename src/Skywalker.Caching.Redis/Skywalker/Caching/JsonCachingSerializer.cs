@@ -1,11 +1,10 @@
-﻿using System.Text.Json;
+using System.Text.Json;
 using Microsoft.Extensions.Options;
 using Skywalker.Caching.Abstractions;
-using Skywalker.DependencyInjection;
 
 namespace Skywalker.Caching;
 
-internal class JsonCachingSerializer : ICachingSerializer, ISingletonDependency
+internal class JsonCachingSerializer : ICachingSerializer
 {
     private readonly CachingOptions _options;
 

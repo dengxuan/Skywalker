@@ -1,5 +1,4 @@
 using System.Collections.Concurrent;
-using System.Reflection;
 using Microsoft.Extensions.DependencyInjection;
 using Skywalker.DependencyInjection;
 using Skywalker.Extensions.DynamicProxies;
@@ -88,67 +87,29 @@ public class DynamicProxyAdvancedTests
     private static ServiceProvider BuildProvider()
     {
         var services = new ServiceCollection();
-        SkywalkerSourceGeneratorsTestsAutoServiceExtensions.AddAutoServices(services);
+        services.AddSkywalker(typeof(DynamicProxyAdvancedTests).Assembly);
         return services.BuildServiceProvider();
     }
 
-    #region Proxy Generation Verification
+    #region Proxy Verification (Castle.DynamicProxy)
 
     [Fact]
-    public void ProxyClass_Generated_ForComplexParamService()
+    public void CastleProxy_Created_ForComplexParamService()
     {
-        var assembly = typeof(DynamicProxyAdvancedTests).Assembly;
-        var proxyType = assembly.GetTypes().FirstOrDefault(t => t.Name == "ComplexParamServiceProxy");
-        Assert.NotNull(proxyType);
+        using var provider = BuildProvider();
+        using var scope = provider.CreateScope();
+        var service = scope.ServiceProvider.GetRequiredService<IComplexParamService>();
+        // Castle.DynamicProxy creates runtime proxy types
+        Assert.NotEqual(typeof(ComplexParamService), service.GetType());
     }
 
     [Fact]
-    public void ProxyClass_Generated_ForGenericMethodService()
+    public void CastleProxy_Created_ForGenericMethodService()
     {
-        var assembly = typeof(DynamicProxyAdvancedTests).Assembly;
-        var proxyType = assembly.GetTypes().FirstOrDefault(t => t.Name == "GenericMethodServiceProxy");
-        Assert.NotNull(proxyType);
-    }
-
-    [Fact]
-    public void ProxyClass_StaticMethodInfoFields_AreValid()
-    {
-        var assembly = typeof(DynamicProxyAdvancedTests).Assembly;
-        var proxyType = assembly.GetTypes().First(t => t.Name == "ComplexParamServiceProxy");
-
-        var methodInfoFields = proxyType
-            .GetFields(BindingFlags.NonPublic | BindingFlags.Static)
-            .Where(f => f.FieldType == typeof(MethodInfo) && f.Name.Contains("MethodInfo"))
-            .ToList();
-
-        // 非泛型方法应当有 MethodInfo 静态字段
-        Assert.NotEmpty(methodInfoFields);
-
-        // 每个字段都不为 null（静态初始化成功 = typeof(...).GetMethod(...) 找到了方法）
-        foreach (var field in methodInfoFields)
-        {
-            Assert.NotNull(field.GetValue(null));
-        }
-    }
-
-    [Fact]
-    public void ProxyClass_FieldNames_AreValidIdentifiers()
-    {
-        var assembly = typeof(DynamicProxyAdvancedTests).Assembly;
-        var proxyType = assembly.GetTypes().First(t => t.Name == "ComplexParamServiceProxy");
-
-        var allFields = proxyType.GetFields(BindingFlags.NonPublic | BindingFlags.Static | BindingFlags.Instance);
-        foreach (var field in allFields)
-        {
-            // C# 标识符不能含有 [] < > , ? . 空格
-            Assert.DoesNotContain("[", field.Name);
-            Assert.DoesNotContain("]", field.Name);
-            Assert.DoesNotContain("<", field.Name);
-            Assert.DoesNotContain(">", field.Name);
-            Assert.DoesNotContain(",", field.Name);
-            Assert.DoesNotContain("?", field.Name);
-            Assert.DoesNotContain(" ", field.Name);
-        }
+        using var provider = BuildProvider();
+        using var scope = provider.CreateScope();
+        var service = scope.ServiceProvider.GetRequiredService<IGenericMethodService>();
+        Assert.NotEqual(typeof(GenericMethodService), service.GetType());
     }
 
     #endregion
@@ -367,22 +328,6 @@ public class DynamicProxyAdvancedTests
         Assert.Empty(result);
     }
 
-    [Fact]
-    public void ProxyClass_GenericMethodService_HasGenericMethodCache()
-    {
-        var assembly = typeof(DynamicProxyAdvancedTests).Assembly;
-        var proxyType = assembly.GetTypes().First(t => t.Name == "GenericMethodServiceProxy");
-
-        // 应当有 ConcurrentDictionary 类型的泛型方法缓存字段
-        var cacheFields = proxyType
-            .GetFields(BindingFlags.NonPublic | BindingFlags.Static)
-            .Where(f => f.FieldType.IsGenericType &&
-                        f.FieldType.GetGenericTypeDefinition() == typeof(ConcurrentDictionary<,>))
-            .ToList();
-
-        Assert.NotEmpty(cacheFields);
-    }
-
     #endregion
 
     #region Pipeline Caching Tests
@@ -402,27 +347,6 @@ public class DynamicProxyAdvancedTests
         Assert.Equal(1, r1);
         Assert.Equal(2, r2);
         Assert.Equal(3, r3);
-    }
-
-    [Fact]
-    public void Pipeline_CacheFields_ExistOnProxy()
-    {
-        var assembly = typeof(DynamicProxyAdvancedTests).Assembly;
-        var proxyType = assembly.GetTypes().First(t => t.Name == "ComplexParamServiceProxy");
-
-        // 应当有 InterceptorDelegate? 类型的管道缓存字段（实例字段，每个非泛型方法一个）
-        var pipelineFields = proxyType
-            .GetFields(BindingFlags.NonPublic | BindingFlags.Instance)
-            .Where(f => f.Name.StartsWith("_pipeline_"))
-            .ToList();
-
-        Assert.NotEmpty(pipelineFields);
-
-        // 每个管道缓存字段类型应为 InterceptorDelegate（nullable）
-        foreach (var field in pipelineFields)
-        {
-            Assert.Equal(typeof(InterceptorDelegate), Nullable.GetUnderlyingType(field.FieldType) ?? field.FieldType);
-        }
     }
 
     #endregion

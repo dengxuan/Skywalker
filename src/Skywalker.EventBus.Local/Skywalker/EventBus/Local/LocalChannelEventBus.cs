@@ -1,7 +1,6 @@
 using System.Collections.Concurrent;
 using System.Threading.Channels;
 using Microsoft.Extensions.Options;
-using Skywalker.DependencyInjection;
 using Skywalker.EventBus.Abstractions;
 
 namespace Skywalker.EventBus.Local;
@@ -9,7 +8,7 @@ namespace Skywalker.EventBus.Local;
 /// <summary>
 /// Local event bus implementation using System.Threading.Channels.
 /// </summary>
-public class LocalChannelEventBus : EventBusBase, ILocalEventBus, IAsyncDisposable, ISingletonDependency
+public class LocalChannelEventBus : EventBusBase, ILocalEventBus, IAsyncDisposable
 {
     private readonly IEventHandlerFactory _handlerFactory;
     private readonly IEventHandlerInvoker _handlerInvoker;

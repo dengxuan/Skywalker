@@ -2,7 +2,6 @@ using System.Globalization;
 using Microsoft.Extensions.Localization;
 using Scriban;
 using Scriban.Runtime;
-using Skywalker.DependencyInjection;
 using Skywalker.Template.Abstractions;
 
 namespace Skywalker.Template.Scriban;
@@ -10,7 +9,7 @@ namespace Skywalker.Template.Scriban;
 /// <summary>
 /// Scriban template rendering engine implementation.
 /// </summary>
-public class ScribanTemplateRenderingEngine : TemplateRenderingEngineBase, ITransientDependency
+public class ScribanTemplateRenderingEngine : TemplateRenderingEngineBase
 {
     public const string EngineName = "Scriban";
 

@@ -16,9 +16,6 @@
     <Nullable>enable</Nullable>
     <NoWarn>CS1951</NoWarn>
     <IsPackable>true</IsPackable>
-    <!-- 将 Source Generator 生成的代码写入磁盘以便调试 -->
-    <EmitCompilerGeneratedFiles>true</EmitCompilerGeneratedFiles>
-    <CompilerGeneratedFilesOutputPath>$(MSBuildProjectDirectory)\obj\Generated</CompilerGeneratedFilesOutputPath>
   </PropertyGroup>
 
   <PropertyGroup>
@@ -48,11 +45,6 @@
 
   <ItemGroup>
     <PackageReference Include="Microsoft.SourceLink.GitHub" Version="$(MicrosoftSourceLinkVersion)" PrivateAssets="All" />
-  </ItemGroup>
-
-  <!-- 暴露 MSBuild 属性给 Source Generator -->
-  <ItemGroup>
-    <CompilerVisibleProperty Include="OutputType" />
   </ItemGroup>
 
   <Import Project="$(RepositoryEngineeringRoot)Versions.props" />

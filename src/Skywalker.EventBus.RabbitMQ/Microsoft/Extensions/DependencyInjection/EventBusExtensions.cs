@@ -80,7 +80,7 @@ public static class EventBusRabbitMQServiceCollectionExtensions
     {
         services.AddRabbitMQ();
         services.AddGuidGenerator();
-        SkywalkerEventBusRabbitMQAutoServiceExtensions.AddAutoServices(services);
+        services.AddSingleton<RabbitMqEventBus>();
         services.AddSingleton<IEventBus>(sp => sp.GetRequiredService<RabbitMqEventBus>());
         services.AddHostedService<RabbitMqSubscriber>();
 
