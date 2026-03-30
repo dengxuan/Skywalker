@@ -51,12 +51,12 @@ public class PermissionChecker : IPermissionChecker, ITransientDependency
         var context = new PermissionValueCheckContext(permission, claimsPrincipal);
         foreach (var provider in _permissionValueProviderManager.ValueProviders)
         {
-            if (context.Permission.AllowedProviders.Any() && !context.Permission.AllowedProviders.Contains(provider!.Name))
+            if (context.Permission.AllowedProviders.Any() && !context.Permission.AllowedProviders.Contains(provider.Name))
             {
                 continue;
             }
 
-            var result = await provider!.CheckAsync(context);
+            var result = await provider.CheckAsync(context);
 
             if (result == PermissionGrantResult.Granted)
             {
@@ -106,7 +106,7 @@ public class PermissionChecker : IPermissionChecker, ITransientDependency
         foreach (var provider in _permissionValueProviderManager.ValueProviders)
         {
             var permissions = permissionDefinitions
-                .Where(x => !x.AllowedProviders.Any() || x.AllowedProviders.Contains(provider!.Name))
+                .Where(x => !x.AllowedProviders.Any() || x.AllowedProviders.Contains(provider.Name))
                 .ToList();
 
             if (permissions.IsNullOrEmpty())
@@ -116,7 +116,7 @@ public class PermissionChecker : IPermissionChecker, ITransientDependency
 
             var context = new PermissionValuesCheckContext(permissions, claimsPrincipal);
 
-            var multipleResult = await provider!.CheckAsync(context);
+            var multipleResult = await provider.CheckAsync(context);
             foreach (var grantResult in multipleResult.Result.Where(grantResult =>
                 result.Result.ContainsKey(grantResult.Key) &&
                 result.Result[grantResult.Key] == PermissionGrantResult.Undefined &&

@@ -1,4 +1,4 @@
-// Licensed to the Gordon under one or more agreements.
+﻿// Licensed to the Gordon under one or more agreements.
 // Gordon licenses this file to you under the MIT license.
 
 using System.Security.Claims;
@@ -84,7 +84,7 @@ public class PermissionCheckerTests
     public async Task IsGrantedAsync_NoProviders_ReturnsFalse()
     {
         SetupPermission("perm1");
-        _providerManager.ValueProviders.Returns(new List<IPermissionValueProvider?>());
+        _providerManager.ValueProviders.Returns(new List<IPermissionValueProvider>());
 
         var result = await _checker.IsGrantedAsync(new ClaimsPrincipal(), "perm1");
 
@@ -99,7 +99,7 @@ public class PermissionCheckerTests
         provider.Name.Returns("TestProvider");
         provider.CheckAsync(Arg.Any<PermissionValueCheckContext>())
             .Returns(Task.FromResult(PermissionGrantResult.Granted));
-        _providerManager.ValueProviders.Returns(new List<IPermissionValueProvider?> { provider });
+        _providerManager.ValueProviders.Returns(new List<IPermissionValueProvider> { provider });
 
         var result = await _checker.IsGrantedAsync(new ClaimsPrincipal(), "perm1");
 
@@ -114,7 +114,7 @@ public class PermissionCheckerTests
         provider.Name.Returns("TestProvider");
         provider.CheckAsync(Arg.Any<PermissionValueCheckContext>())
             .Returns(Task.FromResult(PermissionGrantResult.Prohibited));
-        _providerManager.ValueProviders.Returns(new List<IPermissionValueProvider?> { provider });
+        _providerManager.ValueProviders.Returns(new List<IPermissionValueProvider> { provider });
 
         var result = await _checker.IsGrantedAsync(new ClaimsPrincipal(), "perm1");
 
@@ -129,7 +129,7 @@ public class PermissionCheckerTests
         provider.Name.Returns("TestProvider");
         provider.CheckAsync(Arg.Any<PermissionValueCheckContext>())
             .Returns(Task.FromResult(PermissionGrantResult.Undefined));
-        _providerManager.ValueProviders.Returns(new List<IPermissionValueProvider?> { provider });
+        _providerManager.ValueProviders.Returns(new List<IPermissionValueProvider> { provider });
 
         var result = await _checker.IsGrantedAsync(new ClaimsPrincipal(), "perm1");
 
@@ -154,7 +154,7 @@ public class PermissionCheckerTests
             .Returns(Task.FromResult(PermissionGrantResult.Prohibited));
 
         _providerManager.ValueProviders.Returns(
-            new List<IPermissionValueProvider?> { grantProvider, prohibitProvider });
+            new List<IPermissionValueProvider> { grantProvider, prohibitProvider });
 
         var result = await _checker.IsGrantedAsync(new ClaimsPrincipal(), "perm1");
 
@@ -177,7 +177,7 @@ public class PermissionCheckerTests
             .Returns(Task.FromResult(PermissionGrantResult.Granted));
 
         _providerManager.ValueProviders.Returns(
-            new List<IPermissionValueProvider?> { undefinedProvider, grantProvider });
+            new List<IPermissionValueProvider> { undefinedProvider, grantProvider });
 
         var result = await _checker.IsGrantedAsync(new ClaimsPrincipal(), "perm1");
 
@@ -196,7 +196,7 @@ public class PermissionCheckerTests
         skippedProvider.CheckAsync(Arg.Any<PermissionValueCheckContext>())
             .Returns(Task.FromResult(PermissionGrantResult.Granted));
 
-        _providerManager.ValueProviders.Returns(new List<IPermissionValueProvider?> { skippedProvider });
+        _providerManager.ValueProviders.Returns(new List<IPermissionValueProvider> { skippedProvider });
 
         var result = await _checker.IsGrantedAsync(new ClaimsPrincipal(), "perm1");
 
@@ -213,7 +213,7 @@ public class PermissionCheckerTests
         allowedProvider.CheckAsync(Arg.Any<PermissionValueCheckContext>())
             .Returns(Task.FromResult(PermissionGrantResult.Granted));
 
-        _providerManager.ValueProviders.Returns(new List<IPermissionValueProvider?> { allowedProvider });
+        _providerManager.ValueProviders.Returns(new List<IPermissionValueProvider> { allowedProvider });
 
         var result = await _checker.IsGrantedAsync(new ClaimsPrincipal(), "perm1");
 
@@ -235,7 +235,7 @@ public class PermissionCheckerTests
         provider.CheckAsync(Arg.Do<PermissionValueCheckContext>(ctx => capturedPrincipal = ctx.Principal))
             .Returns(Task.FromResult(PermissionGrantResult.Granted));
 
-        _providerManager.ValueProviders.Returns(new List<IPermissionValueProvider?> { provider });
+        _providerManager.ValueProviders.Returns(new List<IPermissionValueProvider> { provider });
 
         await _checker.IsGrantedAsync("perm1");
 
@@ -272,7 +272,7 @@ public class PermissionCheckerTests
                     PermissionGrantResult.Granted);
                 return Task.FromResult(multiResult);
             });
-        _providerManager.ValueProviders.Returns(new List<IPermissionValueProvider?> { provider });
+        _providerManager.ValueProviders.Returns(new List<IPermissionValueProvider> { provider });
 
         var result = await _checker.IsGrantedAsync(new ClaimsPrincipal(), new[] { "disabled", "enabled" });
 
@@ -301,7 +301,7 @@ public class PermissionCheckerTests
         provider2.Name.Returns("Provider2");
 
         _providerManager.ValueProviders.Returns(
-            new List<IPermissionValueProvider?> { provider1, provider2 });
+            new List<IPermissionValueProvider> { provider1, provider2 });
 
         var result = await _checker.IsGrantedAsync(new ClaimsPrincipal(), new[] { "p1", "p2" });
 
@@ -339,7 +339,7 @@ public class PermissionCheckerTests
             });
 
         _providerManager.ValueProviders.Returns(
-            new List<IPermissionValueProvider?> { provider1, provider2 });
+            new List<IPermissionValueProvider> { provider1, provider2 });
 
         var result = await _checker.IsGrantedAsync(new ClaimsPrincipal(), new[] { "p1", "p2" });
 
