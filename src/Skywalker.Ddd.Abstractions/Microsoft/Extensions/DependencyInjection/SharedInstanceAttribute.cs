@@ -1,5 +1,5 @@
 
-namespace Skywalker.DependencyInjection;
+namespace Microsoft.Extensions.DependencyInjection;
 
 /// <summary>
 /// 标记此类需要共享实例注册。

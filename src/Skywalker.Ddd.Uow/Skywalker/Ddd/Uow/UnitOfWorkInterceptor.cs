@@ -5,7 +5,6 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 using Skywalker.Ddd.Uow.Abstractions;
-using Skywalker.DependencyInjection;
 using Skywalker.Extensions.DynamicProxies;
 
 namespace Skywalker.Ddd.Uow;

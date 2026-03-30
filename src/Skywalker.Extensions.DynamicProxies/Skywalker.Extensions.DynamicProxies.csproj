@@ -2,15 +2,12 @@
 
   <PropertyGroup>
     <RootNamespace></RootNamespace>
-    <Description>Skywalker DDD 核心，包含 DI 标记接口、服务注册和程序集发现</Description>
+    <Description>Skywalker 动态代理基础设施，基于 Castle.DynamicProxy</Description>
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="Castle.Core" Version="$(CastleCoreVersion)" />
     <PackageReference Include="Microsoft.Extensions.DependencyInjection.Abstractions" Version="$(MicrosoftExtensionsVersion)" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <ProjectReference Include="$(LibrariesProjectRoot)Skywalker.Extensions.DynamicProxies\Skywalker.Extensions.DynamicProxies.csproj" />
   </ItemGroup>
 
 </Project>

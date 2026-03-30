@@ -1,7 +1,6 @@
 using Microsoft.Extensions.DependencyInjection;
 using Skywalker.Ddd.Uow;
 using Skywalker.Ddd.Uow.Abstractions;
-using Skywalker.DependencyInjection;
 using Skywalker.Extensions.DynamicProxies;
 
 namespace Skywalker.SourceGenerators.Tests;

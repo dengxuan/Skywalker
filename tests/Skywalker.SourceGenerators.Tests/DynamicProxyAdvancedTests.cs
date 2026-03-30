@@ -1,6 +1,5 @@
 using System.Collections.Concurrent;
 using Microsoft.Extensions.DependencyInjection;
-using Skywalker.DependencyInjection;
 using Skywalker.Extensions.DynamicProxies;
 
 namespace Skywalker.SourceGenerators.Tests;

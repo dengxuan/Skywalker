@@ -3,7 +3,6 @@
 
 using System.Reflection;
 using Skywalker;
-using Skywalker.Extensions.DynamicProxies;
 
 namespace Microsoft.Extensions.DependencyInjection;
 
@@ -22,7 +21,7 @@ public static class SkywalkerServiceCollectionExtensions
     /// <list type="bullet">
     /// <item>发现所有引用了 Skywalker 的程序集</item>
     /// <item>基于反射扫描并注册所有标记了 DI 接口的服务</item>
-    /// <item>注册动态代理服务 (Castle.DynamicProxy)</item>
+    /// <item>为实现了 IInterceptable 的服务启用动态代理</item>
     /// </list>
     /// <para>
     /// 外部模块通过 Builder 扩展方法按需添加：
@@ -57,9 +56,8 @@ public static class SkywalkerServiceCollectionExtensions
         // 3. 基于反射扫描注册所有服务
         partManager.RegisterAllServices(services);
 
-        // 4. 注册动态代理服务
-        services.AddDynamicProxies();
-        services.AddInterceptedServices(partManager.Assemblies.ToArray());
+        // 4. 扫描已注册服务，为 IInterceptable 的服务启用代理
+        services.AddInterceptedServices();
 
         return new SkywalkerBuilder(services, partManager);
     }

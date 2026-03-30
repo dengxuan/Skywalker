@@ -1,5 +1,5 @@
 
-namespace Skywalker.DependencyInjection;
+namespace Microsoft.Extensions.DependencyInjection;
 
 /// <summary>
 /// 指定类应该注册为 Keyed Service。

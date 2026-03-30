@@ -1,4 +1,4 @@
-namespace Skywalker.DependencyInjection;
+namespace Microsoft.Extensions.DependencyInjection;
 
 /// <summary>
 /// 标记服务为瞬态生命周期（每次请求创建新实例）。
