@@ -9,12 +9,16 @@ namespace Microsoft.Extensions.DependencyInjection;
 public static class UowServiceCollectionExtensions
 {
     /// <summary>
-    /// 添加 UnitOfWork 模块服务到服务集合。
+    /// 单独添加 UnitOfWork 模块服务到服务集合。
     /// </summary>
     /// <param name="services">服务集合。</param>
     /// <returns>服务集合。</returns>
+    /// <remarks>
+    /// 通常不需要直接调用此方法，<see cref="SkywalkerServiceCollectionExtensions.AddSkywalker"/>
+    /// 会自动注册所有 Skywalker 模块的服务。
+    /// </remarks>
     public static IServiceCollection AddUnitOfWork(this IServiceCollection services)
     {
-        return services.AddAutoServices();
+        return SkywalkerDddUowAutoServiceExtensions.AddAutoServices(services);
     }
 }

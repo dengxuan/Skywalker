@@ -5,7 +5,9 @@ using Microsoft.Extensions.DependencyInjection;
 
 namespace Skywalker;
 
-internal class SkywalkerBuilder(IServiceCollection services) : ISkywalkerBuilder
+internal class SkywalkerBuilder(IServiceCollection services, SkywalkerPartManager partManager) : ISkywalkerBuilder
 {
     public IServiceCollection Services { get; } = services;
+
+    public SkywalkerPartManager PartManager { get; } = partManager;
 }

@@ -327,15 +327,21 @@ public sealed class DependencyInjectionGenerator : IIncrementalGenerator
         sb.AppendLine();
         sb.AppendLine("using Microsoft.Extensions.DependencyInjection;");
         sb.AppendLine("using Microsoft.Extensions.DependencyInjection.Extensions;");
+        sb.AppendLine("using Skywalker.DependencyInjection;");
+        sb.AppendLine();
+
+        // 使用程序集名称生成唯一的类名
+        var className = GetSafeClassName(assemblyName) + "AutoServiceExtensions";
+        var fullClassName = $"Microsoft.Extensions.DependencyInjection.{className}";
+
+        // 生成 assembly 特性，用于 AddSkywalker() 自动发现
+        sb.AppendLine($"[assembly: SkywalkerServices(typeof({fullClassName}))]");
         sb.AppendLine();
         sb.AppendLine("namespace Microsoft.Extensions.DependencyInjection;");
         sb.AppendLine();
         sb.AppendLine("/// <summary>");
         sb.AppendLine("/// 自动服务注册扩展方法（自动生成）。");
         sb.AppendLine("/// </summary>");
-
-        // 使用程序集名称生成唯一的类名
-        var className = GetSafeClassName(assemblyName) + "AutoServiceExtensions";
         sb.AppendLine($"public static partial class {className}");
         sb.AppendLine("{");
         sb.AppendLine("    /// <summary>");

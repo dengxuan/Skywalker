@@ -3,6 +3,7 @@
 
 using System.Reflection;
 using Skywalker;
+using Skywalker.Extensions.DynamicProxies;
 
 namespace Microsoft.Extensions.DependencyInjection;
 
@@ -15,14 +16,23 @@ public static class SkywalkerServiceCollectionExtensions
     /// 添加 Skywalker 核心服务，自动发现并注册所有引用程序集中的服务。
     /// </summary>
     /// <param name="services">服务集合。</param>
-    /// <returns>Skywalker 构建器。</returns>
+    /// <returns>Skywalker 构建器，支持链式调用。</returns>
     /// <remarks>
     /// 此方法会：
     /// <list type="bullet">
     /// <item>发现所有引用了 Skywalker 的程序集</item>
-    /// <item>调用每个程序集中 SourceGenerator 生成的服务注册方法</item>
-    /// <item>注册 UnitOfWork、拦截器等核心基础设施</item>
+    /// <item>基于反射扫描并注册所有服务</item>
+    /// <item>注册动态代理服务 (Castle.DynamicProxy)</item>
+    /// <item>注册默认内存缓存 (IMemoryCache)</item>
+    /// <item>注册默认本地事件总线 (Local EventBus)</item>
     /// </list>
+    /// <para>
+    /// 使用示例：
+    /// <code>
+    /// services.AddSkywalker()
+    ///     .AddEntityFramework&lt;MyDbContext&gt;(options => options.UseSqlServer(...));
+    /// </code>
+    /// </para>
     /// </remarks>
     public static ISkywalkerBuilder AddSkywalker(this IServiceCollection services)
     {
@@ -34,7 +44,7 @@ public static class SkywalkerServiceCollectionExtensions
     /// </summary>
     /// <param name="services">服务集合。</param>
     /// <param name="entryAssembly">入口程序集。</param>
-    /// <returns>Skywalker 构建器。</returns>
+    /// <returns>Skywalker 构建器，支持链式调用。</returns>
     public static ISkywalkerBuilder AddSkywalker(this IServiceCollection services, Assembly entryAssembly)
     {
         // 1. 创建并配置 PartManager
@@ -44,9 +54,19 @@ public static class SkywalkerServiceCollectionExtensions
         // 2. 注册 PartManager 供后续使用
         services.AddSingleton(partManager);
 
-        // 3. 调用所有发现的程序集的服务注册方法
+        // 3. 基于反射扫描注册所有服务
         partManager.RegisterAllServices(services);
 
-        return new SkywalkerBuilder(services);
+        // 4. 注册动态代理服务
+        services.AddDynamicProxies();
+        services.AddInterceptedServices(partManager.Assemblies.ToArray());
+
+        // 5. 注册默认内存缓存
+        services.AddMemoryCache();
+
+        // 6. 注册默认本地事件总线
+        services.AddEventBusLocal();
+
+        return new SkywalkerBuilder(services, partManager);
     }
 }

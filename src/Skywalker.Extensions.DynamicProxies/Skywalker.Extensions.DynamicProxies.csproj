@@ -2,27 +2,16 @@
 
 	<PropertyGroup>
 		<RootNamespace></RootNamespace>
-		<Description>Skywalker 动态代理抽象，包含拦截器接口和特性</Description>
-		<SkipAutoAnalyzers>true</SkipAutoAnalyzers>
+		<Description>Skywalker 动态代理，基于 Castle.DynamicProxy 实现拦截器</Description>
 	</PropertyGroup>
 
 	<ItemGroup>
+		<PackageReference Include="Castle.Core" Version="$(CastleCoreVersion)" />
 		<PackageReference Include="Microsoft.Extensions.DependencyInjection.Abstractions" Version="$(MicrosoftExtensionsVersion)" />
 	</ItemGroup>
 
-	<!-- Source Generator: 本地开发时作为分析器工作 -->
 	<ItemGroup>
-		<ProjectReference Include="$(LibrariesProjectRoot)Skywalker.Extensions.DynamicProxies.SourceGenerators\Skywalker.Extensions.DynamicProxies.SourceGenerators.csproj"
-						  ReferenceOutputAssembly="false"
-						  OutputItemType="Analyzer" />
+		<ProjectReference Include="$(LibrariesProjectRoot)Skywalker.Extensions.DependencyInjection\Skywalker.Extensions.DependencyInjection.csproj" />
 	</ItemGroup>
-
-	<!-- NuGet 打包时将 SourceGenerator DLL 放入 analyzers/dotnet/cs 目录 -->
-	<Target Name="_IncludeAnalyzerInPackage" BeforeTargets="_GetPackageFiles">
-		<ItemGroup>
-			<_AnalyzerFiles Include="$(LibrariesProjectRoot)Skywalker.Extensions.DynamicProxies.SourceGenerators\bin\$(Configuration)\netstandard2.0\Skywalker.Extensions.DynamicProxies.SourceGenerators.dll" />
-			<_PackageFiles Include="@(_AnalyzerFiles)" PackagePath="analyzers/dotnet/cs" BuildAction="None" />
-		</ItemGroup>
-	</Target>
 
 </Project>

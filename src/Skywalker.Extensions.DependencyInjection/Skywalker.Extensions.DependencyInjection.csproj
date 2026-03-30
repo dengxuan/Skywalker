@@ -2,23 +2,11 @@
 
 	<PropertyGroup>
 		<RootNamespace></RootNamespace>
-		<Description>Skywalker 依赖注入抽象，包含自动注册标记接口和特性</Description>
-		<SkipAutoAnalyzers>true</SkipAutoAnalyzers>
+		<Description>Skywalker 依赖注入抽象，包含自动注册标记接口和反射扫描</Description>
 	</PropertyGroup>
 
-	<!-- Source Generator: 本地开发时作为分析器工作 -->
 	<ItemGroup>
-		<ProjectReference Include="$(LibrariesProjectRoot)Skywalker.Extensions.DependencyInjection.SourceGenerators\Skywalker.Extensions.DependencyInjection.SourceGenerators.csproj"
-						  ReferenceOutputAssembly="false"
-						  OutputItemType="Analyzer" />
+		<PackageReference Include="Microsoft.Extensions.DependencyInjection.Abstractions" Version="$(MicrosoftExtensionsVersion)" />
 	</ItemGroup>
-
-	<!-- NuGet 打包时将 SourceGenerator DLL 放入 analyzers/dotnet/cs 目录 -->
-	<Target Name="_IncludeAnalyzerInPackage" BeforeTargets="_GetPackageFiles">
-		<ItemGroup>
-			<_AnalyzerFiles Include="$(LibrariesProjectRoot)Skywalker.Extensions.DependencyInjection.SourceGenerators\bin\$(Configuration)\netstandard2.0\Skywalker.Extensions.DependencyInjection.SourceGenerators.dll" />
-			<_PackageFiles Include="@(_AnalyzerFiles)" PackagePath="analyzers/dotnet/cs" BuildAction="None" />
-		</ItemGroup>
-	</Target>
 
 </Project>

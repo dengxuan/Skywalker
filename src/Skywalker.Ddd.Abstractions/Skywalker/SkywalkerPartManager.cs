@@ -96,27 +96,15 @@ public sealed class SkywalkerPartManager
     }
 
     /// <summary>
-    /// 调用所有已发现程序集的服务注册方法。
+    /// 从所有已发现程序集中扫描并注册服务（基于反射）。
     /// </summary>
     /// <param name="services">服务集合。</param>
     public void RegisterAllServices(IServiceCollection services)
     {
         foreach (var assembly in _skywalkerAssemblies)
         {
-            var attr = assembly.GetCustomAttribute<SkywalkerServicesAttribute>();
-            if (attr == null)
-            {
-                continue;
-            }
-
-            var method = attr.RegistrationType.GetMethod(
-                "AddAutoServices",
-                BindingFlags.Public | BindingFlags.Static,
-                null,
-                [typeof(IServiceCollection)],
-                null);
-
-            method?.Invoke(null, [services]);
+            // 使用反射扫描注册服务
+            ServiceRegistrar.RegisterAssembly(services, assembly);
         }
     }
 }
