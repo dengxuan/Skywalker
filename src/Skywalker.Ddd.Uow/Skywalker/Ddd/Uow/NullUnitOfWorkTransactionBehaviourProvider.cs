@@ -2,7 +2,7 @@
 // Gordon licenses this file to you under the MIT license.
 
 using Skywalker.Ddd.Uow.Abstractions;
-using Skywalker.DependencyInjection;
+using Microsoft.Extensions.DependencyInjection;
 
 namespace Skywalker.Ddd.Uow;
 

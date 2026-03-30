@@ -26,8 +26,8 @@ public static class EmailTemplateServiceCollectionExtensions
             services.Configure(configureOptions);
         }
 
-        // Register email template sender via auto services
-        SkywalkerExtensionsEmailingTemplateAutoServiceExtensions.AddAutoServices(services);
+        // Register email template sender
+        services.AddTransient<ITemplateEmailSender, TemplateEmailSender>();
 
         // Register template definition provider
         services.Configure<SkywalkerTextTemplatingOptions>(options =>

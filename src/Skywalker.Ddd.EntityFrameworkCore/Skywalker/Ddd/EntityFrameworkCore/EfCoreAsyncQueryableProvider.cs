@@ -1,7 +1,7 @@
 ﻿using System.Linq.Expressions;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Query.Internal;
-using Skywalker.DependencyInjection;
+using Microsoft.Extensions.DependencyInjection;
 
 namespace Skywalker.Ddd.EntityFrameworkCore;
 

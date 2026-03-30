@@ -34,7 +34,7 @@ public static class GuidGeneratorIServiceCollectionExtensions
                 .ValidateOnStart();
         }
 
-        services.AddAutoServices();
+        services.TryAddSingleton<IGuidGenerator, SequentialGuidGenerator>();
         return services;
     }
 
@@ -61,7 +61,7 @@ public static class GuidGeneratorIServiceCollectionExtensions
                 .ValidateOnStart();
         }
 
-        services.AddAutoServices();
+        services.TryAddSingleton<IGuidGenerator, SequentialGuidGenerator>();
         return services;
     }
 }

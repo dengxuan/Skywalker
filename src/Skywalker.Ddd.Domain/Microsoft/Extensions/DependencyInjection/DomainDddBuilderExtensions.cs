@@ -26,7 +26,7 @@ public static class DomainDddBuilderExtensions
     {
         services.AddDddExceptions();
         services.AddEventBusCore();
-        return services.AddAutoServices();
+        return services;
     }
 
     private static void RegisterService(IServiceCollection services, Type serviceType, Type implementationType, bool replaceExisting, bool isReadOnlyRepository = false)
@@ -45,7 +45,6 @@ public static class DomainDddBuilderExtensions
 
     internal static IServiceCollection AddDataFilter(this IServiceCollection services)
     {
-        SkywalkerDddDomainAutoServiceExtensions.AddAutoServices(services);
         services.TryAddSingleton(typeof(IDataFilter<>), typeof(DataFilter<>));
 
         return services;

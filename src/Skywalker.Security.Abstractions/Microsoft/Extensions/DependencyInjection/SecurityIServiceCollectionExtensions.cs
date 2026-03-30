@@ -1,6 +1,11 @@
 // Licensed to the Gordon under one or more agreements.
 // Gordon licenses this file to you under the MIT license.
 
+using Microsoft.Extensions.DependencyInjection.Extensions;
+using Skywalker.Security.Claims;
+using Skywalker.Security.Clients;
+using Skywalker.Security.Users;
+
 namespace Microsoft.Extensions.DependencyInjection;
 
 /// <summary>
@@ -15,6 +20,10 @@ public static class SecurityIServiceCollectionExtensions
     /// <returns>服务集合。</returns>
     public static IServiceCollection AddSecurity(this IServiceCollection services)
     {
-        return services.AddAutoServices();
+        services.TryAddTransient<ISkywalkerClaimsPrincipalFactory, SkywalkerClaimsPrincipalFactory>();
+        services.TryAddSingleton<ICurrentPrincipalAccessor, ThreadCurrentPrincipalAccessor>();
+        services.TryAddTransient<ICurrentClient, CurrentClient>();
+        services.TryAddTransient<ICurrentUser, CurrentUser>();
+        return services;
     }
 }

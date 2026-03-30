@@ -3,7 +3,7 @@
 
 using AutoMapper;
 using Skywalker.Ddd.Application.Abstractions;
-using Skywalker.DependencyInjection;
+using Microsoft.Extensions.DependencyInjection;
 
 namespace Skywalker.Ddd.Application;
 

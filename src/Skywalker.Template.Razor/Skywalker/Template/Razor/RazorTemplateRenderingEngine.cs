@@ -2,7 +2,6 @@ using System.Dynamic;
 using System.Globalization;
 using Microsoft.Extensions.Localization;
 using RazorLight;
-using Skywalker.DependencyInjection;
 using Skywalker.Template.Abstractions;
 
 namespace Skywalker.Template.Razor;
@@ -10,7 +9,7 @@ namespace Skywalker.Template.Razor;
 /// <summary>
 /// Razor template rendering engine implementation using RazorLight.
 /// </summary>
-public class RazorTemplateRenderingEngine : TemplateRenderingEngineBase, ITransientDependency
+public class RazorTemplateRenderingEngine : TemplateRenderingEngineBase
 {
     public const string EngineName = "Razor";
 

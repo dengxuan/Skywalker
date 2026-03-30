@@ -1,13 +1,12 @@
 ﻿// Licensed to the Gordon under one or more agreements.
 // Gordon licenses this file to you under the MIT license.
 
-using Skywalker.DependencyInjection;
 using Skywalker.Extensions.Collections;
 using TimeZoneConverter;
 
 namespace Skywalker.Extensions.Timezone;
 
-public class TZConvertTimezoneProvider : ITimezoneProvider, ISingletonDependency
+public class TZConvertTimezoneProvider : ITimezoneProvider
 {
     public virtual List<NameValue> GetWindowsTimezones()
     {

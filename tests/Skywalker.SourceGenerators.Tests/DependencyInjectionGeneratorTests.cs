@@ -1,6 +1,4 @@
-using System.Reflection;
 using Microsoft.Extensions.DependencyInjection;
-using Skywalker.DependencyInjection;
 using Skywalker.Extensions.DynamicProxies;
 
 namespace Skywalker.SourceGenerators.Tests;
@@ -136,37 +134,16 @@ public class TestOrderService : ITestOrderService, IScopedDependency
 #endregion
 
 /// <summary>
-/// Tests for the DependencyInjectionGenerator Source Generator.
+/// Tests for reflection-based service registration via ServiceRegistrar.
 /// </summary>
 public class DependencyInjectionGeneratorTests
 {
-
     [Fact]
-    public void Generator_GeneratesAddAutoServicesMethod()
-    {
-        // The fact that this test compiles proves the generator works
-        var assembly = typeof(DependencyInjectionGeneratorTests).Assembly;
-
-        // Find the generated class
-        var extensionClass = assembly.GetTypes()
-            .FirstOrDefault(t => t.Name == nameof(SkywalkerSourceGeneratorsTestsAutoServiceExtensions));
-
-        Assert.NotNull(extensionClass);
-
-        // AddAutoServices is internal (非公开)
-        var methodInfo = extensionClass.GetMethod("AddAutoServices", BindingFlags.NonPublic | BindingFlags.Static);
-
-        Assert.NotNull(methodInfo);
-        Assert.True(methodInfo.IsStatic);
-        Assert.True(methodInfo.IsAssembly); // internal 方法
-    }
-
-    [Fact]
-    public void Generator_RegistersTransientService()
+    public void ServiceRegistrar_RegistersTransientService()
     {
         // Arrange
         var services = new ServiceCollection();
-        SkywalkerSourceGeneratorsTestsAutoServiceExtensions.AddAutoServices(services);
+        services.AddSkywalker(typeof(DependencyInjectionGeneratorTests).Assembly);
         var provider = services.BuildServiceProvider();
 
         // Act
@@ -180,11 +157,11 @@ public class DependencyInjectionGeneratorTests
     }
 
     [Fact]
-    public void Generator_RegistersScopedService()
+    public void ServiceRegistrar_RegistersScopedService()
     {
         // Arrange
         var services = new ServiceCollection();
-        SkywalkerSourceGeneratorsTestsAutoServiceExtensions.AddAutoServices(services);
+        services.AddSkywalker(typeof(DependencyInjectionGeneratorTests).Assembly);
         var provider = services.BuildServiceProvider();
 
         // Act
@@ -199,11 +176,11 @@ public class DependencyInjectionGeneratorTests
     }
 
     [Fact]
-    public void Generator_RegistersSingletonService()
+    public void ServiceRegistrar_RegistersSingletonService()
     {
         // Arrange
         var services = new ServiceCollection();
-        SkywalkerSourceGeneratorsTestsAutoServiceExtensions.AddAutoServices(services);
+        services.AddSkywalker(typeof(DependencyInjectionGeneratorTests).Assembly);
         var provider = services.BuildServiceProvider();
 
         // Act
@@ -224,9 +201,7 @@ public class DependencyInjectionGeneratorTests
         var logCountBefore = TestLoggingInterceptor.Log.Count;
 
         var services = new ServiceCollection();
-
-        // AddAutoServices 自动注册所有 DI 服务 + 调用 AddProxyServices 注册代理
-        SkywalkerSourceGeneratorsTestsAutoServiceExtensions.AddAutoServices(services);
+        services.AddSkywalker(typeof(DependencyInjectionGeneratorTests).Assembly);
 
         var provider = services.BuildServiceProvider();
 

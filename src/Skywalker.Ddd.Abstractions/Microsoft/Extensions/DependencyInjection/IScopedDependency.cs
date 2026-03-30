@@ -1,4 +1,4 @@
-namespace Skywalker.DependencyInjection;
+namespace Microsoft.Extensions.DependencyInjection;
 
 /// <summary>
 /// 标记服务为作用域生命周期（每个作用域一个实例）。

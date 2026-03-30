@@ -19,6 +19,6 @@ public static class UowServiceCollectionExtensions
     /// </remarks>
     public static IServiceCollection AddUnitOfWork(this IServiceCollection services)
     {
-        return SkywalkerDddUowAutoServiceExtensions.AddAutoServices(services);
+        return services;
     }
 }

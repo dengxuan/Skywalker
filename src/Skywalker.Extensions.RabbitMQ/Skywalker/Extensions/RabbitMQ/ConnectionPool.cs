@@ -1,12 +1,11 @@
-﻿using System.Collections.Concurrent;
+using System.Collections.Concurrent;
 using Microsoft.Extensions.Options;
 using RabbitMQ.Client;
-using Skywalker.DependencyInjection;
 using Skywalker.Extensions.RabbitMQ.Abstractions;
 
 namespace Skywalker.Extensions.RabbitMQ;
 
-public class ConnectionPool : IConnectionPool, ISingletonDependency
+public class ConnectionPool : IConnectionPool
 {
     protected SkywalkerRabbitMqOptions Options { get; }
 

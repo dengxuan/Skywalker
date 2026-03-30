@@ -1,5 +1,5 @@
 
-namespace Skywalker.DependencyInjection;
+namespace Microsoft.Extensions.DependencyInjection;
 
 /// <summary>
 /// 禁用类的自动注册。

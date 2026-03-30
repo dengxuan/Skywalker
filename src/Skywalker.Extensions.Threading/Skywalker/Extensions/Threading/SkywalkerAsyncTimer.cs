@@ -1,12 +1,11 @@
 ﻿using Microsoft.Extensions.Logging;
-using Skywalker.DependencyInjection;
 
 namespace Skywalker.Extensions.Threading;
 
 /// <summary>
 /// A robust timer implementation that ensures no overlapping occurs. It waits exactly specified <see cref="Period"/> between ticks.
 /// </summary>
-public class SkywalkerAsyncTimer : ITransientDependency
+public class SkywalkerAsyncTimer
 {
     /// <summary>
     /// This func is raised periodically according to Period of Timer.

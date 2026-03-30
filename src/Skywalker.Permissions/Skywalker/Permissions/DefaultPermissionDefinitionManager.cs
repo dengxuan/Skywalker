@@ -4,7 +4,6 @@
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Options;
 
-using Skywalker.DependencyInjection;
 using Skywalker.Permissions.Abstractions;
 
 namespace Skywalker.Permissions;
@@ -13,7 +12,7 @@ namespace Skywalker.Permissions;
 /// 默认权限定义管理器，使用内存存储
 /// 启动时自动从 PermissionOptions.DefinitionProviders 加载权限定义
 /// </summary>
-public class DefaultPermissionDefinitionManager : IPermissionDefinitionManager, ISingletonDependency
+public class DefaultPermissionDefinitionManager : IPermissionDefinitionManager
 {
     private readonly Dictionary<string, PermissionDefinition> _permissions = new();
     private readonly object _lock = new();

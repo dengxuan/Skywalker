@@ -4,14 +4,13 @@
 using System.Security.Claims;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Options;
-using Skywalker.DependencyInjection;
 
 namespace Skywalker.Security.Claims;
 
 /// <summary>
 /// Claims 主体工厂实现类。
 /// </summary>
-public class SkywalkerClaimsPrincipalFactory(IServiceScopeFactory serviceScopeFactory, IOptions<SkywalkerClaimsPrincipalFactoryOptions> abpClaimOptions) : ISkywalkerClaimsPrincipalFactory, ITransientDependency
+public class SkywalkerClaimsPrincipalFactory(IServiceScopeFactory serviceScopeFactory, IOptions<SkywalkerClaimsPrincipalFactoryOptions> abpClaimOptions) : ISkywalkerClaimsPrincipalFactory
 {
     public static string AuthenticationType => "Skywalker.Application";
 

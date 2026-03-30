@@ -59,7 +59,6 @@ public static class EntityFrameworkCoreIServiceCollectionExtensions
         services.AddThreadingServices();
         services.AddGuidGenerator();
         services.AddTimezone();
-        SkywalkerDddEntityFrameworkCoreAutoServiceExtensions.AddAutoServices(services);
         services.AddSingleton(typeof(IDbContextProvider<>), typeof(UnitOfWorkDbContextProvider<>));
 
         return services;

@@ -20,7 +20,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\src\Skywalker.Extensions.DynamicProxies\Skywalker.Extensions.DynamicProxies.csproj" />
+    <ProjectReference Include="..\..\src\Skywalker.Ddd.Abstractions\Skywalker.Ddd.Abstractions.csproj" />
     <PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="$(MicrosoftExtensionsVersion)" />
   </ItemGroup>
 

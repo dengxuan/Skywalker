@@ -11,7 +11,7 @@ public static class ThreadingIServiceCollectionExtensions
 {
     public static IServiceCollection AddThreading(this IServiceCollection services)
     {
-        services.AddAutoServices();
+        services.TryAddTransient<SkywalkerAsyncTimer>();
         return services;
     }
 }

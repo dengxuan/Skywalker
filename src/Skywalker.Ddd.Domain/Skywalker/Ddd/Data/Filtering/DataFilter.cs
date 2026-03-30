@@ -1,7 +1,6 @@
 ﻿using System.Collections.Concurrent;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Options;
-using Skywalker.DependencyInjection;
 
 namespace Skywalker.Ddd.Data.Filtering;
 

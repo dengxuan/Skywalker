@@ -1,11 +1,10 @@
 ﻿using Microsoft.Extensions.FileProviders;
 using Microsoft.Extensions.Options;
 using Microsoft.Extensions.Primitives;
-using Skywalker.DependencyInjection;
 
 namespace Skywalker.Extensions.VirtualFileSystem;
 
-public class VirtualFileProvider : IVirtualFileProvider, ISingletonDependency
+public class VirtualFileProvider : IVirtualFileProvider
 {
     private readonly IFileProvider _hybridFileProvider;
     private readonly SkywalkerVirtualFileSystemOptions _options;

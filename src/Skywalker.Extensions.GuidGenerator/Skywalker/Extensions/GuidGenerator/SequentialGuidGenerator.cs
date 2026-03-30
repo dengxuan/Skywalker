@@ -1,9 +1,8 @@
-﻿// Licensed to the Gordon under one or more agreements.
+// Licensed to the Gordon under one or more agreements.
 // Gordon licenses this file to you under the MIT license.
 
 using System.Security.Cryptography;
 using Microsoft.Extensions.Options;
-using Skywalker.DependencyInjection;
 
 namespace Skywalker.Extensions.GuidGenerator;
 
@@ -13,7 +12,7 @@ namespace Skywalker.Extensions.GuidGenerator;
 /// Implements <see cref="IGuidGenerator"/> by creating sequential Guids.
 /// Use <see cref="SequentialGuidGeneratorOptions"/> to configure.
 /// </summary>
-internal class SequentialGuidGenerator : IGuidGenerator, ISingletonDependency
+internal class SequentialGuidGenerator : IGuidGenerator
 {
     public SequentialGuidGeneratorOptions Options { get; }
 

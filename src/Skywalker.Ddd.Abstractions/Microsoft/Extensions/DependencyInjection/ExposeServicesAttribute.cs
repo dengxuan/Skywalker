@@ -1,5 +1,5 @@
 
-namespace Skywalker.DependencyInjection;
+namespace Microsoft.Extensions.DependencyInjection;
 
 /// <summary>
 /// 显式指定要暴露的服务接口。

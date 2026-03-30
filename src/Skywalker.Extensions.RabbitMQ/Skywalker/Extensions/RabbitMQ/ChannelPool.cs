@@ -1,14 +1,13 @@
-﻿using System.Collections.Concurrent;
+using System.Collections.Concurrent;
 using System.Diagnostics;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Logging.Abstractions;
 using RabbitMQ.Client;
-using Skywalker.DependencyInjection;
 using Skywalker.Extensions.RabbitMQ.Abstractions;
 
 namespace Skywalker.Extensions.RabbitMQ;
 
-public class ChannelPool : IChannelPool, ISingletonDependency
+public class ChannelPool : IChannelPool
 {
     protected IConnectionPool ConnectionPool { get; }
 

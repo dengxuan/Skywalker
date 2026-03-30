@@ -1,12 +1,11 @@
 using System.ComponentModel.DataAnnotations;
-using Skywalker.DependencyInjection;
 
 namespace Skywalker.Validation;
 
 /// <summary>
 /// Validator that uses DataAnnotations attributes.
 /// </summary>
-public class DataAnnotationsValidator : IValidator, ITransientDependency
+public class DataAnnotationsValidator : IValidator
 {
     public IValidationResult Validate(object instance)
     {

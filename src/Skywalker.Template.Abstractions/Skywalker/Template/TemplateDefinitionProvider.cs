@@ -1,8 +1,8 @@
-﻿using Skywalker.Template.Abstractions;
+using Skywalker.Template.Abstractions;
 
 namespace Skywalker.Template;
 
-public abstract class TemplateDefinitionProvider : ITemplateDefinitionProvider//, ITransientDependency
+public abstract class TemplateDefinitionProvider : ITemplateDefinitionProvider//
 {
     public virtual void PreDefine(ITemplateDefinitionContext context)
     {

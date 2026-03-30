@@ -1,4 +1,8 @@
+﻿using Microsoft.Extensions.DependencyInjection.Extensions;
+using Skywalker.Caching;
+using Skywalker.Caching.Abstractions;
 using Skywalker.Caching.Redis;
+using Skywalker.Caching.Redis.Abstractions;
 
 
 namespace Microsoft.Extensions.DependencyInjection;
@@ -31,7 +35,9 @@ public static class RedisCachingIServiceCollectionExtensions
                 .ValidateOnStart();
         }
 
-        SkywalkerCachingRedisAutoServiceExtensions.AddAutoServices(services);
+        services.TryAddSingleton<ICachingSerializer, JsonCachingSerializer>();
+        services.TryAddSingleton<IRedisDatabaseProvider, RedisDatabaseProvider>();
+        services.TryAddSingleton<ICachingProvider, RedisCachingProvider>();
         return services;
     }
 
@@ -60,7 +66,9 @@ public static class RedisCachingIServiceCollectionExtensions
                 .ValidateOnStart();
         }
 
-        SkywalkerCachingRedisAutoServiceExtensions.AddAutoServices(services);
+        services.TryAddSingleton<ICachingSerializer, JsonCachingSerializer>();
+        services.TryAddSingleton<IRedisDatabaseProvider, RedisDatabaseProvider>();
+        services.TryAddSingleton<ICachingProvider, RedisCachingProvider>();
         return services;
     }
 }

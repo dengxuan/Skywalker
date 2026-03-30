@@ -1,6 +1,5 @@
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Caching.Memory;
-using Skywalker.DependencyInjection;
 using Skywalker.Localization.EntityFrameworkCore.Entities;
 
 namespace Skywalker.Localization.EntityFrameworkCore;
@@ -8,7 +7,7 @@ namespace Skywalker.Localization.EntityFrameworkCore;
 /// <summary>
 /// Default implementation of <see cref="ILocalizationTextManager"/>.
 /// </summary>
-public class LocalizationTextManager : ILocalizationTextManager, IScopedDependency
+public class LocalizationTextManager : ILocalizationTextManager
 {
     private readonly ILocalizationDbContext _dbContext;
     private readonly IMemoryCache? _memoryCache;

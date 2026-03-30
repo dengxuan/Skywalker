@@ -1,11 +1,10 @@
-using Skywalker.DependencyInjection;
 
 namespace Skywalker.EventBus.Local;
 
 /// <summary>
 /// Default implementation of <see cref="IDomainEventDispatcher"/>.
 /// </summary>
-public class DomainEventDispatcher : IDomainEventDispatcher, ISingletonDependency
+public class DomainEventDispatcher : IDomainEventDispatcher
 {
     private readonly ILocalEventBus _eventBus;
 

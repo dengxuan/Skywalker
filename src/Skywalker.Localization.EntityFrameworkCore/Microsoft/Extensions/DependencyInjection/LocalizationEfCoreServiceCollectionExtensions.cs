@@ -19,8 +19,8 @@ public static class LocalizationEfCoreServiceCollectionExtensions
         where TDbContext : DbContext, ILocalizationDbContext
     {
         services.AddScoped<ILocalizationDbContext>(sp => sp.GetRequiredService<TDbContext>());
-        // LocalizationTextManager 通过 IScopedDependency 自动注册
-        SkywalkerLocalizationEntityFrameworkCoreAutoServiceExtensions.AddAutoServices(services);
+        // LocalizationTextManager 手动注册
+        services.AddScoped<ILocalizationTextManager, LocalizationTextManager>();
         services.AddMemoryCache();
 
         return services;

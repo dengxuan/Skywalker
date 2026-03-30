@@ -1,5 +1,5 @@
 using Microsoft.Extensions.Configuration;
-using Skywalker.DependencyInjection;
+using Microsoft.Extensions.DependencyInjection;
 
 namespace Skywalker.Ddd.Data;
 

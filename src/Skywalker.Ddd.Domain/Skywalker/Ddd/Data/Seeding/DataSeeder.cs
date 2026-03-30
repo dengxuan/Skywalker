@@ -2,7 +2,6 @@
 using Microsoft.Extensions.Options;
 using Skywalker.Ddd.Uow;
 using Skywalker.Ddd.Uow.Abstractions;
-using Skywalker.DependencyInjection;
 
 namespace Skywalker.Ddd.Data.Seeding;
 

@@ -357,7 +357,7 @@ public class LocalEventBusOptions : EventBusOptions
 builder.Services.AddEventBusLocal();
 ```
 
-> **说明**：事件处理器通过实现 `ILocalEventHandler<TEvent>` 接口并通过 SourceGenerator 自动注册，无需手动添加。
+> **说明**：事件处理器通过实现 `ILocalEventHandler<TEvent>` 接口并通过反射自动注册，无需手动添加。
 
 ### 使用示例
 
@@ -580,7 +580,7 @@ public class EventNameAttribute : Attribute
 builder.Services.AddEventBusRabbitMQ();
 ```
 
-> **说明**：RabbitMQ 连接配置通过 `appsettings.json` 的 `RabbitMQ` 节点注入，事件处理器通过 SourceGenerator 自动注册。
+> **说明**：RabbitMQ 连接配置通过 `appsettings.json` 的 `RabbitMQ` 节点注入，事件处理器通过反射自动注册。
 
 ### 使用示例
 

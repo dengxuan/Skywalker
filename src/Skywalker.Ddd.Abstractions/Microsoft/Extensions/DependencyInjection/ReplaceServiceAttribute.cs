@@ -1,5 +1,5 @@
 
-namespace Skywalker.DependencyInjection;
+namespace Microsoft.Extensions.DependencyInjection;
 
 /// <summary>
 /// 标记服务使用替换模式注册。

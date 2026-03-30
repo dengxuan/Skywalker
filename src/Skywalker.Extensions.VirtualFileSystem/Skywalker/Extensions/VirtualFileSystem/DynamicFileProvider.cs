@@ -1,7 +1,6 @@
 ﻿using System.Collections.Concurrent;
 using Microsoft.Extensions.FileProviders;
 using Microsoft.Extensions.Primitives;
-using Skywalker.DependencyInjection;
 
 namespace Skywalker.Extensions.VirtualFileSystem;
 
@@ -12,7 +11,7 @@ namespace Skywalker.Extensions.VirtualFileSystem;
 /// Current implementation only supports file watch.
 /// Does not support directory or wildcard watches.
 /// </remarks>
-public class DynamicFileProvider : DictionaryBasedFileProvider, IDynamicFileProvider, ISingletonDependency
+public class DynamicFileProvider : DictionaryBasedFileProvider, IDynamicFileProvider
 {
     protected override IDictionary<string, IFileInfo> Files => DynamicFiles;
 

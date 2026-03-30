@@ -5,7 +5,7 @@ using System.Linq.Expressions;
 using Skywalker.Ddd.Domain.Entities;
 using Skywalker.Ddd.Domain.Repositories;
 using Skywalker.Ddd.Uow;
-using Skywalker.DependencyInjection;
+using Microsoft.Extensions.DependencyInjection;
 using Skywalker.Extensions.Collections.Generic;
 using Skywalker.Extensions.Specifications;
 

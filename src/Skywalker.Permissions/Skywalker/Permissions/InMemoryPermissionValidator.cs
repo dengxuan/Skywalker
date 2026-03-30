@@ -3,7 +3,6 @@
 
 using Microsoft.Extensions.Caching.Memory;
 using Microsoft.Extensions.Logging;
-using Skywalker.DependencyInjection;
 using Skywalker.Permissions.Abstractions;
 
 namespace Skywalker.Permissions;
@@ -12,7 +11,7 @@ namespace Skywalker.Permissions;
 /// 基于内存缓存的权限验证器
 /// Server 和 Client 都使用此实现，区别在于谁负责更新缓存
 /// </summary>
-public class InMemoryPermissionValidator : IPermissionValidator, ISingletonDependency
+public class InMemoryPermissionValidator : IPermissionValidator
 {
     private readonly IMemoryCache _cache;
     private readonly ILogger<InMemoryPermissionValidator> _logger;
@@ -37,7 +36,7 @@ public class InMemoryPermissionValidator : IPermissionValidator, ISingletonDepen
         }
 
         var grants = _cache.Get<Dictionary<string, HashSet<(string, string)>>>(GrantsCacheKey);
-        _logger.LogDebug("[InMemoryPermissionValidator] 缓存中权限数量: {Count}", grants?.Count ?? 0);
+        _logger.LogDebug("[InMemoryPermissionValidator] 缓存中权限数量 {Count}", grants?.Count ?? 0);
 
         if (grants != null && grants.TryGetValue(name, out var set))
         {

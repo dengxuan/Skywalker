@@ -1,7 +1,6 @@
-﻿using Microsoft.Extensions.Logging;
+using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 using RabbitMQ.Client;
-using Skywalker.DependencyInjection;
 using Skywalker.Extensions.GuidGenerator;
 using Skywalker.Extensions.RabbitMQ;
 using Skywalker.Extensions.RabbitMQ.Abstractions;
@@ -13,7 +12,7 @@ public class RabbitMqEventBus(
     IConnectionPool connectionPool,
     IRabbitMqSerializer serializer,
     IGuidGenerator guidGenerator,
-    ILogger<RabbitMqEventBus> logger) : EventBusBase, ISingletonDependency
+    ILogger<RabbitMqEventBus> logger) : EventBusBase
 {
     protected RabbitMqEventBusOptions RabbitMqEventBusOptions { get; } = options.Value;
 

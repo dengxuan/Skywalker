@@ -2,11 +2,10 @@
 // Gordon licenses this file to you under the MIT license.
 
 using Microsoft.Extensions.Options;
-using Skywalker.DependencyInjection;
 
 namespace Skywalker.Extensions.Timezone;
 
-public class Clock : IClock, ISingletonDependency
+public class Clock : IClock
 {
     protected TimezoneOptions Options { get; }
 
