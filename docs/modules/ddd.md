@@ -31,6 +31,8 @@
 
 ```
 Skywalker.Ddd (整合包)
+├── Skywalker.Ddd.Abstractions
+│   └── Skywalker.Extensions.DynamicProxies (Castle.DynamicProxy)
 ├── Skywalker.Ddd.Domain
 │   ├── Skywalker.Exceptions.Abstractions
 │   └── Skywalker.EventBus.Abstractions
@@ -38,8 +40,7 @@ Skywalker.Ddd (整合包)
 │   ├── Skywalker.Exceptions.Abstractions
 │   └── Skywalker.Ddd.Uow
 └── Skywalker.Ddd.Uow
-    ├── Skywalker.Exceptions.Abstractions
-    └── Skywalker.Extensions.DynamicProxies
+    └── Skywalker.Exceptions.Abstractions
 
 Skywalker.Ddd.EntityFrameworkCore
 ├── Skywalker.Ddd.Domain
@@ -73,7 +74,7 @@ builder.Services.AddSkywalker();
 builder.Services.AddSkywalker().AddAspNetCore();
 ```
 
-> **说明**：`AddSkywalker()` 是所有 Skywalker 项目的唯一入口，领域服务和应用服务通过 SourceGenerator 自动注册（实现 `ISingletonDependency` / `ITransientDependency` / `IScopedDependency` 接口即可），无需手动调用。
+> **说明**：`AddSkywalker()` 是所有 Skywalker 项目的唯一入口，领域服务和应用服务通过反射自动注册（实现 `ISingletonDependency` / `ITransientDependency` / `IScopedDependency` 接口即可），无需手动调用。这些 DI 标记接口位于 `Microsoft.Extensions.DependencyInjection` 命名空间中，无需额外引入命名空间。
 
 ---
 
