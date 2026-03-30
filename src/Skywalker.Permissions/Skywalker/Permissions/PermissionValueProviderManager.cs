@@ -3,14 +3,15 @@
 
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Options;
+using Skywalker.DependencyInjection;
 using Skywalker.Permissions.Abstractions;
 
 namespace Skywalker.Permissions;
 
-public class PermissionValueProviderManager : IPermissionValueProviderManager
+public class PermissionValueProviderManager : IPermissionValueProviderManager, ISingletonDependency
 {
-    public IReadOnlyList<IPermissionValueProvider?> ValueProviders => _lazyProviders.Value;
-    private readonly Lazy<List<IPermissionValueProvider?>> _lazyProviders;
+    public IReadOnlyList<IPermissionValueProvider> ValueProviders => _lazyProviders.Value;
+    private readonly Lazy<List<IPermissionValueProvider>> _lazyProviders;
 
     protected PermissionOptions Options { get; }
 
@@ -20,10 +21,10 @@ public class PermissionValueProviderManager : IPermissionValueProviderManager
     {
         Options = options.Value;
 
-        _lazyProviders = new Lazy<List<IPermissionValueProvider?>>(
+        _lazyProviders = new Lazy<List<IPermissionValueProvider>>(
             () => Options
                 .ValueProviders
-                .Select(c => serviceProvider.GetRequiredService(c) as IPermissionValueProvider)
+                .Select(c => (IPermissionValueProvider)serviceProvider.GetRequiredService(c))
                 .ToList(),
             true
         );

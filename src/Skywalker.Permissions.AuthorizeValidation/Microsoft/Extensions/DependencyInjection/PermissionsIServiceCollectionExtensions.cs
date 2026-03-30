@@ -21,6 +21,10 @@ public static class PermissionsIServiceCollectionExtensions
         // 注册权限验证器（基于内存缓存）
         services.TryAddSingleton<IPermissionValidator, InMemoryPermissionValidator>();
 
+        // 注册远程权限定义管理器和远程权限验证器
+        services.TryAddSingleton<IPermissionDefinitionManager, RemotePermissionDefinitionManager>();
+        services.TryAddSingleton<IPermissionValidator, RemotePermissionValidator>();
+
         // 注册 HttpClient
         services.AddHttpClient(Constants.PermissionHttpClientName, (serviceProvider, httpClient) =>
         {

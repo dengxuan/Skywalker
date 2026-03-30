@@ -22,9 +22,9 @@ public static class SettingsServiceCollectionExtensions
         var builder = new SettingBuilder(services);
         services.AddObjectAccessor<ISettingBuilder>(builder);
 
-        // Register value providers (order is configured via SkywalkerSettingOptions.ValueProviders)
-        services.AddTransient<DefaultValueSettingValueProvider>();
-        services.AddTransient<ConfigurationSettingValueProvider>();
+        // Register value providers as Singleton (stateless, resolved by Singleton manager)
+        services.AddSingleton<DefaultValueSettingValueProvider>();
+        services.AddSingleton<ConfigurationSettingValueProvider>();
 
         // Core services
         services.AddTransient<ISettingEncryptionService, SettingEncryptionService>();

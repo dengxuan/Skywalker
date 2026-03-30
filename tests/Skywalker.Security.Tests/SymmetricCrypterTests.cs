@@ -71,6 +71,24 @@ public class SymmetricCrypterTests
     }
 
     [Fact]
+    public void Encrypt_ThenDecrypt_ReturnsOriginalBytes()
+    {
+        using var aes = Aes.Create();
+        aes.Mode = CipherMode.CBC;
+        aes.Padding = PaddingMode.PKCS7;
+        aes.GenerateKey();
+        aes.GenerateIV();
+
+        var crypter = new SymmetricCrypter(aes);
+        var original = System.Text.Encoding.UTF8.GetBytes("Hello, World!");
+
+        var encrypted = crypter.Encrypt(original);
+        var decrypted = crypter.Decrypt(encrypted);
+
+        Assert.Equal(original, decrypted);
+    }
+
+    [Fact]
     public void CrypterFactory_CreateSymmetricCrypter_TripleDES_ReturnsInstance()
     {
         var factory = new CrypterFactory();

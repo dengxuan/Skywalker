@@ -25,12 +25,11 @@ public class SymmetricCrypter : ICrypter
     /// <returns>解密后的数据流</returns>
     public byte[] Decrypt(byte[] bytes)
     {
-        using MemoryStream mStream = new();
+        using MemoryStream mStream = new(bytes);
         using CryptoStream cStream = new(mStream, _symmetricAlgorithm.CreateDecryptor(), CryptoStreamMode.Read);
-        var fromEncrypt = new byte[bytes.Length];
-        //将密文流读入内存流,用指定格式编码为字符串返回
-        cStream.ReadExactly(fromEncrypt);
-        return fromEncrypt;
+        using MemoryStream resultStream = new();
+        cStream.CopyTo(resultStream);
+        return resultStream.ToArray();
     }
 
     /// <summary>
