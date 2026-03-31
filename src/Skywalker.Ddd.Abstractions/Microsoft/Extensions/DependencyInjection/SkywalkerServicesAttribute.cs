@@ -4,11 +4,10 @@
 namespace Microsoft.Extensions.DependencyInjection;
 
 /// <summary>
-/// 标记程序集包含自动服务注册扩展类。
-/// 由 SourceGenerator 自动生成此特性。
+/// 标记程序集包含 Skywalker 服务，需要被 <see cref="Skywalker.SkywalkerPartManager"/> 发现。
 /// </summary>
 /// <remarks>
-/// 此特性用于 <c>AddSkywalker()</c> 在运行时发现所有需要注册的程序集。
+/// 标记此特性的程序集会在 <c>AddSkywalker()</c> 调用时被自动发现并添加为 <see cref="Skywalker.ApplicationParts.AssemblyPart"/>。
 /// </remarks>
 [AttributeUsage(AttributeTargets.Assembly, AllowMultiple = false)]
 public sealed class SkywalkerServicesAttribute : Attribute

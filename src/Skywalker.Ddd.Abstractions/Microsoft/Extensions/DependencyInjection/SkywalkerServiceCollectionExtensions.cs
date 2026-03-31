@@ -2,7 +2,9 @@
 // Gordon licenses this file to you under the MIT license.
 
 using System.Reflection;
+using Microsoft.Extensions.DependencyInjection.Extensions;
 using Skywalker;
+using Skywalker.ApplicationParts;
 
 namespace Microsoft.Extensions.DependencyInjection;
 
@@ -19,8 +21,8 @@ public static class SkywalkerServiceCollectionExtensions
     /// <remarks>
     /// 此方法会：
     /// <list type="bullet">
-    /// <item>发现所有引用了 Skywalker 的程序集</item>
-    /// <item>基于反射扫描并注册所有标记了 DI 接口的服务</item>
+    /// <item>发现所有引用了 Skywalker 的程序集，包装为 <see cref="AssemblyPart"/></item>
+    /// <item>通过 <see cref="ServiceRegistrationFeatureProvider"/> 扫描并注册所有标记了 DI 接口的服务</item>
     /// <item>为实现了 IInterceptable 的服务启用动态代理</item>
     /// </list>
     /// <para>
@@ -46,17 +48,34 @@ public static class SkywalkerServiceCollectionExtensions
     /// <returns>Skywalker 构建器，支持链式调用。</returns>
     public static ISkywalkerBuilder AddSkywalker(this IServiceCollection services, Assembly entryAssembly)
     {
-        // 1. 创建并配置 PartManager
+        // 1. 创建 PartManager 并发现所有 Skywalker 程序集
         var partManager = new SkywalkerPartManager();
-        partManager.DiscoverAssemblies(entryAssembly);
+        partManager.PopulateDefaultParts(entryAssembly);
 
-        // 2. 注册 PartManager 供后续使用
+        // 2. 添加默认的 FeatureProvider
+        partManager.FeatureProviders.Add(new ServiceRegistrationFeatureProvider());
+
+        // 3. 注册 PartManager 供后续使用
         services.AddSingleton(partManager);
 
-        // 3. 基于反射扫描注册所有服务
-        partManager.RegisterAllServices(services);
+        // 4. 通过 FeatureProvider 发现并注册服务
+        var feature = new ServiceRegistrationFeature();
+        partManager.PopulateFeature(feature);
 
-        // 4. 扫描已注册服务，为 IInterceptable 的服务启用代理
+        foreach (var descriptor in feature.Services)
+        {
+            var replaceAttr = descriptor.ImplementationType?.GetCustomAttribute<ReplaceServiceAttribute>();
+            if (replaceAttr != null)
+            {
+                services.Replace(descriptor);
+            }
+            else
+            {
+                services.TryAdd(descriptor);
+            }
+        }
+
+        // 5. 扫描已注册服务，为 IInterceptable 的服务启用代理
         services.AddInterceptedServices();
 
         return new SkywalkerBuilder(services, partManager);

@@ -3,76 +3,83 @@
 
 using System.Reflection;
 using Microsoft.Extensions.DependencyInjection;
+using Skywalker.ApplicationParts;
 
 namespace Skywalker;
 
 /// <summary>
-/// Skywalker 程序集管理器，用于发现和注册服务。
+/// 管理 Skywalker 应用程序的 Parts 和 Features。
 /// </summary>
-public sealed class SkywalkerPartManager
+/// <remarks>
+/// 设计参考 ASP.NET Core 的 <c>ApplicationPartManager</c>：
+/// <list type="bullet">
+/// <item><see cref="ApplicationParts"/> 持有程序集等应用部件</item>
+/// <item><see cref="FeatureProviders"/> 持有功能提供者，用于从 Parts 中发现各类功能</item>
+/// <item><see cref="PopulateFeature{TFeature}"/> 驱动功能发现流程</item>
+/// </list>
+/// </remarks>
+public class SkywalkerPartManager
 {
-    private readonly HashSet<string> _processedAssemblies = new(StringComparer.OrdinalIgnoreCase);
-    private readonly List<Assembly> _skywalkerAssemblies = [];
+    /// <summary>
+    /// 获取 <see cref="IApplicationFeatureProvider"/> 列表。
+    /// </summary>
+    public IList<IApplicationFeatureProvider> FeatureProviders { get; } = new List<IApplicationFeatureProvider>();
 
     /// <summary>
-    /// 获取已发现的 Skywalker 程序集列表。
+    /// 获取 <see cref="ApplicationPart"/> 列表。
     /// </summary>
-    public IReadOnlyList<Assembly> Assemblies => _skywalkerAssemblies;
+    /// <remarks>
+    /// 列表中的实例按优先级顺序存储，靠前的 Part 具有更高的优先级。
+    /// <see cref="IApplicationFeatureProvider"/> 可以利用此顺序来解决多个 Part 提供相同功能值时的冲突。
+    /// </remarks>
+    public IList<ApplicationPart> ApplicationParts { get; } = new List<ApplicationPart>();
 
     /// <summary>
-    /// 从入口程序集开始，发现所有包含 <see cref="SkywalkerServicesAttribute"/> 特性的程序集。
+    /// 使用已注册的 <see cref="IApplicationFeatureProvider{TFeature}"/> 填充指定的功能实例。
     /// </summary>
-    /// <param name="entryAssembly">入口程序集，默认使用 <see cref="Assembly.GetEntryAssembly"/>。</param>
-    public void DiscoverAssemblies(Assembly? entryAssembly = null)
+    /// <typeparam name="TFeature">功能类型。</typeparam>
+    /// <param name="feature">要填充的功能实例。</param>
+    public void PopulateFeature<TFeature>(TFeature feature)
     {
-        entryAssembly ??= Assembly.GetEntryAssembly();
-        if (entryAssembly == null)
-        {
-            return;
-        }
+        ArgumentNullException.ThrowIfNull(feature);
 
-        // 入口程序集始终包含在扫描范围内
-        var entryName = entryAssembly.GetName().Name;
-        if (entryName != null && _processedAssemblies.Add(entryName))
+        foreach (var provider in FeatureProviders.OfType<IApplicationFeatureProvider<TFeature>>())
         {
-            _skywalkerAssemblies.Add(entryAssembly);
-        }
-
-        // 递归发现引用的 Skywalker 程序集
-        foreach (var referencedName in entryAssembly.GetReferencedAssemblies())
-        {
-            if (!ShouldProcessReference(referencedName))
-            {
-                continue;
-            }
-
-            try
-            {
-                var referencedAssembly = Assembly.Load(referencedName);
-                DiscoverAssembliesRecursive(referencedAssembly);
-            }
-            catch
-            {
-                // 忽略无法加载的程序集
-            }
+            provider.PopulateFeature(ApplicationParts, feature);
         }
     }
 
-    private void DiscoverAssembliesRecursive(Assembly assembly)
+    /// <summary>
+    /// 从入口程序集开始，递归发现所有 Skywalker 相关程序集并添加为 <see cref="AssemblyPart"/>。
+    /// </summary>
+    /// <param name="entryAssembly">入口程序集。</param>
+    internal void PopulateDefaultParts(Assembly entryAssembly)
     {
-        var name = assembly.GetName().Name;
-        if (name == null || !_processedAssemblies.Add(name))
+        var seenAssemblies = new HashSet<string>(StringComparer.OrdinalIgnoreCase);
+        var assemblies = GetApplicationPartAssemblies(entryAssembly, seenAssemblies);
+
+        foreach (var assembly in assemblies)
         {
-            return;
+            ApplicationParts.Add(new AssemblyPart(assembly));
+        }
+    }
+
+    private static IEnumerable<Assembly> GetApplicationPartAssemblies(Assembly entryAssembly, HashSet<string> seen)
+    {
+        var entryName = entryAssembly.GetName().Name;
+        if (entryName != null && seen.Add(entryName))
+        {
+            yield return entryAssembly;
         }
 
-        // 检查是否有 SkywalkerServicesAttribute 特性 或 是 DDD 内部模块（按命名约定）
-        if (assembly.GetCustomAttribute<SkywalkerServicesAttribute>() != null || IsDddAssembly(name))
+        foreach (var assembly in DiscoverReferencedAssemblies(entryAssembly, seen))
         {
-            _skywalkerAssemblies.Add(assembly);
+            yield return assembly;
         }
+    }
 
-        // 递归处理引用的程序集
+    private static IEnumerable<Assembly> DiscoverReferencedAssemblies(Assembly assembly, HashSet<string> seen)
+    {
         foreach (var referencedName in assembly.GetReferencedAssemblies())
         {
             if (!ShouldProcessReference(referencedName))
@@ -80,16 +87,39 @@ public sealed class SkywalkerPartManager
                 continue;
             }
 
+            Assembly referencedAssembly;
             try
             {
-                var referencedAssembly = Assembly.Load(referencedName);
-                DiscoverAssembliesRecursive(referencedAssembly);
+                referencedAssembly = Assembly.Load(referencedName);
             }
             catch
             {
-                // 忽略无法加载的程序集
+                continue;
+            }
+
+            var name = referencedAssembly.GetName().Name;
+            if (name == null || !seen.Add(name))
+            {
+                continue;
+            }
+
+            if (IsSkywalkerAssembly(referencedAssembly, name))
+            {
+                yield return referencedAssembly;
+            }
+
+            // 递归发现
+            foreach (var nested in DiscoverReferencedAssemblies(referencedAssembly, seen))
+            {
+                yield return nested;
             }
         }
+    }
+
+    private static bool IsSkywalkerAssembly(Assembly assembly, string name)
+    {
+        return assembly.GetCustomAttribute<SkywalkerServicesAttribute>() != null ||
+               name.StartsWith("Skywalker.", StringComparison.OrdinalIgnoreCase);
     }
 
     private static bool ShouldProcessReference(AssemblyName referencedName)
@@ -100,7 +130,6 @@ public sealed class SkywalkerPartManager
             return false;
         }
 
-        // 跳过系统程序集
         if (name.StartsWith("System", StringComparison.OrdinalIgnoreCase) ||
             name.StartsWith("netstandard", StringComparison.OrdinalIgnoreCase) ||
             name.StartsWith("mscorlib", StringComparison.OrdinalIgnoreCase))
@@ -108,7 +137,6 @@ public sealed class SkywalkerPartManager
             return false;
         }
 
-        // 跳过 Microsoft 程序集（但保留 Microsoft.Extensions）
         if (name.StartsWith("Microsoft", StringComparison.OrdinalIgnoreCase) &&
             !name.StartsWith("Microsoft.Extensions", StringComparison.OrdinalIgnoreCase))
         {
@@ -116,26 +144,5 @@ public sealed class SkywalkerPartManager
         }
 
         return true;
-    }
-
-    /// <summary>
-    /// 判断程序集是否为 DDD 内部模块（按命名约定自动发现）。
-    /// </summary>
-    private static bool IsDddAssembly(string? assemblyName)
-    {
-        return assemblyName != null && assemblyName.StartsWith("Skywalker.Ddd.", StringComparison.OrdinalIgnoreCase);
-    }
-
-    /// <summary>
-    /// 从所有已发现程序集中扫描并注册服务（基于反射）。
-    /// </summary>
-    /// <param name="services">服务集合。</param>
-    public void RegisterAllServices(IServiceCollection services)
-    {
-        foreach (var assembly in _skywalkerAssemblies)
-        {
-            // 使用反射扫描注册服务
-            ServiceRegistrar.RegisterAssembly(services, assembly);
-        }
     }
 }
