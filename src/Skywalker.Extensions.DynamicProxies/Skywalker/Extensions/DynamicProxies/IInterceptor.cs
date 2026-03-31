@@ -9,7 +9,7 @@ namespace Skywalker.Extensions.DynamicProxies;
 /// <para>
 /// 使用示例：
 /// <code>
-/// public class LoggingInterceptor : IInterceptor, ITransientDependency
+/// public class LoggingInterceptor : IInterceptor
 /// {
 ///     public async Task InterceptAsync(IMethodInvocation invocation)
 ///     {

@@ -5,7 +5,7 @@ using Skywalker.Ddd.Uow.Abstractions;
 
 namespace Skywalker.Ddd.Data.Seeding;
 
-public class DataSeeder : IDataSeeder, ISingletonDependency
+public class DataSeeder : IDataSeeder
 {
     protected IServiceScopeFactory ServiceScopeFactory { get; }
     protected SkywalkerDataSeedOptions Options { get; }

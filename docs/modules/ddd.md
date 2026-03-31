@@ -67,14 +67,21 @@ dotnet add package Skywalker.Ddd
 ### 注册服务
 
 ```csharp
-// 注册 Skywalker 核心服务（包含 UoW、拦截器等基础设施）
-builder.Services.AddSkywalker();
+// 注册 Skywalker 核心服务，按 DDD 层逐层注册
+builder.Services.AddSkywalker()
+    .AddUnitOfWork()       // 工作单元
+    .AddDddDomain()        // 领域层（自动注册 IDomainService 实现）
+    .AddDddApplication();  // 应用层（自动注册 IApplicationService 实现）
 
 // ASP.NET Core 项目还需注册 Web 集成
-builder.Services.AddSkywalker().AddAspNetCore();
+builder.Services.AddSkywalker()
+    .AddUnitOfWork()
+    .AddDddDomain()
+    .AddDddApplication()
+    .AddAspNetCore();
 ```
 
-> **说明**：`AddSkywalker()` 是所有 Skywalker 项目的唯一入口，领域服务和应用服务通过反射自动注册（实现 `ISingletonDependency` / `ITransientDependency` / `IScopedDependency` 接口即可），无需手动调用。这些 DI 标记接口位于 `Microsoft.Extensions.DependencyInjection` 命名空间中，无需额外引入命名空间。
+> **说明**：`AddSkywalker()` 创建 `SkywalkerPartManager` 并发现引用的程序集。每个 DDD 层都有对应的扩展方法，通过 `FeatureProvider` 按约定自动注册服务：领域层自动注册所有 `IDomainService` 实现为 Scoped，应用层自动注册所有 `IApplicationService` 实现为 Scoped。框架基础服务（如 UoW、DataFilter 等）在各层扩展方法中显式注册。
 
 ---
 
@@ -664,8 +671,9 @@ public sealed class UnitOfWorkAttribute : Attribute
 ### 注册服务
 
 ```csharp
-// AddSkywalker() 已包含 UoW 注册，无需额外调用
-builder.Services.AddSkywalker();
+// UoW 通过 AddUnitOfWork() 注册
+builder.Services.AddSkywalker()
+    .AddUnitOfWork();
 ```
 
 ### 使用示例
@@ -838,8 +846,11 @@ public class EfCoreRepository<TDbContext, TEntity, TKey> : EfCoreRepository<TDbC
 ### 注册服务
 
 ```csharp
-// 注册核心服务
-builder.Services.AddSkywalker();
+// 注册核心服务 + 领域层
+builder.Services.AddSkywalker()
+    .AddUnitOfWork()
+    .AddDddDomain()
+    .AddDddApplication();
 
 // 注册 EF Core DbContext（自动注册仓储和 EntityFrameworkCore 基础设施）
 builder.Services.AddSkywalkerDbContext<OrderDbContext>(options =>
@@ -939,7 +950,11 @@ dotnet add package Skywalker.Ddd.AspNetCore
 
 ```csharp
 // AddAspNetCore() 自动注册异常处理和响应包装
-builder.Services.AddSkywalker().AddAspNetCore();
+builder.Services.AddSkywalker()
+    .AddUnitOfWork()
+    .AddDddDomain()
+    .AddDddApplication()
+    .AddAspNetCore();
 
 // 在中间件管道中启用 Skywalker
 app.UseSkywalker();

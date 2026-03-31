@@ -3,6 +3,7 @@
 
 using System.Reflection;
 using Skywalker;
+using Skywalker.ApplicationParts;
 
 namespace Microsoft.Extensions.DependencyInjection;
 
@@ -12,26 +13,20 @@ namespace Microsoft.Extensions.DependencyInjection;
 public static class SkywalkerServiceCollectionExtensions
 {
     /// <summary>
-    /// 添加 Skywalker DDD 核心服务，自动发现并注册所有引用程序集中的服务。
+    /// 添加 Skywalker DDD 核心服务，发现所有引用程序集并创建 <see cref="SkywalkerPartManager"/>。
     /// </summary>
     /// <param name="services">服务集合。</param>
     /// <returns>Skywalker 构建器，支持链式调用。</returns>
     /// <remarks>
-    /// 此方法会：
-    /// <list type="bullet">
-    /// <item>发现所有引用了 Skywalker 的程序集</item>
-    /// <item>基于反射扫描并注册所有标记了 DI 接口的服务</item>
-    /// <item>为实现了 IInterceptable 的服务启用动态代理</item>
-    /// </list>
-    /// <para>
-    /// 外部模块通过 Builder 扩展方法按需添加：
+    /// 此方法会发现所有引用了 Skywalker 的程序集，包装为 <see cref="AssemblyPart"/>。
+    /// 各模块通过 Builder 扩展方法按需添加 FeatureProvider 并注册服务：
     /// <code>
     /// services.AddSkywalker()
-    ///     .AddEntityFramework&lt;MyDbContext&gt;(options => options.UseSqlServer(...))
-    ///     .AddRedisCaching()
-    ///     .AddRabbitMQEventBus();
+    ///     .AddUnitOfWork()
+    ///     .AddDddDomain()
+    ///     .AddDddApplication()
+    ///     .AddEntityFramework&lt;MyDbContext&gt;(options => options.UseSqlServer(...));
     /// </code>
-    /// </para>
     /// </remarks>
     public static ISkywalkerBuilder AddSkywalker(this IServiceCollection services)
     {
@@ -39,25 +34,17 @@ public static class SkywalkerServiceCollectionExtensions
     }
 
     /// <summary>
-    /// 添加 Skywalker DDD 核心服务，从指定程序集开始发现并注册所有服务。
+    /// 添加 Skywalker DDD 核心服务，从指定程序集开始发现并创建 <see cref="SkywalkerPartManager"/>。
     /// </summary>
     /// <param name="services">服务集合。</param>
     /// <param name="entryAssembly">入口程序集。</param>
     /// <returns>Skywalker 构建器，支持链式调用。</returns>
     public static ISkywalkerBuilder AddSkywalker(this IServiceCollection services, Assembly entryAssembly)
     {
-        // 1. 创建并配置 PartManager
         var partManager = new SkywalkerPartManager();
-        partManager.DiscoverAssemblies(entryAssembly);
+        partManager.PopulateDefaultParts(entryAssembly);
 
-        // 2. 注册 PartManager 供后续使用
         services.AddSingleton(partManager);
-
-        // 3. 基于反射扫描注册所有服务
-        partManager.RegisterAllServices(services);
-
-        // 4. 扫描已注册服务，为 IInterceptable 的服务启用代理
-        services.AddInterceptedServices();
 
         return new SkywalkerBuilder(services, partManager);
     }

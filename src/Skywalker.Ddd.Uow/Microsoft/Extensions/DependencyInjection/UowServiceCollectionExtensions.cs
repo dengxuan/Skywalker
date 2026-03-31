@@ -1,6 +1,12 @@
 // Licensed to the Gordon under one or more agreements.
 // Gordon licenses this file to you under the MIT license.
 
+using Microsoft.Extensions.DependencyInjection.Extensions;
+using Skywalker;
+using Skywalker.Ddd.Uow;
+using Skywalker.Ddd.Uow.Abstractions;
+using Skywalker.Extensions.DynamicProxies;
+
 namespace Microsoft.Extensions.DependencyInjection;
 
 /// <summary>
@@ -9,16 +15,27 @@ namespace Microsoft.Extensions.DependencyInjection;
 public static class UowServiceCollectionExtensions
 {
     /// <summary>
-    /// 单独添加 UnitOfWork 模块服务到服务集合。
+    /// 添加 UnitOfWork 模块服务。
     /// </summary>
-    /// <param name="services">服务集合。</param>
-    /// <returns>服务集合。</returns>
-    /// <remarks>
-    /// 通常不需要直接调用此方法，<see cref="SkywalkerServiceCollectionExtensions.AddSkywalker"/>
-    /// 会自动注册所有 Skywalker 模块的服务。
-    /// </remarks>
-    public static IServiceCollection AddUnitOfWork(this IServiceCollection services)
+    /// <param name="builder">Skywalker 构建器。</param>
+    /// <returns>Skywalker 构建器，支持链式调用。</returns>
+    public static ISkywalkerBuilder AddUnitOfWork(this ISkywalkerBuilder builder)
     {
-        return services;
+        var services = builder.Services;
+
+        // Singleton
+        services.TryAddSingleton<IUnitOfWorkManager, UnitOfWorkManager>();
+        services.TryAddSingleton<IUnitOfWorkTransactionBehaviourProvider, NullUnitOfWorkTransactionBehaviourProvider>();
+
+        // AmbientUnitOfWork — 共享实例，确保 IAmbientUnitOfWork 和 IUnitOfWorkAccessor 使用同一实例
+        services.TryAddSingleton<AmbientUnitOfWork>();
+        services.TryAddSingleton<IAmbientUnitOfWork>(sp => sp.GetRequiredService<AmbientUnitOfWork>());
+        services.TryAddSingleton<IUnitOfWorkAccessor>(sp => sp.GetRequiredService<AmbientUnitOfWork>());
+
+        // Transient
+        services.TryAddTransient<IUnitOfWork, UnitOfWork>();
+        services.TryAddTransient<IInterceptor, UnitOfWorkInterceptor>();
+
+        return builder;
     }
 }

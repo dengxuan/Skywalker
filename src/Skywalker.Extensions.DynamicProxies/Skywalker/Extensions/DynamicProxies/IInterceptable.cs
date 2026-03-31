@@ -26,7 +26,7 @@ namespace Skywalker.Extensions.DynamicProxies;
 /// 
 /// // 实现服务，标记业务特性
 /// [UnitOfWork]
-/// public class OrderService : IOrderService, IScopedDependency
+/// public class OrderService : IOrderService
 /// {
 ///     public async Task&lt;Order&gt; CreateAsync(OrderDto dto) { ... }
 /// }

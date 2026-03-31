@@ -1,9 +1,8 @@
 using Microsoft.Extensions.Configuration;
-using Microsoft.Extensions.DependencyInjection;
 
 namespace Skywalker.Ddd.Data;
 
-public class DefaultConnectionStringResolver : IConnectionStringResolver, ISingletonDependency
+public class DefaultConnectionStringResolver : IConnectionStringResolver
 {
     protected SkywalkerDbConnectionOptions Options { get; }
 

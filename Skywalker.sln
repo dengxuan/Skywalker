@@ -123,7 +123,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Skywalker.Extensions.Emaili
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Skywalker.Extensions.Emailing.Template.Tests", "tests\Skywalker.Extensions.Emailing.Template.Tests\Skywalker.Extensions.Emailing.Template.Tests.csproj", "{D921AF80-D6AE-44BB-BF9D-A1A1F8E8E68B}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Skywalker.SourceGenerators.Tests", "tests\Skywalker.SourceGenerators.Tests\Skywalker.SourceGenerators.Tests.csproj", "{B66A362F-711B-4E72-8C2F-9D76B691AFCD}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Skywalker.Ddd.Tests", "tests\Skywalker.Ddd.Tests\Skywalker.Ddd.Tests.csproj", "{B66A362F-711B-4E72-8C2F-9D76B691AFCD}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Skywalker.Settings.AspNetCore", "src\Skywalker.Settings.AspNetCore\Skywalker.Settings.AspNetCore.csproj", "{CD67B8D7-B728-4B36-80EB-A6F6DCA940AF}"
 EndProject

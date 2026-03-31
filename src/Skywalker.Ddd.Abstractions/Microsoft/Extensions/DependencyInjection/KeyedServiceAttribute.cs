@@ -10,7 +10,7 @@ namespace Microsoft.Extensions.DependencyInjection;
 /// 使用示例：
 /// <code>
 /// [KeyedService(typeof(ILotteryRewarder), "Tgks")]
-/// public class TgksLotteryRewarder : ILotteryRewarder, ITransientDependency
+/// public class TgksLotteryRewarder : ILotteryRewarder
 /// {
 ///     // 注册为 services.AddKeyedTransient&lt;ILotteryRewarder, TgksLotteryRewarder&gt;("Tgks")
 /// }
@@ -20,7 +20,7 @@ namespace Microsoft.Extensions.DependencyInjection;
 /// 也可以使用常量：
 /// <code>
 /// [KeyedService(typeof(ILotteryRewarder), GamingConsts.LotteryTypes.Tgks)]
-/// public class TgksLotteryRewarder : ILotteryRewarder, ITransientDependency
+/// public class TgksLotteryRewarder : ILotteryRewarder
 /// {
 /// }
 /// </code>

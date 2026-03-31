@@ -8,6 +8,6 @@
     <Compile Include="$(SharedSourceDir)System\Runtime\CompilerServices\IsExternalInit.cs" Link="System\Runtime\CompilerServices\IsExternalInit.cs" />
   </ItemGroup>
 
-  <!-- Source Generator auto-injection removed: reflection-based ServiceRegistrar in Ddd.Abstractions replaces SourceGenerators -->
+  <!-- Source Generator auto-injection removed: per-layer FeatureProviders in Ddd.Domain/Ddd.Application replace SourceGenerators -->
 
 </Project>

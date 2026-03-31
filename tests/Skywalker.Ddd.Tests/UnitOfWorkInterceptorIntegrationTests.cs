@@ -1,9 +1,10 @@
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.DependencyInjection.Extensions;
 using Skywalker.Ddd.Uow;
 using Skywalker.Ddd.Uow.Abstractions;
 using Skywalker.Extensions.DynamicProxies;
 
-namespace Skywalker.SourceGenerators.Tests;
+namespace Skywalker.Ddd.Tests;
 
 #region Test UoW Service
 
@@ -20,7 +21,7 @@ public interface ITestUowOrderService : IInterceptable
 /// 使用 [UnitOfWork] 标记的服务，用于验证拦截器在无中间件场景下的工作。
 /// </summary>
 [UnitOfWork]
-public class TestUowOrderService : ITestUowOrderService, IScopedDependency
+public class TestUowOrderService : ITestUowOrderService
 {
     public Task<string> CreateOrderAsync(string product, int quantity)
     {
@@ -44,8 +45,15 @@ public class UnitOfWorkInterceptorIntegrationTests
     {
         var services = new ServiceCollection();
         services.AddLogging();
-        // 使用 AddSkywalker 进行反射扫描注册（传入测试程序集以发现 DDD 模块）
-        services.AddSkywalker(typeof(UnitOfWorkInterceptorIntegrationTests).Assembly);
+        var builder = services.AddSkywalker(typeof(UnitOfWorkInterceptorIntegrationTests).Assembly);
+        builder.AddUnitOfWork();
+
+        // 显式注册测试服务
+        services.TryAddScoped<ITestUowOrderService, TestUowOrderService>();
+
+        // 启用拦截
+        services.AddInterceptedServices();
+
         return services.BuildServiceProvider();
     }
 
@@ -113,7 +121,8 @@ public class UnitOfWorkInterceptorIntegrationTests
     public void UnitOfWorkInterceptor_IsRegistered()
     {
         using var provider = BuildConsoleAppProvider();
-        var interceptor = provider.GetService<UnitOfWorkInterceptor>();
+        var interceptor = provider.GetService<IInterceptor>();
         Assert.NotNull(interceptor);
+        Assert.IsType<UnitOfWorkInterceptor>(interceptor);
     }
 }

@@ -125,7 +125,7 @@ services.AddDynamicProxies();
 services.AddInterceptedServices();
 ```
 
-> **说明**：`AddSkywalker()` 内部已自动调用 `AddInterceptedServices()`，使用 DDD 模块时无需手动调用。
+> **说明**：各 DDD 层的扩展方法（如 `AddDddDomain()`、`AddDddApplication()`）内部已自动调用 `AddInterceptedServices()`，使用 DDD 模块时无需手动调用。
 
 ### 工作原理
 
@@ -151,7 +151,7 @@ public interface IOrderService : IInterceptable
 }
 
 // 实现类正常实现接口
-public class OrderService : IOrderService, IScopedDependency
+public class OrderService : IOrderService
 {
     public async Task<Order> CreateAsync(OrderDto dto)
     {
@@ -170,7 +170,7 @@ public class OrderService : IOrderService, IScopedDependency
 ```csharp
 using Skywalker.Extensions.DynamicProxies;
 
-public class LoggingInterceptor : IInterceptor, ITransientDependency
+public class LoggingInterceptor : IInterceptor
 {
     private readonly ILogger<LoggingInterceptor> _logger;
 
@@ -241,17 +241,17 @@ public class SkywalkerAsyncTimer
     /// 定时触发的事件
     /// </summary>
     public Func<SkywalkerAsyncTimer, Task> Elapsed { get; set; }
-    
+
     /// <summary>
     /// 执行周期（毫秒）
     /// </summary>
     public int Period { get; set; }
-    
+
     /// <summary>
     /// 是否在启动时立即执行一次
     /// </summary>
     public bool RunOnStart { get; set; }
-    
+
     public Task StartAsync(CancellationToken cancellationToken = default);
     public Task StopAsync(CancellationToken cancellationToken = default);
 }
@@ -267,7 +267,7 @@ public abstract class Lock
     public abstract ILockHolder ForReading();
     public abstract ILockHolder ForWriting();
     public abstract IUpgradeableLockHolder ForReadingUpgradeable();
-    
+
     public static Lock Create();
 }
 ```
@@ -345,7 +345,7 @@ services.Configure<SkywalkerVirtualFileSystemOptions>(options =>
     // 添加嵌入式资源
     options.FileSets.AddEmbedded<MyAssemblyMarker>(
         baseNamespace: "MyApp.Resources");
-    
+
     // 添加物理文件
     options.FileSets.AddPhysical("/path/to/files");
 });

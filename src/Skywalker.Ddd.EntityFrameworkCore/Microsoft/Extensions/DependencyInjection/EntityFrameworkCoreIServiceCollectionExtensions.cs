@@ -1,4 +1,5 @@
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.DependencyInjection.Extensions;
 using Skywalker.Ddd.Data;
 using Skywalker.Ddd.Domain.Entities;
 using Skywalker.Ddd.Domain.Repositories;
@@ -6,6 +7,7 @@ using Skywalker.Ddd.EntityFrameworkCore;
 using Skywalker.Ddd.EntityFrameworkCore.DbContextConfiguration;
 using Skywalker.Ddd.Uow.EntityFrameworkCore;
 using Skywalker.Identity.Domain.Repositories;
+using System.Linq;
 
 
 namespace Microsoft.Extensions.DependencyInjection;
@@ -60,6 +62,7 @@ public static class EntityFrameworkCoreIServiceCollectionExtensions
         services.AddGuidGenerator();
         services.AddTimezone();
         services.AddSingleton(typeof(IDbContextProvider<>), typeof(UnitOfWorkDbContextProvider<>));
+        services.TryAddTransient<IAsyncQueryableProvider, EfCoreAsyncQueryableProvider>();
 
         return services;
     }

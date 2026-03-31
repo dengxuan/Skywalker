@@ -23,7 +23,7 @@ public interface ISkywalkerBuilder
     IServiceCollection Services { get; }
 
     /// <summary>
-    /// 程序集管理器，用于发现和注册服务。
+    /// 程序集部件管理器，管理 ApplicationParts 和 FeatureProviders。
     /// </summary>
     SkywalkerPartManager PartManager { get; }
 }

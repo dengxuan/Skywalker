@@ -7,7 +7,7 @@
           <Format>cobertura</Format>
           <ExcludeByAttribute>GeneratedCodeAttribute,CompilerGeneratedAttribute,ExcludeFromCodeCoverage</ExcludeByAttribute>
           <ExcludeByFile>**/*.g.cs,**/obj/Generated/**</ExcludeByFile>
-          <Exclude>[*.SourceGenerators]*,[*.Tests]*</Exclude>
+          <Exclude>[*.Tests]*</Exclude>
         </Configuration>
       </DataCollector>
     </DataCollectors>

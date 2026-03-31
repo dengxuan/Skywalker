@@ -17,7 +17,7 @@ namespace Skywalker.Ddd.Uow;
 public class UnitOfWorkManager(
     IAmbientUnitOfWork ambientUnitOfWork,
     IServiceScopeFactory serviceScopeFactory,
-    ILogger<UnitOfWorkManager> logger) : IUnitOfWorkManager, ISingletonDependency
+    ILogger<UnitOfWorkManager> logger) : IUnitOfWorkManager
 {
     /// <summary>
     /// 

@@ -17,7 +17,7 @@ namespace Skywalker.Ddd.Uow;
 /// <code>
 /// // IOrderService 继承 IInterceptable 将自动生成代理
 /// [UnitOfWork]
-/// public class OrderService : IOrderService, IScopedDependency
+/// public class OrderService : IOrderService
 /// {
 ///     public async Task CreateOrderAsync(OrderDto dto) { ... }
 /// }
@@ -25,7 +25,7 @@ namespace Skywalker.Ddd.Uow;
 /// </remarks>
 public class UnitOfWorkInterceptor(
     IServiceScopeFactory serviceScopeFactory,
-    ILogger<UnitOfWorkInterceptor> logger) : IInterceptor, ITransientDependency
+    ILogger<UnitOfWorkInterceptor> logger) : IInterceptor
 {
     private readonly IServiceScopeFactory _serviceScopeFactory = serviceScopeFactory;
     private readonly ILogger<UnitOfWorkInterceptor> _logger = logger;

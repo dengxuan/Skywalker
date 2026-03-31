@@ -10,7 +10,7 @@ namespace Microsoft.Extensions.DependencyInjection;
 /// 使用示例：
 /// <code>
 /// [ExposeServices(typeof(IEmailService), typeof(INotificationService))]
-/// public class EmailService : IEmailService, INotificationService, IInternalService, ITransientDependency
+/// public class EmailService : IEmailService, INotificationService, IInternalService
 /// {
 ///     // 只会注册 IEmailService 和 INotificationService，不会注册 IInternalService
 /// }

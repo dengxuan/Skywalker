@@ -4,7 +4,7 @@ using Microsoft.Extensions.Options;
 
 namespace Skywalker.Ddd.Data.Filtering;
 
-public class DataFilter : IDataFilter, ISingletonDependency
+public class DataFilter : IDataFilter
 {
     private readonly ConcurrentDictionary<Type, object> _filters;
 

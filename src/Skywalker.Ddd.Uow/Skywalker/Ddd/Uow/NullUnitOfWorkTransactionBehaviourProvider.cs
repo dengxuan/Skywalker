@@ -9,7 +9,7 @@ namespace Skywalker.Ddd.Uow;
 /// <summary>
 /// 空实现的工作单元事务行为提供者
 /// </summary>
-public class NullUnitOfWorkTransactionBehaviourProvider : IUnitOfWorkTransactionBehaviourProvider, ISingletonDependency
+public class NullUnitOfWorkTransactionBehaviourProvider : IUnitOfWorkTransactionBehaviourProvider
 {
     /// <summary>
     /// 
