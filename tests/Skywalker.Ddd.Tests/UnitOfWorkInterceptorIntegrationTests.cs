@@ -45,14 +45,10 @@ public class UnitOfWorkInterceptorIntegrationTests
     {
         var services = new ServiceCollection();
         services.AddLogging();
-        var builder = services.AddSkywalker(typeof(UnitOfWorkInterceptorIntegrationTests).Assembly);
-        builder.AddUnitOfWork();
+        services.AddSkywalker(typeof(UnitOfWorkInterceptorIntegrationTests).Assembly);
 
         // 显式注册测试服务
         services.TryAddScoped<ITestUowOrderService, TestUowOrderService>();
-
-        // 启用拦截
-        services.AddInterceptedServices();
 
         return services.BuildServiceProvider();
     }

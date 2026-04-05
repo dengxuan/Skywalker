@@ -3,7 +3,7 @@
 
 namespace Skywalker.Extensions.DependencyInjection;
 
-internal class CachedServiceProvider : ICachedServiceProvider
+public class CachedServiceProvider : ICachedServiceProvider
 {
     protected IServiceProvider ServiceProvider { get; }
 

@@ -3,6 +3,7 @@ using Microsoft.Extensions.DependencyInjection.Extensions;
 using Skywalker.Ddd.Data;
 using Skywalker.Ddd.Domain.Entities;
 using Skywalker.Ddd.Domain.Repositories;
+using Skywalker.Ddd.Domain.Services;
 using Skywalker.Ddd.EntityFrameworkCore;
 using Skywalker.Ddd.EntityFrameworkCore.DbContextConfiguration;
 using Skywalker.Ddd.Uow.EntityFrameworkCore;
@@ -33,42 +34,57 @@ public static class EntityFrameworkCoreIServiceCollectionExtensions
             if (primaryKeyType == null)
             {
                 var repositoryImplType = typeof(Repository<,>).MakeGenericType(dbContextType, entityType);
-                services.AddDefaultRepository(entityType, repositoryImplType, false);
+                RegisterDefaultRepository(services, entityType, repositoryImplType);
 
                 var domainServiceImplType = typeof(EntityFrameworkCoreDomainService<>).MakeGenericType(entityType);
-                services.AddDefaultDomainService(entityType, domainServiceImplType, false);
+                RegisterDefaultDomainService(services, entityType, domainServiceImplType);
             }
             else
             {
                 var repositoryImplType = typeof(Repository<,,>).MakeGenericType(dbContextType, entityType, primaryKeyType);
-                services.AddDefaultRepository(entityType, repositoryImplType, primaryKeyType, false);
+                RegisterDefaultRepository(services, entityType, repositoryImplType, primaryKeyType);
 
                 var domainServiceImplType = typeof(EntityFrameworkCoreDomainService<,>).MakeGenericType(entityType, primaryKeyType);
-                services.AddDefaultDomainService(entityType, domainServiceImplType, primaryKeyType, false);
+                RegisterDefaultDomainService(services, entityType, domainServiceImplType, primaryKeyType);
             }
         }
         return services;
     }
 
-    /// <summary>
-    /// ���� Entity Framework Core ֧�֡�
-    /// </summary>
-    /// <param name="services">���񼯺ϡ�</param>
-    /// <returns>���񼯺ϡ�</returns>
-    public static IServiceCollection AddEntityFrameworkCore(this IServiceCollection services)
+    private static void RegisterDefaultRepository(IServiceCollection services, Type entityType, Type repositoryImplType, Type? primaryKeyType = null)
     {
-        services.AddDataFilter();
-        services.AddThreadingServices();
-        services.AddGuidGenerator();
-        services.AddTimezone();
-        services.AddSingleton(typeof(IDbContextProvider<>), typeof(UnitOfWorkDbContextProvider<>));
-        services.TryAddTransient<IAsyncQueryableProvider, EfCoreAsyncQueryableProvider>();
+        if (primaryKeyType != null)
+        {
+            TryAddTransient(services, typeof(IReadOnlyRepository<,>).MakeGenericType(entityType, primaryKeyType), repositoryImplType);
+            TryAddTransient(services, typeof(IBasicRepository<,>).MakeGenericType(entityType, primaryKeyType), repositoryImplType);
+            TryAddTransient(services, typeof(IRepository<,>).MakeGenericType(entityType, primaryKeyType), repositoryImplType);
+        }
 
-        return services;
+        TryAddTransient(services, typeof(IReadOnlyRepository<>).MakeGenericType(entityType), repositoryImplType);
+        TryAddTransient(services, typeof(IBasicRepository<>).MakeGenericType(entityType), repositoryImplType);
+        TryAddTransient(services, typeof(IRepository<>).MakeGenericType(entityType), repositoryImplType);
+    }
+
+    private static void RegisterDefaultDomainService(IServiceCollection services, Type entityType, Type domainServiceImplType, Type? primaryKeyType = null)
+    {
+        if (primaryKeyType != null)
+        {
+            TryAddTransient(services, typeof(IDomainService<,>).MakeGenericType(entityType, primaryKeyType), domainServiceImplType);
+        }
+
+        TryAddTransient(services, typeof(IDomainService<>).MakeGenericType(entityType), domainServiceImplType);
+    }
+
+    private static void TryAddTransient(IServiceCollection services, Type serviceType, Type implementationType)
+    {
+        if (serviceType.IsAssignableFrom(implementationType))
+        {
+            services.TryAdd(ServiceDescriptor.Transient(serviceType, implementationType));
+        }
     }
 
     /// <summary>
-    /// ���� DbContext��
+    /// 添加 DbContext。
     /// </summary>
     /// <typeparam name="TDbContext">DbContext ���͡�</typeparam>
     /// <param name="services">���񼯺ϡ�</param>
@@ -76,7 +92,6 @@ public static class EntityFrameworkCoreIServiceCollectionExtensions
     /// <returns>���񼯺ϡ�</returns>
     public static IServiceCollection AddSkywalkerDbContext<TDbContext>(this IServiceCollection services, Action<SkywalkerDbContextOptions> options) where TDbContext : SkywalkerDbContext<TDbContext>
     {
-        services.AddEntityFrameworkCore();
         services.Configure(options);
         services.AddDefaultServices<TDbContext>();
         services.AddTransient(SkywalkerDbContextOptionsFactory.Create<TDbContext>);

@@ -14,4 +14,9 @@ public class ServiceRegistrationFeature
     /// 获取已发现的服务描述符列表。
     /// </summary>
     public IList<ServiceDescriptor> Services { get; } = new List<ServiceDescriptor>();
+
+    /// <summary>
+    /// 获取或设置服务集合，供 FeatureProvider 调用外部组件的 AddXxx 注册方法。
+    /// </summary>
+    public IServiceCollection ServiceCollection { get; set; } = default!;
 }

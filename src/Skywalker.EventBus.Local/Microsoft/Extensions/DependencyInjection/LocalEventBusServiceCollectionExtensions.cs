@@ -1,4 +1,5 @@
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.DependencyInjection.Extensions;
 using Skywalker.EventBus;
 using Skywalker.EventBus.Abstractions;
 using Skywalker.EventBus.Local;
@@ -76,10 +77,9 @@ public static class LocalEventBusServiceCollectionExtensions
 
     private static IServiceCollection AddEventBusLocalServices(this IServiceCollection services)
     {
-        services.AddSingleton<IDomainEventDispatcher, DomainEventDispatcher>();
-        services.AddSingleton<ILocalEventBus, LocalChannelEventBus>();
-        // 注册 IEventBus 指向 ILocalEventBus 的实�?
-        services.AddSingleton<IEventBus>(sp => sp.GetRequiredService<ILocalEventBus>());
+        services.TryAddSingleton<IDomainEventDispatcher, DomainEventDispatcher>();
+        services.TryAddSingleton<ILocalEventBus, LocalChannelEventBus>();
+        services.TryAddSingleton<IEventBus>(sp => sp.GetRequiredService<ILocalEventBus>());
 
         return services;
     }

@@ -3,6 +3,9 @@
 
 using System.Reflection;
 using Microsoft.Extensions.DependencyInjection;
+using Skywalker.Ddd.Data;
+using Skywalker.Ddd.Data.Filtering;
+using Skywalker.Ddd.Data.Seeding;
 using Skywalker.Ddd.Domain.Services;
 using Skywalker.Extensions.DynamicProxies;
 
@@ -10,7 +13,7 @@ namespace Skywalker.ApplicationParts;
 
 /// <summary>
 /// 从 <see cref="ApplicationPart"/> 中发现实现了 <see cref="IDomainService"/> 的类型，
-/// 按约定注册为 Scoped 生命周期。
+/// 按约定注册为 Scoped 生命周期，并注册 Domain 层框架服务。
 /// </summary>
 public class DomainServiceFeatureProvider : IApplicationFeatureProvider<ServiceRegistrationFeature>
 {
@@ -25,6 +28,19 @@ public class DomainServiceFeatureProvider : IApplicationFeatureProvider<ServiceR
     /// <inheritdoc />
     public void PopulateFeature(IEnumerable<ApplicationPart> parts, ServiceRegistrationFeature feature)
     {
+        // 调用外部组件的注册方法
+        feature.ServiceCollection.AddDddExceptions();
+        feature.ServiceCollection.AddEventBusLocal();
+        feature.ServiceCollection.AddThreading();
+
+        // Domain 框架服务
+        feature.Services.Add(ServiceDescriptor.Singleton<IAsyncQueryableExecuter, AsyncQueryableExecuter>());
+        feature.Services.Add(ServiceDescriptor.Singleton<IDataSeeder, DataSeeder>());
+        feature.Services.Add(ServiceDescriptor.Singleton<IDataFilter, DataFilter>());
+        feature.Services.Add(ServiceDescriptor.Singleton(typeof(IDataFilter<>), typeof(DataFilter<>)));
+        feature.Services.Add(ServiceDescriptor.Singleton<IConnectionStringResolver, DefaultConnectionStringResolver>());
+
+        // 扫描 IDomainService 实现
         foreach (var part in parts)
         {
             if (part is not IApplicationPartTypeProvider typeProvider)
