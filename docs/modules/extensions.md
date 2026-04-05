@@ -125,7 +125,7 @@ services.AddDynamicProxies();
 services.AddInterceptedServices();
 ```
 
-> **说明**：各 DDD 层的扩展方法（如 `AddDddDomain()`、`AddDddApplication()`）内部已自动调用 `AddInterceptedServices()`，使用 DDD 模块时无需手动调用。
+> **说明**：`AddSkywalker()` 内部已自动调用 `AddInterceptedServices()`；如果已通过 `AddSkywalker()` 完成框架注册，通常无需再手动调用。
 
 ### 工作原理
 

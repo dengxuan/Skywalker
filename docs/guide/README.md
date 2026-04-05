@@ -142,15 +142,10 @@ var builder = WebApplication.CreateBuilder(args);
 // ============================================
 // 1. Skywalker 核心服务 + ASP.NET Core 集成
 // ============================================
-// AddSkywalker()      → 创建 PartManager，发现程序集
-// AddUnitOfWork()     → 注册工作单元基础设施
-// AddDddDomain()      → 注册领域层（自动注册 IDomainService 实现）
-// AddDddApplication() → 注册应用层（自动注册 IApplicationService 实现）
-// AddAspNetCore()     → 注册异常处理、响应包装等 Web 特有服务
+// AddSkywalker()  → 自动发现并注册各层 FeatureProvider，
+//                    并在内部完成拦截服务等基础设施注册
+// AddAspNetCore() → 注册异常处理、响应包装等 Web 特有服务
 builder.Services.AddSkywalker()
-    .AddUnitOfWork()
-    .AddDddDomain()
-    .AddDddApplication()
     .AddAspNetCore();
 
 // ============================================

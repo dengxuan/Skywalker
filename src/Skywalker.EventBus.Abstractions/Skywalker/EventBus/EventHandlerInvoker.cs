@@ -6,7 +6,7 @@ using Skywalker.EventBus.Abstractions;
 
 namespace Skywalker.EventBus;
 
-public class EventHandlerInvoker : IEventHandlerInvoker
+internal class EventHandlerInvoker : IEventHandlerInvoker
 {
     private readonly ConcurrentDictionary<string, EventHandlerInvokerCacheItem> _cache;
 

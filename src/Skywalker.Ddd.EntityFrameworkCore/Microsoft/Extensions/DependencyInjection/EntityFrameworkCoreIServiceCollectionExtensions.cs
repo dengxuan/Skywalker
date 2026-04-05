@@ -86,10 +86,10 @@ public static class EntityFrameworkCoreIServiceCollectionExtensions
     /// <summary>
     /// 添加 DbContext。
     /// </summary>
-    /// <typeparam name="TDbContext">DbContext ���͡�</typeparam>
-    /// <param name="services">���񼯺ϡ�</param>
-    /// <param name="options">DbContext ���á�</param>
-    /// <returns>���񼯺ϡ�</returns>
+    /// <typeparam name="TDbContext">DbContext 类型。</typeparam>
+    /// <param name="services">服务集合。</param>
+    /// <param name="options">DbContext 配置。</param>
+    /// <returns>服务集合。</returns>
     public static IServiceCollection AddSkywalkerDbContext<TDbContext>(this IServiceCollection services, Action<SkywalkerDbContextOptions> options) where TDbContext : SkywalkerDbContext<TDbContext>
     {
         services.Configure(options);
@@ -100,12 +100,12 @@ public static class EntityFrameworkCoreIServiceCollectionExtensions
     }
 
     /// <summary>
-    /// ���� DbContext ���ӳء�
+    /// 添加 DbContext 连接池。
     /// </summary>
-    /// <typeparam name="TDbContext">DbContext ���͡�</typeparam>
-    /// <param name="services">���񼯺ϡ�</param>
-    /// <param name="options">DbContext ���á�</param>
-    /// <returns>���񼯺ϡ�</returns>
+    /// <typeparam name="TDbContext">DbContext 类型。</typeparam>
+    /// <param name="services">服务集合。</param>
+    /// <param name="options">DbContext 配置。</param>
+    /// <returns>服务集合。</returns>
     public static IServiceCollection AddSkywalkerDbContextPool<TDbContext>(this IServiceCollection services, Action<DbContextOptionsBuilder> options) where TDbContext : SkywalkerDbContext<TDbContext>
     {
         services.Configure(options);

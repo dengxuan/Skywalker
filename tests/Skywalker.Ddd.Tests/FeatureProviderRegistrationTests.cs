@@ -225,7 +225,7 @@ public class FeatureProviderRegistrationTests
     #region PartManager & FeatureProviders
 
     [Fact]
-    public void AddSkywalker_DiscoversFourFeatureProviders()
+    public void AddSkywalker_DiscoversFeatureProviders()
     {
         var services = new ServiceCollection();
         services.AddLogging();
@@ -241,6 +241,7 @@ public class FeatureProviderRegistrationTests
         Assert.Contains("UowServiceFeatureProvider", providerTypes);
         Assert.Contains("DomainServiceFeatureProvider", providerTypes);
         Assert.Contains("ApplicationServiceFeatureProvider", providerTypes);
+        Assert.Contains("EntityFrameworkCoreFeatureProvider", providerTypes);
     }
 
     [Fact]

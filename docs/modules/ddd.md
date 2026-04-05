@@ -67,21 +67,15 @@ dotnet add package Skywalker.Ddd
 ### 注册服务
 
 ```csharp
-// 注册 Skywalker 核心服务，按 DDD 层逐层注册
-builder.Services.AddSkywalker()
-    .AddUnitOfWork()       // 工作单元
-    .AddDddDomain()        // 领域层（自动注册 IDomainService 实现）
-    .AddDddApplication();  // 应用层（自动注册 IApplicationService 实现）
+// 注册 Skywalker 核心服务（自动发现并注册各层 FeatureProvider）
+builder.Services.AddSkywalker();
 
 // ASP.NET Core 项目还需注册 Web 集成
 builder.Services.AddSkywalker()
-    .AddUnitOfWork()
-    .AddDddDomain()
-    .AddDddApplication()
     .AddAspNetCore();
 ```
 
-> **说明**：`AddSkywalker()` 创建 `SkywalkerPartManager` 并发现引用的程序集。每个 DDD 层都有对应的扩展方法，通过 `FeatureProvider` 按约定自动注册服务：领域层自动注册所有 `IDomainService` 实现为 Scoped，应用层自动注册所有 `IApplicationService` 实现为 Scoped。框架基础服务（如 UoW、DataFilter 等）在各层扩展方法中显式注册。
+> **说明**：`AddSkywalker()` 创建 `SkywalkerPartManager` 并发现引用的程序集，自动扫描各层 `FeatureProvider` 完成所有服务注册：领域层自动注册所有 `IDomainService` 实现为 Scoped，应用层自动注册所有 `IApplicationService` 实现为 Scoped。框架基础服务（如 UoW、DataFilter 等）由各层 FeatureProvider 显式注册。如需替换默认实现（如将本地 EventBus 替换为 RabbitMQ），在 `AddSkywalker()` 之后调用对应方法即可。
 
 ---
 

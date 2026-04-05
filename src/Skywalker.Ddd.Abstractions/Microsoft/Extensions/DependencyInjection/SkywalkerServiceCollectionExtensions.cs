@@ -49,7 +49,7 @@ public static class SkywalkerServiceCollectionExtensions
         var partManager = new SkywalkerPartManager();
         partManager.PopulateDefaultParts(entryAssembly);
 
-        services.AddSingleton(partManager);
+        services.TryAddSingleton(partManager);
 
         // 从发现的 Part 中扫描 IApplicationFeatureProvider<ServiceRegistrationFeature> 实现
         var featureProviderType = typeof(IApplicationFeatureProvider<ServiceRegistrationFeature>);
