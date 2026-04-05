@@ -68,9 +68,7 @@ dotnet add package Skywalker.Ddd
 
 ```csharp
 // 注册 Skywalker 核心服务（自动发现并注册各层 FeatureProvider）
-builder.Services.AddSkywalker();
-
-// ASP.NET Core 项目还需注册 Web 集成
+// ASP.NET Core 项目可链式注册 Web 集成
 builder.Services.AddSkywalker()
     .AddAspNetCore();
 ```
@@ -665,9 +663,8 @@ public sealed class UnitOfWorkAttribute : Attribute
 ### 注册服务
 
 ```csharp
-// UoW 通过 AddUnitOfWork() 注册
-builder.Services.AddSkywalker()
-    .AddUnitOfWork();
+// UoW 由 AddSkywalker() 内部的 UowServiceFeatureProvider 自动注册
+builder.Services.AddSkywalker();
 ```
 
 ### 使用示例
@@ -945,9 +942,6 @@ dotnet add package Skywalker.Ddd.AspNetCore
 ```csharp
 // AddAspNetCore() 自动注册异常处理和响应包装
 builder.Services.AddSkywalker()
-    .AddUnitOfWork()
-    .AddDddDomain()
-    .AddDddApplication()
     .AddAspNetCore();
 
 // 在中间件管道中启用 Skywalker
