@@ -74,20 +74,6 @@ public class AddAutoServicesIntegrationTests
     }
 
     [Fact]
-    public void AddSkywalker_DoesNotRegisterDisabledServices()
-    {
-        // Arrange
-        var services = new ServiceCollection();
-        services.AddLogging();
-        services.AddSkywalker(typeof(AddAutoServicesIntegrationTests).Assembly);
-
-        // Assert - TestDisabledService should NOT be registered (not explicitly registered)
-        var disabledDescriptor = services.FirstOrDefault(d =>
-            d.ImplementationType == typeof(TestDisabledService));
-        Assert.Null(disabledDescriptor);
-    }
-
-    [Fact]
     public void AddSkywalker_CreatesPartManagerWithParts()
     {
         // Arrange

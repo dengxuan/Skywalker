@@ -51,12 +51,6 @@ public class TestMultiService : ITestEmailService, ITestNotificationService
     public void Notify(string message) { }
 }
 
-// Service that should NOT be registered
-[DisableAutoRegistration]
-public class TestDisabledService : ITestEmailService
-{
-    public string SendEmail(string to, string subject) => "disabled";
-}
 
 // Service with ReplaceService attribute
 [ReplaceService]

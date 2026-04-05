@@ -75,6 +75,12 @@ public static class SkywalkerServiceCollectionExtensions
             services.TryAdd(descriptor);
         }
 
+        // 应用替换注册（[ReplaceService] 标记的服务）
+        foreach (var descriptor in feature.Replacements)
+        {
+            services.Replace(descriptor);
+        }
+
         // 为实现了 IInterceptable 的服务启用动态代理
         services.AddInterceptedServices();
 

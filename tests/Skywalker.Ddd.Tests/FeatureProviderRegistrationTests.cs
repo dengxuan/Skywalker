@@ -46,17 +46,6 @@ public class TestOrderApplicationService : ITestOrderApplicationService
     public string PlaceOrder() => "OrderPlaced";
 }
 
-public interface ITestDisabledDomainService : IDomainService
-{
-    string Nope();
-}
-
-[DisableAutoRegistration]
-public class TestDisabledDomainService : ITestDisabledDomainService
-{
-    public string Nope() => "Should not be registered";
-}
-
 /// <summary>
 /// 用于 Repository 和 generic IDomainService 注册测试的实体。
 /// </summary>
@@ -75,6 +64,137 @@ public class TestDbContext(DbContextOptions<TestDbContext> options) : SkywalkerD
 {
     public DbSet<TestOrder> Orders { get; set; } = default!;
     public DbSet<TestItem> Items { get; set; } = default!;
+}
+
+/// <summary>
+/// 用于自定义仓储自动注册测试的 Fixtures。
+/// </summary>
+public interface ITestCustomOrderRepository : IRepository
+{
+    Task<TestOrder?> FindByNameAsync(string name);
+}
+
+public class TestCustomOrderRepository : ITestCustomOrderRepository
+{
+    public Task<int> CountAsync(CancellationToken cancellationToken = default) => Task.FromResult(0);
+    public Task<long> LongCountAsync(CancellationToken cancellationToken = default) => Task.FromResult(0L);
+    public Task<TestOrder?> FindByNameAsync(string name) => Task.FromResult<TestOrder?>(null);
+}
+
+// --- [ExposeServices] 测试 Fixtures ---
+
+public interface ITestAuditService : IDomainService
+{
+    string Audit();
+}
+
+public interface ITestInternalService : IDomainService
+{
+}
+
+/// <summary>
+/// 实现了两个接口，但 [ExposeServices] 只暴露 ITestAuditService，
+/// ITestInternalService 不应被注册。
+/// </summary>
+[ExposeServices(typeof(ITestAuditService))]
+public class TestExposedDomainService : ITestAuditService, ITestInternalService
+{
+    public string Audit() => "Audited";
+}
+
+/// <summary>
+/// [ExposeServices] 带 IncludeSelf=true，实现类自身也会被注册。
+/// </summary>
+public interface ITestSelfService : IDomainService
+{
+    string DoWork();
+}
+
+[ExposeServices(typeof(ITestSelfService), IncludeSelf = true)]
+public class TestSelfExposedService : ITestSelfService
+{
+    public string DoWork() => "SelfDone";
+}
+
+/// <summary>
+/// [ExposeServices] 带 IncludeDefaults=true，显式指定的接口 + 自动发现的接口都注册。
+/// </summary>
+public interface ITestExplicitService : IDomainService
+{
+}
+
+public interface ITestAutoDiscoveredService : IDomainService
+{
+}
+
+[ExposeServices(typeof(ITestExplicitService), IncludeDefaults = true)]
+public class TestIncludeDefaultsService : ITestExplicitService, ITestAutoDiscoveredService
+{
+    // IncludeDefaults=true → 两个接口都应被注册
+}
+
+// --- [ReplaceService] 测试 Fixtures ---
+
+/// <summary>
+/// 先注册的默认实现。
+/// </summary>
+public interface ITestReplaceable : IDomainService
+{
+    string WhoAmI();
+}
+
+public class TestOriginalService : ITestReplaceable
+{
+    public string WhoAmI() => "Original";
+}
+
+/// <summary>
+/// [ReplaceService] 标记的替换实现，应覆盖 TestOriginalService 的注册。
+/// </summary>
+[ReplaceService]
+public class TestReplacementDomainService : ITestReplaceable
+{
+    public string WhoAmI() => "Replacement";
+}
+
+// --- [SharedInstance] 测试 Fixtures ---
+
+public interface ITestSharedA : IDomainService
+{
+    string Id { get; }
+}
+
+public interface ITestSharedB : IDomainService
+{
+    string Id { get; }
+}
+
+/// <summary>
+/// [SharedInstance] 标记后，ITestSharedA 和 ITestSharedB 通过工厂共享同一实例。
+/// </summary>
+[SharedInstance]
+public class TestSharedService : ITestSharedA, ITestSharedB
+{
+    public string Id { get; } = Guid.NewGuid().ToString();
+}
+
+// --- [KeyedService] 测试 Fixtures ---
+
+public interface ITestKeyedService : IDomainService
+{
+    string Strategy();
+}
+
+[KeyedService(typeof(ITestKeyedService), "alpha")]
+public class TestAlphaStrategy : ITestKeyedService
+{
+    public string Strategy() => "Alpha";
+}
+
+[KeyedService(typeof(ITestKeyedService), "beta")]
+public class TestBetaStrategy : ITestKeyedService
+{
+    public string Strategy() => "Beta";
 }
 
 #endregion
@@ -197,13 +317,44 @@ public class FeatureProviderRegistrationTests
         Assert.Equal("TestProduct", svc.GetProduct());
     }
 
+    #endregion
+
+    #region Custom Repository Auto-Registration (DomainServiceFeatureProvider)
+
     [Fact]
-    public void AddSkywalker_DoesNotRegister_DisabledDomainService()
+    public void AddSkywalker_AutoDiscovers_IRepository_Implementation()
     {
         using var provider = BuildProvider();
         using var scope = provider.CreateScope();
-        var svc = scope.ServiceProvider.GetService<ITestDisabledDomainService>();
-        Assert.Null(svc);
+        var svc = scope.ServiceProvider.GetService<ITestCustomOrderRepository>();
+        Assert.NotNull(svc);
+    }
+
+    [Fact]
+    public void AddSkywalker_CustomRepository_IsScoped()
+    {
+        var services = new ServiceCollection();
+        services.AddLogging();
+        services.AddSingleton<IConfiguration>(new ConfigurationBuilder().Build());
+        services.AddSkywalker(typeof(FeatureProviderRegistrationTests).Assembly);
+
+        var descriptor = services.FirstOrDefault(d => d.ServiceType == typeof(ITestCustomOrderRepository));
+        Assert.NotNull(descriptor);
+        Assert.Equal(ServiceLifetime.Scoped, descriptor.Lifetime);
+    }
+
+    [Fact]
+    public void AddSkywalker_CustomRepository_DoesNotRegisterStandardInterfaces()
+    {
+        var services = new ServiceCollection();
+        services.AddLogging();
+        services.AddSingleton<IConfiguration>(new ConfigurationBuilder().Build());
+        services.AddSkywalker(typeof(FeatureProviderRegistrationTests).Assembly);
+
+        // TestCustomOrderRepository 只应注册 ITestCustomOrderRepository，不应重复注册 IRepository
+        var repoDescriptors = services.Where(d => d.ImplementationType == typeof(TestCustomOrderRepository)).ToList();
+        Assert.Single(repoDescriptors);
+        Assert.Equal(typeof(ITestCustomOrderRepository), repoDescriptors[0].ServiceType);
     }
 
     #endregion
@@ -401,6 +552,104 @@ public class FeatureProviderRegistrationTests
         using var provider = services.BuildServiceProvider();
         var eventBus = provider.GetRequiredService<IEventBus>();
         Assert.IsType<NullEventBus>(eventBus);
+    }
+
+    #endregion
+
+    #region [ExposeServices] Attribute
+
+    [Fact]
+    public void ExposeServices_OnlyRegistersSpecifiedInterfaces()
+    {
+        using var provider = BuildProvider();
+        using var scope = provider.CreateScope();
+
+        // [ExposeServices(typeof(ITestAuditService))] → 只注册 ITestAuditService
+        var audit = scope.ServiceProvider.GetService<ITestAuditService>();
+        Assert.NotNull(audit);
+        Assert.Equal("Audited", audit.Audit());
+
+        // ITestInternalService 不应被注册
+        var intern = scope.ServiceProvider.GetService<ITestInternalService>();
+        Assert.Null(intern);
+    }
+
+    [Fact]
+    public void ExposeServices_IncludeSelf_RegistersImplementationType()
+    {
+        using var provider = BuildProvider();
+        using var scope = provider.CreateScope();
+
+        // [ExposeServices(typeof(ITestSelfService), IncludeSelf = true)]
+        var byInterface = scope.ServiceProvider.GetService<ITestSelfService>();
+        var bySelf = scope.ServiceProvider.GetService<TestSelfExposedService>();
+        Assert.NotNull(byInterface);
+        Assert.NotNull(bySelf);
+    }
+
+    [Fact]
+    public void ExposeServices_IncludeDefaults_RegistersBothExplicitAndAutoDiscovered()
+    {
+        using var provider = BuildProvider();
+        using var scope = provider.CreateScope();
+
+        // [ExposeServices(typeof(ITestExplicitService), IncludeDefaults = true)]
+        var explicit1 = scope.ServiceProvider.GetService<ITestExplicitService>();
+        var auto = scope.ServiceProvider.GetService<ITestAutoDiscoveredService>();
+        Assert.NotNull(explicit1);
+        Assert.NotNull(auto);
+    }
+
+    #endregion
+
+    #region [ReplaceService] Attribute
+
+    [Fact]
+    public void ReplaceService_OverridesExistingRegistration()
+    {
+        using var provider = BuildProvider();
+        using var scope = provider.CreateScope();
+
+        // TestOriginalService 先注册，TestReplacementDomainService 标记 [ReplaceService] 应覆盖
+        var svc = scope.ServiceProvider.GetService<ITestReplaceable>();
+        Assert.NotNull(svc);
+        Assert.Equal("Replacement", svc.WhoAmI());
+    }
+
+    #endregion
+
+    #region [SharedInstance] Attribute
+
+    [Fact]
+    public void SharedInstance_MultipleInterfaces_ResolveSameInstance()
+    {
+        using var provider = BuildProvider();
+        using var scope = provider.CreateScope();
+
+        // [SharedInstance] → ITestSharedA 和 ITestSharedB 应解析到同一实例
+        var a = scope.ServiceProvider.GetService<ITestSharedA>();
+        var b = scope.ServiceProvider.GetService<ITestSharedB>();
+        Assert.NotNull(a);
+        Assert.NotNull(b);
+        Assert.Equal(a.Id, b.Id);
+    }
+
+    #endregion
+
+    #region [KeyedService] Attribute
+
+    [Fact]
+    public void KeyedService_ResolvesCorrectImplementation()
+    {
+        using var provider = BuildProvider();
+        using var scope = provider.CreateScope();
+
+        var alpha = scope.ServiceProvider.GetKeyedService<ITestKeyedService>("alpha");
+        var beta = scope.ServiceProvider.GetKeyedService<ITestKeyedService>("beta");
+        Assert.NotNull(alpha);
+        Assert.NotNull(beta);
+        Assert.Equal("Alpha", alpha.Strategy());
+        Assert.Equal("Beta", beta.Strategy());
     }
 
     #endregion

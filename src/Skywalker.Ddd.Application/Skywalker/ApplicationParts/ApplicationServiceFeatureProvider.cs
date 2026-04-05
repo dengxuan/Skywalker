@@ -11,6 +11,8 @@ namespace Skywalker.ApplicationParts;
 /// <summary>
 /// 从 <see cref="ApplicationPart"/> 中发现实现了 <see cref="IApplicationService"/> 的类型，
 /// 按约定注册为 Scoped 生命周期。
+/// 支持 <see cref="ExposeServicesAttribute"/>、<see cref="ReplaceServiceAttribute"/>、
+/// <see cref="SharedInstanceAttribute"/>、<see cref="KeyedServiceAttribute"/> 等约定。
 /// </summary>
 public class ApplicationServiceFeatureProvider : IApplicationFeatureProvider<ServiceRegistrationFeature>
 {
@@ -41,25 +43,15 @@ public class ApplicationServiceFeatureProvider : IApplicationFeatureProvider<Ser
                     continue;
                 }
 
-                if (type.IsDefined(typeof(DisableAutoRegistrationAttribute), false))
-                {
-                    continue;
-                }
+                ServiceRegistrationHelper.RegisterKeyedServices(type, feature);
 
                 if (!typeof(IApplicationService).IsAssignableFrom(type))
                 {
                     continue;
                 }
 
-                foreach (var iface in type.GetInterfaces())
-                {
-                    if (s_excludedInterfaces.Contains(iface))
-                    {
-                        continue;
-                    }
-
-                    feature.Services.Add(new ServiceDescriptor(iface, type, ServiceLifetime.Scoped));
-                }
+                var interfaces = type.GetInterfaces().Where(iface => !s_excludedInterfaces.Contains(iface));
+                ServiceRegistrationHelper.RegisterType(type, interfaces, ServiceLifetime.Scoped, feature);
             }
         }
     }
