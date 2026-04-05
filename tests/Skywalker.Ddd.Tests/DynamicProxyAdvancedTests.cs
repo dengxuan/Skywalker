@@ -87,13 +87,14 @@ public class DynamicProxyAdvancedTests
     private static ServiceProvider BuildProvider()
     {
         var services = new ServiceCollection();
+        services.AddLogging();
         services.AddSkywalker(typeof(DynamicProxyAdvancedTests).Assembly);
 
         // 显式注册测试服务
         services.TryAddScoped<IComplexParamService, ComplexParamService>();
         services.TryAddScoped<IGenericMethodService, GenericMethodService>();
 
-        // 启用拦截
+        // 启用拦截（测试服务在 AddSkywalker 之后注册，需再次扫描）
         services.AddInterceptedServices();
 
         return services.BuildServiceProvider();

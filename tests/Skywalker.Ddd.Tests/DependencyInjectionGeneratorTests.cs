@@ -142,6 +142,7 @@ public class DependencyInjectionGeneratorTests
     private static ServiceProvider BuildProvider()
     {
         var services = new ServiceCollection();
+        services.AddLogging();
         services.AddSkywalker(typeof(DependencyInjectionGeneratorTests).Assembly);
 
         // 显式注册测试服务（不再使用 marker interface）
@@ -149,9 +150,9 @@ public class DependencyInjectionGeneratorTests
         services.TryAddScoped<ITestUserRepository, TestUserRepository>();
         services.TryAddSingleton<ITestCacheService, TestCacheService>();
         services.TryAddScoped<ITestOrderService, TestOrderService>();
-        services.TryAddTransient<IInterceptor, TestLoggingInterceptor>();
+        services.AddTransient<IInterceptor, TestLoggingInterceptor>();
 
-        // 启用拦截
+        // 启用拦截（测试服务在 AddSkywalker 之后注册，需再次扫描）
         services.AddInterceptedServices();
 
         return services.BuildServiceProvider();

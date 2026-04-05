@@ -50,6 +50,9 @@ public class UnitOfWorkInterceptorIntegrationTests
         // 显式注册测试服务
         services.TryAddScoped<ITestUowOrderService, TestUowOrderService>();
 
+        // 测试服务在 AddSkywalker 之后注册，需再次扫描以启用代理
+        services.AddInterceptedServices();
+
         return services.BuildServiceProvider();
     }
 
