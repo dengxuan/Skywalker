@@ -11,6 +11,8 @@
   <ItemGroup>
     <PackageReference Include="coverlet.collector" Version="6.0.4" />
     <PackageReference Include="Microsoft.NET.Test.Sdk" Version="17.14.1" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.InMemory" Version="$(MicrosoftEntityFrameworkCoreVersion)" />
+    <PackageReference Include="Microsoft.Extensions.Configuration" Version="9.0.0" />
     <PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="9.0.2" />
     <PackageReference Include="Microsoft.Extensions.Logging" Version="9.0.0" />
     <PackageReference Include="xunit" Version="2.9.3" />
@@ -23,6 +25,9 @@
 
   <ItemGroup>
     <ProjectReference Include="..\..\src\Skywalker.Ddd.Abstractions\Skywalker.Ddd.Abstractions.csproj" />
+    <ProjectReference Include="..\..\src\Skywalker.Ddd.Domain\Skywalker.Ddd.Domain.csproj" />
+    <ProjectReference Include="..\..\src\Skywalker.Ddd.Application\Skywalker.Ddd.Application.csproj" />
+    <ProjectReference Include="..\..\src\Skywalker.Ddd.EntityFrameworkCore\Skywalker.Ddd.EntityFrameworkCore.csproj" />
     <ProjectReference Include="..\..\src\Skywalker.Ddd.Uow\Skywalker.Ddd.Uow.csproj" />
     <ProjectReference Include="..\..\src\Skywalker.EventBus.Local\Skywalker.EventBus.Local.csproj" />
     <ProjectReference Include="..\..\src\Skywalker.Caching.Redis\Skywalker.Caching.Redis.csproj" />

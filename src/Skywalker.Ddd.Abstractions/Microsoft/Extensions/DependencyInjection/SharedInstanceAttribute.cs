@@ -25,7 +25,7 @@ namespace Microsoft.Extensions.DependencyInjection;
 /// <code>
 /// [SharedInstance]
 /// [ExposeServices(typeof(IAmbientUnitOfWork), typeof(IUnitOfWorkAccessor))]
-/// public class AmbientUnitOfWork : IAmbientUnitOfWork, ISingletonDependency
+/// public class AmbientUnitOfWork : IAmbientUnitOfWork
 /// {
 ///     private readonly AsyncLocal&lt;IUnitOfWork?&gt; _currentUow = new();
 ///     // ...

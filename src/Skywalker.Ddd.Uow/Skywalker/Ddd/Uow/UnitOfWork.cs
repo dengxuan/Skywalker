@@ -14,7 +14,7 @@ namespace Skywalker.Ddd.Uow;
 /// 工作单元实现
 /// </summary>
 [ExposeServices(typeof(IUnitOfWork), typeof(IDatabaseApiContainer), typeof(ITransactionApiContainer))]
-public class UnitOfWork : IUnitOfWork, ITransientDependency
+public class UnitOfWork : IUnitOfWork
 {
     /// <summary>
     /// 

@@ -1,11 +1,10 @@
 using System.Linq.Expressions;
-using Microsoft.Extensions.DependencyInjection;
 
 namespace System.Linq;
 
 #pragma warning disable CS1591
 
-public class AsyncQueryableExecuter : IAsyncQueryableExecuter, ISingletonDependency
+public class AsyncQueryableExecuter : IAsyncQueryableExecuter
 {
     protected IEnumerable<IAsyncQueryableProvider> Providers { get; }
 

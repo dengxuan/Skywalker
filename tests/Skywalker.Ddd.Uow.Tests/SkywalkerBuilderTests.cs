@@ -28,11 +28,11 @@ public class SkywalkerBuilderTests
         var services = new ServiceCollection();
         var uowAssembly = typeof(Abstractions.IUnitOfWorkManager).Assembly;
 
-        // Act — 显式传入 Uow 程序集，避免 GetCallingAssembly 在测试环境中行为不一致
+        // Act — 显式传入 Uow 程序集，AddSkywalker 自动发现 UowServiceFeatureProvider 注册服务
         var builder = services.AddSkywalker(uowAssembly);
 
         // 诊断：检查 PartManager 发现了哪些程序集（DDD 模块按命名约定自动发现）
-        Assert.NotEmpty(builder.PartManager.Assemblies); // 应该至少发现一个程序集
+        Assert.NotEmpty(builder.PartManager.ApplicationParts); // 应该至少发现一个程序集
 
         // Assert — UoW 核心服务应已注册
         Assert.Contains(services, d => d.ServiceType == typeof(Abstractions.IUnitOfWorkManager));

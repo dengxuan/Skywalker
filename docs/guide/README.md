@@ -142,7 +142,8 @@ var builder = WebApplication.CreateBuilder(args);
 // ============================================
 // 1. Skywalker 核心服务 + ASP.NET Core 集成
 // ============================================
-// AddSkywalker()  → 注册 UnitOfWork、拦截器等核心基础设施
+// AddSkywalker()  → 自动发现并注册各层 FeatureProvider，
+//                    并在内部完成拦截服务等基础设施注册
 // AddAspNetCore() → 注册异常处理、响应包装等 Web 特有服务
 builder.Services.AddSkywalker()
     .AddAspNetCore();

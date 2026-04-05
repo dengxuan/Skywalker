@@ -2,6 +2,7 @@
 // Gordon licenses this file to you under the MIT license.
 
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.DependencyInjection.Extensions;
 using Skywalker.EventBus;
 using Skywalker.EventBus.Abstractions;
 using Skywalker.EventBus.RabbitMQ;
@@ -81,7 +82,8 @@ public static class EventBusRabbitMQServiceCollectionExtensions
         services.AddRabbitMQ();
         services.AddGuidGenerator();
         services.AddSingleton<RabbitMqEventBus>();
-        services.AddSingleton<IEventBus>(sp => sp.GetRequiredService<RabbitMqEventBus>());
+        // Replace 替换默认的本地 EventBus
+        services.Replace(ServiceDescriptor.Singleton<IEventBus>(sp => sp.GetRequiredService<RabbitMqEventBus>()));
         services.AddHostedService<RabbitMqSubscriber>();
 
         return services;

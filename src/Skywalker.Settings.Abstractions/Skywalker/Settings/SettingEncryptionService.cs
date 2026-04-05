@@ -4,7 +4,7 @@ using Skywalker.Settings.Abstractions;
 
 namespace Skywalker.Settings;
 
-public class SettingEncryptionService(IOptions<SettingCryptionOptions> options) : ISettingEncryptionService//, ITransientDependency
+public class SettingEncryptionService(IOptions<SettingCryptionOptions> options) : ISettingEncryptionService
 {
     private readonly SettingCryptionOptions _options = options.Value;
 

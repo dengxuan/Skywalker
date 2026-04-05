@@ -1,9 +1,10 @@
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.DependencyInjection.Extensions;
 
-namespace Skywalker.SourceGenerators.Tests;
+namespace Skywalker.Ddd.Tests;
 
 /// <summary>
-/// Integration tests for reflection-based service registration via AddSkywalker().
+/// Integration tests for service registration via AddSkywalker() and explicit registration.
 /// </summary>
 public class AddAutoServicesIntegrationTests
 {
@@ -13,20 +14,19 @@ public class AddAutoServicesIntegrationTests
         // Arrange
         var services = new ServiceCollection();
         services.AddLogging();
-
-        // Act - AddSkywalker performs reflection-based scanning
         services.AddSkywalker(typeof(AddAutoServicesIntegrationTests).Assembly);
+
+        // 显式注册测试服务（不再使用 marker interface）
+        services.TryAddTransient<ITestEmailService, TestEmailService>();
+        services.TryAddScoped<ITestUserRepository, TestUserRepository>();
+        services.TryAddSingleton<ITestCacheService, TestCacheService>();
+
         using var provider = services.BuildServiceProvider();
 
-        // Assert - verify services defined in this test project are registered
-        var emailService = provider.GetService<ITestEmailService>();
-        Assert.NotNull(emailService);
-
-        var userRepository = provider.GetService<ITestUserRepository>();
-        Assert.NotNull(userRepository);
-
-        var cacheService = provider.GetService<ITestCacheService>();
-        Assert.NotNull(cacheService);
+        // Assert
+        Assert.NotNull(provider.GetService<ITestEmailService>());
+        Assert.NotNull(provider.GetService<ITestUserRepository>());
+        Assert.NotNull(provider.GetService<ITestCacheService>());
     }
 
     [Fact]
@@ -36,6 +36,11 @@ public class AddAutoServicesIntegrationTests
         var services = new ServiceCollection();
         services.AddLogging();
         services.AddSkywalker(typeof(AddAutoServicesIntegrationTests).Assembly);
+
+        // 显式注册
+        services.TryAddTransient<ITestEmailService, TestEmailService>();
+        services.TryAddScoped<ITestUserRepository, TestUserRepository>();
+        services.TryAddSingleton<ITestCacheService, TestCacheService>();
 
         // Assert - check service descriptors
         var emailDescriptor = services.FirstOrDefault(d => d.ServiceType == typeof(ITestEmailService));
@@ -58,9 +63,11 @@ public class AddAutoServicesIntegrationTests
         var services = new ServiceCollection();
         services.AddLogging();
         services.AddSkywalker(typeof(AddAutoServicesIntegrationTests).Assembly);
+        services.TryAddTransient<ITestEmailService, TestEmailService>();
+
         using var provider = services.BuildServiceProvider();
 
-        // Act & Assert - verify services actually work
+        // Act & Assert
         var emailService = provider.GetRequiredService<ITestEmailService>();
         var result = emailService.SendEmail("test@example.com", "Hello");
         Assert.Contains("test@example.com", result);
@@ -74,24 +81,22 @@ public class AddAutoServicesIntegrationTests
         services.AddLogging();
         services.AddSkywalker(typeof(AddAutoServicesIntegrationTests).Assembly);
 
-        // Assert - TestDisabledService should NOT be registered
+        // Assert - TestDisabledService should NOT be registered (not explicitly registered)
         var disabledDescriptor = services.FirstOrDefault(d =>
             d.ImplementationType == typeof(TestDisabledService));
         Assert.Null(disabledDescriptor);
     }
 
     [Fact]
-    public void AddSkywalker_RegistersServiceWithoutInterface()
+    public void AddSkywalker_CreatesPartManagerWithParts()
     {
         // Arrange
         var services = new ServiceCollection();
         services.AddLogging();
-        services.AddSkywalker(typeof(AddAutoServicesIntegrationTests).Assembly);
-        using var provider = services.BuildServiceProvider();
+        var builder = services.AddSkywalker(typeof(AddAutoServicesIntegrationTests).Assembly);
 
-        // Assert - TestNoInterfaceService should be registered as itself
-        var noInterfaceService = provider.GetService<TestNoInterfaceService>();
-        Assert.NotNull(noInterfaceService);
+        // Assert - PartManager should discover assemblies
+        Assert.NotEmpty(builder.PartManager.ApplicationParts);
     }
 }
 

@@ -11,7 +11,7 @@ namespace Microsoft.Extensions.DependencyInjection;
 /// 使用示例：
 /// <code>
 /// [ReplaceService]
-/// public class CustomEmailService : IEmailService, ITransientDependency
+/// public class CustomEmailService : IEmailService
 /// {
 ///     // 会替换已有的 IEmailService 注册
 /// }

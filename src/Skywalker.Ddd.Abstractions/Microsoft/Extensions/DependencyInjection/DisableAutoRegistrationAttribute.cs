@@ -10,7 +10,7 @@ namespace Microsoft.Extensions.DependencyInjection;
 /// 使用示例：
 /// <code>
 /// [DisableAutoRegistration]
-/// public class ManualService : IMyService, ITransientDependency
+/// public class ManualService : IMyService
 /// {
 ///     // 不会被自动注册，需要手动注册
 /// }

@@ -4,26 +4,14 @@
 namespace Microsoft.Extensions.DependencyInjection;
 
 /// <summary>
-/// 标记程序集包含自动服务注册扩展类。
-/// 由 SourceGenerator 自动生成此特性。
+/// 标记程序集包含 Skywalker 服务，需要被 <see cref="Skywalker.SkywalkerPartManager"/> 发现。
 /// </summary>
 /// <remarks>
-/// 此特性用于 <c>AddSkywalker()</c> 在运行时发现所有需要注册的程序集。
+/// 标记此特性的程序集会在 <c>AddSkywalker()</c> 调用时被自动发现并添加为 <see cref="Skywalker.ApplicationParts.AssemblyPart"/>。
+/// 通常不需要手动标记——引用了 <c>Skywalker.*</c> 程序集的项目会自动被发现。
+/// 仅在程序集不直接引用 Skywalker 但仍需参与服务发现时使用。
 /// </remarks>
 [AttributeUsage(AttributeTargets.Assembly, AllowMultiple = false)]
 public sealed class SkywalkerServicesAttribute : Attribute
 {
-    /// <summary>
-    /// 获取包含 AddAutoServices 方法的扩展类类型。
-    /// </summary>
-    public Type RegistrationType { get; }
-
-    /// <summary>
-    /// 初始化 <see cref="SkywalkerServicesAttribute"/> 类的新实例。
-    /// </summary>
-    /// <param name="registrationType">包含 AddAutoServices 方法的类型。</param>
-    public SkywalkerServicesAttribute(Type registrationType)
-    {
-        RegistrationType = registrationType ?? throw new ArgumentNullException(nameof(registrationType));
-    }
 }

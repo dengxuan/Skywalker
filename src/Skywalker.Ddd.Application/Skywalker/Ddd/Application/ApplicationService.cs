@@ -3,7 +3,6 @@
 
 using AutoMapper;
 using Skywalker.Ddd.Application.Abstractions;
-using Microsoft.Extensions.DependencyInjection;
 
 namespace Skywalker.Ddd.Application;
 
@@ -11,7 +10,7 @@ namespace Skywalker.Ddd.Application;
 /// 应用服务基类，自动启用 UnitOfWork 拦截。
 /// 默认为 Scoped 生命周期。
 /// </summary>
-public abstract class ApplicationService : IApplicationService, IScopedDependency
+public abstract class ApplicationService : IApplicationService
 {
     /// <summary>
     /// 

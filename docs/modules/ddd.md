@@ -67,14 +67,13 @@ dotnet add package Skywalker.Ddd
 ### 注册服务
 
 ```csharp
-// 注册 Skywalker 核心服务（包含 UoW、拦截器等基础设施）
-builder.Services.AddSkywalker();
-
-// ASP.NET Core 项目还需注册 Web 集成
-builder.Services.AddSkywalker().AddAspNetCore();
+// 注册 Skywalker 核心服务（自动发现并注册各层 FeatureProvider）
+// ASP.NET Core 项目可链式注册 Web 集成
+builder.Services.AddSkywalker()
+    .AddAspNetCore();
 ```
 
-> **说明**：`AddSkywalker()` 是所有 Skywalker 项目的唯一入口，领域服务和应用服务通过反射自动注册（实现 `ISingletonDependency` / `ITransientDependency` / `IScopedDependency` 接口即可），无需手动调用。这些 DI 标记接口位于 `Microsoft.Extensions.DependencyInjection` 命名空间中，无需额外引入命名空间。
+> **说明**：`AddSkywalker()` 创建 `SkywalkerPartManager` 并发现引用的程序集，自动扫描各层 `FeatureProvider` 完成所有服务注册：领域层自动注册所有 `IDomainService` 实现为 Scoped，应用层自动注册所有 `IApplicationService` 实现为 Scoped。框架基础服务（如 UoW、DataFilter 等）由各层 FeatureProvider 显式注册。如需替换默认实现（如将本地 EventBus 替换为 RabbitMQ），在 `AddSkywalker()` 之后调用对应方法即可。
 
 ---
 
@@ -664,7 +663,7 @@ public sealed class UnitOfWorkAttribute : Attribute
 ### 注册服务
 
 ```csharp
-// AddSkywalker() 已包含 UoW 注册，无需额外调用
+// UoW 由 AddSkywalker() 内部的 UowServiceFeatureProvider 自动注册
 builder.Services.AddSkywalker();
 ```
 
@@ -838,8 +837,11 @@ public class EfCoreRepository<TDbContext, TEntity, TKey> : EfCoreRepository<TDbC
 ### 注册服务
 
 ```csharp
-// 注册核心服务
-builder.Services.AddSkywalker();
+// 注册核心服务 + 领域层
+builder.Services.AddSkywalker()
+    .AddUnitOfWork()
+    .AddDddDomain()
+    .AddDddApplication();
 
 // 注册 EF Core DbContext（自动注册仓储和 EntityFrameworkCore 基础设施）
 builder.Services.AddSkywalkerDbContext<OrderDbContext>(options =>
@@ -939,7 +941,8 @@ dotnet add package Skywalker.Ddd.AspNetCore
 
 ```csharp
 // AddAspNetCore() 自动注册异常处理和响应包装
-builder.Services.AddSkywalker().AddAspNetCore();
+builder.Services.AddSkywalker()
+    .AddAspNetCore();
 
 // 在中间件管道中启用 Skywalker
 app.UseSkywalker();

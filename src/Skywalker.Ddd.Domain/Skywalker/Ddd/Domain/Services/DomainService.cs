@@ -5,7 +5,6 @@ using System.Linq.Expressions;
 using Skywalker.Ddd.Domain.Entities;
 using Skywalker.Ddd.Domain.Repositories;
 using Skywalker.Ddd.Uow;
-using Microsoft.Extensions.DependencyInjection;
 using Skywalker.Extensions.Collections.Generic;
 using Skywalker.Extensions.Specifications;
 
@@ -19,7 +18,7 @@ namespace Skywalker.Ddd.Domain.Services;
 /// <param name="repository">仓储实例</param>
 /// <param name="asyncExecuter">异步查询执行器</param>
 [UnitOfWork]
-public class DomainService<TEntity>(IRepository<TEntity> repository, IAsyncQueryableExecuter asyncExecuter) : IDomainService<TEntity>, IScopedDependency where TEntity : class, IEntity
+public class DomainService<TEntity>(IRepository<TEntity> repository, IAsyncQueryableExecuter asyncExecuter) : IDomainService<TEntity> where TEntity : class, IEntity
 {
     /// <summary>
     /// 仓储实例，<see cref="IRepository{TEntity, TKey}"/>

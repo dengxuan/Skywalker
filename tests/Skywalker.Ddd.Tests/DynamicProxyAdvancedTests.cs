@@ -1,8 +1,9 @@
 using System.Collections.Concurrent;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.DependencyInjection.Extensions;
 using Skywalker.Extensions.DynamicProxies;
 
-namespace Skywalker.SourceGenerators.Tests;
+namespace Skywalker.Ddd.Tests;
 
 #region Complex Service Interfaces and Implementations
 
@@ -50,7 +51,7 @@ public interface IGenericMethodService : IInterceptable
     Task<List<T>> GetListAsync<T>(string[] keys) where T : class;
 }
 
-public class ComplexParamService : IComplexParamService, IScopedDependency
+public class ComplexParamService : IComplexParamService
 {
     public Task<int> ProcessArrayAsync(string[] items) => Task.FromResult(items.Length);
     public Task<int> ProcessIntArrayAsync(int[] values) => Task.FromResult(values.Sum());
@@ -67,7 +68,7 @@ public class ComplexParamService : IComplexParamService, IScopedDependency
     public Task<string> OverloadedAsync(string key, string[] values) => Task.FromResult($"{key}:[{string.Join(",", values)}]");
 }
 
-public class GenericMethodService : IGenericMethodService, IScopedDependency
+public class GenericMethodService : IGenericMethodService
 {
     public Task<T> GetAsync<T>(string key) where T : class => Task.FromResult(default(T)!);
     public Task<TResult> TransformAsync<TInput, TResult>(TInput input) where TInput : class where TResult : class
@@ -86,7 +87,16 @@ public class DynamicProxyAdvancedTests
     private static ServiceProvider BuildProvider()
     {
         var services = new ServiceCollection();
+        services.AddLogging();
         services.AddSkywalker(typeof(DynamicProxyAdvancedTests).Assembly);
+
+        // 显式注册测试服务
+        services.TryAddScoped<IComplexParamService, ComplexParamService>();
+        services.TryAddScoped<IGenericMethodService, GenericMethodService>();
+
+        // 启用拦截（测试服务在 AddSkywalker 之后注册，需再次扫描）
+        services.AddInterceptedServices();
+
         return services.BuildServiceProvider();
     }
 

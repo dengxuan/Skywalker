@@ -1,11 +1,10 @@
 ﻿using System.Linq.Expressions;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Query.Internal;
-using Microsoft.Extensions.DependencyInjection;
 
 namespace Skywalker.Ddd.EntityFrameworkCore;
 
-public class EfCoreAsyncQueryableProvider : IAsyncQueryableProvider, ITransientDependency
+public class EfCoreAsyncQueryableProvider : IAsyncQueryableProvider
 {
     public bool CanExecute<T>(IQueryable<T> queryable)
     {

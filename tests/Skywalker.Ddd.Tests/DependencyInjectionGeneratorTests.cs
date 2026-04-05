@@ -1,7 +1,8 @@
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.DependencyInjection.Extensions;
 using Skywalker.Extensions.DynamicProxies;
 
-namespace Skywalker.SourceGenerators.Tests;
+namespace Skywalker.Ddd.Tests;
 
 #region Test Service Interfaces and Implementations
 
@@ -26,25 +27,25 @@ public interface ITestNotificationService
 }
 
 // Transient service
-public class TestEmailService : ITestEmailService, ITransientDependency
+public class TestEmailService : ITestEmailService
 {
     public string SendEmail(string to, string subject) => $"Sent to {to}: {subject}";
 }
 
 // Scoped service
-public class TestUserRepository : ITestUserRepository, IScopedDependency
+public class TestUserRepository : ITestUserRepository
 {
     public object GetUser(int id) => new { Id = id, Name = "Test" };
 }
 
 // Singleton service
-public class TestCacheService : ITestCacheService, ISingletonDependency
+public class TestCacheService : ITestCacheService
 {
     public object Get(string key) => $"cached:{key}";
 }
 
 // Service with multiple interfaces
-public class TestMultiService : ITestEmailService, ITestNotificationService, ITransientDependency
+public class TestMultiService : ITestEmailService, ITestNotificationService
 {
     public string SendEmail(string to, string subject) => "multi email";
     public void Notify(string message) { }
@@ -52,28 +53,28 @@ public class TestMultiService : ITestEmailService, ITestNotificationService, ITr
 
 // Service that should NOT be registered
 [DisableAutoRegistration]
-public class TestDisabledService : ITestEmailService, ITransientDependency
+public class TestDisabledService : ITestEmailService
 {
     public string SendEmail(string to, string subject) => "disabled";
 }
 
 // Service with ReplaceService attribute
 [ReplaceService]
-public class TestReplacementService : ITestCacheService, ISingletonDependency
+public class TestReplacementService : ITestCacheService
 {
     public object Get(string key) => $"replacement:{key}";
 }
 
 // Service with ExposeServices attribute
 [ExposeServices(typeof(ITestEmailService), IncludeSelf = true)]
-public class TestExposedService : ITestEmailService, ITestNotificationService, IScopedDependency
+public class TestExposedService : ITestEmailService, ITestNotificationService
 {
     public string SendEmail(string to, string subject) => "exposed";
     public void Notify(string message) { }
 }
 
 // Service without interface - should register itself
-public class TestNoInterfaceService : ITransientDependency
+public class TestNoInterfaceService
 {
     public string DoSomething() => "done";
 }
@@ -83,7 +84,7 @@ public class TestNoInterfaceService : ITransientDependency
 #region Test Interceptors
 
 // Simple logging interceptor for testing
-public class TestLoggingInterceptor : IInterceptor, ITransientDependency
+public class TestLoggingInterceptor : IInterceptor
 {
     public static readonly List<string> Log = new();
     private static readonly object _lock = new();
@@ -97,7 +98,7 @@ public class TestLoggingInterceptor : IInterceptor, ITransientDependency
 }
 
 // Timing interceptor for testing
-public class TestTimingInterceptor : IInterceptor, ITransientDependency
+public class TestTimingInterceptor : IInterceptor
 {
     public static DateTime? StartTime { get; private set; }
     public static DateTime? EndTime { get; private set; }
@@ -117,8 +118,8 @@ public interface ITestOrderService : IInterceptable
     string GetOrderStatus(string orderId);
 }
 
-// Intercepted service - no longer needs [Intercept] attribute
-public class TestOrderService : ITestOrderService, IScopedDependency
+// Intercepted service - no longer needs marker interface
+public class TestOrderService : ITestOrderService
 {
     public Task<string> CreateOrderAsync(string product, int quantity)
     {
@@ -134,23 +135,36 @@ public class TestOrderService : ITestOrderService, IScopedDependency
 #endregion
 
 /// <summary>
-/// Tests for reflection-based service registration via ServiceRegistrar.
+/// Tests for service registration and interception.
 /// </summary>
 public class DependencyInjectionGeneratorTests
 {
+    private static ServiceProvider BuildProvider()
+    {
+        var services = new ServiceCollection();
+        services.AddLogging();
+        services.AddSkywalker(typeof(DependencyInjectionGeneratorTests).Assembly);
+
+        // 显式注册测试服务（不再使用 marker interface）
+        services.TryAddTransient<ITestEmailService, TestEmailService>();
+        services.TryAddScoped<ITestUserRepository, TestUserRepository>();
+        services.TryAddSingleton<ITestCacheService, TestCacheService>();
+        services.TryAddScoped<ITestOrderService, TestOrderService>();
+        services.AddTransient<IInterceptor, TestLoggingInterceptor>();
+
+        // 启用拦截（测试服务在 AddSkywalker 之后注册，需再次扫描）
+        services.AddInterceptedServices();
+
+        return services.BuildServiceProvider();
+    }
+
     [Fact]
     public void ServiceRegistrar_RegistersTransientService()
     {
-        // Arrange
-        var services = new ServiceCollection();
-        services.AddSkywalker(typeof(DependencyInjectionGeneratorTests).Assembly);
-        var provider = services.BuildServiceProvider();
-
-        // Act
+        using var provider = BuildProvider();
         var service1 = provider.GetService<ITestEmailService>();
         var service2 = provider.GetService<ITestEmailService>();
 
-        // Assert
         Assert.NotNull(service1);
         Assert.NotNull(service2);
         Assert.NotSame(service1, service2); // Transient = new instance each time
@@ -159,17 +173,11 @@ public class DependencyInjectionGeneratorTests
     [Fact]
     public void ServiceRegistrar_RegistersScopedService()
     {
-        // Arrange
-        var services = new ServiceCollection();
-        services.AddSkywalker(typeof(DependencyInjectionGeneratorTests).Assembly);
-        var provider = services.BuildServiceProvider();
-
-        // Act
+        using var provider = BuildProvider();
         using var scope = provider.CreateScope();
         var service1 = scope.ServiceProvider.GetService<ITestUserRepository>();
         var service2 = scope.ServiceProvider.GetService<ITestUserRepository>();
 
-        // Assert
         Assert.NotNull(service1);
         Assert.NotNull(service2);
         Assert.Same(service1, service2); // Same within scope
@@ -178,17 +186,11 @@ public class DependencyInjectionGeneratorTests
     [Fact]
     public void ServiceRegistrar_RegistersSingletonService()
     {
-        // Arrange
-        var services = new ServiceCollection();
-        services.AddSkywalker(typeof(DependencyInjectionGeneratorTests).Assembly);
-        var provider = services.BuildServiceProvider();
-
-        // Act
+        using var provider = BuildProvider();
         var service1 = provider.GetService<ITestCacheService>();
         using var scope = provider.CreateScope();
         var service2 = scope.ServiceProvider.GetService<ITestCacheService>();
 
-        // Assert
         Assert.NotNull(service1);
         Assert.NotNull(service2);
         Assert.Same(service1, service2); // Same instance globally
@@ -200,10 +202,7 @@ public class DependencyInjectionGeneratorTests
         // Arrange — 记录当前 Log 长度，不依赖 Clear()（避免并行测试竞争）
         var logCountBefore = TestLoggingInterceptor.Log.Count;
 
-        var services = new ServiceCollection();
-        services.AddSkywalker(typeof(DependencyInjectionGeneratorTests).Assembly);
-
-        var provider = services.BuildServiceProvider();
+        using var provider = BuildProvider();
 
         // Act - 获取代理服务并调用方法
         var service = provider.GetRequiredService<ITestOrderService>();

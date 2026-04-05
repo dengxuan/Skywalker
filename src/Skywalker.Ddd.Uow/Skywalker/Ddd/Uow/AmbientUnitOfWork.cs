@@ -10,9 +10,7 @@ namespace Skywalker.Ddd.Uow;
 /// 当前线程环境下的工作单元。
 /// 使用 SharedInstance 确保 IAmbientUnitOfWork 和 IUnitOfWorkAccessor 共享同一实例。
 /// </summary>
-[SharedInstance]
-[ExposeServices(typeof(IAmbientUnitOfWork), typeof(IUnitOfWorkAccessor))]
-public class AmbientUnitOfWork : IAmbientUnitOfWork, ISingletonDependency
+public class AmbientUnitOfWork : IAmbientUnitOfWork
 {
 
     private readonly AsyncLocal<IUnitOfWork?> _currentUow;

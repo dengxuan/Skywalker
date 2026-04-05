@@ -3,7 +3,7 @@ using Skywalker.Settings.Abstractions;
 
 namespace Skywalker.Settings;
 
-public class ConfigurationSettingValueProvider : ISettingValueProvider//, ITransientDependency
+public class ConfigurationSettingValueProvider : ISettingValueProvider
 {
     public const string ConfigurationNamePrefix = "Settings:";
 
