@@ -3,6 +3,7 @@
 
 using System.Reflection;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.DependencyModel;
 using Skywalker.ApplicationParts;
 
 namespace Skywalker;
@@ -50,13 +51,19 @@ public class SkywalkerPartManager
     }
 
     /// <summary>
-    /// 从入口程序集开始，递归发现所有 Skywalker 相关程序集并添加为 <see cref="AssemblyPart"/>。
+    /// 从入口程序集开始，发现所有 Skywalker 相关程序集并添加为 <see cref="AssemblyPart"/>。
     /// </summary>
     /// <param name="entryAssembly">入口程序集。</param>
+    /// <remarks>
+    /// 优先使用 <see cref="DependencyContext"/> 从 deps.json 中发现所有依赖库（不受编译器优化影响），
+    /// 若 <see cref="DependencyContext"/> 不可用则回退到 <see cref="Assembly.GetReferencedAssemblies"/> 递归发现。
+    /// </remarks>
     internal void PopulateDefaultParts(Assembly entryAssembly)
     {
-        var seenAssemblies = new HashSet<string>(StringComparer.OrdinalIgnoreCase);
-        var assemblies = GetApplicationPartAssemblies(entryAssembly, seenAssemblies);
+        var dependencyContext = DependencyContext.Load(entryAssembly);
+        var assemblies = dependencyContext != null
+            ? DiscoverFromDependencyContext(entryAssembly, dependencyContext)
+            : DiscoverFromReferencedAssemblies(entryAssembly);
 
         foreach (var assembly in assemblies)
         {
@@ -64,21 +71,97 @@ public class SkywalkerPartManager
         }
     }
 
-    private static IEnumerable<Assembly> GetApplicationPartAssemblies(Assembly entryAssembly, HashSet<string> seen)
+    /// <summary>
+    /// 通过 <see cref="DependencyContext"/>（deps.json）发现所有 Skywalker 相关程序集。
+    /// deps.json 包含完整的依赖图，不受编译器 "未使用引用优化" 的影响。
+    /// </summary>
+    private static IEnumerable<Assembly> DiscoverFromDependencyContext(Assembly entryAssembly, DependencyContext dependencyContext)
     {
+        // 收集所有 Skywalker 库名称（用于判断用户库是否引用了 Skywalker）
+        var skywalkerLibNames = new HashSet<string>(StringComparer.OrdinalIgnoreCase);
+        foreach (var lib in dependencyContext.RuntimeLibraries)
+        {
+            if (lib.Name.StartsWith("Skywalker.", StringComparison.OrdinalIgnoreCase))
+            {
+                skywalkerLibNames.Add(lib.Name);
+            }
+        }
+
+        // 入口程序集始终纳入
+        yield return entryAssembly;
+        var entryName = entryAssembly.GetName().Name;
+
+        foreach (var lib in dependencyContext.RuntimeLibraries)
+        {
+            // 跳过入口程序集（已 yield）
+            if (string.Equals(lib.Name, entryName, StringComparison.OrdinalIgnoreCase))
+            {
+                continue;
+            }
+
+            if (!IsSkywalkerRelatedLibrary(lib, skywalkerLibNames))
+            {
+                continue;
+            }
+
+            Assembly? assembly;
+            try
+            {
+                assembly = Assembly.Load(new AssemblyName(lib.Name));
+            }
+            catch
+            {
+                continue;
+            }
+
+            yield return assembly;
+        }
+    }
+
+    /// <summary>
+    /// 判断 <see cref="RuntimeLibrary"/> 是否与 Skywalker 相关。
+    /// </summary>
+    private static bool IsSkywalkerRelatedLibrary(RuntimeLibrary lib, HashSet<string> skywalkerLibNames)
+    {
+        // Skywalker 框架自身程序集
+        if (lib.Name.StartsWith("Skywalker.", StringComparison.OrdinalIgnoreCase))
+        {
+            return true;
+        }
+
+        // 依赖了任何 Skywalker 库的用户程序集
+        foreach (var dep in lib.Dependencies)
+        {
+            if (skywalkerLibNames.Contains(dep.Name))
+            {
+                return true;
+            }
+        }
+
+        return false;
+    }
+
+    /// <summary>
+    /// 回退方案：从入口程序集递归遍历 <see cref="Assembly.GetReferencedAssemblies"/>。
+    /// 在 <see cref="DependencyContext"/> 不可用时使用（如某些测试宿主）。
+    /// 注意：编译器可能优化掉未实际使用的引用，导致部分程序集无法被发现。
+    /// </summary>
+    private static IEnumerable<Assembly> DiscoverFromReferencedAssemblies(Assembly entryAssembly)
+    {
+        var seen = new HashSet<string>(StringComparer.OrdinalIgnoreCase);
         var entryName = entryAssembly.GetName().Name;
         if (entryName != null && seen.Add(entryName))
         {
             yield return entryAssembly;
         }
 
-        foreach (var assembly in DiscoverReferencedAssemblies(entryAssembly, seen))
+        foreach (var assembly in WalkReferencedAssemblies(entryAssembly, seen))
         {
             yield return assembly;
         }
     }
 
-    private static IEnumerable<Assembly> DiscoverReferencedAssemblies(Assembly assembly, HashSet<string> seen)
+    private static IEnumerable<Assembly> WalkReferencedAssemblies(Assembly assembly, HashSet<string> seen)
     {
         foreach (var referencedName in assembly.GetReferencedAssemblies())
         {
@@ -108,23 +191,13 @@ public class SkywalkerPartManager
                 yield return referencedAssembly;
             }
 
-            // 递归发现
-            foreach (var nested in DiscoverReferencedAssemblies(referencedAssembly, seen))
+            foreach (var nested in WalkReferencedAssemblies(referencedAssembly, seen))
             {
                 yield return nested;
             }
         }
     }
 
-    /// <summary>
-    /// 判断程序集是否应被纳入 ApplicationParts。
-    /// 满足以下任一条件即纳入：
-    /// <list type="bullet">
-    /// <item>程序集名称以 <c>Skywalker.</c> 开头（框架自身程序集）</item>
-    /// <item>程序集标记了 <see cref="SkywalkerServicesAttribute"/>（显式声明）</item>
-    /// <item>程序集直接引用了任何 <c>Skywalker.*</c> 程序集（第三方/用户项目）</item>
-    /// </list>
-    /// </summary>
     private static bool IsSkywalkerAssembly(Assembly assembly, string name)
     {
         if (name.StartsWith("Skywalker.", StringComparison.OrdinalIgnoreCase))
@@ -137,7 +210,6 @@ public class SkywalkerPartManager
             return true;
         }
 
-        // 引用了 Skywalker 程序集的用户项目也纳入（与 MVC 行为一致）
         foreach (var reference in assembly.GetReferencedAssemblies())
         {
             if (reference.Name != null && reference.Name.StartsWith("Skywalker.", StringComparison.OrdinalIgnoreCase))

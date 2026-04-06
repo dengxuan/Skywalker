@@ -197,6 +197,34 @@ public class TestBetaStrategy : ITestKeyedService
     public string Strategy() => "Beta";
 }
 
+// --- 用户自定义 FeatureProvider 测试 Fixtures ---
+
+/// <summary>
+/// 模拟用户自定义的服务，不实现 IDomainService/IApplicationService/IRepository，
+/// 只能通过用户自定义 FeatureProvider 注册。
+/// </summary>
+public interface IUserCustomService
+{
+    string Hello();
+}
+
+public class UserCustomServiceImpl : IUserCustomService
+{
+    public string Hello() => "UserCustom";
+}
+
+/// <summary>
+/// 模拟用户在自己的模块中实现 IApplicationFeatureProvider&lt;ServiceRegistrationFeature&gt;，
+/// 用于注册不走 IDomainService/IRepository 约定的自定义服务。
+/// </summary>
+public class UserDefinedFeatureProvider : IApplicationFeatureProvider<ServiceRegistrationFeature>
+{
+    public void PopulateFeature(IEnumerable<ApplicationPart> parts, ServiceRegistrationFeature feature)
+    {
+        feature.Services.Add(ServiceDescriptor.Scoped<IUserCustomService, UserCustomServiceImpl>());
+    }
+}
+
 #endregion
 
 /// <summary>
@@ -650,6 +678,37 @@ public class FeatureProviderRegistrationTests
         Assert.NotNull(beta);
         Assert.Equal("Alpha", alpha.Strategy());
         Assert.Equal("Beta", beta.Strategy());
+    }
+
+    #endregion
+
+    #region User-Defined FeatureProvider Auto-Discovery
+
+    [Fact]
+    public void AddSkywalker_DiscoversUserDefinedFeatureProvider()
+    {
+        var services = new ServiceCollection();
+        services.AddLogging();
+        services.AddSkywalker(typeof(FeatureProviderRegistrationTests).Assembly);
+
+        var partManager = services.BuildServiceProvider().GetRequiredService<SkywalkerPartManager>();
+        var providerTypes = partManager.FeatureProviders
+            .OfType<IApplicationFeatureProvider<ServiceRegistrationFeature>>()
+            .Select(p => p.GetType().Name)
+            .ToList();
+
+        Assert.Contains("UserDefinedFeatureProvider", providerTypes);
+    }
+
+    [Fact]
+    public void AddSkywalker_UserDefinedFeatureProvider_RegistersCustomService()
+    {
+        using var provider = BuildProvider();
+        using var scope = provider.CreateScope();
+
+        var svc = scope.ServiceProvider.GetService<IUserCustomService>();
+        Assert.NotNull(svc);
+        Assert.Equal("UserCustom", svc.Hello());
     }
 
     #endregion
