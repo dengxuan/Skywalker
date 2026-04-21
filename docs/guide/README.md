@@ -1120,7 +1120,7 @@ public class ProductAppService : ApplicationService
             return await _productRepository.FindAsync(id);
         });
 
-        return product != null ? ObjectMapper.Map<Product, ProductDto>(product) : null;
+        return product != null ? _mapper.ToDto(product) : null;
     }
 
     public async Task<List<ProductDto>> GetHotProductsAsync()
@@ -1135,7 +1135,7 @@ public class ProductAppService : ApplicationService
             await _cache.SetAsync(cacheKey, products, TimeSpan.FromMinutes(5));
         }
 
-        return ObjectMapper.Map<List<Product>, List<ProductDto>>(products);
+        return _mapper.ToDtoList(products);
     }
 
     public async Task UpdateAsync(Guid id, UpdateProductInput input)
@@ -1240,7 +1240,7 @@ public class OrderAppService : ApplicationService
         }
 
         var order = await _orderRepository.GetAsync(id);
-        return ObjectMapper.Map<Order, OrderDto>(order);
+        return _mapper.ToDto(order);
     }
 
     public async Task CancelAsync(Guid id, string reason)
@@ -1303,7 +1303,7 @@ public class OrderAppService : ApplicationService
             throw new BusinessException(_localizer["Order.NotFound", id]);
         }
 
-        return ObjectMapper.Map<Order, OrderDto>(order);
+        return _mapper.ToDto(order);
     }
 }
 ```
@@ -1454,7 +1454,7 @@ public class OrderAppService : ApplicationService
             _logger.LogInformation("订单创建成功, OrderId: {OrderId}, OrderNo: {OrderNo}",
                 order.Id, order.OrderNo);
 
-            return ObjectMapper.Map<Order, OrderDto>(order);
+            return _mapper.ToDto(order);
         }
         catch (Exception ex)
         {

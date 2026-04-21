@@ -457,7 +457,6 @@ public interface IOrderRepository : IRepository<Order, Guid>
 using Skywalker.Ddd.Application.Services;
 using Skywalker.Ddd.Uow.Abstractions;
 using Skywalker.EventBus.Local;
-using Skywalker.ObjectMapping;
 
 namespace OrderManagement.Application.Orders;
 
@@ -470,6 +469,7 @@ public class OrderAppService : ApplicationService, IOrderAppService
     private readonly IProductRepository _productRepository;
     private readonly IUnitOfWorkManager _unitOfWorkManager;
     private readonly ILocalEventBus _eventBus;
+    private readonly OrderMapper _mapper = new();
 
     public OrderAppService(
         IOrderRepository orderRepository,
@@ -489,7 +489,7 @@ public class OrderAppService : ApplicationService, IOrderAppService
     public async Task<OrderDto> GetAsync(Guid id)
     {
         var order = await _orderRepository.GetAsync(id);
-        return ObjectMapper.Map<Order, OrderDto>(order);
+        return _mapper.ToDto(order);
     }
 
     /// <summary>
@@ -498,7 +498,7 @@ public class OrderAppService : ApplicationService, IOrderAppService
     public async Task<OrderDto?> GetByOrderNoAsync(string orderNo)
     {
         var order = await _orderRepository.GetByOrderNoAsync(orderNo);
-        return order != null ? ObjectMapper.Map<Order, OrderDto>(order) : null;
+        return order != null ? _mapper.ToDto(order) : null;
     }
 
     /// <summary>
@@ -507,7 +507,7 @@ public class OrderAppService : ApplicationService, IOrderAppService
     public async Task<List<OrderDto>> GetByCustomerIdAsync(Guid customerId)
     {
         var orders = await _orderRepository.GetByCustomerIdAsync(customerId);
-        return ObjectMapper.Map<List<Order>, List<OrderDto>>(orders);
+        return _mapper.ToDtoList(orders);
     }
 
     /// <summary>
@@ -549,7 +549,7 @@ public class OrderAppService : ApplicationService, IOrderAppService
             CustomerId = order.CustomerId
         });
 
-        return ObjectMapper.Map<Order, OrderDto>(order);
+        return _mapper.ToDto(order);
     }
 
     /// <summary>

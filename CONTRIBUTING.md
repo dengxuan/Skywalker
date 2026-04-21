@@ -302,7 +302,6 @@ Skywalker/
 │   ├── Skywalker.Permissions.Abstractions/ # 权限管理
 │   ├── Skywalker.Localization.Abstractions/# 本地化
 │   ├── Skywalker.Validation.Abstractions/  # 数据验证
-│   ├── Skywalker.ObjectMapping.Abstractions/# 对象映射
 │   ├── Skywalker.Template.Abstractions/    # 模板引擎
 │   └── ...
 ├── tests/                            # 测试项目
@@ -532,6 +531,7 @@ dotnet test --filter "FullyQualifiedName~OrderTests"
 public class OrderAppService : ApplicationService, IOrderAppService
 {
     private readonly IOrderRepository _orderRepository;
+    private readonly OrderMapper _mapper = new();
 
     public OrderAppService(IOrderRepository orderRepository)
     {
@@ -541,7 +541,7 @@ public class OrderAppService : ApplicationService, IOrderAppService
     public async Task<OrderDto> GetAsync(Guid id)
     {
         var order = await _orderRepository.GetAsync(id);
-        return ObjectMapper.Map<Order, OrderDto>(order);
+        return _mapper.ToDto(order);
     }
 }
 
