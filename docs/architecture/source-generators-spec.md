@@ -1,0 +1,378 @@
+# Skywalker Source Generator 设计规范
+
+> 状态：**草案 (Draft)**　|　适用：v2.0+　|　最后更新：2026-04-21
+
+本规范是 Skywalker 内部所有 Source Generator 的统一设计准则。
+任何新增 SG 必须遵守。质量保证细则见 [`source-generators-quality.md`](./source-generators-quality.md)。
+
+## 1. 总则
+
+### 1.1 设计原则
+
+1. **零运行时开销**：所有可在编译期完成的工作绝不延迟到运行时。
+2. **零用户配置**：用户引用包即生效，不要求修改 csproj 或调用初始化方法。
+3. **诊断优先于沉默**：遇到不支持的场景必须报 `Diagnostic`，绝不静默跳过。
+4. **生成代码即文档**：生成的 `.g.cs` 必须可读、可 F12 跳转、可调试。
+5. **增量优先**：必须使用 `IIncrementalGenerator`，禁止使用过时的 `ISourceGenerator`。
+
+### 1.2 命名约定
+
+| 项目 | 命名 | 示例 |
+|---|---|---|
+| Generator 项目 | `<宿主项目>.SourceGenerators` | `Skywalker.Ddd.EntityFrameworkCore.SourceGenerators` |
+| Generator 类 | `<功能>Generator` | `RepositoryRegistrationGenerator` |
+| 生成文件 | `<语义名>.g.cs` | `ShopDbContext.Repositories.g.cs` |
+| 生成命名空间 | 跟随源类型；模块入口固定 `Skywalker.Generated` | - |
+| 标注属性 | `<语义名>Attribute` | `ApplicationServiceAttribute` |
+| 诊断码 | `SKY####` 四位数字 | `SKY1001` |
+
+### 1.3 诊断码段位
+
+| 段位 | 用途 |
+|---|---|
+| `SKY1xxx` | DI / 服务注册相关 |
+| `SKY2xxx` | DynamicProxy / 拦截器相关 |
+| `SKY3xxx` | EF Repository 相关 |
+| `SKY4xxx` | EventBus 相关 |
+| `SKY5xxx` | Permission / Localization / Settings 相关 |
+| `SKY9xxx` | 通用（必须 partial、必须 public 等） |
+
+## 2. 项目结构规范
+
+### 2.1 Generator 项目 csproj 模板
+
+```xml
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netstandard2.0</TargetFramework>
+    <LangVersion>latest</LangVersion>
+    <Nullable>enable</Nullable>
+    <IncludeBuildOutput>false</IncludeBuildOutput>
+    <IsRoslynComponent>true</IsRoslynComponent>
+    <EnforceExtendedAnalyzerRules>true</EnforceExtendedAnalyzerRules>
+    <AnalyzerLanguage>cs</AnalyzerLanguage>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.CodeAnalysis.CSharp" Version="$(RoslynVersion)"
+                      PrivateAssets="all" />
+    <PackageReference Include="Microsoft.CodeAnalysis.Analyzers" Version="$(RoslynAnalyzersVersion)"
+                      PrivateAssets="all" />
+  </ItemGroup>
+
+  <!-- 把 generator dll 打到 analyzers 目录，使用者无需额外配置 -->
+  <ItemGroup>
+    <None Include="$(OutputPath)\$(AssemblyName).dll"
+          Pack="true"
+          PackagePath="analyzers/dotnet/cs"
+          Visible="false" />
+  </ItemGroup>
+
+</Project>
+```
+
+**关键点**：
+- `TargetFramework` **必须** `netstandard2.0`（Roslyn 限制）。
+- `IncludeBuildOutput=false` + `Pack="true" PackagePath="analyzers/dotnet/cs"`：
+  这样 generator dll 会随宿主 NuGet 包一起发布，使用者引宿主包即生效。
+
+### 2.2 宿主项目引用
+
+宿主项目（如 `Skywalker.Ddd.EntityFrameworkCore`）这样引：
+
+```xml
+<ItemGroup>
+  <ProjectReference Include="..\Skywalker.Ddd.EntityFrameworkCore.SourceGenerators\Skywalker.Ddd.EntityFrameworkCore.SourceGenerators.csproj"
+                    OutputItemType="Analyzer"
+                    ReferenceOutputAssembly="false"
+                    PrivateAssets="all" />
+</ItemGroup>
+```
+
+### 2.3 测试项目
+
+每个 generator 配套一个 `.Tests` 项目，结构：
+
+```
+Skywalker.Ddd.EntityFrameworkCore.SourceGenerators.Tests/
+├── Snapshots/                    ← Verify 快照存放
+│   └── *.verified.cs
+├── EdgeCases/                    ← 边界场景测试
+├── Diagnostics/                  ← 诊断码测试
+├── GeneratorTestHelper.cs
+└── *.cs
+```
+
+## 3. 代码组织规范
+
+### 3.1 Generator 实现骨架
+
+```csharp
+[Generator(LanguageNames.CSharp)]
+public sealed class XxxGenerator : IIncrementalGenerator
+{
+    public void Initialize(IncrementalGeneratorInitializationContext context)
+    {
+        // 1. 提供常量源（attribute 定义等）
+        context.RegisterPostInitializationOutput(PostInitialize);
+
+        // 2. 收集目标语法
+        var targets = context.SyntaxProvider
+            .ForAttributeWithMetadataName(
+                fullyQualifiedMetadataName: "Skywalker.Xxx.XxxAttribute",
+                predicate: static (node, _) => node is ClassDeclarationSyntax,
+                transform: static (ctx, ct) => Transform(ctx, ct))
+            .Where(static x => x is not null);
+
+        // 3. 输出
+        context.RegisterSourceOutput(targets, Generate);
+    }
+
+    private static void PostInitialize(IncrementalGeneratorPostInitializationContext ctx) { /* ... */ }
+    private static XxxModel? Transform(GeneratorAttributeSyntaxContext ctx, CancellationToken ct) { /* ... */ }
+    private static void Generate(SourceProductionContext ctx, XxxModel model) { /* ... */ }
+}
+```
+
+**强制要求**：
+- `predicate` / `transform` 委托必须 `static`。
+- 中间数据模型（如 `XxxModel`）必须为 `record` 或实现值相等，**禁止持有 `ISymbol` / `SyntaxNode`**（破坏增量缓存）。
+- 必须使用 `ForAttributeWithMetadataName` API（Roslyn 4.4+），不得自己写 `CreateSyntaxProvider` 扫全树。
+
+### 3.2 数据模型规范
+
+```csharp
+// ✅ 正确：值相等的 record，只持有原始数据
+internal sealed record AppServiceModel(
+    string Namespace,
+    string ClassName,
+    string InterfaceName,
+    EquatableArray<MethodModel> Methods);
+
+// ❌ 错误：持有 Symbol，破坏增量
+internal sealed record AppServiceModel(INamedTypeSymbol Symbol);
+```
+
+集合必须用 `EquatableArray<T>`（自定义结构，封装 `ImmutableArray<T>` + 值相等），
+不能直接用 `ImmutableArray<T>` / `IReadOnlyList<T>`。
+
+### 3.3 代码生成规范
+
+#### 必须使用 raw string literal，禁止 `StringBuilder` 拼接：
+
+```csharp
+// ✅ 正确
+var source = $$"""
+    // <auto-generated />
+    #nullable enable
+    namespace {{model.Namespace}};
+
+    partial class {{model.ClassName}}
+    {
+        // ...
+    }
+    """;
+
+// ❌ 错误
+var sb = new StringBuilder();
+sb.AppendLine("// <auto-generated />");
+sb.Append("namespace ").Append(model.Namespace).AppendLine(";");
+```
+
+#### 生成文件必须包含的头部：
+
+```csharp
+// <auto-generated/>
+// This file was generated by Skywalker Source Generators.
+// Do not modify this file manually.
+
+#nullable enable
+#pragma warning disable
+```
+
+#### 生成文件必须以 `.g.cs` 结尾：
+
+```csharp
+ctx.AddSource($"{model.ClassName}.Repositories.g.cs", source);
+```
+
+## 4. 用户 API 规范
+
+### 4.1 标注属性约定
+
+所有用户面向标注必须满足：
+
+- 放在 `Skywalker.<功能>` 命名空间。
+- 提供无参构造函数（最常用场景零配置）。
+- 所有可选项作为命名属性。
+- 提供 `[AttributeUsage]` 严格限定。
+
+```csharp
+[AttributeUsage(AttributeTargets.Class, AllowMultiple = false, Inherited = false)]
+public sealed class ApplicationServiceAttribute : Attribute
+{
+    public ServiceLifetime Lifetime { get; init; } = ServiceLifetime.Scoped;
+    public Type? ServiceType { get; init; }
+}
+```
+
+### 4.2 约定优于配置
+
+每个标注必须支持"命名约定 fallback"：
+
+| 标注 | 命名约定 fallback |
+|---|---|
+| `[ApplicationService]` | 类名以 `AppService` 结尾 |
+| `[Repository]` | 继承 `Repository<,,>` |
+| `[EventHandler]` | 实现 `ILocalEventHandler<>` |
+
+约定可被 csproj 关闭：
+
+```xml
+<PropertyGroup>
+  <SkywalkerConventionAutoRegister>false</SkywalkerConventionAutoRegister>
+</PropertyGroup>
+```
+
+通过 `<CompilerVisibleProperty>` 暴露给 SG。
+
+### 4.3 模块入口生成
+
+每个含 SG 标注的程序集，自动生成：
+
+```csharp
+// Skywalker.Generated/__SkywalkerModuleInitializer__.g.cs
+namespace Skywalker.Generated;
+
+internal static class __SkywalkerModuleInitializer__
+{
+    [ModuleInitializer]
+    internal static void Init()
+    {
+        SkywalkerModuleRegistry.Register(typeof(__SkywalkerModuleInitializer__).Assembly,
+            services =>
+            {
+                // SG 生成的所有注册调用
+                services.AddOrdersDbContextRepositories();
+                services.AddApplicationServices();
+                services.AddEventHandlers();
+            });
+    }
+}
+```
+
+`AddSkywalker()` 在运行时遍历 `SkywalkerModuleRegistry` 即可，**无任何反射**。
+
+## 5. 诊断 (Diagnostics) 规范
+
+### 5.1 强制要求
+
+所有"不能正确生成代码"的情况必须报诊断，**禁止静默跳过**。
+
+```csharp
+private static readonly DiagnosticDescriptor MustBePartial = new(
+    id: "SKY9001",
+    title: "Service class must be partial",
+    messageFormat: "Class '{0}' marked with [{1}] must be declared as partial",
+    category: "Skywalker.SourceGenerators",
+    defaultSeverity: DiagnosticSeverity.Error,
+    isEnabledByDefault: true,
+    description: "Skywalker source generators emit additional members into your class. The class must be 'partial'.",
+    helpLinkUri: "https://skywalker.dev/diagnostics/SKY9001");
+```
+
+### 5.2 诊断质量要求
+
+每个 `SKYxxxx` 必须满足：
+
+- `helpLinkUri` 指向真实文档页（`docs/diagnostics/SKYxxxx.md`）。
+- `messageFormat` 包含足够上下文（类型名、属性名、原因）。
+- `description` 说明正确做法。
+- 测试项目里有对应的 `*_ShouldReportDiagnostic` 测试。
+
+### 5.3 文档页模板
+
+每个 `docs/diagnostics/SKYxxxx.md`：
+
+```markdown
+# SKY9001: Service class must be partial
+
+| 项 | 值 |
+|---|---|
+| 严重性 | Error |
+| 引入版本 | 2.0.0 |
+
+## 原因
+
+...
+
+## 错误示例
+
+...
+
+## 正确示例
+
+...
+
+## 相关链接
+
+...
+```
+
+## 6. 增量与性能规范
+
+- **必须使用** `ForAttributeWithMetadataName`（避免扫全树）。
+- 数据模型必须值相等（用 record + EquatableArray）。
+- `transform` 内不得调用 `Compilation.GetSemanticModel` 之外的耗时操作。
+- 每个 generator 必须有 `IsCacheable` 测试（连续两次运行缓存命中率 100%）。
+
+## 7. 兼容性规范
+
+### 7.1 Roslyn 版本
+
+- 最低支持：Roslyn 4.4 (`Microsoft.Net.Sdk` 8.0+)。
+- 推荐：Roslyn 4.8+。
+- 在宿主 csproj 设置 `<LangVersion>latest</LangVersion>`，但生成代码必须兼容 C# 10+。
+
+### 7.2 C# 语言特性使用
+
+生成代码可使用：
+- ✅ file-scoped namespace
+- ✅ raw string literal
+- ✅ pattern matching
+- ✅ `required` / `init`
+
+生成代码**不应使用**（兼容性考量）：
+- ❌ `extension` （C# 14 预览）
+- ❌ primary constructor on class（兼容旧 IDE）
+
+## 8. 公共 API 锁定
+
+每个发包项目必须接入 `Microsoft.CodeAnalysis.PublicApiAnalyzers`：
+
+```
+Skywalker.Xxx/
+├── PublicAPI.Shipped.txt
+└── PublicAPI.Unshipped.txt
+```
+
+任何破坏性 API 变更必须显式更新这两个文件，PR review 必看。
+
+## 9. 检查清单
+
+新增 SG 时必须确认（PR 模板将包含此清单）：
+
+- [ ] Generator 项目 csproj 符合 §2.1 模板
+- [ ] 使用 `IIncrementalGenerator` + `ForAttributeWithMetadataName`
+- [ ] 数据模型为 record + EquatableArray
+- [ ] 生成代码使用 raw string literal
+- [ ] 生成文件 `.g.cs` 后缀 + auto-generated 头部
+- [ ] 用户标注满足 §4.1 约定
+- [ ] 提供命名约定 fallback
+- [ ] 所有"不能生成"场景报 `SKYxxxx` 诊断
+- [ ] 每个诊断有 `docs/diagnostics/` 文档页
+- [ ] Snapshot 测试覆盖 §EDGE_CASES.md 相关场景
+- [ ] 至少 1 个 sample 项目使用该 generator
+- [ ] AOT publish 零警告
+- [ ] `PublicAPI.Unshipped.txt` 更新
