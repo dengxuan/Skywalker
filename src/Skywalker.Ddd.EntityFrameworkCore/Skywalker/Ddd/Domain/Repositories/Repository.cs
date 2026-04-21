@@ -9,6 +9,7 @@ using Skywalker.Ddd.Domain.Events;
 using Skywalker.Ddd.EntityFrameworkCore;
 using Skywalker.Ddd.Uow.Abstractions;
 using Skywalker.EventBus.Abstractions;
+using Skywalker.Exceptions;
 using Skywalker.Extensions.Collections.Generic;
 using Skywalker.Extensions.Specifications;
 using Skywalker.Extensions.Timezone;

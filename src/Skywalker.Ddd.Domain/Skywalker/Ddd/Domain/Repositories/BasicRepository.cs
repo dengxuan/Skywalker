@@ -4,6 +4,7 @@ using Skywalker.Extensions.DependencyInjection;
 using Skywalker.Ddd.Data;
 using Skywalker.Ddd.Data.Filtering;
 using Skywalker.Ddd.Domain.Entities;
+using Skywalker.Exceptions;
 using Skywalker.Extensions.Collections.Generic;
 using Skywalker.Extensions.Specifications;
 using Skywalker.Extensions.Threading;
