@@ -1,4 +1,9 @@
-namespace Skywalker.EventBus.Local;
+// Licensed to the Gordon under one or more agreements.
+// Gordon licenses this file to you under the MIT license.
+
+using Skywalker.EventBus.Local;
+
+namespace Skywalker.Ddd.Domain.Events;
 
 /// <summary>
 /// Event raised when an entity is changed.
@@ -55,14 +60,3 @@ public class EntityDeletedEvent<TEntity> : EntityChangedEvent<TEntity>
     {
     }
 }
-
-/// <summary>
-/// Type of entity change.
-/// </summary>
-public enum EntityChangeType
-{
-    Created,
-    Updated,
-    Deleted
-}
-

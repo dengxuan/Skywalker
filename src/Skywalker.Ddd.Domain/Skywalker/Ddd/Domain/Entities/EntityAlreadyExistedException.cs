@@ -31,7 +31,7 @@ public class EntityAlreadyExistedException : SkywalkerException
     }
 
     /// <summary>
-    /// Creates a new <see cref="EntityNotFoundException"/> object.
+    /// Creates a new <see cref="EntityAlreadyExistedException"/> object.
     /// </summary>
     public EntityAlreadyExistedException(Type entityType, object? id) : this(entityType, id, null)
     {

@@ -18,12 +18,12 @@ public class BadRequestObjectResultWrapper : IActionResultWrapper
         {
             throw new ArgumentException($"{nameof(problemDetails)} should be ValidationProblemDetails!");
         }
-        var validationErrors = new List<ValidationError>();
+        var validationErrors = new List<ValidationErrorDto>();
         foreach (var item in problemDetails.Errors)
         {
             foreach (var message in item.Value)
             {
-                validationErrors.Add(new ValidationError(item.Key, message));
+                validationErrors.Add(new ValidationErrorDto(item.Key, message));
             }
         }
         var error = new Error((badRequestObject.StatusCode ?? (int)HttpStatusCode.BadRequest).ToString()!, "")
