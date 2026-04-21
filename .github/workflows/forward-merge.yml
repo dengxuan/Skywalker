@@ -1,0 +1,63 @@
+name: Forward merge main → release/2.0
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: write
+  pull-requests: write
+
+jobs:
+  forward-merge:
+    runs-on: ubuntu-latest
+    if: github.repository == 'dengxuan/Skywalker'
+    steps:
+      - name: Checkout release/2.0
+        uses: actions/checkout@v4
+        with:
+          ref: release/2.0
+          fetch-depth: 0
+          token: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Configure git
+        run: |
+          git config user.name  "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+
+      - name: Try fast-forward / merge main
+        id: merge
+        run: |
+          set +e
+          git fetch origin main
+          MERGE_MSG="chore: forward-merge main into release/2.0"
+          git merge origin/main --no-ff -m "$MERGE_MSG"
+          STATUS=$?
+          if [ $STATUS -eq 0 ]; then
+            echo "result=merged" >> "$GITHUB_OUTPUT"
+            git push origin release/2.0
+          else
+            echo "result=conflict" >> "$GITHUB_OUTPUT"
+            git merge --abort || true
+          fi
+
+      - name: Open PR if merge has conflicts
+        if: steps.merge.outputs.result == 'conflict'
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          BRANCH="auto/forward-merge-main-${{ github.run_id }}"
+          git checkout -b "$BRANCH" origin/release/2.0
+          git push origin "$BRANCH"
+
+          EXISTING=$(gh pr list --base release/2.0 --head main --state open --json number --jq '.[0].number' || true)
+          if [ -z "$EXISTING" ]; then
+            gh pr create \
+              --base release/2.0 \
+              --head main \
+              --title "chore: forward-merge main into release/2.0 (conflicts)" \
+              --body "Automated forward-merge from \`main\` failed due to conflicts. Please resolve manually.\n\nTriggered by ${{ github.sha }}."
+          else
+            echo "An open forward-merge PR already exists: #$EXISTING"
+          fi
