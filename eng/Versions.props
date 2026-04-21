@@ -53,7 +53,6 @@
   </PropertyGroup>
 
   <PropertyGroup Label="Third-Party">
-    <AutoMapperVersion>16.1.1</AutoMapperVersion>
     <CastleCoreVersion>5.1.1</CastleCoreVersion>
     <FluentValidationVersion>11.9.0</FluentValidationVersion>
     <PomeloEntityFrameworkCoreMySqlVersion>9.0.0</PomeloEntityFrameworkCoreMySqlVersion>

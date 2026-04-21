@@ -5,10 +5,6 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="AutoMapper" Version="$(AutoMapperVersion)" />
-  </ItemGroup>
-
-  <ItemGroup>
     <ProjectReference Include="$(LibrariesProjectRoot)Skywalker.Exceptions.Abstractions\Skywalker.Exceptions.Abstractions.csproj" />
     <ProjectReference Include="$(LibrariesProjectRoot)Skywalker.Ddd.Uow\Skywalker.Ddd.Uow.csproj" />
   </ItemGroup>
