@@ -5,6 +5,24 @@
 格式参考 [Keep a Changelog](https://keepachangelog.com/zh-CN/1.1.0/)，
 版本号遵循 [Semantic Versioning](https://semver.org/lang/zh-CN/)。
 
+## [2.0.0] - 规划中
+
+v2.0 是 Skywalker 的差异化战役，定位 **小、快、易用**：
+
+- 全面 Source Generator 化：消灭运行时反射、消灭 `Reflection.Emit`。
+- 移除 `Castle.Core` 依赖（~600 KB）。
+- NativeAOT publish 零警告。
+- `AddSkywalker()` 一行启动，零样板注册。
+
+设计与规划文档：
+
+- [`docs/architecture/v2.0-roadmap.md`](docs/architecture/v2.0-roadmap.md)
+- [`docs/architecture/source-generators-spec.md`](docs/architecture/source-generators-spec.md)
+- [`docs/architecture/source-generators-quality.md`](docs/architecture/source-generators-quality.md)
+
+发版策略：`main` → `2.0.0-alpha.x` → `2.0.0-preview.x` → `2.0.0-rc.x` → `2.0.0`。
+每个阶段最低浸泡 2 周，详见质量规范。
+
 ## [Unreleased]
 
 ### Removed
