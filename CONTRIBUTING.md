@@ -37,18 +37,38 @@
 
 ## 🌿 分支策略
 
-我们采用 Git Flow 分支策略：
+我们采用 **双长期分支** 策略，同时维护稳定版与下一代版本：
 
 | 分支 | 用途 | 说明 |
 |------|------|------|
-| `main` | 稳定发布版本 | 只接受 release 分支合并 |
-| `dev` | 开发主线 | 所有 PR 的目标分支 |
+| `main` | v1.x 稳定开发主线 | 所有 v1.x bugfix / 小特性 PR 的目标分支；可直接发布 |
+| `release/2.0` | v2.0 开发分支（Source Generator 化） | 所有 v2.0 PR 的目标分支；alpha/preview/rc tag 在此打 |
 | `feature/*` | 功能开发 | 如 `feature/issue-123-add-caching` |
 | `fix/*` | Bug 修复 | 如 `fix/issue-456-null-reference` |
 | `refactor/*` | 代码重构 | 如 `refactor/issue-789-repository` |
 | `docs/*` | 文档更新 | 如 `docs/issue-29-readme` |
 | `test/*` | 测试相关 | 如 `test/issue-100-unit-tests` |
-| `release/*` | 发布准备 | 如 `release/v1.0.0` |
+| `release/*` | 发布准备 | 如 `release/v1.1.0` |
+
+### v1.x ↔ v2.0 同步
+
+`main` 的所有提交会被 GitHub Action **自动 forward-merge 到 `release/2.0`**
+（见 [`.github/workflows/forward-merge.yml`](.github/workflows/forward-merge.yml)）。
+
+- ✅ 无冲突：自动合入 `release/2.0`，无需人工干预。
+- ⚠️ 有冲突：自动开 PR 到 `release/2.0`，由维护者手动解决。
+
+修改 v2.0 重写区域（如 EF Repository 注册、DynamicProxy）的 v1.x PR，
+请在 PR 描述显式标注 `⚠️ 涉及 v2.0 重写区域`，提示 forward-merge 时需要人工介入。
+
+### PR 目标分支选择
+
+| 你想做的事 | 目标分支 |
+|---|---|
+| 修 v1.x bug、加小特性 | `main` |
+| 实现 v2.0 Source Generator 相关功能 | `release/2.0` |
+| v2.0 计划性文档 / 设计 | `release/2.0`（除非也对 v1.x 有用） |
+| 仓库元信息（CI、模板、许可证等） | `main`（会自动 forward-merge） |
 
 ### 分支命名规范
 
@@ -86,16 +106,23 @@ git remote add upstream https://github.com/L8CHAT/Skywalker.git
 
 ```bash
 git fetch upstream
-git checkout dev
-git merge upstream/dev
+# v1.x 工作
+git checkout main && git merge upstream/main
+# v2.0 工作
+git checkout release/2.0 && git merge upstream/release/2.0
 ```
 
 ### 5. 创建功能分支
 
 ```bash
-# 从 dev 分支创建
-git checkout dev
-git pull upstream dev
+# v1.x 修复 / 小特性：从 main 创建
+git checkout main
+git pull upstream main
+git checkout -b fix/issue-编号-简短描述
+
+# v2.0 功能（Source Generator 等）：从 release/2.0 创建
+git checkout release/2.0
+git pull upstream release/2.0
 git checkout -b feature/issue-编号-简短描述
 ```
 
@@ -113,7 +140,11 @@ git commit -m "feat: 添加xxx功能 (#issue编号)"
 git push origin feature/issue-编号-简短描述
 ```
 
-然后在 GitHub 上创建 Pull Request，**目标分支为 `dev`**（不是 `main`）。
+然后在 GitHub 上创建 Pull Request：
+- **v1.x 改动 → 目标分支 `main`**
+- **v2.0 改动 → 目标分支 `release/2.0`**
+
+详见上方 [分支策略 - PR 目标分支选择](#-分支策略)。
 
 ### 8. 代码审查
 
