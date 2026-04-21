@@ -13,7 +13,7 @@ public static class ModelStateExtensions
             return new AjaxResponse();
         }
 
-        var validationErrors = new List<ValidationError>();
+        var validationErrors = new List<ValidationErrorDto>();
 
         foreach (var state in modelState)
         {
@@ -23,7 +23,7 @@ public static class ModelStateExtensions
                 {
 
                 }
-                validationErrors.Add(new ValidationError(error.ErrorMessage, state.Key));
+                validationErrors.Add(new ValidationErrorDto(error.ErrorMessage, state.Key));
             }
         }
 

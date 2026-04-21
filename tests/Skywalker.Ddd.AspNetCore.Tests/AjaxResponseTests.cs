@@ -101,18 +101,18 @@ public class ErrorTests
         var error = new Error("E001", "validation failed");
         error.ValidationErrors = new[]
         {
-            new ValidationError("Name", "Name is required"),
+            new ValidationErrorDto("Name", "Name is required"),
         };
         Assert.Single(error.ValidationErrors);
     }
 }
 
-public class ValidationErrorTests
+public class ValidationErrorDtoTests
 {
     [Fact]
     public void Constructor_WithMemberAndMessage_ShouldSetProperties()
     {
-        var error = new ValidationError("Name", "Name is required");
+        var error = new ValidationErrorDto("Name", "Name is required");
         Assert.Equal("Name", error.Member);
         Assert.Equal("Name is required", error.Message);
     }
