@@ -415,22 +415,30 @@ namespace Skywalker.Ddd.Application;
 [UnitOfWork]
 public abstract class ApplicationService : IApplicationService
 {
-    // AutoMapper 映射器
-    protected IMapper Mapper { get; }
-
-    protected ApplicationService(IMapper mapper) => Mapper = mapper;
 }
 ```
+
+> **对象映射**：框架不内置映射器。推荐在业务项目中引用 [Riok.Mapperly](https://github.com/riok/mapperly)
+> 源生成器：声明 `[Mapper] partial class`，编译期生成映射代码，零运行时开销且 AOT 友好。
 
 **使用示例：**
 
 ```csharp
+using Riok.Mapperly.Abstractions;
+
+[Mapper]
+public partial class OrderMapper
+{
+    public partial OrderDto ToDto(Order entity);
+    public partial List<OrderDto> ToDtoList(IEnumerable<Order> entities);
+}
+
 public class OrderAppService : ApplicationService, IOrderAppService
 {
     private readonly IRepository<Order, Guid> _orderRepository;
+    private readonly OrderMapper _mapper = new();
 
-    public OrderAppService(IMapper mapper, IRepository<Order, Guid> orderRepository)
-        : base(mapper)
+    public OrderAppService(IRepository<Order, Guid> orderRepository)
     {
         _orderRepository = orderRepository;
     }
@@ -438,7 +446,7 @@ public class OrderAppService : ApplicationService, IOrderAppService
     public async Task<OrderDto> GetAsync(Guid id)
     {
         var order = await _orderRepository.GetAsync(id);
-        return Mapper.Map<OrderDto>(order);
+        return _mapper.ToDto(order);
     }
 
     public async Task<PagedResultDto<OrderDto>> GetListAsync(SearchRequestDto input)
@@ -452,7 +460,7 @@ public class OrderAppService : ApplicationService, IOrderAppService
         return new PagedResultDto<OrderDto>
         {
             TotalCount = orders.TotalCount,
-            Items = Mapper.Map<List<OrderDto>>(orders.Items)
+            Items = _mapper.ToDtoList(orders.Items)
         };
     }
 }

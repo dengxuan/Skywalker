@@ -21,7 +21,7 @@
 | 🌍 **本地化** | 多语言支持（`IStringLocalizer<T>`），支持 JSON 文件和数据库存储本地化资源 |
 | 📝 **模板引擎** | 支持 Scriban（高性能）和 Razor 模板引擎（`ITemplateRenderer`） |
 | ✅ **数据验证** | 集成 FluentValidation（`IValidator<T>`）和 DataAnnotations，支持自定义验证规则 |
-| 🗺️ **对象映射** | 集成 AutoMapper（`IObjectMapper`），简化 DTO 与实体之间的映射 |
+| 🗺️ **对象映射** | 框架不内置映射器，推荐使用 [Mapperly](https://github.com/riok/mapperly) 源生成器，编译期生成、零运行时开销、AOT 友好 |
 | 💨 **缓存** | 支持内存缓存和 Redis 分布式缓存（`ICaching`），统一缓存抽象接口 |
 | 🏥 **健康检查** | 内置 ASP.NET Core 健康检查端点，监控应用健康状态 |
 
@@ -32,7 +32,6 @@
 | **.NET** | 8.0 | 目标框架 |
 | **Entity Framework Core** | 8.0 | ORM 框架 |
 | **ASP.NET Core** | 8.0 | Web 框架 |
-| **AutoMapper** | 12.x | 对象映射 |
 | **FluentValidation** | 11.x | 数据验证 |
 | **RabbitMQ.Client** | 6.x | 消息队列（可选） |
 | **StackExchange.Redis** | 2.x | Redis 客户端（可选） |
@@ -323,6 +322,7 @@ public class OrderAppService : ApplicationService, IOrderAppService
 {
     private readonly IOrderRepository _orderRepository;
     private readonly ILocalEventBus _eventBus;
+    private readonly OrderMapper _mapper = new();
 
     public OrderAppService(
         IOrderRepository orderRepository,
@@ -357,7 +357,7 @@ public class OrderAppService : ApplicationService, IOrderAppService
             CustomerId = order.CustomerId
         });
 
-        return ObjectMapper.Map<Order, OrderDto>(order);
+        return _mapper.ToDto(order);
     }
 
     /// <summary>
@@ -366,7 +366,7 @@ public class OrderAppService : ApplicationService, IOrderAppService
     public async Task<OrderDto> GetAsync(Guid id)
     {
         var order = await _orderRepository.GetAsync(id);
-        return ObjectMapper.Map<Order, OrderDto>(order);
+        return _mapper.ToDto(order);
     }
 
     /// <summary>
@@ -424,8 +424,6 @@ public class OrderAppService : ApplicationService, IOrderAppService
 | **权限管理** | `Skywalker.Permissions.Abstractions` | 权限系统（`IPermissionChecker`），支持角色/用户/客户端 |
 | **本地化** | `Skywalker.Localization.Abstractions` | 多语言支持（`IStringLocalizer<T>`） |
 | **本地化 JSON** | `Skywalker.Localization.Json` | JSON 文件本地化资源 |
-| **对象映射抽象** | `Skywalker.ObjectMapping.Abstractions` | 对象映射接口（`IObjectMapper`） |
-| **AutoMapper 集成** | `Skywalker.ObjectMapping.AutoMapper` | AutoMapper 集成实现 |
 | **验证抽象** | `Skywalker.Validation.Abstractions` | 验证接口（`IValidator<T>`） |
 | **FluentValidation** | `Skywalker.Validation.FluentValidation` | FluentValidation 集成 |
 | **模板抽象** | `Skywalker.Template.Abstractions` | 模板引擎接口（`ITemplateRenderer`） |
@@ -451,8 +449,7 @@ Skywalker.Ddd (整合包)
 │   └── Skywalker.Extensions.Universal
 ├── Skywalker.Ddd.Application
 │   ├── Skywalker.Ddd.Application.Abstractions
-│   ├── Skywalker.Ddd.Domain
-│   └── Skywalker.ObjectMapping.Abstractions
+│   └── Skywalker.Ddd.Domain
 └── Skywalker.Ddd.Uow
     └── Skywalker.Ddd.Domain
 

@@ -151,7 +151,7 @@ public class OrderAppService : ApplicationService, IOrderAppService
         await _eventBus.PublishAsync(new OrderCreatedEvent { OrderId = order.Id });
 
         // 4. 映射并返回
-        return ObjectMapper.Map<Order, OrderDto>(order);
+        return _mapper.ToDto(order);
     }
 }
 ```
@@ -338,7 +338,6 @@ public class OrderRepository : EfCoreRepository<AppDbContext, Order, Guid>, IOrd
 | | Skywalker.Permissions.Abstractions | 权限管理 |
 | | Skywalker.Localization.Abstractions | 本地化 |
 | | Skywalker.Validation.Abstractions | 数据验证 |
-| | Skywalker.ObjectMapping.Abstractions | 对象映射 |
 | | Skywalker.Template.Abstractions | 模板引擎 |
 
 ---
@@ -813,7 +812,7 @@ public class OrderAppService
 public async Task<OrderDto> GetAsync(Guid id)
 {
     var order = await _repository.GetAsync(id);
-    return ObjectMapper.Map<Order, OrderDto>(order);
+    return _mapper.ToDto(order);
 }
 
 // ❌ 错误：应用层返回领域实体

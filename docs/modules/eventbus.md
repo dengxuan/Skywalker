@@ -368,11 +368,11 @@ public class OrderAppService : ApplicationService
 {
     private readonly ILocalEventBus _eventBus;
     private readonly IRepository<Order, Guid> _orderRepository;
+    private readonly OrderMapper _mapper = new();
 
     public OrderAppService(
-        IMapper mapper,
         ILocalEventBus eventBus,
-        IRepository<Order, Guid> orderRepository) : base(mapper)
+        IRepository<Order, Guid> orderRepository)
     {
         _eventBus = eventBus;
         _orderRepository = orderRepository;
@@ -399,7 +399,7 @@ public class OrderAppService : ApplicationService
             CreatedAt = DateTime.UtcNow
         });
 
-        return Mapper.Map<OrderDto>(order);
+        return _mapper.ToDto(order);
     }
 
     public async Task ConfirmOrderAsync(Guid orderId)
@@ -615,8 +615,9 @@ public class PaymentCompletedEvent
 public class OrderAppService : ApplicationService
 {
     private readonly IEventBus _eventBus;
+    private readonly OrderMapper _mapper = new();
 
-    public OrderAppService(IMapper mapper, IEventBus eventBus) : base(mapper)
+    public OrderAppService(IEventBus eventBus)
     {
         _eventBus = eventBus;
     }
@@ -635,7 +636,7 @@ public class OrderAppService : ApplicationService
             CreatedAt = DateTime.UtcNow
         });
 
-        return Mapper.Map<OrderDto>(order);
+        return _mapper.ToDto(order);
     }
 }
 ```

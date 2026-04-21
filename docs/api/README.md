@@ -1404,75 +1404,40 @@ public class OrderAppService
 
 ---
 
-## 对象映射 API
+## 对象映射
 
-### Skywalker.ObjectMapping
-
-#### IObjectMapper 接口
-
-```csharp
-namespace Skywalker.ObjectMapping;
-
-/// <summary>
-/// 对象映射器接口
-/// </summary>
-public interface IObjectMapper
-{
-    /// <summary>
-    /// 将源对象映射到目标类型
-    /// </summary>
-    /// <typeparam name="TDestination">目标类型</typeparam>
-    /// <param name="source">源对象</param>
-    TDestination Map<TDestination>(object source);
-
-    /// <summary>
-    /// 将源对象映射到目标类型
-    /// </summary>
-    /// <typeparam name="TSource">源类型</typeparam>
-    /// <typeparam name="TDestination">目标类型</typeparam>
-    /// <param name="source">源对象</param>
-    TDestination Map<TSource, TDestination>(TSource source);
-
-    /// <summary>
-    /// 将源对象映射到现有目标对象
-    /// </summary>
-    /// <typeparam name="TSource">源类型</typeparam>
-    /// <typeparam name="TDestination">目标类型</typeparam>
-    /// <param name="source">源对象</param>
-    /// <param name="destination">目标对象</param>
-    TDestination Map<TSource, TDestination>(TSource source, TDestination destination);
-}
-```
+框架本身不再内置对象映射器。推荐在业务项目中引用
+[Riok.Mapperly](https://github.com/riok/mapperly) 源生成器：声明 `[Mapper] partial class`，
+编译期生成映射代码，零运行时反射开销且对原生 AOT 友好。
 
 **使用示例：**
 
 ```csharp
-// 配置 AutoMapper Profile
-public class OrderProfile : Profile
+using Riok.Mapperly.Abstractions;
+
+[Mapper]
+public partial class OrderMapper
 {
-    public OrderProfile()
-    {
-        CreateMap<Order, OrderDto>();
-        CreateMap<OrderItem, OrderItemDto>();
-        CreateMap<CreateOrderInput, Order>();
-    }
+    public partial OrderDto ToDto(Order entity);
+    public partial List<OrderDto> ToDtoList(IEnumerable<Order> entities);
+    public partial Order ToEntity(CreateOrderInput input);
 }
 
 // 在应用服务中使用
 public class OrderAppService : ApplicationService
 {
+    private readonly OrderMapper _mapper = new();
+
     public async Task<OrderDto> GetAsync(Guid id)
     {
         var order = await _orderRepository.GetAsync(id);
-
-        // 使用 ObjectMapper（ApplicationService 基类提供）
-        return ObjectMapper.Map<Order, OrderDto>(order);
+        return _mapper.ToDto(order);
     }
 
     public async Task<List<OrderDto>> GetListAsync()
     {
         var orders = await _orderRepository.GetListAsync();
-        return ObjectMapper.Map<List<Order>, List<OrderDto>>(orders);
+        return _mapper.ToDtoList(orders);
     }
 }
 ```
