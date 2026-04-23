@@ -25,14 +25,16 @@ v2.0 是 Skywalker 的差异化战役，定位 **小、快、易用**：
 
 ## [Unreleased]
 
-### Added
+### Changed — BREAKING (Messaging & Transport 独立为 Vertex 项目)
 
-- **`Skywalker.Transport.Grpc`** 新增包：基于 gRPC bidi stream 的 `ITransport` 实现（client side），与业务消息 schema 完全解耦。配合 `Skywalker.Messaging` 即可在 v2 SDK 中以「公网穿透 + HTTPS」替代 NetMQ 跨主机部署。详见 [#203](https://github.com/dengxuan/Skywalker/issues/203)。
-  - 严格遵守 `docs/modules/transport.md` 中的 4 条 transport 铁律（读循环只路由 Acks、单次 send 失败 ≠ 断连、CT 仅作用于 pre-wire、唯一断开判定 = 读循环异常）。
-  - 内置带 jitter 的指数退避重连。
-  - DI 扩展：`services.AddGrpcTransport(name, configure)`。
-- **`Skywalker.Transport.Grpc`** 新增 server 端实现：`GrpcServerTransport` + `BidiServiceImpl`，承载多 peer 的双向流。Peer 身份由 `x-skywalker-peer-id` metadata 头标识；`SendAsync(target, frames)` 路由到对应连接，`ReceiveAsync` 产出带 `From` 的 `TransportMessage`。同样严守 4 条 transport 铁律。详见 [#203](https://github.com/dengxuan/Skywalker/issues/203)。
-  - DI 扩展：`services.AddGrpcServerTransport(name, configure?)`，配合 `app.MapGrpcService<BidiServiceImpl>()` 即可挂载。
+- **`Skywalker.Messaging.*`** 和 **`Skywalker.Transport.*`** 共 5 个包**从 Skywalker 仓移除**，迁入独立的跨语言项目 [**Vertex**](https://github.com/dengxuan/Vertex)（polyrepo）：
+    - .NET 实现：[dengxuan/vertex-dotnet](https://github.com/dengxuan/vertex-dotnet)（NuGet：`Vertex.Messaging`、`Vertex.Messaging.Abstractions`、`Vertex.Transport.Abstractions`、`Vertex.Transport.NetMq`、`Vertex.Transport.Grpc`）
+    - Go 实现：[dengxuan/vertex-go](https://github.com/dengxuan/vertex-go)（module `github.com/dengxuan/vertex-go`）
+    - Wire 规范：[dengxuan/Vertex](https://github.com/dengxuan/Vertex)
+- 原因：Messaging/Transport 本质是**跨语言通信基础设施**，与 Skywalker 的 .NET DDD 框架定位不同步；强行捆绑导致 Go 等语言场景无法对等接入。详见 [messaging-spin-out.md](docs/architecture/messaging-spin-out.md)。
+- **迁移**：把 `using Skywalker.Messaging;` / `using Skywalker.Transport;` 改为 `using Vertex.Messaging;` / `using Vertex.Transport;`；`<PackageReference Include="Skywalker.Messaging" />` 改为 `<PackageReference Include="Vertex.Messaging" />` 等。API 语义（`IMessageBus`、`IRpcClient`、`ITransport`、4 条铁律）保持不变。详见 [docs/migration/v1-to-v2.md § 5](docs/migration/v1-to-v2.md)（release/2.0 分支）。
+- **已发布的 `Skywalker.Messaging.1.0.0` 等 NuGet 包保留不动**，老用户可继续 pin 至 `1.0.0`；不会有 `Skywalker.Messaging.1.0.1+` 继续发布。需要新功能 / bug fix 时请升级到 `Vertex.*`。
+- _后续_ 可能发布 `Skywalker.Messaging.1.0.1` 等带 `[TypeForwardedTo]` 的桥接包，指向 `Vertex.*`。是否发布、何时发布视下游实际迁移情况而定；目前**不**自动发。
 
 ### Removed
 
