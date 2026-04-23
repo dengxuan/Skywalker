@@ -47,17 +47,31 @@ jobs:
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
-          BRANCH="auto/forward-merge-main-${{ github.run_id }}"
-          git checkout -b "$BRANCH" origin/release/2.0
-          git push origin "$BRANCH"
-
           EXISTING=$(gh pr list --base release/2.0 --head main --state open --json number --jq '.[0].number' || true)
-          if [ -z "$EXISTING" ]; then
-            gh pr create \
-              --base release/2.0 \
-              --head main \
-              --title "chore: forward-merge main into release/2.0 (conflicts)" \
-              --body "Automated forward-merge from \`main\` failed due to conflicts. Please resolve manually.\n\nTriggered by ${{ github.sha }}."
-          else
+          if [ -n "$EXISTING" ]; then
             echo "An open forward-merge PR already exists: #$EXISTING"
+            exit 0
           fi
+
+          gh pr create \
+            --base release/2.0 \
+            --head main \
+            --title "chore: forward-merge main into release/2.0 (conflicts)" \
+            --body "$(cat <<'BODY'
+          Automated forward-merge from `main` to `release/2.0` failed due to conflicts.
+
+          **How to resolve manually:**
+
+          ```bash
+          git fetch origin
+          git checkout release/2.0 && git pull --ff-only
+          git merge origin/main
+          # resolve conflicts, then:
+          git push origin release/2.0
+          ```
+
+          This PR will auto-close once you push the resolved merge commit
+          to `release/2.0` (GitHub detects that `main` is reachable from
+          `release/2.0` and closes the PR as \"merged\").
+          BODY
+          )"
