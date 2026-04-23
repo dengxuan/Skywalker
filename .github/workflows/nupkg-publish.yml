@@ -13,6 +13,10 @@ on:
       - release/2.0
     tags:
       - "v*.*.*"
+  # Manual re-publish: useful when GitHub's push-workflow de-dup skips
+  # a merge-commit push, or to force re-build from any historical tag.
+  # Usage: gh workflow run nupkg-publish.yml --ref <branch-or-tag>
+  workflow_dispatch:
 
 permissions:
   contents: read
