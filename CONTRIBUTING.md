@@ -63,12 +63,35 @@
 
 ### PR 目标分支选择
 
-| 你想做的事 | 目标分支 |
-|---|---|
-| 修 v1.x bug、加小特性 | `main` |
-| 实现 v2.0 Source Generator 相关功能 | `release/2.0` |
-| v2.0 计划性文档 / 设计 | `release/2.0`（除非也对 v1.x 有用） |
-| 仓库元信息（CI、模板、许可证等） | `main`（会自动 forward-merge） |
+> ⚠️ **默认原则：新功能优先 target `release/2.0`**。`main` 已进入 v1.x 维护期，仅接受 bug fix / 铁律类修复 / 仓库元信息改动；任何新增功能性 API 都应该进 `release/2.0`，避免日后双版本双份维护。
+
+| 你想做的事 | 目标分支 | 备注 |
+|---|---|---|
+| v1.x 的 bug 修复 | `main` | 会被 forward-merge 自动带到 `release/2.0` |
+| v1.x 的安全/合规修补 | `main` | 同上 |
+| 铁律级底层修复（如 Transport 4 铁律） | `main` | 两个版本都要享受的修复 |
+| 仓库元信息（CI、issue 模板、许可证、README 等） | `main` | 自动 forward-merge |
+| **新功能 / 新模块（默认）** | **`release/2.0`** | 不再 backport 到 v1.x |
+| v2.0 Source Generator 相关实现 | `release/2.0` | Epic #182 |
+| v2.0 API 设计 / 迁移指南 | `release/2.0` | `docs/migration/v1-to-v2.md` |
+
+**决策树：**
+
+```
+是 bug 修复？
+├─ 是 → 影响 v1.x 已发布用户吗？
+│       ├─ 是 → target: main
+│       └─ 否 → target: release/2.0
+└─ 否（是新功能） → 默认 target: release/2.0
+          └─ 例外：明确承诺 backport 到 v1.x 的小增强（罕见，需维护者预先同意）→ target: main
+```
+
+### 版本生命周期
+
+| 版本 | 状态 | 策略 |
+|---|---|---|
+| **v1.x** | 维护期 | 只接受 bug fix / 安全修复；不再加新功能；v2.0 GA 后进入 **6 个月 LTS**（仅安全修复），之后 EOL |
+| **v2.0** | 开发中 | 在 `release/2.0` 迭代，每次 push 自动发 `2.0.0-preview.N` NuGet（见 `nupkg-publish.yml`），鼓励用户提前试用反馈；preview → rc → GA |
 
 ### 分支命名规范
 
@@ -99,7 +122,7 @@ cd Skywalker
 ### 3. 添加上游仓库
 
 ```bash
-git remote add upstream https://github.com/L8CHAT/Skywalker.git
+git remote add upstream https://github.com/dengxuan/Skywalker.git
 ```
 
 ### 4. 同步最新代码
@@ -264,7 +287,7 @@ BREAKING CHANGE: IRepository 接口签名已更改
 
 ```bash
 # 1. 克隆仓库
-git clone https://github.com/L8CHAT/Skywalker.git
+git clone https://github.com/dengxuan/Skywalker.git
 cd Skywalker
 
 # 2. 还原依赖
@@ -594,9 +617,9 @@ public class OrderAppService
 
 | 渠道 | 用途 |
 |------|------|
-| [Issues](https://github.com/L8CHAT/Skywalker/issues) | Bug 报告、功能请求 |
-| [Discussions](https://github.com/L8CHAT/Skywalker/discussions) | 问题讨论、使用帮助 |
-| [Pull Requests](https://github.com/L8CHAT/Skywalker/pulls) | 代码贡献 |
+| [Issues](https://github.com/dengxuan/Skywalker/issues) | Bug 报告、功能请求 |
+| [Discussions](https://github.com/dengxuan/Skywalker/discussions) | 问题讨论、使用帮助 |
+| [Pull Requests](https://github.com/dengxuan/Skywalker/pulls) | 代码贡献 |
 
 ### 提交 Issue 前
 
