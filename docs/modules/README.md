@@ -10,6 +10,7 @@
 |------|------|----------|
 | **DDD 核心** | [ddd.md](./ddd.md) | Domain、Application、Uow、EntityFrameworkCore |
 | **事件总线** | [eventbus.md](./eventbus.md) | Local、RabbitMQ |
+| **传输与消息** | [transport.md](./transport.md) | Transport.Abstractions、Transport.NetMq、Messaging |
 | **缓存** | [caching.md](./caching.md) | Memory、Redis |
 | **设置管理** | [settings.md](./settings.md) | Settings 全系列 |
 | **权限管理** | [permissions.md](./permissions.md) | Permissions 全系列 |

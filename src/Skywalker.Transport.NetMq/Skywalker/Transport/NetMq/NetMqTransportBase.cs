@@ -78,6 +78,9 @@ internal abstract class NetMqTransportBase : ITransport
             copies[i] = frames[i].ToArray();
         }
 
+        // 满足 ITransport.SendAsync 契约（铁律 #3）：入队后即不再响应 CT，
+        // 真正的 socket 发送在 poller 线程上由 OnOutQueueReceiveReady 完成，
+        // 不会因调用方取消 CT 而把已入队的多帧消息撕成两半。
         _outQueue.Enqueue(new OutboundEnvelope(target, copies));
         return ValueTask.CompletedTask;
     }
