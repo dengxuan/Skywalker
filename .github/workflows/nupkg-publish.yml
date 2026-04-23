@@ -4,6 +4,7 @@ on:
   push:
     branches:
       - main
+      - release/2.0
     tags:
       - "v*.*.*"
 
@@ -48,9 +49,23 @@ jobs:
             echo "version=$VERSION" >> "$GITHUB_ENV"
             echo "version=$VERSION" >> "$GITHUB_OUTPUT"
 
+          elif [[ $GITHUB_REF == refs/heads/release/2.0 ]]; then
+            # release/2.0 分支 → 发布 v2.0 preview 包
+            NEW_VERSION="2.0.0-preview.${{ github.run_number }}"
+
+            sed -i "s|<MajorVersion>.*</MajorVersion>|<MajorVersion>2</MajorVersion>|" $VERSION_FILE
+            sed -i "s|<MinorVersion>.*</MinorVersion>|<MinorVersion>0</MinorVersion>|" $VERSION_FILE
+            sed -i "s|<PatchVersion>.*</PatchVersion>|<PatchVersion>0</PatchVersion>|" $VERSION_FILE
+            sed -i "s|<PreReleaseVersionLabel>.*</PreReleaseVersionLabel>|<PreReleaseVersionLabel>preview</PreReleaseVersionLabel>|" $VERSION_FILE
+            sed -i "s|<PreReleaseVersionIteration>.*</PreReleaseVersionIteration>|<PreReleaseVersionIteration>${{ github.run_number }}</PreReleaseVersionIteration>|" $VERSION_FILE
+
+            echo "v2.0 preview: $NEW_VERSION"
+            echo "version=$NEW_VERSION" >> "$GITHUB_ENV"
+            echo "version=$NEW_VERSION" >> "$GITHUB_OUTPUT"
+
           else
             # 如果是推送 main 分支，自动生成预发布版本
-            LATEST_TAG=$(git describe --tags --abbrev=0 2>/dev/null || echo "")
+            LATEST_TAG=$(git describe --tags --match "v1.*" --abbrev=0 2>/dev/null || echo "")
 
             if [[ -n "$LATEST_TAG" ]]; then
               # 存在 Tag，解析 Major.Minor.Patch
@@ -82,11 +97,12 @@ jobs:
           fi
 
       - name: Commit and push updated version
+        if: github.event_name == 'push' && startsWith(github.ref, 'refs/heads/')
         run: |
           git config --global user.name "github-actions"
           git config --global user.email "github-actions@github.com"
           git add eng/Versions.props
-          git diff --cached --quiet && echo "No changes to commit" || (git commit -m "chore: update version to ${{ env.version }}" && git push origin HEAD:main)
+          git diff --cached --quiet && echo "No changes to commit" || (git commit -m "chore: update version to ${{ env.version }}" && git push origin "HEAD:${{ github.ref_name }}")
 
   publish:
     needs: update-version
@@ -95,7 +111,7 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v5
         with:
-          ref: main
+          ref: ${{ github.ref }}
           fetch-depth: 0
 
       - name: Setup .NET
