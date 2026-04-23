@@ -363,3 +363,6 @@ FodyWeavers.xsd
 
 #Angular
 .angular/
+
+# Claude Code local settings
+.claude/settings.local.json
