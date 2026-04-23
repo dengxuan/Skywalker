@@ -91,7 +91,17 @@
 | 版本 | 状态 | 策略 |
 |---|---|---|
 | **v1.x** | 维护期 | 只接受 bug fix / 安全修复；不再加新功能；v2.0 GA 后进入 **6 个月 LTS**（仅安全修复），之后 EOL |
-| **v2.0** | 开发中 | 在 `release/2.0` 迭代，每次 push 自动发 `2.0.0-preview.N` NuGet（见 `nupkg-publish.yml`），鼓励用户提前试用反馈；preview → rc → GA |
+| **v2.0** | 开发中 | 在 `release/2.0` 迭代，每次 push 自动发 `2.0.0-preview.1.N` NuGet，鼓励用户提前试用反馈；preview → rc → GA |
+
+### 版本号如何产生
+
+项目采用 **[MinVer](https://github.com/adamralph/minver) + git tag** 模型：
+
+- 产出版本号由构建时的 git 历史推导，**无需手工维护 `Versions.props`**
+- 分支 push = 预发布包（`1.0.X-alpha.0.N` on main / `2.0.0-preview.1.N` on release/2.0）
+- tag push = 承诺版本（打 `v1.0.1` tag → 发 `1.0.1` GA 包）
+
+完整规则、生命周期、打 tag 操作详见 **[`docs/versioning.md`](docs/versioning.md)**。
 
 ### 分支命名规范
 
