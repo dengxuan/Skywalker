@@ -1,27 +1,9 @@
 <Project>
 
-  <PropertyGroup>
-    <!-- 文件版本号 -->
-    <MajorVersion>1</MajorVersion>
-    <MinorVersion>0</MinorVersion>
-    <PatchVersion>0</PatchVersion>
-    <SdkBandVersion>1.0.0</SdkBandVersion>
-    <PreReleaseVersionLabel>beta</PreReleaseVersionLabel>
-    <PreReleaseVersionIteration>1</PreReleaseVersionIteration>
-    <AssemblyVersion>$(MajorVersion).$(MinorVersion).0.0</AssemblyVersion>
-    <StabilizePackageVersion Condition="'$(StabilizePackageVersion)' == ''">false</StabilizePackageVersion>
-    <DotNetFinalVersionKind Condition="'$(StabilizePackageVersion)' == 'true'">release</DotNetFinalVersionKind>
-    <UsingToolMicrosoftNetILLinkTasks>true</UsingToolMicrosoftNetILLinkTasks>
-    <UsingToolIbcOptimization>false</UsingToolIbcOptimization>
-    <UsingToolXliff>false</UsingToolXliff>
-    <LastReleasedStableAssemblyVersion>$(AssemblyVersion)</LastReleasedStableAssemblyVersion>
-    <PackageVersion>$(MajorVersion).$(MinorVersion).$(PatchVersion)</PackageVersion>
-    <ProductVersion>$(MajorVersion).$(MinorVersion).$(PatchVersion)</ProductVersion>
-  </PropertyGroup>
-
-  <ItemGroup>
-    <ProjectServicingConfiguration Include="Microsoft.NETCore.App.Ref" PatchVersion="0" />
-  </ItemGroup>
+  <!--
+    Project version is derived from git tags via MinVer (see Directory.Build.props).
+    Do NOT add MajorVersion / MinorVersion / PatchVersion / PackageVersion here.
+  -->
 
   <!-- ==================== 集中管理 NuGet 包版本 ==================== -->
 
@@ -42,6 +24,10 @@
     <MicrosoftCodeAnalysisCSharpVersion>4.8.0</MicrosoftCodeAnalysisCSharpVersion>
     <MicrosoftCodeAnalysisAnalyzersVersion>3.3.4</MicrosoftCodeAnalysisAnalyzersVersion>
     <MicrosoftSourceLinkVersion>8.0.0</MicrosoftSourceLinkVersion>
+  </PropertyGroup>
+
+  <PropertyGroup Label="Build tooling">
+    <MinVerVersion>7.0.0</MinVerVersion>
   </PropertyGroup>
 
   <PropertyGroup Label="System">
