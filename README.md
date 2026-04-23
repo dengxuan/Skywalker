@@ -1,6 +1,6 @@
 # Skywalker
 
-[![Build Status](https://github.com/L8CHAT/Skywalker/actions/workflows/build.yml/badge.svg)](https://github.com/L8CHAT/Skywalker/actions)
+[![Tests](https://github.com/dengxuan/Skywalker/actions/workflows/test.yml/badge.svg)](https://github.com/dengxuan/Skywalker/actions/workflows/test.yml)
 [![NuGet](https://img.shields.io/nuget/v/Skywalker.Ddd.svg)](https://www.nuget.org/packages/Skywalker.Ddd)
 [![License](https://img.shields.io/badge/license-MIT-blue.svg)](LICENSE.txt)
 [![.NET](https://img.shields.io/badge/.NET-8.0-purple.svg)](https://dotnet.microsoft.com/)
@@ -487,8 +487,8 @@ Skywalker.Caching.Redis
 
 ## 📞 联系方式
 
-- **Issues**: [GitHub Issues](https://github.com/L8CHAT/Skywalker/issues)
-- **Discussions**: [GitHub Discussions](https://github.com/L8CHAT/Skywalker/discussions)
+- **Issues**: [GitHub Issues](https://github.com/dengxuan/Skywalker/issues)
+- **Discussions**: [GitHub Discussions](https://github.com/dengxuan/Skywalker/discussions)
 
 ## 📄 许可证
 
