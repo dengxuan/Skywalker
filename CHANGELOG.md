@@ -25,6 +25,13 @@ v2.0 是 Skywalker 的差异化战役，定位 **小、快、易用**：
 
 ## [Unreleased]
 
+### Added
+
+- **`Skywalker.Transport.Grpc`** 新增包：基于 gRPC bidi stream 的 `ITransport` 实现（client side），与业务消息 schema 完全解耦。配合 `Skywalker.Messaging` 即可在 v2 SDK 中以「公网穿透 + HTTPS」替代 NetMQ 跨主机部署。详见 [#203](https://github.com/dengxuan/Skywalker/issues/203)。
+  - 严格遵守 `docs/modules/transport.md` 中的 4 条 transport 铁律（读循环只路由 Acks、单次 send 失败 ≠ 断连、CT 仅作用于 pre-wire、唯一断开判定 = 读循环异常）。
+  - 内置带 jitter 的指数退避重连。
+  - DI 扩展：`services.AddGrpcTransport(name, configure)`。
+
 ### Removed
 
 - **BREAKING**：移除 `Skywalker.Ddd.Application` 对 [AutoMapper](https://github.com/AutoMapper/AutoMapper) 的依赖（AutoMapper 自 v15 起转向商业授权）。
