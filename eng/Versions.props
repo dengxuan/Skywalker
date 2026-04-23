@@ -27,7 +27,7 @@
   </PropertyGroup>
 
   <PropertyGroup Label="Build tooling">
-    <MinVerVersion>7.0.0</MinVerVersion>
+    <MinVerPackageVersion>7.0.0</MinVerPackageVersion>
   </PropertyGroup>
 
   <PropertyGroup Label="System">
