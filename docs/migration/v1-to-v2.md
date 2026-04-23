@@ -23,7 +23,7 @@
 |---|---|---|---|
 | `Skywalker.Ddd.*` | 1.x (LTS 6 个月) | 2.0.0 | **Breaking** |
 | `Skywalker.Extensions.DynamicProxies*` | 1.x | 2.0.0 | **Breaking**（移除 Castle.Core） |
-| `Skywalker.Messaging.*` / `Skywalker.Transport.*` | 1.0.0-beta1+ | 2.0.0 | 基本兼容（小改） |
+| ~~`Skywalker.Messaging.*` / `Skywalker.Transport.*`~~ | 1.0.1（最终版，带 `[TypeForwardedTo]`）| —（已迁出）| **迁移到独立项目 [Vertex](https://github.com/dengxuan/Vertex)** —— 改用 `Vertex.Dotnet.*` 包；详见 §5 |
 | `Skywalker.EventBus.*` | 1.x | 2.0.0 | 基本兼容（Handler 自动发现改为 SG） |
 | `Skywalker.Caching.*` / `Skywalker.Localization.*` / `Skywalker.Permissions.*` / `Skywalker.Settings.*` | 1.x | 2.0.0 | 基本兼容 |
 
@@ -132,27 +132,42 @@ builder.Services.AddSkywalker<Startup>(cfg =>
 
 ---
 
-## 5. Messaging & Transport
+## 5. Messaging & Transport → **已独立为 Vertex 项目**
 
-### 5.1 `Skywalker.Transport.Grpc` 客户端/服务端可用
+**状态**：✅ 决定落地，代码迁移进行中
 
-**状态**：✅ 已落地（`main` 已合入，见 [CHANGELOG](../../CHANGELOG.md) + Epic #201）
+**背景**：`Skywalker.Messaging.*` 和 `Skywalker.Transport.*` 四个包本质是**跨语言通信基础设施**（对标 NATS、ZeroMQ），与 Skywalker 的 .NET DDD 框架定位不同步。把它们捆在 .NET 框架里导致 Go/PHP 等语言无法对等接入，复现 "每个语言自己造轮子" 的 bug 模式（这正是 Epic #201 原本想根治的）。
 
-**现象**：v1.x 中 Messaging 仅有 NetMQ adapter；gRPC 适用场景（SDK 用户、穿透 LB/WAF）需要业务自行实现 bidi。
+**v2.0 处置**：
 
-**v2.0 目标**（本 PR 时刻 `main` 即已具备）：
-- `Skywalker.Transport.Grpc` 包含 client (`GrpcTransport`) 和 server (`GrpcServerTransport`) 两种 `ITransport`。
-- 严格遵循 [4 条 transport 铁律](../modules/transport.md)。
+1. **4 个包迁出到独立项目 [Vertex](https://github.com/dengxuan/Vertex)**：
+    - monorepo 结构（`/dotnet` + `/go` + `/protos` + `/spec`），.NET 和 Go 并行开发
+    - Wire spec 文档化，语言中立（见 [Vertex wire-format.md](https://github.com/dengxuan/Vertex/blob/main/spec/wire-format.md)）
+    - 4 条 transport 铁律 port 为 [Vertex transport-contract.md](https://github.com/dengxuan/Vertex/blob/main/spec/transport-contract.md)
 
-**迁移步骤**（从自研 gRPC bidi 迁到 Skywalker）：
-1. 删除业务仓里的 `*Messaging.*` / `*Transport.*` 克隆项目
-2. 改为 `<PackageReference Include="Skywalker.Transport.Grpc" Version="2.0.0-preview.*" />`
-3. 用 `AddGrpcTransport(...)` / `AddGrpcServerTransport(...)` 注册
-4. `MessagingChannel` 包一层即可，业务代码无需感知 transport 细节
+2. **Skywalker 侧过渡**：
+    - `Skywalker.Messaging.*` / `Skywalker.Transport.*` 发终版 `1.0.1`，类型标记 `[Obsolete]` + 带 `[TypeForwardedTo]` 指向 `Vertex.Dotnet.*`
+    - 兜底期约 **3-6 个月**；v2.0 GA 时老包进 EOL
+    - Skywalker 不再维护这 4 个包的新功能；Messaging/Transport 相关 PR 一律去 Vertex 仓
 
-### 5.2 （预留）Messaging API 精简
+**迁移步骤**：
 
-若在 v2.0 周期内对 `IMessageBus` / `IRpcClient` 接口签名做简化，记录于此。
+| 你目前用的 | 改为 |
+|---|---|
+| `<PackageReference Include="Skywalker.Messaging" ... />` | `<PackageReference Include="Vertex.Dotnet.Messaging" ... />` |
+| `<PackageReference Include="Skywalker.Transport.Grpc" ... />` | `<PackageReference Include="Vertex.Dotnet.Transport.Grpc" ... />` |
+| `<PackageReference Include="Skywalker.Transport.NetMq" ... />` | `<PackageReference Include="Vertex.Dotnet.Transport.NetMq" ... />` |
+| `using Skywalker.Messaging;` | `using Vertex.Dotnet.Messaging;` |
+| `using Skywalker.Transport.Grpc;` | `using Vertex.Dotnet.Transport.Grpc;` |
+| `services.AddGrpcTransport(...)` | `services.AddVertexGrpcTransport(...)` |
+
+API 语义保持不变（`IMessageBus`、`IRpcClient`、`MessagingChannel`、`ITransport`、4 条铁律），**仅**更换命名空间和包名。
+
+**跨语言场景新增**：如果你的服务需要和 Go / 其他语言服务通信，现在可以用同一个 Vertex 项目的 [Go implementation](https://github.com/dengxuan/Vertex/tree/main/go)（与 .NET 共享 wire spec），不再需要自研。
+
+**参考**：
+- [Skywalker 内的 spin-out 设计文档](../architecture/messaging-spin-out.md)
+- [Epic #201 Feivoo gRPC bidi 消息内核](https://github.com/dengxuan/Skywalker/issues/201) （已更新为以 Vertex 为内核）
 
 ---
 
