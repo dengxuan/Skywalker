@@ -74,16 +74,22 @@
 | **新功能 / 新模块（默认）** | **`release/2.0`** | 不再 backport 到 v1.x |
 | v2.0 Source Generator 相关实现 | `release/2.0` | Epic #182 |
 | v2.0 API 设计 / 迁移指南 | `release/2.0` | `docs/migration/v1-to-v2.md` |
+| **Messaging / Transport 新功能或改进** | **Vertex 项目**（多仓）：[`vertex-dotnet`](https://github.com/dengxuan/vertex-dotnet) .NET impl / [`vertex-go`](https://github.com/dengxuan/vertex-go) Go impl / [`Vertex`](https://github.com/dengxuan/Vertex) 规范 | Messaging/Transport 已独立项目；这里不再接收相关 PR |
 
 **决策树：**
 
 ```
-是 bug 修复？
-├─ 是 → 影响 v1.x 已发布用户吗？
-│       ├─ 是 → target: main
-│       └─ 否 → target: release/2.0
-└─ 否（是新功能） → 默认 target: release/2.0
-          └─ 例外：明确承诺 backport 到 v1.x 的小增强（罕见，需维护者预先同意）→ target: main
+是 Messaging / Transport 相关？
+├─ 是 → 是 .NET 实现 bug / 改进？
+│       ├─ 是 → 去 https://github.com/dengxuan/vertex-dotnet 开 PR
+│       ├─ 否，是 Go 实现？ → https://github.com/dengxuan/vertex-go
+│       └─ 否，是 wire / 协议规范？ → https://github.com/dengxuan/Vertex（spec 仓，需多语言 impl 同步 PR）
+└─ 否 → 是 bug 修复？
+        ├─ 是 → 影响 v1.x 已发布用户吗？
+        │       ├─ 是 → target: main
+        │       └─ 否 → target: release/2.0
+        └─ 否（是新功能） → 默认 target: release/2.0
+                  └─ 例外：明确承诺 backport 到 v1.x 的小增强（罕见，需维护者预先同意）→ target: main
 ```
 
 ### 版本生命周期
@@ -92,6 +98,14 @@
 |---|---|---|
 | **v1.x** | 维护期 | 只接受 bug fix / 安全修复；不再加新功能；v2.0 GA 后进入 **6 个月 LTS**（仅安全修复），之后 EOL |
 | **v2.0** | 开发中 | 在 `release/2.0` 迭代，每次 push 自动发 `2.0.0-preview.1.N` NuGet，鼓励用户提前试用反馈；preview → rc → GA |
+
+> **Messaging / Transport 的版本线**：已独立为 Vertex 项目（polyrepo），版本号独立管理，不与 Skywalker 版本号绑定：
+>
+> - [`dengxuan/Vertex`](https://github.com/dengxuan/Vertex) — wire spec / protos / compat 测试
+> - [`dengxuan/vertex-dotnet`](https://github.com/dengxuan/vertex-dotnet) — NuGet 包 `Vertex.Messaging`、`Vertex.Transport.Grpc` 等
+> - [`dengxuan/vertex-go`](https://github.com/dengxuan/vertex-go) — Go module `github.com/dengxuan/vertex-go`
+>
+> 背景：[messaging-spin-out.md](docs/architecture/messaging-spin-out.md)。
 
 ### 版本号如何产生
 
