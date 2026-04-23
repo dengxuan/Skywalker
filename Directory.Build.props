@@ -45,7 +45,10 @@
 
   <ItemGroup>
     <PackageReference Include="Microsoft.SourceLink.GitHub" Version="$(MicrosoftSourceLinkVersion)" PrivateAssets="All" />
-    <PackageReference Include="MinVer" Version="$(MinVerVersion)" PrivateAssets="all" />
+    <!-- NOTE: do NOT use $(MinVerVersion) for the package version —
+         MinVerVersion is an MinVer OUTPUT property; pre-setting it
+         makes MinVer short-circuit with that value as the project version. -->
+    <PackageReference Include="MinVer" Version="$(MinVerPackageVersion)" PrivateAssets="all" />
   </ItemGroup>
 
   <!--
