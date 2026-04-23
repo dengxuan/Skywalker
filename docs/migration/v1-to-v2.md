@@ -23,7 +23,7 @@
 |---|---|---|---|
 | `Skywalker.Ddd.*` | 1.x (LTS 6 个月) | 2.0.0 | **Breaking** |
 | `Skywalker.Extensions.DynamicProxies*` | 1.x | 2.0.0 | **Breaking**（移除 Castle.Core） |
-| ~~`Skywalker.Messaging.*` / `Skywalker.Transport.*`~~ | 1.0.1（最终版，带 `[TypeForwardedTo]`）| —（已迁出）| **迁移到独立项目 [Vertex](https://github.com/dengxuan/Vertex)** —— 改用 `Vertex.Dotnet.*` 包；详见 §5 |
+| ~~`Skywalker.Messaging.*` / `Skywalker.Transport.*`~~ | 1.0.1（最终版，带 `[TypeForwardedTo]`）| —（已迁出）| **迁移到独立项目 Vertex (polyrepo)** —— 改用 `Vertex.*` NuGet 包 ([`vertex-dotnet`](https://github.com/dengxuan/vertex-dotnet))，或 Go 的 `github.com/dengxuan/vertex-go`；详见 §5 |
 | `Skywalker.EventBus.*` | 1.x | 2.0.0 | 基本兼容（Handler 自动发现改为 SG） |
 | `Skywalker.Caching.*` / `Skywalker.Localization.*` / `Skywalker.Permissions.*` / `Skywalker.Settings.*` | 1.x | 2.0.0 | 基本兼容 |
 
@@ -140,30 +140,32 @@ builder.Services.AddSkywalker<Startup>(cfg =>
 
 **v2.0 处置**：
 
-1. **4 个包迁出到独立项目 [Vertex](https://github.com/dengxuan/Vertex)**：
-    - monorepo 结构（`/dotnet` + `/go` + `/protos` + `/spec`），.NET 和 Go 并行开发
-    - Wire spec 文档化，语言中立（见 [Vertex wire-format.md](https://github.com/dengxuan/Vertex/blob/main/spec/wire-format.md)）
-    - 4 条 transport 铁律 port 为 [Vertex transport-contract.md](https://github.com/dengxuan/Vertex/blob/main/spec/transport-contract.md)
+1. **4 个包迁出到独立项目 Vertex（polyrepo）**：
+    - [`dengxuan/Vertex`](https://github.com/dengxuan/Vertex) — **wire spec / protos / compat 测试**（语言中立）
+    - [`dengxuan/vertex-dotnet`](https://github.com/dengxuan/vertex-dotnet) — .NET 实现（NuGet 包 `Vertex.Messaging`、`Vertex.Transport.Grpc` 等）
+    - [`dengxuan/vertex-go`](https://github.com/dengxuan/vertex-go) — Go 实现（module `github.com/dengxuan/vertex-go`）
+    - Wire spec 文档化，语言中立（见 [wire-format.md](https://github.com/dengxuan/Vertex/blob/main/spec/wire-format.md)）
+    - 4 条 transport 铁律：[transport-contract.md](https://github.com/dengxuan/Vertex/blob/main/spec/transport-contract.md)
 
 2. **Skywalker 侧过渡**：
-    - `Skywalker.Messaging.*` / `Skywalker.Transport.*` 发终版 `1.0.1`，类型标记 `[Obsolete]` + 带 `[TypeForwardedTo]` 指向 `Vertex.Dotnet.*`
+    - `Skywalker.Messaging.*` / `Skywalker.Transport.*` 发终版 `1.0.1`，类型标记 `[Obsolete]` + 带 `[TypeForwardedTo]` 指向新的 `Vertex.*` 命名空间
     - 兜底期约 **3-6 个月**；v2.0 GA 时老包进 EOL
-    - Skywalker 不再维护这 4 个包的新功能；Messaging/Transport 相关 PR 一律去 Vertex 仓
+    - Skywalker 不再维护这 4 个包的新功能；Messaging/Transport 相关 PR 一律去 Vertex polyrepo
 
-**迁移步骤**：
+**迁移步骤**（NuGet 包名**无** `Dotnet` 前缀——生态本身已暗示语言）：
 
 | 你目前用的 | 改为 |
 |---|---|
-| `<PackageReference Include="Skywalker.Messaging" ... />` | `<PackageReference Include="Vertex.Dotnet.Messaging" ... />` |
-| `<PackageReference Include="Skywalker.Transport.Grpc" ... />` | `<PackageReference Include="Vertex.Dotnet.Transport.Grpc" ... />` |
-| `<PackageReference Include="Skywalker.Transport.NetMq" ... />` | `<PackageReference Include="Vertex.Dotnet.Transport.NetMq" ... />` |
-| `using Skywalker.Messaging;` | `using Vertex.Dotnet.Messaging;` |
-| `using Skywalker.Transport.Grpc;` | `using Vertex.Dotnet.Transport.Grpc;` |
+| `<PackageReference Include="Skywalker.Messaging" ... />` | `<PackageReference Include="Vertex.Messaging" ... />` |
+| `<PackageReference Include="Skywalker.Transport.Grpc" ... />` | `<PackageReference Include="Vertex.Transport.Grpc" ... />` |
+| `<PackageReference Include="Skywalker.Transport.NetMq" ... />` | `<PackageReference Include="Vertex.Transport.NetMq" ... />` |
+| `using Skywalker.Messaging;` | `using Vertex.Messaging;` |
+| `using Skywalker.Transport.Grpc;` | `using Vertex.Transport.Grpc;` |
 | `services.AddGrpcTransport(...)` | `services.AddVertexGrpcTransport(...)` |
 
 API 语义保持不变（`IMessageBus`、`IRpcClient`、`MessagingChannel`、`ITransport`、4 条铁律），**仅**更换命名空间和包名。
 
-**跨语言场景新增**：如果你的服务需要和 Go / 其他语言服务通信，现在可以用同一个 Vertex 项目的 [Go implementation](https://github.com/dengxuan/Vertex/tree/main/go)（与 .NET 共享 wire spec），不再需要自研。
+**跨语言场景新增**：如果你的服务需要和 Go 服务通信，现在可以用 [`vertex-go`](https://github.com/dengxuan/vertex-go)（`go get github.com/dengxuan/vertex-go/messaging`）—— 与 .NET 共享 wire spec，不再需要自研。
 
 **参考**：
 - [Skywalker 内的 spin-out 设计文档](../architecture/messaging-spin-out.md)
