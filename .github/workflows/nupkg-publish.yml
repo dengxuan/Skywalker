@@ -96,13 +96,17 @@ jobs:
             echo "version=$NEW_VERSION" >> "$GITHUB_OUTPUT"
           fi
 
+      # Only main writes Versions.props back — preview builds on release/2.0
+      # are ephemeral (run_number changes every run) and would spam commits
+      # plus create recurring forward-merge conflicts on Versions.props.
+      # The nupkg version is injected via /p:PackageVersion=... anyway.
       - name: Commit and push updated version
-        if: github.event_name == 'push' && startsWith(github.ref, 'refs/heads/')
+        if: github.event_name == 'push' && github.ref == 'refs/heads/main'
         run: |
           git config --global user.name "github-actions"
           git config --global user.email "github-actions@github.com"
           git add eng/Versions.props
-          git diff --cached --quiet && echo "No changes to commit" || (git commit -m "chore: update version to ${{ env.version }}" && git push origin "HEAD:${{ github.ref_name }}")
+          git diff --cached --quiet && echo "No changes to commit" || (git commit -m "chore: update version to ${{ env.version }}" && git push origin HEAD:main)
 
   publish:
     needs: update-version
