@@ -31,6 +31,8 @@ v2.0 是 Skywalker 的差异化战役，定位 **小、快、易用**：
   - 严格遵守 `docs/modules/transport.md` 中的 4 条 transport 铁律（读循环只路由 Acks、单次 send 失败 ≠ 断连、CT 仅作用于 pre-wire、唯一断开判定 = 读循环异常）。
   - 内置带 jitter 的指数退避重连。
   - DI 扩展：`services.AddGrpcTransport(name, configure)`。
+- **`Skywalker.Transport.Grpc`** 新增 server 端实现：`GrpcServerTransport` + `BidiServiceImpl`，承载多 peer 的双向流。Peer 身份由 `x-skywalker-peer-id` metadata 头标识；`SendAsync(target, frames)` 路由到对应连接，`ReceiveAsync` 产出带 `From` 的 `TransportMessage`。同样严守 4 条 transport 铁律。详见 [#203](https://github.com/dengxuan/Skywalker/issues/203)。
+  - DI 扩展：`services.AddGrpcServerTransport(name, configure?)`，配合 `app.MapGrpcService<BidiServiceImpl>()` 即可挂载。
 
 ### Removed
 
