@@ -1,5 +1,11 @@
 name: Publish NuGet Packages
 
+# Version is derived from git tags via MinVer at build time (see Directory.Build.props).
+#   - push `vX.Y.Z[-suffix]` tag        → publishes that exact version
+#   - push commits to main (above v1.*) → publishes 1.0.N-alpha.0.N
+#   - push commits to release/2.0       → publishes 2.0.0-preview.1.N
+# No manual version management in this workflow.
+
 on:
   push:
     branches:
@@ -9,114 +15,18 @@ on:
       - "v*.*.*"
 
 permissions:
-  contents: write
+  contents: read
   packages: write
 
 jobs:
-  update-version:
-    runs-on: ubuntu-latest
-    outputs:
-      version: ${{ steps.set-version.outputs.version }}
-    steps:
-      - name: Checkout code
-        uses: actions/checkout@v5
-        with:
-          fetch-depth: 0  # 确保可以获取完整的 Git 历史和 Tag
-
-      - name: Setup .NET
-        uses: actions/setup-dotnet@v5
-        with:
-          dotnet-version: '8.0.x'
-
-      - name: Determine Version
-        id: set-version
-        run: |
-          VERSION_FILE="eng/Versions.props"
-
-          if [[ $GITHUB_REF == refs/tags/* ]]; then
-            # 如果是推送 Tag，直接使用 Tag 版本
-            VERSION=${GITHUB_REF#refs/tags/v}
-            MAJOR=$(echo "$VERSION" | cut -d. -f1)
-            MINOR=$(echo "$VERSION" | cut -d. -f2)
-            PATCH=$(echo "$VERSION" | cut -d. -f3 | cut -d- -f1)
-
-            # 更新 Versions.props 确保文件中的版本号与 Tag 一致
-            sed -i "s|<MajorVersion>.*</MajorVersion>|<MajorVersion>$MAJOR</MajorVersion>|" $VERSION_FILE
-            sed -i "s|<MinorVersion>.*</MinorVersion>|<MinorVersion>$MINOR</MinorVersion>|" $VERSION_FILE
-            sed -i "s|<PatchVersion>.*</PatchVersion>|<PatchVersion>$PATCH</PatchVersion>|" $VERSION_FILE
-
-            echo "Triggered by tag: $VERSION"
-            echo "version=$VERSION" >> "$GITHUB_ENV"
-            echo "version=$VERSION" >> "$GITHUB_OUTPUT"
-
-          elif [[ $GITHUB_REF == refs/heads/release/2.0 ]]; then
-            # release/2.0 分支 → 发布 v2.0 preview 包
-            NEW_VERSION="2.0.0-preview.${{ github.run_number }}"
-
-            sed -i "s|<MajorVersion>.*</MajorVersion>|<MajorVersion>2</MajorVersion>|" $VERSION_FILE
-            sed -i "s|<MinorVersion>.*</MinorVersion>|<MinorVersion>0</MinorVersion>|" $VERSION_FILE
-            sed -i "s|<PatchVersion>.*</PatchVersion>|<PatchVersion>0</PatchVersion>|" $VERSION_FILE
-            sed -i "s|<PreReleaseVersionLabel>.*</PreReleaseVersionLabel>|<PreReleaseVersionLabel>preview</PreReleaseVersionLabel>|" $VERSION_FILE
-            sed -i "s|<PreReleaseVersionIteration>.*</PreReleaseVersionIteration>|<PreReleaseVersionIteration>${{ github.run_number }}</PreReleaseVersionIteration>|" $VERSION_FILE
-
-            echo "v2.0 preview: $NEW_VERSION"
-            echo "version=$NEW_VERSION" >> "$GITHUB_ENV"
-            echo "version=$NEW_VERSION" >> "$GITHUB_OUTPUT"
-
-          else
-            # 如果是推送 main 分支，自动生成预发布版本
-            LATEST_TAG=$(git describe --tags --match "v1.*" --abbrev=0 2>/dev/null || echo "")
-
-            if [[ -n "$LATEST_TAG" ]]; then
-              # 存在 Tag，解析 Major.Minor.Patch
-              MAJOR=$(echo "$LATEST_TAG" | sed -E 's/v([0-9]+)\.([0-9]+)\.([0-9]+)/\1/')
-              MINOR=$(echo "$LATEST_TAG" | sed -E 's/v([0-9]+)\.([0-9]+)\.([0-9]+)/\2/')
-              PATCH=$(echo "$LATEST_TAG" | sed -E 's/v([0-9]+)\.([0-9]+)\.([0-9]+)/\3/')
-
-              # 递增 PATCH 版本
-              NEW_PATCH=$((PATCH + 1))
-              NEW_VERSION="$MAJOR.$MINOR.$NEW_PATCH-beta.${{ github.run_number }}"
-            else
-              # 如果没有 Tag，使用默认版本
-              MAJOR=1
-              MINOR=0
-              NEW_PATCH=0
-              NEW_VERSION="1.0.0-beta.${{ github.run_number }}"
-            fi
-
-            # 更新 Versions.props
-            sed -i "s|<MajorVersion>.*</MajorVersion>|<MajorVersion>$MAJOR</MajorVersion>|" $VERSION_FILE
-            sed -i "s|<MinorVersion>.*</MinorVersion>|<MinorVersion>$MINOR</MinorVersion>|" $VERSION_FILE
-            sed -i "s|<PatchVersion>.*</PatchVersion>|<PatchVersion>$NEW_PATCH</PatchVersion>|" $VERSION_FILE
-            sed -i "s|<PreReleaseVersionLabel>.*</PreReleaseVersionLabel>|<PreReleaseVersionLabel>beta</PreReleaseVersionLabel>|" $VERSION_FILE
-            sed -i "s|<PreReleaseVersionIteration>.*</PreReleaseVersionIteration>|<PreReleaseVersionIteration>1</PreReleaseVersionIteration>|" $VERSION_FILE
-
-            echo "New version: $NEW_VERSION"
-            echo "version=$NEW_VERSION" >> "$GITHUB_ENV"
-            echo "version=$NEW_VERSION" >> "$GITHUB_OUTPUT"
-          fi
-
-      # Only main writes Versions.props back — preview builds on release/2.0
-      # are ephemeral (run_number changes every run) and would spam commits
-      # plus create recurring forward-merge conflicts on Versions.props.
-      # The nupkg version is injected via /p:PackageVersion=... anyway.
-      - name: Commit and push updated version
-        if: github.event_name == 'push' && github.ref == 'refs/heads/main'
-        run: |
-          git config --global user.name "github-actions"
-          git config --global user.email "github-actions@github.com"
-          git add eng/Versions.props
-          git diff --cached --quiet && echo "No changes to commit" || (git commit -m "chore: update version to ${{ env.version }}" && git push origin HEAD:main)
-
   publish:
-    needs: update-version
     runs-on: ubuntu-latest
     steps:
       - name: Checkout code
         uses: actions/checkout@v5
         with:
           ref: ${{ github.ref }}
-          fetch-depth: 0
+          fetch-depth: 0  # MinVer needs full history + tags
 
       - name: Setup .NET
         uses: actions/setup-dotnet@v5
@@ -127,7 +37,7 @@ jobs:
         run: dotnet restore Skywalker.sln
 
       - name: Build and pack
-        run: dotnet pack Skywalker.sln --configuration Release --output ./nupkgs /p:PackageVersion=${{ needs.update-version.outputs.version }}
+        run: dotnet pack Skywalker.sln --configuration Release --output ./nupkgs
 
       - name: Publish to GitHub Packages
         run: dotnet nuget push "./nupkgs/*.nupkg" --api-key ${{ secrets.GITHUB_TOKEN }} --source "https://nuget.pkg.github.com/${{ github.repository_owner }}/index.json" --symbol-source "https://nuget.pkg.github.com/${{ github.repository_owner }}/index.json" --skip-duplicate
