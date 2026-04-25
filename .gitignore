@@ -10,6 +10,10 @@
 *.userosscache
 *.sln.docstates
 
+# Vim swap files (occasionally created when reviewing snapshot files in editors)
+*.swp
+*.swo
+
 # User-specific files (MonoDevelop/Xamarin Studio)
 *.userprefs
 
