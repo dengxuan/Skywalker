@@ -65,7 +65,7 @@ public Task AppService_WithGenericRepository_ShouldGenerate()
 [ ] using alias
 ```
 
-完整清单见 `tests/SourceGenerators/EDGE_CASES.md`。
+完整清单见 [`tests/SourceGenerators/EDGE_CASES.md`](../../tests/SourceGenerators/EDGE_CASES.md)。每个 SG PR 必须列出对照结果（已覆盖 / 明确不支持 + 诊断码 / 不适用）。
 
 ### Layer 3: Diagnostic 优先于沉默
 

@@ -266,6 +266,8 @@ internal static class __SkywalkerModuleInitializer__
 
 ## 5. 诊断 (Diagnostics) 规范
 
+> 全部诊断码索引见 [`docs/diagnostics/README.md`](../diagnostics/README.md)；新增诊断必须在索引页登记并配套 [`SKYxxxx.md`](../diagnostics/_TEMPLATE.md) 文档页。
+
 ### 5.1 强制要求
 
 所有"不能正确生成代码"的情况必须报诊断，**禁止静默跳过**。
