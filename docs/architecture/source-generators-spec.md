@@ -376,3 +376,26 @@ Skywalker.Xxx/
 - [ ] 至少 1 个 sample 项目使用该 generator
 - [ ] AOT publish 零警告
 - [ ] `PublicAPI.Unshipped.txt` 更新
+
+## 10. 快速开始
+
+### 10.1 共享 helper
+
+新 Generator 项目无需自己重写 `EquatableArray<T>` / `SymbolExtensions` / 通用诊断。
+[`Skywalker.SourceGenerators.Common`](../../src/Skywalker.SourceGenerators.Common/README.md) 是 source-only 库，
+通过 `<Compile Include>` 把源文件直接编进 Generator 程序集（**不**走 PackageReference / ProjectReference，
+避免 analyzer 加载时的依赖解析问题）：
+
+```xml
+<ItemGroup>
+  <Compile Include="$(MSBuildThisFileDirectory)..\Skywalker.SourceGenerators.Common\**\*.cs"
+           Exclude="$(MSBuildThisFileDirectory)..\Skywalker.SourceGenerators.Common\bin\**;
+                    $(MSBuildThisFileDirectory)..\Skywalker.SourceGenerators.Common\obj\**" />
+</ItemGroup>
+```
+
+### 10.2 Generator 项目脚手架
+
+> 🚧 `dotnet new skywalker-generator` 模板待 Sprint 1 第一个真实 SG 落地后随同发布
+> （[#191](https://github.com/dengxuan/Skywalker/issues/191) Phase B）。
+> 当前请参照 §2.1 csproj 模板手工创建。
