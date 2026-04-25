@@ -1,0 +1,57 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <!--
+    Shared test infrastructure for all Skywalker source generators.
+
+    - Provides GeneratorTestHelper.Run<TGenerator>(...) and Verify configuration so
+      individual SG test projects (Sprint 1+) just reference this and write tests.
+    - Hosts a small "HelloGenerator" inside the project's `Sample/` folder to
+      validate the infrastructure end-to-end (snapshot path + diagnostic path).
+  -->
+
+  <PropertyGroup>
+    <TargetFramework>net8.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+    <IsPackable>false</IsPackable>
+    <IsTestProject>true</IsTestProject>
+    <!-- Verify writes *.received.* siblings on diff. CI must fail on any received file. -->
+    <VerifyAutoVerify>false</VerifyAutoVerify>
+    <!--
+      RS1036 / RS2008: the project hosts a tiny in-test SampleGenerator (Sample/HelloGenerator.cs)
+      to validate the test infrastructure itself. It is NOT shipped, so the analyzer-project
+      conventions (extended analyzer rules, release tracking) don't apply here. Real Skywalker
+      generator projects (Sprint 1+) live under src/ and DO follow those conventions.
+    -->
+    <NoWarn>$(NoWarn);RS1036;RS2008</NoWarn>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <!-- Roslyn (must match the host repo's Roslyn version) -->
+    <PackageReference Include="Microsoft.CodeAnalysis.CSharp" Version="$(MicrosoftCodeAnalysisCSharpVersion)" />
+
+    <!-- DI abstractions used as a sample external reference + future Skywalker SG attribute target -->
+    <PackageReference Include="Microsoft.Extensions.DependencyInjection.Abstractions" Version="$(MicrosoftExtensionsVersion)" />
+
+    <!-- Snapshot testing. Verify.Xunit 22.11.0 + Verify.SourceGenerators 2.2.0 is a
+         known-good pair for Roslyn 4.8 + xunit 2.6.x. Newer Verify.Xunit (23.7.2) drags in
+         xunit.extensibility 2.7+ AND has an internal Guard refactor that broke binary
+         compatibility with Verify.SourceGenerators 2.4.0 — gives a TypeLoadException at
+         runtime. Stay on the 22.x line until Verify ships a coordinated bundle. -->
+    <PackageReference Include="Verify.Xunit" Version="22.11.0" />
+    <PackageReference Include="Verify.SourceGenerators" Version="2.2.0" />
+
+    <!-- xUnit -->
+    <PackageReference Include="Microsoft.NET.Test.Sdk" Version="17.8.0" />
+    <PackageReference Include="xunit" Version="2.6.4" />
+    <PackageReference Include="xunit.runner.visualstudio" Version="2.5.6">
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+      <PrivateAssets>all</PrivateAssets>
+    </PackageReference>
+    <PackageReference Include="coverlet.collector" Version="6.0.0">
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+      <PrivateAssets>all</PrivateAssets>
+    </PackageReference>
+  </ItemGroup>
+
+</Project>
