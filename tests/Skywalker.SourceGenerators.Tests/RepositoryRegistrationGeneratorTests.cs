@@ -44,6 +44,7 @@ public sealed class RepositoryRegistrationGeneratorTests
         var generatedSource = generatedTree.GetText().ToString();
 
         Assert.EndsWith("Demo_SalesDbContext.SkywalkerRepositoryRegistrations.g.cs", generatedTree.FilePath);
+        Assert.Contains("[assembly: global::Skywalker.Ddd.EntityFrameworkCore.SkywalkerGeneratedRepositoryRegistrationAttribute", generatedSource);
         Assert.Contains("AddSkywalkerGeneratedRepositoriesForDemo_SalesDbContext", generatedSource);
         Assert.Contains("IRepository<global::Demo.Order, int>", generatedSource);
         Assert.Contains("Repository<global::Demo.SalesDbContext, global::Demo.Order, int>", generatedSource);
