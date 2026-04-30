@@ -1,0 +1,28 @@
+<Project>
+
+  <!--
+    Inherit the repo-wide defaults (TargetFramework=net8.0, Nullable=enable, MinVer, SourceLink, ...)
+    then layer sample-specific overrides on top.
+  -->
+  <Import Project="$([MSBuild]::GetPathOfFileAbove('Directory.Build.props', '$(MSBuildThisFileDirectory)..\'))" />
+
+  <PropertyGroup>
+    <!-- Samples are console apps, not NuGet packages. -->
+    <OutputType>Exe</OutputType>
+    <IsPackable>false</IsPackable>
+
+    <!--
+      Samples often pull in v1.x APIs that we know will fire warnings during the v2.0
+      migration window (Castle.Core, AutoMapper-era Mapper calls, etc). They must still
+      build green on CI; treat warnings as warnings, not errors. The strict TreatWarnings-
+      AsErrors on src/ and tests/ is unaffected.
+    -->
+    <TreatWarningsAsErrors>false</TreatWarningsAsErrors>
+
+    <!-- Repo-wide defaults pack README.md into every produced package; samples don't
+         produce packages so the Pack item is harmless, but we drop the implicit ref
+         to keep the csproj graph clean for AOT scenarios. -->
+    <GenerateDocumentationFile>false</GenerateDocumentationFile>
+  </PropertyGroup>
+
+</Project>
