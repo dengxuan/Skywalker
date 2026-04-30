@@ -8,6 +8,8 @@
         "Microsoft.VisualStudio.Component.NuGet",
         "Microsoft.VisualStudio.Component.Git",
         "Microsoft.Component.MSBuild",
+        "Microsoft.VisualStudio.Workload.NativeDesktop",
+        "Microsoft.VisualStudio.Component.VC.Tools.x86.x64",
         "Microsoft.NetCore.Component.SDK",
         "Microsoft.NetCore.Component.Runtime.6.0"
     ]
