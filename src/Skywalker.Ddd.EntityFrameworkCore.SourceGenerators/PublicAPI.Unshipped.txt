@@ -1,0 +1,4 @@
+#nullable enable
+Skywalker.Ddd.EntityFrameworkCore.SourceGenerators.RepositoryRegistrationGenerator
+Skywalker.Ddd.EntityFrameworkCore.SourceGenerators.RepositoryRegistrationGenerator.Initialize(Microsoft.CodeAnalysis.IncrementalGeneratorInitializationContext context) -> void
+Skywalker.Ddd.EntityFrameworkCore.SourceGenerators.RepositoryRegistrationGenerator.RepositoryRegistrationGenerator() -> void
