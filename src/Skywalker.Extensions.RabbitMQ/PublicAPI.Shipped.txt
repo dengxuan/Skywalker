@@ -1,0 +1,136 @@
+#nullable enable
+const Skywalker.Extensions.RabbitMQ.RabbitMqConnections.DefaultConnectionName = "Default" -> string!
+const Skywalker.Extensions.RabbitMQ.RabbitMqConsts.DeliveryModes.NonPersistent = 1 -> int
+const Skywalker.Extensions.RabbitMQ.RabbitMqConsts.DeliveryModes.Persistent = 2 -> int
+const Skywalker.Extensions.RabbitMQ.RabbitMqConsts.ExchangeTypes.Direct = "direct" -> string!
+const Skywalker.Extensions.RabbitMQ.RabbitMqConsts.ExchangeTypes.Fanout = "fanout" -> string!
+const Skywalker.Extensions.RabbitMQ.RabbitMqConsts.ExchangeTypes.Headers = "headers" -> string!
+const Skywalker.Extensions.RabbitMQ.RabbitMqConsts.ExchangeTypes.Topic = "topic" -> string!
+const Skywalker.Extensions.RabbitMQ.SkywalkerRabbitMqOptions.SectionName = "Skywalker:RabbitMQ" -> string!
+Microsoft.Extensions.DependencyInjection.RabbitMQICollectionExtensions
+Skywalker.Extensions.RabbitMQ.Abstractions.IChannelAccessor
+Skywalker.Extensions.RabbitMQ.Abstractions.IChannelAccessor.Channel.get -> RabbitMQ.Client.IModel!
+Skywalker.Extensions.RabbitMQ.Abstractions.IChannelAccessor.Name.get -> string!
+Skywalker.Extensions.RabbitMQ.Abstractions.IChannelPool
+Skywalker.Extensions.RabbitMQ.Abstractions.IChannelPool.Acquire(string? channelName = null, string? connectionName = null) -> Skywalker.Extensions.RabbitMQ.Abstractions.IChannelAccessor!
+Skywalker.Extensions.RabbitMQ.Abstractions.IConnectionPool
+Skywalker.Extensions.RabbitMQ.Abstractions.IConnectionPool.Get(string? connectionName = null) -> RabbitMQ.Client.IConnection!
+Skywalker.Extensions.RabbitMQ.Abstractions.IRabbitMqMessageConsumer
+Skywalker.Extensions.RabbitMQ.Abstractions.IRabbitMqMessageConsumer.BindAsync(string! routingKey) -> System.Threading.Tasks.Task!
+Skywalker.Extensions.RabbitMQ.Abstractions.IRabbitMqMessageConsumer.OnMessageReceived(System.Func<RabbitMQ.Client.IModel!, RabbitMQ.Client.Events.BasicDeliverEventArgs!, System.Threading.Tasks.Task!>! callback) -> void
+Skywalker.Extensions.RabbitMQ.Abstractions.IRabbitMqMessageConsumer.UnbindAsync(string! routingKey) -> System.Threading.Tasks.Task!
+Skywalker.Extensions.RabbitMQ.Abstractions.IRabbitMqMessageConsumerFactory
+Skywalker.Extensions.RabbitMQ.Abstractions.IRabbitMqMessageConsumerFactory.Create(Skywalker.Extensions.RabbitMQ.ExchangeDeclareConfiguration! exchange, Skywalker.Extensions.RabbitMQ.QueueDeclareConfiguration! queue, string? connectionName = null) -> Skywalker.Extensions.RabbitMQ.Abstractions.IRabbitMqMessageConsumer!
+Skywalker.Extensions.RabbitMQ.Abstractions.IRabbitMqSerializer
+Skywalker.Extensions.RabbitMQ.Abstractions.IRabbitMqSerializer.Deserialize(byte[]! value, System.Type! type) -> object?
+Skywalker.Extensions.RabbitMQ.Abstractions.IRabbitMqSerializer.Deserialize<T>(byte[]! value) -> T?
+Skywalker.Extensions.RabbitMQ.Abstractions.IRabbitMqSerializer.Serialize(object! obj) -> byte[]!
+Skywalker.Extensions.RabbitMQ.ChannelPool
+Skywalker.Extensions.RabbitMQ.ChannelPool.ChannelAccessor
+Skywalker.Extensions.RabbitMQ.ChannelPool.ChannelAccessor.Channel.get -> RabbitMQ.Client.IModel!
+Skywalker.Extensions.RabbitMQ.ChannelPool.ChannelAccessor.ChannelAccessor(RabbitMQ.Client.IModel! channel, string! name, System.Action! disposeAction) -> void
+Skywalker.Extensions.RabbitMQ.ChannelPool.ChannelAccessor.Dispose() -> void
+Skywalker.Extensions.RabbitMQ.ChannelPool.ChannelAccessor.Name.get -> string!
+Skywalker.Extensions.RabbitMQ.ChannelPool.ChannelPool(Skywalker.Extensions.RabbitMQ.Abstractions.IConnectionPool! connectionPool) -> void
+Skywalker.Extensions.RabbitMQ.ChannelPool.ChannelPoolItem
+Skywalker.Extensions.RabbitMQ.ChannelPool.ChannelPoolItem.Acquire() -> void
+Skywalker.Extensions.RabbitMQ.ChannelPool.ChannelPoolItem.Channel.get -> RabbitMQ.Client.IModel!
+Skywalker.Extensions.RabbitMQ.ChannelPool.ChannelPoolItem.ChannelPoolItem(RabbitMQ.Client.IModel! channel) -> void
+Skywalker.Extensions.RabbitMQ.ChannelPool.ChannelPoolItem.Dispose() -> void
+Skywalker.Extensions.RabbitMQ.ChannelPool.ChannelPoolItem.IsInUse.get -> bool
+Skywalker.Extensions.RabbitMQ.ChannelPool.ChannelPoolItem.Release() -> void
+Skywalker.Extensions.RabbitMQ.ChannelPool.ChannelPoolItem.WaitIfInUse(System.TimeSpan timeout) -> void
+Skywalker.Extensions.RabbitMQ.ChannelPool.Channels.get -> System.Collections.Concurrent.ConcurrentDictionary<string!, Skywalker.Extensions.RabbitMQ.ChannelPool.ChannelPoolItem!>!
+Skywalker.Extensions.RabbitMQ.ChannelPool.CheckDisposed() -> void
+Skywalker.Extensions.RabbitMQ.ChannelPool.ConnectionPool.get -> Skywalker.Extensions.RabbitMQ.Abstractions.IConnectionPool!
+Skywalker.Extensions.RabbitMQ.ChannelPool.Dispose() -> void
+Skywalker.Extensions.RabbitMQ.ChannelPool.IsDisposed.get -> bool
+Skywalker.Extensions.RabbitMQ.ChannelPool.Logger.get -> Microsoft.Extensions.Logging.ILogger<Skywalker.Extensions.RabbitMQ.ChannelPool!>!
+Skywalker.Extensions.RabbitMQ.ChannelPool.Logger.set -> void
+Skywalker.Extensions.RabbitMQ.ChannelPool.TotalDisposeWaitDuration.get -> System.TimeSpan
+Skywalker.Extensions.RabbitMQ.ChannelPool.TotalDisposeWaitDuration.set -> void
+Skywalker.Extensions.RabbitMQ.ConnectionPool
+Skywalker.Extensions.RabbitMQ.ConnectionPool.ConnectionPool(Microsoft.Extensions.Options.IOptions<Skywalker.Extensions.RabbitMQ.SkywalkerRabbitMqOptions!>! options) -> void
+Skywalker.Extensions.RabbitMQ.ConnectionPool.Connections.get -> System.Collections.Concurrent.ConcurrentDictionary<string!, System.Lazy<RabbitMQ.Client.IConnection!>!>!
+Skywalker.Extensions.RabbitMQ.ConnectionPool.Dispose() -> void
+Skywalker.Extensions.RabbitMQ.ConnectionPool.Options.get -> Skywalker.Extensions.RabbitMQ.SkywalkerRabbitMqOptions!
+Skywalker.Extensions.RabbitMQ.ExchangeDeclareConfiguration
+Skywalker.Extensions.RabbitMQ.ExchangeDeclareConfiguration.Arguments.get -> System.Collections.Generic.IDictionary<string!, object!>!
+Skywalker.Extensions.RabbitMQ.ExchangeDeclareConfiguration.AutoDelete.get -> bool
+Skywalker.Extensions.RabbitMQ.ExchangeDeclareConfiguration.AutoDelete.set -> void
+Skywalker.Extensions.RabbitMQ.ExchangeDeclareConfiguration.Durable.get -> bool
+Skywalker.Extensions.RabbitMQ.ExchangeDeclareConfiguration.Durable.set -> void
+Skywalker.Extensions.RabbitMQ.ExchangeDeclareConfiguration.ExchangeDeclareConfiguration(string! exchangeName, string! type, bool durable = false, bool autoDelete = false, System.Collections.Generic.IDictionary<string!, object!>? arguments = null) -> void
+Skywalker.Extensions.RabbitMQ.ExchangeDeclareConfiguration.ExchangeName.get -> string!
+Skywalker.Extensions.RabbitMQ.ExchangeDeclareConfiguration.Type.get -> string!
+Skywalker.Extensions.RabbitMQ.QueueDeclareConfiguration
+Skywalker.Extensions.RabbitMQ.QueueDeclareConfiguration.Arguments.get -> System.Collections.Generic.IDictionary<string!, object!>!
+Skywalker.Extensions.RabbitMQ.QueueDeclareConfiguration.AutoDelete.get -> bool
+Skywalker.Extensions.RabbitMQ.QueueDeclareConfiguration.AutoDelete.set -> void
+Skywalker.Extensions.RabbitMQ.QueueDeclareConfiguration.Durable.get -> bool
+Skywalker.Extensions.RabbitMQ.QueueDeclareConfiguration.Durable.set -> void
+Skywalker.Extensions.RabbitMQ.QueueDeclareConfiguration.Exclusive.get -> bool
+Skywalker.Extensions.RabbitMQ.QueueDeclareConfiguration.Exclusive.set -> void
+Skywalker.Extensions.RabbitMQ.QueueDeclareConfiguration.PrefetchCount.get -> ushort?
+Skywalker.Extensions.RabbitMQ.QueueDeclareConfiguration.PrefetchCount.set -> void
+Skywalker.Extensions.RabbitMQ.QueueDeclareConfiguration.QueueDeclareConfiguration(string! queueName, bool durable = true, bool exclusive = false, bool autoDelete = false, ushort? prefetchCount = null, System.Collections.Generic.IDictionary<string!, object!>? arguments = null) -> void
+Skywalker.Extensions.RabbitMQ.QueueDeclareConfiguration.QueueName.get -> string!
+Skywalker.Extensions.RabbitMQ.RabbitMqConnections
+Skywalker.Extensions.RabbitMQ.RabbitMqConnections.Default.get -> RabbitMQ.Client.ConnectionFactory!
+Skywalker.Extensions.RabbitMQ.RabbitMqConnections.Default.set -> void
+Skywalker.Extensions.RabbitMQ.RabbitMqConnections.GetOrDefault(string! connectionName) -> RabbitMQ.Client.ConnectionFactory!
+Skywalker.Extensions.RabbitMQ.RabbitMqConnections.RabbitMqConnections() -> void
+Skywalker.Extensions.RabbitMQ.RabbitMqConsts
+Skywalker.Extensions.RabbitMQ.RabbitMqConsts.DeliveryModes
+Skywalker.Extensions.RabbitMQ.RabbitMqConsts.ExchangeTypes
+Skywalker.Extensions.RabbitMQ.RabbitMqMessageConsumer
+Skywalker.Extensions.RabbitMQ.RabbitMqMessageConsumer.Callbacks.get -> System.Collections.Concurrent.ConcurrentBag<System.Func<RabbitMQ.Client.IModel!, RabbitMQ.Client.Events.BasicDeliverEventArgs!, System.Threading.Tasks.Task!>!>!
+Skywalker.Extensions.RabbitMQ.RabbitMqMessageConsumer.Channel.get -> RabbitMQ.Client.IModel?
+Skywalker.Extensions.RabbitMQ.RabbitMqMessageConsumer.ChannelSendSyncLock.get -> object!
+Skywalker.Extensions.RabbitMQ.RabbitMqMessageConsumer.ConnectionName.get -> string?
+Skywalker.Extensions.RabbitMQ.RabbitMqMessageConsumer.ConnectionPool.get -> Skywalker.Extensions.RabbitMQ.Abstractions.IConnectionPool!
+Skywalker.Extensions.RabbitMQ.RabbitMqMessageConsumer.Exchange.get -> Skywalker.Extensions.RabbitMQ.ExchangeDeclareConfiguration!
+Skywalker.Extensions.RabbitMQ.RabbitMqMessageConsumer.Initialize(Skywalker.Extensions.RabbitMQ.ExchangeDeclareConfiguration! exchange, Skywalker.Extensions.RabbitMQ.QueueDeclareConfiguration! queue, string? connectionName = null) -> void
+Skywalker.Extensions.RabbitMQ.RabbitMqMessageConsumer.Logger.get -> Microsoft.Extensions.Logging.ILogger<Skywalker.Extensions.RabbitMQ.RabbitMqMessageConsumer!>!
+Skywalker.Extensions.RabbitMQ.RabbitMqMessageConsumer.Logger.set -> void
+Skywalker.Extensions.RabbitMQ.RabbitMqMessageConsumer.Queue.get -> Skywalker.Extensions.RabbitMQ.QueueDeclareConfiguration!
+Skywalker.Extensions.RabbitMQ.RabbitMqMessageConsumer.QueueBindCommand
+Skywalker.Extensions.RabbitMQ.RabbitMqMessageConsumer.QueueBindCommand.QueueBindCommand(Skywalker.Extensions.RabbitMQ.RabbitMqMessageConsumer.QueueBindType type, string! routingKey) -> void
+Skywalker.Extensions.RabbitMQ.RabbitMqMessageConsumer.QueueBindCommand.RoutingKey.get -> string!
+Skywalker.Extensions.RabbitMQ.RabbitMqMessageConsumer.QueueBindCommand.Type.get -> Skywalker.Extensions.RabbitMQ.RabbitMqMessageConsumer.QueueBindType
+Skywalker.Extensions.RabbitMQ.RabbitMqMessageConsumer.QueueBindCommands.get -> System.Collections.Concurrent.ConcurrentQueue<Skywalker.Extensions.RabbitMQ.RabbitMqMessageConsumer.QueueBindCommand!>!
+Skywalker.Extensions.RabbitMQ.RabbitMqMessageConsumer.QueueBindType
+Skywalker.Extensions.RabbitMQ.RabbitMqMessageConsumer.QueueBindType.Bind = 0 -> Skywalker.Extensions.RabbitMQ.RabbitMqMessageConsumer.QueueBindType
+Skywalker.Extensions.RabbitMQ.RabbitMqMessageConsumer.QueueBindType.Unbind = 1 -> Skywalker.Extensions.RabbitMQ.RabbitMqMessageConsumer.QueueBindType
+Skywalker.Extensions.RabbitMQ.RabbitMqMessageConsumer.RabbitMqMessageConsumer(Skywalker.Extensions.RabbitMQ.Abstractions.IConnectionPool! connectionPool, Skywalker.Extensions.Threading.SkywalkerAsyncTimer! timer) -> void
+Skywalker.Extensions.RabbitMQ.RabbitMqMessageConsumer.Timer.get -> Skywalker.Extensions.Threading.SkywalkerAsyncTimer!
+Skywalker.Extensions.RabbitMQ.RabbitMqMessageConsumerFactory
+Skywalker.Extensions.RabbitMQ.RabbitMqMessageConsumerFactory.Create(Skywalker.Extensions.RabbitMQ.ExchangeDeclareConfiguration! exchange, Skywalker.Extensions.RabbitMQ.QueueDeclareConfiguration! queue, string? connectionName = null) -> Skywalker.Extensions.RabbitMQ.Abstractions.IRabbitMqMessageConsumer!
+Skywalker.Extensions.RabbitMQ.RabbitMqMessageConsumerFactory.Dispose() -> void
+Skywalker.Extensions.RabbitMQ.RabbitMqMessageConsumerFactory.RabbitMqMessageConsumerFactory(Microsoft.Extensions.DependencyInjection.IServiceScopeFactory! serviceScopeFactory) -> void
+Skywalker.Extensions.RabbitMQ.RabbitMqMessageConsumerFactory.ServiceScope.get -> Microsoft.Extensions.DependencyInjection.IServiceScope!
+Skywalker.Extensions.RabbitMQ.SkywalkerRabbitMqOptions
+Skywalker.Extensions.RabbitMQ.SkywalkerRabbitMqOptions.Connections.get -> Skywalker.Extensions.RabbitMQ.RabbitMqConnections!
+Skywalker.Extensions.RabbitMQ.SkywalkerRabbitMqOptions.SkywalkerRabbitMqOptions() -> void
+Skywalker.Extensions.RabbitMQ.Utf8JsonRabbitMqSerializer
+Skywalker.Extensions.RabbitMQ.Utf8JsonRabbitMqSerializer.Deserialize(byte[]! value, System.Type! type) -> object?
+Skywalker.Extensions.RabbitMQ.Utf8JsonRabbitMqSerializer.Deserialize<T>(byte[]! value) -> T?
+Skywalker.Extensions.RabbitMQ.Utf8JsonRabbitMqSerializer.Serialize(object! obj) -> byte[]!
+Skywalker.Extensions.RabbitMQ.Utf8JsonRabbitMqSerializer.Utf8JsonRabbitMqSerializer(Microsoft.Extensions.Options.IOptions<System.Text.Json.JsonSerializerOptions!>? options = null) -> void
+static Microsoft.Extensions.DependencyInjection.RabbitMQICollectionExtensions.AddRabbitMQ(this Microsoft.Extensions.DependencyInjection.IServiceCollection! services) -> Microsoft.Extensions.DependencyInjection.IServiceCollection!
+static Microsoft.Extensions.DependencyInjection.RabbitMQICollectionExtensions.AddRabbitMQ(this Microsoft.Extensions.DependencyInjection.IServiceCollection! services, System.Action<Skywalker.Extensions.RabbitMQ.SkywalkerRabbitMqOptions!>! configure) -> Microsoft.Extensions.DependencyInjection.IServiceCollection!
+virtual Skywalker.Extensions.RabbitMQ.ChannelPool.Acquire(string? channelName = null, string? connectionName = null) -> Skywalker.Extensions.RabbitMQ.Abstractions.IChannelAccessor!
+virtual Skywalker.Extensions.RabbitMQ.ChannelPool.CreateChannel(string! channelName, string? connectionName) -> RabbitMQ.Client.IModel!
+virtual Skywalker.Extensions.RabbitMQ.ConnectionPool.Get(string? connectionName = null) -> RabbitMQ.Client.IConnection!
+virtual Skywalker.Extensions.RabbitMQ.QueueDeclareConfiguration.Declare(RabbitMQ.Client.IModel! channel) -> RabbitMQ.Client.QueueDeclareOk!
+virtual Skywalker.Extensions.RabbitMQ.RabbitMqMessageConsumer.BindAsync(string! routingKey) -> System.Threading.Tasks.Task!
+virtual Skywalker.Extensions.RabbitMQ.RabbitMqMessageConsumer.Dispose() -> void
+virtual Skywalker.Extensions.RabbitMQ.RabbitMqMessageConsumer.DisposeChannel() -> void
+virtual Skywalker.Extensions.RabbitMQ.RabbitMqMessageConsumer.DisposeChannelAsync() -> System.Threading.Tasks.Task!
+virtual Skywalker.Extensions.RabbitMQ.RabbitMqMessageConsumer.HandleIncomingMessageAsync(object! sender, RabbitMQ.Client.Events.BasicDeliverEventArgs! basicDeliverEventArgs) -> System.Threading.Tasks.Task!
+virtual Skywalker.Extensions.RabbitMQ.RabbitMqMessageConsumer.HandleIncomingMessageAsyncInternal(RabbitMQ.Client.Events.BasicDeliverEventArgs! basicDeliverEventArgs) -> System.Threading.Tasks.Task!
+virtual Skywalker.Extensions.RabbitMQ.RabbitMqMessageConsumer.OnMessageReceived(System.Func<RabbitMQ.Client.IModel!, RabbitMQ.Client.Events.BasicDeliverEventArgs!, System.Threading.Tasks.Task!>! callback) -> void
+virtual Skywalker.Extensions.RabbitMQ.RabbitMqMessageConsumer.Timer_Elapsed(Skywalker.Extensions.Threading.SkywalkerAsyncTimer! timer) -> System.Threading.Tasks.Task!
+virtual Skywalker.Extensions.RabbitMQ.RabbitMqMessageConsumer.TryCreateChannelAsync() -> System.Threading.Tasks.Task!
+virtual Skywalker.Extensions.RabbitMQ.RabbitMqMessageConsumer.TrySendQueueBindCommandsAsync() -> System.Threading.Tasks.Task!
+virtual Skywalker.Extensions.RabbitMQ.RabbitMqMessageConsumer.UnbindAsync(string! routingKey) -> System.Threading.Tasks.Task!

@@ -1,0 +1,63 @@
+#nullable enable
+abstract Skywalker.Settings.EntityFrameworkCore.EfCoreSettingValueProvider.GetProviderKey() -> string?
+abstract Skywalker.Settings.EntityFrameworkCore.EfCoreSettingValueProvider.Name.get -> string!
+const Skywalker.Settings.EntityFrameworkCore.GlobalSettingValueProvider.ProviderName = "G" -> string!
+const Skywalker.Settings.EntityFrameworkCore.UserSettingValueProvider.ProviderName = "U" -> string!
+Microsoft.Extensions.DependencyInjection.SettingsEntityFrameworkCoreServiceCollectionExtensions
+Microsoft.Extensions.EntityFrameworkCore.SettingDbContextModelBuilderExtensions
+override Skywalker.Settings.EntityFrameworkCore.Entities.Setting.GetKeys() -> object![]!
+override Skywalker.Settings.EntityFrameworkCore.Entities.Setting.ToString() -> string!
+override Skywalker.Settings.EntityFrameworkCore.GlobalSettingValueProvider.GetProviderKey() -> string?
+override Skywalker.Settings.EntityFrameworkCore.GlobalSettingValueProvider.Name.get -> string!
+override Skywalker.Settings.EntityFrameworkCore.SettingDbContext.OnModelCreating(Microsoft.EntityFrameworkCore.ModelBuilder! modelBuilder) -> void
+override Skywalker.Settings.EntityFrameworkCore.Specifications.SettingSpecification.ToExpression() -> System.Linq.Expressions.Expression<System.Func<Skywalker.Settings.EntityFrameworkCore.Entities.Setting!, bool>!>!
+override Skywalker.Settings.EntityFrameworkCore.Specifications.SettingsSpecification.ToExpression() -> System.Linq.Expressions.Expression<System.Func<Skywalker.Settings.EntityFrameworkCore.Entities.Setting!, bool>!>!
+override Skywalker.Settings.EntityFrameworkCore.UserSettingValueProvider.GetProviderKey() -> string?
+override Skywalker.Settings.EntityFrameworkCore.UserSettingValueProvider.Name.get -> string!
+Skywalker.Settings.EntityFrameworkCore.EfCoreSettingValueProvider
+Skywalker.Settings.EntityFrameworkCore.EfCoreSettingValueProvider.EfCoreSettingValueProvider(Skywalker.Ddd.Domain.Repositories.IRepository<Skywalker.Settings.EntityFrameworkCore.Entities.Setting!>! repository) -> void
+Skywalker.Settings.EntityFrameworkCore.EfCoreSettingValueProvider.Repository.get -> Skywalker.Ddd.Domain.Repositories.IRepository<Skywalker.Settings.EntityFrameworkCore.Entities.Setting!>!
+Skywalker.Settings.EntityFrameworkCore.Entities.Setting
+Skywalker.Settings.EntityFrameworkCore.Entities.Setting.Setting() -> void
+Skywalker.Settings.EntityFrameworkCore.Entities.Setting.Setting(string! name, string! value, string! providerName, string? providerKey = null) -> void
+Skywalker.Settings.EntityFrameworkCore.Entities.Setting.SetValue(string! value) -> void
+Skywalker.Settings.EntityFrameworkCore.GlobalSettingValueProvider
+Skywalker.Settings.EntityFrameworkCore.GlobalSettingValueProvider.GlobalSettingValueProvider(Skywalker.Ddd.Domain.Repositories.IRepository<Skywalker.Settings.EntityFrameworkCore.Entities.Setting!>! repository) -> void
+Skywalker.Settings.EntityFrameworkCore.ISettingDbContext
+Skywalker.Settings.EntityFrameworkCore.ISettingDbContext.Settings.get -> Microsoft.EntityFrameworkCore.DbSet<Skywalker.Settings.EntityFrameworkCore.Entities.Setting!>!
+Skywalker.Settings.EntityFrameworkCore.ISettingDbContext.Settings.set -> void
+Skywalker.Settings.EntityFrameworkCore.SettingConsts
+Skywalker.Settings.EntityFrameworkCore.SettingDbContext
+Skywalker.Settings.EntityFrameworkCore.SettingDbContext.SettingDbContext(Microsoft.EntityFrameworkCore.DbContextOptions<Skywalker.Settings.EntityFrameworkCore.SettingDbContext!>! options) -> void
+Skywalker.Settings.EntityFrameworkCore.SettingManager
+Skywalker.Settings.EntityFrameworkCore.SettingManager.SettingManager(Skywalker.Ddd.Domain.Repositories.IRepository<Skywalker.Settings.EntityFrameworkCore.Entities.Setting!>! repository, Skywalker.Settings.Abstractions.ISettingDefinitionManager! settingDefinitionManager, Skywalker.Settings.Abstractions.ISettingEncryptionService! settingEncryptionService) -> void
+Skywalker.Settings.EntityFrameworkCore.Specifications.SettingSpecification
+Skywalker.Settings.EntityFrameworkCore.Specifications.SettingSpecification.SettingSpecification(string! name, string! providerName, string? providerKey) -> void
+Skywalker.Settings.EntityFrameworkCore.Specifications.SettingsSpecification
+Skywalker.Settings.EntityFrameworkCore.Specifications.SettingsSpecification.SettingsSpecification(string![]! names, string! providerName, string? providerKey) -> void
+Skywalker.Settings.EntityFrameworkCore.UserSettingValueProvider
+Skywalker.Settings.EntityFrameworkCore.UserSettingValueProvider.UserSettingValueProvider(Skywalker.Ddd.Domain.Repositories.IRepository<Skywalker.Settings.EntityFrameworkCore.Entities.Setting!>! repository, Skywalker.Security.Users.ICurrentUser! currentUser) -> void
+static Microsoft.Extensions.DependencyInjection.SettingsEntityFrameworkCoreServiceCollectionExtensions.AddSettingsEntityFrameworkCore(this Microsoft.Extensions.DependencyInjection.IServiceCollection! services) -> Microsoft.Extensions.DependencyInjection.IServiceCollection!
+static Microsoft.Extensions.DependencyInjection.SettingsEntityFrameworkCoreServiceCollectionExtensions.UseDefaultProviders(this Skywalker.Settings.SkywalkerSettingOptions! options) -> Skywalker.Settings.SkywalkerSettingOptions!
+static Microsoft.Extensions.EntityFrameworkCore.SettingDbContextModelBuilderExtensions.ConfigureSetting(this Microsoft.EntityFrameworkCore.ModelBuilder! builder, string! dbTablePrefix = "", string? dbSchema = null) -> void
+static Skywalker.Settings.EntityFrameworkCore.SettingConsts.MaxNameLength.get -> int
+static Skywalker.Settings.EntityFrameworkCore.SettingConsts.MaxNameLength.set -> void
+static Skywalker.Settings.EntityFrameworkCore.SettingConsts.MaxProviderKeyLength.get -> int
+static Skywalker.Settings.EntityFrameworkCore.SettingConsts.MaxProviderKeyLength.set -> void
+static Skywalker.Settings.EntityFrameworkCore.SettingConsts.MaxProviderNameLength.get -> int
+static Skywalker.Settings.EntityFrameworkCore.SettingConsts.MaxProviderNameLength.set -> void
+static Skywalker.Settings.EntityFrameworkCore.SettingConsts.MaxValueLength.get -> int
+static Skywalker.Settings.EntityFrameworkCore.SettingConsts.MaxValueLength.set -> void
+virtual Skywalker.Settings.EntityFrameworkCore.EfCoreSettingValueProvider.GetAllAsync(Skywalker.Settings.SettingDefinition![]! settings) -> System.Threading.Tasks.Task<System.Collections.Generic.List<Skywalker.Settings.SettingValue!>!>!
+virtual Skywalker.Settings.EntityFrameworkCore.EfCoreSettingValueProvider.GetOrNullAsync(Skywalker.Settings.SettingDefinition! setting) -> System.Threading.Tasks.Task<string?>!
+virtual Skywalker.Settings.EntityFrameworkCore.Entities.Setting.Name.get -> string!
+virtual Skywalker.Settings.EntityFrameworkCore.Entities.Setting.Name.set -> void
+virtual Skywalker.Settings.EntityFrameworkCore.Entities.Setting.ProviderKey.get -> string!
+virtual Skywalker.Settings.EntityFrameworkCore.Entities.Setting.ProviderKey.set -> void
+virtual Skywalker.Settings.EntityFrameworkCore.Entities.Setting.ProviderName.get -> string!
+virtual Skywalker.Settings.EntityFrameworkCore.Entities.Setting.ProviderName.set -> void
+virtual Skywalker.Settings.EntityFrameworkCore.Entities.Setting.Value.get -> string?
+virtual Skywalker.Settings.EntityFrameworkCore.SettingDbContext.Settings.get -> Microsoft.EntityFrameworkCore.DbSet<Skywalker.Settings.EntityFrameworkCore.Entities.Setting!>!
+virtual Skywalker.Settings.EntityFrameworkCore.SettingDbContext.Settings.set -> void
+virtual Skywalker.Settings.EntityFrameworkCore.SettingManager.DeleteAsync(string! name, string! providerName, string? providerKey = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) -> System.Threading.Tasks.Task!
+virtual Skywalker.Settings.EntityFrameworkCore.SettingManager.SetAsync(string! name, string! value, string! providerName, string? providerKey = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) -> System.Threading.Tasks.Task!

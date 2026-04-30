@@ -1,0 +1,76 @@
+#nullable enable
+override Skywalker.Ddd.Application.Dtos.Unit.Equals(object? obj) -> bool
+override Skywalker.Ddd.Application.Dtos.Unit.GetHashCode() -> int
+override Skywalker.Ddd.Application.Dtos.Unit.ToString() -> string!
+Skywalker.ApplicationParts.ApplicationServiceFeatureProvider
+Skywalker.ApplicationParts.ApplicationServiceFeatureProvider.ApplicationServiceFeatureProvider() -> void
+Skywalker.ApplicationParts.ApplicationServiceFeatureProvider.PopulateFeature(System.Collections.Generic.IEnumerable<Skywalker.ApplicationParts.ApplicationPart!>! parts, Skywalker.ApplicationParts.ServiceRegistrationFeature! feature) -> void
+Skywalker.Ddd.Application.Abstractions.IApplicationService
+Skywalker.Ddd.Application.ApplicationService
+Skywalker.Ddd.Application.ApplicationService.ApplicationService() -> void
+Skywalker.Ddd.Application.Dtos.Abstractions.IDto
+Skywalker.Ddd.Application.Dtos.Abstractions.IEntityDto<TKey>
+Skywalker.Ddd.Application.Dtos.Abstractions.IEntityDto<TKey>.Id.get -> TKey
+Skywalker.Ddd.Application.Dtos.Abstractions.IEntityDto<TKey>.Id.init -> void
+Skywalker.Ddd.Application.Dtos.Abstractions.IFilteredRequest
+Skywalker.Ddd.Application.Dtos.Abstractions.IFilteredRequest.Filter.get -> string?
+Skywalker.Ddd.Application.Dtos.Abstractions.IFilteredRequest.Filter.init -> void
+Skywalker.Ddd.Application.Dtos.Abstractions.ILimitedRequest
+Skywalker.Ddd.Application.Dtos.Abstractions.ILimitedRequest.Limit.get -> int
+Skywalker.Ddd.Application.Dtos.Abstractions.ILimitedRequest.Limit.init -> void
+Skywalker.Ddd.Application.Dtos.Abstractions.IListResponse<T>
+Skywalker.Ddd.Application.Dtos.Abstractions.IListResponse<T>.Items.get -> System.Collections.Generic.IReadOnlyList<T>!
+Skywalker.Ddd.Application.Dtos.Abstractions.IListResponse<T>.Items.init -> void
+Skywalker.Ddd.Application.Dtos.Abstractions.IPagedRequest
+Skywalker.Ddd.Application.Dtos.Abstractions.IPagedRequest.Skip.get -> int
+Skywalker.Ddd.Application.Dtos.Abstractions.IPagedRequest.Skip.init -> void
+Skywalker.Ddd.Application.Dtos.Abstractions.IPagedResponse<T>
+Skywalker.Ddd.Application.Dtos.Abstractions.IPagedResponse<T>.Items.get -> System.Collections.Generic.IEnumerable<T>!
+Skywalker.Ddd.Application.Dtos.Abstractions.IPagedResponse<T>.Items.init -> void
+Skywalker.Ddd.Application.Dtos.Abstractions.IRequestDto
+Skywalker.Ddd.Application.Dtos.Abstractions.IRequestDto<TResponse>
+Skywalker.Ddd.Application.Dtos.Abstractions.IResponseDto
+Skywalker.Ddd.Application.Dtos.Abstractions.ISearchRequest
+Skywalker.Ddd.Application.Dtos.Abstractions.ISortedRequest
+Skywalker.Ddd.Application.Dtos.Abstractions.ISortedRequest.Sorting.get -> string?
+Skywalker.Ddd.Application.Dtos.Abstractions.ISortedRequest.Sorting.init -> void
+Skywalker.Ddd.Application.Dtos.Abstractions.ITotalCountResponse
+Skywalker.Ddd.Application.Dtos.Abstractions.ITotalCountResponse.TotalCount.get -> int
+Skywalker.Ddd.Application.Dtos.Abstractions.ITotalCountResponse.TotalCount.init -> void
+Skywalker.Ddd.Application.Dtos.Dto
+Skywalker.Ddd.Application.Dtos.Dto.Dto() -> void
+Skywalker.Ddd.Application.Dtos.EntityDto<TKey>
+Skywalker.Ddd.Application.Dtos.EntityDto<TKey>.EntityDto(TKey Id) -> void
+Skywalker.Ddd.Application.Dtos.EntityDto<TKey>.Id.get -> TKey
+Skywalker.Ddd.Application.Dtos.EntityDto<TKey>.Id.init -> void
+Skywalker.Ddd.Application.Dtos.LimitedRequestDto
+Skywalker.Ddd.Application.Dtos.LimitedRequestDto.Limit.get -> int
+Skywalker.Ddd.Application.Dtos.LimitedRequestDto.Limit.init -> void
+Skywalker.Ddd.Application.Dtos.LimitedRequestDto.LimitedRequestDto(int Limit = 20) -> void
+Skywalker.Ddd.Application.Dtos.ListResponseDto<T>
+Skywalker.Ddd.Application.Dtos.ListResponseDto<T>.Items.get -> System.Collections.Generic.IReadOnlyList<T>!
+Skywalker.Ddd.Application.Dtos.ListResponseDto<T>.Items.init -> void
+Skywalker.Ddd.Application.Dtos.ListResponseDto<T>.ListResponseDto(System.Collections.Generic.IReadOnlyList<T>! Items) -> void
+Skywalker.Ddd.Application.Dtos.PagedRequestDto
+Skywalker.Ddd.Application.Dtos.PagedRequestDto.PagedRequestDto(int Skip = 0, int Limit = 20) -> void
+Skywalker.Ddd.Application.Dtos.PagedRequestDto.Skip.get -> int
+Skywalker.Ddd.Application.Dtos.PagedRequestDto.Skip.init -> void
+Skywalker.Ddd.Application.Dtos.PagedResultDto<T>
+Skywalker.Ddd.Application.Dtos.PagedResultDto<T>.Items.get -> System.Collections.Generic.IEnumerable<T>!
+Skywalker.Ddd.Application.Dtos.PagedResultDto<T>.Items.init -> void
+Skywalker.Ddd.Application.Dtos.PagedResultDto<T>.TotalCount.get -> int
+Skywalker.Ddd.Application.Dtos.PagedResultDto<T>.TotalCount.init -> void
+Skywalker.Ddd.Application.Dtos.SearchRequestDto
+Skywalker.Ddd.Application.Dtos.SearchRequestDto.Filter.get -> string?
+Skywalker.Ddd.Application.Dtos.SearchRequestDto.Filter.init -> void
+Skywalker.Ddd.Application.Dtos.SearchRequestDto.SearchRequestDto(string? Filter, string? Sorting, int Skip = 0, int Limit = 20) -> void
+Skywalker.Ddd.Application.Dtos.SearchRequestDto.Sorting.get -> string?
+Skywalker.Ddd.Application.Dtos.SearchRequestDto.Sorting.init -> void
+Skywalker.Ddd.Application.Dtos.Unit
+Skywalker.Ddd.Application.Dtos.Unit.CompareTo(Skywalker.Ddd.Application.Dtos.Unit other) -> int
+Skywalker.Ddd.Application.Dtos.Unit.Equals(Skywalker.Ddd.Application.Dtos.Unit other) -> bool
+Skywalker.Ddd.Application.Dtos.Unit.Unit() -> void
+static Skywalker.Ddd.Application.Dtos.Unit.operator !=(Skywalker.Ddd.Application.Dtos.Unit first, Skywalker.Ddd.Application.Dtos.Unit second) -> bool
+static Skywalker.Ddd.Application.Dtos.Unit.operator ==(Skywalker.Ddd.Application.Dtos.Unit first, Skywalker.Ddd.Application.Dtos.Unit second) -> bool
+static Skywalker.Ddd.Application.Dtos.Unit.Task.get -> System.Threading.Tasks.Task<Skywalker.Ddd.Application.Dtos.Unit>!
+static Skywalker.Ddd.Application.Dtos.Unit.Value.get -> Skywalker.Ddd.Application.Dtos.Unit

@@ -1,0 +1,35 @@
+#nullable enable
+abstract Skywalker.Extensions.SimpleStateChecking.SimpleBatchStateCheckerBase<TState>.IsEnabledAsync(Skywalker.Extensions.SimpleStateChecking.SimpleBatchStateCheckerContext<TState>! context) -> System.Threading.Tasks.Task<Skywalker.Extensions.SimpleStateChecking.SimpleStateCheckerResult<TState>!>!
+Skywalker.Extensions.SimpleStateChecking.IHasSimpleStateCheckers<TState>
+Skywalker.Extensions.SimpleStateChecking.IHasSimpleStateCheckers<TState>.StateCheckers.get -> System.Collections.Generic.List<Skywalker.Extensions.SimpleStateChecking.ISimpleStateChecker<TState>!>!
+Skywalker.Extensions.SimpleStateChecking.ISimpleBatchStateChecker<TState>
+Skywalker.Extensions.SimpleStateChecking.ISimpleBatchStateChecker<TState>.IsEnabledAsync(Skywalker.Extensions.SimpleStateChecking.SimpleBatchStateCheckerContext<TState>! context) -> System.Threading.Tasks.Task<Skywalker.Extensions.SimpleStateChecking.SimpleStateCheckerResult<TState>!>!
+Skywalker.Extensions.SimpleStateChecking.ISimpleStateChecker<TState>
+Skywalker.Extensions.SimpleStateChecking.ISimpleStateChecker<TState>.IsEnabledAsync(Skywalker.Extensions.SimpleStateChecking.SimpleStateCheckerContext<TState>! context) -> System.Threading.Tasks.Task<bool>!
+Skywalker.Extensions.SimpleStateChecking.ISimpleStateCheckerManager<TState>
+Skywalker.Extensions.SimpleStateChecking.ISimpleStateCheckerManager<TState>.IsEnabledAsync(TState state) -> System.Threading.Tasks.Task<bool>!
+Skywalker.Extensions.SimpleStateChecking.ISimpleStateCheckerManager<TState>.IsEnabledAsync(TState[]! states) -> System.Threading.Tasks.Task<Skywalker.Extensions.SimpleStateChecking.SimpleStateCheckerResult<TState>!>!
+Skywalker.Extensions.SimpleStateChecking.SimpleBatchStateCheckerBase<TState>
+Skywalker.Extensions.SimpleStateChecking.SimpleBatchStateCheckerBase<TState>.IsEnabledAsync(Skywalker.Extensions.SimpleStateChecking.SimpleStateCheckerContext<TState>! context) -> System.Threading.Tasks.Task<bool>!
+Skywalker.Extensions.SimpleStateChecking.SimpleBatchStateCheckerBase<TState>.SimpleBatchStateCheckerBase() -> void
+Skywalker.Extensions.SimpleStateChecking.SimpleBatchStateCheckerContext<TState>
+Skywalker.Extensions.SimpleStateChecking.SimpleBatchStateCheckerContext<TState>.ServiceProvider.get -> System.IServiceProvider!
+Skywalker.Extensions.SimpleStateChecking.SimpleBatchStateCheckerContext<TState>.SimpleBatchStateCheckerContext(System.IServiceProvider! serviceProvider, TState[]! states) -> void
+Skywalker.Extensions.SimpleStateChecking.SimpleBatchStateCheckerContext<TState>.States.get -> TState[]!
+Skywalker.Extensions.SimpleStateChecking.SimpleStateCheckerContext<TState>
+Skywalker.Extensions.SimpleStateChecking.SimpleStateCheckerContext<TState>.ServiceProvider.get -> System.IServiceProvider!
+Skywalker.Extensions.SimpleStateChecking.SimpleStateCheckerContext<TState>.SimpleStateCheckerContext(System.IServiceProvider! serviceProvider, TState state) -> void
+Skywalker.Extensions.SimpleStateChecking.SimpleStateCheckerContext<TState>.State.get -> TState
+Skywalker.Extensions.SimpleStateChecking.SimpleStateCheckerManager<TState>
+Skywalker.Extensions.SimpleStateChecking.SimpleStateCheckerManager<TState>.Options.get -> Skywalker.Extensions.SimpleStateChecking.SimpleStateCheckerOptions<TState>!
+Skywalker.Extensions.SimpleStateChecking.SimpleStateCheckerManager<TState>.ServiceProvider.get -> System.IServiceProvider!
+Skywalker.Extensions.SimpleStateChecking.SimpleStateCheckerManager<TState>.SimpleStateCheckerManager(System.IServiceProvider! serviceProvider, Microsoft.Extensions.Options.IOptions<Skywalker.Extensions.SimpleStateChecking.SimpleStateCheckerOptions<TState>!>! options) -> void
+Skywalker.Extensions.SimpleStateChecking.SimpleStateCheckerOptions<TState>
+Skywalker.Extensions.SimpleStateChecking.SimpleStateCheckerOptions<TState>.GlobalStateCheckers.get -> Skywalker.Extensions.Collections.Generic.ITypeList<Skywalker.Extensions.SimpleStateChecking.ISimpleStateChecker<TState>!>!
+Skywalker.Extensions.SimpleStateChecking.SimpleStateCheckerOptions<TState>.SimpleStateCheckerOptions() -> void
+Skywalker.Extensions.SimpleStateChecking.SimpleStateCheckerResult<TState>
+Skywalker.Extensions.SimpleStateChecking.SimpleStateCheckerResult<TState>.SimpleStateCheckerResult() -> void
+Skywalker.Extensions.SimpleStateChecking.SimpleStateCheckerResult<TState>.SimpleStateCheckerResult(System.Collections.Generic.IEnumerable<TState>! states, bool initValue = true) -> void
+virtual Skywalker.Extensions.SimpleStateChecking.SimpleStateCheckerManager<TState>.InternalIsEnabledAsync(TState state, bool useBatchChecker) -> System.Threading.Tasks.Task<bool>!
+virtual Skywalker.Extensions.SimpleStateChecking.SimpleStateCheckerManager<TState>.IsEnabledAsync(TState state) -> System.Threading.Tasks.Task<bool>!
+virtual Skywalker.Extensions.SimpleStateChecking.SimpleStateCheckerManager<TState>.IsEnabledAsync(TState[]! states) -> System.Threading.Tasks.Task<Skywalker.Extensions.SimpleStateChecking.SimpleStateCheckerResult<TState>!>!

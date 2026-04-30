@@ -1,0 +1,27 @@
+#nullable enable
+Microsoft.AspNetCore.Builder.RateLimitingApplicationBuilderExtensions
+Microsoft.Extensions.DependencyInjection.RateLimitingServiceCollectionExtensions
+Skywalker.Extensions.RateLimiters.AspNetCore.DisableRateLimitingAttribute
+Skywalker.Extensions.RateLimiters.AspNetCore.DisableRateLimitingAttribute.DisableRateLimitingAttribute() -> void
+Skywalker.Extensions.RateLimiters.AspNetCore.RateLimitAttribute
+Skywalker.Extensions.RateLimiters.AspNetCore.RateLimitAttribute.PolicyName.get -> string!
+Skywalker.Extensions.RateLimiters.AspNetCore.RateLimitAttribute.RateLimitAttribute(string! policyName) -> void
+Skywalker.Extensions.RateLimiters.AspNetCore.RateLimitingMiddleware
+Skywalker.Extensions.RateLimiters.AspNetCore.RateLimitingMiddleware.InvokeAsync(Microsoft.AspNetCore.Http.HttpContext! context) -> System.Threading.Tasks.Task!
+Skywalker.Extensions.RateLimiters.AspNetCore.RateLimitingMiddleware.RateLimitingMiddleware(Microsoft.AspNetCore.Http.RequestDelegate! next, Microsoft.Extensions.Options.IOptions<Skywalker.Extensions.RateLimiters.AspNetCore.RateLimitingOptions!>! options, Microsoft.Extensions.Logging.ILogger<Skywalker.Extensions.RateLimiters.AspNetCore.RateLimitingMiddleware!>! logger) -> void
+Skywalker.Extensions.RateLimiters.AspNetCore.RateLimitingOptions
+Skywalker.Extensions.RateLimiters.AspNetCore.RateLimitingOptions.AddFixedWindowLimiter(string! policyName, System.Action<Skywalker.Extensions.RateLimiters.FixedWindowRateLimiterOptions!>! configure) -> Skywalker.Extensions.RateLimiters.AspNetCore.RateLimitingOptions!
+Skywalker.Extensions.RateLimiters.AspNetCore.RateLimitingOptions.AddPolicy(string! policyName, Skywalker.Extensions.RateLimiters.IRateLimiterPolicy! policy) -> Skywalker.Extensions.RateLimiters.AspNetCore.RateLimitingOptions!
+Skywalker.Extensions.RateLimiters.AspNetCore.RateLimitingOptions.AddSlidingWindowLimiter(string! policyName, System.Action<Skywalker.Extensions.RateLimiters.SlidingWindowRateLimiterOptions!>! configure) -> Skywalker.Extensions.RateLimiters.AspNetCore.RateLimitingOptions!
+Skywalker.Extensions.RateLimiters.AspNetCore.RateLimitingOptions.AddTokenBucketLimiter(string! policyName, System.Action<Skywalker.Extensions.RateLimiters.TokenBucketRateLimiterOptions!>! configure) -> Skywalker.Extensions.RateLimiters.AspNetCore.RateLimitingOptions!
+Skywalker.Extensions.RateLimiters.AspNetCore.RateLimitingOptions.DefaultPolicyName.get -> string?
+Skywalker.Extensions.RateLimiters.AspNetCore.RateLimitingOptions.DefaultPolicyName.set -> void
+Skywalker.Extensions.RateLimiters.AspNetCore.RateLimitingOptions.KeyResolver.get -> System.Func<Microsoft.AspNetCore.Http.HttpContext!, string!>?
+Skywalker.Extensions.RateLimiters.AspNetCore.RateLimitingOptions.KeyResolver.set -> void
+Skywalker.Extensions.RateLimiters.AspNetCore.RateLimitingOptions.OnRejected.get -> System.Func<Microsoft.AspNetCore.Http.HttpContext!, Skywalker.Extensions.RateLimiters.RateLimitResult, System.Threading.Tasks.Task!>?
+Skywalker.Extensions.RateLimiters.AspNetCore.RateLimitingOptions.OnRejected.set -> void
+Skywalker.Extensions.RateLimiters.AspNetCore.RateLimitingOptions.RateLimitingOptions() -> void
+Skywalker.Extensions.RateLimiters.AspNetCore.RateLimitingOptions.RejectionStatusCode.get -> int
+Skywalker.Extensions.RateLimiters.AspNetCore.RateLimitingOptions.RejectionStatusCode.set -> void
+static Microsoft.AspNetCore.Builder.RateLimitingApplicationBuilderExtensions.UseSkywalkerRateLimiting(this Microsoft.AspNetCore.Builder.IApplicationBuilder! app) -> Microsoft.AspNetCore.Builder.IApplicationBuilder!
+static Microsoft.Extensions.DependencyInjection.RateLimitingServiceCollectionExtensions.AddSkywalkerRateLimiting(this Microsoft.Extensions.DependencyInjection.IServiceCollection! services, System.Action<Skywalker.Extensions.RateLimiters.AspNetCore.RateLimitingOptions!>! configure) -> Microsoft.Extensions.DependencyInjection.IServiceCollection!

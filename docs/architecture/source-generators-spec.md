@@ -376,3 +376,38 @@ Skywalker.Xxx/
 - [ ] 至少 1 个 sample 项目使用该 generator
 - [ ] AOT publish 零警告
 - [ ] `PublicAPI.Unshipped.txt` 更新
+
+## 10. 快速开始
+
+### 10.1 共享 helper
+
+新 Generator 项目无需自己重写 `EquatableArray<T>` / `SymbolExtensions` / 通用诊断。
+[`Skywalker.SourceGenerators.Common`](../../src/Skywalker.SourceGenerators.Common/README.md) 是 source-only 库，
+通过 `<Compile Include>` 把源文件直接编进 Generator 程序集（**不**走 PackageReference / ProjectReference，
+避免 analyzer 加载时的依赖解析问题）：
+
+```xml
+<ItemGroup>
+  <Compile Include="$(MSBuildThisFileDirectory)..\Skywalker.SourceGenerators.Common\**\*.cs"
+           Exclude="$(MSBuildThisFileDirectory)..\Skywalker.SourceGenerators.Common\bin\**;
+                    $(MSBuildThisFileDirectory)..\Skywalker.SourceGenerators.Common\obj\**" />
+</ItemGroup>
+```
+
+### 10.2 Generator 项目脚手架
+
+从仓库根目录安装模板：
+
+```powershell
+dotnet new install .\templates\skywalker-generator
+```
+
+创建新 Generator 项目：
+
+```powershell
+dotnet new skywalker-generator -n Skywalker.Ddd.EntityFrameworkCore.SourceGenerators -o src\Skywalker.Ddd.EntityFrameworkCore.SourceGenerators
+dotnet build src\Skywalker.Ddd.EntityFrameworkCore.SourceGenerators\Skywalker.Ddd.EntityFrameworkCore.SourceGenerators.csproj
+dotnet test src\Skywalker.Ddd.EntityFrameworkCore.SourceGenerators\tests\Skywalker.Ddd.EntityFrameworkCore.SourceGenerators.Tests\Skywalker.Ddd.EntityFrameworkCore.SourceGenerators.Tests.csproj
+```
+
+模板说明见 [`templates/skywalker-generator/README.md`](../../templates/skywalker-generator/README.md)。

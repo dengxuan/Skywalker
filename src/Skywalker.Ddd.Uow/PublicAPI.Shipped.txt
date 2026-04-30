@@ -1,0 +1,168 @@
+#nullable enable
+const Skywalker.Ddd.Uow.UnitOfWork.UnitOfWorkReservationName = "_SkywalkerActionUnitOfWork" -> string!
+override Skywalker.Ddd.Uow.UnitOfWork.ToString() -> string!
+Skywalker.ApplicationParts.UowServiceFeatureProvider
+Skywalker.ApplicationParts.UowServiceFeatureProvider.PopulateFeature(System.Collections.Generic.IEnumerable<Skywalker.ApplicationParts.ApplicationPart!>! parts, Skywalker.ApplicationParts.ServiceRegistrationFeature! feature) -> void
+Skywalker.ApplicationParts.UowServiceFeatureProvider.UowServiceFeatureProvider() -> void
+Skywalker.Ddd.Uow.Abstractions.IAmbientUnitOfWork
+Skywalker.Ddd.Uow.Abstractions.IDatabaseApi
+Skywalker.Ddd.Uow.Abstractions.IDatabaseApiContainer
+Skywalker.Ddd.Uow.Abstractions.IDatabaseApiContainer.AddDatabaseApi(string! key, Skywalker.Ddd.Uow.Abstractions.IDatabaseApi! api) -> void
+Skywalker.Ddd.Uow.Abstractions.IDatabaseApiContainer.FindDatabaseApi(string! key) -> Skywalker.Ddd.Uow.Abstractions.IDatabaseApi?
+Skywalker.Ddd.Uow.Abstractions.IDatabaseApiContainer.GetOrAddDatabaseApi(string! key, System.Func<Skywalker.Ddd.Uow.Abstractions.IDatabaseApi!>! factory) -> Skywalker.Ddd.Uow.Abstractions.IDatabaseApi!
+Skywalker.Ddd.Uow.Abstractions.ISupportsRollback
+Skywalker.Ddd.Uow.Abstractions.ISupportsRollback.Rollback() -> void
+Skywalker.Ddd.Uow.Abstractions.ISupportsRollback.RollbackAsync(System.Threading.CancellationToken cancellationToken) -> System.Threading.Tasks.Task!
+Skywalker.Ddd.Uow.Abstractions.ISupportsSavingChanges
+Skywalker.Ddd.Uow.Abstractions.ISupportsSavingChanges.SaveChangesAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) -> System.Threading.Tasks.Task!
+Skywalker.Ddd.Uow.Abstractions.ITransactionApi
+Skywalker.Ddd.Uow.Abstractions.ITransactionApi.CommitAsync() -> System.Threading.Tasks.Task!
+Skywalker.Ddd.Uow.Abstractions.ITransactionApiContainer
+Skywalker.Ddd.Uow.Abstractions.ITransactionApiContainer.AddTransactionApi(string! key, Skywalker.Ddd.Uow.Abstractions.ITransactionApi! api) -> void
+Skywalker.Ddd.Uow.Abstractions.ITransactionApiContainer.FindTransactionApi(string! key) -> Skywalker.Ddd.Uow.Abstractions.ITransactionApi?
+Skywalker.Ddd.Uow.Abstractions.ITransactionApiContainer.GetOrAddTransactionApi(string! key, System.Func<Skywalker.Ddd.Uow.Abstractions.ITransactionApi!>! factory) -> Skywalker.Ddd.Uow.Abstractions.ITransactionApi!
+Skywalker.Ddd.Uow.Abstractions.IUnitOfWork
+Skywalker.Ddd.Uow.Abstractions.IUnitOfWork.CompleteAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) -> System.Threading.Tasks.Task!
+Skywalker.Ddd.Uow.Abstractions.IUnitOfWork.Disposed -> System.EventHandler<Skywalker.Ddd.Uow.UnitOfWorkEventArgs!>?
+Skywalker.Ddd.Uow.Abstractions.IUnitOfWork.Failed -> System.EventHandler<Skywalker.Ddd.Uow.UnitOfWorkFailedEventArgs!>?
+Skywalker.Ddd.Uow.Abstractions.IUnitOfWork.Id.get -> System.Guid
+Skywalker.Ddd.Uow.Abstractions.IUnitOfWork.Initialize(Skywalker.Ddd.Uow.UnitOfWorkOptions! options) -> void
+Skywalker.Ddd.Uow.Abstractions.IUnitOfWork.IsCompleted.get -> bool
+Skywalker.Ddd.Uow.Abstractions.IUnitOfWork.IsDisposed.get -> bool
+Skywalker.Ddd.Uow.Abstractions.IUnitOfWork.IsReserved.get -> bool
+Skywalker.Ddd.Uow.Abstractions.IUnitOfWork.Items.get -> System.Collections.Generic.Dictionary<string!, object!>!
+Skywalker.Ddd.Uow.Abstractions.IUnitOfWork.OnCompleted(System.Func<System.Threading.Tasks.Task!>! handler) -> void
+Skywalker.Ddd.Uow.Abstractions.IUnitOfWork.Options.get -> Skywalker.Ddd.Uow.Abstractions.IUnitOfWorkOptions?
+Skywalker.Ddd.Uow.Abstractions.IUnitOfWork.Outer.get -> Skywalker.Ddd.Uow.Abstractions.IUnitOfWork?
+Skywalker.Ddd.Uow.Abstractions.IUnitOfWork.ReservationName.get -> string?
+Skywalker.Ddd.Uow.Abstractions.IUnitOfWork.Reserve(string! reservationName) -> void
+Skywalker.Ddd.Uow.Abstractions.IUnitOfWork.RollbackAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) -> System.Threading.Tasks.Task!
+Skywalker.Ddd.Uow.Abstractions.IUnitOfWork.SaveChangesAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) -> System.Threading.Tasks.Task!
+Skywalker.Ddd.Uow.Abstractions.IUnitOfWork.SetOuter(Skywalker.Ddd.Uow.Abstractions.IUnitOfWork? outer) -> void
+Skywalker.Ddd.Uow.Abstractions.IUnitOfWorkAccessor
+Skywalker.Ddd.Uow.Abstractions.IUnitOfWorkAccessor.SetUnitOfWork(Skywalker.Ddd.Uow.Abstractions.IUnitOfWork? unitOfWork) -> void
+Skywalker.Ddd.Uow.Abstractions.IUnitOfWorkAccessor.UnitOfWork.get -> Skywalker.Ddd.Uow.Abstractions.IUnitOfWork?
+Skywalker.Ddd.Uow.Abstractions.IUnitOfWorkEnabled
+Skywalker.Ddd.Uow.Abstractions.IUnitOfWorkManager
+Skywalker.Ddd.Uow.Abstractions.IUnitOfWorkManager.Begin(Skywalker.Ddd.Uow.UnitOfWorkOptions! options, bool requiresNew = false) -> Skywalker.Ddd.Uow.Abstractions.IUnitOfWork!
+Skywalker.Ddd.Uow.Abstractions.IUnitOfWorkManager.BeginReserved(string! reservationName, Skywalker.Ddd.Uow.UnitOfWorkOptions! options) -> void
+Skywalker.Ddd.Uow.Abstractions.IUnitOfWorkManager.Current.get -> Skywalker.Ddd.Uow.Abstractions.IUnitOfWork?
+Skywalker.Ddd.Uow.Abstractions.IUnitOfWorkManager.Reserve(string! reservationName, bool requiresNew = false) -> Skywalker.Ddd.Uow.Abstractions.IUnitOfWork!
+Skywalker.Ddd.Uow.Abstractions.IUnitOfWorkManager.TryBeginReserved(string! reservationName, Skywalker.Ddd.Uow.UnitOfWorkOptions! options) -> bool
+Skywalker.Ddd.Uow.Abstractions.IUnitOfWorkManagerAccessor
+Skywalker.Ddd.Uow.Abstractions.IUnitOfWorkManagerAccessor.UnitOfWorkManager.get -> Skywalker.Ddd.Uow.Abstractions.IUnitOfWorkManager!
+Skywalker.Ddd.Uow.Abstractions.IUnitOfWorkOptions
+Skywalker.Ddd.Uow.Abstractions.IUnitOfWorkOptions.IsolationLevel.get -> System.Data.IsolationLevel?
+Skywalker.Ddd.Uow.Abstractions.IUnitOfWorkOptions.IsTransactional.get -> bool
+Skywalker.Ddd.Uow.Abstractions.IUnitOfWorkOptions.Timeout.get -> int?
+Skywalker.Ddd.Uow.Abstractions.IUnitOfWorkTransactionBehaviourProvider
+Skywalker.Ddd.Uow.Abstractions.IUnitOfWorkTransactionBehaviourProvider.IsTransactional.get -> bool?
+Skywalker.Ddd.Uow.AmbientUnitOfWork
+Skywalker.Ddd.Uow.AmbientUnitOfWork.AmbientUnitOfWork() -> void
+Skywalker.Ddd.Uow.AmbientUnitOfWork.SetUnitOfWork(Skywalker.Ddd.Uow.Abstractions.IUnitOfWork? unitOfWork) -> void
+Skywalker.Ddd.Uow.AmbientUnitOfWork.UnitOfWork.get -> Skywalker.Ddd.Uow.Abstractions.IUnitOfWork?
+Skywalker.Ddd.Uow.NullUnitOfWorkTransactionBehaviourProvider
+Skywalker.Ddd.Uow.NullUnitOfWorkTransactionBehaviourProvider.IsTransactional.get -> bool?
+Skywalker.Ddd.Uow.NullUnitOfWorkTransactionBehaviourProvider.NullUnitOfWorkTransactionBehaviourProvider() -> void
+Skywalker.Ddd.Uow.UnitOfWork
+Skywalker.Ddd.Uow.UnitOfWork.AddDatabaseApi(string! key, Skywalker.Ddd.Uow.Abstractions.IDatabaseApi! api) -> void
+Skywalker.Ddd.Uow.UnitOfWork.AddTransactionApi(string! key, Skywalker.Ddd.Uow.Abstractions.ITransactionApi! api) -> void
+Skywalker.Ddd.Uow.UnitOfWork.CompletedHandlers.get -> System.Collections.Generic.List<System.Func<System.Threading.Tasks.Task!>!>!
+Skywalker.Ddd.Uow.UnitOfWork.Disposed -> System.EventHandler<Skywalker.Ddd.Uow.UnitOfWorkEventArgs!>?
+Skywalker.Ddd.Uow.UnitOfWork.Failed -> System.EventHandler<Skywalker.Ddd.Uow.UnitOfWorkFailedEventArgs!>?
+Skywalker.Ddd.Uow.UnitOfWork.FindDatabaseApi(string! key) -> Skywalker.Ddd.Uow.Abstractions.IDatabaseApi?
+Skywalker.Ddd.Uow.UnitOfWork.FindTransactionApi(string! key) -> Skywalker.Ddd.Uow.Abstractions.ITransactionApi?
+Skywalker.Ddd.Uow.UnitOfWork.GetAllActiveDatabaseApis() -> System.Collections.Generic.IReadOnlyList<Skywalker.Ddd.Uow.Abstractions.IDatabaseApi!>!
+Skywalker.Ddd.Uow.UnitOfWork.GetAllActiveTransactionApis() -> System.Collections.Generic.IReadOnlyList<Skywalker.Ddd.Uow.Abstractions.ITransactionApi!>!
+Skywalker.Ddd.Uow.UnitOfWork.GetOrAddDatabaseApi(string! key, System.Func<Skywalker.Ddd.Uow.Abstractions.IDatabaseApi!>! factory) -> Skywalker.Ddd.Uow.Abstractions.IDatabaseApi!
+Skywalker.Ddd.Uow.UnitOfWork.GetOrAddTransactionApi(string! key, System.Func<Skywalker.Ddd.Uow.Abstractions.ITransactionApi!>! factory) -> Skywalker.Ddd.Uow.Abstractions.ITransactionApi!
+Skywalker.Ddd.Uow.UnitOfWork.Id.get -> System.Guid
+Skywalker.Ddd.Uow.UnitOfWork.IsCompleted.get -> bool
+Skywalker.Ddd.Uow.UnitOfWork.IsDisposed.get -> bool
+Skywalker.Ddd.Uow.UnitOfWork.IsReserved.get -> bool
+Skywalker.Ddd.Uow.UnitOfWork.IsReserved.set -> void
+Skywalker.Ddd.Uow.UnitOfWork.Items.get -> System.Collections.Generic.Dictionary<string!, object!>!
+Skywalker.Ddd.Uow.UnitOfWork.OnCompleted(System.Func<System.Threading.Tasks.Task!>! handler) -> void
+Skywalker.Ddd.Uow.UnitOfWork.Options.get -> Skywalker.Ddd.Uow.Abstractions.IUnitOfWorkOptions?
+Skywalker.Ddd.Uow.UnitOfWork.Outer.get -> Skywalker.Ddd.Uow.Abstractions.IUnitOfWork?
+Skywalker.Ddd.Uow.UnitOfWork.ReservationName.get -> string?
+Skywalker.Ddd.Uow.UnitOfWork.ReservationName.set -> void
+Skywalker.Ddd.Uow.UnitOfWork.ServiceProvider.get -> System.IServiceProvider!
+Skywalker.Ddd.Uow.UnitOfWork.UnitOfWork(System.IServiceProvider! serviceProvider, Microsoft.Extensions.Options.IOptions<Skywalker.Ddd.Uow.UnitOfWorkDefaultOptions!>! options, Microsoft.Extensions.Logging.ILogger<Skywalker.Ddd.Uow.UnitOfWork!>! logger) -> void
+Skywalker.Ddd.Uow.UnitOfWorkAttribute
+Skywalker.Ddd.Uow.UnitOfWorkAttribute.IsDisabled.get -> bool
+Skywalker.Ddd.Uow.UnitOfWorkAttribute.IsDisabled.set -> void
+Skywalker.Ddd.Uow.UnitOfWorkAttribute.IsolationLevel.get -> System.Data.IsolationLevel?
+Skywalker.Ddd.Uow.UnitOfWorkAttribute.IsolationLevel.set -> void
+Skywalker.Ddd.Uow.UnitOfWorkAttribute.IsTransactional.get -> bool?
+Skywalker.Ddd.Uow.UnitOfWorkAttribute.IsTransactional.set -> void
+Skywalker.Ddd.Uow.UnitOfWorkAttribute.SetOptions(Skywalker.Ddd.Uow.UnitOfWorkOptions! options) -> void
+Skywalker.Ddd.Uow.UnitOfWorkAttribute.Timeout.get -> int?
+Skywalker.Ddd.Uow.UnitOfWorkAttribute.Timeout.set -> void
+Skywalker.Ddd.Uow.UnitOfWorkAttribute.UnitOfWorkAttribute() -> void
+Skywalker.Ddd.Uow.UnitOfWorkAttribute.UnitOfWorkAttribute(bool isTransactional) -> void
+Skywalker.Ddd.Uow.UnitOfWorkAttribute.UnitOfWorkAttribute(bool isTransactional, System.Data.IsolationLevel isolationLevel) -> void
+Skywalker.Ddd.Uow.UnitOfWorkAttribute.UnitOfWorkAttribute(bool isTransactional, System.Data.IsolationLevel isolationLevel, int timeout) -> void
+Skywalker.Ddd.Uow.UnitOfWorkDefaultOptions
+Skywalker.Ddd.Uow.UnitOfWorkDefaultOptions.CalculateIsTransactional(bool autoValue) -> bool
+Skywalker.Ddd.Uow.UnitOfWorkDefaultOptions.IsolationLevel.get -> System.Data.IsolationLevel?
+Skywalker.Ddd.Uow.UnitOfWorkDefaultOptions.IsolationLevel.set -> void
+Skywalker.Ddd.Uow.UnitOfWorkDefaultOptions.Timeout.get -> int?
+Skywalker.Ddd.Uow.UnitOfWorkDefaultOptions.Timeout.set -> void
+Skywalker.Ddd.Uow.UnitOfWorkDefaultOptions.TransactionBehavior.get -> Skywalker.Ddd.Uow.UnitOfWorkTransactionBehavior
+Skywalker.Ddd.Uow.UnitOfWorkDefaultOptions.TransactionBehavior.set -> void
+Skywalker.Ddd.Uow.UnitOfWorkDefaultOptions.UnitOfWorkDefaultOptions() -> void
+Skywalker.Ddd.Uow.UnitOfWorkEventArgs
+Skywalker.Ddd.Uow.UnitOfWorkEventArgs.UnitOfWork.get -> Skywalker.Ddd.Uow.Abstractions.IUnitOfWork!
+Skywalker.Ddd.Uow.UnitOfWorkEventArgs.UnitOfWorkEventArgs(Skywalker.Ddd.Uow.Abstractions.IUnitOfWork! unitOfWork) -> void
+Skywalker.Ddd.Uow.UnitOfWorkExtensions
+Skywalker.Ddd.Uow.UnitOfWorkFailedEventArgs
+Skywalker.Ddd.Uow.UnitOfWorkFailedEventArgs.Exception.get -> System.Exception?
+Skywalker.Ddd.Uow.UnitOfWorkFailedEventArgs.IsRolledback.get -> bool
+Skywalker.Ddd.Uow.UnitOfWorkFailedEventArgs.UnitOfWorkFailedEventArgs(Skywalker.Ddd.Uow.Abstractions.IUnitOfWork! unitOfWork, System.Exception? exception, bool isRolledback) -> void
+Skywalker.Ddd.Uow.UnitOfWorkHelper
+Skywalker.Ddd.Uow.UnitOfWorkInterceptor
+Skywalker.Ddd.Uow.UnitOfWorkInterceptor.InterceptAsync(Skywalker.Extensions.DynamicProxies.IMethodInvocation! invocation) -> System.Threading.Tasks.Task!
+Skywalker.Ddd.Uow.UnitOfWorkInterceptor.UnitOfWorkInterceptor(Microsoft.Extensions.DependencyInjection.IServiceScopeFactory! serviceScopeFactory, Microsoft.Extensions.Logging.ILogger<Skywalker.Ddd.Uow.UnitOfWorkInterceptor!>! logger) -> void
+Skywalker.Ddd.Uow.UnitOfWorkManager
+Skywalker.Ddd.Uow.UnitOfWorkManager.Begin(Skywalker.Ddd.Uow.UnitOfWorkOptions! options, bool requiresNew = false) -> Skywalker.Ddd.Uow.Abstractions.IUnitOfWork!
+Skywalker.Ddd.Uow.UnitOfWorkManager.BeginReserved(string! reservationName, Skywalker.Ddd.Uow.UnitOfWorkOptions! options) -> void
+Skywalker.Ddd.Uow.UnitOfWorkManager.Current.get -> Skywalker.Ddd.Uow.Abstractions.IUnitOfWork?
+Skywalker.Ddd.Uow.UnitOfWorkManager.Reserve(string! reservationName, bool requiresNew = false) -> Skywalker.Ddd.Uow.Abstractions.IUnitOfWork!
+Skywalker.Ddd.Uow.UnitOfWorkManager.TryBeginReserved(string! reservationName, Skywalker.Ddd.Uow.UnitOfWorkOptions! options) -> bool
+Skywalker.Ddd.Uow.UnitOfWorkManager.UnitOfWorkManager(Skywalker.Ddd.Uow.Abstractions.IAmbientUnitOfWork! ambientUnitOfWork, Microsoft.Extensions.DependencyInjection.IServiceScopeFactory! serviceScopeFactory, Microsoft.Extensions.Logging.ILogger<Skywalker.Ddd.Uow.UnitOfWorkManager!>! logger) -> void
+Skywalker.Ddd.Uow.UnitOfWorkManagerExtensions
+Skywalker.Ddd.Uow.UnitOfWorkOptions
+Skywalker.Ddd.Uow.UnitOfWorkOptions.Clone() -> Skywalker.Ddd.Uow.UnitOfWorkOptions!
+Skywalker.Ddd.Uow.UnitOfWorkOptions.IsolationLevel.get -> System.Data.IsolationLevel?
+Skywalker.Ddd.Uow.UnitOfWorkOptions.IsolationLevel.set -> void
+Skywalker.Ddd.Uow.UnitOfWorkOptions.IsTransactional.get -> bool
+Skywalker.Ddd.Uow.UnitOfWorkOptions.IsTransactional.set -> void
+Skywalker.Ddd.Uow.UnitOfWorkOptions.Timeout.get -> int?
+Skywalker.Ddd.Uow.UnitOfWorkOptions.Timeout.set -> void
+Skywalker.Ddd.Uow.UnitOfWorkOptions.UnitOfWorkOptions() -> void
+Skywalker.Ddd.Uow.UnitOfWorkOptions.UnitOfWorkOptions(bool isTransactional = false, System.Data.IsolationLevel? isolationLevel = null, int? timeout = null) -> void
+Skywalker.Ddd.Uow.UnitOfWorkTransactionBehavior
+Skywalker.Ddd.Uow.UnitOfWorkTransactionBehavior.Auto = 0 -> Skywalker.Ddd.Uow.UnitOfWorkTransactionBehavior
+Skywalker.Ddd.Uow.UnitOfWorkTransactionBehavior.Disabled = 2 -> Skywalker.Ddd.Uow.UnitOfWorkTransactionBehavior
+Skywalker.Ddd.Uow.UnitOfWorkTransactionBehavior.Enabled = 1 -> Skywalker.Ddd.Uow.UnitOfWorkTransactionBehavior
+static Skywalker.Ddd.Uow.UnitOfWorkExtensions.IsReservedFor(this Skywalker.Ddd.Uow.Abstractions.IUnitOfWork! unitOfWork, string! reservationName) -> bool
+static Skywalker.Ddd.Uow.UnitOfWorkHelper.GetUnitOfWorkAttributeOrNull(System.Reflection.MethodInfo! methodInfo) -> Skywalker.Ddd.Uow.UnitOfWorkAttribute?
+static Skywalker.Ddd.Uow.UnitOfWorkHelper.IsUnitOfWorkMethod(System.Reflection.MethodInfo! methodInfo, out Skywalker.Ddd.Uow.UnitOfWorkAttribute? unitOfWorkAttribute) -> bool
+static Skywalker.Ddd.Uow.UnitOfWorkHelper.IsUnitOfWorkType(System.Reflection.TypeInfo! implementationType) -> bool
+static Skywalker.Ddd.Uow.UnitOfWorkManagerExtensions.Begin(this Skywalker.Ddd.Uow.Abstractions.IUnitOfWorkManager! unitOfWorkManager, bool requiresNew = false, bool isTransactional = false, System.Data.IsolationLevel? isolationLevel = null, int? timeout = null) -> Skywalker.Ddd.Uow.Abstractions.IUnitOfWork!
+static Skywalker.Ddd.Uow.UnitOfWorkManagerExtensions.BeginReserved(this Skywalker.Ddd.Uow.Abstractions.IUnitOfWorkManager! unitOfWorkManager, string! reservationName) -> void
+static Skywalker.Ddd.Uow.UnitOfWorkManagerExtensions.TryBeginReserved(this Skywalker.Ddd.Uow.Abstractions.IUnitOfWorkManager! unitOfWorkManager, string! reservationName) -> void
+virtual Skywalker.Ddd.Uow.UnitOfWork.CommitTransactionsAsync() -> System.Threading.Tasks.Task!
+virtual Skywalker.Ddd.Uow.UnitOfWork.CompleteAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) -> System.Threading.Tasks.Task!
+virtual Skywalker.Ddd.Uow.UnitOfWork.Dispose() -> void
+virtual Skywalker.Ddd.Uow.UnitOfWork.Initialize(Skywalker.Ddd.Uow.UnitOfWorkOptions! options) -> void
+virtual Skywalker.Ddd.Uow.UnitOfWork.OnCompletedAsync() -> System.Threading.Tasks.Task!
+virtual Skywalker.Ddd.Uow.UnitOfWork.OnDisposed() -> void
+virtual Skywalker.Ddd.Uow.UnitOfWork.OnFailed() -> void
+virtual Skywalker.Ddd.Uow.UnitOfWork.Reserve(string! reservationName) -> void
+virtual Skywalker.Ddd.Uow.UnitOfWork.RollbackAll() -> void
+virtual Skywalker.Ddd.Uow.UnitOfWork.RollbackAllAsync(System.Threading.CancellationToken cancellationToken) -> System.Threading.Tasks.Task!
+virtual Skywalker.Ddd.Uow.UnitOfWork.RollbackAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) -> System.Threading.Tasks.Task!
+virtual Skywalker.Ddd.Uow.UnitOfWork.SaveChangesAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) -> System.Threading.Tasks.Task!
+virtual Skywalker.Ddd.Uow.UnitOfWork.SetOuter(Skywalker.Ddd.Uow.Abstractions.IUnitOfWork? outer) -> void

@@ -1,0 +1,19 @@
+#nullable enable
+Microsoft.Extensions.DependencyInjection.SettingEndpointRouteBuilderExtensions
+Microsoft.Extensions.DependencyInjection.SettingsAspNetCoreServiceCollectionExtensions
+Skywalker.Settings.AspNetCore.SettingDto
+Skywalker.Settings.AspNetCore.SettingDto.Name.get -> string!
+Skywalker.Settings.AspNetCore.SettingDto.Name.init -> void
+Skywalker.Settings.AspNetCore.SettingDto.SettingDto(string! Name, string? Value) -> void
+Skywalker.Settings.AspNetCore.SettingDto.Value.get -> string?
+Skywalker.Settings.AspNetCore.SettingDto.Value.init -> void
+Skywalker.Settings.AspNetCore.UpdateSettingDto
+Skywalker.Settings.AspNetCore.UpdateSettingDto.ProviderKey.get -> string?
+Skywalker.Settings.AspNetCore.UpdateSettingDto.ProviderKey.init -> void
+Skywalker.Settings.AspNetCore.UpdateSettingDto.ProviderName.get -> string!
+Skywalker.Settings.AspNetCore.UpdateSettingDto.ProviderName.init -> void
+Skywalker.Settings.AspNetCore.UpdateSettingDto.UpdateSettingDto(string! Value, string! ProviderName, string? ProviderKey = null) -> void
+Skywalker.Settings.AspNetCore.UpdateSettingDto.Value.get -> string!
+Skywalker.Settings.AspNetCore.UpdateSettingDto.Value.init -> void
+static Microsoft.Extensions.DependencyInjection.SettingEndpointRouteBuilderExtensions.MapSettingEndpoints(this Microsoft.AspNetCore.Routing.IEndpointRouteBuilder! endpoints, string! routePrefix = "api/settings") -> Microsoft.AspNetCore.Routing.RouteGroupBuilder!
+static Microsoft.Extensions.DependencyInjection.SettingsAspNetCoreServiceCollectionExtensions.AddSkywalkerSettingsAspNetCore(this Microsoft.Extensions.DependencyInjection.IServiceCollection! services) -> Microsoft.Extensions.DependencyInjection.IServiceCollection!

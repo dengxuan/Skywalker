@@ -1,0 +1,6 @@
+#nullable enable
+Microsoft.Extensions.DependencyInjection.DbContextHealthCheckExtensions
+Skywalker.HealthChecks.EntityFrameworkCore.DbContextHealthCheck<TContext>
+Skywalker.HealthChecks.EntityFrameworkCore.DbContextHealthCheck<TContext>.CheckHealthAsync(Microsoft.Extensions.Diagnostics.HealthChecks.HealthCheckContext! context, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) -> System.Threading.Tasks.Task<Microsoft.Extensions.Diagnostics.HealthChecks.HealthCheckResult>!
+Skywalker.HealthChecks.EntityFrameworkCore.DbContextHealthCheck<TContext>.DbContextHealthCheck(TContext! dbContext) -> void
+static Microsoft.Extensions.DependencyInjection.DbContextHealthCheckExtensions.AddDbContextHealthCheck<TContext>(this Microsoft.Extensions.DependencyInjection.IHealthChecksBuilder! builder, string? name = null, Microsoft.Extensions.Diagnostics.HealthChecks.HealthStatus? failureStatus = null, System.Collections.Generic.IEnumerable<string!>? tags = null, System.TimeSpan? timeout = null) -> Microsoft.Extensions.DependencyInjection.IHealthChecksBuilder!

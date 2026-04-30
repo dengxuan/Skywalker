@@ -1,0 +1,26 @@
+#nullable enable
+Microsoft.AspNetCore.Builder.HealthCheckApplicationBuilderExtensions
+Microsoft.Extensions.DependencyInjection.HealthCheckServiceCollectionExtensions
+Skywalker.HealthChecks.AspNetCore.HealthCheckResponseWriter
+Skywalker.HealthChecks.AspNetCore.SkywalkerHealthCheckOptions
+Skywalker.HealthChecks.AspNetCore.SkywalkerHealthCheckOptions.DetailedEndpoint.get -> string!
+Skywalker.HealthChecks.AspNetCore.SkywalkerHealthCheckOptions.DetailedEndpoint.set -> void
+Skywalker.HealthChecks.AspNetCore.SkywalkerHealthCheckOptions.DetailedEndpointAuthorizationPolicy.get -> string?
+Skywalker.HealthChecks.AspNetCore.SkywalkerHealthCheckOptions.DetailedEndpointAuthorizationPolicy.set -> void
+Skywalker.HealthChecks.AspNetCore.SkywalkerHealthCheckOptions.EnableDetailedEndpoint.get -> bool
+Skywalker.HealthChecks.AspNetCore.SkywalkerHealthCheckOptions.EnableDetailedEndpoint.set -> void
+Skywalker.HealthChecks.AspNetCore.SkywalkerHealthCheckOptions.EnableKubernetesEndpoints.get -> bool
+Skywalker.HealthChecks.AspNetCore.SkywalkerHealthCheckOptions.EnableKubernetesEndpoints.set -> void
+Skywalker.HealthChecks.AspNetCore.SkywalkerHealthCheckOptions.HealthEndpoint.get -> string!
+Skywalker.HealthChecks.AspNetCore.SkywalkerHealthCheckOptions.HealthEndpoint.set -> void
+Skywalker.HealthChecks.AspNetCore.SkywalkerHealthCheckOptions.LiveEndpoint.get -> string!
+Skywalker.HealthChecks.AspNetCore.SkywalkerHealthCheckOptions.LiveEndpoint.set -> void
+Skywalker.HealthChecks.AspNetCore.SkywalkerHealthCheckOptions.ReadyEndpoint.get -> string!
+Skywalker.HealthChecks.AspNetCore.SkywalkerHealthCheckOptions.ReadyEndpoint.set -> void
+Skywalker.HealthChecks.AspNetCore.SkywalkerHealthCheckOptions.RequireAuthorizationForDetailedEndpoint.get -> bool
+Skywalker.HealthChecks.AspNetCore.SkywalkerHealthCheckOptions.RequireAuthorizationForDetailedEndpoint.set -> void
+Skywalker.HealthChecks.AspNetCore.SkywalkerHealthCheckOptions.SkywalkerHealthCheckOptions() -> void
+static Microsoft.AspNetCore.Builder.HealthCheckApplicationBuilderExtensions.MapSkywalkerHealthChecks(this Microsoft.AspNetCore.Routing.IEndpointRouteBuilder! endpoints) -> Microsoft.AspNetCore.Routing.IEndpointRouteBuilder!
+static Microsoft.Extensions.DependencyInjection.HealthCheckServiceCollectionExtensions.AddSkywalkerHealthChecks(this Microsoft.Extensions.DependencyInjection.IServiceCollection! services, System.Action<Skywalker.HealthChecks.AspNetCore.SkywalkerHealthCheckOptions!>? configure = null) -> Microsoft.Extensions.DependencyInjection.IHealthChecksBuilder!
+static Skywalker.HealthChecks.AspNetCore.HealthCheckResponseWriter.WriteDetailedResponse(Microsoft.AspNetCore.Http.HttpContext! context, Microsoft.Extensions.Diagnostics.HealthChecks.HealthReport! report) -> System.Threading.Tasks.Task!
+static Skywalker.HealthChecks.AspNetCore.HealthCheckResponseWriter.WriteSimpleResponse(Microsoft.AspNetCore.Http.HttpContext! context, Microsoft.Extensions.Diagnostics.HealthChecks.HealthReport! report) -> System.Threading.Tasks.Task!

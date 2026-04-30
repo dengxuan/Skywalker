@@ -1,0 +1,160 @@
+#nullable enable
+abstract Skywalker.Security.Claims.CurrentPrincipalAccessor.GetClaimsPrincipal() -> System.Security.Claims.ClaimsPrincipal?
+Microsoft.Extensions.DependencyInjection.SecurityIServiceCollectionExtensions
+override Skywalker.Security.Claims.ThreadCurrentPrincipalAccessor.GetClaimsPrincipal() -> System.Security.Claims.ClaimsPrincipal?
+Skywalker.Security.Claims.AbpDynamicClaim
+Skywalker.Security.Claims.AbpDynamicClaim.AbpDynamicClaim(string! type, string? value) -> void
+Skywalker.Security.Claims.AbpDynamicClaim.Type.get -> string!
+Skywalker.Security.Claims.AbpDynamicClaim.Type.set -> void
+Skywalker.Security.Claims.AbpDynamicClaim.Value.get -> string?
+Skywalker.Security.Claims.AbpDynamicClaim.Value.set -> void
+Skywalker.Security.Claims.AbpDynamicClaimCacheItem
+Skywalker.Security.Claims.AbpDynamicClaimCacheItem.AbpDynamicClaimCacheItem() -> void
+Skywalker.Security.Claims.AbpDynamicClaimCacheItem.AbpDynamicClaimCacheItem(System.Collections.Generic.List<Skywalker.Security.Claims.AbpDynamicClaim!>! claims) -> void
+Skywalker.Security.Claims.AbpDynamicClaimCacheItem.Claims.get -> System.Collections.Generic.List<Skywalker.Security.Claims.AbpDynamicClaim!>!
+Skywalker.Security.Claims.AbpDynamicClaimCacheItem.Claims.set -> void
+Skywalker.Security.Claims.CurrentPrincipalAccessor
+Skywalker.Security.Claims.CurrentPrincipalAccessor.CurrentPrincipalAccessor() -> void
+Skywalker.Security.Claims.CurrentPrincipalAccessor.Principal.get -> System.Security.Claims.ClaimsPrincipal?
+Skywalker.Security.Claims.ICurrentPrincipalAccessor
+Skywalker.Security.Claims.ICurrentPrincipalAccessor.Change(System.Security.Claims.ClaimsPrincipal! principal) -> System.IDisposable!
+Skywalker.Security.Claims.ICurrentPrincipalAccessor.Principal.get -> System.Security.Claims.ClaimsPrincipal?
+Skywalker.Security.Claims.ISkywalkerClaimsPrincipalContributor
+Skywalker.Security.Claims.ISkywalkerClaimsPrincipalContributor.ContributeAsync(Skywalker.Security.Claims.SkywalkerClaimsPrincipalContributorContext! context) -> System.Threading.Tasks.Task!
+Skywalker.Security.Claims.ISkywalkerClaimsPrincipalFactory
+Skywalker.Security.Claims.ISkywalkerClaimsPrincipalFactory.CreateAsync(System.Security.Claims.ClaimsPrincipal? existsClaimsPrincipal = null) -> System.Threading.Tasks.Task<System.Security.Claims.ClaimsPrincipal!>!
+Skywalker.Security.Claims.ISkywalkerClaimsPrincipalFactory.CreateDynamicAsync(System.Security.Claims.ClaimsPrincipal? existsClaimsPrincipal = null) -> System.Threading.Tasks.Task<System.Security.Claims.ClaimsPrincipal!>!
+Skywalker.Security.Claims.ISkywalkerDynamicClaimsPrincipalContributor
+Skywalker.Security.Claims.ISkywalkerDynamicClaimsPrincipalContributor.ContributeAsync(Skywalker.Security.Claims.SkywalkerClaimsPrincipalContributorContext! context) -> System.Threading.Tasks.Task!
+Skywalker.Security.Claims.SkywalkerClaimsPrincipalContributorContext
+Skywalker.Security.Claims.SkywalkerClaimsPrincipalContributorContext.ClaimsPrincipal.get -> System.Security.Claims.ClaimsPrincipal!
+Skywalker.Security.Claims.SkywalkerClaimsPrincipalContributorContext.ServiceProvider.get -> System.IServiceProvider!
+Skywalker.Security.Claims.SkywalkerClaimsPrincipalContributorContext.SkywalkerClaimsPrincipalContributorContext(System.Security.Claims.ClaimsPrincipal! claimsIdentity, System.IServiceProvider! serviceProvider) -> void
+Skywalker.Security.Claims.SkywalkerClaimsPrincipalFactory
+Skywalker.Security.Claims.SkywalkerClaimsPrincipalFactory.Options.get -> Skywalker.Security.Claims.SkywalkerClaimsPrincipalFactoryOptions!
+Skywalker.Security.Claims.SkywalkerClaimsPrincipalFactory.ServiceScopeFactory.get -> Microsoft.Extensions.DependencyInjection.IServiceScopeFactory!
+Skywalker.Security.Claims.SkywalkerClaimsPrincipalFactory.SkywalkerClaimsPrincipalFactory(Microsoft.Extensions.DependencyInjection.IServiceScopeFactory! serviceScopeFactory, Microsoft.Extensions.Options.IOptions<Skywalker.Security.Claims.SkywalkerClaimsPrincipalFactoryOptions!>! abpClaimOptions) -> void
+Skywalker.Security.Claims.SkywalkerClaimsPrincipalFactoryOptions
+Skywalker.Security.Claims.SkywalkerClaimsPrincipalFactoryOptions.ClaimsMap.get -> System.Collections.Generic.Dictionary<string!, System.Collections.Generic.List<string!>!>!
+Skywalker.Security.Claims.SkywalkerClaimsPrincipalFactoryOptions.ClaimsMap.set -> void
+Skywalker.Security.Claims.SkywalkerClaimsPrincipalFactoryOptions.Contributors.get -> Skywalker.Extensions.Collections.Generic.ITypeList<Skywalker.Security.Claims.ISkywalkerClaimsPrincipalContributor!>!
+Skywalker.Security.Claims.SkywalkerClaimsPrincipalFactoryOptions.DynamicClaims.get -> System.Collections.Generic.List<string!>!
+Skywalker.Security.Claims.SkywalkerClaimsPrincipalFactoryOptions.DynamicContributors.get -> Skywalker.Extensions.Collections.Generic.ITypeList<Skywalker.Security.Claims.ISkywalkerDynamicClaimsPrincipalContributor!>!
+Skywalker.Security.Claims.SkywalkerClaimsPrincipalFactoryOptions.SkywalkerClaimsPrincipalFactoryOptions() -> void
+Skywalker.Security.Claims.SkywalkerClaimTypes
+Skywalker.Security.Claims.SkywalkerClaimTypes.SkywalkerClaimTypes() -> void
+Skywalker.Security.Claims.ThreadCurrentPrincipalAccessor
+Skywalker.Security.Claims.ThreadCurrentPrincipalAccessor.ThreadCurrentPrincipalAccessor() -> void
+Skywalker.Security.Clients.CurrentClient
+Skywalker.Security.Clients.CurrentClient.CurrentClient(Skywalker.Security.Claims.ICurrentPrincipalAccessor! principalAccessor) -> void
+Skywalker.Security.Clients.ICurrentClient
+Skywalker.Security.Clients.ICurrentClient.Id.get -> string?
+Skywalker.Security.Clients.ICurrentClient.IsAuthenticated.get -> bool
+Skywalker.Security.Cryptography.Abstractions.ICrypter
+Skywalker.Security.Cryptography.Abstractions.ICrypter.Decrypt(byte[]! bytes) -> byte[]!
+Skywalker.Security.Cryptography.Abstractions.ICrypter.Encrypt(byte[]! bytes) -> byte[]!
+Skywalker.Security.Cryptography.Abstractions.ICrypterFactory
+Skywalker.Security.Cryptography.Abstractions.ICrypterFactory.CreateAsymmetricCrypter(Skywalker.Security.Cryptography.AsymmetricCrypterAlgorithms algorithm, System.Security.Cryptography.CipherMode cipherMode, System.Security.Cryptography.PaddingMode paddingMode, System.Security.Cryptography.X509Certificates.X509Certificate2! x509Certificate2) -> Skywalker.Security.Cryptography.Abstractions.ICrypter!
+Skywalker.Security.Cryptography.Abstractions.ICrypterFactory.CreateSymmetricCrypter(Skywalker.Security.Cryptography.SymmetricCrypterAlgorithms algorithm, System.Security.Cryptography.CipherMode cipherMode, System.Security.Cryptography.PaddingMode paddingMode) -> Skywalker.Security.Cryptography.Abstractions.ICrypter!
+Skywalker.Security.Cryptography.Abstractions.ICrypterFactory.CreateSymmetricCrypter(Skywalker.Security.Cryptography.SymmetricCrypterAlgorithms algorithm, System.Security.Cryptography.CipherMode cipherMode, System.Security.Cryptography.PaddingMode paddingMode, string! key, string! iv) -> Skywalker.Security.Cryptography.Abstractions.ICrypter!
+Skywalker.Security.Cryptography.Abstractions.IStringCrypter
+Skywalker.Security.Cryptography.Abstractions.IStringCrypter.Decrypt(string? cipherText, string? passPhrase = null, byte[]? salt = null) -> string?
+Skywalker.Security.Cryptography.Abstractions.IStringCrypter.Encrypt(string? plainText, string? passPhrase = null, byte[]? salt = null) -> string?
+Skywalker.Security.Cryptography.AsymmetricCrypterAlgorithms
+Skywalker.Security.Cryptography.AsymmetricCrypterAlgorithms.DSA = 1 -> Skywalker.Security.Cryptography.AsymmetricCrypterAlgorithms
+Skywalker.Security.Cryptography.AsymmetricCrypterAlgorithms.ECDsa = 2 -> Skywalker.Security.Cryptography.AsymmetricCrypterAlgorithms
+Skywalker.Security.Cryptography.AsymmetricCrypterAlgorithms.RSA = 0 -> Skywalker.Security.Cryptography.AsymmetricCrypterAlgorithms
+Skywalker.Security.Cryptography.Crypter
+Skywalker.Security.Cryptography.Crypter.Algorithm.get -> int
+Skywalker.Security.Cryptography.Crypter.Algorithm.set -> void
+Skywalker.Security.Cryptography.Crypter.Crypter() -> void
+Skywalker.Security.Cryptography.Crypter.Crypter(int algorithm) -> void
+Skywalker.Security.Cryptography.Crypter.IV.get -> byte[]?
+Skywalker.Security.Cryptography.Crypter.IV.set -> void
+Skywalker.Security.Cryptography.Crypter.Key.get -> byte[]?
+Skywalker.Security.Cryptography.Crypter.Key.set -> void
+Skywalker.Security.Cryptography.SymmetricCrypterAlgorithms
+Skywalker.Security.Cryptography.SymmetricCrypterAlgorithms.AES = 0 -> Skywalker.Security.Cryptography.SymmetricCrypterAlgorithms
+Skywalker.Security.Cryptography.SymmetricCrypterAlgorithms.DES = 1 -> Skywalker.Security.Cryptography.SymmetricCrypterAlgorithms
+Skywalker.Security.Cryptography.SymmetricCrypterAlgorithms.RC2 = 3 -> Skywalker.Security.Cryptography.SymmetricCrypterAlgorithms
+Skywalker.Security.Cryptography.SymmetricCrypterAlgorithms.TripleDES = 2 -> Skywalker.Security.Cryptography.SymmetricCrypterAlgorithms
+Skywalker.Security.Users.CurrentUser
+Skywalker.Security.Users.CurrentUser.CurrentUser(Skywalker.Security.Claims.ICurrentPrincipalAccessor! principalAccessor) -> void
+Skywalker.Security.Users.CurrentUserExtensions
+Skywalker.Security.Users.ICurrentUser
+Skywalker.Security.Users.ICurrentUser.Email.get -> string?
+Skywalker.Security.Users.ICurrentUser.FindClaim(string! claimType) -> System.Security.Claims.Claim?
+Skywalker.Security.Users.ICurrentUser.FindClaims(string! claimType) -> System.Security.Claims.Claim![]!
+Skywalker.Security.Users.ICurrentUser.GetAllClaims() -> System.Security.Claims.Claim![]!
+Skywalker.Security.Users.ICurrentUser.Id.get -> string?
+Skywalker.Security.Users.ICurrentUser.IsAuthenticated.get -> bool
+Skywalker.Security.Users.ICurrentUser.IsInRole(string! roleName) -> bool
+Skywalker.Security.Users.ICurrentUser.PhoneNumber.get -> string?
+Skywalker.Security.Users.ICurrentUser.Roles.get -> string![]!
+Skywalker.Security.Users.ICurrentUser.Username.get -> string?
+static Microsoft.Extensions.DependencyInjection.SecurityIServiceCollectionExtensions.AddSecurity(this Microsoft.Extensions.DependencyInjection.IServiceCollection! services) -> Microsoft.Extensions.DependencyInjection.IServiceCollection!
+static Skywalker.Security.Claims.AbpDynamicClaimCacheItem.CalculateCacheKey(string! userId) -> string!
+static Skywalker.Security.Claims.SkywalkerClaimsPrincipalFactory.AuthenticationType.get -> string!
+static Skywalker.Security.Claims.SkywalkerClaimTypes.Avatar.get -> string!
+static Skywalker.Security.Claims.SkywalkerClaimTypes.Avatar.set -> void
+static Skywalker.Security.Claims.SkywalkerClaimTypes.ClientId.get -> string!
+static Skywalker.Security.Claims.SkywalkerClaimTypes.ClientId.set -> void
+static Skywalker.Security.Claims.SkywalkerClaimTypes.Email.get -> string!
+static Skywalker.Security.Claims.SkywalkerClaimTypes.Email.set -> void
+static Skywalker.Security.Claims.SkywalkerClaimTypes.EmailVerified.get -> string!
+static Skywalker.Security.Claims.SkywalkerClaimTypes.EmailVerified.set -> void
+static Skywalker.Security.Claims.SkywalkerClaimTypes.NickName.get -> string!
+static Skywalker.Security.Claims.SkywalkerClaimTypes.NickName.set -> void
+static Skywalker.Security.Claims.SkywalkerClaimTypes.PhoneNumber.get -> string!
+static Skywalker.Security.Claims.SkywalkerClaimTypes.PhoneNumber.set -> void
+static Skywalker.Security.Claims.SkywalkerClaimTypes.PhoneNumberVerified.get -> string!
+static Skywalker.Security.Claims.SkywalkerClaimTypes.PhoneNumberVerified.set -> void
+static Skywalker.Security.Claims.SkywalkerClaimTypes.RememberMe.get -> string!
+static Skywalker.Security.Claims.SkywalkerClaimTypes.RememberMe.set -> void
+static Skywalker.Security.Claims.SkywalkerClaimTypes.Role.get -> string!
+static Skywalker.Security.Claims.SkywalkerClaimTypes.Role.set -> void
+static Skywalker.Security.Claims.SkywalkerClaimTypes.SessionId.get -> string!
+static Skywalker.Security.Claims.SkywalkerClaimTypes.SessionId.set -> void
+static Skywalker.Security.Claims.SkywalkerClaimTypes.TenantcyId.get -> string!
+static Skywalker.Security.Claims.SkywalkerClaimTypes.TenantcyId.set -> void
+static Skywalker.Security.Claims.SkywalkerClaimTypes.TgUserName.get -> string!
+static Skywalker.Security.Claims.SkywalkerClaimTypes.TgUserName.set -> void
+static Skywalker.Security.Claims.SkywalkerClaimTypes.UserId.get -> string!
+static Skywalker.Security.Claims.SkywalkerClaimTypes.UserId.set -> void
+static Skywalker.Security.Claims.SkywalkerClaimTypes.UserName.get -> string!
+static Skywalker.Security.Claims.SkywalkerClaimTypes.UserName.set -> void
+static Skywalker.Security.Users.CurrentUserExtensions.FindClaimValue(this Skywalker.Security.Users.ICurrentUser! currentUser, string! claimType) -> string?
+static Skywalker.Security.Users.CurrentUserExtensions.FindClaimValue<T>(this Skywalker.Security.Users.ICurrentUser! currentUser, string! claimType) -> T
+static System.Security.Claims.CurrentPrincipalAccessorExtensions.Change(this Skywalker.Security.Claims.ICurrentPrincipalAccessor! currentPrincipalAccessor, System.Collections.Generic.IEnumerable<System.Security.Claims.Claim!>! claims) -> System.IDisposable!
+static System.Security.Claims.CurrentPrincipalAccessorExtensions.Change(this Skywalker.Security.Claims.ICurrentPrincipalAccessor! currentPrincipalAccessor, System.Security.Claims.Claim! claim) -> System.IDisposable!
+static System.Security.Claims.CurrentPrincipalAccessorExtensions.Change(this Skywalker.Security.Claims.ICurrentPrincipalAccessor! currentPrincipalAccessor, System.Security.Claims.ClaimsIdentity! claimsIdentity) -> System.IDisposable!
+static System.Security.Cryptography.StringExtensions.FromAes(this string? cipherText, string! passPhrase, byte[]! salt, byte[]! initVectorBytes, int keySize = 256) -> string?
+static System.Security.Cryptography.StringExtensions.ToAes(this string? plainText, string! passPhrase, byte[]! salt, byte[]! initVectorBytes, int keySize = 256) -> string?
+static System.Security.Principal.SkywalkerClaimsIdentityExtensions.AddIdentityIfNotContains(this System.Security.Claims.ClaimsPrincipal! principal, System.Security.Claims.ClaimsIdentity! identity) -> System.Security.Claims.ClaimsPrincipal!
+static System.Security.Principal.SkywalkerClaimsIdentityExtensions.AddIfNotContains(this System.Security.Claims.ClaimsIdentity! claimsIdentity, System.Security.Claims.Claim! claim) -> System.Security.Claims.ClaimsIdentity!
+static System.Security.Principal.SkywalkerClaimsIdentityExtensions.AddOrReplace(this System.Security.Claims.ClaimsIdentity! claimsIdentity, System.Security.Claims.Claim! claim) -> System.Security.Claims.ClaimsIdentity!
+static System.Security.Principal.SkywalkerClaimsIdentityExtensions.FindClientId(this System.Security.Claims.ClaimsPrincipal! principal) -> string?
+static System.Security.Principal.SkywalkerClaimsIdentityExtensions.FindClientId(this System.Security.Principal.IIdentity! identity) -> string?
+static System.Security.Principal.SkywalkerClaimsIdentityExtensions.FindTenantcyId(this System.Security.Claims.ClaimsPrincipal! principal) -> long?
+static System.Security.Principal.SkywalkerClaimsIdentityExtensions.FindTenantcyId(this System.Security.Principal.IIdentity! identity) -> long?
+static System.Security.Principal.SkywalkerClaimsIdentityExtensions.FindUserId(this System.Security.Claims.ClaimsPrincipal! principal) -> string?
+static System.Security.Principal.SkywalkerClaimsIdentityExtensions.FindUserId(this System.Security.Principal.IIdentity! identity) -> string?
+System.Security.Claims.CurrentPrincipalAccessorExtensions
+System.Security.Cryptography.StringExtensions
+System.Security.Principal.SkywalkerClaimsIdentityExtensions
+virtual Skywalker.Security.Claims.CurrentPrincipalAccessor.Change(System.Security.Claims.ClaimsPrincipal! principal) -> System.IDisposable!
+virtual Skywalker.Security.Claims.SkywalkerClaimsPrincipalFactory.CreateAsync(System.Security.Claims.ClaimsPrincipal? existsClaimsPrincipal = null) -> System.Threading.Tasks.Task<System.Security.Claims.ClaimsPrincipal!>!
+virtual Skywalker.Security.Claims.SkywalkerClaimsPrincipalFactory.CreateDynamicAsync(System.Security.Claims.ClaimsPrincipal? existsClaimsPrincipal = null) -> System.Threading.Tasks.Task<System.Security.Claims.ClaimsPrincipal!>!
+virtual Skywalker.Security.Claims.SkywalkerClaimsPrincipalFactory.InternalCreateAsync(Skywalker.Security.Claims.SkywalkerClaimsPrincipalFactoryOptions! options, System.Security.Claims.ClaimsPrincipal? existsClaimsPrincipal = null, bool isDynamic = false) -> System.Threading.Tasks.Task<System.Security.Claims.ClaimsPrincipal!>!
+virtual Skywalker.Security.Clients.CurrentClient.Id.get -> string?
+virtual Skywalker.Security.Clients.CurrentClient.IsAuthenticated.get -> bool
+virtual Skywalker.Security.Users.CurrentUser.Email.get -> string?
+virtual Skywalker.Security.Users.CurrentUser.FindClaim(string! claimType) -> System.Security.Claims.Claim?
+virtual Skywalker.Security.Users.CurrentUser.FindClaims(string! claimType) -> System.Security.Claims.Claim![]!
+virtual Skywalker.Security.Users.CurrentUser.GetAllClaims() -> System.Security.Claims.Claim![]!
+virtual Skywalker.Security.Users.CurrentUser.Id.get -> string?
+virtual Skywalker.Security.Users.CurrentUser.IsAuthenticated.get -> bool
+virtual Skywalker.Security.Users.CurrentUser.IsInRole(string! roleName) -> bool
+virtual Skywalker.Security.Users.CurrentUser.PhoneNumber.get -> string?
+virtual Skywalker.Security.Users.CurrentUser.Roles.get -> string![]!
+virtual Skywalker.Security.Users.CurrentUser.Username.get -> string?

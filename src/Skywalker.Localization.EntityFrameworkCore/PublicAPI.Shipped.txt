@@ -1,0 +1,65 @@
+#nullable enable
+const Skywalker.Localization.EntityFrameworkCore.LocalizationConsts.MaxCultureNameLength = 16 -> int
+const Skywalker.Localization.EntityFrameworkCore.LocalizationConsts.MaxIdLength = 64 -> int
+const Skywalker.Localization.EntityFrameworkCore.LocalizationConsts.MaxKeyLength = 512 -> int
+const Skywalker.Localization.EntityFrameworkCore.LocalizationConsts.MaxResourceNameLength = 128 -> int
+const Skywalker.Localization.EntityFrameworkCore.LocalizationConsts.MaxValueLength = 4096 -> int
+Microsoft.Extensions.DependencyInjection.LocalizationEfCoreServiceCollectionExtensions
+Microsoft.Extensions.EntityFrameworkCore.LocalizationDbContextModelBuilderExtensions
+override Skywalker.Localization.EntityFrameworkCore.Entities.LocalizationText.ToString() -> string!
+override Skywalker.Localization.EntityFrameworkCore.LocalizationDbContext.OnModelCreating(Microsoft.EntityFrameworkCore.ModelBuilder! modelBuilder) -> void
+Skywalker.Localization.EntityFrameworkCore.EfCoreLocalizationResourceContributor
+Skywalker.Localization.EntityFrameworkCore.EfCoreLocalizationResourceContributor.EfCoreLocalizationResourceContributor(string! resourceName, int cacheExpirationMinutes = 30) -> void
+Skywalker.Localization.EntityFrameworkCore.EfCoreLocalizationResourceContributor.Fill(string! cultureName, System.Collections.Generic.Dictionary<string!, Skywalker.Localization.LocalizedString!>! dictionary) -> void
+Skywalker.Localization.EntityFrameworkCore.EfCoreLocalizationResourceContributor.GetOrNull(string! cultureName, string! name) -> Skywalker.Localization.LocalizedString?
+Skywalker.Localization.EntityFrameworkCore.EfCoreLocalizationResourceContributor.GetSupportedCultures() -> System.Collections.Generic.IEnumerable<string!>!
+Skywalker.Localization.EntityFrameworkCore.EfCoreLocalizationResourceContributor.Initialize(Skywalker.Localization.LocalizationResourceInitializationContext! context) -> void
+Skywalker.Localization.EntityFrameworkCore.EfCoreLocalizationResourceContributor.InvalidateCache(string? cultureName = null) -> void
+Skywalker.Localization.EntityFrameworkCore.Entities.LocalizationText
+Skywalker.Localization.EntityFrameworkCore.Entities.LocalizationText.LocalizationText() -> void
+Skywalker.Localization.EntityFrameworkCore.Entities.LocalizationText.LocalizationText(string! id, string! resourceName, string! cultureName, string! key, string! value) -> void
+Skywalker.Localization.EntityFrameworkCore.Entities.LocalizationText.SetValue(string! value) -> void
+Skywalker.Localization.EntityFrameworkCore.ILocalizationDbContext
+Skywalker.Localization.EntityFrameworkCore.ILocalizationDbContext.LocalizationTexts.get -> Microsoft.EntityFrameworkCore.DbSet<Skywalker.Localization.EntityFrameworkCore.Entities.LocalizationText!>!
+Skywalker.Localization.EntityFrameworkCore.ILocalizationDbContext.LocalizationTexts.set -> void
+Skywalker.Localization.EntityFrameworkCore.ILocalizationTextManager
+Skywalker.Localization.EntityFrameworkCore.ILocalizationTextManager.DeleteAsync(string! resourceName, string! cultureName, string! key, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) -> System.Threading.Tasks.Task<bool>!
+Skywalker.Localization.EntityFrameworkCore.ILocalizationTextManager.DeleteByCultureAsync(string! resourceName, string! cultureName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) -> System.Threading.Tasks.Task<int>!
+Skywalker.Localization.EntityFrameworkCore.ILocalizationTextManager.ExportAsync(string! resourceName, string! cultureName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) -> System.Threading.Tasks.Task<System.Collections.Generic.Dictionary<string!, string!>!>!
+Skywalker.Localization.EntityFrameworkCore.ILocalizationTextManager.GetAsync(string! resourceName, string! cultureName, string! key, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) -> System.Threading.Tasks.Task<Skywalker.Localization.EntityFrameworkCore.Entities.LocalizationText?>!
+Skywalker.Localization.EntityFrameworkCore.ILocalizationTextManager.GetListAsync(string! resourceName, string! cultureName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) -> System.Threading.Tasks.Task<System.Collections.Generic.List<Skywalker.Localization.EntityFrameworkCore.Entities.LocalizationText!>!>!
+Skywalker.Localization.EntityFrameworkCore.ILocalizationTextManager.GetListByResourceAsync(string! resourceName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) -> System.Threading.Tasks.Task<System.Collections.Generic.List<Skywalker.Localization.EntityFrameworkCore.Entities.LocalizationText!>!>!
+Skywalker.Localization.EntityFrameworkCore.ILocalizationTextManager.GetSupportedCulturesAsync(string! resourceName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) -> System.Threading.Tasks.Task<System.Collections.Generic.List<string!>!>!
+Skywalker.Localization.EntityFrameworkCore.ILocalizationTextManager.ImportAsync(string! resourceName, string! cultureName, System.Collections.Generic.Dictionary<string!, string!>! texts, bool overwrite = true, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) -> System.Threading.Tasks.Task<int>!
+Skywalker.Localization.EntityFrameworkCore.ILocalizationTextManager.InvalidateCache(string! resourceName, string? cultureName = null) -> void
+Skywalker.Localization.EntityFrameworkCore.ILocalizationTextManager.SetAsync(string! resourceName, string! cultureName, string! key, string! value, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) -> System.Threading.Tasks.Task<Skywalker.Localization.EntityFrameworkCore.Entities.LocalizationText!>!
+Skywalker.Localization.EntityFrameworkCore.LocalizationConsts
+Skywalker.Localization.EntityFrameworkCore.LocalizationDbContext
+Skywalker.Localization.EntityFrameworkCore.LocalizationDbContext.LocalizationDbContext(Microsoft.EntityFrameworkCore.DbContextOptions<Skywalker.Localization.EntityFrameworkCore.LocalizationDbContext!>! options) -> void
+Skywalker.Localization.EntityFrameworkCore.LocalizationResourceExtensions
+Skywalker.Localization.EntityFrameworkCore.LocalizationTextManager
+Skywalker.Localization.EntityFrameworkCore.LocalizationTextManager.DeleteAsync(string! resourceName, string! cultureName, string! key, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) -> System.Threading.Tasks.Task<bool>!
+Skywalker.Localization.EntityFrameworkCore.LocalizationTextManager.DeleteByCultureAsync(string! resourceName, string! cultureName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) -> System.Threading.Tasks.Task<int>!
+Skywalker.Localization.EntityFrameworkCore.LocalizationTextManager.ExportAsync(string! resourceName, string! cultureName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) -> System.Threading.Tasks.Task<System.Collections.Generic.Dictionary<string!, string!>!>!
+Skywalker.Localization.EntityFrameworkCore.LocalizationTextManager.GetAsync(string! resourceName, string! cultureName, string! key, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) -> System.Threading.Tasks.Task<Skywalker.Localization.EntityFrameworkCore.Entities.LocalizationText?>!
+Skywalker.Localization.EntityFrameworkCore.LocalizationTextManager.GetListAsync(string! resourceName, string! cultureName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) -> System.Threading.Tasks.Task<System.Collections.Generic.List<Skywalker.Localization.EntityFrameworkCore.Entities.LocalizationText!>!>!
+Skywalker.Localization.EntityFrameworkCore.LocalizationTextManager.GetListByResourceAsync(string! resourceName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) -> System.Threading.Tasks.Task<System.Collections.Generic.List<Skywalker.Localization.EntityFrameworkCore.Entities.LocalizationText!>!>!
+Skywalker.Localization.EntityFrameworkCore.LocalizationTextManager.GetSupportedCulturesAsync(string! resourceName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) -> System.Threading.Tasks.Task<System.Collections.Generic.List<string!>!>!
+Skywalker.Localization.EntityFrameworkCore.LocalizationTextManager.ImportAsync(string! resourceName, string! cultureName, System.Collections.Generic.Dictionary<string!, string!>! texts, bool overwrite = true, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) -> System.Threading.Tasks.Task<int>!
+Skywalker.Localization.EntityFrameworkCore.LocalizationTextManager.InvalidateCache(string! resourceName, string? cultureName = null) -> void
+Skywalker.Localization.EntityFrameworkCore.LocalizationTextManager.LocalizationTextManager(Skywalker.Localization.EntityFrameworkCore.ILocalizationDbContext! dbContext, Microsoft.Extensions.Caching.Memory.IMemoryCache? memoryCache = null) -> void
+Skywalker.Localization.EntityFrameworkCore.LocalizationTextManager.SetAsync(string! resourceName, string! cultureName, string! key, string! value, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) -> System.Threading.Tasks.Task<Skywalker.Localization.EntityFrameworkCore.Entities.LocalizationText!>!
+static Microsoft.Extensions.DependencyInjection.LocalizationEfCoreServiceCollectionExtensions.AddLocalizationEfCore<TDbContext>(this Microsoft.Extensions.DependencyInjection.IServiceCollection! services) -> Microsoft.Extensions.DependencyInjection.IServiceCollection!
+static Microsoft.Extensions.DependencyInjection.LocalizationEfCoreServiceCollectionExtensions.AddLocalizationEfCore<TDbContext>(this Microsoft.Extensions.DependencyInjection.IServiceCollection! services, System.Action<Microsoft.EntityFrameworkCore.DbContextOptionsBuilder!>! optionsAction) -> Microsoft.Extensions.DependencyInjection.IServiceCollection!
+static Microsoft.Extensions.EntityFrameworkCore.LocalizationDbContextModelBuilderExtensions.ConfigureLocalization(this Microsoft.EntityFrameworkCore.ModelBuilder! builder, string! tablePrefix = "", string? schema = null) -> void
+static Skywalker.Localization.EntityFrameworkCore.LocalizationResourceExtensions.AddEfCore(this Skywalker.Localization.LocalizationResource! resource, string? resourceName = null, int cacheExpirationMinutes = 30) -> Skywalker.Localization.LocalizationResource!
+virtual Skywalker.Localization.EntityFrameworkCore.Entities.LocalizationText.CultureName.get -> string!
+virtual Skywalker.Localization.EntityFrameworkCore.Entities.LocalizationText.CultureName.set -> void
+virtual Skywalker.Localization.EntityFrameworkCore.Entities.LocalizationText.Key.get -> string!
+virtual Skywalker.Localization.EntityFrameworkCore.Entities.LocalizationText.Key.set -> void
+virtual Skywalker.Localization.EntityFrameworkCore.Entities.LocalizationText.ResourceName.get -> string!
+virtual Skywalker.Localization.EntityFrameworkCore.Entities.LocalizationText.ResourceName.set -> void
+virtual Skywalker.Localization.EntityFrameworkCore.Entities.LocalizationText.Value.get -> string!
+virtual Skywalker.Localization.EntityFrameworkCore.Entities.LocalizationText.Value.set -> void
+virtual Skywalker.Localization.EntityFrameworkCore.LocalizationDbContext.LocalizationTexts.get -> Microsoft.EntityFrameworkCore.DbSet<Skywalker.Localization.EntityFrameworkCore.Entities.LocalizationText!>!
+virtual Skywalker.Localization.EntityFrameworkCore.LocalizationDbContext.LocalizationTexts.set -> void

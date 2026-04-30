@@ -1,0 +1,773 @@
+#nullable enable
+abstract Skywalker.Extensions.Tokenizer.Either<TA, TB>.Equals(Skywalker.Extensions.Tokenizer.Either<TA, TB>? other) -> bool
+abstract Skywalker.Extensions.Tokenizer.Either<TA, TB>.Fold<TResult>(System.Func<TA, TResult>! a, System.Func<TB, TResult>! b) -> TResult
+const System.RegexConstants.Email.Any = "^[a-zA-Z0-9.!#$%&'*+\\/=?^_`{|}~-]+@[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?(?:\\.[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?)*$" -> string!
+const System.RegexConstants.Ipv4Address.Any = "((2(5[0-5]|[0-4]\\d))|[0-1]?\\d{1,2})(\\.((2(5[0-5]|[0-4]\\d))|[0-1]?\\d{1,2})){3}" -> string!
+const System.RegexConstants.MobileNumber.Any = "\\+(9[976]\\d|8[987530]\\d|6[987]\\d|5[90]\\d|42\\d|3[875]\\d|2[98654321]\\d|9[8543210]|8[6421]|6[6543210]|5[87654321]|4[987654310]|3[9643210]|2[70]|7|1)\\d{1,14}$" -> string!
+const System.RegexConstants.MobileNumber.AU = "^(\\+?61|0)4\\d{8}$" -> string!
+const System.RegexConstants.MobileNumber.BE = "^(\\+?32|0)4?\\d{8}$" -> string!
+const System.RegexConstants.MobileNumber.BR = "^(\\+?55|0)\\-?[1-9]{2}\\-?[2-9]{1}\\d{3,4}\\-?\\d{4}$" -> string!
+const System.RegexConstants.MobileNumber.CN = "^(\\+?0?86\\-?)?1[345789]\\d{9}$" -> string!
+const System.RegexConstants.MobileNumber.CZ = "^(\\+?420)? ?[1-9][0-9]{2} ?[0-9]{3} ?[0-9]{3}$" -> string!
+const System.RegexConstants.MobileNumber.DE = "^(\\+?49[ \\.\\-])?([\\(]{1}[0-9]{1,6}[\\)])?([0-9 \\.\\-\\/]{3,20})((x|ext|extension)[ ]?[0-9]{1,4})?$" -> string!
+const System.RegexConstants.MobileNumber.DK = "^(\\+?45)?(\\d{8})$" -> string!
+const System.RegexConstants.MobileNumber.DZ = "^(\\+?213|0)(5|6|7)\\d{8}$" -> string!
+const System.RegexConstants.MobileNumber.ES = "^(\\+?34)?(6\\d{1}|7[1234])\\d{7}$" -> string!
+const System.RegexConstants.MobileNumber.FI = "^(\\+?358|0)\\s?(4(0|1|2|4|5)?|50)\\s?(\\d\\s?){4,8}\\d$" -> string!
+const System.RegexConstants.MobileNumber.FR = "^(\\+?33|0)[67]\\d{8}$" -> string!
+const System.RegexConstants.MobileNumber.GB = "^(\\+?44|0)7\\d{9}$" -> string!
+const System.RegexConstants.MobileNumber.GR = "^(\\+?30)?(69\\d{8})$" -> string!
+const System.RegexConstants.MobileNumber.HK = "^(\\+?852\\-?)?[569]\\d{3}\\-?\\d{4}$" -> string!
+const System.RegexConstants.MobileNumber.HU = "^(\\+?36)(20|30|70)\\d{7}$" -> string!
+const System.RegexConstants.MobileNumber.IN = "^(\\+?91|0)?[789]\\d{9}$" -> string!
+const System.RegexConstants.MobileNumber.IT = "^(\\+?39)?\\s?3\\d{2} ?\\d{6,7}$" -> string!
+const System.RegexConstants.MobileNumber.JP = "^(\\+?81|0)\\d{1,4}[ \\-]?\\d{1,4}[ \\-]?\\d{4}$" -> string!
+const System.RegexConstants.MobileNumber.MY = "^(\\+?6?01){1}(([145]{1}(\\-|\\s)?\\d{7,8})|([236789]{1}(\\s|\\-)?\\d{7}))$" -> string!
+const System.RegexConstants.MobileNumber.NO = "^(\\+?47)?[49]\\d{7}$" -> string!
+const System.RegexConstants.MobileNumber.NZ = "^(\\+?64|0)2\\d{7,9}$" -> string!
+const System.RegexConstants.MobileNumber.PL = "^(\\+?48)? ?[5-8]\\d ?\\d{3} ?\\d{2} ?\\d{2}$" -> string!
+const System.RegexConstants.MobileNumber.PT = "^(\\+?351)?9[1236]\\d{7}$" -> string!
+const System.RegexConstants.MobileNumber.RS = "^(\\+3816|06)[- \\d]{5,9}$" -> string!
+const System.RegexConstants.MobileNumber.RU = "^(\\+?7|8)?9\\d{9}$" -> string!
+const System.RegexConstants.MobileNumber.SA = "^(!?(\\+?966)|0)?5\\d{8}$" -> string!
+const System.RegexConstants.MobileNumber.SY = "^(!?(\\+?963)|0)?9\\d{8}$" -> string!
+const System.RegexConstants.MobileNumber.TR = "^(\\+?90|0)?5\\d{9}$" -> string!
+const System.RegexConstants.MobileNumber.TW = "^(\\+?886\\-?|0)?9\\d{8}$" -> string!
+const System.RegexConstants.MobileNumber.US = "^(\\+?1)?[2-9]\\d{2}[2-9](?!11)\\d{6}$" -> string!
+const System.RegexConstants.MobileNumber.VN = "^(\\+?84|0)?((1(2([0-9])|6([2-9])|88|99))|(9((?!5)[0-9])))([0-9]{7})$" -> string!
+const System.RegexConstants.MobileNumber.ZA = "^(\\+?27|0)\\d{9}$" -> string!
+const System.RegexConstants.MobileNumber.ZM = "^(\\+?26)?09[567]\\d{7}$" -> string!
+Microsoft.Extensions.DependencyInjection.IServiceCollectionExtensions
+Microsoft.Extensions.DependencyInjection.ObjectAccessorIServiceCollectionExtensions
+override abstract Skywalker.Extensions.Tokenizer.Either<TA, TB>.Equals(object? obj) -> bool
+override abstract Skywalker.Extensions.Tokenizer.Either<TA, TB>.GetHashCode() -> int
+override abstract Skywalker.Extensions.Tokenizer.Either<TA, TB>.ToString() -> string?
+override Skywalker.Extensions.Filters.BloomFilter.Equals(object? obj) -> bool
+override Skywalker.Extensions.Filters.BloomFilter.GetHashCode() -> int
+override Skywalker.Extensions.Tokenizer.Token.Equals(object? other) -> bool
+override Skywalker.Extensions.Tokenizer.Token.GetHashCode() -> int
+override Skywalker.Extensions.Tokenizer.Token.ToString() -> string!
+override System.ObjectId.Equals(object? other) -> bool
+override System.ObjectId.GetHashCode() -> int
+override System.ObjectId.ToString() -> string!
+Skywalker.Extensions.Collections.Generic.CopyOnWriteDictionary<TKey, TValue>
+Skywalker.Extensions.Collections.Generic.CopyOnWriteDictionary<TKey, TValue>.CopyOnWriteDictionary(System.Collections.Generic.IDictionary<TKey, TValue>! sourceDictionary, System.Collections.Generic.IEqualityComparer<TKey>! comparer) -> void
+Skywalker.Extensions.Collections.Generic.CopyOnWriteDictionary<TKey, TValue>.Remove(System.Collections.Generic.KeyValuePair<TKey, TValue> item) -> bool
+Skywalker.Extensions.Collections.Generic.IPagedList<T>
+Skywalker.Extensions.Collections.Generic.IPagedList<T>.TotalCount.get -> int
+Skywalker.Extensions.Collections.Generic.ITypeList
+Skywalker.Extensions.Collections.Generic.ITypeList<TBaseType>
+Skywalker.Extensions.Collections.Generic.ITypeList<TBaseType>.Add<T>() -> void
+Skywalker.Extensions.Collections.Generic.ITypeList<TBaseType>.Contains<T>() -> bool
+Skywalker.Extensions.Collections.Generic.ITypeList<TBaseType>.Remove<T>() -> void
+Skywalker.Extensions.Collections.Generic.NameValue<T>
+Skywalker.Extensions.Collections.Generic.NameValue<T>.Name.get -> string!
+Skywalker.Extensions.Collections.Generic.NameValue<T>.Name.set -> void
+Skywalker.Extensions.Collections.Generic.NameValue<T>.NameValue() -> void
+Skywalker.Extensions.Collections.Generic.NameValue<T>.NameValue(string! name, T? value) -> void
+Skywalker.Extensions.Collections.Generic.NameValue<T>.Value.get -> T?
+Skywalker.Extensions.Collections.Generic.NameValue<T>.Value.set -> void
+Skywalker.Extensions.Collections.Generic.PagedList<T>
+Skywalker.Extensions.Collections.Generic.PagedList<T>.Items.get -> System.Collections.Generic.IEnumerable<T>!
+Skywalker.Extensions.Collections.Generic.PagedList<T>.PagedList(int totalCount, System.Collections.Generic.IEnumerable<T>! collection) -> void
+Skywalker.Extensions.Collections.Generic.PagedList<T>.TotalCount.get -> int
+Skywalker.Extensions.Collections.Generic.TypeList
+Skywalker.Extensions.Collections.Generic.TypeList.TypeList() -> void
+Skywalker.Extensions.Collections.Generic.TypeList<TBaseType>
+Skywalker.Extensions.Collections.Generic.TypeList<TBaseType>.Add(System.Type! item) -> void
+Skywalker.Extensions.Collections.Generic.TypeList<TBaseType>.Add<T>() -> void
+Skywalker.Extensions.Collections.Generic.TypeList<TBaseType>.Clear() -> void
+Skywalker.Extensions.Collections.Generic.TypeList<TBaseType>.Contains(System.Type! item) -> bool
+Skywalker.Extensions.Collections.Generic.TypeList<TBaseType>.Contains<T>() -> bool
+Skywalker.Extensions.Collections.Generic.TypeList<TBaseType>.CopyTo(System.Type![]! array, int arrayIndex) -> void
+Skywalker.Extensions.Collections.Generic.TypeList<TBaseType>.Count.get -> int
+Skywalker.Extensions.Collections.Generic.TypeList<TBaseType>.GetEnumerator() -> System.Collections.Generic.IEnumerator<System.Type!>!
+Skywalker.Extensions.Collections.Generic.TypeList<TBaseType>.IndexOf(System.Type! item) -> int
+Skywalker.Extensions.Collections.Generic.TypeList<TBaseType>.Insert(int index, System.Type! item) -> void
+Skywalker.Extensions.Collections.Generic.TypeList<TBaseType>.IsReadOnly.get -> bool
+Skywalker.Extensions.Collections.Generic.TypeList<TBaseType>.Remove(System.Type! item) -> bool
+Skywalker.Extensions.Collections.Generic.TypeList<TBaseType>.Remove<T>() -> void
+Skywalker.Extensions.Collections.Generic.TypeList<TBaseType>.RemoveAt(int index) -> void
+Skywalker.Extensions.Collections.Generic.TypeList<TBaseType>.this[int index].get -> System.Type!
+Skywalker.Extensions.Collections.Generic.TypeList<TBaseType>.this[int index].set -> void
+Skywalker.Extensions.Collections.Generic.TypeList<TBaseType>.TypeList() -> void
+Skywalker.Extensions.Collections.NamedTypeSelector
+Skywalker.Extensions.Collections.NamedTypeSelector.Name.get -> string!
+Skywalker.Extensions.Collections.NamedTypeSelector.Name.set -> void
+Skywalker.Extensions.Collections.NamedTypeSelector.NamedTypeSelector(string! name, System.Func<System.Type!, bool>! predicate) -> void
+Skywalker.Extensions.Collections.NamedTypeSelector.Predicate.get -> System.Func<System.Type!, bool>!
+Skywalker.Extensions.Collections.NamedTypeSelector.Predicate.set -> void
+Skywalker.Extensions.Collections.NameValue
+Skywalker.Extensions.Collections.NameValue.NameValue() -> void
+Skywalker.Extensions.Collections.NameValue.NameValue(string! name, string? value) -> void
+Skywalker.Extensions.Filters.BloomFilter
+Skywalker.Extensions.Filters.BloomFilter.Add(byte[]! bytes) -> void
+Skywalker.Extensions.Filters.BloomFilter.Add(object! element) -> void
+Skywalker.Extensions.Filters.BloomFilter.AddAll(System.Collections.Generic.IEnumerable<byte[]!>! c) -> void
+Skywalker.Extensions.Filters.BloomFilter.AddAll(System.Collections.Generic.IEnumerable<object!>! c) -> void
+Skywalker.Extensions.Filters.BloomFilter.BloomFilter(double c, int n, int k) -> void
+Skywalker.Extensions.Filters.BloomFilter.BloomFilter(double falsePositiveProbability, int expectedNumberOfElements) -> void
+Skywalker.Extensions.Filters.BloomFilter.BloomFilter(int bitSetSize, int expectedNumberOElements) -> void
+Skywalker.Extensions.Filters.BloomFilter.BloomFilter(int bitSetSize, int expectedNumberOfFilterElements, int actualNumberOfFilterElements, System.Collections.BitArray! filterData) -> void
+Skywalker.Extensions.Filters.BloomFilter.Clear() -> void
+Skywalker.Extensions.Filters.BloomFilter.Contains(byte[]! bytes) -> bool
+Skywalker.Extensions.Filters.BloomFilter.Contains(object! element) -> bool
+Skywalker.Extensions.Filters.BloomFilter.ContainsAll(System.Collections.Generic.IEnumerable<object!>! c) -> bool
+Skywalker.Extensions.Filters.BloomFilter.Count() -> int
+Skywalker.Extensions.Filters.BloomFilter.ExpectedFalsePositiveProbability() -> double
+Skywalker.Extensions.Filters.BloomFilter.GetBit(int bit) -> bool
+Skywalker.Extensions.Filters.BloomFilter.GetBitSet() -> System.Collections.BitArray!
+Skywalker.Extensions.Filters.BloomFilter.GetBitsPerElement() -> double
+Skywalker.Extensions.Filters.BloomFilter.GetExpectedBitsPerElement() -> double
+Skywalker.Extensions.Filters.BloomFilter.GetExpectedNumberOfElements() -> int
+Skywalker.Extensions.Filters.BloomFilter.GetFalsePositiveProbability() -> double
+Skywalker.Extensions.Filters.BloomFilter.GetFalsePositiveProbability(double numberOfElements) -> double
+Skywalker.Extensions.Filters.BloomFilter.K.get -> int
+Skywalker.Extensions.Filters.BloomFilter.SetBit(int bit, bool value) -> void
+Skywalker.Extensions.Filters.BloomFilter.Size() -> int
+Skywalker.Extensions.ObjectAccessor.Abstractions.IObjectAccessor<T>
+Skywalker.Extensions.ObjectAccessor.Abstractions.IObjectAccessor<T>.Value.get -> T?
+Skywalker.Extensions.Text.FormattedStringValueExtracter
+Skywalker.Extensions.Text.FormattedStringValueExtracter.ExtractionResult
+Skywalker.Extensions.Text.FormattedStringValueExtracter.ExtractionResult.IsMatch.get -> bool
+Skywalker.Extensions.Text.FormattedStringValueExtracter.ExtractionResult.IsMatch.set -> void
+Skywalker.Extensions.Text.FormattedStringValueExtracter.ExtractionResult.Matches.get -> System.Collections.Generic.List<Skywalker.Extensions.Collections.NameValue!>!
+Skywalker.Extensions.Text.FormattedStringValueExtracter.FormattedStringValueExtracter() -> void
+Skywalker.Extensions.Text.Utf8Helper
+Skywalker.Extensions.Tokenizer.Either<TA, TB>
+Skywalker.Extensions.Tokenizer.Token
+Skywalker.Extensions.Tokenizer.Token.Equals(Skywalker.Extensions.Tokenizer.Token other) -> bool
+Skywalker.Extensions.Tokenizer.Token.Kind.get -> Skywalker.Extensions.Tokenizer.TokenKind
+Skywalker.Extensions.Tokenizer.Token.Text.get -> string?
+Skywalker.Extensions.Tokenizer.Token.Token() -> void
+Skywalker.Extensions.Tokenizer.Tokener
+Skywalker.Extensions.Tokenizer.TokenKind
+Skywalker.Extensions.Tokenizer.TokenKind.Char = 18 -> Skywalker.Extensions.Tokenizer.TokenKind
+Skywalker.Extensions.Tokenizer.TokenKind.DashMatch = 4 -> Skywalker.Extensions.Tokenizer.TokenKind
+Skywalker.Extensions.Tokenizer.TokenKind.Eoi = 0 -> Skywalker.Extensions.Tokenizer.TokenKind
+Skywalker.Extensions.Tokenizer.TokenKind.Function = 14 -> Skywalker.Extensions.Tokenizer.TokenKind
+Skywalker.Extensions.Tokenizer.TokenKind.Greater = 12 -> Skywalker.Extensions.Tokenizer.TokenKind
+Skywalker.Extensions.Tokenizer.TokenKind.Hash = 2 -> Skywalker.Extensions.Tokenizer.TokenKind
+Skywalker.Extensions.Tokenizer.TokenKind.Ident = 1 -> Skywalker.Extensions.Tokenizer.TokenKind
+Skywalker.Extensions.Tokenizer.TokenKind.Includes = 3 -> Skywalker.Extensions.Tokenizer.TokenKind
+Skywalker.Extensions.Tokenizer.TokenKind.Integer = 15 -> Skywalker.Extensions.Tokenizer.TokenKind
+Skywalker.Extensions.Tokenizer.TokenKind.NotEqual = 5 -> Skywalker.Extensions.Tokenizer.TokenKind
+Skywalker.Extensions.Tokenizer.TokenKind.Plus = 11 -> Skywalker.Extensions.Tokenizer.TokenKind
+Skywalker.Extensions.Tokenizer.TokenKind.PrefixMatch = 6 -> Skywalker.Extensions.Tokenizer.TokenKind
+Skywalker.Extensions.Tokenizer.TokenKind.RegexMatch = 9 -> Skywalker.Extensions.Tokenizer.TokenKind
+Skywalker.Extensions.Tokenizer.TokenKind.Slash = 17 -> Skywalker.Extensions.Tokenizer.TokenKind
+Skywalker.Extensions.Tokenizer.TokenKind.String = 10 -> Skywalker.Extensions.Tokenizer.TokenKind
+Skywalker.Extensions.Tokenizer.TokenKind.SubstringMatch = 8 -> Skywalker.Extensions.Tokenizer.TokenKind
+Skywalker.Extensions.Tokenizer.TokenKind.SuffixMatch = 7 -> Skywalker.Extensions.Tokenizer.TokenKind
+Skywalker.Extensions.Tokenizer.TokenKind.Tilde = 16 -> Skywalker.Extensions.Tokenizer.TokenKind
+Skywalker.Extensions.Tokenizer.TokenKind.WhiteSpace = 13 -> Skywalker.Extensions.Tokenizer.TokenKind
+Skywalker.Logging.IExceptionWithSelfLogging
+Skywalker.Logging.IExceptionWithSelfLogging.Log(Microsoft.Extensions.Logging.ILogger! logger) -> void
+Skywalker.ObjectHelper
+static Microsoft.Extensions.DependencyInjection.IServiceCollectionExtensions.GetConfiguration(this Microsoft.Extensions.DependencyInjection.IServiceCollection! services) -> Microsoft.Extensions.Configuration.IConfiguration?
+static Microsoft.Extensions.DependencyInjection.IServiceCollectionExtensions.GetSingletonInstance<T>(this Microsoft.Extensions.DependencyInjection.IServiceCollection! services) -> T
+static Microsoft.Extensions.DependencyInjection.IServiceCollectionExtensions.GetSingletonInstanceOrNull<T>(this Microsoft.Extensions.DependencyInjection.IServiceCollection! services) -> T?
+static Microsoft.Extensions.DependencyInjection.IServiceCollectionExtensions.ReplaceConfiguration(this Microsoft.Extensions.DependencyInjection.IServiceCollection! services, Microsoft.Extensions.Configuration.IConfiguration! configuration) -> Microsoft.Extensions.DependencyInjection.IServiceCollection!
+static Microsoft.Extensions.DependencyInjection.ObjectAccessorIServiceCollectionExtensions.AddObjectAccessor<TInstance>(this Microsoft.Extensions.DependencyInjection.IServiceCollection! services, System.Func<System.IServiceProvider!, TInstance!>! instanceFactory) -> Microsoft.Extensions.DependencyInjection.IServiceCollection!
+static Microsoft.Extensions.DependencyInjection.ObjectAccessorIServiceCollectionExtensions.AddObjectAccessor<TInstance>(this Microsoft.Extensions.DependencyInjection.IServiceCollection! services, TInstance! instance) -> Microsoft.Extensions.DependencyInjection.IServiceCollection!
+static readonly System.DisposeAction.Empty -> System.DisposeAction!
+static Skywalker.Extensions.Filters.BloomFilter.CreateHash(byte[]! data) -> int
+static Skywalker.Extensions.Filters.BloomFilter.CreateHash(string! val) -> int
+static Skywalker.Extensions.Filters.BloomFilter.CreateHash(string! val, System.Text.Encoding! charset) -> int
+static Skywalker.Extensions.Filters.BloomFilter.CreateHashes(byte[]! data, int hashes) -> int[]!
+static Skywalker.Extensions.Filters.BloomFilter.Equals(System.Collections.BitArray! a, System.Collections.BitArray! b) -> bool
+static Skywalker.Extensions.Filters.BloomFilter.HashBytes(System.Collections.BitArray! data) -> int
+static Skywalker.Extensions.Text.FormattedStringValueExtracter.Extract(string! str, string! format, bool ignoreCase = false, char? splitformatCharacter = null) -> Skywalker.Extensions.Text.FormattedStringValueExtracter.ExtractionResult!
+static Skywalker.Extensions.Text.FormattedStringValueExtracter.IsMatch(string! str, string! format, out string?[]! values, bool ignoreCase = false) -> bool
+static Skywalker.Extensions.Text.Utf8Helper.ReadStringFromStream(System.IO.Stream! stream) -> string!
+static Skywalker.Extensions.Tokenizer.Either<TA, TB>.A(TA value) -> Skywalker.Extensions.Tokenizer.Either<TA, TB>!
+static Skywalker.Extensions.Tokenizer.Either<TA, TB>.B(TB value) -> Skywalker.Extensions.Tokenizer.Either<TA, TB>!
+static Skywalker.Extensions.Tokenizer.Token.Char(char ch) -> Skywalker.Extensions.Tokenizer.Token
+static Skywalker.Extensions.Tokenizer.Token.Colon() -> Skywalker.Extensions.Tokenizer.Token
+static Skywalker.Extensions.Tokenizer.Token.Comma() -> Skywalker.Extensions.Tokenizer.Token
+static Skywalker.Extensions.Tokenizer.Token.DashMatch() -> Skywalker.Extensions.Tokenizer.Token
+static Skywalker.Extensions.Tokenizer.Token.Dot() -> Skywalker.Extensions.Tokenizer.Token
+static Skywalker.Extensions.Tokenizer.Token.Eoi() -> Skywalker.Extensions.Tokenizer.Token
+static Skywalker.Extensions.Tokenizer.Token.Equals() -> Skywalker.Extensions.Tokenizer.Token
+static Skywalker.Extensions.Tokenizer.Token.Function(string? text) -> Skywalker.Extensions.Tokenizer.Token
+static Skywalker.Extensions.Tokenizer.Token.Greater() -> Skywalker.Extensions.Tokenizer.Token
+static Skywalker.Extensions.Tokenizer.Token.Hash(string? text) -> Skywalker.Extensions.Tokenizer.Token
+static Skywalker.Extensions.Tokenizer.Token.Ident(string? text) -> Skywalker.Extensions.Tokenizer.Token
+static Skywalker.Extensions.Tokenizer.Token.Includes() -> Skywalker.Extensions.Tokenizer.Token
+static Skywalker.Extensions.Tokenizer.Token.Integer(string? text) -> Skywalker.Extensions.Tokenizer.Token
+static Skywalker.Extensions.Tokenizer.Token.LeftBracket() -> Skywalker.Extensions.Tokenizer.Token
+static Skywalker.Extensions.Tokenizer.Token.NotEqual() -> Skywalker.Extensions.Tokenizer.Token
+static Skywalker.Extensions.Tokenizer.Token.operator !=(Skywalker.Extensions.Tokenizer.Token a, Skywalker.Extensions.Tokenizer.Token b) -> bool
+static Skywalker.Extensions.Tokenizer.Token.operator ==(Skywalker.Extensions.Tokenizer.Token a, Skywalker.Extensions.Tokenizer.Token b) -> bool
+static Skywalker.Extensions.Tokenizer.Token.Pipe() -> Skywalker.Extensions.Tokenizer.Token
+static Skywalker.Extensions.Tokenizer.Token.Plus() -> Skywalker.Extensions.Tokenizer.Token
+static Skywalker.Extensions.Tokenizer.Token.PrefixMatch() -> Skywalker.Extensions.Tokenizer.Token
+static Skywalker.Extensions.Tokenizer.Token.RegexMatch() -> Skywalker.Extensions.Tokenizer.Token
+static Skywalker.Extensions.Tokenizer.Token.RightBracket() -> Skywalker.Extensions.Tokenizer.Token
+static Skywalker.Extensions.Tokenizer.Token.RightParenthesis() -> Skywalker.Extensions.Tokenizer.Token
+static Skywalker.Extensions.Tokenizer.Token.Semicolon() -> Skywalker.Extensions.Tokenizer.Token
+static Skywalker.Extensions.Tokenizer.Token.Slash() -> Skywalker.Extensions.Tokenizer.Token
+static Skywalker.Extensions.Tokenizer.Token.Star() -> Skywalker.Extensions.Tokenizer.Token
+static Skywalker.Extensions.Tokenizer.Token.String(string? text) -> Skywalker.Extensions.Tokenizer.Token
+static Skywalker.Extensions.Tokenizer.Token.SubstringMatch() -> Skywalker.Extensions.Tokenizer.Token
+static Skywalker.Extensions.Tokenizer.Token.SuffixMatch() -> Skywalker.Extensions.Tokenizer.Token
+static Skywalker.Extensions.Tokenizer.Token.Tilde() -> Skywalker.Extensions.Tokenizer.Token
+static Skywalker.Extensions.Tokenizer.Token.WhiteSpace(string? space) -> Skywalker.Extensions.Tokenizer.Token
+static Skywalker.Extensions.Tokenizer.Tokener.Tokenize(string! input) -> System.Collections.Generic.IEnumerable<Skywalker.Extensions.Tokenizer.Token>!
+static Skywalker.Extensions.Tokenizer.Tokener.Tokenize(System.IO.TextReader! reader) -> System.Collections.Generic.IEnumerable<Skywalker.Extensions.Tokenizer.Token>!
+static Skywalker.ObjectHelper.TrySetProperty<TObject, TValue>(TObject obj, System.Linq.Expressions.Expression<System.Func<TObject, TValue>!>! propertySelector, System.Func<TObject, TValue>! valueFactory, params System.Type![]? ignoreAttributeTypes) -> void
+static Skywalker.ObjectHelper.TrySetProperty<TObject, TValue>(TObject obj, System.Linq.Expressions.Expression<System.Func<TObject, TValue>!>! propertySelector, System.Func<TValue>! valueFactory, params System.Type![]! ignoreAttributeTypes) -> void
+static System.Base32.FromBase32(string! input) -> byte[]!
+static System.Base32.ToBase32(byte[]! input) -> string!
+static System.Check.AssignableTo<TBaseType>(System.Type! type, string! parameterName) -> System.Type!
+static System.Check.Condition<T>(T value, System.Predicate<T>! condition, string! parameterName) -> T
+static System.Check.Equal(this bool value, bool expected, string! argumentName) -> bool
+static System.Check.Equal(this int value, int expected, string! argumentName) -> int
+static System.Check.Equal(this long value, long expected, string! argumentName) -> long
+static System.Check.HasNoNulls<T>(System.Collections.Generic.IList<T!>! value, string! parameterName) -> System.Collections.Generic.IList<T!>!
+static System.Check.LengthOf(this string! value, string! argumentName, int maxLength, int minLength = 0) -> string!
+static System.Check.Nonnegative(this decimal number, string! argumentName) -> decimal
+static System.Check.Nonnegative(this int number, string! argumentName) -> int
+static System.Check.Nonnegative(this long number, string! argumentName) -> long
+static System.Check.NotEmptyGuid(this System.Guid guid, string! argumentName) -> System.Guid
+static System.Check.NotNull<T>(this T? argument, string! parameterName) -> T
+static System.Check.NotNull<T>(this T? argument, string! parameterName, string! message) -> T
+static System.Check.NotNullOrEmpty(this string? argument, string! argumentName) -> string!
+static System.Check.NotNullOrEmpty<T>(System.Collections.Generic.ICollection<T>? argument, string! argumentName) -> System.Collections.Generic.ICollection<T>!
+static System.Check.NotNullOrWhiteSpace(this string? argument, string! argumentName) -> string!
+static System.Check.Positive(this decimal number, string! argumentName) -> decimal
+static System.Check.Positive(this int number, string! argumentName) -> int
+static System.Check.Positive(this long number, string! argumentName) -> long
+static System.Collections.Generic.AsyncEnumerableExtensions.ToListAsync<T>(this System.Collections.Generic.IAsyncEnumerable<T>! source) -> System.Threading.Tasks.Task<System.Collections.Generic.List<T>!>!
+static System.Collections.Generic.ICollectionExtensions.AddIfNotContains<T>(this System.Collections.Generic.ICollection<T>! source, System.Collections.Generic.IEnumerable<T>! items) -> System.Collections.Generic.IEnumerable<T>!
+static System.Collections.Generic.ICollectionExtensions.AddIfNotContains<T>(this System.Collections.Generic.ICollection<T>! source, System.Func<T, bool>! predicate, System.Func<T>! itemFactory) -> bool
+static System.Collections.Generic.ICollectionExtensions.AddIfNotContains<T>(this System.Collections.Generic.ICollection<T>! source, T item) -> bool
+static System.Collections.Generic.ICollectionExtensions.AreEquivalent<T>(this System.Collections.Generic.IList<T>! listA, System.Collections.Generic.IList<T>! listB) -> bool
+static System.Collections.Generic.ICollectionExtensions.ConvertAll<X, Y>(this X[]! items, System.Func<X, Y>! converter) -> Y[]!
+static System.Collections.Generic.ICollectionExtensions.Find<T>(this T[]! items, System.Predicate<T>! predicate) -> T?
+static System.Collections.Generic.ICollectionExtensions.FindAll<T>(this T[]! items, System.Predicate<T>! predicate) -> T[]!
+static System.Collections.Generic.ICollectionExtensions.ForEach<X>(this System.Collections.Generic.IEnumerable<X>! items, System.Action<X>! action) -> void
+static System.Collections.Generic.ICollectionExtensions.GetContentsHashCode<T>(this System.Collections.Generic.IList<T>! list) -> int
+static System.Collections.Generic.ICollectionExtensions.IsNullOrEmpty<T>(this System.Collections.Generic.ICollection<T>? source) -> bool
+static System.Collections.Generic.ICollectionExtensions.RemoveAll<T>(this System.Collections.Generic.ICollection<T>! source, System.Func<T, bool>! predicate) -> System.Collections.Generic.IList<T>!
+static System.Collections.Generic.IDictionaryExtensions.GetOrAdd<TKey, TValue>(this System.Collections.Generic.IDictionary<TKey, TValue>! dictionary, TKey key, System.Func<TKey, TValue>! factory) -> TValue
+static System.Collections.Generic.IDictionaryExtensions.GetOrAdd<TKey, TValue>(this System.Collections.Generic.IDictionary<TKey, TValue>! dictionary, TKey key, System.Func<TValue>! factory) -> TValue
+static System.Collections.Generic.IDictionaryExtensions.GetOrDefault<TKey, TValue>(this System.Collections.Concurrent.ConcurrentDictionary<TKey, TValue>! dictionary, TKey key) -> TValue?
+static System.Collections.Generic.IDictionaryExtensions.GetOrDefault<TKey, TValue>(this System.Collections.Generic.Dictionary<TKey, TValue>! dictionary, TKey key) -> TValue?
+static System.Collections.Generic.IDictionaryExtensions.GetOrDefault<TKey, TValue>(this System.Collections.Generic.IDictionary<TKey, TValue>! dictionary, TKey key) -> TValue?
+static System.Collections.Generic.IDictionaryExtensions.GetOrDefault<TKey, TValue>(this System.Collections.Generic.IReadOnlyDictionary<TKey, TValue>! dictionary, TKey key) -> TValue?
+static System.Collections.Generic.IEnumerableExtensions.HasDuplicates<T, TProp>(this System.Collections.Generic.IEnumerable<T>! list, System.Func<T, TProp>! selector) -> bool
+static System.Collections.Generic.IEnumerableExtensions.IsNullOrEmpty(this System.Collections.IEnumerable? this) -> bool
+static System.Collections.Generic.IEnumerableExtensions.JoinAsString(this System.Collections.Generic.IEnumerable<string!>! source, string! separator) -> string!
+static System.Collections.Generic.IEnumerableExtensions.JoinAsString<T>(this System.Collections.Generic.IEnumerable<T>! source, string! separator) -> string!
+static System.Collections.Generic.IEnumerableExtensions.SelectNonNull<T, TResult>(this System.Collections.Generic.IEnumerable<T>! source, System.Func<T, TResult>! selector) -> System.Collections.Generic.IEnumerable<TResult>!
+static System.Collections.Generic.IEnumerableExtensions.SortByDependencies<T>(this System.Collections.Generic.IEnumerable<T>! source, System.Func<T, System.Collections.Generic.IEnumerable<T>!>! getDependencies) -> System.Collections.Generic.List<T>!
+static System.Collections.Generic.IEnumerableExtensions.WhereIf<T>(this System.Collections.Generic.IEnumerable<T>! source, bool condition, System.Func<T, bool>! predicate) -> System.Collections.Generic.IEnumerable<T>!
+static System.Collections.Generic.IEnumerableExtensions.WhereIf<T>(this System.Collections.Generic.IEnumerable<T>! source, bool condition, System.Func<T, int, bool>! predicate) -> System.Collections.Generic.IEnumerable<T>!
+static System.Collections.Generic.IListExtensions.AddFirst<T>(this System.Collections.Generic.IList<T>! source, T item) -> void
+static System.Collections.Generic.IListExtensions.AddLast<T>(this System.Collections.Generic.IList<T>! source, T item) -> void
+static System.Collections.Generic.IListExtensions.FindIndex<T>(this System.Collections.Generic.IList<T>! source, System.Predicate<T>! selector) -> int
+static System.Collections.Generic.IListExtensions.GetOrAdd<T>(this System.Collections.Generic.IList<T>! source, System.Func<T, bool>! selector, System.Func<T>! factory) -> T
+static System.Collections.Generic.IListExtensions.InsertAfter<T>(this System.Collections.Generic.IList<T>! source, System.Predicate<T>! selector, T item) -> void
+static System.Collections.Generic.IListExtensions.InsertAfter<T>(this System.Collections.Generic.IList<T>! source, T existingItem, T item) -> void
+static System.Collections.Generic.IListExtensions.InsertBefore<T>(this System.Collections.Generic.IList<T>! source, System.Predicate<T>! selector, T item) -> void
+static System.Collections.Generic.IListExtensions.InsertBefore<T>(this System.Collections.Generic.IList<T>! source, T existingItem, T item) -> void
+static System.Collections.Generic.IListExtensions.MoveItem<T>(this System.Collections.Generic.List<T>! source, System.Predicate<T>! selector, int targetIndex) -> void
+static System.Collections.Generic.IListExtensions.ReplaceOne<T>(this System.Collections.Generic.IList<T>! source, System.Predicate<T>! selector, System.Func<T, T>! itemFactory) -> void
+static System.Collections.Generic.IListExtensions.ReplaceOne<T>(this System.Collections.Generic.IList<T>! source, System.Predicate<T>! selector, T item) -> void
+static System.Collections.Generic.IListExtensions.ReplaceOne<T>(this System.Collections.Generic.IList<T>! source, T item, T replaceWith) -> void
+static System.Collections.Generic.IListExtensions.ReplaceWhile<T>(this System.Collections.Generic.IList<T>! source, System.Predicate<T>! selector, System.Func<T, T>! itemFactory) -> void
+static System.Collections.Generic.IListExtensions.ReplaceWhile<T>(this System.Collections.Generic.IList<T>! source, System.Predicate<T>! selector, T item) -> void
+static System.Collections.Generic.NamedTypeSelectorListExtensions.Add(this System.Collections.Generic.IList<Skywalker.Extensions.Collections.NamedTypeSelector!>! list, string! name, params System.Type![]! types) -> void
+static System.ComparableExtensions.IsBetween<T>(this T value, T minInclusiveValue, T maxInclusiveValue) -> bool
+static System.Converters.ChangeType<TValue>(object! o) -> TValue?
+static System.Converters.EnumTryParse<TValue>(string? input, System.Type! conversionType, out TValue? theEnum) -> bool
+static System.Converters.FormatValue(byte value, System.Globalization.CultureInfo? culture = null) -> string!
+static System.Converters.FormatValue(byte? value, System.Globalization.CultureInfo? culture = null) -> string?
+static System.Converters.FormatValue(decimal value, System.Globalization.CultureInfo? culture = null) -> string!
+static System.Converters.FormatValue(decimal? value, System.Globalization.CultureInfo? culture = null) -> string?
+static System.Converters.FormatValue(double value, System.Globalization.CultureInfo? culture = null) -> string!
+static System.Converters.FormatValue(double? value, System.Globalization.CultureInfo? culture = null) -> string?
+static System.Converters.FormatValue(float value, System.Globalization.CultureInfo? culture = null) -> string!
+static System.Converters.FormatValue(float? value, System.Globalization.CultureInfo? culture = null) -> string?
+static System.Converters.FormatValue(int value, System.Globalization.CultureInfo? culture = null) -> string!
+static System.Converters.FormatValue(int? value, System.Globalization.CultureInfo? culture = null) -> string?
+static System.Converters.FormatValue(long value, System.Globalization.CultureInfo? culture = null) -> string!
+static System.Converters.FormatValue(long? value, System.Globalization.CultureInfo? culture = null) -> string?
+static System.Converters.FormatValue(sbyte value, System.Globalization.CultureInfo? culture = null) -> string!
+static System.Converters.FormatValue(sbyte? value, System.Globalization.CultureInfo? culture = null) -> string?
+static System.Converters.FormatValue(short value, System.Globalization.CultureInfo? culture = null) -> string!
+static System.Converters.FormatValue(short? value, System.Globalization.CultureInfo? culture = null) -> string?
+static System.Converters.FormatValue(System.DateTime value, System.Globalization.CultureInfo? culture = null) -> string!
+static System.Converters.FormatValue(System.DateTime? value, System.Globalization.CultureInfo? culture = null) -> string?
+static System.Converters.FormatValue(System.DateTimeOffset value, System.Globalization.CultureInfo? culture = null) -> string!
+static System.Converters.FormatValue(System.DateTimeOffset? value, System.Globalization.CultureInfo? culture = null) -> string?
+static System.Converters.FormatValue(uint value, System.Globalization.CultureInfo? culture = null) -> string!
+static System.Converters.FormatValue(uint? value, System.Globalization.CultureInfo? culture = null) -> string?
+static System.Converters.FormatValue(ulong value, System.Globalization.CultureInfo? culture = null) -> string!
+static System.Converters.FormatValue(ulong? value, System.Globalization.CultureInfo? culture = null) -> string?
+static System.Converters.FormatValue(ushort value, System.Globalization.CultureInfo? culture = null) -> string!
+static System.Converters.FormatValue(ushort? value, System.Globalization.CultureInfo? culture = null) -> string?
+static System.Converters.GetMinMaxValueOfType<TValue>() -> (object!, object!)
+static System.Converters.ToDictionary(object! source, bool addEmptyObjects = true, bool forceCamelCase = true) -> System.Collections.Generic.IDictionary<string!, object?>?
+static System.Converters.TryChangeType<TValue>(object! value, out TValue? result, System.Globalization.CultureInfo? cultureInfo = null) -> bool
+static System.CorrelationIdGenerator.Instance.get -> System.CorrelationIdGenerator!
+static System.EnumExtensions.GetEnumDescription<T>(this T enum) -> string!
+static System.EnumExtensions.GetEnumName<T>(this T enum) -> string!
+static System.EventHandlerExtensions.InvokeSafely(this System.EventHandler! eventHandler, object? sender) -> void
+static System.EventHandlerExtensions.InvokeSafely(this System.EventHandler! eventHandler, object? sender, System.EventArgs! e) -> void
+static System.EventHandlerExtensions.InvokeSafely<TEventArgs>(this System.EventHandler<TEventArgs!>! eventHandler, object? sender, TEventArgs! e) -> void
+static System.ExceptionExtensions.ReThrow(this System.Exception! exception) -> void
+static System.Globalization.CultureHelper.GetBaseCultureName(string! cultureName) -> string!
+static System.Globalization.CultureHelper.IsRtl.get -> bool
+static System.Globalization.CultureHelper.IsValidCultureCode(string! cultureCode) -> bool
+static System.Globalization.CultureHelper.Use(string! culture, string? uiCulture = null) -> System.IDisposable!
+static System.Globalization.CultureHelper.Use(System.Globalization.CultureInfo! culture, System.Globalization.CultureInfo? uiCulture = null) -> System.IDisposable!
+static System.IO.StreamExtensions.CopyToAsync(this System.IO.Stream! stream, System.IO.Stream! destination, System.Threading.CancellationToken cancellationToken) -> System.Threading.Tasks.Task!
+static System.IO.StreamExtensions.GetAllBytes(this System.IO.Stream! stream) -> byte[]!
+static System.IO.StreamExtensions.GetAllBytesAsync(this System.IO.Stream! stream, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) -> System.Threading.Tasks.Task<byte[]!>!
+static System.Linq.QueryableExtensions.SkipIf<T, TQueryable>(this TQueryable query, bool condition, int? count) -> TQueryable
+static System.Linq.QueryableExtensions.TakeIf<T, TQueryable>(this TQueryable query, bool condition, int? count) -> TQueryable
+static System.Linq.QueryableExtensions.ToPagedList<T>(this System.Linq.IQueryable<T>! source, int skip, int limit) -> Skywalker.Extensions.Collections.Generic.PagedList<T>!
+static System.Linq.QueryableExtensions.ToPagedListAsync<T>(this System.Linq.IQueryable<T>! source, int skip, int limit, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) -> System.Threading.Tasks.Task<Skywalker.Extensions.Collections.Generic.PagedList<T>!>!
+static System.Linq.QueryableExtensions.WhereIf<T>(this System.Linq.IQueryable<T>! source, bool condition, System.Func<T, bool>! predicate) -> System.Linq.IQueryable<T>!
+static System.Linq.QueryableExtensions.WhereIf<T>(this System.Linq.IQueryable<T>! source, bool condition, System.Func<T, int, bool>! predicate) -> System.Linq.IQueryable<T>!
+static System.Net.HttpStatusCodeExtensions.IsSuccessStatusCode(this System.Net.HttpStatusCode statusCode) -> bool
+static System.NullDisposable.Instance.get -> System.NullDisposable!
+static System.ObjectExtensions.As<T>(this object! object) -> T?
+static System.ObjectExtensions.IsIn<T>(this T item, params T[]! list) -> bool
+static System.ObjectExtensions.Locking(this object! source, System.Action! action) -> void
+static System.ObjectExtensions.Locking<T, TResult>(this T! source, System.Func<T!, TResult>! func) -> TResult
+static System.ObjectExtensions.Locking<T>(this T! source, System.Action<T!>! action) -> void
+static System.ObjectExtensions.Locking<TResult>(this object! source, System.Func<TResult>! func) -> TResult
+static System.ObjectExtensions.To<T>(this object! object) -> T
+static System.ObjectId.CreateId() -> System.ObjectId
+static System.ObjectId.CreateId(int timestamp) -> System.ObjectId
+static System.ObjectId.CreateId(System.DateTime timestamp) -> System.ObjectId
+static System.ObjectId.Empty.get -> System.ObjectId
+static System.ObjectId.operator !=(System.ObjectId lhs, System.ObjectId rhs) -> bool
+static System.ObjectId.operator <(System.ObjectId lhs, System.ObjectId rhs) -> bool
+static System.ObjectId.operator <=(System.ObjectId lhs, System.ObjectId rhs) -> bool
+static System.ObjectId.operator ==(System.ObjectId lhs, System.ObjectId rhs) -> bool
+static System.ObjectId.operator >(System.ObjectId lhs, System.ObjectId rhs) -> bool
+static System.ObjectId.operator >=(System.ObjectId lhs, System.ObjectId rhs) -> bool
+static System.ObjectId.Parse(string! s) -> System.ObjectId
+static System.ObjectId.ParseHexString(string! s) -> byte[]!
+static System.ObjectId.TryParse(string! s, out System.ObjectId objectId) -> bool
+static System.ObjectId.Unpack(byte[]! bytes, out int timestamp, out int machine, out short pid, out int increment) -> void
+static System.Reflection.CustomAttributeAccessor.GetCustomAttribute<TAttribute>(System.Reflection.MemberInfo! memberInfo, bool inherit = true) -> TAttribute?
+static System.Reflection.CustomAttributeAccessor.GetCustomAttribute<TAttribute>(System.Type! type, bool inherit = true) -> TAttribute?
+static System.Reflection.CustomAttributeAccessor.GetCustomAttributes(System.Reflection.MemberInfo! memberInfo, bool inherit = true) -> System.Collections.Generic.IEnumerable<System.Attribute!>!
+static System.Reflection.CustomAttributeAccessor.GetCustomAttributes(System.Type! type, bool inherit = true) -> System.Collections.Generic.IEnumerable<System.Attribute!>!
+static System.Reflection.CustomAttributeAccessor.GetCustomAttributes<TAttribute>(System.Reflection.MemberInfo! memberInfo, bool inherit = true) -> System.Collections.Generic.IEnumerable<TAttribute>!
+static System.Reflection.CustomAttributeAccessor.GetCustomAttributes<TAttribute>(System.Type! type, bool inherit = true) -> System.Collections.Generic.IEnumerable<TAttribute>!
+static System.Reflection.MemberInfoExtensions.GetCustomAttribute<TAttribute>(this System.Reflection.MemberInfo! memberInfo, bool inherit = true) -> TAttribute?
+static System.Reflection.MemberInfoExtensions.GetCustomAttributes(this System.Reflection.MemberInfo! memberInfo, bool inherit = true) -> System.Collections.Generic.IEnumerable<System.Attribute!>!
+static System.Reflection.MemberInfoExtensions.GetCustomAttributes<TAttribute>(this System.Reflection.MemberInfo! memberInfo, bool inherit = true) -> System.Collections.Generic.IEnumerable<TAttribute>!
+static System.Reflection.MemberInfoExtensions.GetSingleAttributeOfTypeOrBaseTypesOrNull<TAttribute>(this System.Type! type, bool inherit = true) -> TAttribute?
+static System.Reflection.MemberInfoExtensions.GetSingleAttributeOrNull<TAttribute>(this System.Reflection.MemberInfo! memberInfo, bool inherit = true) -> TAttribute?
+static System.Reflection.PropertyActivator<TContext>.GetPropertiesToActivate(System.Type! type, System.Type! activateAttributeType, System.Func<System.Reflection.PropertyInfo!, System.Reflection.PropertyActivator<TContext>!>! createActivateInfo) -> System.Reflection.PropertyActivator<TContext>![]!
+static System.Reflection.PropertyActivator<TContext>.GetPropertiesToActivate(System.Type! type, System.Type! activateAttributeType, System.Func<System.Reflection.PropertyInfo!, System.Reflection.PropertyActivator<TContext>!>! createActivateInfo, bool includeNonPublic) -> System.Reflection.PropertyActivator<TContext>![]!
+static System.Reflection.PropertyHelper.GetProperties(System.Reflection.TypeInfo! typeInfo) -> System.Reflection.PropertyHelper![]!
+static System.Reflection.PropertyHelper.GetProperties(System.Type! type) -> System.Reflection.PropertyHelper![]!
+static System.Reflection.PropertyHelper.GetProperties(System.Type! type, System.Func<System.Reflection.PropertyInfo!, System.Reflection.PropertyHelper!>! createPropertyHelper, System.Collections.Concurrent.ConcurrentDictionary<System.Type!, System.Reflection.PropertyHelper![]!>! cache) -> System.Reflection.PropertyHelper![]!
+static System.Reflection.PropertyHelper.GetVisibleProperties(System.Reflection.TypeInfo! typeInfo) -> System.Reflection.PropertyHelper![]!
+static System.Reflection.PropertyHelper.GetVisibleProperties(System.Type! type) -> System.Reflection.PropertyHelper![]!
+static System.Reflection.PropertyHelper.GetVisibleProperties(System.Type! type, System.Func<System.Reflection.PropertyInfo!, System.Reflection.PropertyHelper!>! createPropertyHelper, System.Collections.Concurrent.ConcurrentDictionary<System.Type!, System.Reflection.PropertyHelper![]!>! allPropertiesCache, System.Collections.Concurrent.ConcurrentDictionary<System.Type!, System.Reflection.PropertyHelper![]!>! visiblePropertiesCache) -> System.Reflection.PropertyHelper![]!
+static System.Reflection.PropertyHelper.MakeFastPropertyGetter(System.Reflection.PropertyInfo! propertyInfo) -> System.Func<object!, object!>!
+static System.Reflection.PropertyHelper.MakeFastPropertySetter(System.Reflection.PropertyInfo! propertyInfo) -> System.Action<object!, object!>!
+static System.Reflection.PropertyHelper.MakeNullSafeFastPropertyGetter(System.Reflection.PropertyInfo! propertyInfo) -> System.Func<object!, object!>!
+static System.Reflection.PropertyHelper.ObjectToDictionary(object! value) -> System.Collections.Generic.IDictionary<string!, object!>!
+static System.Reflection.ReflectionHelper.GetAttributesOfMemberOrDeclaringType<TAttribute>(System.Reflection.MemberInfo! memberInfo, bool inherit = true) -> System.Collections.Generic.IEnumerable<TAttribute!>!
+static System.Reflection.ReflectionHelper.GetImplementedGenericTypes(System.Type! givenType, System.Type! genericType) -> System.Collections.Generic.List<System.Type!>!
+static System.Reflection.ReflectionHelper.GetPublicConstantsRecursively(System.Type! type) -> string![]!
+static System.Reflection.ReflectionHelper.GetSingleAttributeOfMemberOrDeclaringTypeOrDefault<TAttribute>(System.Reflection.MemberInfo! memberInfo, TAttribute? defaultValue = null, bool inherit = true) -> TAttribute?
+static System.Reflection.ReflectionHelper.GetSingleAttributeOrDefault<TAttribute>(System.Reflection.MemberInfo! memberInfo, TAttribute? defaultValue = null, bool inherit = true) -> TAttribute?
+static System.Reflection.ReflectionHelper.GetValueByPath(object! obj, System.Type! objectType, string! propertyPath) -> object?
+static System.Reflection.ReflectionHelper.IsAssignableToGenericType(System.Type! givenType, System.Type! genericType) -> bool
+static System.Reflection.TypeHelper.ConvertFrom(System.Type! targetType, object! value) -> object?
+static System.Reflection.TypeHelper.ConvertFrom<TTargetType>(object! value) -> object?
+static System.Reflection.TypeHelper.ConvertFromString(System.Type! targetType, string! value) -> object?
+static System.Reflection.TypeHelper.ConvertFromString<TTargetType>(string! value) -> object?
+static System.Reflection.TypeHelper.FindGenericType(System.Type! generic, System.Type? type) -> System.Type?
+static System.Reflection.TypeHelper.GetDefaultValue(System.Type! type) -> object?
+static System.Reflection.TypeHelper.GetDefaultValue<T>() -> T?
+static System.Reflection.TypeHelper.GetFirstGenericArgumentIfNullable(this System.Type! t) -> System.Type?
+static System.Reflection.TypeHelper.GetFullNameHandlingNullableAndGenerics(System.Type! type) -> string!
+static System.Reflection.TypeHelper.GetNonNullableType(System.Type! type) -> System.Type!
+static System.Reflection.TypeHelper.GetSelfAndBaseTypes(System.Type! type) -> System.Collections.Generic.IEnumerable<System.Type!>!
+static System.Reflection.TypeHelper.GetSimplifiedName(System.Type! type) -> string!
+static System.Reflection.TypeHelper.GetTypeName(System.Type! type) -> string!
+static System.Reflection.TypeHelper.GetUnderlyingType(System.Type? type) -> System.Type!
+static System.Reflection.TypeHelper.IsClass(System.Type! type) -> bool
+static System.Reflection.TypeHelper.IsCompatibleWith(System.Type! source, System.Type! target) -> bool
+static System.Reflection.TypeHelper.IsDefaultValue(object! obj) -> bool
+static System.Reflection.TypeHelper.IsDictionary(System.Type! type, out System.Type? keyType, out System.Type? valueType) -> bool
+static System.Reflection.TypeHelper.IsEnumerable(System.Type! type, out System.Type? itemType, bool includePrimitives = true) -> bool
+static System.Reflection.TypeHelper.IsEnumType(System.Type! type) -> bool
+static System.Reflection.TypeHelper.IsFloatingType(System.Type! type, bool includeNullable = true) -> bool
+static System.Reflection.TypeHelper.IsFunc(object! obj) -> bool
+static System.Reflection.TypeHelper.IsFunc<TReturn>(object! obj) -> bool
+static System.Reflection.TypeHelper.IsNonNullablePrimitiveType(System.Type! type) -> bool
+static System.Reflection.TypeHelper.IsNullable(System.Type! type) -> bool
+static System.Reflection.TypeHelper.IsNullableType(System.Type! type) -> bool
+static System.Reflection.TypeHelper.IsNumericType(System.Type! type) -> bool
+static System.Reflection.TypeHelper.IsPrimitiveExtended(System.Type! type, bool includeNullables = true, bool includeEnums = false) -> bool
+static System.Reflection.TypeHelper.IsSignedIntegralType(System.Type! type) -> bool
+static System.Reflection.TypeHelper.IsStruct(System.Type! type) -> bool
+static System.Reflection.TypeHelper.IsUnsignedIntegralType(System.Type! type) -> bool
+static System.Reflection.TypeHelper.ParseEnum(string! value, System.Type! type) -> object?
+static System.Reflection.TypeHelper.StripNullable(System.Type! type) -> System.Type!
+static System.Reflection.TypeHelper.ToNullableType(System.Type! type) -> System.Type!
+static System.Reflection.TypeHelper.TypeMaybeNull(System.Type! type) -> bool
+static System.Reflection.TypeInfoExtensions.GetGenericTypeArguments(this System.Reflection.TypeInfo! typeInfo) -> System.Type![]!
+static System.Security.Cryptography.HashAlgorithmExtensions.ToBase64(this byte[]! bytes) -> string!
+static System.Security.Cryptography.HashAlgorithmExtensions.ToHash(this byte[]! bytes, System.Security.Cryptography.HashAlgorithm! algorithm) -> byte[]!
+static System.Security.Cryptography.HashAlgorithmExtensions.ToHex(this byte[]! bytes, bool isUpperCase = true) -> string!
+static System.Security.Cryptography.HashAlgorithmExtensions.ToHmacMd5(this byte[]! bytes) -> byte[]!
+static System.Security.Cryptography.HashAlgorithmExtensions.ToHmacMd5(this byte[]! bytes, byte[]! key) -> byte[]!
+static System.Security.Cryptography.HashAlgorithmExtensions.ToHmacMd5(this byte[]! bytes, string! key) -> byte[]!
+static System.Security.Cryptography.HashAlgorithmExtensions.ToHmacMd5(this byte[]! bytes, string! key, System.Text.Encoding! encoding) -> byte[]!
+static System.Security.Cryptography.HashAlgorithmExtensions.ToHmacSha1(this byte[]! bytes) -> byte[]!
+static System.Security.Cryptography.HashAlgorithmExtensions.ToHmacSha1(this byte[]! bytes, byte[]! key) -> byte[]!
+static System.Security.Cryptography.HashAlgorithmExtensions.ToHmacSha1(this byte[]! bytes, string! key) -> byte[]!
+static System.Security.Cryptography.HashAlgorithmExtensions.ToHmacSha1(this byte[]! bytes, string! key, System.Text.Encoding! encoding) -> byte[]!
+static System.Security.Cryptography.HashAlgorithmExtensions.ToHmacSha256(this byte[]! bytes) -> byte[]!
+static System.Security.Cryptography.HashAlgorithmExtensions.ToHmacSha256(this byte[]! bytes, byte[]! key) -> byte[]!
+static System.Security.Cryptography.HashAlgorithmExtensions.ToHmacSha384(this byte[]! bytes) -> byte[]!
+static System.Security.Cryptography.HashAlgorithmExtensions.ToHmacSha384(this byte[]! bytes, byte[]! key) -> byte[]!
+static System.Security.Cryptography.HashAlgorithmExtensions.ToHmacSha384(this byte[]! bytes, string! key) -> byte[]!
+static System.Security.Cryptography.HashAlgorithmExtensions.ToHmacSha384(this byte[]! bytes, string! key, System.Text.Encoding! encoding) -> byte[]!
+static System.Security.Cryptography.HashAlgorithmExtensions.ToHmacSha512(this byte[]! bytes) -> byte[]!
+static System.Security.Cryptography.HashAlgorithmExtensions.ToHmacSha512(this byte[]! bytes, byte[]! key) -> byte[]!
+static System.Security.Cryptography.HashAlgorithmExtensions.ToHmacSha512(this byte[]! bytes, string! key) -> byte[]!
+static System.Security.Cryptography.HashAlgorithmExtensions.ToHmacSha512(this byte[]! bytes, string! key, System.Text.Encoding! encoding) -> byte[]!
+static System.Security.Cryptography.HashAlgorithmExtensions.ToMd5(this byte[]! bytes) -> byte[]!
+static System.Security.Cryptography.HashAlgorithmExtensions.ToSha1(this byte[]! bytes) -> byte[]!
+static System.Security.Cryptography.HashAlgorithmExtensions.ToSha256(this byte[]! bytes) -> byte[]!
+static System.Security.Cryptography.HashAlgorithmExtensions.ToSha384(this byte[]! bytes) -> byte[]!
+static System.Security.Cryptography.HashAlgorithmExtensions.ToSha512(this byte[]! bytes) -> byte[]!
+static System.Security.Cryptography.HashAlgorithmExtensions.VerifyHash(this byte[]! bytes, byte[]! hashedBytes, System.Security.Cryptography.HashAlgorithm! algorithm) -> bool
+static System.Security.Cryptography.HashAlgorithmExtensions.VerifyHmacMd5(this byte[]! bytes, byte[]! hashedBytes) -> bool
+static System.Security.Cryptography.HashAlgorithmExtensions.VerifyHmacMd5(this byte[]! bytes, byte[]! hashedBytes, byte[]! key) -> bool
+static System.Security.Cryptography.HashAlgorithmExtensions.VerifyHmacMd5(this byte[]! bytes, byte[]! hashedBytes, string! key) -> bool
+static System.Security.Cryptography.HashAlgorithmExtensions.VerifyHmacMd5(this byte[]! bytes, byte[]! hashedBytes, string! key, System.Text.Encoding! encoding) -> bool
+static System.Security.Cryptography.HashAlgorithmExtensions.VerifyHmacSha1(this byte[]! bytes, byte[]! hashedBytes) -> bool
+static System.Security.Cryptography.HashAlgorithmExtensions.VerifyHmacSha1(this byte[]! bytes, byte[]! hashedBytes, byte[]! key) -> bool
+static System.Security.Cryptography.HashAlgorithmExtensions.VerifyHmacSha1(this byte[]! bytes, byte[]! hashedBytes, string! key) -> bool
+static System.Security.Cryptography.HashAlgorithmExtensions.VerifyHmacSha1(this byte[]! bytes, byte[]! hashedBytes, string! key, System.Text.Encoding! encoding) -> bool
+static System.Security.Cryptography.HashAlgorithmExtensions.VerifyHmacSha256(this byte[]! bytes, byte[]! hashedBytes) -> bool
+static System.Security.Cryptography.HashAlgorithmExtensions.VerifyHmacSha256(this byte[]! bytes, byte[]! hashedBytes, byte[]! key) -> bool
+static System.Security.Cryptography.HashAlgorithmExtensions.VerifyHmacSha256(this byte[]! bytes, byte[]! hashedBytes, string! key) -> bool
+static System.Security.Cryptography.HashAlgorithmExtensions.VerifyHmacSha256(this byte[]! bytes, byte[]! hashedBytes, string! key, System.Text.Encoding! encoding) -> bool
+static System.Security.Cryptography.HashAlgorithmExtensions.VerifyHmacSha384(this byte[]! bytes, byte[]! hashedBytes) -> bool
+static System.Security.Cryptography.HashAlgorithmExtensions.VerifyHmacSha384(this byte[]! bytes, byte[]! hashedBytes, byte[]! key) -> bool
+static System.Security.Cryptography.HashAlgorithmExtensions.VerifyHmacSha384(this byte[]! bytes, byte[]! hashedBytes, string! key) -> bool
+static System.Security.Cryptography.HashAlgorithmExtensions.VerifyHmacSha384(this byte[]! bytes, byte[]! hashedBytes, string! key, System.Text.Encoding! encoding) -> bool
+static System.Security.Cryptography.HashAlgorithmExtensions.VerifyHmacSha512(this byte[]! bytes, byte[]! hashedBytes) -> bool
+static System.Security.Cryptography.HashAlgorithmExtensions.VerifyHmacSha512(this byte[]! bytes, byte[]! key, byte[]! hashedBytes) -> bool
+static System.Security.Cryptography.HashAlgorithmExtensions.VerifyHmacSha512(this byte[]! bytes, string! key, byte[]! hashedBytes) -> bool
+static System.Security.Cryptography.HashAlgorithmExtensions.VerifyHmacSha512(this byte[]! bytes, string! key, byte[]! hashedBytes, System.Text.Encoding! encoding) -> bool
+static System.Security.Cryptography.HashAlgorithmExtensions.VerifyMd5(this byte[]! bytes, byte[]! hashedBytes) -> bool
+static System.Security.Cryptography.HashAlgorithmExtensions.VerifySha1(this byte[]! bytes, byte[]! hashedBytes) -> bool
+static System.Security.Cryptography.HashAlgorithmExtensions.VerifySha256(this byte[]! bytes, byte[]! hashedBytes) -> bool
+static System.Security.Cryptography.HashAlgorithmExtensions.VerifySha384(this byte[]! bytes, byte[]! hashedBytes) -> bool
+static System.Security.Cryptography.HashAlgorithmExtensions.VerifySha512(this byte[]! bytes, byte[]! hashedBytes) -> bool
+static System.Security.Cryptography.Randomizer.Generate(int length) -> byte[]!
+static System.Security.Cryptography.Randomizer.GenerateInt32(int fromInclusive = 0, int toExclusive = 2147483647) -> int
+static System.Security.Cryptography.Randomizer.GenerateInt32(int toExclusive = 2147483647) -> int
+static System.Security.Cryptography.Randomizer.GenerateInt64() -> long
+static System.Security.Cryptography.Randomizer.GenerateString() -> string!
+static System.Security.Cryptography.Randomizer.GenerateString(int length, bool digitOnly = false) -> string!
+static System.Security.Cryptography.Randomizer.WeightRandom<T>(this System.Collections.Generic.IEnumerable<T>! enumerable, System.Func<T, int>! weighter) -> T?
+static System.Security.Cryptography.Rfc6238AuthenticationService.ComputeTotp(byte[]! key, ulong timestepNumber, string? modifier) -> int
+static System.Security.Cryptography.Rfc6238AuthenticationService.GenerateCode(byte[]! securityToken, string? modifier = null) -> int
+static System.Security.Cryptography.Rfc6238AuthenticationService.GenerateRandomKey() -> byte[]!
+static System.Security.Cryptography.Rfc6238AuthenticationService.ValidateCode(byte[]! securityToken, int code, string? modifier = null) -> bool
+static System.StringExtensions.AddHashFragment(this string! url, string! query) -> string!
+static System.StringExtensions.AddQueryString(this string! url, string! name, string! value) -> string!
+static System.StringExtensions.AddQueryString(this string! url, string! query) -> string!
+static System.StringExtensions.CleanUrlPath(this string? url) -> string?
+static System.StringExtensions.EnsureEndsWith(this string! str, char c) -> string!
+static System.StringExtensions.EnsureEndsWith(this string! str, char c, bool ignoreCase, System.Globalization.CultureInfo! culture) -> string!
+static System.StringExtensions.EnsureEndsWith(this string! str, char c, System.StringComparison comparisonType) -> string!
+static System.StringExtensions.EnsureLeadingSlash(this string? url) -> string?
+static System.StringExtensions.EnsureStartsWith(this string! str, char c) -> string!
+static System.StringExtensions.EnsureStartsWith(this string! str, char c, bool ignoreCase, System.Globalization.CultureInfo! culture) -> string!
+static System.StringExtensions.EnsureStartsWith(this string! str, char c, System.StringComparison comparisonType) -> string!
+static System.StringExtensions.EnsureTrailingSlash(this string? url) -> string?
+static System.StringExtensions.FromSpaceSeparatedString(this string! input) -> System.Collections.Generic.IEnumerable<string!>!
+static System.StringExtensions.GetOrigin(this string! url) -> string?
+static System.StringExtensions.IsAlgeriaMobileNumber(this string? value) -> bool
+static System.StringExtensions.IsAustraliaMobileNumber(this string? value) -> bool
+static System.StringExtensions.IsBelgiumMobileNumber(this string? value) -> bool
+static System.StringExtensions.IsBrazilMobileNumber(this string? value) -> bool
+static System.StringExtensions.IsChinaMainlandMobileNumber(this string? value) -> bool
+static System.StringExtensions.IsCzechMobileNumber(this string? value) -> bool
+static System.StringExtensions.IsDenmarkMobileNumber(this string? value) -> bool
+static System.StringExtensions.IsEmail(this string? value) -> bool
+static System.StringExtensions.IsEmptyOrWhiteSpace(this string! str) -> bool
+static System.StringExtensions.IsFinlandMobileNumber(this string? value) -> bool
+static System.StringExtensions.IsFranceMobileNumber(this string? value) -> bool
+static System.StringExtensions.IsGermanyMobileNumber(this string? value) -> bool
+static System.StringExtensions.IsGreeceMobileNumber(this string? value) -> bool
+static System.StringExtensions.IsHongKongOfChinaMobileNumber(this string? value) -> bool
+static System.StringExtensions.IsHungaryMobileNumber(this string? value) -> bool
+static System.StringExtensions.IsIndiaMobileNumber(this string? value) -> bool
+static System.StringExtensions.IsIp4Address(this string? value) -> bool
+static System.StringExtensions.IsItalyMobileNumber(this string? value) -> bool
+static System.StringExtensions.IsJapanMobileNumber(this string? value) -> bool
+static System.StringExtensions.IsLocalUrl(this string! url) -> bool
+static System.StringExtensions.IsMalaysiaMobileNumber(this string? value) -> bool
+static System.StringExtensions.IsMatch(this string? value, string! pattern) -> bool
+static System.StringExtensions.IsMatch(this string? value, string! pattern, System.Text.RegularExpressions.RegexOptions regexOptions) -> bool
+static System.StringExtensions.IsMissing(this string? value) -> bool
+static System.StringExtensions.IsMissingOrTooLong(this string? value, int maxLength) -> bool
+static System.StringExtensions.IsMobileNumber(this string? value) -> bool
+static System.StringExtensions.IsNewZealandMobileNumber(this string? value) -> bool
+static System.StringExtensions.IsNorwayMobileNumber(this string? value) -> bool
+static System.StringExtensions.IsNullOrEmpty(this string? str) -> bool
+static System.StringExtensions.IsNullOrWhiteSpace(this string? str) -> bool
+static System.StringExtensions.IsPolandMobileNumber(this string? value) -> bool
+static System.StringExtensions.IsPortugalMobileNumber(this string? value) -> bool
+static System.StringExtensions.IsPresent(this string? value) -> bool
+static System.StringExtensions.IsRussianFederationMobileNumber(this string? value) -> bool
+static System.StringExtensions.IsSaudiArabiaMobileNumber(this string? value) -> bool
+static System.StringExtensions.IsSerbiaMobileNumber(this string? value) -> bool
+static System.StringExtensions.IsSouthAfricaMobileNumber(this string? value) -> bool
+static System.StringExtensions.IsSpainMobileNumber(this string? value) -> bool
+static System.StringExtensions.IsSyrianArabMobileNumber(this string? value) -> bool
+static System.StringExtensions.IsTaiwanOfChinaMobileNumber(this string? value) -> bool
+static System.StringExtensions.IsTurkeyMobileNumber(this string? value) -> bool
+static System.StringExtensions.IsUnitedKingdomMobileNumber(this string? value) -> bool
+static System.StringExtensions.IsUnitedStatesMobileNumber(this string? value) -> bool
+static System.StringExtensions.IsVietNamMobileNumber(this string? value) -> bool
+static System.StringExtensions.IsZambiaMobileNumber(this string? value) -> bool
+static System.StringExtensions.Left(this string! str, int len) -> string!
+static System.StringExtensions.NormalizeLineEndings(this string! str) -> string!
+static System.StringExtensions.NthIndexOf(this string! str, char c, int n) -> int
+static System.StringExtensions.Obfuscate(this string! value) -> string!
+static System.StringExtensions.ParseScopesString(this string? scopes) -> System.Collections.Generic.List<string!>?
+static System.StringExtensions.RemoveLeadingSlash(this string? url) -> string?
+static System.StringExtensions.RemovePostFix(this string? str, params string![]! postFixes) -> string?
+static System.StringExtensions.RemovePreFix(this string? str, params string![]! preFixes) -> string?
+static System.StringExtensions.RemoveTrailingSlash(this string? url) -> string?
+static System.StringExtensions.Right(this string! str, int len) -> string!
+static System.StringExtensions.Split(this string! str, string! separator) -> string![]!
+static System.StringExtensions.Split(this string! str, string! separator, System.StringSplitOptions options) -> string![]!
+static System.StringExtensions.SplitToLines(this string! str) -> string![]!
+static System.StringExtensions.SplitToLines(this string! str, System.StringSplitOptions options) -> string![]!
+static System.StringExtensions.ToCamelCase(this string! str, bool invariantCulture = true) -> string!
+static System.StringExtensions.ToCamelCase(this string! str, System.Globalization.CultureInfo! culture) -> string!
+static System.StringExtensions.ToEnum<T>(this string! value) -> T
+static System.StringExtensions.ToEnum<T>(this string! value, bool ignoreCase) -> T
+static System.StringExtensions.ToHmac(this string! str) -> string!
+static System.StringExtensions.ToHmac(this string! str, System.Text.Encoding! encoding) -> string!
+static System.StringExtensions.ToHmacMd5(this string! str) -> string!
+static System.StringExtensions.ToHmacMd5(this string! str, System.Text.Encoding! encoding) -> string!
+static System.StringExtensions.ToHmacRipemd160(this string! str) -> string!
+static System.StringExtensions.ToHmacRipemd160(this string! str, System.Text.Encoding! encoding) -> string!
+static System.StringExtensions.ToHmacSha1(this string! str) -> string!
+static System.StringExtensions.ToHmacSha1(this string! str, System.Text.Encoding! encoding) -> string!
+static System.StringExtensions.ToHmacSha256(this string! str) -> string!
+static System.StringExtensions.ToHmacSha256(this string! str, string! key) -> string!
+static System.StringExtensions.ToHmacSha256(this string! str, string! key, System.Text.Encoding! encoding) -> string!
+static System.StringExtensions.ToHmacSha256(this string! str, System.Text.Encoding! encoding) -> string!
+static System.StringExtensions.ToHmacSha384(this string! str) -> string!
+static System.StringExtensions.ToHmacSha384(this string! str, System.Text.Encoding! encoding) -> string!
+static System.StringExtensions.ToHmacSha512(this string! str) -> string!
+static System.StringExtensions.ToHmacSha512(this string! str, System.Text.Encoding! encoding) -> string!
+static System.StringExtensions.ToMacTripleDES(this string! str) -> string!
+static System.StringExtensions.ToMacTripleDES(this string! str, System.Text.Encoding! encoding) -> string!
+static System.StringExtensions.ToMd5(this string! str) -> string!
+static System.StringExtensions.ToMd5(this string! str, System.Text.Encoding! encoding) -> string!
+static System.StringExtensions.ToPascalCase(this string! str, bool invariantCulture = true) -> string!
+static System.StringExtensions.ToPascalCase(this string! str, System.Globalization.CultureInfo! culture) -> string!
+static System.StringExtensions.ToSentenceCase(this string! str, bool invariantCulture = false) -> string!
+static System.StringExtensions.ToSentenceCase(this string! str, System.Globalization.CultureInfo! culture) -> string!
+static System.StringExtensions.ToSha1(this string! str) -> string!
+static System.StringExtensions.ToSha1(this string! str, System.Text.Encoding! encoding) -> string!
+static System.StringExtensions.ToSha256(this string! str) -> string!
+static System.StringExtensions.ToSha256(this string! str, System.Text.Encoding! encoding) -> string!
+static System.StringExtensions.ToSha384(this string! str) -> string!
+static System.StringExtensions.ToSha384(this string! str, System.Text.Encoding! encoding) -> string!
+static System.StringExtensions.ToSha512(this string! str) -> string!
+static System.StringExtensions.ToSha512(this string! str, System.Text.Encoding! encoding) -> string!
+static System.StringExtensions.ToSpaceSeparatedString(this System.Collections.Generic.IEnumerable<string!>! list) -> string!
+static System.StringExtensions.ToStringWithoutBom(this byte[]? bytes) -> string?
+static System.StringExtensions.ToStringWithoutBom(this byte[]? bytes, System.Text.Encoding! encoding) -> string?
+static System.StringExtensions.Truncate(this string! str, int maxLength) -> string?
+static System.StringExtensions.TruncateWithPostfix(this string! str, int maxLength) -> string?
+static System.StringExtensions.TruncateWithPostfix(this string! str, int maxLength, string! postfix) -> string?
+static System.StringExtensions.VerifyHmacSha256(this string! str, string! hexHashedValue) -> bool
+static System.StringExtensions.VerifyHmacSha256(this string! str, string! hexHashedValue, byte[]! key) -> bool
+static System.StringExtensions.VerifyHmacSha256(this string! str, string! hexHashedValue, byte[]! key, System.Text.Encoding! encoding) -> bool
+static System.StringExtensions.VerifyHmacSha256(this string! str, string! hexHashedValue, string! key) -> bool
+static System.StringExtensions.VerifyHmacSha256(this string! str, string! hexHashedValue, string! key, System.Text.Encoding! encoding) -> bool
+static System.StringExtensions.VerifyHmacSha256(this string! str, string! hexHashedValue, System.Text.Encoding! encoding) -> bool
+static System.StringExtensions.VerifyMd5(this string! str, string! hexHashedValue) -> bool
+static System.StringExtensions.VerifyMd5(this string! str, string! hexHashedValue, System.Text.Encoding! encoding) -> bool
+static System.StringExtensions.VerifySha1(this string! str, string! hexHashedValue) -> bool
+static System.StringExtensions.VerifySha1(this string! str, string! hexHashedValue, System.Text.Encoding! encoding) -> bool
+static System.StringExtensions.VerifySha256(this string! str, string! hexHashedValue) -> bool
+static System.StringExtensions.VerifySha256(this string! str, string! hexHashedValue, System.Text.Encoding! encoding) -> bool
+static System.StringExtensions.VerifySha384(this string! str, string! hexHashedValue) -> bool
+static System.StringExtensions.VerifySha384(this string! str, string! hexHashedValue, System.Text.Encoding! encoding) -> bool
+static System.StringExtensions.VerifySha512(this string! str, string! hexHashedValue) -> bool
+static System.StringExtensions.VerifySha512(this string! str, string! hexHashedValue, System.Text.Encoding! encoding) -> bool
+static System.Threading.ReaderWriterLockSlimExtensions.ReadLocking(this System.Threading.ReaderWriterLockSlim! locker, System.Action! action) -> void
+static System.Threading.ReaderWriterLockSlimExtensions.ReadLocking<T, TResult>(this System.Threading.ReaderWriterLockSlim! locker, System.Func<T?, TResult>! method, T? object) -> TResult
+static System.Threading.ReaderWriterLockSlimExtensions.ReadLocking<T>(this System.Threading.ReaderWriterLockSlim! locker, System.Action<T?>! action, T? object) -> void
+static System.Threading.ReaderWriterLockSlimExtensions.ReadLocking<TResult>(this System.Threading.ReaderWriterLockSlim! locker, System.Func<TResult>! method) -> TResult
+static System.Threading.ReaderWriterLockSlimExtensions.ReadLockingAsync(this System.Threading.ReaderWriterLockSlim! locker, System.Action! action) -> System.Threading.Tasks.Task!
+static System.Threading.ReaderWriterLockSlimExtensions.ReadLockingAsync<T, TResult>(this System.Threading.ReaderWriterLockSlim! locker, System.Func<T?, System.Threading.Tasks.Task<TResult>!>! method, T? object) -> System.Threading.Tasks.Task<TResult>!
+static System.Threading.ReaderWriterLockSlimExtensions.ReadLockingAsync<T>(this System.Threading.ReaderWriterLockSlim! locker, System.Action<T?>! action, T? object) -> System.Threading.Tasks.Task!
+static System.Threading.ReaderWriterLockSlimExtensions.ReadLockingAsync<TResult>(this System.Threading.ReaderWriterLockSlim! locker, System.Func<System.Threading.Tasks.Task<TResult>!>! method) -> System.Threading.Tasks.Task<TResult>!
+static System.Threading.ReaderWriterLockSlimExtensions.ReadWriteLocking<T, TResult>(this System.Threading.ReaderWriterLockSlim! locker, System.Func<T?, TResult>! shared, System.Func<T?, TResult>! exclusive, T? object) -> TResult
+static System.Threading.ReaderWriterLockSlimExtensions.ReadWriteLocking<TResult>(this System.Threading.ReaderWriterLockSlim! locker, System.Func<TResult>! shared, System.Func<TResult>! exclusive) -> TResult
+static System.Threading.ReaderWriterLockSlimExtensions.ReadWriteLockingAsync<T, TResult>(this System.Threading.ReaderWriterLockSlim! locker, System.Func<T?, System.Threading.Tasks.Task<TResult>!>! shared, System.Func<T?, System.Threading.Tasks.Task<TResult>!>! exclusive, T? object) -> System.Threading.Tasks.Task<TResult>!
+static System.Threading.ReaderWriterLockSlimExtensions.ReadWriteLockingAsync<TResult>(this System.Threading.ReaderWriterLockSlim! locker, System.Func<System.Threading.Tasks.Task<TResult>!>! shared, System.Func<System.Threading.Tasks.Task<TResult>!>! exclusive) -> System.Threading.Tasks.Task<TResult>!
+static System.Threading.ReaderWriterLockSlimExtensions.WriteLocking(this System.Threading.ReaderWriterLockSlim! locker, System.Action! action) -> void
+static System.Threading.ReaderWriterLockSlimExtensions.WriteLocking<T, TResult>(this System.Threading.ReaderWriterLockSlim! locker, System.Func<T?, TResult>! method, T? object) -> TResult
+static System.Threading.ReaderWriterLockSlimExtensions.WriteLocking<T>(this System.Threading.ReaderWriterLockSlim! locker, System.Action<T?>! action, T? object) -> void
+static System.Threading.ReaderWriterLockSlimExtensions.WriteLocking<TResult>(this System.Threading.ReaderWriterLockSlim! locker, System.Func<TResult>! method) -> TResult
+static System.Threading.ReaderWriterLockSlimExtensions.WriteLockingAsync(this System.Threading.ReaderWriterLockSlim! locker, System.Action! action) -> System.Threading.Tasks.Task!
+static System.Threading.ReaderWriterLockSlimExtensions.WriteLockingAsync<T, TResult>(this System.Threading.ReaderWriterLockSlim! locker, System.Func<T?, System.Threading.Tasks.Task<TResult>!>! method, T? object) -> System.Threading.Tasks.Task<TResult>!
+static System.Threading.ReaderWriterLockSlimExtensions.WriteLockingAsync<T>(this System.Threading.ReaderWriterLockSlim! locker, System.Action<T?>! action, T? object) -> System.Threading.Tasks.Task!
+static System.Threading.ReaderWriterLockSlimExtensions.WriteLockingAsync<TResult>(this System.Threading.ReaderWriterLockSlim! locker, System.Func<System.Threading.Tasks.Task<TResult>!>! method) -> System.Threading.Tasks.Task<TResult>!
+static System.Threading.SemaphoreSlimExtensions.Lock(this System.Threading.SemaphoreSlim! semaphoreSlim) -> System.IDisposable!
+static System.Threading.SemaphoreSlimExtensions.Lock(this System.Threading.SemaphoreSlim! semaphoreSlim, int millisecondsTimeout) -> System.IDisposable!
+static System.Threading.SemaphoreSlimExtensions.Lock(this System.Threading.SemaphoreSlim! semaphoreSlim, int millisecondsTimeout, System.Threading.CancellationToken cancellationToken) -> System.IDisposable!
+static System.Threading.SemaphoreSlimExtensions.Lock(this System.Threading.SemaphoreSlim! semaphoreSlim, System.Threading.CancellationToken cancellationToken) -> System.IDisposable!
+static System.Threading.SemaphoreSlimExtensions.Lock(this System.Threading.SemaphoreSlim! semaphoreSlim, System.TimeSpan timeout) -> System.IDisposable!
+static System.Threading.SemaphoreSlimExtensions.Lock(this System.Threading.SemaphoreSlim! semaphoreSlim, System.TimeSpan timeout, System.Threading.CancellationToken cancellationToken) -> System.IDisposable!
+static System.Threading.SemaphoreSlimExtensions.LockAsync(this System.Threading.SemaphoreSlim! semaphoreSlim) -> System.Threading.Tasks.Task<System.IDisposable!>!
+static System.Threading.SemaphoreSlimExtensions.LockAsync(this System.Threading.SemaphoreSlim! semaphoreSlim, int millisecondsTimeout) -> System.Threading.Tasks.Task<System.IDisposable!>!
+static System.Threading.SemaphoreSlimExtensions.LockAsync(this System.Threading.SemaphoreSlim! semaphoreSlim, int millisecondsTimeout, System.Threading.CancellationToken cancellationToken) -> System.Threading.Tasks.Task<System.IDisposable!>!
+static System.Threading.SemaphoreSlimExtensions.LockAsync(this System.Threading.SemaphoreSlim! semaphoreSlim, System.Threading.CancellationToken cancellationToken) -> System.Threading.Tasks.Task<System.IDisposable!>!
+static System.Threading.SemaphoreSlimExtensions.LockAsync(this System.Threading.SemaphoreSlim! semaphoreSlim, System.TimeSpan timeout) -> System.Threading.Tasks.Task<System.IDisposable!>!
+static System.Threading.SemaphoreSlimExtensions.LockAsync(this System.Threading.SemaphoreSlim! semaphoreSlim, System.TimeSpan timeout, System.Threading.CancellationToken cancellationToken) -> System.Threading.Tasks.Task<System.IDisposable!>!
+static System.Threading.Tasks.TaskCache.FalseResult.get -> System.Threading.Tasks.Task<bool>!
+static System.Threading.Tasks.TaskCache.TrueResult.get -> System.Threading.Tasks.Task<bool>!
+static System.TypeExtensions.GetAssembly(this System.Type! type) -> System.Reflection.Assembly!
+static System.TypeExtensions.GetBaseClasses(this System.Type! type, bool includeObject = true) -> System.Type![]!
+static System.TypeExtensions.GetBestName(this System.Type! type) -> string!
+static System.TypeExtensions.GetCustomAttribute<TAttribute>(this System.Type! type, bool inherit = true) -> TAttribute?
+static System.TypeExtensions.GetCustomAttributes(this System.Type! type, bool inherit = true) -> System.Collections.Generic.IEnumerable<System.Attribute!>!
+static System.TypeExtensions.GetCustomAttributes<TAttribute>(this System.Type! type, bool inherit = true) -> System.Collections.Generic.IEnumerable<TAttribute>!
+static System.TypeExtensions.GetFullNameWithAssemblyName(this System.Type! type) -> string!
+static System.TypeExtensions.IsAssignableTo(this System.Type! type, System.Type! targetType) -> bool
+static System.TypeExtensions.IsAssignableTo<TTarget>(this System.Type! type) -> bool
+static System.UriUtilities.CanonicalizeUrl(string! uri, string! relativeUri) -> string!
+static System.UriUtilities.IsHttpUri(System.Uri! uri) -> bool
+static System.UriUtilities.IsNonSecureWebSocketScheme(string! scheme) -> bool
+static System.UriUtilities.IsSecureWebSocketScheme(string! scheme) -> bool
+static System.UriUtilities.IsSupportedNonSecureScheme(string! scheme) -> bool
+static System.UriUtilities.IsSupportedScheme(string! scheme) -> bool
+static System.UriUtilities.IsSupportedSecureScheme(string! scheme) -> bool
+System.Base32
+System.Check
+System.Collections.Generic.AsyncEnumerableExtensions
+System.Collections.Generic.ICollectionExtensions
+System.Collections.Generic.IDictionaryExtensions
+System.Collections.Generic.IEnumerableExtensions
+System.Collections.Generic.IListExtensions
+System.Collections.Generic.NamedTypeSelectorListExtensions
+System.Collections.Generic.Reader<T>
+System.Collections.Generic.Reader<T>.Close() -> void
+System.Collections.Generic.Reader<T>.GetEnumerator() -> System.Collections.Generic.IEnumerator<T>!
+System.Collections.Generic.Reader<T>.HasMore.get -> bool
+System.Collections.Generic.Reader<T>.Peek() -> T
+System.Collections.Generic.Reader<T>.Read() -> T
+System.Collections.Generic.Reader<T>.Reader(System.Collections.Generic.IEnumerable<T>! e) -> void
+System.Collections.Generic.Reader<T>.Reader(System.Collections.Generic.IEnumerator<T>! e) -> void
+System.Collections.Generic.Reader<T>.Unread(T value) -> void
+System.ComparableExtensions
+System.Converters
+System.CorrelationIdGenerator
+System.CorrelationIdGenerator.Next.get -> string!
+System.DisposeAction
+System.DisposeAction.~DisposeAction() -> void
+System.DisposeAction.Dispose() -> void
+System.DisposeAction.DisposeAction(System.Action? action) -> void
+System.EnumExtensions
+System.EventHandlerExtensions
+System.ExceptionExtensions
+System.Globalization.CultureHelper
+System.IO.StreamExtensions
+System.Linq.QueryableExtensions
+System.LruCache<TInput, TResult>
+System.LruCache<TInput, TResult>.Capacity.get -> int
+System.LruCache<TInput, TResult>.Capacity.set -> void
+System.LruCache<TInput, TResult>.Dispose() -> void
+System.LruCache<TInput, TResult>.GetValue(TInput key) -> TResult
+System.LruCache<TInput, TResult>.LruCache(System.Func<TInput, TResult>! evalutor, int capacity) -> void
+System.Net.HttpStatusCodeExtensions
+System.NullDisposable
+System.NullDisposable.Dispose() -> void
+System.ObjectExtensions
+System.ObjectId
+System.ObjectId.CompareTo(System.ObjectId other) -> int
+System.ObjectId.CreationTime.get -> System.DateTime
+System.ObjectId.Equals(System.ObjectId rhs) -> bool
+System.ObjectId.Increment.get -> int
+System.ObjectId.Machine.get -> int
+System.ObjectId.ObjectId() -> void
+System.ObjectId.ObjectId(byte[]! bytes) -> void
+System.ObjectId.ObjectId(string! value) -> void
+System.ObjectId.ObjectId(System.ReadOnlySpan<byte> bytes) -> void
+System.ObjectId.Pid.get -> short
+System.ObjectId.Timestamp.get -> int
+System.ObjectId.ToByteArray() -> byte[]!
+System.ObjectId.ToByteArray(byte[]! destination, int offset) -> void
+System.Reflection.CustomAttributeAccessor
+System.Reflection.MemberInfoExtensions
+System.Reflection.PropertyActivator<TContext>
+System.Reflection.PropertyActivator<TContext>.Activate(object! instance, TContext context) -> object!
+System.Reflection.PropertyActivator<TContext>.PropertyActivator(System.Reflection.PropertyInfo! propertyInfo, System.Func<TContext, object!>! valueAccessor) -> void
+System.Reflection.PropertyActivator<TContext>.PropertyInfo.get -> System.Reflection.PropertyInfo!
+System.Reflection.PropertyHelper
+System.Reflection.PropertyHelper.GetValue(object! instance) -> object!
+System.Reflection.PropertyHelper.Property.get -> System.Reflection.PropertyInfo!
+System.Reflection.PropertyHelper.PropertyHelper(System.Reflection.PropertyInfo! property) -> void
+System.Reflection.PropertyHelper.SetValue(object! instance, object! value) -> void
+System.Reflection.PropertyHelper.ValueGetter.get -> System.Func<object!, object!>!
+System.Reflection.PropertyHelper.ValueSetter.get -> System.Action<object!, object!>!
+System.Reflection.ReflectionHelper
+System.Reflection.TypeHelper
+System.Reflection.TypeInfoExtensions
+System.RegexConstants
+System.RegexConstants.Email
+System.RegexConstants.Email.Email() -> void
+System.RegexConstants.Ipv4Address
+System.RegexConstants.Ipv4Address.Ipv4Address() -> void
+System.RegexConstants.MobileNumber
+System.RegexConstants.MobileNumber.MobileNumber() -> void
+System.RegexConstants.RegexConstants() -> void
+System.Security.Cryptography.HashAlgorithmExtensions
+System.Security.Cryptography.Randomizer
+System.Security.Cryptography.Rfc6238AuthenticationService
+System.StringExtensions
+System.Threading.ReaderWriterLockSlimExtensions
+System.Threading.SemaphoreSlimExtensions
+System.Threading.Tasks.TaskCache
+System.TypeExtensions
+System.UriUtilities
+virtual Skywalker.Extensions.Collections.Generic.CopyOnWriteDictionary<TKey, TValue>.Add(System.Collections.Generic.KeyValuePair<TKey, TValue> item) -> void
+virtual Skywalker.Extensions.Collections.Generic.CopyOnWriteDictionary<TKey, TValue>.Add(TKey key, TValue value) -> void
+virtual Skywalker.Extensions.Collections.Generic.CopyOnWriteDictionary<TKey, TValue>.Clear() -> void
+virtual Skywalker.Extensions.Collections.Generic.CopyOnWriteDictionary<TKey, TValue>.Contains(System.Collections.Generic.KeyValuePair<TKey, TValue> item) -> bool
+virtual Skywalker.Extensions.Collections.Generic.CopyOnWriteDictionary<TKey, TValue>.ContainsKey(TKey key) -> bool
+virtual Skywalker.Extensions.Collections.Generic.CopyOnWriteDictionary<TKey, TValue>.CopyTo(System.Collections.Generic.KeyValuePair<TKey, TValue>[]! array, int arrayIndex) -> void
+virtual Skywalker.Extensions.Collections.Generic.CopyOnWriteDictionary<TKey, TValue>.Count.get -> int
+virtual Skywalker.Extensions.Collections.Generic.CopyOnWriteDictionary<TKey, TValue>.GetEnumerator() -> System.Collections.Generic.IEnumerator<System.Collections.Generic.KeyValuePair<TKey, TValue>>!
+virtual Skywalker.Extensions.Collections.Generic.CopyOnWriteDictionary<TKey, TValue>.IsReadOnly.get -> bool
+virtual Skywalker.Extensions.Collections.Generic.CopyOnWriteDictionary<TKey, TValue>.Keys.get -> System.Collections.Generic.ICollection<TKey>!
+virtual Skywalker.Extensions.Collections.Generic.CopyOnWriteDictionary<TKey, TValue>.Remove(TKey key) -> bool
+virtual Skywalker.Extensions.Collections.Generic.CopyOnWriteDictionary<TKey, TValue>.this[TKey key].get -> TValue
+virtual Skywalker.Extensions.Collections.Generic.CopyOnWriteDictionary<TKey, TValue>.this[TKey key].set -> void
+virtual Skywalker.Extensions.Collections.Generic.CopyOnWriteDictionary<TKey, TValue>.TryGetValue(TKey key, out TValue value) -> bool
+virtual Skywalker.Extensions.Collections.Generic.CopyOnWriteDictionary<TKey, TValue>.Values.get -> System.Collections.Generic.ICollection<TValue>!
+virtual System.DisposeAction.Dispose(bool disposing) -> void
+virtual System.Reflection.PropertyHelper.Name.get -> string!
+virtual System.Reflection.PropertyHelper.Name.set -> void

@@ -1,0 +1,24 @@
+#nullable enable
+Skywalker.Localization.AspNetCore.DefaultLanguageProvider
+Skywalker.Localization.AspNetCore.DefaultLanguageProvider.DefaultLanguageProvider(Microsoft.Extensions.Options.IOptions<Skywalker.Localization.LocalizationOptions!>! options) -> void
+Skywalker.Localization.AspNetCore.DefaultLanguageProvider.GetLanguagesAsync() -> System.Threading.Tasks.Task<System.Collections.Generic.IReadOnlyList<Skywalker.Localization.LanguageInfo!>!>!
+Skywalker.Localization.AspNetCore.LocalizationServiceCollectionExtensions
+Skywalker.Localization.AspNetCore.SkywalkerStringLocalizer
+Skywalker.Localization.AspNetCore.SkywalkerStringLocalizer.GetAllStrings(bool includeParentCultures = true) -> System.Collections.Generic.IEnumerable<Skywalker.Localization.LocalizedString!>!
+Skywalker.Localization.AspNetCore.SkywalkerStringLocalizer.GetAllStrings(System.Globalization.CultureInfo! culture, bool includeParentCultures = true) -> System.Collections.Generic.IEnumerable<Skywalker.Localization.LocalizedString!>!
+Skywalker.Localization.AspNetCore.SkywalkerStringLocalizer.SkywalkerStringLocalizer(Skywalker.Localization.LocalizationResource! resource, Microsoft.Extensions.Options.IOptions<Skywalker.Localization.LocalizationOptions!>! options) -> void
+Skywalker.Localization.AspNetCore.SkywalkerStringLocalizer.this[string! name, params object![]! arguments].get -> Skywalker.Localization.LocalizedString!
+Skywalker.Localization.AspNetCore.SkywalkerStringLocalizer.this[string! name].get -> Skywalker.Localization.LocalizedString!
+Skywalker.Localization.AspNetCore.SkywalkerStringLocalizer<TResource>
+Skywalker.Localization.AspNetCore.SkywalkerStringLocalizer<TResource>.GetAllStrings(bool includeParentCultures = true) -> System.Collections.Generic.IEnumerable<Skywalker.Localization.LocalizedString!>!
+Skywalker.Localization.AspNetCore.SkywalkerStringLocalizer<TResource>.GetAllStrings(System.Globalization.CultureInfo! culture, bool includeParentCultures = true) -> System.Collections.Generic.IEnumerable<Skywalker.Localization.LocalizedString!>!
+Skywalker.Localization.AspNetCore.SkywalkerStringLocalizer<TResource>.SkywalkerStringLocalizer(Skywalker.Localization.IStringLocalizerFactory! factory) -> void
+Skywalker.Localization.AspNetCore.SkywalkerStringLocalizer<TResource>.this[string! name, params object![]! arguments].get -> Skywalker.Localization.LocalizedString!
+Skywalker.Localization.AspNetCore.SkywalkerStringLocalizer<TResource>.this[string! name].get -> Skywalker.Localization.LocalizedString!
+Skywalker.Localization.AspNetCore.SkywalkerStringLocalizerFactory
+Skywalker.Localization.AspNetCore.SkywalkerStringLocalizerFactory.Create(string! baseName, string! location) -> Skywalker.Localization.IStringLocalizer!
+Skywalker.Localization.AspNetCore.SkywalkerStringLocalizerFactory.Create(System.Type! resourceType) -> Skywalker.Localization.IStringLocalizer!
+Skywalker.Localization.AspNetCore.SkywalkerStringLocalizerFactory.Create<TResource>() -> Skywalker.Localization.IStringLocalizer!
+Skywalker.Localization.AspNetCore.SkywalkerStringLocalizerFactory.SkywalkerStringLocalizerFactory(System.IServiceProvider! serviceProvider, Microsoft.Extensions.Options.IOptions<Skywalker.Localization.LocalizationOptions!>! options) -> void
+static Skywalker.Localization.AspNetCore.LocalizationServiceCollectionExtensions.AddSkywalkerLocalization(this Microsoft.Extensions.DependencyInjection.IServiceCollection! services, System.Action<Skywalker.Localization.LocalizationOptions!>? configureOptions = null) -> Microsoft.Extensions.DependencyInjection.IServiceCollection!
+static Skywalker.Localization.AspNetCore.LocalizationServiceCollectionExtensions.UseSkywalkerRequestLocalization(this Microsoft.AspNetCore.Builder.IApplicationBuilder! app) -> Microsoft.AspNetCore.Builder.IApplicationBuilder!

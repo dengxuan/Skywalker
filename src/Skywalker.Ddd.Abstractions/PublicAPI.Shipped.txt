@@ -1,0 +1,51 @@
+#nullable enable
+abstract Skywalker.ApplicationParts.ApplicationPart.Name.get -> string!
+Microsoft.Extensions.DependencyInjection.ExposeServicesAttribute
+Microsoft.Extensions.DependencyInjection.ExposeServicesAttribute.ExposeServicesAttribute(params System.Type![]! serviceTypes) -> void
+Microsoft.Extensions.DependencyInjection.ExposeServicesAttribute.IncludeDefaults.get -> bool
+Microsoft.Extensions.DependencyInjection.ExposeServicesAttribute.IncludeDefaults.set -> void
+Microsoft.Extensions.DependencyInjection.ExposeServicesAttribute.IncludeSelf.get -> bool
+Microsoft.Extensions.DependencyInjection.ExposeServicesAttribute.IncludeSelf.set -> void
+Microsoft.Extensions.DependencyInjection.ExposeServicesAttribute.ServiceTypes.get -> System.Type![]!
+Microsoft.Extensions.DependencyInjection.KeyedServiceAttribute
+Microsoft.Extensions.DependencyInjection.KeyedServiceAttribute.Key.get -> object!
+Microsoft.Extensions.DependencyInjection.KeyedServiceAttribute.KeyedServiceAttribute(System.Type! serviceType, object! key) -> void
+Microsoft.Extensions.DependencyInjection.KeyedServiceAttribute.ServiceType.get -> System.Type!
+Microsoft.Extensions.DependencyInjection.ReplaceServiceAttribute
+Microsoft.Extensions.DependencyInjection.ReplaceServiceAttribute.ReplaceServiceAttribute() -> void
+Microsoft.Extensions.DependencyInjection.SharedInstanceAttribute
+Microsoft.Extensions.DependencyInjection.SharedInstanceAttribute.SharedInstanceAttribute() -> void
+Microsoft.Extensions.DependencyInjection.SkywalkerServiceCollectionExtensions
+Microsoft.Extensions.DependencyInjection.SkywalkerServicesAttribute
+Microsoft.Extensions.DependencyInjection.SkywalkerServicesAttribute.SkywalkerServicesAttribute() -> void
+override Skywalker.ApplicationParts.AssemblyPart.Name.get -> string!
+Skywalker.ApplicationParts.ApplicationPart
+Skywalker.ApplicationParts.ApplicationPart.ApplicationPart() -> void
+Skywalker.ApplicationParts.AssemblyPart
+Skywalker.ApplicationParts.AssemblyPart.Assembly.get -> System.Reflection.Assembly!
+Skywalker.ApplicationParts.AssemblyPart.AssemblyPart(System.Reflection.Assembly! assembly) -> void
+Skywalker.ApplicationParts.AssemblyPart.Types.get -> System.Collections.Generic.IEnumerable<System.Reflection.TypeInfo!>!
+Skywalker.ApplicationParts.IApplicationFeatureProvider
+Skywalker.ApplicationParts.IApplicationFeatureProvider<TFeature>
+Skywalker.ApplicationParts.IApplicationFeatureProvider<TFeature>.PopulateFeature(System.Collections.Generic.IEnumerable<Skywalker.ApplicationParts.ApplicationPart!>! parts, TFeature feature) -> void
+Skywalker.ApplicationParts.IApplicationPartTypeProvider
+Skywalker.ApplicationParts.IApplicationPartTypeProvider.Types.get -> System.Collections.Generic.IEnumerable<System.Reflection.TypeInfo!>!
+Skywalker.ApplicationParts.ServiceRegistrationFeature
+Skywalker.ApplicationParts.ServiceRegistrationFeature.Replacements.get -> System.Collections.Generic.IList<Microsoft.Extensions.DependencyInjection.ServiceDescriptor!>!
+Skywalker.ApplicationParts.ServiceRegistrationFeature.ServiceCollection.get -> Microsoft.Extensions.DependencyInjection.IServiceCollection!
+Skywalker.ApplicationParts.ServiceRegistrationFeature.ServiceCollection.set -> void
+Skywalker.ApplicationParts.ServiceRegistrationFeature.ServiceRegistrationFeature() -> void
+Skywalker.ApplicationParts.ServiceRegistrationFeature.Services.get -> System.Collections.Generic.IList<Microsoft.Extensions.DependencyInjection.ServiceDescriptor!>!
+Skywalker.ApplicationParts.ServiceRegistrationHelper
+Skywalker.ISkywalkerBuilder
+Skywalker.ISkywalkerBuilder.PartManager.get -> Skywalker.SkywalkerPartManager!
+Skywalker.ISkywalkerBuilder.Services.get -> Microsoft.Extensions.DependencyInjection.IServiceCollection!
+Skywalker.SkywalkerPartManager
+Skywalker.SkywalkerPartManager.ApplicationParts.get -> System.Collections.Generic.IList<Skywalker.ApplicationParts.ApplicationPart!>!
+Skywalker.SkywalkerPartManager.FeatureProviders.get -> System.Collections.Generic.IList<Skywalker.ApplicationParts.IApplicationFeatureProvider!>!
+Skywalker.SkywalkerPartManager.PopulateFeature<TFeature>(TFeature feature) -> void
+Skywalker.SkywalkerPartManager.SkywalkerPartManager() -> void
+static Microsoft.Extensions.DependencyInjection.SkywalkerServiceCollectionExtensions.AddSkywalker(this Microsoft.Extensions.DependencyInjection.IServiceCollection! services) -> Skywalker.ISkywalkerBuilder!
+static Microsoft.Extensions.DependencyInjection.SkywalkerServiceCollectionExtensions.AddSkywalker(this Microsoft.Extensions.DependencyInjection.IServiceCollection! services, System.Reflection.Assembly! entryAssembly) -> Skywalker.ISkywalkerBuilder!
+static Skywalker.ApplicationParts.ServiceRegistrationHelper.RegisterKeyedServices(System.Type! type, Skywalker.ApplicationParts.ServiceRegistrationFeature! feature) -> void
+static Skywalker.ApplicationParts.ServiceRegistrationHelper.RegisterType(System.Type! type, System.Collections.Generic.IEnumerable<System.Type!>! defaultInterfaces, Microsoft.Extensions.DependencyInjection.ServiceLifetime lifetime, Skywalker.ApplicationParts.ServiceRegistrationFeature! feature) -> void

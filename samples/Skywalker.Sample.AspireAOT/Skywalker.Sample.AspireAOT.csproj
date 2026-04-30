@@ -1,0 +1,19 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <!--
+      AOT-publish target. The build column is identical to other samples; the AOT
+      bar bites only when running `dotnet publish -p:PublishAot=true`. Keep
+      InvariantGlobalization on by default to mirror typical AOT services.
+    -->
+    <PublishAot>true</PublishAot>
+    <InvariantGlobalization>true</InvariantGlobalization>
+
+    <!--
+      During Sprint 0 the goal is "AOT publish must succeed". Zero IL2xxx / IL3xxx
+      warnings is enforced by Sprint 1+ when each generator's AOT story lands.
+      Keeping the warnings as warnings (not errors) until then.
+    -->
+  </PropertyGroup>
+
+</Project>

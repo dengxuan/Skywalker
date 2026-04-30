@@ -1,0 +1,142 @@
+#nullable enable
+abstract Skywalker.Extensions.RateLimiters.RateLimiterPolicy<TOptions>.CreateRateLimiter(string! key) -> Skywalker.Extensions.RateLimiters.IRateLimiter!
+abstract Skywalker.Extensions.RateLimiters.TokenBucket.UpdateTokens() -> void
+override Skywalker.Extensions.RateLimiters.FixedTokenBucket.UpdateTokens() -> void
+override Skywalker.Extensions.RateLimiters.FixedWindowRateLimiterPolicy.CreateRateLimiter(string! key) -> Skywalker.Extensions.RateLimiters.IRateLimiter!
+override Skywalker.Extensions.RateLimiters.SlidingWindowRateLimiterPolicy.CreateRateLimiter(string! key) -> Skywalker.Extensions.RateLimiters.IRateLimiter!
+override Skywalker.Extensions.RateLimiters.StepDownTokenBucket.UpdateTokens() -> void
+override Skywalker.Extensions.RateLimiters.StepUpLeakyTokenBucket.UpdateTokens() -> void
+override Skywalker.Extensions.RateLimiters.TokenBucketRateLimiterPolicy.CreateRateLimiter(string! key) -> Skywalker.Extensions.RateLimiters.IRateLimiter!
+Skywalker.Extensions.RateLimiters.ConcurrencyRateLimiter
+Skywalker.Extensions.RateLimiters.ConcurrencyRateLimiter.ConcurrencyRateLimiter(Skywalker.Extensions.RateLimiters.ConcurrencyRateLimiterOptions! options) -> void
+Skywalker.Extensions.RateLimiters.ConcurrencyRateLimiter.GetStatistics() -> Skywalker.Extensions.RateLimiters.RateLimiterStatistics?
+Skywalker.Extensions.RateLimiters.ConcurrencyRateLimiter.Name.get -> string!
+Skywalker.Extensions.RateLimiters.ConcurrencyRateLimiter.Release(int permitCount = 1) -> void
+Skywalker.Extensions.RateLimiters.ConcurrencyRateLimiter.TryAcquire(int permitCount = 1) -> Skywalker.Extensions.RateLimiters.RateLimitResult
+Skywalker.Extensions.RateLimiters.ConcurrencyRateLimiter.TryAcquireAsync(int permitCount = 1, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) -> System.Threading.Tasks.ValueTask<Skywalker.Extensions.RateLimiters.RateLimitResult>
+Skywalker.Extensions.RateLimiters.ConcurrencyRateLimiterOptions
+Skywalker.Extensions.RateLimiters.ConcurrencyRateLimiterOptions.ConcurrencyRateLimiterOptions() -> void
+Skywalker.Extensions.RateLimiters.ConcurrencyRateLimiterOptions.QueueLimit.get -> int
+Skywalker.Extensions.RateLimiters.ConcurrencyRateLimiterOptions.QueueLimit.set -> void
+Skywalker.Extensions.RateLimiters.ConcurrencyRateLimiterOptions.QueueProcessingOrder.get -> Skywalker.Extensions.RateLimiters.QueueProcessingOrder
+Skywalker.Extensions.RateLimiters.ConcurrencyRateLimiterOptions.QueueProcessingOrder.set -> void
+Skywalker.Extensions.RateLimiters.FixedTokenBucket
+Skywalker.Extensions.RateLimiters.FixedTokenBucket.FixedTokenBucket(long maxTokens, long refillInterval, long refillIntervalInMilliSeconds) -> void
+Skywalker.Extensions.RateLimiters.FixedWindowRateLimiter
+Skywalker.Extensions.RateLimiters.FixedWindowRateLimiter.FixedWindowRateLimiter(Skywalker.Extensions.RateLimiters.FixedWindowRateLimiterOptions! options) -> void
+Skywalker.Extensions.RateLimiters.FixedWindowRateLimiter.GetStatistics() -> Skywalker.Extensions.RateLimiters.RateLimiterStatistics?
+Skywalker.Extensions.RateLimiters.FixedWindowRateLimiter.Name.get -> string!
+Skywalker.Extensions.RateLimiters.FixedWindowRateLimiter.TryAcquire(int permitCount = 1) -> Skywalker.Extensions.RateLimiters.RateLimitResult
+Skywalker.Extensions.RateLimiters.FixedWindowRateLimiter.TryAcquireAsync(int permitCount = 1, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) -> System.Threading.Tasks.ValueTask<Skywalker.Extensions.RateLimiters.RateLimitResult>
+Skywalker.Extensions.RateLimiters.FixedWindowRateLimiterOptions
+Skywalker.Extensions.RateLimiters.FixedWindowRateLimiterOptions.FixedWindowRateLimiterOptions() -> void
+Skywalker.Extensions.RateLimiters.FixedWindowRateLimiterOptions.Window.get -> System.TimeSpan
+Skywalker.Extensions.RateLimiters.FixedWindowRateLimiterOptions.Window.set -> void
+Skywalker.Extensions.RateLimiters.FixedWindowRateLimiterPolicy
+Skywalker.Extensions.RateLimiters.FixedWindowRateLimiterPolicy.FixedWindowRateLimiterPolicy(string! policyName, Skywalker.Extensions.RateLimiters.FixedWindowRateLimiterOptions! options) -> void
+Skywalker.Extensions.RateLimiters.IRateLimiter
+Skywalker.Extensions.RateLimiters.IRateLimiter.GetStatistics() -> Skywalker.Extensions.RateLimiters.RateLimiterStatistics?
+Skywalker.Extensions.RateLimiters.IRateLimiter.Name.get -> string!
+Skywalker.Extensions.RateLimiters.IRateLimiter.TryAcquire(int permitCount = 1) -> Skywalker.Extensions.RateLimiters.RateLimitResult
+Skywalker.Extensions.RateLimiters.IRateLimiter.TryAcquireAsync(int permitCount = 1, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) -> System.Threading.Tasks.ValueTask<Skywalker.Extensions.RateLimiters.RateLimitResult>
+Skywalker.Extensions.RateLimiters.IRateLimiterPolicy
+Skywalker.Extensions.RateLimiters.IRateLimiterPolicy.GetRateLimiter(string! key) -> Skywalker.Extensions.RateLimiters.IRateLimiter!
+Skywalker.Extensions.RateLimiters.IRateLimiterPolicy.OnRejectedAsync(string! key, Skywalker.Extensions.RateLimiters.RateLimitResult result) -> System.Threading.Tasks.ValueTask
+Skywalker.Extensions.RateLimiters.IRateLimiterPolicy.PolicyName.get -> string!
+Skywalker.Extensions.RateLimiters.IThrottleStrategy
+Skywalker.Extensions.RateLimiters.IThrottleStrategy.CurrentTokenCount.get -> long
+Skywalker.Extensions.RateLimiters.IThrottleStrategy.ShouldThrottle(long n = 1) -> bool
+Skywalker.Extensions.RateLimiters.IThrottleStrategy.ShouldThrottle(long n, out System.TimeSpan waitTime) -> bool
+Skywalker.Extensions.RateLimiters.IThrottleStrategy.ShouldThrottle(out System.TimeSpan waitTime) -> bool
+Skywalker.Extensions.RateLimiters.LeakyTokenBucket
+Skywalker.Extensions.RateLimiters.LeakyTokenBucket.LeakyTokenBucket(long maxTokens, long refillInterval, int refillIntervalInMilliSeconds, long stepTokens, long stepInterval, int stepIntervalInMilliseconds) -> void
+Skywalker.Extensions.RateLimiters.LeakyTokenBucket.StepTokens.get -> long
+Skywalker.Extensions.RateLimiters.LeakyTokenBucket.TicksStepInterval.get -> long
+Skywalker.Extensions.RateLimiters.LeakyTokenBucket.TicksStepInterval.set -> void
+Skywalker.Extensions.RateLimiters.QueueProcessingOrder
+Skywalker.Extensions.RateLimiters.QueueProcessingOrder.NewestFirst = 1 -> Skywalker.Extensions.RateLimiters.QueueProcessingOrder
+Skywalker.Extensions.RateLimiters.QueueProcessingOrder.OldestFirst = 0 -> Skywalker.Extensions.RateLimiters.QueueProcessingOrder
+Skywalker.Extensions.RateLimiters.RateLimiterOptions
+Skywalker.Extensions.RateLimiters.RateLimiterOptions.AutoReplenishment.get -> bool
+Skywalker.Extensions.RateLimiters.RateLimiterOptions.AutoReplenishment.set -> void
+Skywalker.Extensions.RateLimiters.RateLimiterOptions.Name.get -> string!
+Skywalker.Extensions.RateLimiters.RateLimiterOptions.Name.set -> void
+Skywalker.Extensions.RateLimiters.RateLimiterOptions.PermitLimit.get -> int
+Skywalker.Extensions.RateLimiters.RateLimiterOptions.PermitLimit.set -> void
+Skywalker.Extensions.RateLimiters.RateLimiterOptions.RateLimiterOptions() -> void
+Skywalker.Extensions.RateLimiters.RateLimiterPolicy<TOptions>
+Skywalker.Extensions.RateLimiters.RateLimiterPolicy<TOptions>.GetRateLimiter(string! key) -> Skywalker.Extensions.RateLimiters.IRateLimiter!
+Skywalker.Extensions.RateLimiters.RateLimiterPolicy<TOptions>.Options.get -> TOptions!
+Skywalker.Extensions.RateLimiters.RateLimiterPolicy<TOptions>.PolicyName.get -> string!
+Skywalker.Extensions.RateLimiters.RateLimiterPolicy<TOptions>.RateLimiterPolicy(string! policyName, TOptions! options) -> void
+Skywalker.Extensions.RateLimiters.RateLimiterStatistics
+Skywalker.Extensions.RateLimiters.RateLimiterStatistics.CurrentAvailablePermits.get -> long
+Skywalker.Extensions.RateLimiters.RateLimiterStatistics.CurrentAvailablePermits.init -> void
+Skywalker.Extensions.RateLimiters.RateLimiterStatistics.RateLimiterStatistics() -> void
+Skywalker.Extensions.RateLimiters.RateLimiterStatistics.TotalFailedAcquisitions.get -> long
+Skywalker.Extensions.RateLimiters.RateLimiterStatistics.TotalFailedAcquisitions.init -> void
+Skywalker.Extensions.RateLimiters.RateLimiterStatistics.TotalSuccessfulAcquisitions.get -> long
+Skywalker.Extensions.RateLimiters.RateLimiterStatistics.TotalSuccessfulAcquisitions.init -> void
+Skywalker.Extensions.RateLimiters.RateLimitResult
+Skywalker.Extensions.RateLimiters.RateLimitResult.IsAcquired.get -> bool
+Skywalker.Extensions.RateLimiters.RateLimitResult.RateLimitResult() -> void
+Skywalker.Extensions.RateLimiters.RateLimitResult.Reason.get -> string?
+Skywalker.Extensions.RateLimiters.RateLimitResult.RetryAfter.get -> System.TimeSpan
+Skywalker.Extensions.RateLimiters.RollingWindowThrottler
+Skywalker.Extensions.RateLimiters.RollingWindowThrottler.AvailableTokens.get -> int
+Skywalker.Extensions.RateLimiters.RollingWindowThrottler.Occurrences.get -> int
+Skywalker.Extensions.RateLimiters.RollingWindowThrottler.RollingWindowThrottler(int occurrences, System.TimeSpan timeUnit) -> void
+Skywalker.Extensions.RateLimiters.RollingWindowThrottler.ShouldThrottle(int tokens, out long waitTimeMillis) -> bool
+Skywalker.Extensions.RateLimiters.RollingWindowThrottler.ShouldThrottle(out long waitTimeMillis) -> bool
+Skywalker.Extensions.RateLimiters.RollingWindowThrottler.TimeUnit.get -> System.TimeSpan
+Skywalker.Extensions.RateLimiters.SlidingWindowRateLimiter
+Skywalker.Extensions.RateLimiters.SlidingWindowRateLimiter.GetStatistics() -> Skywalker.Extensions.RateLimiters.RateLimiterStatistics?
+Skywalker.Extensions.RateLimiters.SlidingWindowRateLimiter.Name.get -> string!
+Skywalker.Extensions.RateLimiters.SlidingWindowRateLimiter.SlidingWindowRateLimiter(Skywalker.Extensions.RateLimiters.SlidingWindowRateLimiterOptions! options) -> void
+Skywalker.Extensions.RateLimiters.SlidingWindowRateLimiter.TryAcquire(int permitCount = 1) -> Skywalker.Extensions.RateLimiters.RateLimitResult
+Skywalker.Extensions.RateLimiters.SlidingWindowRateLimiter.TryAcquireAsync(int permitCount = 1, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) -> System.Threading.Tasks.ValueTask<Skywalker.Extensions.RateLimiters.RateLimitResult>
+Skywalker.Extensions.RateLimiters.SlidingWindowRateLimiterOptions
+Skywalker.Extensions.RateLimiters.SlidingWindowRateLimiterOptions.SegmentsPerWindow.get -> int
+Skywalker.Extensions.RateLimiters.SlidingWindowRateLimiterOptions.SegmentsPerWindow.set -> void
+Skywalker.Extensions.RateLimiters.SlidingWindowRateLimiterOptions.SlidingWindowRateLimiterOptions() -> void
+Skywalker.Extensions.RateLimiters.SlidingWindowRateLimiterOptions.Window.get -> System.TimeSpan
+Skywalker.Extensions.RateLimiters.SlidingWindowRateLimiterOptions.Window.set -> void
+Skywalker.Extensions.RateLimiters.SlidingWindowRateLimiterPolicy
+Skywalker.Extensions.RateLimiters.SlidingWindowRateLimiterPolicy.SlidingWindowRateLimiterPolicy(string! policyName, Skywalker.Extensions.RateLimiters.SlidingWindowRateLimiterOptions! options) -> void
+Skywalker.Extensions.RateLimiters.StepDownTokenBucket
+Skywalker.Extensions.RateLimiters.StepDownTokenBucket.StepDownTokenBucket(long maxTokens, long refillInterval, int refillIntervalInMilliSeconds, long stepTokens, long stepInterval, int stepIntervalInMilliseconds) -> void
+Skywalker.Extensions.RateLimiters.StepUpLeakyTokenBucket
+Skywalker.Extensions.RateLimiters.StepUpLeakyTokenBucket.StepUpLeakyTokenBucket(long maxTokens, long refillInterval, int refillIntervalInMilliSeconds, long stepTokens, long stepInterval, int stepIntervalInMilliseconds) -> void
+Skywalker.Extensions.RateLimiters.Throttler
+Skywalker.Extensions.RateLimiters.Throttler.CanConsume() -> bool
+Skywalker.Extensions.RateLimiters.Throttler.Throttler(Skywalker.Extensions.RateLimiters.IThrottleStrategy! strategy) -> void
+Skywalker.Extensions.RateLimiters.TokenBucket
+Skywalker.Extensions.RateLimiters.TokenBucket.BucketTokenCapacity.get -> long
+Skywalker.Extensions.RateLimiters.TokenBucket.BucketTokenCapacity.set -> void
+Skywalker.Extensions.RateLimiters.TokenBucket.CurrentTokenCount.get -> long
+Skywalker.Extensions.RateLimiters.TokenBucket.NextRefillTime.get -> long
+Skywalker.Extensions.RateLimiters.TokenBucket.NextRefillTime.set -> void
+Skywalker.Extensions.RateLimiters.TokenBucket.ShouldThrottle(long n = 1) -> bool
+Skywalker.Extensions.RateLimiters.TokenBucket.ShouldThrottle(long n, out System.TimeSpan waitTime) -> bool
+Skywalker.Extensions.RateLimiters.TokenBucket.ShouldThrottle(out System.TimeSpan waitTime) -> bool
+Skywalker.Extensions.RateLimiters.TokenBucket.TicksRefillInterval.get -> long
+Skywalker.Extensions.RateLimiters.TokenBucket.TokenBucket(long bucketTokenCapacity, long refillInterval, long refillIntervalInMilliSeconds) -> void
+Skywalker.Extensions.RateLimiters.TokenBucket.Tokens.get -> long
+Skywalker.Extensions.RateLimiters.TokenBucket.Tokens.set -> void
+Skywalker.Extensions.RateLimiters.TokenBucketRateLimiter
+Skywalker.Extensions.RateLimiters.TokenBucketRateLimiter.GetStatistics() -> Skywalker.Extensions.RateLimiters.RateLimiterStatistics?
+Skywalker.Extensions.RateLimiters.TokenBucketRateLimiter.Name.get -> string!
+Skywalker.Extensions.RateLimiters.TokenBucketRateLimiter.TokenBucketRateLimiter(Skywalker.Extensions.RateLimiters.TokenBucketRateLimiterOptions! options) -> void
+Skywalker.Extensions.RateLimiters.TokenBucketRateLimiter.TryAcquire(int permitCount = 1) -> Skywalker.Extensions.RateLimiters.RateLimitResult
+Skywalker.Extensions.RateLimiters.TokenBucketRateLimiter.TryAcquireAsync(int permitCount = 1, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) -> System.Threading.Tasks.ValueTask<Skywalker.Extensions.RateLimiters.RateLimitResult>
+Skywalker.Extensions.RateLimiters.TokenBucketRateLimiterOptions
+Skywalker.Extensions.RateLimiters.TokenBucketRateLimiterOptions.ReplenishmentPeriod.get -> System.TimeSpan
+Skywalker.Extensions.RateLimiters.TokenBucketRateLimiterOptions.ReplenishmentPeriod.set -> void
+Skywalker.Extensions.RateLimiters.TokenBucketRateLimiterOptions.TokenBucketRateLimiterOptions() -> void
+Skywalker.Extensions.RateLimiters.TokenBucketRateLimiterOptions.TokensPerPeriod.get -> int
+Skywalker.Extensions.RateLimiters.TokenBucketRateLimiterOptions.TokensPerPeriod.set -> void
+Skywalker.Extensions.RateLimiters.TokenBucketRateLimiterPolicy
+Skywalker.Extensions.RateLimiters.TokenBucketRateLimiterPolicy.TokenBucketRateLimiterPolicy(string! policyName, Skywalker.Extensions.RateLimiters.TokenBucketRateLimiterOptions! options) -> void
+static Skywalker.Extensions.RateLimiters.RateLimitResult.Failed(System.TimeSpan retryAfter, string? reason = null) -> Skywalker.Extensions.RateLimiters.RateLimitResult
+static Skywalker.Extensions.RateLimiters.RateLimitResult.Success() -> Skywalker.Extensions.RateLimiters.RateLimitResult
+virtual Skywalker.Extensions.RateLimiters.RateLimiterPolicy<TOptions>.OnRejectedAsync(string! key, Skywalker.Extensions.RateLimiters.RateLimitResult result) -> System.Threading.Tasks.ValueTask

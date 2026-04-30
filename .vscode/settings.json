@@ -1,3 +1,16 @@
 {
-    "dotnet.unitTests.runSettingsPath": "coverlet.runsettings"
+    "dotnet.unitTests.runSettingsPath": "coverlet.runsettings",
+    "terminal.integrated.defaultProfile.windows": "Skywalker Dev PowerShell",
+    "terminal.integrated.profiles.windows": {
+        "Skywalker Dev PowerShell": {
+            "path": "powershell.exe",
+            "args": [
+                "-NoExit",
+                "-ExecutionPolicy",
+                "Bypass",
+                "-File",
+                "${workspaceFolder}\\eng\\Enter-VsDevShell.ps1"
+            ]
+        }
+    }
 }

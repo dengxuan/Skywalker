@@ -1,0 +1,20 @@
+#nullable enable
+Skywalker.Localization.Json.JsonLocalizationDictionaryBuilder
+Skywalker.Localization.Json.JsonLocalizationOptions
+Skywalker.Localization.Json.JsonLocalizationOptions.FileExtension.get -> string!
+Skywalker.Localization.Json.JsonLocalizationOptions.FileExtension.set -> void
+Skywalker.Localization.Json.JsonLocalizationOptions.JsonLocalizationOptions() -> void
+Skywalker.Localization.Json.JsonLocalizationOptions.ResourcesPath.get -> string?
+Skywalker.Localization.Json.JsonLocalizationOptions.ResourcesPath.set -> void
+Skywalker.Localization.Json.JsonLocalizationOptions.UseVirtualFileSystem.get -> bool
+Skywalker.Localization.Json.JsonLocalizationOptions.UseVirtualFileSystem.set -> void
+Skywalker.Localization.Json.JsonLocalizationResourceContributor
+Skywalker.Localization.Json.JsonLocalizationResourceContributor.Fill(string! cultureName, System.Collections.Generic.Dictionary<string!, Skywalker.Localization.LocalizedString!>! dictionary) -> void
+Skywalker.Localization.Json.JsonLocalizationResourceContributor.GetOrNull(string! cultureName, string! name) -> Skywalker.Localization.LocalizedString?
+Skywalker.Localization.Json.JsonLocalizationResourceContributor.GetSupportedCultures() -> System.Collections.Generic.IEnumerable<string!>!
+Skywalker.Localization.Json.JsonLocalizationResourceContributor.Initialize(Skywalker.Localization.LocalizationResourceInitializationContext! context) -> void
+Skywalker.Localization.Json.JsonLocalizationResourceContributor.JsonLocalizationResourceContributor(string! virtualPath, string! fileExtension = ".json") -> void
+Skywalker.Localization.Json.LocalizationResourceExtensions
+static Skywalker.Localization.Json.JsonLocalizationDictionaryBuilder.Build(string! jsonContent) -> System.Collections.Generic.Dictionary<string!, string!>!
+static Skywalker.Localization.Json.LocalizationResourceExtensions.AddJson(this Skywalker.Localization.LocalizationResource! resource, string! virtualPath, string! fileExtension = ".json") -> Skywalker.Localization.LocalizationResource!
+static Skywalker.Localization.Json.LocalizationResourceExtensions.AddJsonFromDefaultPath(this Skywalker.Localization.LocalizationResource! resource, string! basePath = "/Localization") -> Skywalker.Localization.LocalizationResource!

@@ -23,6 +23,7 @@
   <PropertyGroup Label="Roslyn">
     <MicrosoftCodeAnalysisCSharpVersion>4.8.0</MicrosoftCodeAnalysisCSharpVersion>
     <MicrosoftCodeAnalysisAnalyzersVersion>3.3.4</MicrosoftCodeAnalysisAnalyzersVersion>
+    <MicrosoftCodeAnalysisPublicApiAnalyzersVersion>3.3.4</MicrosoftCodeAnalysisPublicApiAnalyzersVersion>
     <MicrosoftSourceLinkVersion>8.0.0</MicrosoftSourceLinkVersion>
   </PropertyGroup>
 

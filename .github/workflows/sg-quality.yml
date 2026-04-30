@@ -1,0 +1,185 @@
+name: Source Generator Quality
+
+on:
+  push:
+    branches:
+      - main
+      - release/2.0
+  pull_request:
+    branches:
+      - main
+      - release/2.0
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  packages: write
+
+jobs:
+  build-and-test:
+    name: Build and test
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v5
+        with:
+          fetch-depth: 0
+
+      - name: Setup .NET
+        uses: actions/setup-dotnet@v5
+        with:
+          dotnet-version: '8.0.x'
+
+      - name: Restore solution
+        run: dotnet restore Skywalker.sln
+
+      - name: Build solution
+        run: dotnet build Skywalker.sln --configuration Release --no-restore -m:1
+
+      - name: Run tests
+        run: dotnet test Skywalker.sln --configuration Release --no-build --verbosity normal -m:1
+
+      - name: Fail on unapproved snapshots
+        shell: pwsh
+        run: |
+          $received = Get-ChildItem -Recurse -Filter '*.received.cs'
+          if ($received.Count -gt 0) {
+            $received | ForEach-Object { Write-Error "Unapproved snapshot: $($_.FullName)" }
+            exit 1
+          }
+
+  samples:
+    name: Sample ${{ matrix.sample }}
+    runs-on: ubuntu-latest
+    needs: build-and-test
+
+    strategy:
+      fail-fast: false
+      matrix:
+        sample:
+          - Skywalker.Sample.Minimal
+          - Skywalker.Sample.MultiDbContext
+          - Skywalker.Sample.GenericServices
+          - Skywalker.Sample.NestedTypes
+          - Skywalker.Sample.InternalServices
+          - Skywalker.Sample.Modular
+          - Skywalker.Sample.AspireAOT
+          - Skywalker.Sample.LegacyMigration
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v5
+        with:
+          fetch-depth: 0
+
+      - name: Setup .NET
+        uses: actions/setup-dotnet@v5
+        with:
+          dotnet-version: '8.0.x'
+
+      - name: Restore sample
+        run: dotnet restore samples/${{ matrix.sample }}/${{ matrix.sample }}.csproj
+
+      - name: Build sample
+        run: dotnet build samples/${{ matrix.sample }}/${{ matrix.sample }}.csproj --configuration Release --no-restore
+
+      - name: Run sample smoke test
+        run: dotnet run --project samples/${{ matrix.sample }}/${{ matrix.sample }}.csproj --configuration Release --no-build
+
+  aot-publish:
+    name: AOT publish canary
+    runs-on: ubuntu-latest
+    needs: build-and-test
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v5
+        with:
+          fetch-depth: 0
+
+      - name: Setup .NET
+        uses: actions/setup-dotnet@v5
+        with:
+          dotnet-version: '9.0.x'
+
+      - name: Install NativeAOT prerequisites
+        run: sudo apt-get update && sudo apt-get install -y clang zlib1g-dev
+
+      - name: Publish AOT sample
+        shell: bash
+        run: |
+          set -o pipefail
+          dotnet publish samples/Skywalker.Sample.AspireAOT/Skywalker.Sample.AspireAOT.csproj --configuration Release -p:PublishAot=true 2>&1 | tee aot-publish.log
+          if grep -E "warning IL[23][0-9]{3}" aot-publish.log; then
+            echo "AOT publish produced IL2xxx/IL3xxx warnings."
+            exit 1
+          fi
+
+      - name: Upload AOT publish log
+        if: always()
+        uses: actions/upload-artifact@v7
+        with:
+          name: aot-publish-log
+          path: aot-publish.log
+
+  public-api-check:
+    name: Public API check
+    runs-on: ubuntu-latest
+    needs: build-and-test
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v5
+        with:
+          fetch-depth: 0
+
+      - name: Setup .NET
+        uses: actions/setup-dotnet@v5
+        with:
+          dotnet-version: '8.0.x'
+
+      - name: Run PublicApiAnalyzers when configured
+        shell: pwsh
+        run: |
+          $apiFiles = Get-ChildItem -Recurse -File | Where-Object { $_.Name -in @('PublicAPI.Shipped.txt', 'PublicAPI.Unshipped.txt') }
+          if ($apiFiles.Count -eq 0) {
+            "PublicApiAnalyzers are not configured yet; #188 will turn this into a strict gate." | Out-File -FilePath $env:GITHUB_STEP_SUMMARY -Append
+            return
+          }
+
+          dotnet restore Skywalker.sln
+          dotnet build Skywalker.sln --configuration Release --no-restore -m:1 -p:RunAnalyzers=true -warnaserror
+
+  pack-alpha:
+    name: Pack alpha
+    runs-on: ubuntu-latest
+    needs:
+      - build-and-test
+      - samples
+      - aot-publish
+      - public-api-check
+    if: github.ref == 'refs/heads/release/2.0' && github.event_name == 'push'
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v5
+        with:
+          fetch-depth: 0
+
+      - name: Setup .NET
+        uses: actions/setup-dotnet@v5
+        with:
+          dotnet-version: '8.0.x'
+
+      - name: Pack alpha artifacts
+        run: dotnet pack Skywalker.sln --configuration Release --output ./nupkgs
+
+      - name: Upload alpha artifacts
+        uses: actions/upload-artifact@v7
+        with:
+          name: sg-alpha-packages
+          path: ./nupkgs/*.nupkg
+
+      - name: Publish alpha packages to GitHub Packages
+        run: dotnet nuget push "./nupkgs/*.nupkg" --api-key ${{ secrets.GITHUB_TOKEN }} --source "https://nuget.pkg.github.com/${{ github.repository_owner }}/index.json" --symbol-source "https://nuget.pkg.github.com/${{ github.repository_owner }}/index.json" --skip-duplicate

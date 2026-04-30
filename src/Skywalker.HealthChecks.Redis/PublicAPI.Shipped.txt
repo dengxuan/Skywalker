@@ -1,0 +1,6 @@
+#nullable enable
+Microsoft.Extensions.DependencyInjection.RedisHealthCheckExtensions
+Skywalker.HealthChecks.Redis.RedisHealthCheck
+Skywalker.HealthChecks.Redis.RedisHealthCheck.CheckHealthAsync(Microsoft.Extensions.Diagnostics.HealthChecks.HealthCheckContext! context, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) -> System.Threading.Tasks.Task<Microsoft.Extensions.Diagnostics.HealthChecks.HealthCheckResult>!
+Skywalker.HealthChecks.Redis.RedisHealthCheck.RedisHealthCheck(Skywalker.Caching.Redis.Abstractions.IRedisDatabaseProvider! redisDatabaseProvider) -> void
+static Microsoft.Extensions.DependencyInjection.RedisHealthCheckExtensions.AddRedisHealthCheck(this Microsoft.Extensions.DependencyInjection.IHealthChecksBuilder! builder, string! name = "redis", Microsoft.Extensions.Diagnostics.HealthChecks.HealthStatus? failureStatus = null, System.Collections.Generic.IEnumerable<string!>? tags = null, System.TimeSpan? timeout = null) -> Microsoft.Extensions.DependencyInjection.IHealthChecksBuilder!
