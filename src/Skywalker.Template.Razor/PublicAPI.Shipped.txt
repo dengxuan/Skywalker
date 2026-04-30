@@ -1,0 +1,17 @@
+#nullable enable
+const Skywalker.Template.Razor.RazorTemplateRenderingEngine.EngineName = "Razor" -> string!
+Microsoft.Extensions.DependencyInjection.RazorTemplateServiceCollectionExtensions
+override Skywalker.Template.Razor.RazorTemplateRenderingEngine.Name.get -> string!
+override Skywalker.Template.Razor.RazorTemplateRenderingEngine.RenderAsync(string! templateName, object? model = null, string? cultureName = null, System.Collections.Generic.Dictionary<string!, object!>? globalContext = null) -> System.Threading.Tasks.Task<string!>!
+Skywalker.Template.Razor.RazorTemplateOptions
+Skywalker.Template.Razor.RazorTemplateOptions.DefaultNamespace.get -> string!
+Skywalker.Template.Razor.RazorTemplateOptions.DefaultNamespace.set -> void
+Skywalker.Template.Razor.RazorTemplateOptions.EnableCaching.get -> bool
+Skywalker.Template.Razor.RazorTemplateOptions.EnableCaching.set -> void
+Skywalker.Template.Razor.RazorTemplateOptions.EnableDebugging.get -> bool
+Skywalker.Template.Razor.RazorTemplateOptions.EnableDebugging.set -> void
+Skywalker.Template.Razor.RazorTemplateOptions.RazorTemplateOptions() -> void
+Skywalker.Template.Razor.RazorTemplateRenderingEngine
+Skywalker.Template.Razor.RazorTemplateRenderingEngine.RazorTemplateRenderingEngine(Skywalker.Template.Abstractions.ITemplateDefinitionManager! templateDefinitionManager, Skywalker.Template.Abstractions.ITemplateContentProvider! templateContentProvider, Microsoft.Extensions.Localization.IStringLocalizerFactory! stringLocalizerFactory) -> void
+static Microsoft.Extensions.DependencyInjection.RazorTemplateServiceCollectionExtensions.AddRazorTemplate(this Microsoft.Extensions.DependencyInjection.IServiceCollection! services, System.Action<Skywalker.Template.Razor.RazorTemplateOptions!>? configureOptions = null) -> Microsoft.Extensions.DependencyInjection.IServiceCollection!
+virtual Skywalker.Template.Razor.RazorTemplateRenderingEngine.RenderTemplateAsync(string! templateKey, string! templateContent, object? model, System.Collections.Generic.IDictionary<string!, object?>! viewBag) -> System.Threading.Tasks.Task<string!>!

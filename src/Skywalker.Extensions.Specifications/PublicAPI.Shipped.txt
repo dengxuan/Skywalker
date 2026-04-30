@@ -1,0 +1,51 @@
+#nullable enable
+abstract Skywalker.Extensions.Specifications.Specification<T>.ToExpression() -> System.Linq.Expressions.Expression<System.Func<T, bool>!>!
+override Skywalker.Extensions.Specifications.AndNotSpecification<T>.ToExpression() -> System.Linq.Expressions.Expression<System.Func<T, bool>!>!
+override Skywalker.Extensions.Specifications.AndSpecification<T>.ToExpression() -> System.Linq.Expressions.Expression<System.Func<T, bool>!>!
+override Skywalker.Extensions.Specifications.AnySpecification<T>.ToExpression() -> System.Linq.Expressions.Expression<System.Func<T, bool>!>!
+override Skywalker.Extensions.Specifications.ExpressionSpecification<T>.ToExpression() -> System.Linq.Expressions.Expression<System.Func<T, bool>!>!
+override Skywalker.Extensions.Specifications.NoneSpecification<T>.ToExpression() -> System.Linq.Expressions.Expression<System.Func<T, bool>!>!
+override Skywalker.Extensions.Specifications.NotSpecification<T>.ToExpression() -> System.Linq.Expressions.Expression<System.Func<T, bool>!>!
+override Skywalker.Extensions.Specifications.OrSpecification<T>.ToExpression() -> System.Linq.Expressions.Expression<System.Func<T, bool>!>!
+Skywalker.Extensions.Specifications.AndNotSpecification<T>
+Skywalker.Extensions.Specifications.AndNotSpecification<T>.AndNotSpecification(Skywalker.Extensions.Specifications.ISpecification<T>! left, Skywalker.Extensions.Specifications.ISpecification<T>! right) -> void
+Skywalker.Extensions.Specifications.AndSpecification<T>
+Skywalker.Extensions.Specifications.AndSpecification<T>.AndSpecification(Skywalker.Extensions.Specifications.ISpecification<T>! left, Skywalker.Extensions.Specifications.ISpecification<T>! right) -> void
+Skywalker.Extensions.Specifications.AnySpecification<T>
+Skywalker.Extensions.Specifications.AnySpecification<T>.AnySpecification() -> void
+Skywalker.Extensions.Specifications.CompositeSpecification<T>
+Skywalker.Extensions.Specifications.CompositeSpecification<T>.CompositeSpecification(Skywalker.Extensions.Specifications.ISpecification<T>! left, Skywalker.Extensions.Specifications.ISpecification<T>! right) -> void
+Skywalker.Extensions.Specifications.CompositeSpecification<T>.Left.get -> Skywalker.Extensions.Specifications.ISpecification<T>!
+Skywalker.Extensions.Specifications.CompositeSpecification<T>.Right.get -> Skywalker.Extensions.Specifications.ISpecification<T>!
+Skywalker.Extensions.Specifications.ExpressionFuncExtender
+Skywalker.Extensions.Specifications.ExpressionSpecification<T>
+Skywalker.Extensions.Specifications.ExpressionSpecification<T>.ExpressionSpecification(System.Linq.Expressions.Expression<System.Func<T, bool>!>! expression) -> void
+Skywalker.Extensions.Specifications.ICompositeSpecification<T>
+Skywalker.Extensions.Specifications.ICompositeSpecification<T>.Left.get -> Skywalker.Extensions.Specifications.ISpecification<T>!
+Skywalker.Extensions.Specifications.ICompositeSpecification<T>.Right.get -> Skywalker.Extensions.Specifications.ISpecification<T>!
+Skywalker.Extensions.Specifications.ISpecification<T>
+Skywalker.Extensions.Specifications.ISpecification<T>.IsSatisfiedBy(T obj) -> bool
+Skywalker.Extensions.Specifications.ISpecification<T>.ToExpression() -> System.Linq.Expressions.Expression<System.Func<T, bool>!>!
+Skywalker.Extensions.Specifications.ISpecificationParser<TCriteria>
+Skywalker.Extensions.Specifications.ISpecificationParser<TCriteria>.Parse<T>(Skywalker.Extensions.Specifications.ISpecification<T>! specification) -> TCriteria
+Skywalker.Extensions.Specifications.NoneSpecification<T>
+Skywalker.Extensions.Specifications.NoneSpecification<T>.NoneSpecification() -> void
+Skywalker.Extensions.Specifications.NotSpecification<T>
+Skywalker.Extensions.Specifications.NotSpecification<T>.NotSpecification(Skywalker.Extensions.Specifications.ISpecification<T>! specification) -> void
+Skywalker.Extensions.Specifications.OrSpecification<T>
+Skywalker.Extensions.Specifications.OrSpecification<T>.OrSpecification(Skywalker.Extensions.Specifications.ISpecification<T>! left, Skywalker.Extensions.Specifications.ISpecification<T>! right) -> void
+Skywalker.Extensions.Specifications.Specification<T>
+Skywalker.Extensions.Specifications.Specification<T>.False() -> System.Linq.Expressions.Expression<System.Func<T, bool>!>!
+Skywalker.Extensions.Specifications.Specification<T>.Specification() -> void
+Skywalker.Extensions.Specifications.Specification<T>.True() -> System.Linq.Expressions.Expression<System.Func<T, bool>!>!
+Skywalker.Extensions.Specifications.SpecificationExtensions
+static Skywalker.Extensions.Specifications.ExpressionFuncExtender.And<T>(this System.Linq.Expressions.Expression<System.Func<T, bool>!>! first, System.Linq.Expressions.Expression<System.Func<T, bool>!>! second) -> System.Linq.Expressions.Expression<System.Func<T, bool>!>!
+static Skywalker.Extensions.Specifications.ExpressionFuncExtender.AndIf<T>(this System.Linq.Expressions.Expression<System.Func<T, bool>!>! first, bool condition, System.Linq.Expressions.Expression<System.Func<T, bool>!>! second) -> System.Linq.Expressions.Expression<System.Func<T, bool>!>!
+static Skywalker.Extensions.Specifications.ExpressionFuncExtender.Or<T>(this System.Linq.Expressions.Expression<System.Func<T, bool>!>! first, System.Linq.Expressions.Expression<System.Func<T, bool>!>! second) -> System.Linq.Expressions.Expression<System.Func<T, bool>!>!
+static Skywalker.Extensions.Specifications.ExpressionFuncExtender.OrIf<T>(this System.Linq.Expressions.Expression<System.Func<T, bool>!>! first, bool condition, System.Linq.Expressions.Expression<System.Func<T, bool>!>! second) -> System.Linq.Expressions.Expression<System.Func<T, bool>!>!
+static Skywalker.Extensions.Specifications.Specification<T>.implicit operator System.Linq.Expressions.Expression<System.Func<T, bool>!>!(Skywalker.Extensions.Specifications.Specification<T>! specification) -> System.Linq.Expressions.Expression<System.Func<T, bool>!>!
+static Skywalker.Extensions.Specifications.SpecificationExtensions.And<T>(this Skywalker.Extensions.Specifications.ISpecification<T>! specification, Skywalker.Extensions.Specifications.ISpecification<T>! other) -> Skywalker.Extensions.Specifications.ISpecification<T>!
+static Skywalker.Extensions.Specifications.SpecificationExtensions.AndNot<T>(this Skywalker.Extensions.Specifications.ISpecification<T>! specification, Skywalker.Extensions.Specifications.ISpecification<T>! other) -> Skywalker.Extensions.Specifications.ISpecification<T>!
+static Skywalker.Extensions.Specifications.SpecificationExtensions.Not<T>(this Skywalker.Extensions.Specifications.ISpecification<T>! specification) -> Skywalker.Extensions.Specifications.ISpecification<T>!
+static Skywalker.Extensions.Specifications.SpecificationExtensions.Or<T>(this Skywalker.Extensions.Specifications.ISpecification<T>! specification, Skywalker.Extensions.Specifications.ISpecification<T>! other) -> Skywalker.Extensions.Specifications.ISpecification<T>!
+virtual Skywalker.Extensions.Specifications.Specification<T>.IsSatisfiedBy(T obj) -> bool

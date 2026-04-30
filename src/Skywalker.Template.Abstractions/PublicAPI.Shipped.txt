@@ -1,0 +1,132 @@
+#nullable enable
+abstract Skywalker.Template.TemplateDefinitionProvider.Define(Skywalker.Template.Abstractions.ITemplateDefinitionContext! context) -> void
+abstract Skywalker.Template.TemplateRenderingEngineBase.Name.get -> string!
+abstract Skywalker.Template.TemplateRenderingEngineBase.RenderAsync(string! templateName, object? model = null, string? cultureName = null, System.Collections.Generic.Dictionary<string!, object!>? globalContext = null) -> System.Threading.Tasks.Task<string!>!
+const Skywalker.Template.TemplateDefinition.MaxNameLength = 128 -> int
+const Skywalker.Template.VirtualFiles.VirtualFileTemplateContentContributor.VirtualPathPropertyName = "VirtualPath" -> string!
+Microsoft.Extensions.DependencyInjection.TemplateIServiceCollectionExtensions
+readonly Skywalker.Template.TemplateRenderingEngineBase.StringLocalizerFactory -> Microsoft.Extensions.Localization.IStringLocalizerFactory!
+readonly Skywalker.Template.TemplateRenderingEngineBase.TemplateContentProvider -> Skywalker.Template.Abstractions.ITemplateContentProvider!
+readonly Skywalker.Template.TemplateRenderingEngineBase.TemplateDefinitionManager -> Skywalker.Template.Abstractions.ITemplateDefinitionManager!
+Skywalker.Template.Abstractions.ITemplateContentContributor
+Skywalker.Template.Abstractions.ITemplateContentContributor.GetOrNullAsync(Skywalker.Template.TemplateContentContributorContext! context) -> System.Threading.Tasks.Task<string?>!
+Skywalker.Template.Abstractions.ITemplateContentProvider
+Skywalker.Template.Abstractions.ITemplateContentProvider.GetContentOrNullAsync(Skywalker.Template.TemplateDefinition! templateDefinition, string? cultureName = null, bool tryDefaults = true, bool useCurrentCultureIfCultureNameIsNull = true) -> System.Threading.Tasks.Task<string?>!
+Skywalker.Template.Abstractions.ITemplateContentProvider.GetContentOrNullAsync(string! templateName, string? cultureName = null, bool tryDefaults = true, bool useCurrentCultureIfCultureNameIsNull = true) -> System.Threading.Tasks.Task<string?>!
+Skywalker.Template.Abstractions.ITemplateDefinitionContext
+Skywalker.Template.Abstractions.ITemplateDefinitionContext.Add(params Skywalker.Template.TemplateDefinition![]! definitions) -> void
+Skywalker.Template.Abstractions.ITemplateDefinitionContext.GetAll(string! name) -> System.Collections.Generic.IReadOnlyList<Skywalker.Template.TemplateDefinition!>!
+Skywalker.Template.Abstractions.ITemplateDefinitionContext.GetOrNull(string! name) -> Skywalker.Template.TemplateDefinition?
+Skywalker.Template.Abstractions.ITemplateDefinitionManager
+Skywalker.Template.Abstractions.ITemplateDefinitionManager.Get(string! name) -> Skywalker.Template.TemplateDefinition!
+Skywalker.Template.Abstractions.ITemplateDefinitionManager.GetAll() -> System.Collections.Generic.IReadOnlyList<Skywalker.Template.TemplateDefinition!>!
+Skywalker.Template.Abstractions.ITemplateDefinitionManager.GetOrNull(string! name) -> Skywalker.Template.TemplateDefinition?
+Skywalker.Template.Abstractions.ITemplateDefinitionProvider
+Skywalker.Template.Abstractions.ITemplateDefinitionProvider.Define(Skywalker.Template.Abstractions.ITemplateDefinitionContext! context) -> void
+Skywalker.Template.Abstractions.ITemplateDefinitionProvider.PostDefine(Skywalker.Template.Abstractions.ITemplateDefinitionContext! context) -> void
+Skywalker.Template.Abstractions.ITemplateDefinitionProvider.PreDefine(Skywalker.Template.Abstractions.ITemplateDefinitionContext! context) -> void
+Skywalker.Template.Abstractions.ITemplateRenderer
+Skywalker.Template.Abstractions.ITemplateRenderer.RenderAsync(string! templateName, object? model = null, string? cultureName = null, System.Collections.Generic.Dictionary<string!, object!>? globalContext = null) -> System.Threading.Tasks.Task<string!>!
+Skywalker.Template.Abstractions.ITemplateRenderingEngine
+Skywalker.Template.Abstractions.ITemplateRenderingEngine.Name.get -> string!
+Skywalker.Template.Abstractions.ITemplateRenderingEngine.RenderAsync(string! templateName, object? model = null, string? cultureName = null, System.Collections.Generic.Dictionary<string!, object!>? globalContext = null) -> System.Threading.Tasks.Task<string!>!
+Skywalker.Template.SkywalkerTemplateRenderer
+Skywalker.Template.SkywalkerTemplateRenderer.Options.get -> Skywalker.Template.SkywalkerTextTemplatingOptions!
+Skywalker.Template.SkywalkerTemplateRenderer.ServiceScopeFactory.get -> Microsoft.Extensions.DependencyInjection.IServiceScopeFactory!
+Skywalker.Template.SkywalkerTemplateRenderer.SkywalkerTemplateRenderer(Microsoft.Extensions.DependencyInjection.IServiceScopeFactory! serviceScopeFactory, Skywalker.Template.Abstractions.ITemplateDefinitionManager! templateDefinitionManager, Microsoft.Extensions.Options.IOptions<Skywalker.Template.SkywalkerTextTemplatingOptions!>! options) -> void
+Skywalker.Template.SkywalkerTemplateRenderer.TemplateDefinitionManager.get -> Skywalker.Template.Abstractions.ITemplateDefinitionManager!
+Skywalker.Template.SkywalkerTextTemplatingOptions
+Skywalker.Template.SkywalkerTextTemplatingOptions.ContentContributors.get -> Skywalker.Extensions.Collections.Generic.ITypeList<Skywalker.Template.Abstractions.ITemplateContentContributor!>!
+Skywalker.Template.SkywalkerTextTemplatingOptions.DefaultRenderingEngine.get -> string!
+Skywalker.Template.SkywalkerTextTemplatingOptions.DefaultRenderingEngine.set -> void
+Skywalker.Template.SkywalkerTextTemplatingOptions.DefinitionProviders.get -> Skywalker.Extensions.Collections.Generic.ITypeList<Skywalker.Template.Abstractions.ITemplateDefinitionProvider!>!
+Skywalker.Template.SkywalkerTextTemplatingOptions.RenderingEngines.get -> System.Collections.Generic.IDictionary<string!, System.Type!>!
+Skywalker.Template.SkywalkerTextTemplatingOptions.SkywalkerTextTemplatingOptions() -> void
+Skywalker.Template.TemplateContentContributorContext
+Skywalker.Template.TemplateContentContributorContext.Culture.get -> string?
+Skywalker.Template.TemplateContentContributorContext.ServiceProvider.get -> System.IServiceProvider!
+Skywalker.Template.TemplateContentContributorContext.TemplateContentContributorContext(Skywalker.Template.TemplateDefinition! templateDefinition, System.IServiceProvider! serviceProvider, string? culture) -> void
+Skywalker.Template.TemplateContentContributorContext.TemplateDefinition.get -> Skywalker.Template.TemplateDefinition!
+Skywalker.Template.TemplateContentProvider
+Skywalker.Template.TemplateContentProvider.Options.get -> Skywalker.Template.SkywalkerTextTemplatingOptions!
+Skywalker.Template.TemplateContentProvider.ServiceScopeFactory.get -> Microsoft.Extensions.DependencyInjection.IServiceScopeFactory!
+Skywalker.Template.TemplateContentProvider.TemplateContentProvider(Skywalker.Template.Abstractions.ITemplateDefinitionManager! templateDefinitionManager, Microsoft.Extensions.DependencyInjection.IServiceScopeFactory! serviceScopeFactory, Microsoft.Extensions.Options.IOptions<Skywalker.Template.SkywalkerTextTemplatingOptions!>! options) -> void
+Skywalker.Template.TemplateDefinition
+Skywalker.Template.TemplateDefinition.DefaultCultureName.get -> string?
+Skywalker.Template.TemplateDefinition.DisplayName.get -> Microsoft.Extensions.Localization.LocalizedString!
+Skywalker.Template.TemplateDefinition.DisplayName.set -> void
+Skywalker.Template.TemplateDefinition.IsInlineLocalized.get -> bool
+Skywalker.Template.TemplateDefinition.IsInlineLocalized.set -> void
+Skywalker.Template.TemplateDefinition.IsLayout.get -> bool
+Skywalker.Template.TemplateDefinition.Layout.get -> string?
+Skywalker.Template.TemplateDefinition.Layout.set -> void
+Skywalker.Template.TemplateDefinition.LocalizationResource.get -> System.Type?
+Skywalker.Template.TemplateDefinition.LocalizationResource.set -> void
+Skywalker.Template.TemplateDefinition.Name.get -> string!
+Skywalker.Template.TemplateDefinition.Properties.get -> System.Collections.Generic.Dictionary<string!, object?>!
+Skywalker.Template.TemplateDefinition.RenderEngine.get -> string?
+Skywalker.Template.TemplateDefinition.RenderEngine.set -> void
+Skywalker.Template.TemplateDefinition.TemplateDefinition(string! name, System.Type? localizationResource = null, Microsoft.Extensions.Localization.LocalizedString? displayName = null, bool isLayout = false, string? layout = null, string? defaultCultureName = null) -> void
+Skywalker.Template.TemplateDefinition.this[string! name].get -> object?
+Skywalker.Template.TemplateDefinition.this[string! name].set -> void
+Skywalker.Template.TemplateDefinitionContext
+Skywalker.Template.TemplateDefinitionContext.GetAll(string! name) -> System.Collections.Generic.IReadOnlyList<Skywalker.Template.TemplateDefinition!>!
+Skywalker.Template.TemplateDefinitionContext.TemplateDefinitionContext(System.Collections.Generic.Dictionary<string!, Skywalker.Template.TemplateDefinition!>! templates) -> void
+Skywalker.Template.TemplateDefinitionContext.Templates.get -> System.Collections.Generic.Dictionary<string!, Skywalker.Template.TemplateDefinition!>!
+Skywalker.Template.TemplateDefinitionExtensions
+Skywalker.Template.TemplateDefinitionManager
+Skywalker.Template.TemplateDefinitionManager.Options.get -> Skywalker.Template.SkywalkerTextTemplatingOptions!
+Skywalker.Template.TemplateDefinitionManager.ServiceProvider.get -> System.IServiceProvider!
+Skywalker.Template.TemplateDefinitionManager.TemplateDefinitionManager(Microsoft.Extensions.Options.IOptions<Skywalker.Template.SkywalkerTextTemplatingOptions!>! options, System.IServiceProvider! serviceProvider) -> void
+Skywalker.Template.TemplateDefinitionManager.TemplateDefinitions.get -> System.Lazy<System.Collections.Generic.IDictionary<string!, Skywalker.Template.TemplateDefinition!>!>!
+Skywalker.Template.TemplateDefinitionProvider
+Skywalker.Template.TemplateDefinitionProvider.TemplateDefinitionProvider() -> void
+Skywalker.Template.TemplateRenderingEngineBase
+Skywalker.Template.TemplateRenderingEngineBase.TemplateRenderingEngineBase(Skywalker.Template.Abstractions.ITemplateDefinitionManager! templateDefinitionManager, Skywalker.Template.Abstractions.ITemplateContentProvider! templateContentProvider, Microsoft.Extensions.Localization.IStringLocalizerFactory! stringLocalizerFactory) -> void
+Skywalker.Template.VirtualFiles.FileInfoLocalizedTemplateContentReader
+Skywalker.Template.VirtualFiles.FileInfoLocalizedTemplateContentReader.FileInfoLocalizedTemplateContentReader() -> void
+Skywalker.Template.VirtualFiles.FileInfoLocalizedTemplateContentReader.GetContentOrNull(string? culture) -> string?
+Skywalker.Template.VirtualFiles.FileInfoLocalizedTemplateContentReader.ReadContentsAsync(Microsoft.Extensions.FileProviders.IFileInfo! fileInfo) -> System.Threading.Tasks.Task!
+Skywalker.Template.VirtualFiles.ILocalizedTemplateContentReader
+Skywalker.Template.VirtualFiles.ILocalizedTemplateContentReader.GetContentOrNull(string? culture) -> string?
+Skywalker.Template.VirtualFiles.ILocalizedTemplateContentReaderFactory
+Skywalker.Template.VirtualFiles.ILocalizedTemplateContentReaderFactory.CreateAsync(Skywalker.Template.TemplateDefinition! templateDefinition) -> System.Threading.Tasks.Task<Skywalker.Template.VirtualFiles.ILocalizedTemplateContentReader!>!
+Skywalker.Template.VirtualFiles.LocalizedTemplateContentReaderFactory
+Skywalker.Template.VirtualFiles.LocalizedTemplateContentReaderFactory.LocalizedTemplateContentReaderFactory(Skywalker.Extensions.VirtualFileSystem.IVirtualFileProvider! virtualFileProvider) -> void
+Skywalker.Template.VirtualFiles.LocalizedTemplateContentReaderFactory.ReaderCache.get -> System.Collections.Concurrent.ConcurrentDictionary<string!, Skywalker.Template.VirtualFiles.ILocalizedTemplateContentReader!>!
+Skywalker.Template.VirtualFiles.LocalizedTemplateContentReaderFactory.SemaphoreSlim.get -> System.Threading.SemaphoreSlim!
+Skywalker.Template.VirtualFiles.LocalizedTemplateContentReaderFactory.VirtualFileProvider.get -> Skywalker.Extensions.VirtualFileSystem.IVirtualFileProvider!
+Skywalker.Template.VirtualFiles.NullLocalizedTemplateContentReader
+Skywalker.Template.VirtualFiles.NullLocalizedTemplateContentReader.GetContentOrNull(string? culture) -> string?
+Skywalker.Template.VirtualFiles.VirtualFileTemplateContentContributor
+Skywalker.Template.VirtualFiles.VirtualFileTemplateContentContributor.VirtualFileTemplateContentContributor(Skywalker.Template.VirtualFiles.ILocalizedTemplateContentReaderFactory! localizedTemplateContentReaderFactory) -> void
+Skywalker.Template.VirtualFiles.VirtualFolderLocalizedTemplateContentReader
+Skywalker.Template.VirtualFiles.VirtualFolderLocalizedTemplateContentReader.GetContentOrNull(string? cultureName) -> string?
+Skywalker.Template.VirtualFiles.VirtualFolderLocalizedTemplateContentReader.ReadContentsAsync(Skywalker.Extensions.VirtualFileSystem.IVirtualFileProvider! virtualFileProvider, string! virtualPath) -> System.Threading.Tasks.Task!
+Skywalker.Template.VirtualFiles.VirtualFolderLocalizedTemplateContentReader.VirtualFolderLocalizedTemplateContentReader(string![]! fileExtension) -> void
+static Microsoft.Extensions.DependencyInjection.TemplateIServiceCollectionExtensions.AddTemplate(this Microsoft.Extensions.DependencyInjection.IServiceCollection! services) -> Microsoft.Extensions.DependencyInjection.IServiceCollection!
+static Microsoft.Extensions.DependencyInjection.TemplateIServiceCollectionExtensions.AddTemplate(this Microsoft.Extensions.DependencyInjection.IServiceCollection! services, System.Action<Skywalker.Template.SkywalkerTextTemplatingOptions!>! options) -> Microsoft.Extensions.DependencyInjection.IServiceCollection!
+static Skywalker.Template.TemplateDefinitionExtensions.GetVirtualFilePathOrNull(this Skywalker.Template.TemplateDefinition! templateDefinition) -> string?
+static Skywalker.Template.TemplateDefinitionExtensions.WithVirtualFilePath(this Skywalker.Template.TemplateDefinition! templateDefinition, string! virtualPath, bool isInlineLocalized) -> Skywalker.Template.TemplateDefinition!
+static Skywalker.Template.VirtualFiles.NullLocalizedTemplateContentReader.Instance.get -> Skywalker.Template.VirtualFiles.NullLocalizedTemplateContentReader!
+virtual Skywalker.Template.SkywalkerTemplateRenderer.RenderAsync(string! templateName, object? model = null, string? cultureName = null, System.Collections.Generic.Dictionary<string!, object!>? globalContext = null) -> System.Threading.Tasks.Task<string!>!
+virtual Skywalker.Template.TemplateContentProvider.CreateTemplateContentContributors(System.IServiceProvider! serviceProvider) -> Skywalker.Template.Abstractions.ITemplateContentContributor![]!
+virtual Skywalker.Template.TemplateContentProvider.GetContentOrNullAsync(Skywalker.Template.Abstractions.ITemplateContentContributor![]! contributors, Skywalker.Template.TemplateContentContributorContext! context) -> System.Threading.Tasks.Task<string?>!
+virtual Skywalker.Template.TemplateContentProvider.GetContentOrNullAsync(Skywalker.Template.TemplateDefinition! templateDefinition, string? cultureName = null, bool tryDefaults = true, bool useCurrentCultureIfCultureNameIsNull = true) -> System.Threading.Tasks.Task<string?>!
+virtual Skywalker.Template.TemplateContentProvider.GetContentOrNullAsync(string! templateName, string? cultureName = null, bool tryDefaults = true, bool useCurrentCultureIfCultureNameIsNull = true) -> System.Threading.Tasks.Task<string?>!
+virtual Skywalker.Template.TemplateDefinition.WithProperty(string! key, object! value) -> Skywalker.Template.TemplateDefinition!
+virtual Skywalker.Template.TemplateDefinition.WithRenderEngine(string! renderEngine) -> Skywalker.Template.TemplateDefinition!
+virtual Skywalker.Template.TemplateDefinitionContext.Add(params Skywalker.Template.TemplateDefinition![]! definitions) -> void
+virtual Skywalker.Template.TemplateDefinitionContext.GetAll() -> System.Collections.Generic.IReadOnlyList<Skywalker.Template.TemplateDefinition!>!
+virtual Skywalker.Template.TemplateDefinitionContext.GetOrNull(string! name) -> Skywalker.Template.TemplateDefinition?
+virtual Skywalker.Template.TemplateDefinitionManager.CreateTextTemplateDefinitions() -> System.Collections.Generic.IDictionary<string!, Skywalker.Template.TemplateDefinition!>!
+virtual Skywalker.Template.TemplateDefinitionManager.Get(string! name) -> Skywalker.Template.TemplateDefinition!
+virtual Skywalker.Template.TemplateDefinitionManager.GetAll() -> System.Collections.Generic.IReadOnlyList<Skywalker.Template.TemplateDefinition!>!
+virtual Skywalker.Template.TemplateDefinitionManager.GetOrNull(string! name) -> Skywalker.Template.TemplateDefinition?
+virtual Skywalker.Template.TemplateDefinitionProvider.PostDefine(Skywalker.Template.Abstractions.ITemplateDefinitionContext! context) -> void
+virtual Skywalker.Template.TemplateDefinitionProvider.PreDefine(Skywalker.Template.Abstractions.ITemplateDefinitionContext! context) -> void
+virtual Skywalker.Template.TemplateRenderingEngineBase.GetContentOrNullAsync(Skywalker.Template.TemplateDefinition! templateDefinition) -> System.Threading.Tasks.Task<string?>!
+virtual Skywalker.Template.TemplateRenderingEngineBase.GetLocalizerOrNull(Skywalker.Template.TemplateDefinition! templateDefinition) -> Microsoft.Extensions.Localization.IStringLocalizer!
+virtual Skywalker.Template.VirtualFiles.LocalizedTemplateContentReaderFactory.CreateAsync(Skywalker.Template.TemplateDefinition! templateDefinition) -> System.Threading.Tasks.Task<Skywalker.Template.VirtualFiles.ILocalizedTemplateContentReader!>!
+virtual Skywalker.Template.VirtualFiles.LocalizedTemplateContentReaderFactory.CreateInternalAsync(Skywalker.Template.TemplateDefinition! templateDefinition) -> System.Threading.Tasks.Task<Skywalker.Template.VirtualFiles.ILocalizedTemplateContentReader!>!
+virtual Skywalker.Template.VirtualFiles.VirtualFileTemplateContentContributor.GetOrNullAsync(Skywalker.Template.TemplateContentContributorContext! context) -> System.Threading.Tasks.Task<string?>!

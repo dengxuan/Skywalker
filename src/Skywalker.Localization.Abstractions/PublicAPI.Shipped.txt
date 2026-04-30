@@ -1,0 +1,98 @@
+#nullable enable
+override Skywalker.Localization.LocalizedString.ToString() -> string!
+Skywalker.Localization.ILanguageProvider
+Skywalker.Localization.ILanguageProvider.GetLanguagesAsync() -> System.Threading.Tasks.Task<System.Collections.Generic.IReadOnlyList<Skywalker.Localization.LanguageInfo!>!>!
+Skywalker.Localization.ILocalizationResource
+Skywalker.Localization.ILocalizationResource.BaseResourceTypes.get -> System.Collections.Generic.IReadOnlyList<System.Type!>!
+Skywalker.Localization.ILocalizationResource.Contributors.get -> System.Collections.Generic.IReadOnlyList<Skywalker.Localization.ILocalizationResourceContributor!>!
+Skywalker.Localization.ILocalizationResource.DefaultCultureName.get -> string?
+Skywalker.Localization.ILocalizationResource.ResourceName.get -> string!
+Skywalker.Localization.ILocalizationResourceContributor
+Skywalker.Localization.ILocalizationResourceContributor.Fill(string! cultureName, System.Collections.Generic.Dictionary<string!, Skywalker.Localization.LocalizedString!>! dictionary) -> void
+Skywalker.Localization.ILocalizationResourceContributor.GetOrNull(string! cultureName, string! name) -> Skywalker.Localization.LocalizedString?
+Skywalker.Localization.ILocalizationResourceContributor.GetSupportedCultures() -> System.Collections.Generic.IEnumerable<string!>!
+Skywalker.Localization.ILocalizationResourceContributor.Initialize(Skywalker.Localization.LocalizationResourceInitializationContext! context) -> void
+Skywalker.Localization.IStringLocalizer
+Skywalker.Localization.IStringLocalizer.GetAllStrings(bool includeParentCultures = true) -> System.Collections.Generic.IEnumerable<Skywalker.Localization.LocalizedString!>!
+Skywalker.Localization.IStringLocalizer.GetAllStrings(System.Globalization.CultureInfo! culture, bool includeParentCultures = true) -> System.Collections.Generic.IEnumerable<Skywalker.Localization.LocalizedString!>!
+Skywalker.Localization.IStringLocalizer.this[string! name, params object![]! arguments].get -> Skywalker.Localization.LocalizedString!
+Skywalker.Localization.IStringLocalizer.this[string! name].get -> Skywalker.Localization.LocalizedString!
+Skywalker.Localization.IStringLocalizer<TResource>
+Skywalker.Localization.IStringLocalizerFactory
+Skywalker.Localization.IStringLocalizerFactory.Create(string! baseName, string! location) -> Skywalker.Localization.IStringLocalizer!
+Skywalker.Localization.IStringLocalizerFactory.Create(System.Type! resourceType) -> Skywalker.Localization.IStringLocalizer!
+Skywalker.Localization.IStringLocalizerFactory.Create<TResource>() -> Skywalker.Localization.IStringLocalizer!
+Skywalker.Localization.LanguageInfo
+Skywalker.Localization.LanguageInfo.CultureName.get -> string!
+Skywalker.Localization.LanguageInfo.DisplayName.get -> string!
+Skywalker.Localization.LanguageInfo.FlagIcon.get -> string?
+Skywalker.Localization.LanguageInfo.FlagIcon.set -> void
+Skywalker.Localization.LanguageInfo.IsDefault.get -> bool
+Skywalker.Localization.LanguageInfo.IsDefault.set -> void
+Skywalker.Localization.LanguageInfo.IsEnabled.get -> bool
+Skywalker.Localization.LanguageInfo.IsEnabled.set -> void
+Skywalker.Localization.LanguageInfo.LanguageInfo(string! cultureName, string! displayName, string? uiCultureName = null, string? flagIcon = null, bool isDefault = false) -> void
+Skywalker.Localization.LanguageInfo.UiCultureName.get -> string!
+Skywalker.Localization.LocalizationOptions
+Skywalker.Localization.LocalizationOptions.DefaultResourceType.get -> System.Type?
+Skywalker.Localization.LocalizationOptions.DefaultResourceType.set -> void
+Skywalker.Localization.LocalizationOptions.GlobalContributors.get -> System.Collections.Generic.List<Skywalker.Localization.ILocalizationResourceContributor!>!
+Skywalker.Localization.LocalizationOptions.Languages.get -> System.Collections.Generic.List<Skywalker.Localization.LanguageInfo!>!
+Skywalker.Localization.LocalizationOptions.LocalizationOptions() -> void
+Skywalker.Localization.LocalizationOptions.Resources.get -> Skywalker.Localization.LocalizationResourceDictionary!
+Skywalker.Localization.LocalizationResource
+Skywalker.Localization.LocalizationResource.AddBaseTypes(params System.Type![]! types) -> Skywalker.Localization.LocalizationResource!
+Skywalker.Localization.LocalizationResource.AddBaseTypes<TBaseResource>() -> Skywalker.Localization.LocalizationResource!
+Skywalker.Localization.LocalizationResource.BaseResourceTypes.get -> System.Collections.Generic.List<System.Type!>!
+Skywalker.Localization.LocalizationResource.Contributors.get -> System.Collections.Generic.List<Skywalker.Localization.ILocalizationResourceContributor!>!
+Skywalker.Localization.LocalizationResource.DefaultCultureName.get -> string?
+Skywalker.Localization.LocalizationResource.DefaultCultureName.set -> void
+Skywalker.Localization.LocalizationResource.LocalizationResource(System.Type! resourceType, string? defaultCultureName = null) -> void
+Skywalker.Localization.LocalizationResource.ResourceName.get -> string!
+Skywalker.Localization.LocalizationResource.ResourceType.get -> System.Type!
+Skywalker.Localization.LocalizationResourceDictionary
+Skywalker.Localization.LocalizationResourceDictionary.Add(System.Collections.Generic.KeyValuePair<System.Type!, Skywalker.Localization.LocalizationResource!> item) -> void
+Skywalker.Localization.LocalizationResourceDictionary.Add(System.Type! key, Skywalker.Localization.LocalizationResource! value) -> void
+Skywalker.Localization.LocalizationResourceDictionary.Add(System.Type! resourceType, string? defaultCultureName = null) -> Skywalker.Localization.LocalizationResource!
+Skywalker.Localization.LocalizationResourceDictionary.Add<TResource>(string? defaultCultureName = null) -> Skywalker.Localization.LocalizationResource!
+Skywalker.Localization.LocalizationResourceDictionary.Clear() -> void
+Skywalker.Localization.LocalizationResourceDictionary.Contains(System.Collections.Generic.KeyValuePair<System.Type!, Skywalker.Localization.LocalizationResource!> item) -> bool
+Skywalker.Localization.LocalizationResourceDictionary.ContainsKey(System.Type! key) -> bool
+Skywalker.Localization.LocalizationResourceDictionary.CopyTo(System.Collections.Generic.KeyValuePair<System.Type!, Skywalker.Localization.LocalizationResource!>[]! array, int arrayIndex) -> void
+Skywalker.Localization.LocalizationResourceDictionary.Count.get -> int
+Skywalker.Localization.LocalizationResourceDictionary.GetEnumerator() -> System.Collections.Generic.IEnumerator<System.Collections.Generic.KeyValuePair<System.Type!, Skywalker.Localization.LocalizationResource!>>!
+Skywalker.Localization.LocalizationResourceDictionary.GetOrNull(System.Type! resourceType) -> Skywalker.Localization.LocalizationResource?
+Skywalker.Localization.LocalizationResourceDictionary.GetOrNull<TResource>() -> Skywalker.Localization.LocalizationResource?
+Skywalker.Localization.LocalizationResourceDictionary.IsReadOnly.get -> bool
+Skywalker.Localization.LocalizationResourceDictionary.Keys.get -> System.Collections.Generic.ICollection<System.Type!>!
+Skywalker.Localization.LocalizationResourceDictionary.LocalizationResourceDictionary() -> void
+Skywalker.Localization.LocalizationResourceDictionary.Remove(System.Collections.Generic.KeyValuePair<System.Type!, Skywalker.Localization.LocalizationResource!> item) -> bool
+Skywalker.Localization.LocalizationResourceDictionary.Remove(System.Type! key) -> bool
+Skywalker.Localization.LocalizationResourceDictionary.this[System.Type! key].get -> Skywalker.Localization.LocalizationResource!
+Skywalker.Localization.LocalizationResourceDictionary.this[System.Type! key].set -> void
+Skywalker.Localization.LocalizationResourceDictionary.TryGetValue(System.Type! key, out Skywalker.Localization.LocalizationResource! value) -> bool
+Skywalker.Localization.LocalizationResourceDictionary.Values.get -> System.Collections.Generic.ICollection<Skywalker.Localization.LocalizationResource!>!
+Skywalker.Localization.LocalizationResourceInitializationContext
+Skywalker.Localization.LocalizationResourceInitializationContext.LocalizationResourceInitializationContext(Skywalker.Localization.LocalizationResource! resource, System.IServiceProvider! serviceProvider) -> void
+Skywalker.Localization.LocalizationResourceInitializationContext.Resource.get -> Skywalker.Localization.LocalizationResource!
+Skywalker.Localization.LocalizationResourceInitializationContext.ServiceProvider.get -> System.IServiceProvider!
+Skywalker.Localization.LocalizedString
+Skywalker.Localization.LocalizedString.LocalizedString(string! name, string! value) -> void
+Skywalker.Localization.LocalizedString.LocalizedString(string! name, string! value, bool resourceNotFound, string? searchedLocation = null) -> void
+Skywalker.Localization.LocalizedString.Name.get -> string!
+Skywalker.Localization.LocalizedString.ResourceNotFound.get -> bool
+Skywalker.Localization.LocalizedString.SearchedLocation.get -> string?
+Skywalker.Localization.LocalizedString.Value.get -> string!
+Skywalker.Localization.NullStringLocalizer
+Skywalker.Localization.NullStringLocalizer.GetAllStrings(bool includeParentCultures = true) -> System.Collections.Generic.IEnumerable<Skywalker.Localization.LocalizedString!>!
+Skywalker.Localization.NullStringLocalizer.GetAllStrings(System.Globalization.CultureInfo! culture, bool includeParentCultures = true) -> System.Collections.Generic.IEnumerable<Skywalker.Localization.LocalizedString!>!
+Skywalker.Localization.NullStringLocalizer.this[string! name, params object![]! arguments].get -> Skywalker.Localization.LocalizedString!
+Skywalker.Localization.NullStringLocalizer.this[string! name].get -> Skywalker.Localization.LocalizedString!
+Skywalker.Localization.NullStringLocalizer<TResource>
+Skywalker.Localization.NullStringLocalizer<TResource>.GetAllStrings(bool includeParentCultures = true) -> System.Collections.Generic.IEnumerable<Skywalker.Localization.LocalizedString!>!
+Skywalker.Localization.NullStringLocalizer<TResource>.GetAllStrings(System.Globalization.CultureInfo! culture, bool includeParentCultures = true) -> System.Collections.Generic.IEnumerable<Skywalker.Localization.LocalizedString!>!
+Skywalker.Localization.NullStringLocalizer<TResource>.this[string! name, params object![]! arguments].get -> Skywalker.Localization.LocalizedString!
+Skywalker.Localization.NullStringLocalizer<TResource>.this[string! name].get -> Skywalker.Localization.LocalizedString!
+static Skywalker.Localization.LocalizedString.implicit operator string!(Skywalker.Localization.LocalizedString! localizedString) -> string!
+static Skywalker.Localization.NullStringLocalizer.Instance.get -> Skywalker.Localization.NullStringLocalizer!
+static Skywalker.Localization.NullStringLocalizer<TResource>.Instance.get -> Skywalker.Localization.NullStringLocalizer<TResource>!

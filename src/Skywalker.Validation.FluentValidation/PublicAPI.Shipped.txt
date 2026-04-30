@@ -1,0 +1,10 @@
+#nullable enable
+Microsoft.Extensions.DependencyInjection.FluentValidationServiceCollectionExtensions
+Skywalker.Validation.FluentValidation.FluentValidationValidatorAdapter<T>
+Skywalker.Validation.FluentValidation.FluentValidationValidatorAdapter<T>.FluentValidationValidatorAdapter(FluentValidation.IValidator<T!>! fluentValidator) -> void
+Skywalker.Validation.FluentValidation.FluentValidationValidatorAdapter<T>.Validate(object! instance) -> Skywalker.Validation.IValidationResult!
+Skywalker.Validation.FluentValidation.FluentValidationValidatorAdapter<T>.Validate(T! instance) -> Skywalker.Validation.IValidationResult!
+Skywalker.Validation.FluentValidation.FluentValidationValidatorAdapter<T>.ValidateAsync(object! instance, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) -> System.Threading.Tasks.Task<Skywalker.Validation.IValidationResult!>!
+Skywalker.Validation.FluentValidation.FluentValidationValidatorAdapter<T>.ValidateAsync(T! instance, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) -> System.Threading.Tasks.Task<Skywalker.Validation.IValidationResult!>!
+static Microsoft.Extensions.DependencyInjection.FluentValidationServiceCollectionExtensions.AddFluentValidation(this Microsoft.Extensions.DependencyInjection.IServiceCollection! services, System.Reflection.Assembly! assembly) -> Microsoft.Extensions.DependencyInjection.IServiceCollection!
+static Microsoft.Extensions.DependencyInjection.FluentValidationServiceCollectionExtensions.AddFluentValidation<T>(this Microsoft.Extensions.DependencyInjection.IServiceCollection! services) -> Microsoft.Extensions.DependencyInjection.IServiceCollection!

@@ -14,7 +14,7 @@
     <ProduceReferenceAssembly>false</ProduceReferenceAssembly>
     <GenerateDocumentationFile>false</GenerateDocumentationFile>
     <Nullable>enable</Nullable>
-    <NoWarn>CS1951</NoWarn>
+    <NoWarn>$(NoWarn);CS1951</NoWarn>
     <IsPackable>true</IsPackable>
   </PropertyGroup>
 
@@ -45,6 +45,7 @@
 
   <ItemGroup>
     <PackageReference Include="Microsoft.SourceLink.GitHub" Version="$(MicrosoftSourceLinkVersion)" PrivateAssets="All" />
+    <PackageReference Include="Microsoft.CodeAnalysis.PublicApiAnalyzers" Version="$(MicrosoftCodeAnalysisPublicApiAnalyzersVersion)" PrivateAssets="all" Condition="'$(IsPackable)' == 'true'" />
     <!-- NOTE: do NOT use $(MinVerVersion) for the package version —
          MinVerVersion is an MinVer OUTPUT property; pre-setting it
          makes MinVer short-circuit with that value as the project version. -->

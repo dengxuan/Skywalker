@@ -1,0 +1,8 @@
+#nullable enable
+Microsoft.EntityFrameworkCore.SkywalkerSqlServerModelBuilderExtensions
+Skywalker.Ddd.EntityFrameworkCore.DbContextConfiguration.SkywalkerDbContextConfigurationContextSqlServerExtensions
+Skywalker.Ddd.EntityFrameworkCore.SkywalkerDbContextOptionsSqlServerExtensions
+static Microsoft.EntityFrameworkCore.SkywalkerSqlServerModelBuilderExtensions.UseSqlServer(this Microsoft.EntityFrameworkCore.ModelBuilder! modelBuilder) -> void
+static Skywalker.Ddd.EntityFrameworkCore.DbContextConfiguration.SkywalkerDbContextConfigurationContextSqlServerExtensions.UseSqlServer(this Skywalker.Ddd.EntityFrameworkCore.DbContextConfiguration.SkywalkerDbContextConfigurationContext! context, System.Action<Microsoft.EntityFrameworkCore.Infrastructure.SqlServerDbContextOptionsBuilder!>? sqlserverOptionsAction = null) -> Microsoft.EntityFrameworkCore.DbContextOptionsBuilder!
+static Skywalker.Ddd.EntityFrameworkCore.SkywalkerDbContextOptionsSqlServerExtensions.UseSqlServer(this Skywalker.Ddd.EntityFrameworkCore.SkywalkerDbContextOptions! options, System.Action<Microsoft.EntityFrameworkCore.Infrastructure.SqlServerDbContextOptionsBuilder!>? mySQLOptionsAction = null) -> void
+static Skywalker.Ddd.EntityFrameworkCore.SkywalkerDbContextOptionsSqlServerExtensions.UseSqlServer<TDbContext>(this Skywalker.Ddd.EntityFrameworkCore.SkywalkerDbContextOptions! options, System.Action<Microsoft.EntityFrameworkCore.Infrastructure.SqlServerDbContextOptionsBuilder!>? mySQLOptionsAction = null) -> void

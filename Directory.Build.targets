@@ -1,6 +1,7 @@
 <Project>
   <PropertyGroup>
     <ImportDirectoryBuildTargets>false</ImportDirectoryBuildTargets>
+    <NoWarn>$(NoWarn);RS0026;RS0027;RS0041</NoWarn>
   </PropertyGroup>
 
   <!-- Adds IsExternalInit to gen builds. -->

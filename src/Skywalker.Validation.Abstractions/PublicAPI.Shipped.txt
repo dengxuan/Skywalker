@@ -1,0 +1,65 @@
+#nullable enable
+Microsoft.Extensions.DependencyInjection.ValidationServiceCollectionExtensions
+override Skywalker.Validation.ValidationError.ToString() -> string!
+override Skywalker.Validation.ValidationResult.ToString() -> string!
+Skywalker.Validation.CompositeValidator
+Skywalker.Validation.CompositeValidator.CompositeValidator(System.Collections.Generic.IEnumerable<Skywalker.Validation.IValidator!>! validators) -> void
+Skywalker.Validation.CompositeValidator.Validate(object! instance) -> Skywalker.Validation.IValidationResult!
+Skywalker.Validation.CompositeValidator.ValidateAsync(object! instance, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) -> System.Threading.Tasks.Task<Skywalker.Validation.IValidationResult!>!
+Skywalker.Validation.DataAnnotationsValidator
+Skywalker.Validation.DataAnnotationsValidator.DataAnnotationsValidator() -> void
+Skywalker.Validation.DataAnnotationsValidator.Validate(object! instance) -> Skywalker.Validation.IValidationResult!
+Skywalker.Validation.DataAnnotationsValidator.ValidateAsync(object! instance, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) -> System.Threading.Tasks.Task<Skywalker.Validation.IValidationResult!>!
+Skywalker.Validation.DataAnnotationsValidator<T>
+Skywalker.Validation.DataAnnotationsValidator<T>.DataAnnotationsValidator() -> void
+Skywalker.Validation.DataAnnotationsValidator<T>.Validate(T! instance) -> Skywalker.Validation.IValidationResult!
+Skywalker.Validation.DataAnnotationsValidator<T>.ValidateAsync(T! instance, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) -> System.Threading.Tasks.Task<Skywalker.Validation.IValidationResult!>!
+Skywalker.Validation.IAsyncValidatableObject
+Skywalker.Validation.IAsyncValidatableObject.ValidateAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) -> System.Threading.Tasks.Task<System.Collections.Generic.IEnumerable<Skywalker.Validation.ValidationError!>!>!
+Skywalker.Validation.IValidatableObject
+Skywalker.Validation.IValidatableObject.Validate() -> System.Collections.Generic.IEnumerable<Skywalker.Validation.ValidationError!>!
+Skywalker.Validation.IValidationResult
+Skywalker.Validation.IValidationResult.Errors.get -> System.Collections.Generic.IReadOnlyList<Skywalker.Validation.ValidationError!>!
+Skywalker.Validation.IValidationResult.IsValid.get -> bool
+Skywalker.Validation.IValidator
+Skywalker.Validation.IValidator.Validate(object! instance) -> Skywalker.Validation.IValidationResult!
+Skywalker.Validation.IValidator.ValidateAsync(object! instance, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) -> System.Threading.Tasks.Task<Skywalker.Validation.IValidationResult!>!
+Skywalker.Validation.IValidator<T>
+Skywalker.Validation.IValidator<T>.Validate(T! instance) -> Skywalker.Validation.IValidationResult!
+Skywalker.Validation.IValidator<T>.ValidateAsync(T! instance, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) -> System.Threading.Tasks.Task<Skywalker.Validation.IValidationResult!>!
+Skywalker.Validation.ValidationError
+Skywalker.Validation.ValidationError.AttemptedValue.get -> object?
+Skywalker.Validation.ValidationError.AttemptedValue.set -> void
+Skywalker.Validation.ValidationError.ErrorCode.get -> string?
+Skywalker.Validation.ValidationError.ErrorCode.set -> void
+Skywalker.Validation.ValidationError.ErrorMessage.get -> string!
+Skywalker.Validation.ValidationError.ErrorMessage.set -> void
+Skywalker.Validation.ValidationError.PropertyName.get -> string!
+Skywalker.Validation.ValidationError.PropertyName.set -> void
+Skywalker.Validation.ValidationError.Severity.get -> Skywalker.Validation.ValidationSeverity
+Skywalker.Validation.ValidationError.Severity.set -> void
+Skywalker.Validation.ValidationError.ValidationError(string! propertyName, string! errorMessage) -> void
+Skywalker.Validation.ValidationError.ValidationError(string! propertyName, string! errorMessage, string! errorCode) -> void
+Skywalker.Validation.ValidationException
+Skywalker.Validation.ValidationException.Errors.get -> System.Collections.Generic.IReadOnlyList<Skywalker.Validation.ValidationError!>!
+Skywalker.Validation.ValidationException.ValidationException(Skywalker.Validation.IValidationResult! result) -> void
+Skywalker.Validation.ValidationException.ValidationException(string! message) -> void
+Skywalker.Validation.ValidationException.ValidationException(string! propertyName, string! errorMessage) -> void
+Skywalker.Validation.ValidationException.ValidationException(System.Collections.Generic.IEnumerable<Skywalker.Validation.ValidationError!>! errors) -> void
+Skywalker.Validation.ValidationResult
+Skywalker.Validation.ValidationResult.AddError(Skywalker.Validation.ValidationError! error) -> void
+Skywalker.Validation.ValidationResult.AddErrors(System.Collections.Generic.IEnumerable<Skywalker.Validation.ValidationError!>! errors) -> void
+Skywalker.Validation.ValidationResult.Errors.get -> System.Collections.Generic.IReadOnlyList<Skywalker.Validation.ValidationError!>!
+Skywalker.Validation.ValidationResult.IsValid.get -> bool
+Skywalker.Validation.ValidationResult.ValidationResult() -> void
+Skywalker.Validation.ValidationResult.ValidationResult(System.Collections.Generic.IEnumerable<Skywalker.Validation.ValidationError!>! errors) -> void
+Skywalker.Validation.ValidationSeverity
+Skywalker.Validation.ValidationSeverity.Error = 2 -> Skywalker.Validation.ValidationSeverity
+Skywalker.Validation.ValidationSeverity.Info = 0 -> Skywalker.Validation.ValidationSeverity
+Skywalker.Validation.ValidationSeverity.Warning = 1 -> Skywalker.Validation.ValidationSeverity
+static Microsoft.Extensions.DependencyInjection.ValidationServiceCollectionExtensions.AddValidation(this Microsoft.Extensions.DependencyInjection.IServiceCollection! services) -> Microsoft.Extensions.DependencyInjection.IServiceCollection!
+static Microsoft.Extensions.DependencyInjection.ValidationServiceCollectionExtensions.AddValidator<T, TValidator>(this Microsoft.Extensions.DependencyInjection.IServiceCollection! services) -> Microsoft.Extensions.DependencyInjection.IServiceCollection!
+static Microsoft.Extensions.DependencyInjection.ValidationServiceCollectionExtensions.AddValidator<TValidator>(this Microsoft.Extensions.DependencyInjection.IServiceCollection! services) -> Microsoft.Extensions.DependencyInjection.IServiceCollection!
+static Skywalker.Validation.ValidationResult.Failure(string! propertyName, string! errorMessage) -> Skywalker.Validation.ValidationResult!
+static Skywalker.Validation.ValidationResult.Failure(System.Collections.Generic.IEnumerable<Skywalker.Validation.ValidationError!>! errors) -> Skywalker.Validation.ValidationResult!
+static Skywalker.Validation.ValidationResult.Success() -> Skywalker.Validation.ValidationResult!

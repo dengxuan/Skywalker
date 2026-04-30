@@ -1,0 +1,86 @@
+#nullable enable
+const Skywalker.Extensions.Emailing.Template.EmailTemplateNames.Layout = "Skywalker.Emailing.Layout" -> string!
+const Skywalker.Extensions.Emailing.Template.EmailTemplateNames.Notification = "Skywalker.Emailing.Notification" -> string!
+const Skywalker.Extensions.Emailing.Template.EmailTemplateNames.ResetPassword = "Skywalker.Emailing.ResetPassword" -> string!
+const Skywalker.Extensions.Emailing.Template.EmailTemplateNames.VerifyEmail = "Skywalker.Emailing.VerifyEmail" -> string!
+const Skywalker.Extensions.Emailing.Template.EmailTemplateNames.Welcome = "Skywalker.Emailing.Welcome" -> string!
+Microsoft.Extensions.DependencyInjection.EmailTemplateServiceCollectionExtensions
+override Skywalker.Extensions.Emailing.Template.EmailTemplateDefinitionProvider.Define(Skywalker.Template.Abstractions.ITemplateDefinitionContext! context) -> void
+Skywalker.Extensions.Emailing.Template.EmailTemplateDefinitionProvider
+Skywalker.Extensions.Emailing.Template.EmailTemplateDefinitionProvider.EmailTemplateDefinitionProvider() -> void
+Skywalker.Extensions.Emailing.Template.EmailTemplateNames
+Skywalker.Extensions.Emailing.Template.EmailTemplateOptions
+Skywalker.Extensions.Emailing.Template.EmailTemplateOptions.BodyTemplateSuffix.get -> string!
+Skywalker.Extensions.Emailing.Template.EmailTemplateOptions.BodyTemplateSuffix.set -> void
+Skywalker.Extensions.Emailing.Template.EmailTemplateOptions.DefaultLayoutTemplate.get -> string?
+Skywalker.Extensions.Emailing.Template.EmailTemplateOptions.DefaultLayoutTemplate.set -> void
+Skywalker.Extensions.Emailing.Template.EmailTemplateOptions.EmailTemplateOptions() -> void
+Skywalker.Extensions.Emailing.Template.EmailTemplateOptions.SubjectTemplateSuffix.get -> string!
+Skywalker.Extensions.Emailing.Template.EmailTemplateOptions.SubjectTemplateSuffix.set -> void
+Skywalker.Extensions.Emailing.Template.EmailTemplateOptions.TemplateBasePath.get -> string!
+Skywalker.Extensions.Emailing.Template.EmailTemplateOptions.TemplateBasePath.set -> void
+Skywalker.Extensions.Emailing.Template.ITemplateEmailSender
+Skywalker.Extensions.Emailing.Template.ITemplateEmailSender.SendAsync(string! from, string! to, string! templateName, object? model = null, string? cultureName = null) -> System.Threading.Tasks.Task!
+Skywalker.Extensions.Emailing.Template.ITemplateEmailSender.SendAsync(string! to, string! templateName, object? model = null, string? cultureName = null) -> System.Threading.Tasks.Task!
+Skywalker.Extensions.Emailing.Template.ITemplateEmailSender.SendAsync(System.Collections.Generic.IEnumerable<string!>! to, string! templateName, object? model = null, string? cultureName = null) -> System.Threading.Tasks.Task!
+Skywalker.Extensions.Emailing.Template.Models.EmailModelBase
+Skywalker.Extensions.Emailing.Template.Models.EmailModelBase.AppName.get -> string?
+Skywalker.Extensions.Emailing.Template.Models.EmailModelBase.AppName.set -> void
+Skywalker.Extensions.Emailing.Template.Models.EmailModelBase.AppUrl.get -> string?
+Skywalker.Extensions.Emailing.Template.Models.EmailModelBase.AppUrl.set -> void
+Skywalker.Extensions.Emailing.Template.Models.EmailModelBase.EmailModelBase() -> void
+Skywalker.Extensions.Emailing.Template.Models.EmailModelBase.Year.get -> int
+Skywalker.Extensions.Emailing.Template.Models.EmailModelBase.Year.set -> void
+Skywalker.Extensions.Emailing.Template.Models.NotificationEmailModel
+Skywalker.Extensions.Emailing.Template.Models.NotificationEmailModel.ActionText.get -> string?
+Skywalker.Extensions.Emailing.Template.Models.NotificationEmailModel.ActionText.set -> void
+Skywalker.Extensions.Emailing.Template.Models.NotificationEmailModel.ActionUrl.get -> string?
+Skywalker.Extensions.Emailing.Template.Models.NotificationEmailModel.ActionUrl.set -> void
+Skywalker.Extensions.Emailing.Template.Models.NotificationEmailModel.Message.get -> string?
+Skywalker.Extensions.Emailing.Template.Models.NotificationEmailModel.Message.set -> void
+Skywalker.Extensions.Emailing.Template.Models.NotificationEmailModel.NotificationEmailModel() -> void
+Skywalker.Extensions.Emailing.Template.Models.NotificationEmailModel.Timestamp.get -> System.DateTime?
+Skywalker.Extensions.Emailing.Template.Models.NotificationEmailModel.Timestamp.set -> void
+Skywalker.Extensions.Emailing.Template.Models.NotificationEmailModel.Title.get -> string?
+Skywalker.Extensions.Emailing.Template.Models.NotificationEmailModel.Title.set -> void
+Skywalker.Extensions.Emailing.Template.Models.NotificationEmailModel.UserName.get -> string?
+Skywalker.Extensions.Emailing.Template.Models.NotificationEmailModel.UserName.set -> void
+Skywalker.Extensions.Emailing.Template.Models.ResetPasswordEmailModel
+Skywalker.Extensions.Emailing.Template.Models.ResetPasswordEmailModel.ResetLink.get -> string?
+Skywalker.Extensions.Emailing.Template.Models.ResetPasswordEmailModel.ResetLink.set -> void
+Skywalker.Extensions.Emailing.Template.Models.ResetPasswordEmailModel.ResetLinkExpirationHours.get -> int
+Skywalker.Extensions.Emailing.Template.Models.ResetPasswordEmailModel.ResetLinkExpirationHours.set -> void
+Skywalker.Extensions.Emailing.Template.Models.ResetPasswordEmailModel.ResetPasswordEmailModel() -> void
+Skywalker.Extensions.Emailing.Template.Models.ResetPasswordEmailModel.UserName.get -> string?
+Skywalker.Extensions.Emailing.Template.Models.ResetPasswordEmailModel.UserName.set -> void
+Skywalker.Extensions.Emailing.Template.Models.VerifyEmailModel
+Skywalker.Extensions.Emailing.Template.Models.VerifyEmailModel.ExpirationHours.get -> int
+Skywalker.Extensions.Emailing.Template.Models.VerifyEmailModel.ExpirationHours.set -> void
+Skywalker.Extensions.Emailing.Template.Models.VerifyEmailModel.UserName.get -> string?
+Skywalker.Extensions.Emailing.Template.Models.VerifyEmailModel.UserName.set -> void
+Skywalker.Extensions.Emailing.Template.Models.VerifyEmailModel.VerificationCode.get -> string?
+Skywalker.Extensions.Emailing.Template.Models.VerifyEmailModel.VerificationCode.set -> void
+Skywalker.Extensions.Emailing.Template.Models.VerifyEmailModel.VerificationLink.get -> string?
+Skywalker.Extensions.Emailing.Template.Models.VerifyEmailModel.VerificationLink.set -> void
+Skywalker.Extensions.Emailing.Template.Models.VerifyEmailModel.VerifyEmailModel() -> void
+Skywalker.Extensions.Emailing.Template.Models.WelcomeEmailModel
+Skywalker.Extensions.Emailing.Template.Models.WelcomeEmailModel.ActivationLink.get -> string?
+Skywalker.Extensions.Emailing.Template.Models.WelcomeEmailModel.ActivationLink.set -> void
+Skywalker.Extensions.Emailing.Template.Models.WelcomeEmailModel.ActivationLinkExpirationHours.get -> int
+Skywalker.Extensions.Emailing.Template.Models.WelcomeEmailModel.ActivationLinkExpirationHours.set -> void
+Skywalker.Extensions.Emailing.Template.Models.WelcomeEmailModel.UserName.get -> string?
+Skywalker.Extensions.Emailing.Template.Models.WelcomeEmailModel.UserName.set -> void
+Skywalker.Extensions.Emailing.Template.Models.WelcomeEmailModel.WelcomeEmailModel() -> void
+Skywalker.Extensions.Emailing.Template.TemplateEmailSender
+Skywalker.Extensions.Emailing.Template.TemplateEmailSender.EmailSender.get -> Skywalker.Extensions.Emailing.IEmailSender!
+Skywalker.Extensions.Emailing.Template.TemplateEmailSender.Options.get -> Skywalker.Extensions.Emailing.Template.EmailTemplateOptions!
+Skywalker.Extensions.Emailing.Template.TemplateEmailSender.TemplateEmailSender(Skywalker.Extensions.Emailing.IEmailSender! emailSender, Skywalker.Template.Abstractions.ITemplateRenderer! templateRenderer, Microsoft.Extensions.Options.IOptions<Skywalker.Extensions.Emailing.Template.EmailTemplateOptions!>! options) -> void
+Skywalker.Extensions.Emailing.Template.TemplateEmailSender.TemplateRenderer.get -> Skywalker.Template.Abstractions.ITemplateRenderer!
+static Microsoft.Extensions.DependencyInjection.EmailTemplateServiceCollectionExtensions.AddEmailTemplate(this Microsoft.Extensions.DependencyInjection.IServiceCollection! services, System.Action<Skywalker.Extensions.Emailing.Template.EmailTemplateOptions!>? configureOptions = null) -> Microsoft.Extensions.DependencyInjection.IServiceCollection!
+static Microsoft.Extensions.DependencyInjection.EmailTemplateServiceCollectionExtensions.AddEmailTemplateWithLayout(this Microsoft.Extensions.DependencyInjection.IServiceCollection! services, System.Action<Skywalker.Extensions.Emailing.Template.EmailTemplateOptions!>? configureOptions = null) -> Microsoft.Extensions.DependencyInjection.IServiceCollection!
+virtual Skywalker.Extensions.Emailing.Template.TemplateEmailSender.GetBodyTemplateName(string! templateName) -> string!
+virtual Skywalker.Extensions.Emailing.Template.TemplateEmailSender.GetSubjectTemplateName(string! templateName) -> string!
+virtual Skywalker.Extensions.Emailing.Template.TemplateEmailSender.RenderEmailAsync(string! templateName, object? model, string? cultureName) -> System.Threading.Tasks.Task<(string! Subject, string! Body)>!
+virtual Skywalker.Extensions.Emailing.Template.TemplateEmailSender.SendAsync(string! from, string! to, string! templateName, object? model = null, string? cultureName = null) -> System.Threading.Tasks.Task!
+virtual Skywalker.Extensions.Emailing.Template.TemplateEmailSender.SendAsync(string! to, string! templateName, object? model = null, string? cultureName = null) -> System.Threading.Tasks.Task!
+virtual Skywalker.Extensions.Emailing.Template.TemplateEmailSender.SendAsync(System.Collections.Generic.IEnumerable<string!>! to, string! templateName, object? model = null, string? cultureName = null) -> System.Threading.Tasks.Task!

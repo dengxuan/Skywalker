@@ -15,8 +15,9 @@
 7. [项目结构](#-项目结构)
 8. [编码规范](#-编码规范)
 9. [测试规范](#-测试规范)
-10. [文档规范](#-文档规范)
-11. [获取帮助](#-获取帮助)
+10. [公共 API 维护](#-公共-api-维护)
+11. [文档规范](#-文档规范)
+12. [获取帮助](#-获取帮助)
 
 ---
 
@@ -557,6 +558,33 @@ dotnet test --collect:"XPlat Code Coverage"
 # 运行特定测试
 dotnet test --filter "FullyQualifiedName~OrderTests"
 ```
+
+---
+
+## 🔒 公共 API 维护
+
+所有发包项目都通过 `Microsoft.CodeAnalysis.PublicApiAnalyzers` 锁定公共 API。每个项目包含两个文件：
+
+| 文件 | 用途 |
+|------|------|
+| `PublicAPI.Shipped.txt` | 已发布版本中存在的公共 API baseline |
+| `PublicAPI.Unshipped.txt` | 当前开发周期新增、尚未发布的公共 API |
+
+### 新增公共 API
+
+1. 修改代码后运行 `dotnet build Skywalker.sln --configuration Release -m:1`。
+2. 如果出现 `RS0016`，使用 IDE quick fix 或手工把新增 API 加到对应项目的 `PublicAPI.Unshipped.txt`。
+3. PR 中说明新增 API 的用途和兼容性影响。
+
+### 修改或删除公共 API
+
+- 破坏性变更必须在 PR 描述中显式说明，并解释迁移方式。
+- 不要直接删除 `PublicAPI.Shipped.txt` 中的条目来“绕过”检查；这代表已发布 API 的兼容性承诺。
+- 如确实要移除 API，应在 PR 中标注 breaking change，并由维护者确认版本策略。
+
+### 发布后整理
+
+发包后，将每个项目 `PublicAPI.Unshipped.txt` 中的条目追加到 `PublicAPI.Shipped.txt`，然后清空 `PublicAPI.Unshipped.txt`。这样下一轮开发可以只审查新的公共 API 增量。
 
 ---
 

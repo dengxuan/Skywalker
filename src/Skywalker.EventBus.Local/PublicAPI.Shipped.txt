@@ -1,0 +1,46 @@
+#nullable enable
+const Skywalker.EventBus.Local.LocalEventBusOptions.SectionName = "Skywalker:EventBus:Local" -> string!
+Microsoft.Extensions.DependencyInjection.LocalEventBusServiceCollectionExtensions
+override Skywalker.EventBus.Local.LocalChannelEventBus.PublishAsync(System.Type! eventType, object! eventArgs) -> System.Threading.Tasks.Task!
+Skywalker.EventBus.Local.DomainEventBase
+Skywalker.EventBus.Local.DomainEventBase.DomainEventBase() -> void
+Skywalker.EventBus.Local.DomainEventBase.OccurredOn.get -> System.DateTimeOffset
+Skywalker.EventBus.Local.DomainEventCollection
+Skywalker.EventBus.Local.DomainEventCollection.Add(Skywalker.EventBus.Local.IDomainEvent! domainEvent) -> void
+Skywalker.EventBus.Local.DomainEventCollection.Clear() -> void
+Skywalker.EventBus.Local.DomainEventCollection.Count.get -> int
+Skywalker.EventBus.Local.DomainEventCollection.DomainEventCollection() -> void
+Skywalker.EventBus.Local.DomainEventCollection.GetEnumerator() -> System.Collections.Generic.IEnumerator<Skywalker.EventBus.Local.IDomainEvent!>!
+Skywalker.EventBus.Local.DomainEventCollection.Remove(Skywalker.EventBus.Local.IDomainEvent! domainEvent) -> void
+Skywalker.EventBus.Local.DomainEventDispatcher
+Skywalker.EventBus.Local.DomainEventDispatcher.DispatchEventAsync(Skywalker.EventBus.Local.IDomainEvent! domainEvent, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) -> System.Threading.Tasks.Task!
+Skywalker.EventBus.Local.DomainEventDispatcher.DispatchEventsAsync(System.Collections.Generic.IEnumerable<Skywalker.EventBus.Local.IHasDomainEvents!>! entities, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) -> System.Threading.Tasks.Task!
+Skywalker.EventBus.Local.DomainEventDispatcher.DomainEventDispatcher(Skywalker.EventBus.Local.ILocalEventBus! eventBus) -> void
+Skywalker.EventBus.Local.IDomainEvent
+Skywalker.EventBus.Local.IDomainEvent.OccurredOn.get -> System.DateTimeOffset
+Skywalker.EventBus.Local.IDomainEventDispatcher
+Skywalker.EventBus.Local.IDomainEventDispatcher.DispatchEventAsync(Skywalker.EventBus.Local.IDomainEvent! domainEvent, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) -> System.Threading.Tasks.Task!
+Skywalker.EventBus.Local.IDomainEventDispatcher.DispatchEventsAsync(System.Collections.Generic.IEnumerable<Skywalker.EventBus.Local.IHasDomainEvents!>! entities, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) -> System.Threading.Tasks.Task!
+Skywalker.EventBus.Local.IHasDomainEvents
+Skywalker.EventBus.Local.IHasDomainEvents.ClearDomainEvents() -> void
+Skywalker.EventBus.Local.IHasDomainEvents.DomainEvents.get -> System.Collections.Generic.IReadOnlyCollection<Skywalker.EventBus.Local.IDomainEvent!>!
+Skywalker.EventBus.Local.ILocalEventBus
+Skywalker.EventBus.Local.ILocalEventBus.Subscribe(System.Type! eventType, System.Type! handlerType) -> void
+Skywalker.EventBus.Local.ILocalEventBus.Subscribe<TEvent, THandler>() -> void
+Skywalker.EventBus.Local.ILocalEventBus.Unsubscribe(System.Type! eventType, System.Type! handlerType) -> void
+Skywalker.EventBus.Local.ILocalEventBus.Unsubscribe<TEvent, THandler>() -> void
+Skywalker.EventBus.Local.LocalChannelEventBus
+Skywalker.EventBus.Local.LocalChannelEventBus.DisposeAsync() -> System.Threading.Tasks.ValueTask
+Skywalker.EventBus.Local.LocalChannelEventBus.LocalChannelEventBus(Skywalker.EventBus.Abstractions.IEventHandlerFactory! handlerFactory, Skywalker.EventBus.Abstractions.IEventHandlerInvoker! handlerInvoker, Microsoft.Extensions.Options.IOptions<Skywalker.EventBus.Local.LocalEventBusOptions!>! options) -> void
+Skywalker.EventBus.Local.LocalChannelEventBus.Subscribe(System.Type! eventType, System.Type! handlerType) -> void
+Skywalker.EventBus.Local.LocalChannelEventBus.Subscribe<TEvent, THandler>() -> void
+Skywalker.EventBus.Local.LocalChannelEventBus.Unsubscribe(System.Type! eventType, System.Type! handlerType) -> void
+Skywalker.EventBus.Local.LocalChannelEventBus.Unsubscribe<TEvent, THandler>() -> void
+Skywalker.EventBus.Local.LocalEventBusOptions
+Skywalker.EventBus.Local.LocalEventBusOptions.AddEventHandler<THandler>() -> void
+Skywalker.EventBus.Local.LocalEventBusOptions.ChannelCapacity.get -> int
+Skywalker.EventBus.Local.LocalEventBusOptions.ChannelCapacity.set -> void
+Skywalker.EventBus.Local.LocalEventBusOptions.Handlers.get -> System.Collections.Generic.List<System.Type!>!
+Skywalker.EventBus.Local.LocalEventBusOptions.LocalEventBusOptions() -> void
+static Microsoft.Extensions.DependencyInjection.LocalEventBusServiceCollectionExtensions.AddEventBusLocal(this Microsoft.Extensions.DependencyInjection.IServiceCollection! services) -> Microsoft.Extensions.DependencyInjection.IServiceCollection!
+static Microsoft.Extensions.DependencyInjection.LocalEventBusServiceCollectionExtensions.AddEventBusLocal(this Microsoft.Extensions.DependencyInjection.IServiceCollection! services, System.Action<Skywalker.EventBus.Local.LocalEventBusOptions!>! configure) -> Microsoft.Extensions.DependencyInjection.IServiceCollection!

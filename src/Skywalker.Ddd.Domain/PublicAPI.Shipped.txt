@@ -1,0 +1,682 @@
+#nullable enable
+abstract Skywalker.Ddd.Domain.Entities.Entity.GetKeys() -> object![]!
+abstract Skywalker.Ddd.Domain.Repositories.BasicRepository<TEntity, TKey>.FindAsync(TKey id, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) -> System.Threading.Tasks.Task<TEntity?>!
+abstract Skywalker.Ddd.Domain.Repositories.BasicRepository<TEntity>.CountAsync(System.Linq.Expressions.Expression<System.Func<TEntity!, bool>!>! expression, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) -> System.Threading.Tasks.Task<int>!
+abstract Skywalker.Ddd.Domain.Repositories.BasicRepository<TEntity>.CountAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) -> System.Threading.Tasks.Task<int>!
+abstract Skywalker.Ddd.Domain.Repositories.BasicRepository<TEntity>.DeleteAsync(System.Linq.Expressions.Expression<System.Func<TEntity!, bool>!>! predicate, bool autoSave = false, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) -> System.Threading.Tasks.Task!
+abstract Skywalker.Ddd.Domain.Repositories.BasicRepository<TEntity>.DeleteAsync(TEntity! entity, bool autoSave = false, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) -> System.Threading.Tasks.Task!
+abstract Skywalker.Ddd.Domain.Repositories.BasicRepository<TEntity>.FindAsync(System.Linq.Expressions.Expression<System.Func<TEntity!, bool>!>! predicate, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) -> System.Threading.Tasks.Task<TEntity?>!
+abstract Skywalker.Ddd.Domain.Repositories.BasicRepository<TEntity>.GetListAsync(Skywalker.Extensions.Specifications.ISpecification<TEntity!>! specification, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) -> System.Threading.Tasks.Task<System.Collections.Generic.List<TEntity!>!>!
+abstract Skywalker.Ddd.Domain.Repositories.BasicRepository<TEntity>.GetListAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) -> System.Threading.Tasks.Task<System.Collections.Generic.List<TEntity!>!>!
+abstract Skywalker.Ddd.Domain.Repositories.BasicRepository<TEntity>.GetPagedListAsync(int skip, int limit, string? sorting, string? filter, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) -> System.Threading.Tasks.Task<Skywalker.Extensions.Collections.Generic.PagedList<TEntity!>!>!
+abstract Skywalker.Ddd.Domain.Repositories.BasicRepository<TEntity>.GetPagedListAsync(int skip, int limit, string? sorting, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) -> System.Threading.Tasks.Task<Skywalker.Extensions.Collections.Generic.PagedList<TEntity!>!>!
+abstract Skywalker.Ddd.Domain.Repositories.BasicRepository<TEntity>.GetPagedListAsync(int skip, int limit, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) -> System.Threading.Tasks.Task<Skywalker.Extensions.Collections.Generic.PagedList<TEntity!>!>!
+abstract Skywalker.Ddd.Domain.Repositories.BasicRepository<TEntity>.GetPagedListAsync(Skywalker.Extensions.Specifications.ISpecification<TEntity!>! specification, int skip, int limit, string? sorting = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) -> System.Threading.Tasks.Task<Skywalker.Extensions.Collections.Generic.PagedList<TEntity!>!>!
+abstract Skywalker.Ddd.Domain.Repositories.BasicRepository<TEntity>.GetPagedListAsync(System.Linq.Expressions.Expression<System.Func<TEntity!, bool>!>! expression, int skip, int limit, string? sorting, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) -> System.Threading.Tasks.Task<Skywalker.Extensions.Collections.Generic.PagedList<TEntity!>!>!
+abstract Skywalker.Ddd.Domain.Repositories.BasicRepository<TEntity>.GetPagedListAsync(System.Linq.Expressions.Expression<System.Func<TEntity!, bool>!>! expression, int skip, int limit, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) -> System.Threading.Tasks.Task<Skywalker.Extensions.Collections.Generic.PagedList<TEntity!>!>!
+abstract Skywalker.Ddd.Domain.Repositories.BasicRepository<TEntity>.GetQueryable() -> System.Linq.IQueryable<TEntity!>!
+abstract Skywalker.Ddd.Domain.Repositories.BasicRepository<TEntity>.InsertAsync(System.Collections.Generic.IEnumerable<TEntity!>! entities, bool autoSave = false, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) -> System.Threading.Tasks.Task<int>!
+abstract Skywalker.Ddd.Domain.Repositories.BasicRepository<TEntity>.InsertAsync(TEntity! entity, bool autoSave = false, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) -> System.Threading.Tasks.Task<TEntity!>!
+abstract Skywalker.Ddd.Domain.Repositories.BasicRepository<TEntity>.LongCountAsync(System.Linq.Expressions.Expression<System.Func<TEntity!, bool>!>! expression, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) -> System.Threading.Tasks.Task<long>!
+abstract Skywalker.Ddd.Domain.Repositories.BasicRepository<TEntity>.LongCountAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) -> System.Threading.Tasks.Task<long>!
+abstract Skywalker.Ddd.Domain.Repositories.BasicRepository<TEntity>.UpdateAsync(TEntity! entity, bool autoSave = false, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) -> System.Threading.Tasks.Task<TEntity!>!
+abstract Skywalker.Ddd.Domain.Values.ValueObject.GetAtomicValues() -> System.Collections.Generic.IEnumerable<object?>!
+const Skywalker.Ddd.Data.ConnectionStrings.DefaultConnectionStringName = "Default" -> string!
+const Skywalker.Ddd.Domain.Entities.ConcurrencyStampConsts.MaxLength = 40 -> int
+const Skywalker.Ddd.Domain.Entities.Entity<TKey>.MaxIdLength = 40 -> int
+const Skywalker.Ddd.Domain.Events.Distributed.AutoEntityDistributedEventSelectorListExtensions.AllEntitiesSelectorName = "All" -> string!
+Microsoft.Extensions.DependencyInjection.ThreadingServiceCollectionExtensions
+override Skywalker.Ddd.Domain.Entities.Entity.ToString() -> string!
+override Skywalker.Ddd.Domain.Entities.Entity<TKey>.GetKeys() -> object![]!
+override Skywalker.Ddd.Domain.Entities.Entity<TKey>.ToString() -> string!
+override Skywalker.Ddd.Domain.Events.EntityChangeReport.ToString() -> string!
+Skywalker.ApplicationParts.DomainServiceFeatureProvider
+Skywalker.ApplicationParts.DomainServiceFeatureProvider.DomainServiceFeatureProvider() -> void
+Skywalker.ApplicationParts.DomainServiceFeatureProvider.PopulateFeature(System.Collections.Generic.IEnumerable<Skywalker.ApplicationParts.ApplicationPart!>! parts, Skywalker.ApplicationParts.ServiceRegistrationFeature! feature) -> void
+Skywalker.Ddd.Data.ConnectionStringNameAttribute
+Skywalker.Ddd.Data.ConnectionStringNameAttribute.ConnectionStringNameAttribute(string! name) -> void
+Skywalker.Ddd.Data.ConnectionStringNameAttribute.Name.get -> string!
+Skywalker.Ddd.Data.ConnectionStringResolverExtensions
+Skywalker.Ddd.Data.ConnectionStrings
+Skywalker.Ddd.Data.ConnectionStrings.ConnectionStrings() -> void
+Skywalker.Ddd.Data.ConnectionStrings.Default.get -> string!
+Skywalker.Ddd.Data.ConnectionStrings.Default.set -> void
+Skywalker.Ddd.Data.DefaultConnectionStringResolver
+Skywalker.Ddd.Data.DefaultConnectionStringResolver.DefaultConnectionStringResolver(Microsoft.Extensions.Configuration.IConfiguration! configuration) -> void
+Skywalker.Ddd.Data.DefaultConnectionStringResolver.Options.get -> Skywalker.Ddd.Data.SkywalkerDbConnectionOptions!
+Skywalker.Ddd.Data.Filtering.DataFilter
+Skywalker.Ddd.Data.Filtering.DataFilter.DataFilter(System.IServiceProvider! serviceProvider) -> void
+Skywalker.Ddd.Data.Filtering.DataFilter.Disable<TFilter>() -> System.IDisposable!
+Skywalker.Ddd.Data.Filtering.DataFilter.Enable<TFilter>() -> System.IDisposable!
+Skywalker.Ddd.Data.Filtering.DataFilter.IsEnabled<TFilter>() -> bool
+Skywalker.Ddd.Data.Filtering.DataFilter<TFilter>
+Skywalker.Ddd.Data.Filtering.DataFilter<TFilter>.DataFilter(Microsoft.Extensions.Options.IOptions<Skywalker.Ddd.Data.Filtering.SkywalkerDataFilterOptions!>! options) -> void
+Skywalker.Ddd.Data.Filtering.DataFilter<TFilter>.Disable() -> System.IDisposable!
+Skywalker.Ddd.Data.Filtering.DataFilter<TFilter>.Enable() -> System.IDisposable!
+Skywalker.Ddd.Data.Filtering.DataFilter<TFilter>.IsEnabled.get -> bool
+Skywalker.Ddd.Data.Filtering.DataFilterState
+Skywalker.Ddd.Data.Filtering.DataFilterState.Clone() -> Skywalker.Ddd.Data.Filtering.DataFilterState!
+Skywalker.Ddd.Data.Filtering.DataFilterState.DataFilterState(bool isEnabled) -> void
+Skywalker.Ddd.Data.Filtering.DataFilterState.IsEnabled.get -> bool
+Skywalker.Ddd.Data.Filtering.DataFilterState.IsEnabled.set -> void
+Skywalker.Ddd.Data.Filtering.IDataFilter
+Skywalker.Ddd.Data.Filtering.IDataFilter.Disable<TFilter>() -> System.IDisposable!
+Skywalker.Ddd.Data.Filtering.IDataFilter.Enable<TFilter>() -> System.IDisposable!
+Skywalker.Ddd.Data.Filtering.IDataFilter.IsEnabled<TFilter>() -> bool
+Skywalker.Ddd.Data.Filtering.IDataFilter<TFilter>
+Skywalker.Ddd.Data.Filtering.IDataFilter<TFilter>.Disable() -> System.IDisposable!
+Skywalker.Ddd.Data.Filtering.IDataFilter<TFilter>.Enable() -> System.IDisposable!
+Skywalker.Ddd.Data.Filtering.IDataFilter<TFilter>.IsEnabled.get -> bool
+Skywalker.Ddd.Data.Filtering.SkywalkerDataFilterOptions
+Skywalker.Ddd.Data.Filtering.SkywalkerDataFilterOptions.DefaultStates.get -> System.Collections.Generic.Dictionary<System.Type!, Skywalker.Ddd.Data.Filtering.DataFilterState!>!
+Skywalker.Ddd.Data.Filtering.SkywalkerDataFilterOptions.SkywalkerDataFilterOptions() -> void
+Skywalker.Ddd.Data.IConnectionStringResolver
+Skywalker.Ddd.Data.IConnectionStringResolver.Resolve(string! connectionStringName) -> string!
+Skywalker.Ddd.Data.IDeletable
+Skywalker.Ddd.Data.IDeletable.DeletionTime.get -> System.DateTime?
+Skywalker.Ddd.Data.IDeletable.DeletionTime.set -> void
+Skywalker.Ddd.Data.IDeletable.IsDeleted.get -> bool
+Skywalker.Ddd.Data.IDeletable.IsDeleted.set -> void
+Skywalker.Ddd.Data.Seeding.DataSeedContext
+Skywalker.Ddd.Data.Seeding.DataSeedContext.DataSeedContext() -> void
+Skywalker.Ddd.Data.Seeding.DataSeedContext.Properties.get -> System.Collections.Generic.Dictionary<string!, object?>!
+Skywalker.Ddd.Data.Seeding.DataSeedContext.this[string! name].get -> object?
+Skywalker.Ddd.Data.Seeding.DataSeedContext.this[string! name].set -> void
+Skywalker.Ddd.Data.Seeding.DataSeedContributorList
+Skywalker.Ddd.Data.Seeding.DataSeedContributorList.DataSeedContributorList() -> void
+Skywalker.Ddd.Data.Seeding.DataSeeder
+Skywalker.Ddd.Data.Seeding.DataSeeder.DataSeeder(Microsoft.Extensions.Options.IOptions<Skywalker.Ddd.Data.Seeding.SkywalkerDataSeedOptions!>! options, Microsoft.Extensions.DependencyInjection.IServiceScopeFactory! serviceScopeFactory) -> void
+Skywalker.Ddd.Data.Seeding.DataSeeder.Options.get -> Skywalker.Ddd.Data.Seeding.SkywalkerDataSeedOptions!
+Skywalker.Ddd.Data.Seeding.DataSeeder.ServiceScopeFactory.get -> Microsoft.Extensions.DependencyInjection.IServiceScopeFactory!
+Skywalker.Ddd.Data.Seeding.DataSeederExtensions
+Skywalker.Ddd.Data.Seeding.IDataSeedContributor
+Skywalker.Ddd.Data.Seeding.IDataSeedContributor.SeedAsync(Skywalker.Ddd.Data.Seeding.DataSeedContext! context) -> System.Threading.Tasks.Task!
+Skywalker.Ddd.Data.Seeding.IDataSeeder
+Skywalker.Ddd.Data.Seeding.IDataSeeder.SeedAsync(Skywalker.Ddd.Data.Seeding.DataSeedContext! context) -> System.Threading.Tasks.Task!
+Skywalker.Ddd.Data.Seeding.SkywalkerDataSeedOptions
+Skywalker.Ddd.Data.Seeding.SkywalkerDataSeedOptions.Contributors.get -> Skywalker.Ddd.Data.Seeding.DataSeedContributorList!
+Skywalker.Ddd.Data.Seeding.SkywalkerDataSeedOptions.SkywalkerDataSeedOptions() -> void
+Skywalker.Ddd.Data.SkywalkerCommonDbProperties
+Skywalker.Ddd.Data.SkywalkerDbConcurrencyException
+Skywalker.Ddd.Data.SkywalkerDbConcurrencyException.SkywalkerDbConcurrencyException() -> void
+Skywalker.Ddd.Data.SkywalkerDbConcurrencyException.SkywalkerDbConcurrencyException(string! message) -> void
+Skywalker.Ddd.Data.SkywalkerDbConcurrencyException.SkywalkerDbConcurrencyException(string! message, System.Exception! innerException) -> void
+Skywalker.Ddd.Data.SkywalkerDbConnectionOptions
+Skywalker.Ddd.Data.SkywalkerDbConnectionOptions.ConnectionStrings.get -> Skywalker.Ddd.Data.ConnectionStrings!
+Skywalker.Ddd.Data.SkywalkerDbConnectionOptions.ConnectionStrings.set -> void
+Skywalker.Ddd.Data.SkywalkerDbConnectionOptions.SkywalkerDbConnectionOptions() -> void
+Skywalker.Ddd.Domain.Entities.AggregateRoot
+Skywalker.Ddd.Domain.Entities.AggregateRoot.AggregateRoot() -> void
+Skywalker.Ddd.Domain.Entities.AggregateRoot<TKey>
+Skywalker.Ddd.Domain.Entities.AggregateRoot<TKey>.AggregateRoot() -> void
+Skywalker.Ddd.Domain.Entities.AggregateRoot<TKey>.AggregateRoot(TKey id) -> void
+Skywalker.Ddd.Domain.Entities.ConcurrencyStampConsts
+Skywalker.Ddd.Domain.Entities.DisableIdGenerationAttribute
+Skywalker.Ddd.Domain.Entities.DisableIdGenerationAttribute.DisableIdGenerationAttribute() -> void
+Skywalker.Ddd.Domain.Entities.Entity
+Skywalker.Ddd.Domain.Entities.Entity.Entity() -> void
+Skywalker.Ddd.Domain.Entities.Entity.EntityEquals(Skywalker.Ddd.Domain.Entities.IEntity! other) -> bool
+Skywalker.Ddd.Domain.Entities.Entity<TKey>
+Skywalker.Ddd.Domain.Entities.Entity<TKey>.Entity() -> void
+Skywalker.Ddd.Domain.Entities.Entity<TKey>.Entity(TKey id) -> void
+Skywalker.Ddd.Domain.Entities.Entity<TKey>.Equals(TKey? other) -> bool
+Skywalker.Ddd.Domain.Entities.EntityAlreadyExistedException
+Skywalker.Ddd.Domain.Entities.EntityAlreadyExistedException.EntityAlreadyExistedException() -> void
+Skywalker.Ddd.Domain.Entities.EntityAlreadyExistedException.EntityAlreadyExistedException(string! message) -> void
+Skywalker.Ddd.Domain.Entities.EntityAlreadyExistedException.EntityAlreadyExistedException(string! message, System.Exception? innerException) -> void
+Skywalker.Ddd.Domain.Entities.EntityAlreadyExistedException.EntityAlreadyExistedException(System.Type! entityType) -> void
+Skywalker.Ddd.Domain.Entities.EntityAlreadyExistedException.EntityAlreadyExistedException(System.Type! entityType, object? id) -> void
+Skywalker.Ddd.Domain.Entities.EntityAlreadyExistedException.EntityAlreadyExistedException(System.Type! entityType, object? id, System.Exception? innerException) -> void
+Skywalker.Ddd.Domain.Entities.EntityAlreadyExistedException.EntityType.get -> System.Type?
+Skywalker.Ddd.Domain.Entities.EntityAlreadyExistedException.EntityType.set -> void
+Skywalker.Ddd.Domain.Entities.EntityAlreadyExistedException.Id.get -> object?
+Skywalker.Ddd.Domain.Entities.EntityAlreadyExistedException.Id.set -> void
+Skywalker.Ddd.Domain.Entities.EntityHelper
+Skywalker.Ddd.Domain.Entities.IAggregateRoot
+Skywalker.Ddd.Domain.Entities.IAggregateRoot<TKey>
+Skywalker.Ddd.Domain.Entities.IEntity
+Skywalker.Ddd.Domain.Entities.IEntity.GetKeys() -> object![]!
+Skywalker.Ddd.Domain.Entities.IEntity<TKey>
+Skywalker.Ddd.Domain.Entities.IEntity<TKey>.Id.get -> TKey
+Skywalker.Ddd.Domain.Entities.IGeneratesDomainEvents
+Skywalker.Ddd.Domain.Entities.IGeneratesDomainEvents.ClearDistributedEvents() -> void
+Skywalker.Ddd.Domain.Entities.IGeneratesDomainEvents.GetDistributedEvents() -> System.Collections.Generic.IEnumerable<object!>!
+Skywalker.Ddd.Domain.Entities.IHasConcurrencyStamp
+Skywalker.Ddd.Domain.Entities.IHasConcurrencyStamp.ConcurrencyStamp.get -> string?
+Skywalker.Ddd.Domain.Entities.IHasConcurrencyStamp.ConcurrencyStamp.set -> void
+Skywalker.Ddd.Domain.Entities.IHasCreationTime
+Skywalker.Ddd.Domain.Entities.IHasCreationTime.CreationTime.get -> System.DateTime
+Skywalker.Ddd.Domain.Entities.IHasCreationTime.CreationTime.set -> void
+Skywalker.Ddd.Domain.Entities.IHasModificationTime
+Skywalker.Ddd.Domain.Entities.IHasModificationTime.ModificationTime.get -> System.DateTime?
+Skywalker.Ddd.Domain.Entities.IHasModificationTime.ModificationTime.set -> void
+Skywalker.Ddd.Domain.Events.Distributed.AutoEntityDistributedEventSelectorList
+Skywalker.Ddd.Domain.Events.Distributed.AutoEntityDistributedEventSelectorList.AutoEntityDistributedEventSelectorList() -> void
+Skywalker.Ddd.Domain.Events.Distributed.AutoEntityDistributedEventSelectorListExtensions
+Skywalker.Ddd.Domain.Events.Distributed.EntityCreatedEto<TEntityEto>
+Skywalker.Ddd.Domain.Events.Distributed.EntityCreatedEto<TEntityEto>.Entity.get -> TEntityEto
+Skywalker.Ddd.Domain.Events.Distributed.EntityCreatedEto<TEntityEto>.Entity.set -> void
+Skywalker.Ddd.Domain.Events.Distributed.EntityCreatedEto<TEntityEto>.EntityCreatedEto(TEntityEto entity) -> void
+Skywalker.Ddd.Domain.Events.Distributed.EntityDeletedEto<TEntityEto>
+Skywalker.Ddd.Domain.Events.Distributed.EntityDeletedEto<TEntityEto>.Entity.get -> TEntityEto
+Skywalker.Ddd.Domain.Events.Distributed.EntityDeletedEto<TEntityEto>.Entity.set -> void
+Skywalker.Ddd.Domain.Events.Distributed.EntityDeletedEto<TEntityEto>.EntityDeletedEto(TEntityEto entity) -> void
+Skywalker.Ddd.Domain.Events.Distributed.EntityEto
+Skywalker.Ddd.Domain.Events.Distributed.EntityEto.EntityEto(string! entityType, string! keysAsString) -> void
+Skywalker.Ddd.Domain.Events.Distributed.EntityEto.EntityType.get -> string!
+Skywalker.Ddd.Domain.Events.Distributed.EntityEto.EntityType.set -> void
+Skywalker.Ddd.Domain.Events.Distributed.EntityEto.KeysAsString.get -> string!
+Skywalker.Ddd.Domain.Events.Distributed.EntityEto.KeysAsString.set -> void
+Skywalker.Ddd.Domain.Events.Distributed.EntityUpdatedEto<TEntityEto>
+Skywalker.Ddd.Domain.Events.Distributed.EntityUpdatedEto<TEntityEto>.Entity.get -> TEntityEto
+Skywalker.Ddd.Domain.Events.Distributed.EntityUpdatedEto<TEntityEto>.Entity.set -> void
+Skywalker.Ddd.Domain.Events.Distributed.EntityUpdatedEto<TEntityEto>.EntityUpdatedEto(TEntityEto entity) -> void
+Skywalker.Ddd.Domain.Events.Distributed.Eto
+Skywalker.Ddd.Domain.Events.Distributed.Eto.Eto() -> void
+Skywalker.Ddd.Domain.Events.Distributed.Eto.Properties.get -> System.Collections.Generic.Dictionary<string!, object!>!
+Skywalker.Ddd.Domain.Events.Distributed.EtoMappingDictionary
+Skywalker.Ddd.Domain.Events.Distributed.EtoMappingDictionary.Add<TEntity, TEntityEto>(System.Type? objectMappingContextType = null) -> void
+Skywalker.Ddd.Domain.Events.Distributed.EtoMappingDictionary.EtoMappingDictionary() -> void
+Skywalker.Ddd.Domain.Events.Distributed.EtoMappingDictionaryItem
+Skywalker.Ddd.Domain.Events.Distributed.EtoMappingDictionaryItem.EtoMappingDictionaryItem(System.Type! etoType, System.Type? objectMappingContextType = null) -> void
+Skywalker.Ddd.Domain.Events.Distributed.EtoMappingDictionaryItem.EtoType.get -> System.Type!
+Skywalker.Ddd.Domain.Events.Distributed.EtoMappingDictionaryItem.ObjectMappingContextType.get -> System.Type?
+Skywalker.Ddd.Domain.Events.Distributed.IAutoEntityDistributedEventSelectorList
+Skywalker.Ddd.Domain.Events.Distributed.IEntityToEtoMapper
+Skywalker.Ddd.Domain.Events.Distributed.IEntityToEtoMapper.Map(object! entityObj) -> object?
+Skywalker.Ddd.Domain.Events.Distributed.SkywalkerDistributedEntityEventOptions
+Skywalker.Ddd.Domain.Events.Distributed.SkywalkerDistributedEntityEventOptions.AutoEventSelectors.get -> Skywalker.Ddd.Domain.Events.Distributed.IAutoEntityDistributedEventSelectorList!
+Skywalker.Ddd.Domain.Events.Distributed.SkywalkerDistributedEntityEventOptions.EtoMappings.get -> Skywalker.Ddd.Domain.Events.Distributed.EtoMappingDictionary!
+Skywalker.Ddd.Domain.Events.Distributed.SkywalkerDistributedEntityEventOptions.EtoMappings.set -> void
+Skywalker.Ddd.Domain.Events.Distributed.SkywalkerDistributedEntityEventOptions.SkywalkerDistributedEntityEventOptions() -> void
+Skywalker.Ddd.Domain.Events.DomainEventEntry
+Skywalker.Ddd.Domain.Events.DomainEventEntry.DomainEventEntry(object! sourceEntity, object! eventData) -> void
+Skywalker.Ddd.Domain.Events.DomainEventEntry.EventData.get -> object!
+Skywalker.Ddd.Domain.Events.DomainEventEntry.SourceEntity.get -> object!
+Skywalker.Ddd.Domain.Events.EntityChangedEvent<TEntity>
+Skywalker.Ddd.Domain.Events.EntityChangedEvent<TEntity>.ChangeType.get -> Skywalker.Ddd.Domain.Events.EntityChangeType
+Skywalker.Ddd.Domain.Events.EntityChangedEvent<TEntity>.Entity.get -> TEntity
+Skywalker.Ddd.Domain.Events.EntityChangedEvent<TEntity>.EntityChangedEvent(TEntity entity, Skywalker.Ddd.Domain.Events.EntityChangeType changeType) -> void
+Skywalker.Ddd.Domain.Events.EntityChangedEventData<TEntity>
+Skywalker.Ddd.Domain.Events.EntityChangedEventData<TEntity>.EntityChangedEventData(TEntity! Entity) -> void
+Skywalker.Ddd.Domain.Events.EntityChangeEntry
+Skywalker.Ddd.Domain.Events.EntityChangeEntry.ChangeType.get -> Skywalker.Ddd.Domain.Events.EntityChangeType
+Skywalker.Ddd.Domain.Events.EntityChangeEntry.ChangeType.set -> void
+Skywalker.Ddd.Domain.Events.EntityChangeEntry.Entity.get -> object!
+Skywalker.Ddd.Domain.Events.EntityChangeEntry.Entity.set -> void
+Skywalker.Ddd.Domain.Events.EntityChangeEntry.EntityChangeEntry(object! entity, Skywalker.Ddd.Domain.Events.EntityChangeType changeType) -> void
+Skywalker.Ddd.Domain.Events.EntityChangeEventHelper
+Skywalker.Ddd.Domain.Events.EntityChangeEventHelper.DistributedEntityEventOptions.get -> Skywalker.Ddd.Domain.Events.Distributed.SkywalkerDistributedEntityEventOptions!
+Skywalker.Ddd.Domain.Events.EntityChangeEventHelper.EntityChangeEventHelper(Skywalker.Ddd.Domain.Events.Distributed.IEntityToEtoMapper! entityToEtoMapper, Microsoft.Extensions.Options.IOptions<Skywalker.Ddd.Domain.Events.Distributed.SkywalkerDistributedEntityEventOptions!>! distributedEntityEventOptions) -> void
+Skywalker.Ddd.Domain.Events.EntityChangeEventHelper.EntityToEtoMapper.get -> Skywalker.Ddd.Domain.Events.Distributed.IEntityToEtoMapper!
+Skywalker.Ddd.Domain.Events.EntityChangeEventHelper.EventBus.get -> Skywalker.EventBus.Abstractions.IEventBus!
+Skywalker.Ddd.Domain.Events.EntityChangeEventHelper.EventBus.set -> void
+Skywalker.Ddd.Domain.Events.EntityChangeEventHelper.Logger.get -> Microsoft.Extensions.Logging.ILogger<Skywalker.Ddd.Domain.Events.EntityChangeEventHelper!>!
+Skywalker.Ddd.Domain.Events.EntityChangeEventHelper.Logger.set -> void
+Skywalker.Ddd.Domain.Events.EntityChangeEventHelper.TriggerEventsAsync(Skywalker.Ddd.Domain.Events.EntityChangeReport! changeReport) -> System.Threading.Tasks.Task!
+Skywalker.Ddd.Domain.Events.EntityChangeReport
+Skywalker.Ddd.Domain.Events.EntityChangeReport.ChangedEntities.get -> System.Collections.Generic.List<Skywalker.Ddd.Domain.Events.EntityChangeEntry!>!
+Skywalker.Ddd.Domain.Events.EntityChangeReport.DistributedEvents.get -> System.Collections.Generic.List<Skywalker.Ddd.Domain.Events.DomainEventEntry!>!
+Skywalker.Ddd.Domain.Events.EntityChangeReport.DomainEvents.get -> System.Collections.Generic.List<Skywalker.Ddd.Domain.Events.DomainEventEntry!>!
+Skywalker.Ddd.Domain.Events.EntityChangeReport.EntityChangeReport() -> void
+Skywalker.Ddd.Domain.Events.EntityChangeReport.IsEmpty() -> bool
+Skywalker.Ddd.Domain.Events.EntityChangeType
+Skywalker.Ddd.Domain.Events.EntityChangeType.Created = 0 -> Skywalker.Ddd.Domain.Events.EntityChangeType
+Skywalker.Ddd.Domain.Events.EntityChangeType.Deleted = 2 -> Skywalker.Ddd.Domain.Events.EntityChangeType
+Skywalker.Ddd.Domain.Events.EntityChangeType.Updated = 1 -> Skywalker.Ddd.Domain.Events.EntityChangeType
+Skywalker.Ddd.Domain.Events.EntityChangingEventData<TEntity>
+Skywalker.Ddd.Domain.Events.EntityChangingEventData<TEntity>.EntityChangingEventData(TEntity! Entity) -> void
+Skywalker.Ddd.Domain.Events.EntityCreatedEvent<TEntity>
+Skywalker.Ddd.Domain.Events.EntityCreatedEvent<TEntity>.EntityCreatedEvent(TEntity entity) -> void
+Skywalker.Ddd.Domain.Events.EntityCreatedEventData<TEntity>
+Skywalker.Ddd.Domain.Events.EntityCreatedEventData<TEntity>.EntityCreatedEventData(TEntity! Entity) -> void
+Skywalker.Ddd.Domain.Events.EntityCreatingEventData<TEntity>
+Skywalker.Ddd.Domain.Events.EntityCreatingEventData<TEntity>.EntityCreatingEventData(TEntity! Entity) -> void
+Skywalker.Ddd.Domain.Events.EntityDeletedEvent<TEntity>
+Skywalker.Ddd.Domain.Events.EntityDeletedEvent<TEntity>.EntityDeletedEvent(TEntity entity) -> void
+Skywalker.Ddd.Domain.Events.EntityDeletedEventData<TEntity>
+Skywalker.Ddd.Domain.Events.EntityDeletedEventData<TEntity>.EntityDeletedEventData(TEntity! Entity) -> void
+Skywalker.Ddd.Domain.Events.EntityDeletingEventData<TEntity>
+Skywalker.Ddd.Domain.Events.EntityDeletingEventData<TEntity>.EntityDeletingEventData(TEntity! Entity) -> void
+Skywalker.Ddd.Domain.Events.EntityEventData<TEntity>
+Skywalker.Ddd.Domain.Events.EntityEventData<TEntity>.Entity.get -> TEntity!
+Skywalker.Ddd.Domain.Events.EntityEventData<TEntity>.Entity.init -> void
+Skywalker.Ddd.Domain.Events.EntityEventData<TEntity>.EntityEventData(TEntity! Entity) -> void
+Skywalker.Ddd.Domain.Events.EntityUpdatedEvent<TEntity>
+Skywalker.Ddd.Domain.Events.EntityUpdatedEvent<TEntity>.EntityUpdatedEvent(TEntity entity) -> void
+Skywalker.Ddd.Domain.Events.EntityUpdatedEventData<TEntity>
+Skywalker.Ddd.Domain.Events.EntityUpdatedEventData<TEntity>.EntityUpdatedEventData(TEntity! Entity) -> void
+Skywalker.Ddd.Domain.Events.EntityUpdatingEventData<TEntity>
+Skywalker.Ddd.Domain.Events.EntityUpdatingEventData<TEntity>.EntityUpdatingEventData(TEntity! Entity) -> void
+Skywalker.Ddd.Domain.Events.IEntityChangeEventHelper
+Skywalker.Ddd.Domain.Events.IEntityChangeEventHelper.TriggerEntityCreatedEventAsync(object! entity) -> System.Threading.Tasks.Task!
+Skywalker.Ddd.Domain.Events.IEntityChangeEventHelper.TriggerEntityCreatedEventOnUowCompletedAsync(object! entity) -> System.Threading.Tasks.Task!
+Skywalker.Ddd.Domain.Events.IEntityChangeEventHelper.TriggerEntityCreatingEventAsync(object! entity) -> System.Threading.Tasks.Task!
+Skywalker.Ddd.Domain.Events.IEntityChangeEventHelper.TriggerEntityDeletedEventAsync(object! entity) -> System.Threading.Tasks.Task!
+Skywalker.Ddd.Domain.Events.IEntityChangeEventHelper.TriggerEntityDeletedEventOnUowCompletedAsync(object! entity) -> System.Threading.Tasks.Task!
+Skywalker.Ddd.Domain.Events.IEntityChangeEventHelper.TriggerEntityDeletingEventAsync(object! entity) -> System.Threading.Tasks.Task!
+Skywalker.Ddd.Domain.Events.IEntityChangeEventHelper.TriggerEntityUpdatedEventAsync(object! entity) -> System.Threading.Tasks.Task!
+Skywalker.Ddd.Domain.Events.IEntityChangeEventHelper.TriggerEntityUpdatedEventOnUowCompletedAsync(object! entity) -> System.Threading.Tasks.Task!
+Skywalker.Ddd.Domain.Events.IEntityChangeEventHelper.TriggerEntityUpdatingEventAsync(object! entity) -> System.Threading.Tasks.Task!
+Skywalker.Ddd.Domain.Events.IEntityChangeEventHelper.TriggerEventsAsync(Skywalker.Ddd.Domain.Events.EntityChangeReport! changeReport) -> System.Threading.Tasks.Task!
+Skywalker.Ddd.Domain.Events.NullEntityChangeEventHelper
+Skywalker.Ddd.Domain.Events.NullEntityChangeEventHelper.TriggerEntityCreatedEventAsync(object! entity) -> System.Threading.Tasks.Task!
+Skywalker.Ddd.Domain.Events.NullEntityChangeEventHelper.TriggerEntityCreatedEventOnUowCompletedAsync(object! entity) -> System.Threading.Tasks.Task!
+Skywalker.Ddd.Domain.Events.NullEntityChangeEventHelper.TriggerEntityCreatingEventAsync(object! entity) -> System.Threading.Tasks.Task!
+Skywalker.Ddd.Domain.Events.NullEntityChangeEventHelper.TriggerEntityDeletedEventAsync(object! entity) -> System.Threading.Tasks.Task!
+Skywalker.Ddd.Domain.Events.NullEntityChangeEventHelper.TriggerEntityDeletedEventOnUowCompletedAsync(object! entity) -> System.Threading.Tasks.Task!
+Skywalker.Ddd.Domain.Events.NullEntityChangeEventHelper.TriggerEntityDeletingEventAsync(object! entity) -> System.Threading.Tasks.Task!
+Skywalker.Ddd.Domain.Events.NullEntityChangeEventHelper.TriggerEntityUpdatedEventAsync(object! entity) -> System.Threading.Tasks.Task!
+Skywalker.Ddd.Domain.Events.NullEntityChangeEventHelper.TriggerEntityUpdatedEventOnUowCompletedAsync(object! entity) -> System.Threading.Tasks.Task!
+Skywalker.Ddd.Domain.Events.NullEntityChangeEventHelper.TriggerEntityUpdatingEventAsync(object! entity) -> System.Threading.Tasks.Task!
+Skywalker.Ddd.Domain.Events.NullEntityChangeEventHelper.TriggerEventsAsync(Skywalker.Ddd.Domain.Events.EntityChangeReport! changeReport) -> System.Threading.Tasks.Task!
+Skywalker.Ddd.Domain.Repositories.BasicRepository<TEntity, TKey>
+Skywalker.Ddd.Domain.Repositories.BasicRepository<TEntity, TKey>.BasicRepository() -> void
+Skywalker.Ddd.Domain.Repositories.BasicRepository<TEntity>
+Skywalker.Ddd.Domain.Repositories.BasicRepository<TEntity>.BasicRepository() -> void
+Skywalker.Ddd.Domain.Repositories.BasicRepository<TEntity>.CancellationTokenProvider.get -> Skywalker.Extensions.Threading.ICancellationTokenProvider!
+Skywalker.Ddd.Domain.Repositories.BasicRepository<TEntity>.CancellationTokenProvider.set -> void
+Skywalker.Ddd.Domain.Repositories.BasicRepository<TEntity>.DataFilter.get -> Skywalker.Ddd.Data.Filtering.IDataFilter?
+Skywalker.Ddd.Domain.Repositories.BasicRepository<TEntity>.DataFilter.set -> void
+Skywalker.Ddd.Domain.Repositories.BasicRepository<TEntity>.ElementType.get -> System.Type!
+Skywalker.Ddd.Domain.Repositories.BasicRepository<TEntity>.Expression.get -> System.Linq.Expressions.Expression!
+Skywalker.Ddd.Domain.Repositories.BasicRepository<TEntity>.GetAsync(System.Linq.Expressions.Expression<System.Func<TEntity!, bool>!>! predicate, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) -> System.Threading.Tasks.Task<TEntity!>!
+Skywalker.Ddd.Domain.Repositories.BasicRepository<TEntity>.GetEnumerator() -> System.Collections.Generic.IEnumerator<TEntity!>!
+Skywalker.Ddd.Domain.Repositories.BasicRepository<TEntity>.Provider.get -> System.Linq.IQueryProvider!
+Skywalker.Ddd.Domain.Repositories.BasicRepository<TEntity>.ServiceProvider.get -> System.IServiceProvider?
+Skywalker.Ddd.Domain.Repositories.BasicRepository<TEntity>.ServiceProvider.set -> void
+Skywalker.Ddd.Domain.Repositories.IBasicRepository<TEntity, TKey>
+Skywalker.Ddd.Domain.Repositories.IBasicRepository<TEntity, TKey>.DeleteAsync(TKey id, bool autoSave = false, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) -> System.Threading.Tasks.Task!
+Skywalker.Ddd.Domain.Repositories.IBasicRepository<TEntity>
+Skywalker.Ddd.Domain.Repositories.IBasicRepository<TEntity>.DeleteAsync(System.Linq.Expressions.Expression<System.Func<TEntity!, bool>!>! filter, bool autoSave = false, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) -> System.Threading.Tasks.Task!
+Skywalker.Ddd.Domain.Repositories.IBasicRepository<TEntity>.DeleteAsync(TEntity! entity, bool autoSave = false, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) -> System.Threading.Tasks.Task!
+Skywalker.Ddd.Domain.Repositories.IBasicRepository<TEntity>.InsertAsync(System.Collections.Generic.IEnumerable<TEntity!>! entities, bool autoSave = false, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) -> System.Threading.Tasks.Task<int>!
+Skywalker.Ddd.Domain.Repositories.IBasicRepository<TEntity>.InsertAsync(TEntity! entity, bool autoSave = false, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) -> System.Threading.Tasks.Task<TEntity!>!
+Skywalker.Ddd.Domain.Repositories.IBasicRepository<TEntity>.UpdateAsync(TEntity! entity, bool autoSave = false, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) -> System.Threading.Tasks.Task<TEntity!>!
+Skywalker.Ddd.Domain.Repositories.IReadOnlyRepository<TEntity, TKey>
+Skywalker.Ddd.Domain.Repositories.IReadOnlyRepository<TEntity, TKey>.FindAsync(TKey id, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) -> System.Threading.Tasks.Task<TEntity?>!
+Skywalker.Ddd.Domain.Repositories.IReadOnlyRepository<TEntity, TKey>.GetAsync(TKey id, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) -> System.Threading.Tasks.Task<TEntity!>!
+Skywalker.Ddd.Domain.Repositories.IReadOnlyRepository<TEntity>
+Skywalker.Ddd.Domain.Repositories.IReadOnlyRepository<TEntity>.FindAsync(Skywalker.Extensions.Specifications.ISpecification<TEntity!>! specification, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) -> System.Threading.Tasks.Task<TEntity?>!
+Skywalker.Ddd.Domain.Repositories.IReadOnlyRepository<TEntity>.FindAsync(System.Linq.Expressions.Expression<System.Func<TEntity!, bool>!>! filter, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) -> System.Threading.Tasks.Task<TEntity?>!
+Skywalker.Ddd.Domain.Repositories.IReadOnlyRepository<TEntity>.GetAsync(Skywalker.Extensions.Specifications.ISpecification<TEntity!>! specification, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) -> System.Threading.Tasks.Task<TEntity!>!
+Skywalker.Ddd.Domain.Repositories.IReadOnlyRepository<TEntity>.GetAsync(System.Linq.Expressions.Expression<System.Func<TEntity!, bool>!>! filter, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) -> System.Threading.Tasks.Task<TEntity!>!
+Skywalker.Ddd.Domain.Repositories.IReadOnlyRepository<TEntity>.GetListAsync(Skywalker.Extensions.Specifications.ISpecification<TEntity!>! specification, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) -> System.Threading.Tasks.Task<System.Collections.Generic.List<TEntity!>!>!
+Skywalker.Ddd.Domain.Repositories.IReadOnlyRepository<TEntity>.GetListAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) -> System.Threading.Tasks.Task<System.Collections.Generic.List<TEntity!>!>!
+Skywalker.Ddd.Domain.Repositories.IReadOnlyRepository<TEntity>.GetPagedListAsync(int skip, int limit, string? sorting, string? filter, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) -> System.Threading.Tasks.Task<Skywalker.Extensions.Collections.Generic.PagedList<TEntity!>!>!
+Skywalker.Ddd.Domain.Repositories.IReadOnlyRepository<TEntity>.GetPagedListAsync(int skip, int limit, string? sorting, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) -> System.Threading.Tasks.Task<Skywalker.Extensions.Collections.Generic.PagedList<TEntity!>!>!
+Skywalker.Ddd.Domain.Repositories.IReadOnlyRepository<TEntity>.GetPagedListAsync(int skip, int limit, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) -> System.Threading.Tasks.Task<Skywalker.Extensions.Collections.Generic.PagedList<TEntity!>!>!
+Skywalker.Ddd.Domain.Repositories.IReadOnlyRepository<TEntity>.GetPagedListAsync(Skywalker.Extensions.Specifications.ISpecification<TEntity!>! specification, int skip, int limit, string? sorting = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) -> System.Threading.Tasks.Task<Skywalker.Extensions.Collections.Generic.PagedList<TEntity!>!>!
+Skywalker.Ddd.Domain.Repositories.IReadOnlyRepository<TEntity>.GetPagedListAsync(System.Linq.Expressions.Expression<System.Func<TEntity!, bool>!>! expression, int skip, int limit, string? sorting, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) -> System.Threading.Tasks.Task<Skywalker.Extensions.Collections.Generic.PagedList<TEntity!>!>!
+Skywalker.Ddd.Domain.Repositories.IReadOnlyRepository<TEntity>.GetPagedListAsync(System.Linq.Expressions.Expression<System.Func<TEntity!, bool>!>! expression, int skip, int limit, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) -> System.Threading.Tasks.Task<Skywalker.Extensions.Collections.Generic.PagedList<TEntity!>!>!
+Skywalker.Ddd.Domain.Repositories.IRepository
+Skywalker.Ddd.Domain.Repositories.IRepository.CountAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) -> System.Threading.Tasks.Task<int>!
+Skywalker.Ddd.Domain.Repositories.IRepository.LongCountAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) -> System.Threading.Tasks.Task<long>!
+Skywalker.Ddd.Domain.Repositories.IRepository<TEntity, TKey>
+Skywalker.Ddd.Domain.Repositories.IRepository<TEntity, TKey>.AnyAsync(TKey id, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) -> System.Threading.Tasks.Task<bool>!
+Skywalker.Ddd.Domain.Repositories.IRepository<TEntity>
+Skywalker.Ddd.Domain.Repositories.IRepository<TEntity>.AnyAsync(Skywalker.Extensions.Specifications.ISpecification<TEntity!>! specification, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) -> System.Threading.Tasks.Task<bool>!
+Skywalker.Ddd.Domain.Repositories.IRepository<TEntity>.AnyAsync(System.Linq.Expressions.Expression<System.Func<TEntity!, bool>!>! filter, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) -> System.Threading.Tasks.Task<bool>!
+Skywalker.Ddd.Domain.Repositories.IRepository<TEntity>.CountAsync(Skywalker.Extensions.Specifications.ISpecification<TEntity!>! specification, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) -> System.Threading.Tasks.Task<int>!
+Skywalker.Ddd.Domain.Repositories.IRepository<TEntity>.CountAsync(System.Linq.Expressions.Expression<System.Func<TEntity!, bool>!>! filter, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) -> System.Threading.Tasks.Task<int>!
+Skywalker.Ddd.Domain.Repositories.IRepository<TEntity>.LongCountAsync(Skywalker.Extensions.Specifications.ISpecification<TEntity!>! specification, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) -> System.Threading.Tasks.Task<long>!
+Skywalker.Ddd.Domain.Repositories.IRepository<TEntity>.LongCountAsync(System.Linq.Expressions.Expression<System.Func<TEntity!, bool>!>! filter, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) -> System.Threading.Tasks.Task<long>!
+Skywalker.Ddd.Domain.Repositories.ISupportsExplicitLoading<TEntity, TKey>
+Skywalker.Ddd.Domain.Repositories.ISupportsExplicitLoading<TEntity, TKey>.EnsureCollectionLoadedAsync<TProperty>(TEntity! entity, System.Linq.Expressions.Expression<System.Func<TEntity!, System.Collections.Generic.IEnumerable<TProperty!>!>!>! propertyExpression, System.Threading.CancellationToken cancellationToken) -> System.Threading.Tasks.Task!
+Skywalker.Ddd.Domain.Repositories.ISupportsExplicitLoading<TEntity, TKey>.EnsurePropertyLoadedAsync<TProperty>(TEntity! entity, System.Linq.Expressions.Expression<System.Func<TEntity!, TProperty?>!>! propertyExpression, System.Threading.CancellationToken cancellationToken) -> System.Threading.Tasks.Task!
+Skywalker.Ddd.Domain.Repositories.RepositoryExtensions
+Skywalker.Ddd.Domain.Services.DomainService<TEntity, TKey>
+Skywalker.Ddd.Domain.Services.DomainService<TEntity, TKey>.DomainService(Skywalker.Ddd.Domain.Repositories.IRepository<TEntity!, TKey>! repository, System.Linq.IAsyncQueryableExecuter! asyncExecuter) -> void
+Skywalker.Ddd.Domain.Services.DomainService<TEntity>
+Skywalker.Ddd.Domain.Services.DomainService<TEntity>.DomainService(Skywalker.Ddd.Domain.Repositories.IRepository<TEntity!>! repository, System.Linq.IAsyncQueryableExecuter! asyncExecuter) -> void
+Skywalker.Ddd.Domain.Services.IDomainService
+Skywalker.Ddd.Domain.Services.IDomainService<TEntity, TKey>
+Skywalker.Ddd.Domain.Services.IDomainService<TEntity, TKey>.AnyAsync(TKey id, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) -> System.Threading.Tasks.Task<bool>!
+Skywalker.Ddd.Domain.Services.IDomainService<TEntity, TKey>.FindAsync(TKey id, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) -> System.Threading.Tasks.Task<TEntity?>!
+Skywalker.Ddd.Domain.Services.IDomainService<TEntity, TKey>.GetAsync(TKey id, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) -> System.Threading.Tasks.Task<TEntity!>!
+Skywalker.Ddd.Domain.Services.IDomainService<TEntity>
+Skywalker.Ddd.Domain.Services.IDomainService<TEntity>.AnyAsync(System.Linq.Expressions.Expression<System.Func<TEntity!, bool>!>! filter, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) -> System.Threading.Tasks.Task<bool>!
+Skywalker.Ddd.Domain.Services.IDomainService<TEntity>.CountAsync(System.Linq.Expressions.Expression<System.Func<TEntity!, bool>!>! filter, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) -> System.Threading.Tasks.Task<int>!
+Skywalker.Ddd.Domain.Services.IDomainService<TEntity>.CountAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) -> System.Threading.Tasks.Task<int>!
+Skywalker.Ddd.Domain.Services.IDomainService<TEntity>.DeleteAsync(TEntity! entity, bool autoSave = false, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) -> System.Threading.Tasks.Task!
+Skywalker.Ddd.Domain.Services.IDomainService<TEntity>.FindAsync(Skywalker.Extensions.Specifications.Specification<TEntity!>! specification, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) -> System.Threading.Tasks.Task<TEntity?>!
+Skywalker.Ddd.Domain.Services.IDomainService<TEntity>.FindAsync(System.Linq.Expressions.Expression<System.Func<TEntity!, bool>!>! expression, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) -> System.Threading.Tasks.Task<TEntity?>!
+Skywalker.Ddd.Domain.Services.IDomainService<TEntity>.GetAsync(Skywalker.Extensions.Specifications.Specification<TEntity!>! specification, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) -> System.Threading.Tasks.Task<TEntity!>!
+Skywalker.Ddd.Domain.Services.IDomainService<TEntity>.GetAsync(System.Linq.Expressions.Expression<System.Func<TEntity!, bool>!>! expression, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) -> System.Threading.Tasks.Task<TEntity!>!
+Skywalker.Ddd.Domain.Services.IDomainService<TEntity>.GetListAsync(System.Linq.Expressions.Expression<System.Func<TEntity!, bool>!>! expression, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) -> System.Threading.Tasks.Task<System.Collections.Generic.List<TEntity!>!>!
+Skywalker.Ddd.Domain.Services.IDomainService<TEntity>.GetListAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) -> System.Threading.Tasks.Task<System.Collections.Generic.List<TEntity!>!>!
+Skywalker.Ddd.Domain.Services.IDomainService<TEntity>.GetPagedListAsync(int skip, int limit, string? sorting, string? filter, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) -> System.Threading.Tasks.Task<Skywalker.Extensions.Collections.Generic.PagedList<TEntity!>!>!
+Skywalker.Ddd.Domain.Services.IDomainService<TEntity>.GetPagedListAsync(int skip, int limit, string? sorting, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) -> System.Threading.Tasks.Task<Skywalker.Extensions.Collections.Generic.PagedList<TEntity!>!>!
+Skywalker.Ddd.Domain.Services.IDomainService<TEntity>.GetPagedListAsync(int skip, int limit, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) -> System.Threading.Tasks.Task<Skywalker.Extensions.Collections.Generic.PagedList<TEntity!>!>!
+Skywalker.Ddd.Domain.Services.IDomainService<TEntity>.GetPagedListAsync(System.Linq.Expressions.Expression<System.Func<TEntity!, bool>!>! filter, int skip, int limit, string? sorting, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) -> System.Threading.Tasks.Task<Skywalker.Extensions.Collections.Generic.PagedList<TEntity!>!>!
+Skywalker.Ddd.Domain.Services.IDomainService<TEntity>.GetPagedListAsync(System.Linq.Expressions.Expression<System.Func<TEntity!, bool>!>! filter, int skip, int limit, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) -> System.Threading.Tasks.Task<Skywalker.Extensions.Collections.Generic.PagedList<TEntity!>!>!
+Skywalker.Ddd.Domain.Services.IDomainService<TEntity>.InsertAsync(TEntity! entity, bool autoSave = false, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) -> System.Threading.Tasks.Task<TEntity!>!
+Skywalker.Ddd.Domain.Services.IDomainService<TEntity>.LongCountAsync(System.Linq.Expressions.Expression<System.Func<TEntity!, bool>!>! expression, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) -> System.Threading.Tasks.Task<long>!
+Skywalker.Ddd.Domain.Services.IDomainService<TEntity>.LongCountAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) -> System.Threading.Tasks.Task<long>!
+Skywalker.Ddd.Domain.Services.IDomainService<TEntity>.UpdateAsync(TEntity! entity, bool autoSave = false, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) -> System.Threading.Tasks.Task<TEntity!>!
+Skywalker.Ddd.Domain.Values.ValueObject
+Skywalker.Ddd.Domain.Values.ValueObject.ValueEquals(object? object) -> bool
+Skywalker.Ddd.Domain.Values.ValueObject.ValueObject() -> void
+Skywalker.Extensions.Threading.AmbientDataContextAmbientScopeProvider<T>
+Skywalker.Extensions.Threading.AmbientDataContextAmbientScopeProvider<T>.AmbientDataContextAmbientScopeProvider(Skywalker.Extensions.Threading.IAmbientDataContext! dataContext, Microsoft.Extensions.Logging.ILogger<Skywalker.Extensions.Threading.AmbientDataContextAmbientScopeProvider<T>!>! logger) -> void
+Skywalker.Extensions.Threading.AmbientDataContextAmbientScopeProvider<T>.BeginScope(string! contextKey, T value) -> System.IDisposable!
+Skywalker.Extensions.Threading.AmbientDataContextAmbientScopeProvider<T>.GetValue(string! contextKey) -> T?
+Skywalker.Extensions.Threading.AsyncLocalAmbientDataContext
+Skywalker.Extensions.Threading.AsyncLocalAmbientDataContext.AsyncLocalAmbientDataContext() -> void
+Skywalker.Extensions.Threading.AsyncLocalAmbientDataContext.GetData(string! key) -> object?
+Skywalker.Extensions.Threading.AsyncLocalAmbientDataContext.SetData(string! key, object? value) -> void
+Skywalker.Extensions.Threading.CancellationTokenProviderExtensions
+Skywalker.Extensions.Threading.IAmbientDataContext
+Skywalker.Extensions.Threading.IAmbientDataContext.GetData(string! key) -> object?
+Skywalker.Extensions.Threading.IAmbientDataContext.SetData(string! key, object? value) -> void
+Skywalker.Extensions.Threading.IAmbientScopeProvider<T>
+Skywalker.Extensions.Threading.IAmbientScopeProvider<T>.BeginScope(string! contextKey, T value) -> System.IDisposable!
+Skywalker.Extensions.Threading.IAmbientScopeProvider<T>.GetValue(string! contextKey) -> T?
+Skywalker.Extensions.Threading.ICancellationTokenProvider
+Skywalker.Extensions.Threading.ICancellationTokenProvider.Token.get -> System.Threading.CancellationToken
+Skywalker.Extensions.Threading.NullCancellationTokenProvider
+Skywalker.Extensions.Threading.NullCancellationTokenProvider.Token.get -> System.Threading.CancellationToken
+static Microsoft.Extensions.DependencyInjection.ThreadingServiceCollectionExtensions.AddThreading(this Microsoft.Extensions.DependencyInjection.IServiceCollection! services) -> Microsoft.Extensions.DependencyInjection.IServiceCollection!
+static Skywalker.Ddd.Data.ConnectionStringNameAttribute.GetConnectionStringName(System.Type! type) -> string!
+static Skywalker.Ddd.Data.ConnectionStringNameAttribute.GetConnectionStringName<T>() -> string!
+static Skywalker.Ddd.Data.ConnectionStringResolverExtensions.Resolve<T>(this Skywalker.Ddd.Data.IConnectionStringResolver! resolver) -> string!
+static Skywalker.Ddd.Data.Seeding.DataSeederExtensions.SeedAsync(this Skywalker.Ddd.Data.Seeding.IDataSeeder! seeder) -> System.Threading.Tasks.Task!
+static Skywalker.Ddd.Data.SkywalkerCommonDbProperties.DbSchema.get -> string?
+static Skywalker.Ddd.Data.SkywalkerCommonDbProperties.DbSchema.set -> void
+static Skywalker.Ddd.Data.SkywalkerCommonDbProperties.DbTablePrefix.get -> string!
+static Skywalker.Ddd.Data.SkywalkerCommonDbProperties.DbTablePrefix.set -> void
+static Skywalker.Ddd.Domain.Entities.EntityHelper.CheckEntity(System.Type! type) -> void
+static Skywalker.Ddd.Domain.Entities.EntityHelper.CreateEqualityExpressionForId<TEntity, TKey>(TKey id) -> System.Linq.Expressions.Expression<System.Func<TEntity, bool>!>!
+static Skywalker.Ddd.Domain.Entities.EntityHelper.EntityEquals(Skywalker.Ddd.Domain.Entities.IEntity? entity1, Skywalker.Ddd.Domain.Entities.IEntity? entity2) -> bool
+static Skywalker.Ddd.Domain.Entities.EntityHelper.FindPrimaryKeyType(System.Type! entityType) -> System.Type?
+static Skywalker.Ddd.Domain.Entities.EntityHelper.FindPrimaryKeyType<TEntity>() -> System.Type?
+static Skywalker.Ddd.Domain.Entities.EntityHelper.HasDefaultId<TKey>(Skywalker.Ddd.Domain.Entities.IEntity<TKey>! entity) -> bool
+static Skywalker.Ddd.Domain.Entities.EntityHelper.HasDefaultKeys(Skywalker.Ddd.Domain.Entities.IEntity! entity) -> bool
+static Skywalker.Ddd.Domain.Entities.EntityHelper.IsEntity(System.Type! type) -> bool
+static Skywalker.Ddd.Domain.Entities.EntityHelper.IsEntityWithId(System.Type! type) -> bool
+static Skywalker.Ddd.Domain.Entities.EntityHelper.IsValueObject(object? obj) -> bool
+static Skywalker.Ddd.Domain.Entities.EntityHelper.IsValueObject(System.Type! type) -> bool
+static Skywalker.Ddd.Domain.Entities.EntityHelper.IsValueObjectPredicate -> System.Func<System.Type!, bool>!
+static Skywalker.Ddd.Domain.Entities.EntityHelper.TrySetId<TKey>(Skywalker.Ddd.Domain.Entities.IEntity<TKey>! entity, System.Func<TKey>! idFactory, bool checkForDisableIdGenerationAttribute = false) -> void
+static Skywalker.Ddd.Domain.Events.Distributed.AutoEntityDistributedEventSelectorListExtensions.Add(this Skywalker.Ddd.Domain.Events.Distributed.IAutoEntityDistributedEventSelectorList! selectors, string! selectorName, System.Func<System.Type!, bool>! predicate) -> void
+static Skywalker.Ddd.Domain.Events.Distributed.AutoEntityDistributedEventSelectorListExtensions.Add(this Skywalker.Ddd.Domain.Events.Distributed.IAutoEntityDistributedEventSelectorList! selectors, System.Func<System.Type!, bool>! predicate) -> void
+static Skywalker.Ddd.Domain.Events.Distributed.AutoEntityDistributedEventSelectorListExtensions.Add<TEntity>(this Skywalker.Ddd.Domain.Events.Distributed.IAutoEntityDistributedEventSelectorList! selectors) -> void
+static Skywalker.Ddd.Domain.Events.Distributed.AutoEntityDistributedEventSelectorListExtensions.AddAll(this Skywalker.Ddd.Domain.Events.Distributed.IAutoEntityDistributedEventSelectorList! selectors) -> void
+static Skywalker.Ddd.Domain.Events.Distributed.AutoEntityDistributedEventSelectorListExtensions.AddNamespace(this Skywalker.Ddd.Domain.Events.Distributed.IAutoEntityDistributedEventSelectorList! selectors, string! namespaceName) -> void
+static Skywalker.Ddd.Domain.Events.Distributed.AutoEntityDistributedEventSelectorListExtensions.IsMatch(this Skywalker.Ddd.Domain.Events.Distributed.IAutoEntityDistributedEventSelectorList! selectors, System.Type! entityType) -> bool
+static Skywalker.Ddd.Domain.Events.Distributed.AutoEntityDistributedEventSelectorListExtensions.RemoveByName(this Skywalker.Ddd.Domain.Events.Distributed.IAutoEntityDistributedEventSelectorList! selectors, string! name) -> bool
+static Skywalker.Ddd.Domain.Events.NullEntityChangeEventHelper.Instance.get -> Skywalker.Ddd.Domain.Events.NullEntityChangeEventHelper!
+static Skywalker.Ddd.Domain.Repositories.RepositoryExtensions.DeleteManyAsync<TEntity, TKey>(this Skywalker.Ddd.Domain.Repositories.IBasicRepository<TEntity!, TKey>! repository, System.Collections.Generic.IEnumerable<TKey>! ids, bool autoSave = false, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) -> System.Threading.Tasks.Task<int>!
+static Skywalker.Ddd.Domain.Repositories.RepositoryExtensions.DeleteManyAsync<TEntity>(this Skywalker.Ddd.Domain.Repositories.IBasicRepository<TEntity!>! repository, System.Collections.Generic.IEnumerable<TEntity!>! entities, bool autoSave = false, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) -> System.Threading.Tasks.Task<int>!
+static Skywalker.Ddd.Domain.Repositories.RepositoryExtensions.EnsureCollectionLoadedAsync<TEntity, TKey, TProperty>(this Skywalker.Ddd.Domain.Repositories.IRepository<TEntity!, TKey>! repository, TEntity! entity, System.Linq.Expressions.Expression<System.Func<TEntity!, System.Collections.Generic.IEnumerable<TProperty!>!>!>! propertyExpression, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) -> System.Threading.Tasks.Task!
+static Skywalker.Ddd.Domain.Repositories.RepositoryExtensions.EnsurePropertyLoadedAsync<TEntity, TKey, TProperty>(this Skywalker.Ddd.Domain.Repositories.IRepository<TEntity!, TKey>! repository, TEntity! entity, System.Linq.Expressions.Expression<System.Func<TEntity!, TProperty?>!>! propertyExpression, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) -> System.Threading.Tasks.Task!
+static Skywalker.Ddd.Domain.Repositories.RepositoryExtensions.FirstOrDefaultAsync<TEntity>(this Skywalker.Ddd.Domain.Repositories.IReadOnlyRepository<TEntity!>! repository, System.Linq.Expressions.Expression<System.Func<TEntity!, bool>!>! filter, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) -> System.Threading.Tasks.Task<TEntity?>!
+static Skywalker.Ddd.Domain.Repositories.RepositoryExtensions.HardDeleteAsync<TEntity>(this Skywalker.Ddd.Domain.Repositories.IRepository<TEntity!>! repository, TEntity! entity, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) -> System.Threading.Tasks.Task!
+static Skywalker.Ddd.Domain.Repositories.RepositoryExtensions.InsertManyAsync<TEntity>(this Skywalker.Ddd.Domain.Repositories.IBasicRepository<TEntity!>! repository, System.Collections.Generic.IEnumerable<TEntity!>! entities, bool autoSave = false, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) -> System.Threading.Tasks.Task<int>!
+static Skywalker.Ddd.Domain.Repositories.RepositoryExtensions.UpdateManyAsync<TEntity>(this Skywalker.Ddd.Domain.Repositories.IBasicRepository<TEntity!>! repository, System.Collections.Generic.IEnumerable<TEntity!>! entities, bool autoSave = false, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) -> System.Threading.Tasks.Task<int>!
+static Skywalker.Extensions.Threading.CancellationTokenProviderExtensions.FallbackToProvider(this Skywalker.Extensions.Threading.ICancellationTokenProvider! provider, System.Threading.CancellationToken prefferedValue = default(System.Threading.CancellationToken)) -> System.Threading.CancellationToken
+static Skywalker.Extensions.Threading.NullCancellationTokenProvider.Instance.get -> Skywalker.Extensions.Threading.NullCancellationTokenProvider!
+System.Linq.AsyncQueryableExecuter
+System.Linq.AsyncQueryableExecuter.AllAsync<T>(System.Linq.IQueryable<T>! queryable, System.Linq.Expressions.Expression<System.Func<T, bool>!>! predicate, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) -> System.Threading.Tasks.Task<bool>!
+System.Linq.AsyncQueryableExecuter.AnyAsync<T>(System.Linq.IQueryable<T>! queryable, System.Linq.Expressions.Expression<System.Func<T, bool>!>! predicate, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) -> System.Threading.Tasks.Task<bool>!
+System.Linq.AsyncQueryableExecuter.AsyncQueryableExecuter(System.Collections.Generic.IEnumerable<System.Linq.IAsyncQueryableProvider!>! providers) -> void
+System.Linq.AsyncQueryableExecuter.AverageAsync(System.Linq.IQueryable<decimal?>! queryable, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) -> System.Threading.Tasks.Task<decimal?>!
+System.Linq.AsyncQueryableExecuter.AverageAsync(System.Linq.IQueryable<decimal>! queryable, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) -> System.Threading.Tasks.Task<decimal>!
+System.Linq.AsyncQueryableExecuter.AverageAsync(System.Linq.IQueryable<double?>! queryable, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) -> System.Threading.Tasks.Task<double?>!
+System.Linq.AsyncQueryableExecuter.AverageAsync(System.Linq.IQueryable<double>! queryable, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) -> System.Threading.Tasks.Task<double>!
+System.Linq.AsyncQueryableExecuter.AverageAsync(System.Linq.IQueryable<float?>! queryable, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) -> System.Threading.Tasks.Task<float?>!
+System.Linq.AsyncQueryableExecuter.AverageAsync(System.Linq.IQueryable<float>! queryable, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) -> System.Threading.Tasks.Task<float>!
+System.Linq.AsyncQueryableExecuter.AverageAsync(System.Linq.IQueryable<int?>! queryable, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) -> System.Threading.Tasks.Task<double?>!
+System.Linq.AsyncQueryableExecuter.AverageAsync(System.Linq.IQueryable<int>! queryable, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) -> System.Threading.Tasks.Task<double>!
+System.Linq.AsyncQueryableExecuter.AverageAsync(System.Linq.IQueryable<long?>! queryable, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) -> System.Threading.Tasks.Task<double?>!
+System.Linq.AsyncQueryableExecuter.AverageAsync(System.Linq.IQueryable<long>! queryable, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) -> System.Threading.Tasks.Task<double>!
+System.Linq.AsyncQueryableExecuter.AverageAsync<T>(System.Linq.IQueryable<T>! queryable, System.Linq.Expressions.Expression<System.Func<T, decimal?>!>! selector, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) -> System.Threading.Tasks.Task<decimal?>!
+System.Linq.AsyncQueryableExecuter.AverageAsync<T>(System.Linq.IQueryable<T>! queryable, System.Linq.Expressions.Expression<System.Func<T, decimal>!>! selector, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) -> System.Threading.Tasks.Task<decimal>!
+System.Linq.AsyncQueryableExecuter.AverageAsync<T>(System.Linq.IQueryable<T>! queryable, System.Linq.Expressions.Expression<System.Func<T, double?>!>! selector, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) -> System.Threading.Tasks.Task<double?>!
+System.Linq.AsyncQueryableExecuter.AverageAsync<T>(System.Linq.IQueryable<T>! queryable, System.Linq.Expressions.Expression<System.Func<T, double>!>! selector, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) -> System.Threading.Tasks.Task<double>!
+System.Linq.AsyncQueryableExecuter.AverageAsync<T>(System.Linq.IQueryable<T>! queryable, System.Linq.Expressions.Expression<System.Func<T, float?>!>! selector, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) -> System.Threading.Tasks.Task<float?>!
+System.Linq.AsyncQueryableExecuter.AverageAsync<T>(System.Linq.IQueryable<T>! queryable, System.Linq.Expressions.Expression<System.Func<T, float>!>! selector, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) -> System.Threading.Tasks.Task<float>!
+System.Linq.AsyncQueryableExecuter.AverageAsync<T>(System.Linq.IQueryable<T>! queryable, System.Linq.Expressions.Expression<System.Func<T, int?>!>! selector, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) -> System.Threading.Tasks.Task<double?>!
+System.Linq.AsyncQueryableExecuter.AverageAsync<T>(System.Linq.IQueryable<T>! queryable, System.Linq.Expressions.Expression<System.Func<T, int>!>! selector, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) -> System.Threading.Tasks.Task<double>!
+System.Linq.AsyncQueryableExecuter.AverageAsync<T>(System.Linq.IQueryable<T>! queryable, System.Linq.Expressions.Expression<System.Func<T, long?>!>! selector, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) -> System.Threading.Tasks.Task<double?>!
+System.Linq.AsyncQueryableExecuter.AverageAsync<T>(System.Linq.IQueryable<T>! queryable, System.Linq.Expressions.Expression<System.Func<T, long>!>! selector, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) -> System.Threading.Tasks.Task<double>!
+System.Linq.AsyncQueryableExecuter.ContainsAsync<T>(System.Linq.IQueryable<T>! queryable, T item, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) -> System.Threading.Tasks.Task<bool>!
+System.Linq.AsyncQueryableExecuter.CountAsync<T>(System.Linq.IQueryable<T>! queryable, System.Linq.Expressions.Expression<System.Func<T, bool>!>! predicate, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) -> System.Threading.Tasks.Task<int>!
+System.Linq.AsyncQueryableExecuter.CountAsync<T>(System.Linq.IQueryable<T>! queryable, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) -> System.Threading.Tasks.Task<int>!
+System.Linq.AsyncQueryableExecuter.FirstAsync<T>(System.Linq.IQueryable<T>! queryable, System.Linq.Expressions.Expression<System.Func<T, bool>!>! predicate, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) -> System.Threading.Tasks.Task<T>!
+System.Linq.AsyncQueryableExecuter.FirstAsync<T>(System.Linq.IQueryable<T>! queryable, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) -> System.Threading.Tasks.Task<T>!
+System.Linq.AsyncQueryableExecuter.FirstOrDefaultAsync<T>(System.Linq.IQueryable<T>! queryable, System.Linq.Expressions.Expression<System.Func<T, bool>!>! predicate, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) -> System.Threading.Tasks.Task<T?>!
+System.Linq.AsyncQueryableExecuter.FirstOrDefaultAsync<T>(System.Linq.IQueryable<T>! queryable, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) -> System.Threading.Tasks.Task<T?>!
+System.Linq.AsyncQueryableExecuter.LastAsync<T>(System.Linq.IQueryable<T>! queryable, System.Linq.Expressions.Expression<System.Func<T, bool>!>! predicate, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) -> System.Threading.Tasks.Task<T>!
+System.Linq.AsyncQueryableExecuter.LastAsync<T>(System.Linq.IQueryable<T>! queryable, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) -> System.Threading.Tasks.Task<T>!
+System.Linq.AsyncQueryableExecuter.LastOrDefaultAsync<T>(System.Linq.IQueryable<T>! queryable, System.Linq.Expressions.Expression<System.Func<T, bool>!>! predicate, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) -> System.Threading.Tasks.Task<T?>!
+System.Linq.AsyncQueryableExecuter.LastOrDefaultAsync<T>(System.Linq.IQueryable<T>! queryable, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) -> System.Threading.Tasks.Task<T?>!
+System.Linq.AsyncQueryableExecuter.LongCountAsync<T>(System.Linq.IQueryable<T>! queryable, System.Linq.Expressions.Expression<System.Func<T, bool>!>! predicate, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) -> System.Threading.Tasks.Task<long>!
+System.Linq.AsyncQueryableExecuter.LongCountAsync<T>(System.Linq.IQueryable<T>! queryable, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) -> System.Threading.Tasks.Task<long>!
+System.Linq.AsyncQueryableExecuter.MaxAsync<T, TResult>(System.Linq.IQueryable<T>! queryable, System.Linq.Expressions.Expression<System.Func<T, TResult>!>! selector, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) -> System.Threading.Tasks.Task<TResult?>!
+System.Linq.AsyncQueryableExecuter.MaxAsync<T>(System.Linq.IQueryable<T>! queryable, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) -> System.Threading.Tasks.Task<T?>!
+System.Linq.AsyncQueryableExecuter.MinAsync<T, TResult>(System.Linq.IQueryable<T>! queryable, System.Linq.Expressions.Expression<System.Func<T, TResult?>!>! selector, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) -> System.Threading.Tasks.Task<TResult?>!
+System.Linq.AsyncQueryableExecuter.MinAsync<T>(System.Linq.IQueryable<T>! queryable, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) -> System.Threading.Tasks.Task<T?>!
+System.Linq.AsyncQueryableExecuter.Providers.get -> System.Collections.Generic.IEnumerable<System.Linq.IAsyncQueryableProvider!>!
+System.Linq.AsyncQueryableExecuter.SingleAsync<T>(System.Linq.IQueryable<T>! queryable, System.Linq.Expressions.Expression<System.Func<T, bool>!>! predicate, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) -> System.Threading.Tasks.Task<T>!
+System.Linq.AsyncQueryableExecuter.SingleAsync<T>(System.Linq.IQueryable<T>! queryable, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) -> System.Threading.Tasks.Task<T>!
+System.Linq.AsyncQueryableExecuter.SingleOrDefaultAsync<T>(System.Linq.IQueryable<T>! queryable, System.Linq.Expressions.Expression<System.Func<T, bool>!>! predicate, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) -> System.Threading.Tasks.Task<T?>!
+System.Linq.AsyncQueryableExecuter.SingleOrDefaultAsync<T>(System.Linq.IQueryable<T>! queryable, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) -> System.Threading.Tasks.Task<T?>!
+System.Linq.AsyncQueryableExecuter.SumAsync(System.Linq.IQueryable<decimal?>! queryable, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) -> System.Threading.Tasks.Task<decimal?>!
+System.Linq.AsyncQueryableExecuter.SumAsync(System.Linq.IQueryable<decimal>! queryable, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) -> System.Threading.Tasks.Task<decimal>!
+System.Linq.AsyncQueryableExecuter.SumAsync(System.Linq.IQueryable<double?>! queryable, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) -> System.Threading.Tasks.Task<double?>!
+System.Linq.AsyncQueryableExecuter.SumAsync(System.Linq.IQueryable<double>! queryable, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) -> System.Threading.Tasks.Task<double>!
+System.Linq.AsyncQueryableExecuter.SumAsync(System.Linq.IQueryable<float?>! queryable, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) -> System.Threading.Tasks.Task<float?>!
+System.Linq.AsyncQueryableExecuter.SumAsync(System.Linq.IQueryable<float>! queryable, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) -> System.Threading.Tasks.Task<float>!
+System.Linq.AsyncQueryableExecuter.SumAsync(System.Linq.IQueryable<int?>! queryable, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) -> System.Threading.Tasks.Task<int?>!
+System.Linq.AsyncQueryableExecuter.SumAsync(System.Linq.IQueryable<int>! queryable, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) -> System.Threading.Tasks.Task<int>!
+System.Linq.AsyncQueryableExecuter.SumAsync(System.Linq.IQueryable<long?>! queryable, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) -> System.Threading.Tasks.Task<long?>!
+System.Linq.AsyncQueryableExecuter.SumAsync(System.Linq.IQueryable<long>! queryable, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) -> System.Threading.Tasks.Task<long>!
+System.Linq.AsyncQueryableExecuter.SumAsync<T>(System.Linq.IQueryable<T>! queryable, System.Linq.Expressions.Expression<System.Func<T, decimal?>!>! selector, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) -> System.Threading.Tasks.Task<decimal?>!
+System.Linq.AsyncQueryableExecuter.SumAsync<T>(System.Linq.IQueryable<T>! queryable, System.Linq.Expressions.Expression<System.Func<T, decimal>!>! selector, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) -> System.Threading.Tasks.Task<decimal>!
+System.Linq.AsyncQueryableExecuter.SumAsync<T>(System.Linq.IQueryable<T>! queryable, System.Linq.Expressions.Expression<System.Func<T, double?>!>! selector, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) -> System.Threading.Tasks.Task<double?>!
+System.Linq.AsyncQueryableExecuter.SumAsync<T>(System.Linq.IQueryable<T>! queryable, System.Linq.Expressions.Expression<System.Func<T, double>!>! selector, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) -> System.Threading.Tasks.Task<double>!
+System.Linq.AsyncQueryableExecuter.SumAsync<T>(System.Linq.IQueryable<T>! queryable, System.Linq.Expressions.Expression<System.Func<T, float?>!>! selector, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) -> System.Threading.Tasks.Task<float?>!
+System.Linq.AsyncQueryableExecuter.SumAsync<T>(System.Linq.IQueryable<T>! queryable, System.Linq.Expressions.Expression<System.Func<T, float>!>! selector, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) -> System.Threading.Tasks.Task<float>!
+System.Linq.AsyncQueryableExecuter.SumAsync<T>(System.Linq.IQueryable<T>! queryable, System.Linq.Expressions.Expression<System.Func<T, int?>!>! selector, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) -> System.Threading.Tasks.Task<int?>!
+System.Linq.AsyncQueryableExecuter.SumAsync<T>(System.Linq.IQueryable<T>! queryable, System.Linq.Expressions.Expression<System.Func<T, int>!>! selector, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) -> System.Threading.Tasks.Task<int>!
+System.Linq.AsyncQueryableExecuter.SumAsync<T>(System.Linq.IQueryable<T>! queryable, System.Linq.Expressions.Expression<System.Func<T, long?>!>! selector, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) -> System.Threading.Tasks.Task<long?>!
+System.Linq.AsyncQueryableExecuter.SumAsync<T>(System.Linq.IQueryable<T>! queryable, System.Linq.Expressions.Expression<System.Func<T, long>!>! selector, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) -> System.Threading.Tasks.Task<long>!
+System.Linq.AsyncQueryableExecuter.ToArrayAsync<T>(System.Linq.IQueryable<T>! queryable, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) -> System.Threading.Tasks.Task<T[]!>!
+System.Linq.AsyncQueryableExecuter.ToListAsync<T>(System.Linq.IQueryable<T>! queryable, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) -> System.Threading.Tasks.Task<System.Collections.Generic.List<T>!>!
+System.Linq.IAsyncQueryableExecuter
+System.Linq.IAsyncQueryableExecuter.AllAsync<T>(System.Linq.IQueryable<T>! queryable, System.Linq.Expressions.Expression<System.Func<T, bool>!>! predicate, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) -> System.Threading.Tasks.Task<bool>!
+System.Linq.IAsyncQueryableExecuter.AnyAsync<T>(System.Linq.IQueryable<T>! queryable, System.Linq.Expressions.Expression<System.Func<T, bool>!>! predicate, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) -> System.Threading.Tasks.Task<bool>!
+System.Linq.IAsyncQueryableExecuter.AverageAsync(System.Linq.IQueryable<decimal?>! source, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) -> System.Threading.Tasks.Task<decimal?>!
+System.Linq.IAsyncQueryableExecuter.AverageAsync(System.Linq.IQueryable<decimal>! source, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) -> System.Threading.Tasks.Task<decimal>!
+System.Linq.IAsyncQueryableExecuter.AverageAsync(System.Linq.IQueryable<double?>! source, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) -> System.Threading.Tasks.Task<double?>!
+System.Linq.IAsyncQueryableExecuter.AverageAsync(System.Linq.IQueryable<double>! source, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) -> System.Threading.Tasks.Task<double>!
+System.Linq.IAsyncQueryableExecuter.AverageAsync(System.Linq.IQueryable<float?>! source, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) -> System.Threading.Tasks.Task<float?>!
+System.Linq.IAsyncQueryableExecuter.AverageAsync(System.Linq.IQueryable<float>! source, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) -> System.Threading.Tasks.Task<float>!
+System.Linq.IAsyncQueryableExecuter.AverageAsync(System.Linq.IQueryable<int?>! source, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) -> System.Threading.Tasks.Task<double?>!
+System.Linq.IAsyncQueryableExecuter.AverageAsync(System.Linq.IQueryable<int>! source, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) -> System.Threading.Tasks.Task<double>!
+System.Linq.IAsyncQueryableExecuter.AverageAsync(System.Linq.IQueryable<long?>! source, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) -> System.Threading.Tasks.Task<double?>!
+System.Linq.IAsyncQueryableExecuter.AverageAsync(System.Linq.IQueryable<long>! source, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) -> System.Threading.Tasks.Task<double>!
+System.Linq.IAsyncQueryableExecuter.AverageAsync<T>(System.Linq.IQueryable<T>! queryable, System.Linq.Expressions.Expression<System.Func<T, decimal?>!>! selector, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) -> System.Threading.Tasks.Task<decimal?>!
+System.Linq.IAsyncQueryableExecuter.AverageAsync<T>(System.Linq.IQueryable<T>! queryable, System.Linq.Expressions.Expression<System.Func<T, decimal>!>! selector, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) -> System.Threading.Tasks.Task<decimal>!
+System.Linq.IAsyncQueryableExecuter.AverageAsync<T>(System.Linq.IQueryable<T>! queryable, System.Linq.Expressions.Expression<System.Func<T, double?>!>! selector, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) -> System.Threading.Tasks.Task<double?>!
+System.Linq.IAsyncQueryableExecuter.AverageAsync<T>(System.Linq.IQueryable<T>! queryable, System.Linq.Expressions.Expression<System.Func<T, double>!>! selector, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) -> System.Threading.Tasks.Task<double>!
+System.Linq.IAsyncQueryableExecuter.AverageAsync<T>(System.Linq.IQueryable<T>! queryable, System.Linq.Expressions.Expression<System.Func<T, float?>!>! selector, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) -> System.Threading.Tasks.Task<float?>!
+System.Linq.IAsyncQueryableExecuter.AverageAsync<T>(System.Linq.IQueryable<T>! queryable, System.Linq.Expressions.Expression<System.Func<T, float>!>! selector, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) -> System.Threading.Tasks.Task<float>!
+System.Linq.IAsyncQueryableExecuter.AverageAsync<T>(System.Linq.IQueryable<T>! queryable, System.Linq.Expressions.Expression<System.Func<T, int?>!>! selector, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) -> System.Threading.Tasks.Task<double?>!
+System.Linq.IAsyncQueryableExecuter.AverageAsync<T>(System.Linq.IQueryable<T>! queryable, System.Linq.Expressions.Expression<System.Func<T, int>!>! selector, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) -> System.Threading.Tasks.Task<double>!
+System.Linq.IAsyncQueryableExecuter.AverageAsync<T>(System.Linq.IQueryable<T>! queryable, System.Linq.Expressions.Expression<System.Func<T, long?>!>! selector, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) -> System.Threading.Tasks.Task<double?>!
+System.Linq.IAsyncQueryableExecuter.AverageAsync<T>(System.Linq.IQueryable<T>! queryable, System.Linq.Expressions.Expression<System.Func<T, long>!>! selector, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) -> System.Threading.Tasks.Task<double>!
+System.Linq.IAsyncQueryableExecuter.ContainsAsync<T>(System.Linq.IQueryable<T>! queryable, T item, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) -> System.Threading.Tasks.Task<bool>!
+System.Linq.IAsyncQueryableExecuter.CountAsync<T>(System.Linq.IQueryable<T>! queryable, System.Linq.Expressions.Expression<System.Func<T, bool>!>! predicate, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) -> System.Threading.Tasks.Task<int>!
+System.Linq.IAsyncQueryableExecuter.CountAsync<T>(System.Linq.IQueryable<T>! queryable, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) -> System.Threading.Tasks.Task<int>!
+System.Linq.IAsyncQueryableExecuter.FirstAsync<T>(System.Linq.IQueryable<T>! queryable, System.Linq.Expressions.Expression<System.Func<T, bool>!>! predicate, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) -> System.Threading.Tasks.Task<T>!
+System.Linq.IAsyncQueryableExecuter.FirstAsync<T>(System.Linq.IQueryable<T>! queryable, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) -> System.Threading.Tasks.Task<T>!
+System.Linq.IAsyncQueryableExecuter.FirstOrDefaultAsync<T>(System.Linq.IQueryable<T>! queryable, System.Linq.Expressions.Expression<System.Func<T, bool>!>! predicate, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) -> System.Threading.Tasks.Task<T?>!
+System.Linq.IAsyncQueryableExecuter.FirstOrDefaultAsync<T>(System.Linq.IQueryable<T>! queryable, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) -> System.Threading.Tasks.Task<T?>!
+System.Linq.IAsyncQueryableExecuter.LastAsync<T>(System.Linq.IQueryable<T>! queryable, System.Linq.Expressions.Expression<System.Func<T, bool>!>! predicate, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) -> System.Threading.Tasks.Task<T>!
+System.Linq.IAsyncQueryableExecuter.LastAsync<T>(System.Linq.IQueryable<T>! queryable, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) -> System.Threading.Tasks.Task<T>!
+System.Linq.IAsyncQueryableExecuter.LastOrDefaultAsync<T>(System.Linq.IQueryable<T>! queryable, System.Linq.Expressions.Expression<System.Func<T, bool>!>! predicate, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) -> System.Threading.Tasks.Task<T?>!
+System.Linq.IAsyncQueryableExecuter.LastOrDefaultAsync<T>(System.Linq.IQueryable<T>! queryable, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) -> System.Threading.Tasks.Task<T?>!
+System.Linq.IAsyncQueryableExecuter.LongCountAsync<T>(System.Linq.IQueryable<T>! queryable, System.Linq.Expressions.Expression<System.Func<T, bool>!>! predicate, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) -> System.Threading.Tasks.Task<long>!
+System.Linq.IAsyncQueryableExecuter.LongCountAsync<T>(System.Linq.IQueryable<T>! queryable, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) -> System.Threading.Tasks.Task<long>!
+System.Linq.IAsyncQueryableExecuter.MaxAsync<T, TResult>(System.Linq.IQueryable<T>! queryable, System.Linq.Expressions.Expression<System.Func<T, TResult>!>! selector, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) -> System.Threading.Tasks.Task<TResult?>!
+System.Linq.IAsyncQueryableExecuter.MaxAsync<T>(System.Linq.IQueryable<T>! queryable, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) -> System.Threading.Tasks.Task<T?>!
+System.Linq.IAsyncQueryableExecuter.MinAsync<T, TResult>(System.Linq.IQueryable<T>! queryable, System.Linq.Expressions.Expression<System.Func<T, TResult?>!>! selector, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) -> System.Threading.Tasks.Task<TResult?>!
+System.Linq.IAsyncQueryableExecuter.MinAsync<T>(System.Linq.IQueryable<T>! queryable, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) -> System.Threading.Tasks.Task<T?>!
+System.Linq.IAsyncQueryableExecuter.SingleAsync<T>(System.Linq.IQueryable<T>! queryable, System.Linq.Expressions.Expression<System.Func<T, bool>!>! predicate, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) -> System.Threading.Tasks.Task<T>!
+System.Linq.IAsyncQueryableExecuter.SingleAsync<T>(System.Linq.IQueryable<T>! queryable, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) -> System.Threading.Tasks.Task<T>!
+System.Linq.IAsyncQueryableExecuter.SingleOrDefaultAsync<T>(System.Linq.IQueryable<T>! queryable, System.Linq.Expressions.Expression<System.Func<T, bool>!>! predicate, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) -> System.Threading.Tasks.Task<T?>!
+System.Linq.IAsyncQueryableExecuter.SingleOrDefaultAsync<T>(System.Linq.IQueryable<T>! queryable, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) -> System.Threading.Tasks.Task<T?>!
+System.Linq.IAsyncQueryableExecuter.SumAsync(System.Linq.IQueryable<decimal?>! source, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) -> System.Threading.Tasks.Task<decimal?>!
+System.Linq.IAsyncQueryableExecuter.SumAsync(System.Linq.IQueryable<decimal>! source, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) -> System.Threading.Tasks.Task<decimal>!
+System.Linq.IAsyncQueryableExecuter.SumAsync(System.Linq.IQueryable<double?>! source, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) -> System.Threading.Tasks.Task<double?>!
+System.Linq.IAsyncQueryableExecuter.SumAsync(System.Linq.IQueryable<double>! source, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) -> System.Threading.Tasks.Task<double>!
+System.Linq.IAsyncQueryableExecuter.SumAsync(System.Linq.IQueryable<float?>! source, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) -> System.Threading.Tasks.Task<float?>!
+System.Linq.IAsyncQueryableExecuter.SumAsync(System.Linq.IQueryable<float>! source, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) -> System.Threading.Tasks.Task<float>!
+System.Linq.IAsyncQueryableExecuter.SumAsync(System.Linq.IQueryable<int?>! source, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) -> System.Threading.Tasks.Task<int?>!
+System.Linq.IAsyncQueryableExecuter.SumAsync(System.Linq.IQueryable<int>! source, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) -> System.Threading.Tasks.Task<int>!
+System.Linq.IAsyncQueryableExecuter.SumAsync(System.Linq.IQueryable<long?>! source, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) -> System.Threading.Tasks.Task<long?>!
+System.Linq.IAsyncQueryableExecuter.SumAsync(System.Linq.IQueryable<long>! source, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) -> System.Threading.Tasks.Task<long>!
+System.Linq.IAsyncQueryableExecuter.SumAsync<T>(System.Linq.IQueryable<T>! queryable, System.Linq.Expressions.Expression<System.Func<T, decimal?>!>! selector, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) -> System.Threading.Tasks.Task<decimal?>!
+System.Linq.IAsyncQueryableExecuter.SumAsync<T>(System.Linq.IQueryable<T>! queryable, System.Linq.Expressions.Expression<System.Func<T, decimal>!>! selector, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) -> System.Threading.Tasks.Task<decimal>!
+System.Linq.IAsyncQueryableExecuter.SumAsync<T>(System.Linq.IQueryable<T>! queryable, System.Linq.Expressions.Expression<System.Func<T, double?>!>! selector, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) -> System.Threading.Tasks.Task<double?>!
+System.Linq.IAsyncQueryableExecuter.SumAsync<T>(System.Linq.IQueryable<T>! queryable, System.Linq.Expressions.Expression<System.Func<T, double>!>! selector, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) -> System.Threading.Tasks.Task<double>!
+System.Linq.IAsyncQueryableExecuter.SumAsync<T>(System.Linq.IQueryable<T>! queryable, System.Linq.Expressions.Expression<System.Func<T, float?>!>! selector, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) -> System.Threading.Tasks.Task<float?>!
+System.Linq.IAsyncQueryableExecuter.SumAsync<T>(System.Linq.IQueryable<T>! queryable, System.Linq.Expressions.Expression<System.Func<T, float>!>! selector, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) -> System.Threading.Tasks.Task<float>!
+System.Linq.IAsyncQueryableExecuter.SumAsync<T>(System.Linq.IQueryable<T>! queryable, System.Linq.Expressions.Expression<System.Func<T, int?>!>! selector, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) -> System.Threading.Tasks.Task<int?>!
+System.Linq.IAsyncQueryableExecuter.SumAsync<T>(System.Linq.IQueryable<T>! queryable, System.Linq.Expressions.Expression<System.Func<T, int>!>! selector, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) -> System.Threading.Tasks.Task<int>!
+System.Linq.IAsyncQueryableExecuter.SumAsync<T>(System.Linq.IQueryable<T>! queryable, System.Linq.Expressions.Expression<System.Func<T, long?>!>! selector, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) -> System.Threading.Tasks.Task<long?>!
+System.Linq.IAsyncQueryableExecuter.SumAsync<T>(System.Linq.IQueryable<T>! queryable, System.Linq.Expressions.Expression<System.Func<T, long>!>! selector, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) -> System.Threading.Tasks.Task<long>!
+System.Linq.IAsyncQueryableExecuter.ToArrayAsync<T>(System.Linq.IQueryable<T>! queryable, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) -> System.Threading.Tasks.Task<T[]!>!
+System.Linq.IAsyncQueryableExecuter.ToListAsync<T>(System.Linq.IQueryable<T>! queryable, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) -> System.Threading.Tasks.Task<System.Collections.Generic.List<T>!>!
+System.Linq.IAsyncQueryableProvider
+System.Linq.IAsyncQueryableProvider.AllAsync<T>(System.Linq.IQueryable<T>! queryable, System.Linq.Expressions.Expression<System.Func<T, bool>!>! predicate, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) -> System.Threading.Tasks.Task<bool>!
+System.Linq.IAsyncQueryableProvider.AnyAsync<T>(System.Linq.IQueryable<T>! queryable, System.Linq.Expressions.Expression<System.Func<T, bool>!>! predicate, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) -> System.Threading.Tasks.Task<bool>!
+System.Linq.IAsyncQueryableProvider.AverageAsync(System.Linq.IQueryable<decimal?>! source, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) -> System.Threading.Tasks.Task<decimal?>!
+System.Linq.IAsyncQueryableProvider.AverageAsync(System.Linq.IQueryable<decimal>! source, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) -> System.Threading.Tasks.Task<decimal>!
+System.Linq.IAsyncQueryableProvider.AverageAsync(System.Linq.IQueryable<double?>! source, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) -> System.Threading.Tasks.Task<double?>!
+System.Linq.IAsyncQueryableProvider.AverageAsync(System.Linq.IQueryable<double>! source, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) -> System.Threading.Tasks.Task<double>!
+System.Linq.IAsyncQueryableProvider.AverageAsync(System.Linq.IQueryable<float?>! source, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) -> System.Threading.Tasks.Task<float?>!
+System.Linq.IAsyncQueryableProvider.AverageAsync(System.Linq.IQueryable<float>! source, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) -> System.Threading.Tasks.Task<float>!
+System.Linq.IAsyncQueryableProvider.AverageAsync(System.Linq.IQueryable<int?>! source, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) -> System.Threading.Tasks.Task<double?>!
+System.Linq.IAsyncQueryableProvider.AverageAsync(System.Linq.IQueryable<int>! source, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) -> System.Threading.Tasks.Task<double>!
+System.Linq.IAsyncQueryableProvider.AverageAsync(System.Linq.IQueryable<long?>! source, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) -> System.Threading.Tasks.Task<double?>!
+System.Linq.IAsyncQueryableProvider.AverageAsync(System.Linq.IQueryable<long>! source, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) -> System.Threading.Tasks.Task<double>!
+System.Linq.IAsyncQueryableProvider.AverageAsync<T>(System.Linq.IQueryable<T>! queryable, System.Linq.Expressions.Expression<System.Func<T, decimal?>!>! selector, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) -> System.Threading.Tasks.Task<decimal?>!
+System.Linq.IAsyncQueryableProvider.AverageAsync<T>(System.Linq.IQueryable<T>! queryable, System.Linq.Expressions.Expression<System.Func<T, decimal>!>! selector, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) -> System.Threading.Tasks.Task<decimal>!
+System.Linq.IAsyncQueryableProvider.AverageAsync<T>(System.Linq.IQueryable<T>! queryable, System.Linq.Expressions.Expression<System.Func<T, double?>!>! selector, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) -> System.Threading.Tasks.Task<double?>!
+System.Linq.IAsyncQueryableProvider.AverageAsync<T>(System.Linq.IQueryable<T>! queryable, System.Linq.Expressions.Expression<System.Func<T, double>!>! selector, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) -> System.Threading.Tasks.Task<double>!
+System.Linq.IAsyncQueryableProvider.AverageAsync<T>(System.Linq.IQueryable<T>! queryable, System.Linq.Expressions.Expression<System.Func<T, float?>!>! selector, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) -> System.Threading.Tasks.Task<float?>!
+System.Linq.IAsyncQueryableProvider.AverageAsync<T>(System.Linq.IQueryable<T>! queryable, System.Linq.Expressions.Expression<System.Func<T, float>!>! selector, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) -> System.Threading.Tasks.Task<float>!
+System.Linq.IAsyncQueryableProvider.AverageAsync<T>(System.Linq.IQueryable<T>! queryable, System.Linq.Expressions.Expression<System.Func<T, int?>!>! selector, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) -> System.Threading.Tasks.Task<double?>!
+System.Linq.IAsyncQueryableProvider.AverageAsync<T>(System.Linq.IQueryable<T>! queryable, System.Linq.Expressions.Expression<System.Func<T, int>!>! selector, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) -> System.Threading.Tasks.Task<double>!
+System.Linq.IAsyncQueryableProvider.AverageAsync<T>(System.Linq.IQueryable<T>! queryable, System.Linq.Expressions.Expression<System.Func<T, long?>!>! selector, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) -> System.Threading.Tasks.Task<double?>!
+System.Linq.IAsyncQueryableProvider.AverageAsync<T>(System.Linq.IQueryable<T>! queryable, System.Linq.Expressions.Expression<System.Func<T, long>!>! selector, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) -> System.Threading.Tasks.Task<double>!
+System.Linq.IAsyncQueryableProvider.CanExecute<T>(System.Linq.IQueryable<T>! queryable) -> bool
+System.Linq.IAsyncQueryableProvider.ContainsAsync<T>(System.Linq.IQueryable<T>! queryable, T item, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) -> System.Threading.Tasks.Task<bool>!
+System.Linq.IAsyncQueryableProvider.CountAsync<T>(System.Linq.IQueryable<T>! queryable, System.Linq.Expressions.Expression<System.Func<T, bool>!>! predicate, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) -> System.Threading.Tasks.Task<int>!
+System.Linq.IAsyncQueryableProvider.CountAsync<T>(System.Linq.IQueryable<T>! queryable, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) -> System.Threading.Tasks.Task<int>!
+System.Linq.IAsyncQueryableProvider.FirstAsync<T>(System.Linq.IQueryable<T>! queryable, System.Linq.Expressions.Expression<System.Func<T, bool>!>! predicate, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) -> System.Threading.Tasks.Task<T>!
+System.Linq.IAsyncQueryableProvider.FirstAsync<T>(System.Linq.IQueryable<T>! queryable, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) -> System.Threading.Tasks.Task<T>!
+System.Linq.IAsyncQueryableProvider.FirstOrDefaultAsync<T>(System.Linq.IQueryable<T>! queryable, System.Linq.Expressions.Expression<System.Func<T, bool>!>! predicate, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) -> System.Threading.Tasks.Task<T?>!
+System.Linq.IAsyncQueryableProvider.FirstOrDefaultAsync<T>(System.Linq.IQueryable<T>! queryable, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) -> System.Threading.Tasks.Task<T?>!
+System.Linq.IAsyncQueryableProvider.LastAsync<T>(System.Linq.IQueryable<T>! queryable, System.Linq.Expressions.Expression<System.Func<T, bool>!>! predicate, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) -> System.Threading.Tasks.Task<T>!
+System.Linq.IAsyncQueryableProvider.LastAsync<T>(System.Linq.IQueryable<T>! queryable, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) -> System.Threading.Tasks.Task<T>!
+System.Linq.IAsyncQueryableProvider.LastOrDefaultAsync<T>(System.Linq.IQueryable<T>! queryable, System.Linq.Expressions.Expression<System.Func<T, bool>!>! predicate, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) -> System.Threading.Tasks.Task<T?>!
+System.Linq.IAsyncQueryableProvider.LastOrDefaultAsync<T>(System.Linq.IQueryable<T>! queryable, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) -> System.Threading.Tasks.Task<T?>!
+System.Linq.IAsyncQueryableProvider.LongCountAsync<T>(System.Linq.IQueryable<T>! queryable, System.Linq.Expressions.Expression<System.Func<T, bool>!>! predicate, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) -> System.Threading.Tasks.Task<long>!
+System.Linq.IAsyncQueryableProvider.LongCountAsync<T>(System.Linq.IQueryable<T>! queryable, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) -> System.Threading.Tasks.Task<long>!
+System.Linq.IAsyncQueryableProvider.MaxAsync<T, TResult>(System.Linq.IQueryable<T>! queryable, System.Linq.Expressions.Expression<System.Func<T, TResult>!>! selector, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) -> System.Threading.Tasks.Task<TResult?>!
+System.Linq.IAsyncQueryableProvider.MaxAsync<T>(System.Linq.IQueryable<T>! queryable, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) -> System.Threading.Tasks.Task<T?>!
+System.Linq.IAsyncQueryableProvider.MinAsync<T, TResult>(System.Linq.IQueryable<T>! queryable, System.Linq.Expressions.Expression<System.Func<T, TResult>!>! selector, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) -> System.Threading.Tasks.Task<TResult?>!
+System.Linq.IAsyncQueryableProvider.MinAsync<T>(System.Linq.IQueryable<T>! queryable, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) -> System.Threading.Tasks.Task<T?>!
+System.Linq.IAsyncQueryableProvider.SingleAsync<T>(System.Linq.IQueryable<T>! queryable, System.Linq.Expressions.Expression<System.Func<T, bool>!>! predicate, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) -> System.Threading.Tasks.Task<T>!
+System.Linq.IAsyncQueryableProvider.SingleAsync<T>(System.Linq.IQueryable<T>! queryable, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) -> System.Threading.Tasks.Task<T>!
+System.Linq.IAsyncQueryableProvider.SingleOrDefaultAsync<T>(System.Linq.IQueryable<T>! queryable, System.Linq.Expressions.Expression<System.Func<T, bool>!>! predicate, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) -> System.Threading.Tasks.Task<T?>!
+System.Linq.IAsyncQueryableProvider.SingleOrDefaultAsync<T>(System.Linq.IQueryable<T>! queryable, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) -> System.Threading.Tasks.Task<T?>!
+System.Linq.IAsyncQueryableProvider.SumAsync(System.Linq.IQueryable<decimal?>! source, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) -> System.Threading.Tasks.Task<decimal?>!
+System.Linq.IAsyncQueryableProvider.SumAsync(System.Linq.IQueryable<decimal>! source, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) -> System.Threading.Tasks.Task<decimal>!
+System.Linq.IAsyncQueryableProvider.SumAsync(System.Linq.IQueryable<double?>! source, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) -> System.Threading.Tasks.Task<double?>!
+System.Linq.IAsyncQueryableProvider.SumAsync(System.Linq.IQueryable<double>! source, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) -> System.Threading.Tasks.Task<double>!
+System.Linq.IAsyncQueryableProvider.SumAsync(System.Linq.IQueryable<float?>! source, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) -> System.Threading.Tasks.Task<float?>!
+System.Linq.IAsyncQueryableProvider.SumAsync(System.Linq.IQueryable<float>! source, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) -> System.Threading.Tasks.Task<float>!
+System.Linq.IAsyncQueryableProvider.SumAsync(System.Linq.IQueryable<int?>! source, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) -> System.Threading.Tasks.Task<int?>!
+System.Linq.IAsyncQueryableProvider.SumAsync(System.Linq.IQueryable<int>! source, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) -> System.Threading.Tasks.Task<int>!
+System.Linq.IAsyncQueryableProvider.SumAsync(System.Linq.IQueryable<long?>! source, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) -> System.Threading.Tasks.Task<long?>!
+System.Linq.IAsyncQueryableProvider.SumAsync(System.Linq.IQueryable<long>! source, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) -> System.Threading.Tasks.Task<long>!
+System.Linq.IAsyncQueryableProvider.SumAsync<T>(System.Linq.IQueryable<T>! queryable, System.Linq.Expressions.Expression<System.Func<T, decimal?>!>! selector, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) -> System.Threading.Tasks.Task<decimal?>!
+System.Linq.IAsyncQueryableProvider.SumAsync<T>(System.Linq.IQueryable<T>! queryable, System.Linq.Expressions.Expression<System.Func<T, decimal>!>! selector, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) -> System.Threading.Tasks.Task<decimal>!
+System.Linq.IAsyncQueryableProvider.SumAsync<T>(System.Linq.IQueryable<T>! queryable, System.Linq.Expressions.Expression<System.Func<T, double?>!>! selector, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) -> System.Threading.Tasks.Task<double?>!
+System.Linq.IAsyncQueryableProvider.SumAsync<T>(System.Linq.IQueryable<T>! queryable, System.Linq.Expressions.Expression<System.Func<T, double>!>! selector, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) -> System.Threading.Tasks.Task<double>!
+System.Linq.IAsyncQueryableProvider.SumAsync<T>(System.Linq.IQueryable<T>! queryable, System.Linq.Expressions.Expression<System.Func<T, float?>!>! selector, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) -> System.Threading.Tasks.Task<float?>!
+System.Linq.IAsyncQueryableProvider.SumAsync<T>(System.Linq.IQueryable<T>! queryable, System.Linq.Expressions.Expression<System.Func<T, float>!>! selector, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) -> System.Threading.Tasks.Task<float>!
+System.Linq.IAsyncQueryableProvider.SumAsync<T>(System.Linq.IQueryable<T>! queryable, System.Linq.Expressions.Expression<System.Func<T, int?>!>! selector, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) -> System.Threading.Tasks.Task<int?>!
+System.Linq.IAsyncQueryableProvider.SumAsync<T>(System.Linq.IQueryable<T>! queryable, System.Linq.Expressions.Expression<System.Func<T, int>!>! selector, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) -> System.Threading.Tasks.Task<int>!
+System.Linq.IAsyncQueryableProvider.SumAsync<T>(System.Linq.IQueryable<T>! queryable, System.Linq.Expressions.Expression<System.Func<T, long?>!>! selector, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) -> System.Threading.Tasks.Task<long?>!
+System.Linq.IAsyncQueryableProvider.SumAsync<T>(System.Linq.IQueryable<T>! queryable, System.Linq.Expressions.Expression<System.Func<T, long>!>! selector, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) -> System.Threading.Tasks.Task<long>!
+System.Linq.IAsyncQueryableProvider.ToArrayAsync<T>(System.Linq.IQueryable<T>! queryable, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) -> System.Threading.Tasks.Task<T[]!>!
+System.Linq.IAsyncQueryableProvider.ToListAsync<T>(System.Linq.IQueryable<T>! queryable, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) -> System.Threading.Tasks.Task<System.Collections.Generic.List<T>!>!
+virtual Skywalker.Ddd.Data.DefaultConnectionStringResolver.Resolve(string! connectionStringName) -> string!
+virtual Skywalker.Ddd.Data.Seeding.DataSeedContext.WithProperty(string! key, object! value) -> Skywalker.Ddd.Data.Seeding.DataSeedContext!
+virtual Skywalker.Ddd.Data.Seeding.DataSeeder.SeedAsync(Skywalker.Ddd.Data.Seeding.DataSeedContext! context) -> System.Threading.Tasks.Task!
+virtual Skywalker.Ddd.Domain.Entities.AggregateRoot.AddDistributedEvent(object! eventData) -> void
+virtual Skywalker.Ddd.Domain.Entities.AggregateRoot.ClearDistributedEvents() -> void
+virtual Skywalker.Ddd.Domain.Entities.AggregateRoot.GetDistributedEvents() -> System.Collections.Generic.IEnumerable<object!>!
+virtual Skywalker.Ddd.Domain.Entities.AggregateRoot.Validate(System.ComponentModel.DataAnnotations.ValidationContext! validationContext) -> System.Collections.Generic.IEnumerable<System.ComponentModel.DataAnnotations.ValidationResult!>!
+virtual Skywalker.Ddd.Domain.Entities.AggregateRoot<TKey>.AddDistributedEvent(object! eventData) -> void
+virtual Skywalker.Ddd.Domain.Entities.AggregateRoot<TKey>.ClearDistributedEvents() -> void
+virtual Skywalker.Ddd.Domain.Entities.AggregateRoot<TKey>.GetDistributedEvents() -> System.Collections.Generic.IEnumerable<object!>!
+virtual Skywalker.Ddd.Domain.Entities.AggregateRoot<TKey>.Validate(System.ComponentModel.DataAnnotations.ValidationContext! validationContext) -> System.Collections.Generic.IEnumerable<System.ComponentModel.DataAnnotations.ValidationResult!>!
+virtual Skywalker.Ddd.Domain.Entities.Entity.ConcurrencyStamp.get -> string?
+virtual Skywalker.Ddd.Domain.Entities.Entity.ConcurrencyStamp.set -> void
+virtual Skywalker.Ddd.Domain.Entities.Entity.CreationTime.get -> System.DateTime
+virtual Skywalker.Ddd.Domain.Entities.Entity.CreationTime.set -> void
+virtual Skywalker.Ddd.Domain.Entities.Entity<TKey>.Id.get -> TKey
+virtual Skywalker.Ddd.Domain.Entities.Entity<TKey>.Id.set -> void
+virtual Skywalker.Ddd.Domain.Events.EntityChangeEventHelper.TriggerDistributedEvents(System.Collections.Generic.List<Skywalker.Ddd.Domain.Events.DomainEventEntry!>! distributedEvents) -> System.Threading.Tasks.Task!
+virtual Skywalker.Ddd.Domain.Events.EntityChangeEventHelper.TriggerEntityChangeEvents(System.Collections.Generic.List<Skywalker.Ddd.Domain.Events.EntityChangeEntry!>! changedEntities) -> System.Threading.Tasks.Task!
+virtual Skywalker.Ddd.Domain.Events.EntityChangeEventHelper.TriggerEntityCreatedEventAsync(object! entity) -> System.Threading.Tasks.Task!
+virtual Skywalker.Ddd.Domain.Events.EntityChangeEventHelper.TriggerEntityCreatedEventOnUowCompletedAsync(object! entity) -> System.Threading.Tasks.Task!
+virtual Skywalker.Ddd.Domain.Events.EntityChangeEventHelper.TriggerEntityCreatingEventAsync(object! entity) -> System.Threading.Tasks.Task!
+virtual Skywalker.Ddd.Domain.Events.EntityChangeEventHelper.TriggerEntityDeletedEventAsync(object! entity) -> System.Threading.Tasks.Task!
+virtual Skywalker.Ddd.Domain.Events.EntityChangeEventHelper.TriggerEntityDeletedEventOnUowCompletedAsync(object! entity) -> System.Threading.Tasks.Task!
+virtual Skywalker.Ddd.Domain.Events.EntityChangeEventHelper.TriggerEntityDeletingEventAsync(object! entity) -> System.Threading.Tasks.Task!
+virtual Skywalker.Ddd.Domain.Events.EntityChangeEventHelper.TriggerEntityUpdatedEventAsync(object! entity) -> System.Threading.Tasks.Task!
+virtual Skywalker.Ddd.Domain.Events.EntityChangeEventHelper.TriggerEntityUpdatedEventOnUowCompletedAsync(object! entity) -> System.Threading.Tasks.Task!
+virtual Skywalker.Ddd.Domain.Events.EntityChangeEventHelper.TriggerEntityUpdatingEventAsync(object! entity) -> System.Threading.Tasks.Task!
+virtual Skywalker.Ddd.Domain.Events.EntityChangeEventHelper.TriggerEventsInternalAsync(Skywalker.Ddd.Domain.Events.EntityChangeReport! changeReport) -> System.Threading.Tasks.Task!
+virtual Skywalker.Ddd.Domain.Events.EntityChangeEventHelper.TriggerEventWithEntity(Skywalker.EventBus.Abstractions.IEventBus! eventPublisher, System.Type! genericEventType, object! entityOrEto, object! originalEntity, bool triggerInCurrentUnitOfWork) -> System.Threading.Tasks.Task!
+virtual Skywalker.Ddd.Domain.Events.EntityEventData<TEntity>.GetConstructorArgs() -> object![]!
+virtual Skywalker.Ddd.Domain.Repositories.BasicRepository<TEntity, TKey>.DeleteAsync(TKey id, bool autoSave = false, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) -> System.Threading.Tasks.Task!
+virtual Skywalker.Ddd.Domain.Repositories.BasicRepository<TEntity, TKey>.GetAsync(TKey id, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) -> System.Threading.Tasks.Task<TEntity!>!
+virtual Skywalker.Ddd.Domain.Repositories.BasicRepository<TEntity>.ApplyDataFilters<TQueryable>(TQueryable query) -> TQueryable
+virtual Skywalker.Ddd.Domain.Repositories.BasicRepository<TEntity>.FindAsync(Skywalker.Extensions.Specifications.ISpecification<TEntity!>! specification, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) -> System.Threading.Tasks.Task<TEntity?>!
+virtual Skywalker.Ddd.Domain.Repositories.BasicRepository<TEntity>.GetAsync(Skywalker.Extensions.Specifications.ISpecification<TEntity!>! specification, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) -> System.Threading.Tasks.Task<TEntity!>!
+virtual Skywalker.Ddd.Domain.Repositories.BasicRepository<TEntity>.GetCancellationToken(System.Threading.CancellationToken preferredValue = default(System.Threading.CancellationToken)) -> System.Threading.CancellationToken
+virtual Skywalker.Ddd.Domain.Services.DomainService<TEntity, TKey>.AnyAsync(TKey id, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) -> System.Threading.Tasks.Task<bool>!
+virtual Skywalker.Ddd.Domain.Services.DomainService<TEntity, TKey>.FindAsync(TKey id, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) -> System.Threading.Tasks.Task<TEntity?>!
+virtual Skywalker.Ddd.Domain.Services.DomainService<TEntity, TKey>.GetAsync(TKey id, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) -> System.Threading.Tasks.Task<TEntity!>!
+virtual Skywalker.Ddd.Domain.Services.DomainService<TEntity, TKey>.Repository.get -> Skywalker.Ddd.Domain.Repositories.IRepository<TEntity!, TKey>!
+virtual Skywalker.Ddd.Domain.Services.DomainService<TEntity>.AnyAsync(System.Linq.Expressions.Expression<System.Func<TEntity!, bool>!>! filter, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) -> System.Threading.Tasks.Task<bool>!
+virtual Skywalker.Ddd.Domain.Services.DomainService<TEntity>.AsyncExecuter.get -> System.Linq.IAsyncQueryableExecuter!
+virtual Skywalker.Ddd.Domain.Services.DomainService<TEntity>.CountAsync(System.Linq.Expressions.Expression<System.Func<TEntity!, bool>!>! expression, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) -> System.Threading.Tasks.Task<int>!
+virtual Skywalker.Ddd.Domain.Services.DomainService<TEntity>.CountAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) -> System.Threading.Tasks.Task<int>!
+virtual Skywalker.Ddd.Domain.Services.DomainService<TEntity>.DeleteAsync(TEntity! entity, bool autoSave = false, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) -> System.Threading.Tasks.Task!
+virtual Skywalker.Ddd.Domain.Services.DomainService<TEntity>.FindAsync(Skywalker.Extensions.Specifications.Specification<TEntity!>! specification, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) -> System.Threading.Tasks.Task<TEntity?>!
+virtual Skywalker.Ddd.Domain.Services.DomainService<TEntity>.FindAsync(System.Linq.Expressions.Expression<System.Func<TEntity!, bool>!>! expression, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) -> System.Threading.Tasks.Task<TEntity?>!
+virtual Skywalker.Ddd.Domain.Services.DomainService<TEntity>.GetAsync(Skywalker.Extensions.Specifications.Specification<TEntity!>! specification, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) -> System.Threading.Tasks.Task<TEntity!>!
+virtual Skywalker.Ddd.Domain.Services.DomainService<TEntity>.GetAsync(System.Linq.Expressions.Expression<System.Func<TEntity!, bool>!>! expression, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) -> System.Threading.Tasks.Task<TEntity!>!
+virtual Skywalker.Ddd.Domain.Services.DomainService<TEntity>.GetListAsync(System.Linq.Expressions.Expression<System.Func<TEntity!, bool>!>! expression, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) -> System.Threading.Tasks.Task<System.Collections.Generic.List<TEntity!>!>!
+virtual Skywalker.Ddd.Domain.Services.DomainService<TEntity>.GetListAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) -> System.Threading.Tasks.Task<System.Collections.Generic.List<TEntity!>!>!
+virtual Skywalker.Ddd.Domain.Services.DomainService<TEntity>.GetPagedListAsync(int skip, int limit, string? sorting, string? filter, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) -> System.Threading.Tasks.Task<Skywalker.Extensions.Collections.Generic.PagedList<TEntity!>!>!
+virtual Skywalker.Ddd.Domain.Services.DomainService<TEntity>.GetPagedListAsync(int skip, int limit, string? sorting, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) -> System.Threading.Tasks.Task<Skywalker.Extensions.Collections.Generic.PagedList<TEntity!>!>!
+virtual Skywalker.Ddd.Domain.Services.DomainService<TEntity>.GetPagedListAsync(int skip, int limit, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) -> System.Threading.Tasks.Task<Skywalker.Extensions.Collections.Generic.PagedList<TEntity!>!>!
+virtual Skywalker.Ddd.Domain.Services.DomainService<TEntity>.GetPagedListAsync(System.Linq.Expressions.Expression<System.Func<TEntity!, bool>!>! expression, int skip, int limit, string? sorting, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) -> System.Threading.Tasks.Task<Skywalker.Extensions.Collections.Generic.PagedList<TEntity!>!>!
+virtual Skywalker.Ddd.Domain.Services.DomainService<TEntity>.GetPagedListAsync(System.Linq.Expressions.Expression<System.Func<TEntity!, bool>!>! expression, int skip, int limit, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) -> System.Threading.Tasks.Task<Skywalker.Extensions.Collections.Generic.PagedList<TEntity!>!>!
+virtual Skywalker.Ddd.Domain.Services.DomainService<TEntity>.InsertAsync(TEntity! entity, bool autoSave = false, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) -> System.Threading.Tasks.Task<TEntity!>!
+virtual Skywalker.Ddd.Domain.Services.DomainService<TEntity>.LongCountAsync(System.Linq.Expressions.Expression<System.Func<TEntity!, bool>!>! expression, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) -> System.Threading.Tasks.Task<long>!
+virtual Skywalker.Ddd.Domain.Services.DomainService<TEntity>.LongCountAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) -> System.Threading.Tasks.Task<long>!
+virtual Skywalker.Ddd.Domain.Services.DomainService<TEntity>.Repository.get -> Skywalker.Ddd.Domain.Repositories.IRepository<TEntity!>!
+virtual Skywalker.Ddd.Domain.Services.DomainService<TEntity>.UpdateAsync(TEntity! entity, bool autoSave = false, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) -> System.Threading.Tasks.Task<TEntity!>!
+virtual System.Linq.AsyncQueryableExecuter.FindProvider<T>(System.Linq.IQueryable<T>! queryable) -> System.Linq.IAsyncQueryableProvider?

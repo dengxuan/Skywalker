@@ -1,0 +1,24 @@
+#nullable enable
+const Skywalker.Caching.Redis.RedisOptions.SectionName = "Skywalker:Caching:Redis" -> string!
+Microsoft.Extensions.DependencyInjection.RedisCachingIServiceCollectionExtensions
+Microsoft.Extensions.DependencyInjection.SkywalkerBuilderRedisCachingExtensions
+override Skywalker.Caching.Redis.RedisCachingProvider.CreateCacheImplementation(string! name) -> Skywalker.Caching.Abstractions.ICaching!
+Skywalker.Caching.Redis.Abstractions.IRedisDatabaseProvider
+Skywalker.Caching.Redis.Abstractions.IRedisDatabaseProvider.GetDatabase() -> StackExchange.Redis.IDatabase!
+Skywalker.Caching.Redis.RedisCachingProvider
+Skywalker.Caching.Redis.RedisCachingProvider.RedisCachingProvider(System.IServiceProvider! iocResolver) -> void
+Skywalker.Caching.Redis.RedisDatabaseProvider
+Skywalker.Caching.Redis.RedisDatabaseProvider.GetDatabase() -> StackExchange.Redis.IDatabase!
+Skywalker.Caching.Redis.RedisDatabaseProvider.RedisDatabaseProvider(Microsoft.Extensions.Options.IOptionsMonitor<Skywalker.Caching.Redis.RedisOptions!>! options) -> void
+Skywalker.Caching.Redis.RedisOptions
+Skywalker.Caching.Redis.RedisOptions.ConnectionString.get -> string!
+Skywalker.Caching.Redis.RedisOptions.ConnectionString.set -> void
+Skywalker.Caching.Redis.RedisOptions.DefaultExpirationMinutes.get -> int
+Skywalker.Caching.Redis.RedisOptions.DefaultExpirationMinutes.set -> void
+Skywalker.Caching.Redis.RedisOptions.InstanceName.get -> string?
+Skywalker.Caching.Redis.RedisOptions.InstanceName.set -> void
+Skywalker.Caching.Redis.RedisOptions.RedisOptions() -> void
+static Microsoft.Extensions.DependencyInjection.RedisCachingIServiceCollectionExtensions.AddRedisCaching(this Microsoft.Extensions.DependencyInjection.IServiceCollection! services) -> Microsoft.Extensions.DependencyInjection.IServiceCollection!
+static Microsoft.Extensions.DependencyInjection.RedisCachingIServiceCollectionExtensions.AddRedisCaching(this Microsoft.Extensions.DependencyInjection.IServiceCollection! services, System.Action<Skywalker.Caching.Redis.RedisOptions!>! configure) -> Microsoft.Extensions.DependencyInjection.IServiceCollection!
+static Microsoft.Extensions.DependencyInjection.SkywalkerBuilderRedisCachingExtensions.AddRedisCaching(this Skywalker.ISkywalkerBuilder! builder) -> Skywalker.ISkywalkerBuilder!
+static Microsoft.Extensions.DependencyInjection.SkywalkerBuilderRedisCachingExtensions.AddRedisCaching(this Skywalker.ISkywalkerBuilder! builder, System.Action<Skywalker.Caching.Redis.RedisOptions!>! configure) -> Skywalker.ISkywalkerBuilder!

@@ -1,0 +1,101 @@
+#nullable enable
+abstract Skywalker.Permissions.Abstractions.PermissionValueProvider.CheckAsync(Skywalker.Permissions.PermissionValueCheckContext! context) -> System.Threading.Tasks.Task<Skywalker.Permissions.PermissionGrantResult>!
+abstract Skywalker.Permissions.Abstractions.PermissionValueProvider.CheckAsync(Skywalker.Permissions.PermissionValuesCheckContext! context) -> System.Threading.Tasks.Task<Skywalker.Permissions.MultiplePermissionGrantResult!>!
+abstract Skywalker.Permissions.Abstractions.PermissionValueProvider.Name.get -> string!
+const Skywalker.Permissions.PermissionsErrorCodes.GivenPolicyHasNotGranted = "Skywalker.Permissions:010001" -> string!
+const Skywalker.Permissions.PermissionsErrorCodes.GivenPolicyHasNotGrantedForGivenResource = "Skywalker.Permissions:010003" -> string!
+const Skywalker.Permissions.PermissionsErrorCodes.GivenPolicyHasNotGrantedWithPolicyName = "Skywalker.Permissions:010002" -> string!
+const Skywalker.Permissions.PermissionsErrorCodes.GivenRequirementHasNotGrantedForGivenResource = "Skywalker.Permissions:010004" -> string!
+const Skywalker.Permissions.PermissionsErrorCodes.GivenRequirementsHasNotGrantedForGivenResource = "Skywalker.Permissions:010005" -> string!
+override Skywalker.Permissions.PermissionDefinition.ToString() -> string!
+Skywalker.Permissions.Abstractions.IPermissionChecker
+Skywalker.Permissions.Abstractions.IPermissionChecker.IsGrantedAsync(string! name) -> System.Threading.Tasks.Task<bool>!
+Skywalker.Permissions.Abstractions.IPermissionChecker.IsGrantedAsync(string![]! names) -> System.Threading.Tasks.Task<Skywalker.Permissions.MultiplePermissionGrantResult!>!
+Skywalker.Permissions.Abstractions.IPermissionChecker.IsGrantedAsync(System.Security.Claims.ClaimsPrincipal? claimsPrincipal, string! name) -> System.Threading.Tasks.Task<bool>!
+Skywalker.Permissions.Abstractions.IPermissionChecker.IsGrantedAsync(System.Security.Claims.ClaimsPrincipal? claimsPrincipal, string![]! names) -> System.Threading.Tasks.Task<Skywalker.Permissions.MultiplePermissionGrantResult!>!
+Skywalker.Permissions.Abstractions.IPermissionDefinitionManager
+Skywalker.Permissions.Abstractions.IPermissionDefinitionManager.CreatePermissionsAsync(System.Collections.Generic.IReadOnlyList<Skywalker.Permissions.PermissionDefinition!>! permissionDefinitions) -> System.Threading.Tasks.Task!
+Skywalker.Permissions.Abstractions.IPermissionDefinitionManager.GetAsync(string! name) -> System.Threading.Tasks.Task<Skywalker.Permissions.PermissionDefinition!>!
+Skywalker.Permissions.Abstractions.IPermissionDefinitionManager.GetOrNullAsync(string! name) -> System.Threading.Tasks.Task<Skywalker.Permissions.PermissionDefinition?>!
+Skywalker.Permissions.Abstractions.IPermissionDefinitionManager.GetPermissionsAsync() -> System.Threading.Tasks.Task<System.Collections.Generic.IReadOnlyList<Skywalker.Permissions.PermissionDefinition!>!>!
+Skywalker.Permissions.Abstractions.IPermissionDefinitionManager.GetPermissionsAsync(params string![]! names) -> System.Threading.Tasks.Task<System.Collections.Generic.IReadOnlyList<Skywalker.Permissions.PermissionDefinition!>!>!
+Skywalker.Permissions.Abstractions.IPermissionDefinitionProvider
+Skywalker.Permissions.Abstractions.IPermissionDefinitionProvider.Define(Skywalker.Permissions.PermissionDefinitionContext! context) -> void
+Skywalker.Permissions.Abstractions.IPermissionsAuthorizationService
+Skywalker.Permissions.Abstractions.IPermissionsAuthorizationService.CheckAsync(Skywalker.Permissions.PermissionsAuthorizationContext! context) -> System.Threading.Tasks.Task!
+Skywalker.Permissions.Abstractions.IPermissionValidator
+Skywalker.Permissions.Abstractions.IPermissionValidator.IsGrantedAsync(string! name, string! providerName, string! providerKey) -> System.Threading.Tasks.Task<bool>!
+Skywalker.Permissions.Abstractions.IPermissionValidator.IsGrantedAsync(string![]! names, string! providerName, string! providerKey) -> System.Threading.Tasks.Task<Skywalker.Permissions.MultiplePermissionGrantResult!>!
+Skywalker.Permissions.Abstractions.IPermissionValueProvider
+Skywalker.Permissions.Abstractions.IPermissionValueProvider.CheckAsync(Skywalker.Permissions.PermissionValueCheckContext! context) -> System.Threading.Tasks.Task<Skywalker.Permissions.PermissionGrantResult>!
+Skywalker.Permissions.Abstractions.IPermissionValueProvider.CheckAsync(Skywalker.Permissions.PermissionValuesCheckContext! context) -> System.Threading.Tasks.Task<Skywalker.Permissions.MultiplePermissionGrantResult!>!
+Skywalker.Permissions.Abstractions.IPermissionValueProvider.Name.get -> string!
+Skywalker.Permissions.Abstractions.IPermissionValueProviderManager
+Skywalker.Permissions.Abstractions.IPermissionValueProviderManager.ValueProviders.get -> System.Collections.Generic.IReadOnlyList<Skywalker.Permissions.Abstractions.IPermissionValueProvider!>!
+Skywalker.Permissions.Abstractions.PermissionGrantInfo
+Skywalker.Permissions.Abstractions.PermissionGrantInfo.IsGranted.get -> bool
+Skywalker.Permissions.Abstractions.PermissionGrantInfo.Name.get -> string!
+Skywalker.Permissions.Abstractions.PermissionGrantInfo.PermissionGrantInfo(string! name, bool isGranted, string? providerName = null, string? providerKey = null) -> void
+Skywalker.Permissions.Abstractions.PermissionGrantInfo.ProviderKey.get -> string?
+Skywalker.Permissions.Abstractions.PermissionGrantInfo.ProviderName.get -> string?
+Skywalker.Permissions.Abstractions.PermissionValueProvider
+Skywalker.Permissions.Abstractions.PermissionValueProvider.PermissionValueProvider(Skywalker.Permissions.Abstractions.IPermissionValidator! validator) -> void
+Skywalker.Permissions.Abstractions.PermissionValueProvider.Validator.get -> Skywalker.Permissions.Abstractions.IPermissionValidator!
+Skywalker.Permissions.MultiplePermissionGrantResult
+Skywalker.Permissions.MultiplePermissionGrantResult.AllGranted.get -> bool
+Skywalker.Permissions.MultiplePermissionGrantResult.AllProhibited.get -> bool
+Skywalker.Permissions.MultiplePermissionGrantResult.MultiplePermissionGrantResult() -> void
+Skywalker.Permissions.MultiplePermissionGrantResult.MultiplePermissionGrantResult(string![]! names, Skywalker.Permissions.PermissionGrantResult grantResult = Skywalker.Permissions.PermissionGrantResult.Undefined) -> void
+Skywalker.Permissions.MultiplePermissionGrantResult.Result.get -> System.Collections.Generic.Dictionary<string!, Skywalker.Permissions.PermissionGrantResult>!
+Skywalker.Permissions.PermissionDefinition
+Skywalker.Permissions.PermissionDefinition.AllowedProviders.get -> string![]!
+Skywalker.Permissions.PermissionDefinition.Children.get -> System.Collections.Generic.IReadOnlyList<Skywalker.Permissions.PermissionDefinition!>!
+Skywalker.Permissions.PermissionDefinition.DisplayName.get -> string!
+Skywalker.Permissions.PermissionDefinition.IsEnabled.get -> bool
+Skywalker.Permissions.PermissionDefinition.IsEnabled.set -> void
+Skywalker.Permissions.PermissionDefinition.Name.get -> string!
+Skywalker.Permissions.PermissionDefinition.Parent.get -> Skywalker.Permissions.PermissionDefinition?
+Skywalker.Permissions.PermissionDefinition.Parent.set -> void
+Skywalker.Permissions.PermissionDefinition.PermissionDefinition(string! name, string! displayName, bool isEnabled = true, System.Collections.Generic.Dictionary<string!, object?>? properties = null, string![]? allowedProviders = null) -> void
+Skywalker.Permissions.PermissionDefinition.Properties.get -> System.Collections.Generic.Dictionary<string!, object?>!
+Skywalker.Permissions.PermissionDefinition.StateCheckers.get -> System.Collections.Generic.List<Skywalker.Extensions.SimpleStateChecking.ISimpleStateChecker<Skywalker.Permissions.PermissionDefinition!>!>!
+Skywalker.Permissions.PermissionDefinition.this[string! name].get -> object?
+Skywalker.Permissions.PermissionDefinition.this[string! name].set -> void
+Skywalker.Permissions.PermissionDefinitionContext
+Skywalker.Permissions.PermissionDefinitionContext.AddPermission(string! name, string! displayName, bool isEnabled = true) -> Skywalker.Permissions.PermissionDefinition!
+Skywalker.Permissions.PermissionDefinitionContext.PermissionDefinitionContext() -> void
+Skywalker.Permissions.PermissionDefinitionContext.Permissions.get -> System.Collections.Generic.IReadOnlyList<Skywalker.Permissions.PermissionDefinition!>!
+Skywalker.Permissions.PermissionGrantResult
+Skywalker.Permissions.PermissionGrantResult.Granted = 1 -> Skywalker.Permissions.PermissionGrantResult
+Skywalker.Permissions.PermissionGrantResult.Prohibited = 2 -> Skywalker.Permissions.PermissionGrantResult
+Skywalker.Permissions.PermissionGrantResult.Undefined = 0 -> Skywalker.Permissions.PermissionGrantResult
+Skywalker.Permissions.PermissionOptions
+Skywalker.Permissions.PermissionOptions.DefinitionProviders.get -> Skywalker.Extensions.Collections.Generic.ITypeList<Skywalker.Permissions.Abstractions.IPermissionDefinitionProvider!>!
+Skywalker.Permissions.PermissionOptions.PermissionOptions() -> void
+Skywalker.Permissions.PermissionOptions.ValueProviders.get -> Skywalker.Extensions.Collections.Generic.ITypeList<Skywalker.Permissions.Abstractions.IPermissionValueProvider!>!
+Skywalker.Permissions.PermissionsAuthorizationContext
+Skywalker.Permissions.PermissionsAuthorizationContext.Method.get -> System.Reflection.MethodInfo!
+Skywalker.Permissions.PermissionsAuthorizationContext.PermissionsAuthorizationContext(System.Reflection.MethodInfo! method) -> void
+Skywalker.Permissions.PermissionsErrorCodes
+Skywalker.Permissions.PermissionStateContext
+Skywalker.Permissions.PermissionStateContext.Permission.get -> Skywalker.Permissions.PermissionDefinition?
+Skywalker.Permissions.PermissionStateContext.Permission.set -> void
+Skywalker.Permissions.PermissionStateContext.PermissionStateContext() -> void
+Skywalker.Permissions.PermissionStateContext.ServiceProvider.get -> System.IServiceProvider?
+Skywalker.Permissions.PermissionStateContext.ServiceProvider.set -> void
+Skywalker.Permissions.PermissionValueCheckContext
+Skywalker.Permissions.PermissionValueCheckContext.Permission.get -> Skywalker.Permissions.PermissionDefinition!
+Skywalker.Permissions.PermissionValueCheckContext.PermissionValueCheckContext(Skywalker.Permissions.PermissionDefinition! permission, System.Security.Claims.ClaimsPrincipal? principal) -> void
+Skywalker.Permissions.PermissionValueCheckContext.Principal.get -> System.Security.Claims.ClaimsPrincipal?
+Skywalker.Permissions.PermissionValuesCheckContext
+Skywalker.Permissions.PermissionValuesCheckContext.Permissions.get -> System.Collections.Generic.List<Skywalker.Permissions.PermissionDefinition!>!
+Skywalker.Permissions.PermissionValuesCheckContext.PermissionValuesCheckContext(System.Collections.Generic.List<Skywalker.Permissions.PermissionDefinition!>! permissions, System.Security.Claims.ClaimsPrincipal? principal) -> void
+Skywalker.Permissions.PermissionValuesCheckContext.Principal.get -> System.Security.Claims.ClaimsPrincipal?
+Skywalker.Permissions.RequirePermissionsSimpleBatchStateCheckerModel<TState>
+Skywalker.Permissions.RequirePermissionsSimpleBatchStateCheckerModel<TState>.Permissions.get -> string![]!
+Skywalker.Permissions.RequirePermissionsSimpleBatchStateCheckerModel<TState>.RequirePermissionsSimpleBatchStateCheckerModel(TState state, string![]! permissions, bool requiresAll = true) -> void
+Skywalker.Permissions.RequirePermissionsSimpleBatchStateCheckerModel<TState>.RequiresAll.get -> bool
+Skywalker.Permissions.RequirePermissionsSimpleBatchStateCheckerModel<TState>.State.get -> TState
+virtual Skywalker.Permissions.PermissionDefinition.AddChild(string! name, string! displayName, bool isEnabled = true) -> Skywalker.Permissions.PermissionDefinition!
+virtual Skywalker.Permissions.PermissionDefinition.WithProperty(string! key, object! value) -> Skywalker.Permissions.PermissionDefinition!
+virtual Skywalker.Permissions.PermissionDefinition.WithProviders(params string![]! providers) -> Skywalker.Permissions.PermissionDefinition!

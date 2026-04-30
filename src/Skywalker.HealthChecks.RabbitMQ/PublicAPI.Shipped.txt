@@ -1,0 +1,6 @@
+#nullable enable
+Microsoft.Extensions.DependencyInjection.RabbitMqHealthCheckExtensions
+Skywalker.HealthChecks.RabbitMQ.RabbitMqHealthCheck
+Skywalker.HealthChecks.RabbitMQ.RabbitMqHealthCheck.CheckHealthAsync(Microsoft.Extensions.Diagnostics.HealthChecks.HealthCheckContext! context, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) -> System.Threading.Tasks.Task<Microsoft.Extensions.Diagnostics.HealthChecks.HealthCheckResult>!
+Skywalker.HealthChecks.RabbitMQ.RabbitMqHealthCheck.RabbitMqHealthCheck(Skywalker.Extensions.RabbitMQ.Abstractions.IConnectionPool! connectionPool) -> void
+static Microsoft.Extensions.DependencyInjection.RabbitMqHealthCheckExtensions.AddRabbitMqHealthCheck(this Microsoft.Extensions.DependencyInjection.IHealthChecksBuilder! builder, string! name = "rabbitmq", Microsoft.Extensions.Diagnostics.HealthChecks.HealthStatus? failureStatus = null, System.Collections.Generic.IEnumerable<string!>? tags = null, System.TimeSpan? timeout = null) -> Microsoft.Extensions.DependencyInjection.IHealthChecksBuilder!

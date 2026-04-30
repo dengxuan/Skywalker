@@ -1,0 +1,98 @@
+#nullable enable
+abstract Skywalker.Extensions.VirtualFileSystem.DictionaryBasedFileProvider.Files.get -> System.Collections.Generic.IDictionary<string!, Microsoft.Extensions.FileProviders.IFileInfo!>!
+const Skywalker.Extensions.VirtualFileSystem.SkywalkerVirtualFileSystemOptions.SectionName = "Skywalker:VirtualFileSystem" -> string!
+Microsoft.Extensions.DependencyInjection.VirtualFileSystemIServiceCollectionExtensions
+Microsoft.Extensions.FileProviders.AbpFileInfoExtensions
+override Skywalker.Extensions.VirtualFileSystem.DynamicFileProvider.Files.get -> System.Collections.Generic.IDictionary<string!, Microsoft.Extensions.FileProviders.IFileInfo!>!
+override Skywalker.Extensions.VirtualFileSystem.DynamicFileProvider.Watch(string! filter) -> Microsoft.Extensions.Primitives.IChangeToken!
+override Skywalker.Extensions.VirtualFileSystem.Embedded.EmbeddedResourceFileInfo.ToString() -> string!
+override Skywalker.Extensions.VirtualFileSystem.Embedded.SkywalkerEmbeddedFileProvider.Files.get -> System.Collections.Generic.IDictionary<string!, Microsoft.Extensions.FileProviders.IFileInfo!>!
+override Skywalker.Extensions.VirtualFileSystem.Embedded.SkywalkerEmbeddedFileProvider.NormalizePath(string! subpath) -> string!
+Skywalker.Extensions.VirtualFileSystem.DictionaryBasedFileProvider
+Skywalker.Extensions.VirtualFileSystem.DictionaryBasedFileProvider.DictionaryBasedFileProvider() -> void
+Skywalker.Extensions.VirtualFileSystem.DynamicFileProvider
+Skywalker.Extensions.VirtualFileSystem.DynamicFileProvider.AddOrUpdate(Microsoft.Extensions.FileProviders.IFileInfo! fileInfo) -> void
+Skywalker.Extensions.VirtualFileSystem.DynamicFileProvider.ChangeTokenInfo
+Skywalker.Extensions.VirtualFileSystem.DynamicFileProvider.ChangeTokenInfo.ChangeToken.get -> Microsoft.Extensions.Primitives.CancellationChangeToken!
+Skywalker.Extensions.VirtualFileSystem.DynamicFileProvider.ChangeTokenInfo.ChangeTokenInfo() -> void
+Skywalker.Extensions.VirtualFileSystem.DynamicFileProvider.ChangeTokenInfo.ChangeTokenInfo(System.Threading.CancellationTokenSource! tokenSource, Microsoft.Extensions.Primitives.CancellationChangeToken! changeToken) -> void
+Skywalker.Extensions.VirtualFileSystem.DynamicFileProvider.ChangeTokenInfo.TokenSource.get -> System.Threading.CancellationTokenSource!
+Skywalker.Extensions.VirtualFileSystem.DynamicFileProvider.Delete(string! filePath) -> bool
+Skywalker.Extensions.VirtualFileSystem.DynamicFileProvider.DynamicFileProvider() -> void
+Skywalker.Extensions.VirtualFileSystem.DynamicFileProvider.DynamicFiles.get -> System.Collections.Concurrent.ConcurrentDictionary<string!, Microsoft.Extensions.FileProviders.IFileInfo!>!
+Skywalker.Extensions.VirtualFileSystem.DynamicFileProvider.FilePathTokenLookup.get -> System.Collections.Concurrent.ConcurrentDictionary<string!, Skywalker.Extensions.VirtualFileSystem.DynamicFileProvider.ChangeTokenInfo>!
+Skywalker.Extensions.VirtualFileSystem.Embedded.EmbeddedResourceFileInfo
+Skywalker.Extensions.VirtualFileSystem.Embedded.EmbeddedResourceFileInfo.CreateReadStream() -> System.IO.Stream!
+Skywalker.Extensions.VirtualFileSystem.Embedded.EmbeddedResourceFileInfo.EmbeddedResourceFileInfo(System.Reflection.Assembly! assembly, string! resourcePath, string! virtualPath, string! name, System.DateTimeOffset lastModified) -> void
+Skywalker.Extensions.VirtualFileSystem.Embedded.EmbeddedResourceFileInfo.Exists.get -> bool
+Skywalker.Extensions.VirtualFileSystem.Embedded.EmbeddedResourceFileInfo.IsDirectory.get -> bool
+Skywalker.Extensions.VirtualFileSystem.Embedded.EmbeddedResourceFileInfo.LastModified.get -> System.DateTimeOffset
+Skywalker.Extensions.VirtualFileSystem.Embedded.EmbeddedResourceFileInfo.Length.get -> long
+Skywalker.Extensions.VirtualFileSystem.Embedded.EmbeddedResourceFileInfo.Name.get -> string!
+Skywalker.Extensions.VirtualFileSystem.Embedded.EmbeddedResourceFileInfo.PhysicalPath.get -> string?
+Skywalker.Extensions.VirtualFileSystem.Embedded.EmbeddedResourceFileInfo.VirtualPath.get -> string!
+Skywalker.Extensions.VirtualFileSystem.Embedded.EmbeddedVirtualFileSetInfo
+Skywalker.Extensions.VirtualFileSystem.Embedded.EmbeddedVirtualFileSetInfo.Assembly.get -> System.Reflection.Assembly!
+Skywalker.Extensions.VirtualFileSystem.Embedded.EmbeddedVirtualFileSetInfo.BaseFolder.get -> string?
+Skywalker.Extensions.VirtualFileSystem.Embedded.EmbeddedVirtualFileSetInfo.EmbeddedVirtualFileSetInfo(Microsoft.Extensions.FileProviders.IFileProvider! fileProvider, System.Reflection.Assembly! assembly, string? baseFolder = null) -> void
+Skywalker.Extensions.VirtualFileSystem.Embedded.SkywalkerEmbeddedFileProvider
+Skywalker.Extensions.VirtualFileSystem.Embedded.SkywalkerEmbeddedFileProvider.AddFiles(System.Collections.Generic.Dictionary<string!, Microsoft.Extensions.FileProviders.IFileInfo!>! files) -> void
+Skywalker.Extensions.VirtualFileSystem.Embedded.SkywalkerEmbeddedFileProvider.Assembly.get -> System.Reflection.Assembly!
+Skywalker.Extensions.VirtualFileSystem.Embedded.SkywalkerEmbeddedFileProvider.BaseNamespace.get -> string?
+Skywalker.Extensions.VirtualFileSystem.Embedded.SkywalkerEmbeddedFileProvider.SkywalkerEmbeddedFileProvider(System.Reflection.Assembly! assembly, string? baseNamespace = null) -> void
+Skywalker.Extensions.VirtualFileSystem.IDynamicFileProvider
+Skywalker.Extensions.VirtualFileSystem.IDynamicFileProvider.AddOrUpdate(Microsoft.Extensions.FileProviders.IFileInfo! fileInfo) -> void
+Skywalker.Extensions.VirtualFileSystem.IDynamicFileProvider.Delete(string! filePath) -> bool
+Skywalker.Extensions.VirtualFileSystem.InMemoryFileInfo
+Skywalker.Extensions.VirtualFileSystem.InMemoryFileInfo.CreateReadStream() -> System.IO.Stream!
+Skywalker.Extensions.VirtualFileSystem.InMemoryFileInfo.DynamicPath.get -> string!
+Skywalker.Extensions.VirtualFileSystem.InMemoryFileInfo.Exists.get -> bool
+Skywalker.Extensions.VirtualFileSystem.InMemoryFileInfo.InMemoryFileInfo(string! dynamicPath, byte[]! fileContent, string! name) -> void
+Skywalker.Extensions.VirtualFileSystem.InMemoryFileInfo.IsDirectory.get -> bool
+Skywalker.Extensions.VirtualFileSystem.InMemoryFileInfo.LastModified.get -> System.DateTimeOffset
+Skywalker.Extensions.VirtualFileSystem.InMemoryFileInfo.Length.get -> long
+Skywalker.Extensions.VirtualFileSystem.InMemoryFileInfo.Name.get -> string!
+Skywalker.Extensions.VirtualFileSystem.InMemoryFileInfo.PhysicalPath.get -> string?
+Skywalker.Extensions.VirtualFileSystem.IVirtualFileProvider
+Skywalker.Extensions.VirtualFileSystem.Physical.PhysicalVirtualFileSetInfo
+Skywalker.Extensions.VirtualFileSystem.Physical.PhysicalVirtualFileSetInfo.PhysicalVirtualFileSetInfo(Microsoft.Extensions.FileProviders.IFileProvider! fileProvider, string! root) -> void
+Skywalker.Extensions.VirtualFileSystem.Physical.PhysicalVirtualFileSetInfo.Root.get -> string!
+Skywalker.Extensions.VirtualFileSystem.SkywalkerVirtualFileSystemOptions
+Skywalker.Extensions.VirtualFileSystem.SkywalkerVirtualFileSystemOptions.FileSets.get -> Skywalker.Extensions.VirtualFileSystem.VirtualFileSetList!
+Skywalker.Extensions.VirtualFileSystem.SkywalkerVirtualFileSystemOptions.SkywalkerVirtualFileSystemOptions() -> void
+Skywalker.Extensions.VirtualFileSystem.VirtualDirectoryFileInfo
+Skywalker.Extensions.VirtualFileSystem.VirtualDirectoryFileInfo.CreateReadStream() -> System.IO.Stream!
+Skywalker.Extensions.VirtualFileSystem.VirtualDirectoryFileInfo.Exists.get -> bool
+Skywalker.Extensions.VirtualFileSystem.VirtualDirectoryFileInfo.IsDirectory.get -> bool
+Skywalker.Extensions.VirtualFileSystem.VirtualDirectoryFileInfo.LastModified.get -> System.DateTimeOffset
+Skywalker.Extensions.VirtualFileSystem.VirtualDirectoryFileInfo.Length.get -> long
+Skywalker.Extensions.VirtualFileSystem.VirtualDirectoryFileInfo.Name.get -> string!
+Skywalker.Extensions.VirtualFileSystem.VirtualDirectoryFileInfo.PhysicalPath.get -> string!
+Skywalker.Extensions.VirtualFileSystem.VirtualDirectoryFileInfo.VirtualDirectoryFileInfo(string! physicalPath, string! name, System.DateTimeOffset lastModified) -> void
+Skywalker.Extensions.VirtualFileSystem.VirtualFileProvider
+Skywalker.Extensions.VirtualFileSystem.VirtualFileProvider.VirtualFileProvider(Microsoft.Extensions.Options.IOptions<Skywalker.Extensions.VirtualFileSystem.SkywalkerVirtualFileSystemOptions!>! options, Skywalker.Extensions.VirtualFileSystem.IDynamicFileProvider! dynamicFileProvider) -> void
+Skywalker.Extensions.VirtualFileSystem.VirtualFileSetInfo
+Skywalker.Extensions.VirtualFileSystem.VirtualFileSetInfo.FileProvider.get -> Microsoft.Extensions.FileProviders.IFileProvider!
+Skywalker.Extensions.VirtualFileSystem.VirtualFileSetInfo.VirtualFileSetInfo(Microsoft.Extensions.FileProviders.IFileProvider! fileProvider) -> void
+Skywalker.Extensions.VirtualFileSystem.VirtualFileSetList
+Skywalker.Extensions.VirtualFileSystem.VirtualFileSetList.VirtualFileSetList() -> void
+Skywalker.Extensions.VirtualFileSystem.VirtualFileSetListExtensions
+static Microsoft.Extensions.DependencyInjection.VirtualFileSystemIServiceCollectionExtensions.AddVirtualFileSystem(this Microsoft.Extensions.DependencyInjection.IServiceCollection! services) -> Microsoft.Extensions.DependencyInjection.IServiceCollection!
+static Microsoft.Extensions.FileProviders.AbpFileInfoExtensions.GetVirtualOrPhysicalPathOrNull(this Microsoft.Extensions.FileProviders.IFileInfo! fileInfo) -> string?
+static Microsoft.Extensions.FileProviders.AbpFileInfoExtensions.ReadAsString(this Microsoft.Extensions.FileProviders.IFileInfo! fileInfo) -> string!
+static Microsoft.Extensions.FileProviders.AbpFileInfoExtensions.ReadAsString(this Microsoft.Extensions.FileProviders.IFileInfo! fileInfo, System.Text.Encoding! encoding) -> string!
+static Microsoft.Extensions.FileProviders.AbpFileInfoExtensions.ReadAsStringAsync(this Microsoft.Extensions.FileProviders.IFileInfo! fileInfo) -> System.Threading.Tasks.Task<string!>!
+static Microsoft.Extensions.FileProviders.AbpFileInfoExtensions.ReadAsStringAsync(this Microsoft.Extensions.FileProviders.IFileInfo! fileInfo, System.Text.Encoding! encoding) -> System.Threading.Tasks.Task<string!>!
+static Microsoft.Extensions.FileProviders.AbpFileInfoExtensions.ReadBytes(this Microsoft.Extensions.FileProviders.IFileInfo! fileInfo) -> byte[]!
+static Microsoft.Extensions.FileProviders.AbpFileInfoExtensions.ReadBytesAsync(this Microsoft.Extensions.FileProviders.IFileInfo! fileInfo) -> System.Threading.Tasks.Task<byte[]!>!
+static Skywalker.Extensions.VirtualFileSystem.VirtualFileSetListExtensions.AddEmbedded<T>(this Skywalker.Extensions.VirtualFileSystem.VirtualFileSetList! list, string? baseNamespace = null, string? baseFolder = null) -> void
+static Skywalker.Extensions.VirtualFileSystem.VirtualFileSetListExtensions.AddPhysical(this Skywalker.Extensions.VirtualFileSystem.VirtualFileSetList! list, string! root, Microsoft.Extensions.FileProviders.Physical.ExclusionFilters exclusionFilters = Microsoft.Extensions.FileProviders.Physical.ExclusionFilters.Sensitive) -> void
+static Skywalker.Extensions.VirtualFileSystem.VirtualFileSetListExtensions.ReplaceEmbeddedByPhysical<T>(this Skywalker.Extensions.VirtualFileSystem.VirtualFileSetList! fileSets, string! physicalPath) -> void
+virtual Skywalker.Extensions.VirtualFileSystem.DictionaryBasedFileProvider.GetDirectoryContents(string! subpath) -> Microsoft.Extensions.FileProviders.IDirectoryContents!
+virtual Skywalker.Extensions.VirtualFileSystem.DictionaryBasedFileProvider.GetFileInfo(string! subpath) -> Microsoft.Extensions.FileProviders.IFileInfo!
+virtual Skywalker.Extensions.VirtualFileSystem.DictionaryBasedFileProvider.NormalizePath(string! subpath) -> string!
+virtual Skywalker.Extensions.VirtualFileSystem.DictionaryBasedFileProvider.Watch(string! filter) -> Microsoft.Extensions.Primitives.IChangeToken!
+virtual Skywalker.Extensions.VirtualFileSystem.VirtualFileProvider.CreateHybridProvider(Skywalker.Extensions.VirtualFileSystem.IDynamicFileProvider! dynamicFileProvider) -> Microsoft.Extensions.FileProviders.IFileProvider!
+virtual Skywalker.Extensions.VirtualFileSystem.VirtualFileProvider.GetDirectoryContents(string! subpath) -> Microsoft.Extensions.FileProviders.IDirectoryContents!
+virtual Skywalker.Extensions.VirtualFileSystem.VirtualFileProvider.GetFileInfo(string! subpath) -> Microsoft.Extensions.FileProviders.IFileInfo!
+virtual Skywalker.Extensions.VirtualFileSystem.VirtualFileProvider.Watch(string! filter) -> Microsoft.Extensions.Primitives.IChangeToken!

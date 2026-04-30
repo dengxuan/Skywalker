@@ -1,0 +1,16 @@
+#nullable enable
+const Skywalker.Extensions.GuidGenerator.SequentialGuidGeneratorOptions.SectionName = "Skywalker:GuidGenerator" -> string!
+Microsoft.Extensions.DependencyInjection.GuidGeneratorIServiceCollectionExtensions
+Skywalker.Extensions.GuidGenerator.IGuidGenerator
+Skywalker.Extensions.GuidGenerator.IGuidGenerator.Create() -> System.Guid
+Skywalker.Extensions.GuidGenerator.SequentialGuidGeneratorOptions
+Skywalker.Extensions.GuidGenerator.SequentialGuidGeneratorOptions.DefaultSequentialGuidType.get -> Skywalker.Extensions.GuidGenerator.SequentialGuidType?
+Skywalker.Extensions.GuidGenerator.SequentialGuidGeneratorOptions.DefaultSequentialGuidType.set -> void
+Skywalker.Extensions.GuidGenerator.SequentialGuidGeneratorOptions.GetDefaultSequentialGuidType() -> Skywalker.Extensions.GuidGenerator.SequentialGuidType
+Skywalker.Extensions.GuidGenerator.SequentialGuidGeneratorOptions.SequentialGuidGeneratorOptions() -> void
+Skywalker.Extensions.GuidGenerator.SequentialGuidType
+Skywalker.Extensions.GuidGenerator.SequentialGuidType.SequentialAsBinary = 1 -> Skywalker.Extensions.GuidGenerator.SequentialGuidType
+Skywalker.Extensions.GuidGenerator.SequentialGuidType.SequentialAsString = 0 -> Skywalker.Extensions.GuidGenerator.SequentialGuidType
+Skywalker.Extensions.GuidGenerator.SequentialGuidType.SequentialAtEnd = 2 -> Skywalker.Extensions.GuidGenerator.SequentialGuidType
+static Microsoft.Extensions.DependencyInjection.GuidGeneratorIServiceCollectionExtensions.AddGuidGenerator(this Microsoft.Extensions.DependencyInjection.IServiceCollection! services) -> Microsoft.Extensions.DependencyInjection.IServiceCollection!
+static Microsoft.Extensions.DependencyInjection.GuidGeneratorIServiceCollectionExtensions.AddGuidGenerator(this Microsoft.Extensions.DependencyInjection.IServiceCollection! services, System.Action<Skywalker.Extensions.GuidGenerator.SequentialGuidGeneratorOptions!>! configure) -> Microsoft.Extensions.DependencyInjection.IServiceCollection!

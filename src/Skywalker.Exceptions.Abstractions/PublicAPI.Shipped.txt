@@ -1,0 +1,111 @@
+#nullable enable
+abstract Skywalker.Exceptions.ExceptionSubscriber.HandleAsync(Skywalker.Exceptions.ExceptionNotificationContext! context) -> System.Threading.Tasks.Task!
+Microsoft.Extensions.DependencyInjection.DddExceptionsServiceCollectionExtensions
+Skywalker.Exceptions.Abstractions.IExceptionNotifier
+Skywalker.Exceptions.Abstractions.IExceptionNotifier.NotifyAsync(Skywalker.Exceptions.ExceptionNotificationContext! context) -> System.Threading.Tasks.Task!
+Skywalker.Exceptions.Abstractions.IExceptionSubscriber
+Skywalker.Exceptions.Abstractions.IExceptionSubscriber.HandleAsync(Skywalker.Exceptions.ExceptionNotificationContext! context) -> System.Threading.Tasks.Task!
+Skywalker.Exceptions.Abstractions.IHasErrorDetails
+Skywalker.Exceptions.Abstractions.IHasErrorDetails.Details.get -> string!
+Skywalker.Exceptions.AuthorizationException
+Skywalker.Exceptions.AuthorizationException.AuthorizationException() -> void
+Skywalker.Exceptions.AuthorizationException.AuthorizationException(string! message) -> void
+Skywalker.Exceptions.AuthorizationException.AuthorizationException(string! message, string? code) -> void
+Skywalker.Exceptions.AuthorizationException.AuthorizationException(string! message, string? code, System.Exception? innerException) -> void
+Skywalker.Exceptions.AuthorizationException.AuthorizationException(string! message, System.Exception? innerException) -> void
+Skywalker.Exceptions.AuthorizationException.Code.get -> string?
+Skywalker.Exceptions.AuthorizationException.LogLevel.get -> Microsoft.Extensions.Logging.LogLevel
+Skywalker.Exceptions.AuthorizationException.LogLevel.set -> void
+Skywalker.Exceptions.AuthorizationException.WithData(string! name, object! value) -> Skywalker.Exceptions.AuthorizationException!
+Skywalker.Exceptions.EntityNotFoundException
+Skywalker.Exceptions.EntityNotFoundException.Code.get -> string?
+Skywalker.Exceptions.EntityNotFoundException.EntityId.get -> object?
+Skywalker.Exceptions.EntityNotFoundException.EntityNotFoundException() -> void
+Skywalker.Exceptions.EntityNotFoundException.EntityNotFoundException(string! message) -> void
+Skywalker.Exceptions.EntityNotFoundException.EntityNotFoundException(string! message, System.Exception? innerException) -> void
+Skywalker.Exceptions.EntityNotFoundException.EntityNotFoundException(System.Type! entityType) -> void
+Skywalker.Exceptions.EntityNotFoundException.EntityNotFoundException(System.Type! entityType, object? entityId) -> void
+Skywalker.Exceptions.EntityNotFoundException.EntityNotFoundException(System.Type! entityType, object? entityId, System.Exception? innerException) -> void
+Skywalker.Exceptions.EntityNotFoundException.EntityType.get -> System.Type?
+Skywalker.Exceptions.ErrorInfo
+Skywalker.Exceptions.ErrorInfo.Code.get -> string?
+Skywalker.Exceptions.ErrorInfo.Code.set -> void
+Skywalker.Exceptions.ErrorInfo.Details.get -> string?
+Skywalker.Exceptions.ErrorInfo.Details.set -> void
+Skywalker.Exceptions.ErrorInfo.ErrorInfo() -> void
+Skywalker.Exceptions.ErrorInfo.ErrorInfo(string! message) -> void
+Skywalker.Exceptions.ErrorInfo.ErrorInfo(string? code, string! message) -> void
+Skywalker.Exceptions.ErrorInfo.ErrorInfo(string? code, string! message, string? details) -> void
+Skywalker.Exceptions.ErrorInfo.Message.get -> string!
+Skywalker.Exceptions.ErrorInfo.Message.set -> void
+Skywalker.Exceptions.ErrorInfo.ValidationErrors.get -> Skywalker.Exceptions.ValidationErrorInfo![]?
+Skywalker.Exceptions.ErrorInfo.ValidationErrors.set -> void
+Skywalker.Exceptions.ExceptionConvertOptions
+Skywalker.Exceptions.ExceptionConvertOptions.ExceptionConvertOptions() -> void
+Skywalker.Exceptions.ExceptionConvertOptions.IncludeDetails.get -> bool
+Skywalker.Exceptions.ExceptionConvertOptions.IncludeDetails.set -> void
+Skywalker.Exceptions.ExceptionConvertOptions.SendNotifications.get -> bool
+Skywalker.Exceptions.ExceptionConvertOptions.SendNotifications.set -> void
+Skywalker.Exceptions.ExceptionNotificationContext
+Skywalker.Exceptions.ExceptionNotificationContext.Exception.get -> System.Exception!
+Skywalker.Exceptions.ExceptionNotificationContext.ExceptionNotificationContext(System.Exception! exception, Microsoft.Extensions.Logging.LogLevel? logLevel = null, bool handled = true) -> void
+Skywalker.Exceptions.ExceptionNotificationContext.Handled.get -> bool
+Skywalker.Exceptions.ExceptionNotificationContext.LogLevel.get -> Microsoft.Extensions.Logging.LogLevel
+Skywalker.Exceptions.ExceptionNotifier
+Skywalker.Exceptions.ExceptionNotifier.ExceptionNotifier(Microsoft.Extensions.DependencyInjection.IServiceScopeFactory! serviceScopeFactory) -> void
+Skywalker.Exceptions.ExceptionNotifier.Logger.get -> Microsoft.Extensions.Logging.ILogger<Skywalker.Exceptions.ExceptionNotifier!>!
+Skywalker.Exceptions.ExceptionNotifier.Logger.set -> void
+Skywalker.Exceptions.ExceptionNotifier.ServiceScopeFactory.get -> Microsoft.Extensions.DependencyInjection.IServiceScopeFactory!
+Skywalker.Exceptions.ExceptionNotifierExtensions
+Skywalker.Exceptions.ExceptionSubscriber
+Skywalker.Exceptions.ExceptionSubscriber.ExceptionSubscriber() -> void
+Skywalker.Exceptions.IExceptionToErrorInfoConverter
+Skywalker.Exceptions.IExceptionToErrorInfoConverter.Convert(System.Exception! exception, Skywalker.Exceptions.ExceptionConvertOptions? options = null) -> Skywalker.Exceptions.ErrorInfo!
+Skywalker.Exceptions.IHasErrorCode
+Skywalker.Exceptions.IHasErrorCode.Code.get -> string?
+Skywalker.Exceptions.IHasHttpStatusCode
+Skywalker.Exceptions.IHasHttpStatusCode.HttpStatusCode.get -> System.Net.HttpStatusCode
+Skywalker.Exceptions.IHasLogLevel
+Skywalker.Exceptions.IHasLogLevel.LogLevel.get -> Microsoft.Extensions.Logging.LogLevel
+Skywalker.Exceptions.IHasValidationErrors
+Skywalker.Exceptions.IHasValidationErrors.ValidationErrors.get -> System.Collections.Generic.IReadOnlyList<System.ComponentModel.DataAnnotations.ValidationResult!>!
+Skywalker.Exceptions.IHttpExceptionStatusCodeFinder
+Skywalker.Exceptions.IHttpExceptionStatusCodeFinder.GetStatusCode(object! httpContext, System.Exception! exception) -> System.Net.HttpStatusCode
+Skywalker.Exceptions.NullExceptionNotifier
+Skywalker.Exceptions.NullExceptionNotifier.NotifyAsync(Skywalker.Exceptions.ExceptionNotificationContext! context) -> System.Threading.Tasks.Task!
+Skywalker.Exceptions.SkywalkerException
+Skywalker.Exceptions.SkywalkerException.SkywalkerException() -> void
+Skywalker.Exceptions.SkywalkerException.SkywalkerException(string? message) -> void
+Skywalker.Exceptions.SkywalkerException.SkywalkerException(string? message, System.Exception? innerException) -> void
+Skywalker.Exceptions.SkywalkerValidationException
+Skywalker.Exceptions.SkywalkerValidationException.Code.get -> string?
+Skywalker.Exceptions.SkywalkerValidationException.LogLevel.get -> Microsoft.Extensions.Logging.LogLevel
+Skywalker.Exceptions.SkywalkerValidationException.LogLevel.set -> void
+Skywalker.Exceptions.SkywalkerValidationException.SkywalkerValidationException() -> void
+Skywalker.Exceptions.SkywalkerValidationException.SkywalkerValidationException(string! message) -> void
+Skywalker.Exceptions.SkywalkerValidationException.SkywalkerValidationException(string! message, System.Collections.Generic.IEnumerable<System.ComponentModel.DataAnnotations.ValidationResult!>! validationErrors) -> void
+Skywalker.Exceptions.SkywalkerValidationException.SkywalkerValidationException(string! message, System.Exception? innerException) -> void
+Skywalker.Exceptions.SkywalkerValidationException.SkywalkerValidationException(System.Collections.Generic.IEnumerable<System.ComponentModel.DataAnnotations.ValidationResult!>! validationErrors) -> void
+Skywalker.Exceptions.SkywalkerValidationException.ValidationErrors.get -> System.Collections.Generic.IReadOnlyList<System.ComponentModel.DataAnnotations.ValidationResult!>!
+Skywalker.Exceptions.UserFriendlyException
+Skywalker.Exceptions.UserFriendlyException.Code.get -> string?
+Skywalker.Exceptions.UserFriendlyException.UserFriendlyException(string? code) -> void
+Skywalker.Exceptions.UserFriendlyException.UserFriendlyException(string? code, string! message) -> void
+Skywalker.Exceptions.UserFriendlyException.WithData(string! name, object! value) -> Skywalker.Exceptions.UserFriendlyException!
+Skywalker.Exceptions.ValidationErrorInfo
+Skywalker.Exceptions.ValidationErrorInfo.Members.get -> string![]?
+Skywalker.Exceptions.ValidationErrorInfo.Members.set -> void
+Skywalker.Exceptions.ValidationErrorInfo.Message.get -> string!
+Skywalker.Exceptions.ValidationErrorInfo.Message.set -> void
+Skywalker.Exceptions.ValidationErrorInfo.ValidationErrorInfo() -> void
+Skywalker.Exceptions.ValidationErrorInfo.ValidationErrorInfo(string! message) -> void
+Skywalker.Exceptions.ValidationErrorInfo.ValidationErrorInfo(string! message, string![]! members) -> void
+Skywalker.Extensions.DependencyInjection.ICachedServiceProvider
+Skywalker.Extensions.DependencyInjection.IScopedServiceProviderAccesssor
+Skywalker.Extensions.DependencyInjection.IScopedServiceProviderAccesssor.Current.get -> System.IServiceProvider!
+Skywalker.Extensions.DependencyInjection.IServiceProviderAccessor
+Skywalker.Extensions.DependencyInjection.IServiceProviderAccessor.ServiceProvider.get -> System.IServiceProvider?
+static Microsoft.Extensions.DependencyInjection.DddExceptionsServiceCollectionExtensions.AddDddExceptions(this Microsoft.Extensions.DependencyInjection.IServiceCollection! services) -> Microsoft.Extensions.DependencyInjection.IServiceCollection!
+static Skywalker.Exceptions.ExceptionNotifierExtensions.NotifyAsync(this Skywalker.Exceptions.Abstractions.IExceptionNotifier! exceptionNotifier, System.Exception! exception, Microsoft.Extensions.Logging.LogLevel? logLevel = null, bool handled = true) -> System.Threading.Tasks.Task!
+static Skywalker.Exceptions.NullExceptionNotifier.Instance.get -> Skywalker.Exceptions.NullExceptionNotifier!
+virtual Skywalker.Exceptions.ExceptionNotifier.NotifyAsync(Skywalker.Exceptions.ExceptionNotificationContext! context) -> System.Threading.Tasks.Task!

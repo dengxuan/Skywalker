@@ -1,0 +1,17 @@
+#nullable enable
+Microsoft.Extensions.DependencyInjection.SmsIServiceCollectionExtensions
+Skywalker.Sms.Abstractions.ISmsSender
+Skywalker.Sms.Abstractions.ISmsSender.SendAsync(Skywalker.Sms.SmsMessage! smsMessage) -> System.Threading.Tasks.Task!
+Skywalker.Sms.NullSmsSender
+Skywalker.Sms.NullSmsSender.Logger.get -> Microsoft.Extensions.Logging.ILogger<Skywalker.Sms.NullSmsSender!>!
+Skywalker.Sms.NullSmsSender.Logger.set -> void
+Skywalker.Sms.NullSmsSender.NullSmsSender() -> void
+Skywalker.Sms.NullSmsSender.SendAsync(Skywalker.Sms.SmsMessage! smsMessage) -> System.Threading.Tasks.Task!
+Skywalker.Sms.SmsMessage
+Skywalker.Sms.SmsMessage.PhoneNumber.get -> string!
+Skywalker.Sms.SmsMessage.Properties.get -> System.Collections.Generic.IDictionary<string!, object!>!
+Skywalker.Sms.SmsMessage.SmsMessage(string! phoneNumber, string! text) -> void
+Skywalker.Sms.SmsMessage.Text.get -> string!
+Skywalker.Sms.SmsSenderExtensions
+static Microsoft.Extensions.DependencyInjection.SmsIServiceCollectionExtensions.AddSms(this Microsoft.Extensions.DependencyInjection.IServiceCollection! services) -> Microsoft.Extensions.DependencyInjection.IServiceCollection!
+static Skywalker.Sms.SmsSenderExtensions.SendAsync(this Skywalker.Sms.Abstractions.ISmsSender! smsSender, string! phoneNumber, string! text) -> System.Threading.Tasks.Task!

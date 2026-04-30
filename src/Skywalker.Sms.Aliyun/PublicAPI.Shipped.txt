@@ -1,0 +1,16 @@
+#nullable enable
+Microsoft.Extensions.DependencyInjection.AliyunSmsSenderExtensions
+Skywalker.Sms.Aliyun.AliyunSmsSender
+Skywalker.Sms.Aliyun.AliyunSmsSender.AliyunSmsSender(Microsoft.Extensions.Options.IOptionsMonitor<Skywalker.Sms.Aliyun.SkywalkerAliyunSmsOptions!>! options) -> void
+Skywalker.Sms.Aliyun.AliyunSmsSender.Options.get -> Skywalker.Sms.Aliyun.SkywalkerAliyunSmsOptions!
+Skywalker.Sms.Aliyun.AliyunSmsSender.SendAsync(Skywalker.Sms.SmsMessage! smsMessage) -> System.Threading.Tasks.Task!
+Skywalker.Sms.Aliyun.SkywalkerAliyunSmsOptions
+Skywalker.Sms.Aliyun.SkywalkerAliyunSmsOptions.AccessKeyId.get -> string?
+Skywalker.Sms.Aliyun.SkywalkerAliyunSmsOptions.AccessKeyId.set -> void
+Skywalker.Sms.Aliyun.SkywalkerAliyunSmsOptions.AccessKeySecret.get -> string?
+Skywalker.Sms.Aliyun.SkywalkerAliyunSmsOptions.AccessKeySecret.set -> void
+Skywalker.Sms.Aliyun.SkywalkerAliyunSmsOptions.RegionId.get -> string?
+Skywalker.Sms.Aliyun.SkywalkerAliyunSmsOptions.RegionId.set -> void
+Skywalker.Sms.Aliyun.SkywalkerAliyunSmsOptions.SkywalkerAliyunSmsOptions() -> void
+static Microsoft.Extensions.DependencyInjection.AliyunSmsSenderExtensions.AddAliyunSms(this Microsoft.Extensions.DependencyInjection.IServiceCollection! service, System.Action<Skywalker.Sms.Aliyun.SkywalkerAliyunSmsOptions!>! options) -> Microsoft.Extensions.DependencyInjection.IServiceCollection!
+virtual Skywalker.Sms.Aliyun.AliyunSmsSender.CreateClient() -> AlibabaCloud.SDK.Dysmsapi20170525.Client!

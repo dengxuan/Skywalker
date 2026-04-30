@@ -1,0 +1,197 @@
+#nullable enable
+const Skywalker.Ddd.AspNetCore.ResponseEncryption.TripledesEncryptionProvider.Name = "3des" -> string!
+Microsoft.AspNetCore.Builder.DddIApplicationBuilderExtensions
+Microsoft.AspNetCore.Builder.ExceptionHandlingApplicationBuilderExtensions
+Microsoft.Extensions.DependencyInjection.ExceptionHandlingServiceCollectionExtensions
+Microsoft.Extensions.DependencyInjection.SkywalkerAspNetCoreServiceCollectionExtensions
+Microsoft.Extensions.DependencyInjection.SkywalkerResponseWrapperIServiceCollectionExtensions
+Skywalker.Ddd.AspNetCore.ExceptionHandling.DefaultExceptionToErrorInfoConverter
+Skywalker.Ddd.AspNetCore.ExceptionHandling.DefaultExceptionToErrorInfoConverter.DefaultExceptionToErrorInfoConverter() -> void
+Skywalker.Ddd.AspNetCore.ExceptionHandling.DefaultHttpExceptionStatusCodeFinder
+Skywalker.Ddd.AspNetCore.ExceptionHandling.DefaultHttpExceptionStatusCodeFinder.DefaultHttpExceptionStatusCodeFinder() -> void
+Skywalker.Ddd.AspNetCore.ExceptionHandling.ExceptionHandlingOptions
+Skywalker.Ddd.AspNetCore.ExceptionHandling.ExceptionHandlingOptions.ExceptionHandlingOptions() -> void
+Skywalker.Ddd.AspNetCore.ExceptionHandling.ExceptionHandlingOptions.SendExceptionDetailsToClients.get -> bool
+Skywalker.Ddd.AspNetCore.ExceptionHandling.ExceptionHandlingOptions.SendExceptionDetailsToClients.set -> void
+Skywalker.Ddd.AspNetCore.ExceptionHandling.ExceptionHandlingOptions.SendExceptionsNotifications.get -> bool
+Skywalker.Ddd.AspNetCore.ExceptionHandling.ExceptionHandlingOptions.SendExceptionsNotifications.set -> void
+Skywalker.Ddd.AspNetCore.ExceptionHandling.SkywalkerExceptionHandlingMiddleware
+Skywalker.Ddd.AspNetCore.ExceptionHandling.SkywalkerExceptionHandlingMiddleware.InvokeAsync(Microsoft.AspNetCore.Http.HttpContext! context) -> System.Threading.Tasks.Task!
+Skywalker.Ddd.AspNetCore.ExceptionHandling.SkywalkerExceptionHandlingMiddleware.SkywalkerExceptionHandlingMiddleware(Microsoft.AspNetCore.Http.RequestDelegate! next, Microsoft.Extensions.Logging.ILogger<Skywalker.Ddd.AspNetCore.ExceptionHandling.SkywalkerExceptionHandlingMiddleware!>! logger) -> void
+Skywalker.Ddd.AspNetCore.Mvc.Filters.ExceptionFilter
+Skywalker.Ddd.AspNetCore.Mvc.Filters.ExceptionFilter.ExceptionFilter(Skywalker.Ddd.AspNetCore.Mvc.Models.Abstractions.IErrorBuilder! errorBuilder, Skywalker.Ddd.AspNetCore.Mvc.ResponseWrapperOptions! options, Microsoft.Extensions.Logging.ILogger<Skywalker.Ddd.AspNetCore.Mvc.Filters.ExceptionFilter!>! logger) -> void
+Skywalker.Ddd.AspNetCore.Mvc.Filters.ExceptionFilter.OnException(Microsoft.AspNetCore.Mvc.Filters.ExceptionContext! context) -> void
+Skywalker.Ddd.AspNetCore.Mvc.Models.Abstractions.AjaxResponse
+Skywalker.Ddd.AspNetCore.Mvc.Models.Abstractions.AjaxResponse.AjaxResponse() -> void
+Skywalker.Ddd.AspNetCore.Mvc.Models.Abstractions.AjaxResponse.AjaxResponse(bool success) -> void
+Skywalker.Ddd.AspNetCore.Mvc.Models.Abstractions.AjaxResponse.AjaxResponse(object? result) -> void
+Skywalker.Ddd.AspNetCore.Mvc.Models.Abstractions.AjaxResponse.AjaxResponse(Skywalker.Ddd.AspNetCore.Mvc.Models.Abstractions.Error! error, bool unAuthorizedRequest = false) -> void
+Skywalker.Ddd.AspNetCore.Mvc.Models.Abstractions.AjaxResponse<TResult>
+Skywalker.Ddd.AspNetCore.Mvc.Models.Abstractions.AjaxResponse<TResult>.AjaxResponse() -> void
+Skywalker.Ddd.AspNetCore.Mvc.Models.Abstractions.AjaxResponse<TResult>.AjaxResponse(bool success) -> void
+Skywalker.Ddd.AspNetCore.Mvc.Models.Abstractions.AjaxResponse<TResult>.AjaxResponse(Skywalker.Ddd.AspNetCore.Mvc.Models.Abstractions.Error! error, bool unAuthorizedRequest = false) -> void
+Skywalker.Ddd.AspNetCore.Mvc.Models.Abstractions.AjaxResponse<TResult>.AjaxResponse(TResult? result) -> void
+Skywalker.Ddd.AspNetCore.Mvc.Models.Abstractions.AjaxResponse<TResult>.Result.get -> TResult?
+Skywalker.Ddd.AspNetCore.Mvc.Models.Abstractions.AjaxResponse<TResult>.Result.set -> void
+Skywalker.Ddd.AspNetCore.Mvc.Models.Abstractions.AjaxResponseBase
+Skywalker.Ddd.AspNetCore.Mvc.Models.Abstractions.AjaxResponseBase.AjaxResponseBase() -> void
+Skywalker.Ddd.AspNetCore.Mvc.Models.Abstractions.AjaxResponseBase.Error.get -> Skywalker.Ddd.AspNetCore.Mvc.Models.Abstractions.Error?
+Skywalker.Ddd.AspNetCore.Mvc.Models.Abstractions.AjaxResponseBase.Error.set -> void
+Skywalker.Ddd.AspNetCore.Mvc.Models.Abstractions.AjaxResponseBase.Success.get -> bool
+Skywalker.Ddd.AspNetCore.Mvc.Models.Abstractions.AjaxResponseBase.Success.set -> void
+Skywalker.Ddd.AspNetCore.Mvc.Models.Abstractions.AjaxResponseBase.UnAuthorizedRequest.get -> bool
+Skywalker.Ddd.AspNetCore.Mvc.Models.Abstractions.AjaxResponseBase.UnAuthorizedRequest.set -> void
+Skywalker.Ddd.AspNetCore.Mvc.Models.Abstractions.DontWrapResultAttribute
+Skywalker.Ddd.AspNetCore.Mvc.Models.Abstractions.DontWrapResultAttribute.DontWrapResultAttribute() -> void
+Skywalker.Ddd.AspNetCore.Mvc.Models.Abstractions.Error
+Skywalker.Ddd.AspNetCore.Mvc.Models.Abstractions.Error.Code.get -> string!
+Skywalker.Ddd.AspNetCore.Mvc.Models.Abstractions.Error.Code.set -> void
+Skywalker.Ddd.AspNetCore.Mvc.Models.Abstractions.Error.Details.get -> string?
+Skywalker.Ddd.AspNetCore.Mvc.Models.Abstractions.Error.Details.set -> void
+Skywalker.Ddd.AspNetCore.Mvc.Models.Abstractions.Error.Error(string! code, string! message) -> void
+Skywalker.Ddd.AspNetCore.Mvc.Models.Abstractions.Error.Error(string! code, string! message, string! details) -> void
+Skywalker.Ddd.AspNetCore.Mvc.Models.Abstractions.Error.Message.get -> string!
+Skywalker.Ddd.AspNetCore.Mvc.Models.Abstractions.Error.Message.set -> void
+Skywalker.Ddd.AspNetCore.Mvc.Models.Abstractions.Error.ValidationErrors.get -> Skywalker.Ddd.AspNetCore.Mvc.Models.Abstractions.ValidationErrorDto![]?
+Skywalker.Ddd.AspNetCore.Mvc.Models.Abstractions.Error.ValidationErrors.set -> void
+Skywalker.Ddd.AspNetCore.Mvc.Models.Abstractions.ErrorBuilder
+Skywalker.Ddd.AspNetCore.Mvc.Models.Abstractions.ErrorBuilder.AddExceptionConverter(Skywalker.Ddd.AspNetCore.Mvc.Models.Abstractions.IExceptionToErrorConverter! converter) -> void
+Skywalker.Ddd.AspNetCore.Mvc.Models.Abstractions.ErrorBuilder.BuildForException(System.Exception! exception) -> Skywalker.Ddd.AspNetCore.Mvc.Models.Abstractions.Error!
+Skywalker.Ddd.AspNetCore.Mvc.Models.Abstractions.ErrorBuilder.ErrorBuilder(Skywalker.Ddd.AspNetCore.Mvc.ResponseWrapperOptions! configuration) -> void
+Skywalker.Ddd.AspNetCore.Mvc.Models.Abstractions.IErrorBuilder
+Skywalker.Ddd.AspNetCore.Mvc.Models.Abstractions.IErrorBuilder.AddExceptionConverter(Skywalker.Ddd.AspNetCore.Mvc.Models.Abstractions.IExceptionToErrorConverter! converter) -> void
+Skywalker.Ddd.AspNetCore.Mvc.Models.Abstractions.IErrorBuilder.BuildForException(System.Exception! exception) -> Skywalker.Ddd.AspNetCore.Mvc.Models.Abstractions.Error!
+Skywalker.Ddd.AspNetCore.Mvc.Models.Abstractions.IExceptionToErrorConverter
+Skywalker.Ddd.AspNetCore.Mvc.Models.Abstractions.IExceptionToErrorConverter.Convert(System.Exception! exception) -> Skywalker.Ddd.AspNetCore.Mvc.Models.Abstractions.Error!
+Skywalker.Ddd.AspNetCore.Mvc.Models.Abstractions.IExceptionToErrorConverter.Next.set -> void
+Skywalker.Ddd.AspNetCore.Mvc.Models.Abstractions.ValidationErrorDto
+Skywalker.Ddd.AspNetCore.Mvc.Models.Abstractions.ValidationErrorDto.Member.get -> string!
+Skywalker.Ddd.AspNetCore.Mvc.Models.Abstractions.ValidationErrorDto.Member.set -> void
+Skywalker.Ddd.AspNetCore.Mvc.Models.Abstractions.ValidationErrorDto.Message.get -> string!
+Skywalker.Ddd.AspNetCore.Mvc.Models.Abstractions.ValidationErrorDto.Message.set -> void
+Skywalker.Ddd.AspNetCore.Mvc.Models.Abstractions.ValidationErrorDto.ValidationErrorDto(string! member, string! message) -> void
+Skywalker.Ddd.AspNetCore.Mvc.Models.Abstractions.WrapResultAttribute
+Skywalker.Ddd.AspNetCore.Mvc.Models.Abstractions.WrapResultAttribute.LogError.get -> bool
+Skywalker.Ddd.AspNetCore.Mvc.Models.Abstractions.WrapResultAttribute.LogError.set -> void
+Skywalker.Ddd.AspNetCore.Mvc.Models.Abstractions.WrapResultAttribute.WrapOnError.get -> bool
+Skywalker.Ddd.AspNetCore.Mvc.Models.Abstractions.WrapResultAttribute.WrapOnError.set -> void
+Skywalker.Ddd.AspNetCore.Mvc.Models.Abstractions.WrapResultAttribute.WrapOnSuccess.get -> bool
+Skywalker.Ddd.AspNetCore.Mvc.Models.Abstractions.WrapResultAttribute.WrapOnSuccess.set -> void
+Skywalker.Ddd.AspNetCore.Mvc.Models.Abstractions.WrapResultAttribute.WrapResultAttribute(bool wrapOnSuccess = true, bool wrapOnError = true) -> void
+Skywalker.Ddd.AspNetCore.Mvc.Models.ModelStateExtensions
+Skywalker.Ddd.AspNetCore.Mvc.ResponseWrapperOptions
+Skywalker.Ddd.AspNetCore.Mvc.ResponseWrapperOptions.DefaultWrapResultAttribute.get -> Skywalker.Ddd.AspNetCore.Mvc.Models.Abstractions.WrapResultAttribute!
+Skywalker.Ddd.AspNetCore.Mvc.ResponseWrapperOptions.IsValidationEnabledForControllers.get -> bool
+Skywalker.Ddd.AspNetCore.Mvc.ResponseWrapperOptions.IsValidationEnabledForControllers.set -> void
+Skywalker.Ddd.AspNetCore.Mvc.ResponseWrapperOptions.ResponseWrapperOptions() -> void
+Skywalker.Ddd.AspNetCore.Mvc.ResponseWrapperOptions.SendAllExceptionsToClients.get -> bool
+Skywalker.Ddd.AspNetCore.Mvc.ResponseWrapperOptions.SendAllExceptionsToClients.set -> void
+Skywalker.Ddd.AspNetCore.Mvc.ResponseWrapperOptions.SetNoCacheForAjaxResponses.get -> bool
+Skywalker.Ddd.AspNetCore.Mvc.ResponseWrapperOptions.SetNoCacheForAjaxResponses.set -> void
+Skywalker.Ddd.AspNetCore.Mvc.Results.ActionResultHelper
+Skywalker.Ddd.AspNetCore.Mvc.Results.ResultFilter
+Skywalker.Ddd.AspNetCore.Mvc.Results.ResultFilter.ResultFilter(Skywalker.Ddd.AspNetCore.Mvc.ResponseWrapperOptions! options, Skywalker.Ddd.AspNetCore.Mvc.Results.Wrapping.IActionResultWrapperFactory! actionResultWrapper) -> void
+Skywalker.Ddd.AspNetCore.Mvc.Results.Wrapping.ActionResultWrapperFactory
+Skywalker.Ddd.AspNetCore.Mvc.Results.Wrapping.ActionResultWrapperFactory.ActionResultWrapperFactory() -> void
+Skywalker.Ddd.AspNetCore.Mvc.Results.Wrapping.ActionResultWrapperFactory.CreateFor(Microsoft.AspNetCore.Mvc.Filters.ResultExecutingContext! actionResult) -> Skywalker.Ddd.AspNetCore.Mvc.Results.Wrapping.IActionResultWrapper!
+Skywalker.Ddd.AspNetCore.Mvc.Results.Wrapping.BadRequestObjectResultWrapper
+Skywalker.Ddd.AspNetCore.Mvc.Results.Wrapping.BadRequestObjectResultWrapper.BadRequestObjectResultWrapper() -> void
+Skywalker.Ddd.AspNetCore.Mvc.Results.Wrapping.BadRequestObjectResultWrapper.Wrap(Microsoft.AspNetCore.Mvc.Filters.ResultExecutingContext! actionResult) -> void
+Skywalker.Ddd.AspNetCore.Mvc.Results.Wrapping.BadRequestResultWrapper
+Skywalker.Ddd.AspNetCore.Mvc.Results.Wrapping.BadRequestResultWrapper.BadRequestResultWrapper() -> void
+Skywalker.Ddd.AspNetCore.Mvc.Results.Wrapping.BadRequestResultWrapper.Wrap(Microsoft.AspNetCore.Mvc.Filters.ResultExecutingContext! actionResult) -> void
+Skywalker.Ddd.AspNetCore.Mvc.Results.Wrapping.EmptyActionResultWrapper
+Skywalker.Ddd.AspNetCore.Mvc.Results.Wrapping.EmptyActionResultWrapper.EmptyActionResultWrapper() -> void
+Skywalker.Ddd.AspNetCore.Mvc.Results.Wrapping.EmptyActionResultWrapper.Wrap(Microsoft.AspNetCore.Mvc.Filters.ResultExecutingContext! actionResult) -> void
+Skywalker.Ddd.AspNetCore.Mvc.Results.Wrapping.IActionResultWrapper
+Skywalker.Ddd.AspNetCore.Mvc.Results.Wrapping.IActionResultWrapper.Wrap(Microsoft.AspNetCore.Mvc.Filters.ResultExecutingContext! actionResult) -> void
+Skywalker.Ddd.AspNetCore.Mvc.Results.Wrapping.IActionResultWrapperFactory
+Skywalker.Ddd.AspNetCore.Mvc.Results.Wrapping.IActionResultWrapperFactory.CreateFor(Microsoft.AspNetCore.Mvc.Filters.ResultExecutingContext! actionResult) -> Skywalker.Ddd.AspNetCore.Mvc.Results.Wrapping.IActionResultWrapper!
+Skywalker.Ddd.AspNetCore.Mvc.Results.Wrapping.NullActionResultWrapper
+Skywalker.Ddd.AspNetCore.Mvc.Results.Wrapping.NullActionResultWrapper.NullActionResultWrapper() -> void
+Skywalker.Ddd.AspNetCore.Mvc.Results.Wrapping.NullActionResultWrapper.Wrap(Microsoft.AspNetCore.Mvc.Filters.ResultExecutingContext! actionResult) -> void
+Skywalker.Ddd.AspNetCore.Mvc.Results.Wrapping.ObjectActionResultWrapper
+Skywalker.Ddd.AspNetCore.Mvc.Results.Wrapping.ObjectActionResultWrapper.ObjectActionResultWrapper() -> void
+Skywalker.Ddd.AspNetCore.Mvc.Results.Wrapping.ObjectActionResultWrapper.Wrap(Microsoft.AspNetCore.Mvc.Filters.ResultExecutingContext! actionResult) -> void
+Skywalker.Ddd.AspNetCore.RequestDecryption.IDecryptionProvider
+Skywalker.Ddd.AspNetCore.RequestDecryption.IDecryptionProvider.GetDecryptionStream(System.IO.Stream! stream) -> System.Threading.Tasks.Task<System.IO.Stream!>!
+Skywalker.Ddd.AspNetCore.RequestDecryption.IDecryptionProvider.Key.get -> byte[]!
+Skywalker.Ddd.AspNetCore.RequestDecryption.IDecryptionProvider.Key.set -> void
+Skywalker.Ddd.AspNetCore.RequestDecryption.IDecryptionProvider.Mode.get -> System.Security.Cryptography.CipherMode
+Skywalker.Ddd.AspNetCore.RequestDecryption.IDecryptionProvider.Mode.set -> void
+Skywalker.Ddd.AspNetCore.RequestDecryption.IDecryptionProvider.Padding.get -> System.Security.Cryptography.PaddingMode
+Skywalker.Ddd.AspNetCore.RequestDecryption.IDecryptionProvider.Padding.set -> void
+Skywalker.Ddd.AspNetCore.RequestDecryption.IRequestDecryptionProvider
+Skywalker.Ddd.AspNetCore.RequestDecryption.IRequestDecryptionProvider.GetDecryptionStream(Microsoft.AspNetCore.Http.HttpContext! context) -> System.Threading.Tasks.Task<System.IO.Stream?>!
+Skywalker.Ddd.AspNetCore.RequestDecryption.RequestDecryptionBuilderExtensions
+Skywalker.Ddd.AspNetCore.RequestDecryption.RequestDecryptionServiceExtensions
+Skywalker.Ddd.AspNetCore.ResponseEncryption.EncryptionFeature
+Skywalker.Ddd.AspNetCore.ResponseEncryption.EncryptionFeature.CryptoName.get -> string!
+Skywalker.Ddd.AspNetCore.ResponseEncryption.EncryptionFeature.CryptoName.set -> void
+Skywalker.Ddd.AspNetCore.ResponseEncryption.EncryptionFeature.EncryptionFeature(string! name, string! secureKey, System.Security.Cryptography.CipherMode cipherMode = System.Security.Cryptography.CipherMode.CBC, System.Security.Cryptography.PaddingMode paddingMode = System.Security.Cryptography.PaddingMode.PKCS7) -> void
+Skywalker.Ddd.AspNetCore.ResponseEncryption.EncryptionFeature.Key.get -> string!
+Skywalker.Ddd.AspNetCore.ResponseEncryption.EncryptionFeature.Key.set -> void
+Skywalker.Ddd.AspNetCore.ResponseEncryption.EncryptionFeature.Mode.get -> System.Security.Cryptography.CipherMode
+Skywalker.Ddd.AspNetCore.ResponseEncryption.EncryptionFeature.Mode.set -> void
+Skywalker.Ddd.AspNetCore.ResponseEncryption.EncryptionFeature.Padding.get -> System.Security.Cryptography.PaddingMode
+Skywalker.Ddd.AspNetCore.ResponseEncryption.EncryptionFeature.Padding.set -> void
+Skywalker.Ddd.AspNetCore.ResponseEncryption.IEncryptionFeature
+Skywalker.Ddd.AspNetCore.ResponseEncryption.IEncryptionFeature.CryptoName.get -> string!
+Skywalker.Ddd.AspNetCore.ResponseEncryption.IEncryptionFeature.Key.get -> string!
+Skywalker.Ddd.AspNetCore.ResponseEncryption.IEncryptionFeature.Mode.get -> System.Security.Cryptography.CipherMode
+Skywalker.Ddd.AspNetCore.ResponseEncryption.IEncryptionFeature.Mode.set -> void
+Skywalker.Ddd.AspNetCore.ResponseEncryption.IEncryptionFeature.Padding.get -> System.Security.Cryptography.PaddingMode
+Skywalker.Ddd.AspNetCore.ResponseEncryption.IEncryptionFeature.Padding.set -> void
+Skywalker.Ddd.AspNetCore.ResponseEncryption.IEncryptionProvider
+Skywalker.Ddd.AspNetCore.ResponseEncryption.IEncryptionProvider.CreateStream(System.IO.Stream! outputStream) -> System.Threading.Tasks.Task<System.Security.Cryptography.CryptoStream!>!
+Skywalker.Ddd.AspNetCore.ResponseEncryption.IEncryptionProvider.Key.get -> byte[]!
+Skywalker.Ddd.AspNetCore.ResponseEncryption.IEncryptionProvider.Key.set -> void
+Skywalker.Ddd.AspNetCore.ResponseEncryption.IEncryptionProvider.Mode.get -> System.Security.Cryptography.CipherMode
+Skywalker.Ddd.AspNetCore.ResponseEncryption.IEncryptionProvider.Mode.set -> void
+Skywalker.Ddd.AspNetCore.ResponseEncryption.IEncryptionProvider.Padding.get -> System.Security.Cryptography.PaddingMode
+Skywalker.Ddd.AspNetCore.ResponseEncryption.IEncryptionProvider.Padding.set -> void
+Skywalker.Ddd.AspNetCore.ResponseEncryption.IResponseEncryptionProvider
+Skywalker.Ddd.AspNetCore.ResponseEncryption.IResponseEncryptionProvider.GetEncryptionProvider(Microsoft.AspNetCore.Http.HttpContext! context) -> Skywalker.Ddd.AspNetCore.ResponseEncryption.IEncryptionProvider?
+Skywalker.Ddd.AspNetCore.ResponseEncryption.ResponseEncryptionBuilderExtensions
+Skywalker.Ddd.AspNetCore.ResponseEncryption.ResponseEncryptionDefaults
+Skywalker.Ddd.AspNetCore.ResponseEncryption.ResponseEncryptionDefaults.ResponseEncryptionDefaults() -> void
+Skywalker.Ddd.AspNetCore.ResponseEncryption.ResponseEncryptionMiddleware
+Skywalker.Ddd.AspNetCore.ResponseEncryption.ResponseEncryptionMiddleware.Invoke(Microsoft.AspNetCore.Http.HttpContext! context) -> System.Threading.Tasks.Task!
+Skywalker.Ddd.AspNetCore.ResponseEncryption.ResponseEncryptionMiddleware.ResponseEncryptionMiddleware(Microsoft.AspNetCore.Http.RequestDelegate! next, Skywalker.Ddd.AspNetCore.ResponseEncryption.IResponseEncryptionProvider! provider) -> void
+Skywalker.Ddd.AspNetCore.ResponseEncryption.ResponseEncryptionProvider
+Skywalker.Ddd.AspNetCore.ResponseEncryption.ResponseEncryptionProvider.ResponseEncryptionProvider(Microsoft.Extensions.Logging.ILogger<Skywalker.Ddd.AspNetCore.ResponseEncryption.ResponseEncryptionProvider!>! logger) -> void
+Skywalker.Ddd.AspNetCore.ResponseEncryption.ResponseEncryptionServicesExtensions
+Skywalker.Ddd.AspNetCore.ResponseEncryption.TripledesEncryptionProvider
+Skywalker.Ddd.AspNetCore.ResponseEncryption.TripledesEncryptionProvider.CreateStream(System.IO.Stream! outputStream) -> System.Threading.Tasks.Task<System.Security.Cryptography.CryptoStream!>!
+Skywalker.Ddd.AspNetCore.ResponseEncryption.TripledesEncryptionProvider.Key.get -> byte[]!
+Skywalker.Ddd.AspNetCore.ResponseEncryption.TripledesEncryptionProvider.Key.set -> void
+Skywalker.Ddd.AspNetCore.ResponseEncryption.TripledesEncryptionProvider.Mode.get -> System.Security.Cryptography.CipherMode
+Skywalker.Ddd.AspNetCore.ResponseEncryption.TripledesEncryptionProvider.Mode.set -> void
+Skywalker.Ddd.AspNetCore.ResponseEncryption.TripledesEncryptionProvider.Padding.get -> System.Security.Cryptography.PaddingMode
+Skywalker.Ddd.AspNetCore.ResponseEncryption.TripledesEncryptionProvider.Padding.set -> void
+Skywalker.Ddd.AspNetCore.ResponseEncryption.TripledesEncryptionProvider.TripledesEncryptionProvider() -> void
+Skywalker.Ddd.AspNetCore.Uow.UnitOfWorkMiddleware
+Skywalker.Ddd.AspNetCore.Uow.UnitOfWorkMiddleware.InvokeAsync(Microsoft.AspNetCore.Http.HttpContext! context, Skywalker.Ddd.Uow.Abstractions.IUnitOfWorkManager! unitOfWorkManager) -> System.Threading.Tasks.Task!
+Skywalker.Ddd.AspNetCore.Uow.UnitOfWorkMiddleware.UnitOfWorkMiddleware(Microsoft.AspNetCore.Http.RequestDelegate! next, Microsoft.Extensions.DependencyInjection.IServiceScopeFactory! serviceScopeFactory, Microsoft.Extensions.Logging.ILogger<Skywalker.Ddd.AspNetCore.Uow.UnitOfWorkMiddleware!>! logger) -> void
+static Microsoft.AspNetCore.Builder.DddIApplicationBuilderExtensions.UseSkywalker(this Microsoft.AspNetCore.Builder.IApplicationBuilder! app) -> Microsoft.AspNetCore.Builder.IApplicationBuilder!
+static Microsoft.AspNetCore.Builder.DddIApplicationBuilderExtensions.UseUnitOfWork(this Microsoft.AspNetCore.Builder.IApplicationBuilder! app) -> Microsoft.AspNetCore.Builder.IApplicationBuilder!
+static Microsoft.AspNetCore.Builder.ExceptionHandlingApplicationBuilderExtensions.UseSkywalkerExceptionHandling(this Microsoft.AspNetCore.Builder.IApplicationBuilder! app) -> Microsoft.AspNetCore.Builder.IApplicationBuilder!
+static Microsoft.Extensions.DependencyInjection.ExceptionHandlingServiceCollectionExtensions.AddSkywalkerExceptionHandling(this Microsoft.Extensions.DependencyInjection.IServiceCollection! services) -> Microsoft.Extensions.DependencyInjection.IServiceCollection!
+static Microsoft.Extensions.DependencyInjection.ExceptionHandlingServiceCollectionExtensions.AddSkywalkerExceptionHandling(this Microsoft.Extensions.DependencyInjection.IServiceCollection! services, System.Action<Skywalker.Ddd.AspNetCore.ExceptionHandling.ExceptionHandlingOptions!>! configure) -> Microsoft.Extensions.DependencyInjection.IServiceCollection!
+static Microsoft.Extensions.DependencyInjection.SkywalkerAspNetCoreServiceCollectionExtensions.AddAspNetCore(this Skywalker.ISkywalkerBuilder! builder) -> Skywalker.ISkywalkerBuilder!
+static Microsoft.Extensions.DependencyInjection.SkywalkerResponseWrapperIServiceCollectionExtensions.AddResponseWrapper(this Microsoft.Extensions.DependencyInjection.IServiceCollection! services) -> Microsoft.Extensions.DependencyInjection.IServiceCollection!
+static Microsoft.Extensions.DependencyInjection.SkywalkerResponseWrapperIServiceCollectionExtensions.AddResponseWrapper(this Microsoft.Extensions.DependencyInjection.IServiceCollection! services, System.Action<Skywalker.Ddd.AspNetCore.Mvc.ResponseWrapperOptions!>! configure) -> Microsoft.Extensions.DependencyInjection.IServiceCollection!
+static readonly Skywalker.Ddd.AspNetCore.ResponseEncryption.ResponseEncryptionDefaults.MimeTypes -> System.Collections.Generic.IEnumerable<string!>!
+static Skywalker.Ddd.AspNetCore.Mvc.Models.ModelStateExtensions.ToMvcAjaxResponse(this Microsoft.AspNetCore.Mvc.ModelBinding.ModelStateDictionary! modelState) -> Skywalker.Ddd.AspNetCore.Mvc.Models.Abstractions.AjaxResponse!
+static Skywalker.Ddd.AspNetCore.Mvc.Results.ActionResultHelper.IsObjectResult(System.Type! returnType) -> bool
+static Skywalker.Ddd.AspNetCore.RequestDecryption.RequestDecryptionBuilderExtensions.UseRequestDecryption(this Microsoft.AspNetCore.Builder.IApplicationBuilder! builder) -> Microsoft.AspNetCore.Builder.IApplicationBuilder!
+static Skywalker.Ddd.AspNetCore.RequestDecryption.RequestDecryptionServiceExtensions.AddRequestDecryption(this Microsoft.Extensions.DependencyInjection.IServiceCollection! services) -> Microsoft.Extensions.DependencyInjection.IServiceCollection!
+static Skywalker.Ddd.AspNetCore.ResponseEncryption.ResponseEncryptionBuilderExtensions.UseResponseEncryption(this Microsoft.AspNetCore.Builder.IApplicationBuilder! builder) -> Microsoft.AspNetCore.Builder.IApplicationBuilder!
+static Skywalker.Ddd.AspNetCore.ResponseEncryption.ResponseEncryptionServicesExtensions.AddResponseEncryption(this Microsoft.Extensions.DependencyInjection.IServiceCollection! services) -> Microsoft.Extensions.DependencyInjection.IServiceCollection!
+virtual Skywalker.Ddd.AspNetCore.ExceptionHandling.DefaultExceptionToErrorInfoConverter.Convert(System.Exception! exception, Skywalker.Exceptions.ExceptionConvertOptions? options = null) -> Skywalker.Exceptions.ErrorInfo!
+virtual Skywalker.Ddd.AspNetCore.ExceptionHandling.DefaultExceptionToErrorInfoConverter.CreateErrorInfoWithoutCode(System.Exception! exception, Skywalker.Exceptions.ExceptionConvertOptions! options) -> Skywalker.Exceptions.ErrorInfo!
+virtual Skywalker.Ddd.AspNetCore.ExceptionHandling.DefaultExceptionToErrorInfoConverter.CreateValidationErrorInfo(Skywalker.Exceptions.SkywalkerValidationException! exception) -> Skywalker.Exceptions.ErrorInfo!
+virtual Skywalker.Ddd.AspNetCore.ExceptionHandling.DefaultHttpExceptionStatusCodeFinder.GetStatusCode(object! httpContext, System.Exception! exception) -> System.Net.HttpStatusCode
+virtual Skywalker.Ddd.AspNetCore.Mvc.Results.ResultFilter.OnResultExecuted(Microsoft.AspNetCore.Mvc.Filters.ResultExecutedContext! context) -> void
+virtual Skywalker.Ddd.AspNetCore.Mvc.Results.ResultFilter.OnResultExecuting(Microsoft.AspNetCore.Mvc.Filters.ResultExecutingContext! context) -> void
+virtual Skywalker.Ddd.AspNetCore.ResponseEncryption.ResponseEncryptionProvider.GetEncryptionProvider(Microsoft.AspNetCore.Http.HttpContext! context) -> Skywalker.Ddd.AspNetCore.ResponseEncryption.IEncryptionProvider?

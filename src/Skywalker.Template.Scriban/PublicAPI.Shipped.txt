@@ -1,0 +1,17 @@
+#nullable enable
+const Skywalker.Template.Scriban.ScribanTemplateRenderingEngine.EngineName = "Scriban" -> string!
+Microsoft.Extensions.DependencyInjection.ScribanTemplateServiceCollectionExtensions
+override Skywalker.Template.Scriban.ScribanTemplateRenderingEngine.Name.get -> string!
+override Skywalker.Template.Scriban.ScribanTemplateRenderingEngine.RenderAsync(string! templateName, object? model = null, string? cultureName = null, System.Collections.Generic.Dictionary<string!, object!>? globalContext = null) -> System.Threading.Tasks.Task<string!>!
+Skywalker.Template.Scriban.ScribanTemplateOptions
+Skywalker.Template.Scriban.ScribanTemplateOptions.EnableCaching.get -> bool
+Skywalker.Template.Scriban.ScribanTemplateOptions.EnableCaching.set -> void
+Skywalker.Template.Scriban.ScribanTemplateOptions.GlobalFunctions.get -> System.Collections.Generic.Dictionary<string!, System.Delegate!>!
+Skywalker.Template.Scriban.ScribanTemplateOptions.GlobalVariables.get -> System.Collections.Generic.Dictionary<string!, object!>!
+Skywalker.Template.Scriban.ScribanTemplateOptions.MaxCacheSize.get -> int
+Skywalker.Template.Scriban.ScribanTemplateOptions.MaxCacheSize.set -> void
+Skywalker.Template.Scriban.ScribanTemplateOptions.ScribanTemplateOptions() -> void
+Skywalker.Template.Scriban.ScribanTemplateRenderingEngine
+Skywalker.Template.Scriban.ScribanTemplateRenderingEngine.ScribanTemplateRenderingEngine(Skywalker.Template.Abstractions.ITemplateDefinitionManager! templateDefinitionManager, Skywalker.Template.Abstractions.ITemplateContentProvider! templateContentProvider, Microsoft.Extensions.Localization.IStringLocalizerFactory! stringLocalizerFactory) -> void
+static Microsoft.Extensions.DependencyInjection.ScribanTemplateServiceCollectionExtensions.AddScribanTemplate(this Microsoft.Extensions.DependencyInjection.IServiceCollection! services, System.Action<Skywalker.Template.Scriban.ScribanTemplateOptions!>? configureOptions = null) -> Microsoft.Extensions.DependencyInjection.IServiceCollection!
+virtual Skywalker.Template.Scriban.ScribanTemplateRenderingEngine.RenderTemplateAsync(string! templateContent, object? model, Skywalker.Template.TemplateDefinition! templateDefinition, System.Collections.Generic.Dictionary<string!, object!>? globalContext) -> System.Threading.Tasks.Task<string!>!

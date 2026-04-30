@@ -1,0 +1,35 @@
+#nullable enable
+Microsoft.Extensions.DependencyInjection.TimezoneIServiceCollectionExtensions
+Skywalker.Extensions.Timezone.Clock
+Skywalker.Extensions.Timezone.Clock.Clock(Microsoft.Extensions.Options.IOptions<Skywalker.Extensions.Timezone.TimezoneOptions!>! options) -> void
+Skywalker.Extensions.Timezone.Clock.Options.get -> Skywalker.Extensions.Timezone.TimezoneOptions!
+Skywalker.Extensions.Timezone.DisableDateTimeNormalizationAttribute
+Skywalker.Extensions.Timezone.DisableDateTimeNormalizationAttribute.DisableDateTimeNormalizationAttribute() -> void
+Skywalker.Extensions.Timezone.IClock
+Skywalker.Extensions.Timezone.IClock.Kind.get -> System.DateTimeKind
+Skywalker.Extensions.Timezone.IClock.Normalize(System.DateTime dateTime) -> System.DateTime
+Skywalker.Extensions.Timezone.IClock.Now.get -> System.DateTime
+Skywalker.Extensions.Timezone.IClock.SupportsMultipleTimezone.get -> bool
+Skywalker.Extensions.Timezone.ITimezoneProvider
+Skywalker.Extensions.Timezone.ITimezoneProvider.GetIanaTimezones() -> System.Collections.Generic.List<Skywalker.Extensions.Collections.NameValue!>!
+Skywalker.Extensions.Timezone.ITimezoneProvider.GetTimeZoneInfo(string! windowsOrIanaTimeZoneId) -> System.TimeZoneInfo!
+Skywalker.Extensions.Timezone.ITimezoneProvider.GetWindowsTimezones() -> System.Collections.Generic.List<Skywalker.Extensions.Collections.NameValue!>!
+Skywalker.Extensions.Timezone.ITimezoneProvider.IanaToWindows(string! ianaTimeZoneName) -> string!
+Skywalker.Extensions.Timezone.ITimezoneProvider.WindowsToIana(string! windowsTimeZoneId) -> string!
+Skywalker.Extensions.Timezone.TimezoneOptions
+Skywalker.Extensions.Timezone.TimezoneOptions.Kind.get -> System.DateTimeKind
+Skywalker.Extensions.Timezone.TimezoneOptions.Kind.set -> void
+Skywalker.Extensions.Timezone.TimezoneOptions.TimezoneOptions() -> void
+Skywalker.Extensions.Timezone.TZConvertTimezoneProvider
+Skywalker.Extensions.Timezone.TZConvertTimezoneProvider.TZConvertTimezoneProvider() -> void
+static Microsoft.Extensions.DependencyInjection.TimezoneIServiceCollectionExtensions.AddTimezone(this Microsoft.Extensions.DependencyInjection.IServiceCollection! services) -> Microsoft.Extensions.DependencyInjection.IServiceCollection!
+static Microsoft.Extensions.DependencyInjection.TimezoneIServiceCollectionExtensions.AddTimezone(this Microsoft.Extensions.DependencyInjection.IServiceCollection! services, System.Action<Skywalker.Extensions.Timezone.TimezoneOptions!>! options) -> Microsoft.Extensions.DependencyInjection.IServiceCollection!
+virtual Skywalker.Extensions.Timezone.Clock.Kind.get -> System.DateTimeKind
+virtual Skywalker.Extensions.Timezone.Clock.Normalize(System.DateTime dateTime) -> System.DateTime
+virtual Skywalker.Extensions.Timezone.Clock.Now.get -> System.DateTime
+virtual Skywalker.Extensions.Timezone.Clock.SupportsMultipleTimezone.get -> bool
+virtual Skywalker.Extensions.Timezone.TZConvertTimezoneProvider.GetIanaTimezones() -> System.Collections.Generic.List<Skywalker.Extensions.Collections.NameValue!>!
+virtual Skywalker.Extensions.Timezone.TZConvertTimezoneProvider.GetTimeZoneInfo(string! windowsOrIanaTimeZoneId) -> System.TimeZoneInfo!
+virtual Skywalker.Extensions.Timezone.TZConvertTimezoneProvider.GetWindowsTimezones() -> System.Collections.Generic.List<Skywalker.Extensions.Collections.NameValue!>!
+virtual Skywalker.Extensions.Timezone.TZConvertTimezoneProvider.IanaToWindows(string! ianaTimeZoneName) -> string!
+virtual Skywalker.Extensions.Timezone.TZConvertTimezoneProvider.WindowsToIana(string! windowsTimeZoneId) -> string!

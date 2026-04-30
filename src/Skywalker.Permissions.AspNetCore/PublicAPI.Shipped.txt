@@ -1,0 +1,49 @@
+#nullable enable
+const Skywalker.Permissions.AspNetCore.RequirePermissionAttribute.PolicyPrefix = "Permission:" -> string!
+Microsoft.Extensions.DependencyInjection.PermissionServerServiceCollectionExtensions
+override Skywalker.Permissions.AspNetCore.PermissionAuthorizationHandler.HandleRequirementAsync(Microsoft.AspNetCore.Authorization.AuthorizationHandlerContext! context, Skywalker.Permissions.AspNetCore.PermissionRequirement! requirement) -> System.Threading.Tasks.Task!
+Skywalker.Permissions.AspNetCore.IPermissionGrantStore
+Skywalker.Permissions.AspNetCore.IPermissionGrantStore.GetAllAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) -> System.Threading.Tasks.Task<System.Collections.Generic.IReadOnlyList<Skywalker.Permissions.Abstractions.PermissionGrantInfo!>!>!
+Skywalker.Permissions.AspNetCore.IPermissionGrantStore.GetVersionAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) -> System.Threading.Tasks.Task<string!>!
+Skywalker.Permissions.AspNetCore.NullPermissionGrantStore
+Skywalker.Permissions.AspNetCore.NullPermissionGrantStore.GetAllAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) -> System.Threading.Tasks.Task<System.Collections.Generic.IReadOnlyList<Skywalker.Permissions.Abstractions.PermissionGrantInfo!>!>!
+Skywalker.Permissions.AspNetCore.NullPermissionGrantStore.GetVersionAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) -> System.Threading.Tasks.Task<string!>!
+Skywalker.Permissions.AspNetCore.NullPermissionGrantStore.NullPermissionGrantStore() -> void
+Skywalker.Permissions.AspNetCore.PermissionAuthorizationHandler
+Skywalker.Permissions.AspNetCore.PermissionAuthorizationHandler.PermissionAuthorizationHandler(Skywalker.Permissions.Abstractions.IPermissionChecker! permissionChecker) -> void
+Skywalker.Permissions.AspNetCore.PermissionAuthorizationPolicyProvider
+Skywalker.Permissions.AspNetCore.PermissionAuthorizationPolicyProvider.GetDefaultPolicyAsync() -> System.Threading.Tasks.Task<Microsoft.AspNetCore.Authorization.AuthorizationPolicy!>!
+Skywalker.Permissions.AspNetCore.PermissionAuthorizationPolicyProvider.GetFallbackPolicyAsync() -> System.Threading.Tasks.Task<Microsoft.AspNetCore.Authorization.AuthorizationPolicy?>!
+Skywalker.Permissions.AspNetCore.PermissionAuthorizationPolicyProvider.GetPolicyAsync(string! policyName) -> System.Threading.Tasks.Task<Microsoft.AspNetCore.Authorization.AuthorizationPolicy?>!
+Skywalker.Permissions.AspNetCore.PermissionAuthorizationPolicyProvider.PermissionAuthorizationPolicyProvider(Microsoft.Extensions.Options.IOptions<Microsoft.AspNetCore.Authorization.AuthorizationOptions!>! options) -> void
+Skywalker.Permissions.AspNetCore.PermissionRegisterRequest
+Skywalker.Permissions.AspNetCore.PermissionRegisterRequest.PermissionRegisterRequest() -> void
+Skywalker.Permissions.AspNetCore.PermissionRegisterRequest.Permissions.get -> System.Collections.Generic.IEnumerable<Skywalker.Permissions.PermissionDefinition!>!
+Skywalker.Permissions.AspNetCore.PermissionRegisterRequest.Permissions.set -> void
+Skywalker.Permissions.AspNetCore.PermissionRequirement
+Skywalker.Permissions.AspNetCore.PermissionRequirement.Permission.get -> string!
+Skywalker.Permissions.AspNetCore.PermissionRequirement.PermissionRequirement(string! permission) -> void
+Skywalker.Permissions.AspNetCore.PermissionsConfiguration
+Skywalker.Permissions.AspNetCore.PermissionsConfiguration.PermissionGrantsEndpoint.get -> string!
+Skywalker.Permissions.AspNetCore.PermissionsConfiguration.PermissionGrantsEndpoint.set -> void
+Skywalker.Permissions.AspNetCore.PermissionsConfiguration.PermissionsConfiguration() -> void
+Skywalker.Permissions.AspNetCore.PermissionsConfiguration.RegisterEndpoint.get -> string!
+Skywalker.Permissions.AspNetCore.PermissionsConfiguration.RegisterEndpoint.set -> void
+Skywalker.Permissions.AspNetCore.PermissionServerEndpointsExtensions
+Skywalker.Permissions.AspNetCore.PermissionServerOptions
+Skywalker.Permissions.AspNetCore.PermissionServerOptions.DiscoveryEndpoint.get -> string!
+Skywalker.Permissions.AspNetCore.PermissionServerOptions.DiscoveryEndpoint.set -> void
+Skywalker.Permissions.AspNetCore.PermissionServerOptions.PermissionGrantsEndpoint.get -> string!
+Skywalker.Permissions.AspNetCore.PermissionServerOptions.PermissionGrantsEndpoint.set -> void
+Skywalker.Permissions.AspNetCore.PermissionServerOptions.PermissionServerOptions() -> void
+Skywalker.Permissions.AspNetCore.PermissionServerOptions.RegisterEndpoint.get -> string!
+Skywalker.Permissions.AspNetCore.PermissionServerOptions.RegisterEndpoint.set -> void
+Skywalker.Permissions.AspNetCore.PermissionServerOptions.Secrets.get -> System.Collections.Generic.Dictionary<string!, string!>!
+Skywalker.Permissions.AspNetCore.RequirePermissionAttribute
+Skywalker.Permissions.AspNetCore.RequirePermissionAttribute.Permission.get -> string!
+Skywalker.Permissions.AspNetCore.RequirePermissionAttribute.RequirePermissionAttribute(string! permission) -> void
+Skywalker.Permissions.AspNetCore.SkywalkerPermissionsAspNetCoreServiceCollectionExtensions
+static Microsoft.Extensions.DependencyInjection.PermissionServerServiceCollectionExtensions.AddPermissionsServer(this Microsoft.Extensions.DependencyInjection.IServiceCollection! services, System.Action<Skywalker.Permissions.AspNetCore.PermissionServerOptions!>? configure = null) -> Microsoft.Extensions.DependencyInjection.IServiceCollection!
+static Microsoft.Extensions.DependencyInjection.PermissionServerServiceCollectionExtensions.AddPermissionsServer<TGrantStore>(this Microsoft.Extensions.DependencyInjection.IServiceCollection! services, System.Action<Skywalker.Permissions.AspNetCore.PermissionServerOptions!>? configure = null) -> Microsoft.Extensions.DependencyInjection.IServiceCollection!
+static Skywalker.Permissions.AspNetCore.PermissionServerEndpointsExtensions.MapPermissionsServer(this Microsoft.AspNetCore.Routing.IEndpointRouteBuilder! endpoints) -> Microsoft.AspNetCore.Routing.IEndpointRouteBuilder!
+static Skywalker.Permissions.AspNetCore.SkywalkerPermissionsAspNetCoreServiceCollectionExtensions.AddSkywalkerPermissionAuthorization(this Microsoft.Extensions.DependencyInjection.IServiceCollection! services) -> Microsoft.Extensions.DependencyInjection.IServiceCollection!

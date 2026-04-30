@@ -1,0 +1,44 @@
+#nullable enable
+abstract Skywalker.Caching.Abstractions.CachingProvider.CreateCacheImplementation(string! name) -> Skywalker.Caching.Abstractions.ICaching!
+Skywalker.Caching.Abstractions.CacheAttribute
+Skywalker.Caching.Abstractions.CacheAttribute.CacheAttribute(string! key) -> void
+Skywalker.Caching.Abstractions.CacheAttribute.Expiry.get -> int
+Skywalker.Caching.Abstractions.CacheAttribute.Expiry.set -> void
+Skywalker.Caching.Abstractions.CacheAttribute.Key.get -> string!
+Skywalker.Caching.Abstractions.CachingProvider
+Skywalker.Caching.Abstractions.CachingProvider.CachingProvider() -> void
+Skywalker.Caching.Abstractions.CachingProvider.GetCaching(string! name) -> Skywalker.Caching.Abstractions.ICaching!
+Skywalker.Caching.Abstractions.ICaching
+Skywalker.Caching.Abstractions.ICaching.Clear() -> void
+Skywalker.Caching.Abstractions.ICaching.ClearAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) -> System.Threading.Tasks.Task!
+Skywalker.Caching.Abstractions.ICaching.DefaultExpireTime.get -> System.TimeSpan?
+Skywalker.Caching.Abstractions.ICaching.DefaultExpireTime.set -> void
+Skywalker.Caching.Abstractions.ICaching.Get(string! key) -> byte[]?
+Skywalker.Caching.Abstractions.ICaching.Get<TVaule>(string! key) -> TVaule?
+Skywalker.Caching.Abstractions.ICaching.GetAsync(string! key, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) -> System.Threading.Tasks.ValueTask<byte[]?>
+Skywalker.Caching.Abstractions.ICaching.GetAsync<TVaule>(string! key, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) -> System.Threading.Tasks.ValueTask<TVaule?>
+Skywalker.Caching.Abstractions.ICaching.GetMany<TValue>(System.Collections.Generic.IEnumerable<string!>! keys) -> System.Collections.Generic.IEnumerable<TValue?>!
+Skywalker.Caching.Abstractions.ICaching.GetManyAsync<TValue>(System.Collections.Generic.IEnumerable<string!>! keys, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) -> System.Threading.Tasks.ValueTask<System.Collections.Generic.IEnumerable<TValue?>!>
+Skywalker.Caching.Abstractions.ICaching.GetOrSet<TValue>(string! key, System.Func<TValue>! factory) -> TValue
+Skywalker.Caching.Abstractions.ICaching.GetOrSetAsync<TValue>(string! key, System.Func<System.Threading.Tasks.Task<TValue>!>! factory, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) -> System.Threading.Tasks.ValueTask<TValue>
+Skywalker.Caching.Abstractions.ICaching.Name.get -> string!
+Skywalker.Caching.Abstractions.ICaching.Remove(string! key) -> void
+Skywalker.Caching.Abstractions.ICaching.RemoveAsync(string! key, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) -> System.Threading.Tasks.Task!
+Skywalker.Caching.Abstractions.ICaching.RemoveManyAsync(string![]! keys, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) -> System.Threading.Tasks.Task!
+Skywalker.Caching.Abstractions.ICaching.Set(string! key, byte[]! value, System.TimeSpan? expireTime = null) -> void
+Skywalker.Caching.Abstractions.ICaching.Set<TVaule>(string! key, TVaule value, System.TimeSpan? expireTime = null) -> void
+Skywalker.Caching.Abstractions.ICaching.SetAsync(string! key, byte[]! value, System.TimeSpan? expireTime = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) -> System.Threading.Tasks.Task!
+Skywalker.Caching.Abstractions.ICaching.SetAsync<TVaule>(string! key, TVaule value, System.TimeSpan? expireTime = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) -> System.Threading.Tasks.Task!
+Skywalker.Caching.Abstractions.ICaching.SetMany<TVaule>(System.Collections.Generic.IEnumerable<System.Collections.Generic.KeyValuePair<string!, TVaule>>! items, System.TimeSpan? expireTime = null) -> void
+Skywalker.Caching.Abstractions.ICaching.SetManyAsync<TVaule>(System.Collections.Generic.IEnumerable<System.Collections.Generic.KeyValuePair<string!, TVaule>>! items, System.TimeSpan? expireTime = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) -> System.Threading.Tasks.Task!
+Skywalker.Caching.Abstractions.ICachingProvider
+Skywalker.Caching.Abstractions.ICachingProvider.GetCaching(string! name) -> Skywalker.Caching.Abstractions.ICaching!
+Skywalker.Caching.Abstractions.ICachingSerializer
+Skywalker.Caching.Abstractions.ICachingSerializer.Deserialize(System.Type! type, byte[]? bytes) -> object?
+Skywalker.Caching.Abstractions.ICachingSerializer.Serialize<T>(T object) -> byte[]!
+Skywalker.Caching.CachingOptions
+Skywalker.Caching.CachingOptions.CachingOptions() -> void
+Skywalker.Caching.CachingOptions.Encoding.get -> System.Text.Encoding!
+Skywalker.Caching.CachingOptions.Encoding.set -> void
+Skywalker.Caching.SerializerExtensions
+static Skywalker.Caching.SerializerExtensions.Deserialize<T>(this Skywalker.Caching.Abstractions.ICachingSerializer! serializer, byte[]? bytes) -> T?

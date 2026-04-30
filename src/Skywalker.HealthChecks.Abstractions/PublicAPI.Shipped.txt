@@ -1,0 +1,46 @@
+#nullable enable
+const Skywalker.HealthChecks.HealthCheckConsts.CacheTag = "cache" -> string!
+const Skywalker.HealthChecks.HealthCheckConsts.DatabaseTag = "database" -> string!
+const Skywalker.HealthChecks.HealthCheckConsts.DefaultEndpoint = "/health" -> string!
+const Skywalker.HealthChecks.HealthCheckConsts.DefaultTimeoutSeconds = 30 -> int
+const Skywalker.HealthChecks.HealthCheckConsts.DetailedEndpoint = "/health/detail" -> string!
+const Skywalker.HealthChecks.HealthCheckConsts.ExternalServiceTag = "external" -> string!
+const Skywalker.HealthChecks.HealthCheckConsts.LiveEndpoint = "/health/live" -> string!
+const Skywalker.HealthChecks.HealthCheckConsts.LiveTag = "live" -> string!
+const Skywalker.HealthChecks.HealthCheckConsts.MessagingTag = "messaging" -> string!
+const Skywalker.HealthChecks.HealthCheckConsts.ReadyEndpoint = "/health/ready" -> string!
+const Skywalker.HealthChecks.HealthCheckConsts.ReadyTag = "ready" -> string!
+Skywalker.HealthChecks.HealthCheckConsts
+Skywalker.HealthChecks.HealthCheckEntry
+Skywalker.HealthChecks.HealthCheckEntry.Data.get -> System.Collections.Generic.IReadOnlyDictionary<string!, object!>?
+Skywalker.HealthChecks.HealthCheckEntry.Data.set -> void
+Skywalker.HealthChecks.HealthCheckEntry.Description.get -> string?
+Skywalker.HealthChecks.HealthCheckEntry.Description.set -> void
+Skywalker.HealthChecks.HealthCheckEntry.Duration.get -> System.TimeSpan
+Skywalker.HealthChecks.HealthCheckEntry.Duration.set -> void
+Skywalker.HealthChecks.HealthCheckEntry.Exception.get -> string?
+Skywalker.HealthChecks.HealthCheckEntry.Exception.set -> void
+Skywalker.HealthChecks.HealthCheckEntry.HealthCheckEntry() -> void
+Skywalker.HealthChecks.HealthCheckEntry.Name.get -> string!
+Skywalker.HealthChecks.HealthCheckEntry.Name.set -> void
+Skywalker.HealthChecks.HealthCheckEntry.Status.get -> string!
+Skywalker.HealthChecks.HealthCheckEntry.Status.set -> void
+Skywalker.HealthChecks.HealthCheckEntry.Tags.get -> System.Collections.Generic.IEnumerable<string!>!
+Skywalker.HealthChecks.HealthCheckEntry.Tags.set -> void
+Skywalker.HealthChecks.HealthCheckResponse
+Skywalker.HealthChecks.HealthCheckResponse.Entries.get -> System.Collections.Generic.IEnumerable<Skywalker.HealthChecks.HealthCheckEntry!>!
+Skywalker.HealthChecks.HealthCheckResponse.Entries.set -> void
+Skywalker.HealthChecks.HealthCheckResponse.HealthCheckResponse() -> void
+Skywalker.HealthChecks.HealthCheckResponse.Status.get -> string!
+Skywalker.HealthChecks.HealthCheckResponse.Status.set -> void
+Skywalker.HealthChecks.HealthCheckResponse.TotalDuration.get -> System.TimeSpan
+Skywalker.HealthChecks.HealthCheckResponse.TotalDuration.set -> void
+Skywalker.HealthChecks.HealthCheckResponseExtensions
+Skywalker.HealthChecks.HealthCheckSimpleResponse
+Skywalker.HealthChecks.HealthCheckSimpleResponse.HealthCheckSimpleResponse() -> void
+Skywalker.HealthChecks.HealthCheckSimpleResponse.Status.get -> string!
+Skywalker.HealthChecks.HealthCheckSimpleResponse.Status.set -> void
+Skywalker.HealthChecks.HealthCheckSimpleResponse.TotalDuration.get -> double
+Skywalker.HealthChecks.HealthCheckSimpleResponse.TotalDuration.set -> void
+static Skywalker.HealthChecks.HealthCheckResponseExtensions.ToResponse(this Microsoft.Extensions.Diagnostics.HealthChecks.HealthReport! report) -> Skywalker.HealthChecks.HealthCheckResponse!
+static Skywalker.HealthChecks.HealthCheckResponseExtensions.ToSimpleResponse(this Microsoft.Extensions.Diagnostics.HealthChecks.HealthReport! report) -> Skywalker.HealthChecks.HealthCheckSimpleResponse!

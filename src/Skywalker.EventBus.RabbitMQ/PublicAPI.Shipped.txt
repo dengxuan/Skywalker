@@ -1,0 +1,37 @@
+#nullable enable
+const Skywalker.EventBus.RabbitMQ.RabbitMqEventBusOptions.DefaultExchangeType = "direct" -> string!
+const Skywalker.EventBus.RabbitMQ.RabbitMqEventBusOptions.SectionName = "Skywalker:EventBus:RabbitMQ" -> string!
+Microsoft.Extensions.DependencyInjection.EventBusRabbitMQServiceCollectionExtensions
+Microsoft.Extensions.DependencyInjection.SkywalkerBuilderRabbitMQEventBusExtensions
+override Skywalker.EventBus.RabbitMQ.RabbitMqEventBus.PublishAsync(System.Type! eventType, object! eventArgs) -> System.Threading.Tasks.Task!
+Skywalker.EventBus.RabbitMQ.RabbitMqEventBus
+Skywalker.EventBus.RabbitMQ.RabbitMqEventBus.ConnectionPool.get -> Skywalker.Extensions.RabbitMQ.Abstractions.IConnectionPool!
+Skywalker.EventBus.RabbitMQ.RabbitMqEventBus.GuidGenerator.get -> Skywalker.Extensions.GuidGenerator.IGuidGenerator!
+Skywalker.EventBus.RabbitMQ.RabbitMqEventBus.Logger.get -> Microsoft.Extensions.Logging.ILogger<Skywalker.EventBus.RabbitMQ.RabbitMqEventBus!>!
+Skywalker.EventBus.RabbitMQ.RabbitMqEventBus.RabbitMqEventBus(Microsoft.Extensions.Options.IOptions<Skywalker.EventBus.RabbitMQ.RabbitMqEventBusOptions!>! options, Skywalker.Extensions.RabbitMQ.Abstractions.IConnectionPool! connectionPool, Skywalker.Extensions.RabbitMQ.Abstractions.IRabbitMqSerializer! serializer, Skywalker.Extensions.GuidGenerator.IGuidGenerator! guidGenerator, Microsoft.Extensions.Logging.ILogger<Skywalker.EventBus.RabbitMQ.RabbitMqEventBus!>! logger) -> void
+Skywalker.EventBus.RabbitMQ.RabbitMqEventBus.RabbitMqEventBusOptions.get -> Skywalker.EventBus.RabbitMQ.RabbitMqEventBusOptions!
+Skywalker.EventBus.RabbitMQ.RabbitMqEventBus.Serializer.get -> Skywalker.Extensions.RabbitMQ.Abstractions.IRabbitMqSerializer!
+Skywalker.EventBus.RabbitMQ.RabbitMqEventBusOptions
+Skywalker.EventBus.RabbitMQ.RabbitMqEventBusOptions.ClientName.get -> string!
+Skywalker.EventBus.RabbitMQ.RabbitMqEventBusOptions.ClientName.set -> void
+Skywalker.EventBus.RabbitMQ.RabbitMqEventBusOptions.ConnectionName.get -> string?
+Skywalker.EventBus.RabbitMQ.RabbitMqEventBusOptions.ConnectionName.set -> void
+Skywalker.EventBus.RabbitMQ.RabbitMqEventBusOptions.ExchangeArguments.get -> System.Collections.Generic.IDictionary<string!, object!>!
+Skywalker.EventBus.RabbitMQ.RabbitMqEventBusOptions.ExchangeArguments.set -> void
+Skywalker.EventBus.RabbitMQ.RabbitMqEventBusOptions.ExchangeName.get -> string!
+Skywalker.EventBus.RabbitMQ.RabbitMqEventBusOptions.ExchangeName.set -> void
+Skywalker.EventBus.RabbitMQ.RabbitMqEventBusOptions.ExchangeType.get -> string?
+Skywalker.EventBus.RabbitMQ.RabbitMqEventBusOptions.ExchangeType.set -> void
+Skywalker.EventBus.RabbitMQ.RabbitMqEventBusOptions.GetExchangeTypeOrDefault() -> string!
+Skywalker.EventBus.RabbitMQ.RabbitMqEventBusOptions.PrefetchCount.get -> ushort?
+Skywalker.EventBus.RabbitMQ.RabbitMqEventBusOptions.PrefetchCount.set -> void
+Skywalker.EventBus.RabbitMQ.RabbitMqEventBusOptions.QueueArguments.get -> System.Collections.Generic.IDictionary<string!, object!>!
+Skywalker.EventBus.RabbitMQ.RabbitMqEventBusOptions.QueueArguments.set -> void
+Skywalker.EventBus.RabbitMQ.RabbitMqEventBusOptions.RabbitMqEventBusOptions() -> void
+static Microsoft.Extensions.DependencyInjection.EventBusRabbitMQServiceCollectionExtensions.AddEventBusRabbitMQ(this Microsoft.Extensions.DependencyInjection.IServiceCollection! services) -> Microsoft.Extensions.DependencyInjection.IServiceCollection!
+static Microsoft.Extensions.DependencyInjection.EventBusRabbitMQServiceCollectionExtensions.AddEventBusRabbitMQ(this Microsoft.Extensions.DependencyInjection.IServiceCollection! services, System.Action<Skywalker.EventBus.RabbitMQ.RabbitMqEventBusOptions!>! configure) -> Microsoft.Extensions.DependencyInjection.IServiceCollection!
+static Microsoft.Extensions.DependencyInjection.SkywalkerBuilderRabbitMQEventBusExtensions.AddRabbitMQEventBus(this Skywalker.ISkywalkerBuilder! builder) -> Skywalker.ISkywalkerBuilder!
+static Microsoft.Extensions.DependencyInjection.SkywalkerBuilderRabbitMQEventBusExtensions.AddRabbitMQEventBus(this Skywalker.ISkywalkerBuilder! builder, System.Action<Skywalker.EventBus.RabbitMQ.RabbitMqEventBusOptions!>! configure) -> Skywalker.ISkywalkerBuilder!
+virtual Skywalker.EventBus.RabbitMQ.RabbitMqEventBus.PublishAsync(RabbitMQ.Client.IModel! channel, string! routingKey, byte[]! body, System.Collections.Generic.Dictionary<string!, object!>? headersArguments = null, System.Guid? eventId = null, string? correlationId = null) -> System.Threading.Tasks.Task!
+virtual Skywalker.EventBus.RabbitMQ.RabbitMqEventBus.PublishAsync(string! routingKey, byte[]! body, System.Collections.Generic.Dictionary<string!, object!>? headersArguments = null, System.Guid? eventId = null, string? correlationId = null) -> System.Threading.Tasks.Task!
+virtual Skywalker.EventBus.RabbitMQ.RabbitMqEventBus.PublishAsync(System.Type! eventType, object! eventData, System.Collections.Generic.Dictionary<string!, object!>? headersArguments = null, System.Guid? eventId = null, string? correlationId = null) -> System.Threading.Tasks.Task!

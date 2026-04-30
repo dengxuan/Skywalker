@@ -1,0 +1,16 @@
+#nullable enable
+Microsoft.Extensions.DependencyInjection.PermissionsIServiceCollectionExtensions
+override Skywalker.Permissions.AuthorizeValidation.PermissionSyncHostedService.ExecuteAsync(System.Threading.CancellationToken stoppingToken) -> System.Threading.Tasks.Task!
+Skywalker.Permissions.AuthorizeValidation.PermissionSyncHostedService
+Skywalker.Permissions.AuthorizeValidation.PermissionSyncHostedService.PermissionSyncHostedService(Microsoft.Extensions.Logging.ILogger<Skywalker.Permissions.AuthorizeValidation.PermissionSyncHostedService!>! logger, Microsoft.Extensions.Options.IOptions<Skywalker.Permissions.AuthorizeValidation.PermissionValidationOptions!>! options, System.Net.Http.IHttpClientFactory! httpClientFactory, Microsoft.Extensions.Caching.Memory.IMemoryCache! cache, Skywalker.Permissions.Abstractions.IPermissionDefinitionManager! definitionManager) -> void
+Skywalker.Permissions.AuthorizeValidation.PermissionValidationOptions
+Skywalker.Permissions.AuthorizeValidation.PermissionValidationOptions.Authority.get -> string!
+Skywalker.Permissions.AuthorizeValidation.PermissionValidationOptions.Authority.set -> void
+Skywalker.Permissions.AuthorizeValidation.PermissionValidationOptions.PermissionGrantsEndpoint.get -> string!
+Skywalker.Permissions.AuthorizeValidation.PermissionValidationOptions.PermissionGrantsEndpoint.set -> void
+Skywalker.Permissions.AuthorizeValidation.PermissionValidationOptions.PermissionValidationOptions() -> void
+Skywalker.Permissions.AuthorizeValidation.PermissionValidationOptions.RefreshInterval.get -> System.TimeSpan
+Skywalker.Permissions.AuthorizeValidation.PermissionValidationOptions.RefreshInterval.set -> void
+Skywalker.Permissions.AuthorizeValidation.PermissionValidationOptions.Secret.get -> string!
+Skywalker.Permissions.AuthorizeValidation.PermissionValidationOptions.Secret.set -> void
+static Microsoft.Extensions.DependencyInjection.PermissionsIServiceCollectionExtensions.AddPermissionValidation(this Microsoft.Extensions.DependencyInjection.IServiceCollection! services, System.Action<Skywalker.Permissions.AuthorizeValidation.PermissionValidationOptions!>! options) -> Microsoft.Extensions.DependencyInjection.IServiceCollection!

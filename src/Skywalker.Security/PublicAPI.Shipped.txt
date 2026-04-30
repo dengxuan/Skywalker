@@ -1,0 +1,14 @@
+#nullable enable
+Skywalker.Security.Cryptography.AsymmetricCrypter
+Skywalker.Security.Cryptography.AsymmetricCrypter.AsymmetricCrypter(System.Security.Cryptography.AsymmetricAlgorithm! asymmetricAlgorithm, System.Security.Cryptography.X509Certificates.X509Certificate2! x509Certificate2) -> void
+Skywalker.Security.Cryptography.AsymmetricCrypter.Decrypt(byte[]! bytes) -> byte[]!
+Skywalker.Security.Cryptography.AsymmetricCrypter.Encrypt(byte[]! bytes) -> byte[]!
+Skywalker.Security.Cryptography.CrypterFactory
+Skywalker.Security.Cryptography.CrypterFactory.CreateAsymmetricCrypter(Skywalker.Security.Cryptography.AsymmetricCrypterAlgorithms algorithm, System.Security.Cryptography.CipherMode cipherMode, System.Security.Cryptography.PaddingMode paddingMode, System.Security.Cryptography.X509Certificates.X509Certificate2! x509Certificate2) -> Skywalker.Security.Cryptography.Abstractions.ICrypter!
+Skywalker.Security.Cryptography.CrypterFactory.CreateSymmetricCrypter(Skywalker.Security.Cryptography.SymmetricCrypterAlgorithms algorithm, System.Security.Cryptography.CipherMode cipherMode, System.Security.Cryptography.PaddingMode paddingMode) -> Skywalker.Security.Cryptography.Abstractions.ICrypter!
+Skywalker.Security.Cryptography.CrypterFactory.CreateSymmetricCrypter(Skywalker.Security.Cryptography.SymmetricCrypterAlgorithms algorithm, System.Security.Cryptography.CipherMode cipherMode, System.Security.Cryptography.PaddingMode paddingMode, string! key, string! iv) -> Skywalker.Security.Cryptography.Abstractions.ICrypter!
+Skywalker.Security.Cryptography.CrypterFactory.CrypterFactory() -> void
+Skywalker.Security.Cryptography.SymmetricCrypter
+Skywalker.Security.Cryptography.SymmetricCrypter.Decrypt(byte[]! bytes) -> byte[]!
+Skywalker.Security.Cryptography.SymmetricCrypter.Encrypt(byte[]! bytes) -> byte[]!
+Skywalker.Security.Cryptography.SymmetricCrypter.SymmetricCrypter(System.Security.Cryptography.SymmetricAlgorithm! symmetricAlgorithm) -> void

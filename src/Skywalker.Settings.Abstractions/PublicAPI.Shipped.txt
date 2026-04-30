@@ -1,0 +1,120 @@
+#nullable enable
+abstract Skywalker.Settings.SettingDefinitionProvider.Define(Skywalker.Settings.Abstractions.ISettingDefinitionContext! context) -> void
+const Skywalker.Settings.ConfigurationSettingValueProvider.ConfigurationNamePrefix = "Settings:" -> string!
+const Skywalker.Settings.ConfigurationSettingValueProvider.ProviderName = "C" -> string!
+const Skywalker.Settings.DefaultValueSettingValueProvider.ProviderName = "D" -> string!
+Microsoft.Extensions.DependencyInjection.SettingsServiceCollectionExtensions
+Skywalker.Settings.Abstractions.ISettingDefinitionContext
+Skywalker.Settings.Abstractions.ISettingDefinitionContext.Add(params Skywalker.Settings.SettingDefinition![]! definitions) -> void
+Skywalker.Settings.Abstractions.ISettingDefinitionContext.GetAll() -> System.Collections.Generic.IReadOnlyList<Skywalker.Settings.SettingDefinition!>!
+Skywalker.Settings.Abstractions.ISettingDefinitionContext.GetOrNull(string! name) -> Skywalker.Settings.SettingDefinition?
+Skywalker.Settings.Abstractions.ISettingDefinitionManager
+Skywalker.Settings.Abstractions.ISettingDefinitionManager.Get(string! name) -> Skywalker.Settings.SettingDefinition!
+Skywalker.Settings.Abstractions.ISettingDefinitionManager.GetAll() -> System.Collections.Generic.IReadOnlyList<Skywalker.Settings.SettingDefinition!>!
+Skywalker.Settings.Abstractions.ISettingDefinitionManager.GetOrNull(string! name) -> Skywalker.Settings.SettingDefinition?
+Skywalker.Settings.Abstractions.ISettingDefinitionProvider
+Skywalker.Settings.Abstractions.ISettingDefinitionProvider.Define(Skywalker.Settings.Abstractions.ISettingDefinitionContext! context) -> void
+Skywalker.Settings.Abstractions.ISettingEncryptionService
+Skywalker.Settings.Abstractions.ISettingEncryptionService.Decrypt(string? encryptedValue) -> string?
+Skywalker.Settings.Abstractions.ISettingEncryptionService.Encrypt(string? plainValue) -> string?
+Skywalker.Settings.Abstractions.ISettingManager
+Skywalker.Settings.Abstractions.ISettingManager.DeleteAsync(string! name, string! providerName, string? providerKey = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) -> System.Threading.Tasks.Task!
+Skywalker.Settings.Abstractions.ISettingManager.SetAsync(string! name, string! value, string! providerName, string? providerKey = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) -> System.Threading.Tasks.Task!
+Skywalker.Settings.Abstractions.ISettingProvider
+Skywalker.Settings.Abstractions.ISettingProvider.GetAllAsync() -> System.Threading.Tasks.Task<System.Collections.Generic.List<Skywalker.Settings.SettingValue!>!>!
+Skywalker.Settings.Abstractions.ISettingProvider.GetAllAsync(string![]! names) -> System.Threading.Tasks.Task<System.Collections.Generic.List<Skywalker.Settings.SettingValue!>!>!
+Skywalker.Settings.Abstractions.ISettingProvider.GetAsync(string! name) -> System.Threading.Tasks.Task<string!>!
+Skywalker.Settings.Abstractions.ISettingProvider.GetOrNullAsync(string! name) -> System.Threading.Tasks.Task<string?>!
+Skywalker.Settings.Abstractions.ISettingValueProvider
+Skywalker.Settings.Abstractions.ISettingValueProvider.GetAllAsync(Skywalker.Settings.SettingDefinition![]! settings) -> System.Threading.Tasks.Task<System.Collections.Generic.List<Skywalker.Settings.SettingValue!>!>!
+Skywalker.Settings.Abstractions.ISettingValueProvider.GetOrNullAsync(Skywalker.Settings.SettingDefinition! setting) -> System.Threading.Tasks.Task<string?>!
+Skywalker.Settings.Abstractions.ISettingValueProvider.Name.get -> string!
+Skywalker.Settings.Abstractions.ISettingValueProviderManager
+Skywalker.Settings.Abstractions.ISettingValueProviderManager.Providers.get -> System.Collections.Generic.List<Skywalker.Settings.Abstractions.ISettingValueProvider!>!
+Skywalker.Settings.ConfigurationSettingValueProvider
+Skywalker.Settings.ConfigurationSettingValueProvider.Configuration.get -> Microsoft.Extensions.Configuration.IConfiguration!
+Skywalker.Settings.ConfigurationSettingValueProvider.ConfigurationSettingValueProvider(Microsoft.Extensions.Configuration.IConfiguration! configuration) -> void
+Skywalker.Settings.ConfigurationSettingValueProvider.GetAllAsync(Skywalker.Settings.SettingDefinition![]! settings) -> System.Threading.Tasks.Task<System.Collections.Generic.List<Skywalker.Settings.SettingValue!>!>!
+Skywalker.Settings.ConfigurationSettingValueProvider.Name.get -> string!
+Skywalker.Settings.DefaultValueSettingValueProvider
+Skywalker.Settings.DefaultValueSettingValueProvider.DefaultValueSettingValueProvider() -> void
+Skywalker.Settings.DefaultValueSettingValueProvider.GetAllAsync(Skywalker.Settings.SettingDefinition![]! settings) -> System.Threading.Tasks.Task<System.Collections.Generic.List<Skywalker.Settings.SettingValue!>!>!
+Skywalker.Settings.DefaultValueSettingValueProvider.GetOrNullAsync(Skywalker.Settings.SettingDefinition! setting) -> System.Threading.Tasks.Task<string?>!
+Skywalker.Settings.DefaultValueSettingValueProvider.Name.get -> string!
+Skywalker.Settings.ISettingBuilder
+Skywalker.Settings.ISettingBuilder.Services.get -> Microsoft.Extensions.DependencyInjection.IServiceCollection!
+Skywalker.Settings.SettingCryptionOptions
+Skywalker.Settings.SettingCryptionOptions.DefaultPassPhrase.get -> string!
+Skywalker.Settings.SettingCryptionOptions.DefaultPassPhrase.set -> void
+Skywalker.Settings.SettingCryptionOptions.DefaultSalt.get -> byte[]!
+Skywalker.Settings.SettingCryptionOptions.DefaultSalt.set -> void
+Skywalker.Settings.SettingCryptionOptions.InitVectorBytes.get -> byte[]!
+Skywalker.Settings.SettingCryptionOptions.InitVectorBytes.set -> void
+Skywalker.Settings.SettingCryptionOptions.Keysize.get -> int
+Skywalker.Settings.SettingCryptionOptions.Keysize.set -> void
+Skywalker.Settings.SettingCryptionOptions.SettingCryptionOptions() -> void
+Skywalker.Settings.SettingDefinition
+Skywalker.Settings.SettingDefinition.DefaultValue.get -> string?
+Skywalker.Settings.SettingDefinition.DefaultValue.set -> void
+Skywalker.Settings.SettingDefinition.Description.get -> string?
+Skywalker.Settings.SettingDefinition.Description.set -> void
+Skywalker.Settings.SettingDefinition.DisplayName.get -> string!
+Skywalker.Settings.SettingDefinition.DisplayName.set -> void
+Skywalker.Settings.SettingDefinition.IsEncrypted.get -> bool
+Skywalker.Settings.SettingDefinition.IsEncrypted.set -> void
+Skywalker.Settings.SettingDefinition.IsInherited.get -> bool
+Skywalker.Settings.SettingDefinition.IsInherited.set -> void
+Skywalker.Settings.SettingDefinition.IsVisibleToClients.get -> bool
+Skywalker.Settings.SettingDefinition.IsVisibleToClients.set -> void
+Skywalker.Settings.SettingDefinition.Name.get -> string!
+Skywalker.Settings.SettingDefinition.Properties.get -> System.Collections.Generic.Dictionary<string!, object!>!
+Skywalker.Settings.SettingDefinition.Providers.get -> System.Collections.Generic.List<string!>!
+Skywalker.Settings.SettingDefinition.SettingDefinition(string! name, string? defaultValue = null, string? displayName = null, string? description = null, bool isVisibleToClients = false, bool isInherited = true, bool isEncrypted = false) -> void
+Skywalker.Settings.SettingDefinitionContext
+Skywalker.Settings.SettingDefinitionContext.SettingDefinitionContext(System.Collections.Generic.Dictionary<string!, Skywalker.Settings.SettingDefinition!>! settings) -> void
+Skywalker.Settings.SettingDefinitionContext.Settings.get -> System.Collections.Generic.Dictionary<string!, Skywalker.Settings.SettingDefinition!>!
+Skywalker.Settings.SettingDefinitionManager
+Skywalker.Settings.SettingDefinitionManager.Options.get -> Skywalker.Settings.SkywalkerSettingOptions!
+Skywalker.Settings.SettingDefinitionManager.ServiceProvider.get -> System.IServiceProvider!
+Skywalker.Settings.SettingDefinitionManager.SettingDefinitionManager(Microsoft.Extensions.Options.IOptions<Skywalker.Settings.SkywalkerSettingOptions!>! options, System.IServiceProvider! serviceProvider) -> void
+Skywalker.Settings.SettingDefinitionManager.SettingDefinitions.get -> System.Lazy<System.Collections.Generic.IDictionary<string!, Skywalker.Settings.SettingDefinition!>!>!
+Skywalker.Settings.SettingDefinitionProvider
+Skywalker.Settings.SettingDefinitionProvider.SettingDefinitionProvider() -> void
+Skywalker.Settings.SettingEncryptionService
+Skywalker.Settings.SettingEncryptionService.SettingEncryptionService(Microsoft.Extensions.Options.IOptions<Skywalker.Settings.SettingCryptionOptions!>! options) -> void
+Skywalker.Settings.SettingProvider
+Skywalker.Settings.SettingProvider.SettingDefinitionManager.get -> Skywalker.Settings.Abstractions.ISettingDefinitionManager!
+Skywalker.Settings.SettingProvider.SettingEncryptionService.get -> Skywalker.Settings.Abstractions.ISettingEncryptionService!
+Skywalker.Settings.SettingProvider.SettingProvider(Skywalker.Settings.Abstractions.ISettingDefinitionManager! settingDefinitionManager, Skywalker.Settings.Abstractions.ISettingEncryptionService! settingEncryptionService, Skywalker.Settings.Abstractions.ISettingValueProviderManager! settingValueProviderManager) -> void
+Skywalker.Settings.SettingProvider.SettingValueProviderManager.get -> Skywalker.Settings.Abstractions.ISettingValueProviderManager!
+Skywalker.Settings.SettingProviderExtensions
+Skywalker.Settings.SettingValue
+Skywalker.Settings.SettingValue.SettingValue(string! name, string? value) -> void
+Skywalker.Settings.SettingValueProviderManager
+Skywalker.Settings.SettingValueProviderManager.Options.get -> Skywalker.Settings.SkywalkerSettingOptions!
+Skywalker.Settings.SettingValueProviderManager.Providers.get -> System.Collections.Generic.List<Skywalker.Settings.Abstractions.ISettingValueProvider!>!
+Skywalker.Settings.SettingValueProviderManager.SettingValueProviderManager(System.IServiceProvider! serviceProvider, Microsoft.Extensions.Options.IOptions<Skywalker.Settings.SkywalkerSettingOptions!>! options) -> void
+Skywalker.Settings.SkywalkerSettingOptions
+Skywalker.Settings.SkywalkerSettingOptions.SkywalkerSettingOptions() -> void
+Skywalker.Settings.SkywalkerSettingOptions.ValueProviders.get -> Skywalker.Extensions.Collections.Generic.ITypeList<Skywalker.Settings.Abstractions.ISettingValueProvider!>!
+static Microsoft.Extensions.DependencyInjection.SettingsServiceCollectionExtensions.AddSettings(this Microsoft.Extensions.DependencyInjection.IServiceCollection! services) -> Skywalker.Settings.ISettingBuilder!
+static Microsoft.Extensions.DependencyInjection.SettingsServiceCollectionExtensions.AddSettings(this Microsoft.Extensions.DependencyInjection.IServiceCollection! services, System.Action<Skywalker.Settings.SkywalkerSettingOptions!>! options) -> Skywalker.Settings.ISettingBuilder!
+static Skywalker.Settings.SettingProviderExtensions.GetAsync<T>(this Skywalker.Settings.Abstractions.ISettingProvider! settingProvider, string! name, T defaultValue = default(T)) -> System.Threading.Tasks.Task<T>!
+static Skywalker.Settings.SettingProviderExtensions.IsTrueAsync(this Skywalker.Settings.Abstractions.ISettingProvider! settingProvider, string! name) -> System.Threading.Tasks.Task<bool>!
+virtual Skywalker.Settings.ConfigurationSettingValueProvider.GetOrNullAsync(Skywalker.Settings.SettingDefinition! setting) -> System.Threading.Tasks.Task<string?>!
+virtual Skywalker.Settings.SettingDefinition.WithProperty(string! key, object! value) -> Skywalker.Settings.SettingDefinition!
+virtual Skywalker.Settings.SettingDefinition.WithProviders(params string![]! providers) -> Skywalker.Settings.SettingDefinition!
+virtual Skywalker.Settings.SettingDefinitionContext.Add(params Skywalker.Settings.SettingDefinition![]! definitions) -> void
+virtual Skywalker.Settings.SettingDefinitionContext.GetAll() -> System.Collections.Generic.IReadOnlyList<Skywalker.Settings.SettingDefinition!>!
+virtual Skywalker.Settings.SettingDefinitionContext.GetOrNull(string! name) -> Skywalker.Settings.SettingDefinition?
+virtual Skywalker.Settings.SettingDefinitionManager.CreateSettingDefinitions() -> System.Collections.Generic.IDictionary<string!, Skywalker.Settings.SettingDefinition!>!
+virtual Skywalker.Settings.SettingDefinitionManager.Get(string! name) -> Skywalker.Settings.SettingDefinition!
+virtual Skywalker.Settings.SettingDefinitionManager.GetAll() -> System.Collections.Generic.IReadOnlyList<Skywalker.Settings.SettingDefinition!>!
+virtual Skywalker.Settings.SettingDefinitionManager.GetOrNull(string! name) -> Skywalker.Settings.SettingDefinition?
+virtual Skywalker.Settings.SettingEncryptionService.Decrypt(string? encryptedValue) -> string?
+virtual Skywalker.Settings.SettingEncryptionService.Encrypt(string? plainValue) -> string?
+virtual Skywalker.Settings.SettingProvider.GetAllAsync() -> System.Threading.Tasks.Task<System.Collections.Generic.List<Skywalker.Settings.SettingValue!>!>!
+virtual Skywalker.Settings.SettingProvider.GetAllAsync(string![]! names) -> System.Threading.Tasks.Task<System.Collections.Generic.List<Skywalker.Settings.SettingValue!>!>!
+virtual Skywalker.Settings.SettingProvider.GetAsync(string! name) -> System.Threading.Tasks.Task<string!>!
+virtual Skywalker.Settings.SettingProvider.GetOrNullAsync(string! name) -> System.Threading.Tasks.Task<string?>!
+virtual Skywalker.Settings.SettingProvider.GetOrNullValueFromProvidersAsync(System.Collections.Generic.IEnumerable<Skywalker.Settings.Abstractions.ISettingValueProvider!>! providers, Skywalker.Settings.SettingDefinition! setting) -> System.Threading.Tasks.Task<string?>!

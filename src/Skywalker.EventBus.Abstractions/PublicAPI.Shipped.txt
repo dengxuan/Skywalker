@@ -1,0 +1,73 @@
+#nullable enable
+~Skywalker.EventBus.IEventHandlerMethodExecutor.ExecutorAsync.get -> Skywalker.EventBus.EventHandlerMethodExecutorAsync
+~Skywalker.EventBus.LocalEventHandlerMethodExecutor<TEvent>
+~Skywalker.EventBus.LocalEventHandlerMethodExecutor<TEvent>.ExecuteAsync(Skywalker.EventBus.Abstractions.IEventHandler target, TEvent parameters) -> System.Threading.Tasks.Task
+~Skywalker.EventBus.LocalEventHandlerMethodExecutor<TEvent>.ExecutorAsync.get -> Skywalker.EventBus.EventHandlerMethodExecutorAsync
+abstract Skywalker.EventBus.EventBusBase.PublishAsync(System.Type! eventType, object! eventArgs) -> System.Threading.Tasks.Task!
+Skywalker.EventBus.Abstractions.IEventBus
+Skywalker.EventBus.Abstractions.IEventBus.PublishAsync(System.Type! eventType, object! eventArgs) -> System.Threading.Tasks.Task!
+Skywalker.EventBus.Abstractions.IEventBus.PublishAsync<TEvent>(TEvent! eventArgs) -> System.Threading.Tasks.Task!
+Skywalker.EventBus.Abstractions.IEventDataWithInheritableGenericArgument
+Skywalker.EventBus.Abstractions.IEventDataWithInheritableGenericArgument.GetConstructorArgs() -> object![]!
+Skywalker.EventBus.Abstractions.IEventHandler
+Skywalker.EventBus.Abstractions.IEventHandler<TEvent>
+Skywalker.EventBus.Abstractions.IEventHandler<TEvent>.HandleEventAsync(TEvent eventData) -> System.Threading.Tasks.Task!
+Skywalker.EventBus.Abstractions.IEventHandlerFactory
+Skywalker.EventBus.Abstractions.IEventHandlerFactory.GetHandler(System.Type! handlerType) -> Skywalker.EventBus.Abstractions.IEventHandler!
+Skywalker.EventBus.Abstractions.IEventHandlerInvoker
+Skywalker.EventBus.Abstractions.IEventHandlerInvoker.InvokeAsync(Skywalker.EventBus.Abstractions.IEventHandler! eventHandler, object! eventData, System.Type! eventType) -> System.Threading.Tasks.Task!
+Skywalker.EventBus.Abstractions.IEventNameProvider
+Skywalker.EventBus.Abstractions.IEventNameProvider.GetName(System.Type! eventType) -> string!
+Skywalker.EventBus.Abstractions.IQueueNameProvider
+Skywalker.EventBus.Abstractions.IQueueNameProvider.GetName(System.Type! eventType) -> string?
+Skywalker.EventBus.Abstractions.ISubscriber
+Skywalker.EventBus.EventBusBase
+Skywalker.EventBus.EventBusBase.EventBusBase() -> void
+Skywalker.EventBus.EventBusOptions
+Skywalker.EventBus.EventBusOptions.AddEventHandler<THandler>() -> void
+Skywalker.EventBus.EventBusOptions.EventBusOptions() -> void
+Skywalker.EventBus.EventHandlerFactory
+Skywalker.EventBus.EventHandlerFactory.EventHandlerFactory(System.IServiceProvider! serviceProvider) -> void
+Skywalker.EventBus.EventHandlerFactory.GetHandler(System.Type! handlerType) -> Skywalker.EventBus.Abstractions.IEventHandler!
+Skywalker.EventBus.EventHandlerMethodExecutorAsync
+Skywalker.EventBus.EventNameAttribute
+Skywalker.EventBus.EventNameAttribute.EventNameAttribute(string! name) -> void
+Skywalker.EventBus.EventNameAttribute.GetName(System.Type! eventType) -> string!
+Skywalker.EventBus.GenericEventNameAttribute
+Skywalker.EventBus.GenericEventNameAttribute.GenericEventNameAttribute() -> void
+Skywalker.EventBus.GenericEventNameAttribute.Postfix.get -> string?
+Skywalker.EventBus.GenericEventNameAttribute.Postfix.set -> void
+Skywalker.EventBus.GenericEventNameAttribute.Prefix.get -> string?
+Skywalker.EventBus.GenericEventNameAttribute.Prefix.set -> void
+Skywalker.EventBus.IEventBusBuilder
+Skywalker.EventBus.IEventBusBuilder.Services.get -> Microsoft.Extensions.DependencyInjection.IServiceCollection!
+Skywalker.EventBus.IEventHandlerMethodExecutor
+Skywalker.EventBus.LocalEventHandlerMethodExecutor<TEvent>.LocalEventHandlerMethodExecutor() -> void
+Skywalker.EventBus.NullEventBus
+Skywalker.EventBus.NullEventBus.PublishAsync(System.Type! eventType, object! eventData) -> System.Threading.Tasks.Task!
+Skywalker.EventBus.NullEventBus.PublishAsync<TEvent>(TEvent! eventData) -> System.Threading.Tasks.Task!
+Skywalker.EventBus.NullEventBus.Subscribe(System.Type! eventType, Skywalker.EventBus.Abstractions.IEventHandler! handler) -> System.IDisposable!
+Skywalker.EventBus.NullEventBus.Subscribe(System.Type! eventType, Skywalker.EventBus.Abstractions.IEventHandlerFactory! factory) -> System.IDisposable!
+Skywalker.EventBus.NullEventBus.Subscribe<TEvent, THandler>() -> System.IDisposable!
+Skywalker.EventBus.NullEventBus.Subscribe<TEvent>(Skywalker.EventBus.Abstractions.IEventHandler<TEvent!>! handler) -> System.IDisposable!
+Skywalker.EventBus.NullEventBus.Subscribe<TEvent>(Skywalker.EventBus.Abstractions.IEventHandlerFactory! factory) -> System.IDisposable!
+Skywalker.EventBus.NullEventBus.Subscribe<TEvent>(System.Func<TEvent!, System.Threading.Tasks.Task!>! action) -> System.IDisposable!
+Skywalker.EventBus.NullEventBus.Unsubscribe(System.Type! eventType, Skywalker.EventBus.Abstractions.IEventHandler! handler) -> void
+Skywalker.EventBus.NullEventBus.Unsubscribe(System.Type! eventType, Skywalker.EventBus.Abstractions.IEventHandlerFactory! factory) -> void
+Skywalker.EventBus.NullEventBus.Unsubscribe<TEvent>(Skywalker.EventBus.Abstractions.IEventHandler<TEvent!>! handler) -> void
+Skywalker.EventBus.NullEventBus.Unsubscribe<TEvent>(Skywalker.EventBus.Abstractions.IEventHandlerFactory! factory) -> void
+Skywalker.EventBus.NullEventBus.Unsubscribe<TEvent>(System.Func<TEvent!, System.Threading.Tasks.Task!>! action) -> void
+Skywalker.EventBus.NullEventBus.UnsubscribeAll(System.Type! eventType) -> void
+Skywalker.EventBus.NullEventBus.UnsubscribeAll<TEvent>() -> void
+Skywalker.EventBus.QueueNameAttribute
+Skywalker.EventBus.QueueNameAttribute.GetName(System.Type! eventType) -> string?
+Skywalker.EventBus.QueueNameAttribute.QueueNameAttribute(string! name) -> void
+static Skywalker.EventBus.EventNameAttribute.GetNameOrDefault(System.Type! eventType) -> string!
+static Skywalker.EventBus.EventNameAttribute.GetNameOrDefault<TEvent>() -> string!
+static Skywalker.EventBus.NullEventBus.Instance.get -> Skywalker.EventBus.NullEventBus!
+static Skywalker.EventBus.QueueNameAttribute.GetNameOrDefault(System.Type! eventType) -> string?
+static Skywalker.EventBus.QueueNameAttribute.GetNameOrDefault<TEvent>() -> string?
+virtual Skywalker.EventBus.EventBusBase.PublishAsync<TEvent>(TEvent! eventArgs) -> System.Threading.Tasks.Task!
+virtual Skywalker.EventBus.EventNameAttribute.Name.get -> string!
+virtual Skywalker.EventBus.GenericEventNameAttribute.GetName(System.Type! eventType) -> string!
+virtual Skywalker.EventBus.QueueNameAttribute.Name.get -> string?

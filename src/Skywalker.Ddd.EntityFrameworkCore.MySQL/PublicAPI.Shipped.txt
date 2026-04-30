@@ -1,0 +1,7 @@
+#nullable enable
+Microsoft.EntityFrameworkCore.SkywalkerMySqlModelBuilderExtensions
+Skywalker.Ddd.EntityFrameworkCore.SkywalkerDbContextConfigurationContextMySqlExtensions
+Skywalker.Ddd.EntityFrameworkCore.SkywalkerDbContextOptionsMySqlExtensions
+static Microsoft.EntityFrameworkCore.SkywalkerMySqlModelBuilderExtensions.UseMySQL(this Microsoft.EntityFrameworkCore.ModelBuilder! modelBuilder) -> void
+static Skywalker.Ddd.EntityFrameworkCore.SkywalkerDbContextConfigurationContextMySqlExtensions.UseMySql(this Skywalker.Ddd.EntityFrameworkCore.DbContextConfiguration.SkywalkerDbContextConfigurationContext! context, System.Action<Microsoft.EntityFrameworkCore.Infrastructure.MySqlDbContextOptionsBuilder!>? mySQLOptionsAction = null) -> Microsoft.EntityFrameworkCore.DbContextOptionsBuilder!
+static Skywalker.Ddd.EntityFrameworkCore.SkywalkerDbContextOptionsMySqlExtensions.UseMySql(this Skywalker.Ddd.EntityFrameworkCore.SkywalkerDbContextOptions! options, System.Action<Microsoft.EntityFrameworkCore.Infrastructure.MySqlDbContextOptionsBuilder!>? mySQLOptionsAction = null) -> void
