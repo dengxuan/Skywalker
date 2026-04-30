@@ -2,15 +2,16 @@
 
 > 最后更新：2026-04-23
 
-本文档规定 Skywalker 的版本号来源、发布流程、以及 v1.x / v2.0 双线并存的演进路径。**这是唯一权威文档**，CI 工作流、NuGet 包、发布公告都以此为准。
+本文档规定 Skywalker 的版本号来源、发布流程、以及 v1.x / v2.0 双线并存的演进路径。**这是版本号事实源**，CI 工作流、NuGet 包、发布公告都以此为准。日常研发、bugfix、main 分支职责和 daily build 规范见 [release-governance.md](release-governance.md)。
 
 ---
 
 ## 核心原则
 
 1. **tag 是事实源**。git tag 决定产出的 NuGet 版本号，不存在任何"手工维护的版本字段"。
-2. **分支 push = 预发布**。推到 `main` / `release/2.0` 会自动发 `-alpha.N` / `-preview.N` 包，供下游提前集成测试，但**不**承诺稳定性。
-3. **tag 推送 = 承诺**。打 `v*` tag 即对外承诺这一版本的 API 稳定性边界（见下表）。
+2. **长期分支 push = GitHub Packages 滚动验证包**。推到 `main` / `release/2.0` 会自动发 `-alpha.N` / `-preview.N.M` 包，供下游切换版本及时验证，但**不**承诺稳定性。
+3. **Unreleased = 滚动包变更记录**。`CHANGELOG.md` 的 `[Unreleased]` 记录已进入滚动包、尚未固化为正式版本的修复和功能。
+4. **tag 推送 = 承诺**。打 `v*` tag 即对外承诺这一版本的 API 稳定性边界（见下表）。
 
 ---
 
@@ -23,8 +24,8 @@
 | 正好在 `v1.0.0` tag 上 | `1.0.0` | v1.x GA |
 | 正好在 `v1.0.1-rc.1` tag 上 | `1.0.1-rc.1` | v1.0.1 的候选发布 |
 | 正好在 `v2.0.0-preview.1` tag 上 | `2.0.0-preview.1` | v2.0 首个 preview |
-| main，`v1.0.0` 之后 N 个 commit | `1.0.1-alpha.0.N` | v1.x 的日常预览 |
-| release/2.0，`v2.0.0-preview.1` 之后 N 个 commit | `2.0.0-preview.1.N` | v2.0 的日常预览 |
+| main，`v1.0.0` 之后 N 个 commit | `1.0.1-alpha.0.N` | v1.x 滚动验证包 |
+| release/2.0，`v2.0.0-preview.1` 之后 N 个 commit | `2.0.0-preview.1.N` | v2.0 滚动验证包 |
 
 配置位置：[Directory.Build.props](../../Directory.Build.props)（`MinVerTagPrefix=v`、`MinVerDefaultPreReleaseIdentifiers=alpha.0`）。
 
@@ -36,8 +37,9 @@
 |---|---|---|---|
 | *（无后缀）* | **GA** | API 稳定，语义化版本承诺 | 生产可用；按需升级 patch/minor |
 | `-rc.N` | Release Candidate | **不**再引入新 API，仅修 rc 期间发现的 bug | 生产前集成验证 |
-| `-preview.N[.M]` | Preview | API 可能微调；无 breaking 内部变更 | 预研 / staging 环境试用 |
-| `-alpha.N[.M]` | Alpha | 任何东西都可能变，仅供日常同步 | **不**生产使用；仅用于团队联调 |
+| `-preview.N` | Preview 里程碑 | API 可能微调；无 breaking 内部变更 | 预研 / staging 环境试用 |
+| `-preview.N.M` | v2.0 滚动验证包 | 来自 `release/2.0` 的每次合并，未完成正式浸泡 | 下游及时验证修复和新功能 |
+| `-alpha.N[.M]` | v1.x 滚动验证包 | 来自 `main` 的每次合并，未完成正式浸泡 | 下游及时验证 bugfix；不生产使用 |
 | `-beta.N`（已废弃）| 历史遗物 | v1.0.0 之前的旧版本用过 | 迁移到 `1.0.0` 或更高 |
 
 ---
@@ -70,12 +72,12 @@ GA 的硬门禁详见 [docs/architecture/v2.0-roadmap.md](./architecture/v2.0-ro
                         (手动打 tag)
                     ┌─► v1.0.1-rc.1  ────► 1.0.1-rc.1
 main ──── push ────┤
-                    └─► 日常 push ────────► 1.0.X-alpha.0.N
+                    └─► 日常 push ────────► 1.0.X-alpha.0.N  (GitHub Packages 滚动验证包)
 
                         (手动打 tag)
                     ┌─► v2.0.0-preview.2 ─► 2.0.0-preview.2
 release/2.0 ──push─┤
-                    └─► 日常 push ────────► 2.0.0-preview.1.N
+                    └─► 日常 push ────────► 2.0.0-preview.1.N (GitHub Packages 滚动验证包)
                                               （N 基于 v2.0.0-preview.1 之后的 commit 数）
 ```
 
@@ -84,6 +86,17 @@ release/2.0 ──push─┤
 `main` 的每次 push 由 [`forward-merge.yml`](../../.github/workflows/forward-merge.yml) 自动合并到 `release/2.0`。bug fix 双享受；新功能**不**走这条路（新功能应直接 target `release/2.0`）。
 
 冲突处理见 [CONTRIBUTING.md 分支策略](../../CONTRIBUTING.md#-分支策略)。
+
+### Changelog 与滚动验证
+
+`CHANGELOG.md` 的 `[Unreleased]` 是滚动包的发布说明草稿。合并 PR 后，如果 CI 已把包发布到 GitHub Packages，该变更就应记录在 `[Unreleased]` 中，方便下游知道当前滚动版本包含哪些修复和功能。
+
+发布正式版本时：
+
+1. 将 `[Unreleased]` 内容移动到目标版本段，例如 `[1.0.1]`、`[1.0.1-rc.1]` 或 `[2.0.0-preview.2]`。
+2. 在文件顶部重新添加新的空 `[Unreleased]`。
+3. 打对应 `v*` tag。
+4. GitHub Packages 上的滚动包继续用于下一轮验证；tag 版本才是对外承诺版本。
 
 ---
 
@@ -163,5 +176,6 @@ git push origin main
 - [CONTRIBUTING.md § 分支策略](../../CONTRIBUTING.md#-分支策略)
 - [docs/migration/v1-to-v2.md](./migration/v1-to-v2.md) — v1.x → v2.0 迁移手册
 - [docs/architecture/v2.0-roadmap.md](./architecture/v2.0-roadmap.md) — v2.0 路线图
+- [docs/release-governance.md](./release-governance.md) — 研发、bugfix、main 与 daily build 治理
 - [Directory.Build.props](../../Directory.Build.props) — MinVer 配置
 - [.github/workflows/nupkg-publish.yml](../../.github/workflows/nupkg-publish.yml) — 发布 workflow

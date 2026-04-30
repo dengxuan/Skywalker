@@ -42,13 +42,16 @@
 | 分支 | 用途 | 说明 |
 |------|------|------|
 | `main` | v1.x 稳定开发主线 | 所有 v1.x bugfix / 小特性 PR 的目标分支；可直接发布 |
-| `release/2.0` | v2.0 开发分支（Source Generator 化） | 所有 v2.0 PR 的目标分支；alpha/preview/rc tag 在此打 |
+| `release/2.0` | v2.0 开发集成分支（Source Generator 化） | 所有 v2.0 PR 的目标分支；alpha/preview/rc tag 在此打 |
 | `feature/*` | 功能开发 | 如 `feature/issue-123-add-caching` |
 | `fix/*` | Bug 修复 | 如 `fix/issue-456-null-reference` |
+| `integration/*` | 短期专题集成 | 如 `integration/sg-sprint-1`；完成后合回 `release/2.0` 并删除 |
 | `refactor/*` | 代码重构 | 如 `refactor/issue-789-repository` |
 | `docs/*` | 文档更新 | 如 `docs/issue-29-readme` |
 | `test/*` | 测试相关 | 如 `test/issue-100-unit-tests` |
 | `release/*` | 发布准备 | 如 `release/v1.1.0` |
+
+> Skywalker 不维护长期 `dev` 分支。`release/2.0` 就是当前 v2.0 开发集成线；如确需缓冲多 PR，可使用短期 `integration/*` 分支。完整研发、发版、daily build 规范见 [`docs/release-governance.md`](docs/release-governance.md)。
 
 ### v1.x ↔ v2.0 同步
 
@@ -107,13 +110,17 @@
 >
 > 背景：[messaging-spin-out.md](docs/architecture/messaging-spin-out.md)。
 
-### 版本号如何产生
+### 版本号与下游验证
 
 项目采用 **[MinVer](https://github.com/adamralph/minver) + git tag** 模型：
 
 - 产出版本号由构建时的 git 历史推导，**无需手工维护 `Versions.props`**
-- 分支 push = 预发布包（`1.0.X-alpha.0.N` on main / `2.0.0-preview.1.N` on release/2.0）
+- 分支 push = GitHub Packages 滚动验证包（`1.0.X-alpha.0.N` on main / `2.0.0-preview.1.N` on release/2.0）
 - tag push = 承诺版本（打 `v1.0.1` tag → 发 `1.0.1` GA 包）
+- `CHANGELOG.md` 的 `[Unreleased]` 记录当前滚动包已包含、但尚未固化到正式版本的变更
+- 每个用户可见 PR 必须自己提交对应 `[Unreleased]` 条目；缺失时不得合并
+
+下游提交 bug 后，维护者应先补复现测试和 `[Unreleased]` 条目，再合并修复到目标长期分支；CI 发布滚动包后，下游切换到该滚动版本验证。确认通过并浸泡 1-2 周后，再把 `[Unreleased]` 内容移动到正式版本段并打 tag。
 
 完整规则、生命周期、打 tag 操作详见 **[`docs/versioning.md`](docs/versioning.md)**。
 
@@ -171,6 +178,11 @@ git checkout -b fix/issue-编号-简短描述
 git checkout release/2.0
 git pull upstream release/2.0
 git checkout -b feature/issue-编号-简短描述
+
+# 短期专题集成：仅维护者在需要时创建，完成后合回 release/2.0 并删除
+git checkout release/2.0
+git pull upstream release/2.0
+git checkout -b integration/sg-sprint-1
 ```
 
 ### 6. 开发与提交
@@ -280,12 +292,15 @@ BREAKING CHANGE: IRepository 接口签名已更改
 - [ ] 已更新相关 XML 注释
 - [ ] 已更新相关文档（如适用）
 - [ ] README 已更新（如适用）
+- [ ] 用户可见修复、功能、破坏性变更已在本 PR 写入 `CHANGELOG.md` 的 `[Unreleased]`
+- [ ] 如未更新 `[Unreleased]`，PR 描述已写明 `No changelog needed` 和原因
 
 ### PR 信息
 
 - [ ] PR 标题符合提交规范
 - [ ] PR 描述清晰说明了变更内容
 - [ ] 已关联相关 Issue
+- [ ] 如为下游 bugfix，说明合并后用于验证的 GitHub Packages 滚动版本
 
 ---
 
