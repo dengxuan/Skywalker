@@ -6,15 +6,15 @@ case that should stay buildable and runnable in CI as generators are added.
 
 ## Current State
 
-Sprint 0 creates the skeleton only. Each sample currently contains a minimal
-`Program.cs` smoke test and a README that describes the scenario it will validate.
-Real generator-driven code is filled in during Sprint 1+.
+Sprint 0 created the sample matrix skeleton. Sprint 1 starts filling it in with
+real generator-driven code. Each sample should stay buildable and runnable in CI
+as it moves from placeholder to scenario canary.
 
 ## Sample Matrix
 
 | Sample | Scenario | Sprint 0 status | Filled in by |
 |---|---|---|---|
-| `Skywalker.Sample.Minimal` | Smallest app; package install + `AddSkywalker()` happy path | Skeleton, build/run smoke test | Sprint 1, Sprint 3 |
+| `Skywalker.Sample.Minimal` | Smallest app; EF repository generator analyzer + `AddSkywalkerDbContext<TDbContext>()` happy path | Sprint 1 smoke test: generated metadata + repository/domain-service registration | Sprint 1, Sprint 3 |
 | `Skywalker.Sample.MultiDbContext` | Multiple EF Core DbContexts without generated-name collisions | Skeleton, build/run smoke test | Sprint 1 |
 | `Skywalker.Sample.GenericServices` | Open and closed generic application services | Skeleton, build/run smoke test | Sprint 1, Sprint 3 |
 | `Skywalker.Sample.NestedTypes` | Nested partial types and fully-qualified generated names | Skeleton, build/run smoke test | Sprint 3 |
