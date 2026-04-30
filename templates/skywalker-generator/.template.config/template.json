@@ -1,0 +1,34 @@
+{
+  "$schema": "http://json.schemastore.org/template",
+  "author": "Skywalker",
+  "classifications": [
+    "Skywalker",
+    "Source Generator",
+    "Analyzer"
+  ],
+  "identity": "Skywalker.Templates.SourceGenerator",
+  "name": "Skywalker Source Generator",
+  "shortName": "skywalker-generator",
+  "sourceName": "Skywalker.Template.SourceGenerators",
+  "preferNameDirectory": true,
+  "tags": {
+    "language": "C#",
+    "type": "project"
+  },
+  "symbols": {
+    "roslynVersion": {
+      "type": "parameter",
+      "datatype": "string",
+      "defaultValue": "4.8.0",
+      "replaces": "4.8.0",
+      "description": "Microsoft.CodeAnalysis.CSharp package version used when the repo does not provide a central version property."
+    },
+    "roslynAnalyzersVersion": {
+      "type": "parameter",
+      "datatype": "string",
+      "defaultValue": "3.3.4",
+      "replaces": "3.3.4",
+      "description": "Microsoft.CodeAnalysis.Analyzers package version used when the repo does not provide a central version property."
+    }
+  }
+}

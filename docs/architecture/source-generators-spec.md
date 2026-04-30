@@ -396,6 +396,18 @@ Skywalker.Xxx/
 
 ### 10.2 Generator 项目脚手架
 
-> 🚧 `dotnet new skywalker-generator` 模板待 Sprint 1 第一个真实 SG 落地后随同发布
-> （[#191](https://github.com/dengxuan/Skywalker/issues/191) Phase B）。
-> 当前请参照 §2.1 csproj 模板手工创建。
+从仓库根目录安装模板：
+
+```powershell
+dotnet new install .\templates\skywalker-generator
+```
+
+创建新 Generator 项目：
+
+```powershell
+dotnet new skywalker-generator -n Skywalker.Ddd.EntityFrameworkCore.SourceGenerators -o src\Skywalker.Ddd.EntityFrameworkCore.SourceGenerators
+dotnet build src\Skywalker.Ddd.EntityFrameworkCore.SourceGenerators\Skywalker.Ddd.EntityFrameworkCore.SourceGenerators.csproj
+dotnet test src\Skywalker.Ddd.EntityFrameworkCore.SourceGenerators\tests\Skywalker.Ddd.EntityFrameworkCore.SourceGenerators.Tests\Skywalker.Ddd.EntityFrameworkCore.SourceGenerators.Tests.csproj
+```
+
+模板说明见 [`templates/skywalker-generator/README.md`](../../templates/skywalker-generator/README.md)。
