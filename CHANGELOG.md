@@ -5,48 +5,89 @@
 格式参考 [Keep a Changelog](https://keepachangelog.com/zh-CN/1.1.0/)，
 版本号遵循 [Semantic Versioning](https://semver.org/lang/zh-CN/)。
 
-## [2.0.0] - 规划中
-
-v2.0 是 Skywalker 的差异化战役，定位 **小、快、易用**：
-
-- 全面 Source Generator 化：消灭运行时反射、消灭 `Reflection.Emit`。
-- 移除 `Castle.Core` 依赖（~600 KB）。
-- NativeAOT publish 零警告。
-- `AddSkywalker()` 一行启动，零样板注册。
-
-设计与规划文档：
-
-- [`docs/architecture/v2.0-roadmap.md`](docs/architecture/v2.0-roadmap.md)
-- [`docs/architecture/source-generators-spec.md`](docs/architecture/source-generators-spec.md)
-- [`docs/architecture/source-generators-quality.md`](docs/architecture/source-generators-quality.md)
-
-发版策略：`main` → `2.0.0-alpha.x` → `2.0.0-preview.x` → `2.0.0-rc.x` → `2.0.0`。
-每个阶段最低浸泡 2 周，详见质量规范。
-
 ## [Unreleased]
 
-### Added
+### Changed — BREAKING (Messaging & Transport 独立为 Vertex 项目)
 
-- **`Skywalker.Transport.Grpc`** 新增包：基于 gRPC bidi stream 的 `ITransport` 实现（client side），与业务消息 schema 完全解耦。配合 `Skywalker.Messaging` 即可在 v2 SDK 中以「公网穿透 + HTTPS」替代 NetMQ 跨主机部署。详见 [#203](https://github.com/dengxuan/Skywalker/issues/203)。
-  - 严格遵守 `docs/modules/transport.md` 中的 4 条 transport 铁律（读循环只路由 Acks、单次 send 失败 ≠ 断连、CT 仅作用于 pre-wire、唯一断开判定 = 读循环异常）。
-  - 内置带 jitter 的指数退避重连。
-  - DI 扩展：`services.AddGrpcTransport(name, configure)`。
-- **`Skywalker.Transport.Grpc`** 新增 server 端实现：`GrpcServerTransport` + `BidiServiceImpl`，承载多 peer 的双向流。Peer 身份由 `x-skywalker-peer-id` metadata 头标识；`SendAsync(target, frames)` 路由到对应连接，`ReceiveAsync` 产出带 `From` 的 `TransportMessage`。同样严守 4 条 transport 铁律。详见 [#203](https://github.com/dengxuan/Skywalker/issues/203)。
-  - DI 扩展：`services.AddGrpcServerTransport(name, configure?)`，配合 `app.MapGrpcService<BidiServiceImpl>()` 即可挂载。
-
-### Removed
-
-- **BREAKING**：移除 `Skywalker.Ddd.Application` 对 [AutoMapper](https://github.com/AutoMapper/AutoMapper) 的依赖（AutoMapper 自 v15 起转向商业授权）。
-- 删除 `SkywalkerProfile`。
-- 移除 `ApplicationService` 的 `IMapper Mapper` 属性与构造函数参数。
-- 移除 `eng/Versions.props` 中的 `AutoMapperVersion`。
+- **`Skywalker.Messaging.*`** 和 **`Skywalker.Transport.*`** 共 5 个包**从 Skywalker 仓移除**，迁入独立的跨语言项目 [**Vertex**](https://github.com/dengxuan/Vertex)（polyrepo）：
+    - .NET 实现：[dengxuan/vertex-dotnet](https://github.com/dengxuan/vertex-dotnet)（NuGet：`Vertex.Messaging`、`Vertex.Messaging.Abstractions`、`Vertex.Transport.Abstractions`、`Vertex.Transport.NetMq`、`Vertex.Transport.Grpc`）
+    - Go 实现：[dengxuan/vertex-go](https://github.com/dengxuan/vertex-go)（module `github.com/dengxuan/vertex-go`）
+    - Wire 规范：[dengxuan/Vertex](https://github.com/dengxuan/Vertex)
+- 原因：Messaging/Transport 本质是**跨语言通信基础设施**，与 Skywalker 的 .NET DDD 框架定位不同步；强行捆绑导致 Go 等语言场景无法对等接入。详见 [messaging-spin-out.md](docs/architecture/messaging-spin-out.md)。
+- **迁移**：把 `using Skywalker.Messaging;` / `using Skywalker.Transport;` 改为 `using Vertex.Messaging;` / `using Vertex.Transport;`；`<PackageReference Include="Skywalker.Messaging" />` 改为 `<PackageReference Include="Vertex.Messaging" />` 等。API 语义（`IMessageBus`、`IRpcClient`、`ITransport`、4 条铁律）保持不变。
+- **已发布的 `Skywalker.Messaging.1.0.0` 等 NuGet 包保留不动**，老用户可继续 pin 至 `1.0.0`；不会有 `Skywalker.Messaging.1.0.1+` 继续发布。需要新功能 / bug fix 时请升级到 `Vertex.*`。
+- _后续_ 可能发布 `Skywalker.Messaging.1.0.1` 等带 `[TypeForwardedTo]` 的桥接包，指向 `Vertex.*`。是否发布、何时发布视下游实际迁移情况而定；目前**不**自动发。
 
 ### Changed
 
-- `ApplicationService` 现在为无参基类，业务派生类请自行注入所需服务。
-- 全部文档（README、CONTRIBUTING、`docs/`、`samples/`）的对象映射示例改为使用 [Riok.Mapperly](https://github.com/riok/mapperly) 源生成器。
+- 迁移到 [MinVer](https://github.com/adamralph/minver) 由 git tag 驱动版本号 (#213, #215)。
+- 新增权威的版本策略文档 [docs/versioning.md](docs/versioning.md)，从 CONTRIBUTING 链接 (#216)。
+- 简化 forward-merge 冲突处理路径，发布工作流增加 `workflow_dispatch` 触发 (#217)。
+- CONTRIBUTING / 架构文档同步反映 Messaging/Transport → Vertex 的 spin-out (#218, #219, #221)。
 
-### Migration Guide
+## [2.0.0-preview.1] - 2026-04-23
+
+v2.0 发版通道的第一个标记 tag。基于 v1.0.0 stable，从 `release/2.0` 分支开辟独立发布通道，用于后续 v2.0 全面 Source Generator 化迭代的 preview / rc 浸泡测试。包内容与 v1.0.0 几乎一致，差异仅在版本号体系与新增的迁移指南骨架。
+
+### Added
+
+- v1.x → v2.0 迁移指南骨架 [docs/migration/v1-to-v2.md](https://github.com/dengxuan/Skywalker/blob/release/2.0/docs/migration/v1-to-v2.md)（仅在 `release/2.0` 分支）(#211)。
+
+### Changed
+
+- 版本号体系切换为 `2.0.0-preview.x`（MinVer 自动）。
+- CI 跳过 `Versions.props` 回写以避免在 `release/2.0` 上意外触发 main 同步循环 (#212)。
+
+## [1.0.0] - 2026-04-23
+
+Skywalker 首个 stable 版本，提供完整的 .NET 8 DDD 应用开发框架。
+
+### Added — 核心框架
+
+- DDD 基础抽象与 EF Core 集成（`Skywalker.Ddd`、`Skywalker.Ddd.EntityFrameworkCore`）
+- 应用服务、Repository、UnitOfWork、领域事件、值对象、聚合根、规约
+- 多租户支持、审计日志、对象映射约定、数据过滤
+
+### Added — 模块
+
+- `Skywalker.Permissions.*`：权限注册 / 验证 / 服务端授权数据同步（issues #9-#16）
+- `Skywalker.Settings.*` / `Skywalker.Localization` / `Skywalker.Validation`
+- `Skywalker.Security` / `Skywalker.AspNetCore`
+- `Skywalker.Extensions.*`：`DependencyInjection`、`DynamicProxies`、`Universal`、`Linq` 等
+
+### Added — Source Generator（v1 阶段，反射混合期）
+
+- `Skywalker.SourceGenerators`：模块化自动注册（`SkywalkerModuleAttribute` + 程序集扫描，issues #120-#126）
+- `Skywalker.Extensions.DynamicProxies.SourceGenerators`：拦截器静态代理生成
+- `AddSkywalker()` / `ISkywalkerBuilder` 一站式注册入口（Console / Web 统一）
+
+### Added — Messaging & Transport（已于 [Unreleased] spin-out 至 Vertex）
+
+- `Skywalker.Messaging.Abstractions` / `Skywalker.Messaging`：bidi 消息内核（`IMessageBus` / `IRpcClient` / `IRpcHandler<TReq,TRes>`）(#193)
+- `Skywalker.Transport.Abstractions` / `Skywalker.Transport.NetMq`：传输层抽象 + ZeroMQ 实现 (#193)
+- `Skywalker.Transport.Grpc` / `Skywalker.Transport.Grpc.Server`：gRPC bidi 传输实现 (#203, #206, #208)
+- 4 条铁律协议约束并通过 XML doc 在 `ITransport.SendAsync` 上固化 CT 契约 (#202, #205)
+  1. read loop 只内联路由 Ack；handler 异步派发
+  2. 单条 reply 发送失败 ≠ 断连
+  3. write 拿到锁后必须不被 CT 中断（CT 只用于「上线前」取消）
+  4. 唯一断连源是 read loop 的 `Recv()` / `MoveNext()` 错误
+
+### Changed — BREAKING（v0.x 用户）
+
+- **移除 `Skywalker.Ddd.Application` 对 [AutoMapper](https://github.com/AutoMapper/AutoMapper) 的依赖**（AutoMapper 自 v15 起转为商业授权）(#181)。
+  - 删除 `SkywalkerProfile`。
+  - 移除 `ApplicationService` 的 `IMapper Mapper` 属性与构造函数参数。
+  - 移除 `eng/Versions.props` 中的 `AutoMapperVersion`。
+- `ApplicationService` 改为无参基类，业务派生类自行注入所需服务。
+- 全部文档示例改为使用 [Riok.Mapperly](https://github.com/riok/mapperly) 源生成器。
+
+### Documentation
+
+- 完整 README / CONTRIBUTING / API / 使用指南 / 示例项目（issues #17-#21, #66）
+- 架构设计文档体系（[docs/architecture/](docs/architecture/)）
+- v2.0 Source Generator 路线图与规范（[v2.0-roadmap.md](docs/architecture/v2.0-roadmap.md)、[source-generators-spec.md](docs/architecture/source-generators-spec.md)、[source-generators-quality.md](docs/architecture/source-generators-quality.md)）(#183)
+
+### v0.x → v1.0 Migration Guide（AutoMapper → Mapperly）
 
 派生 `ApplicationService` 的业务代码需要按以下步骤迁移：
 
@@ -90,8 +131,32 @@ v2.0 是 Skywalker 的差异化战役，定位 **小、快、易用**：
 
 5. **移除 DI 中对 AutoMapper 的注册**（如有）：删除 `services.AddAutoMapper(...)`。
 
-### Why
+理由：
 
 - AutoMapper 自 v15 起转向商业授权，框架不应将商业许可成本传递给使用者。
 - Mapperly 是 MIT 许可的源生成器，编译期生成映射代码，零运行时反射开销，对原生 AOT 友好，重构时编译器即可发现字段不匹配。
 - 框架原本就未在 DI 容器中注册 AutoMapper，派生 `ApplicationService` 的服务实际无法解析 `IMapper`，移除此依赖同时修复该潜在缺陷。
+
+---
+
+## v2.0 Roadmap
+
+v2.0 是 Skywalker 的差异化战役，定位 **小、快、易用**：
+
+- 全面 Source Generator 化：消灭运行时反射、消灭 `Reflection.Emit`。
+- 移除 `Castle.Core` 依赖（~600 KB）。
+- NativeAOT publish 零警告。
+- `AddSkywalker()` 一行启动，零样板注册。
+- Messaging/Transport 已 spin-out 到 [Vertex](https://github.com/dengxuan/Vertex) 独立项目。
+
+设计与规划文档：
+
+- [`docs/architecture/v2.0-roadmap.md`](docs/architecture/v2.0-roadmap.md)
+- [`docs/architecture/source-generators-spec.md`](docs/architecture/source-generators-spec.md)
+- [`docs/architecture/source-generators-quality.md`](docs/architecture/source-generators-quality.md)
+
+发版策略：`release/2.0` → `2.0.0-preview.x` → `2.0.0-rc.x` → `2.0.0`，每阶段最低浸泡 2 周，详见 [versioning.md](docs/versioning.md)。
+
+[Unreleased]: https://github.com/dengxuan/Skywalker/compare/v2.0.0-preview.1...HEAD
+[2.0.0-preview.1]: https://github.com/dengxuan/Skywalker/compare/v1.0.0...v2.0.0-preview.1
+[1.0.0]: https://github.com/dengxuan/Skywalker/releases/tag/v1.0.0

@@ -42,13 +42,16 @@
 | 分支 | 用途 | 说明 |
 |------|------|------|
 | `main` | v1.x 稳定开发主线 | 所有 v1.x bugfix / 小特性 PR 的目标分支；可直接发布 |
-| `release/2.0` | v2.0 开发分支（Source Generator 化） | 所有 v2.0 PR 的目标分支；alpha/preview/rc tag 在此打 |
+| `release/2.0` | v2.0 开发集成分支（Source Generator 化） | 所有 v2.0 PR 的目标分支；alpha/preview/rc tag 在此打 |
 | `feature/*` | 功能开发 | 如 `feature/issue-123-add-caching` |
 | `fix/*` | Bug 修复 | 如 `fix/issue-456-null-reference` |
+| `integration/*` | 短期专题集成 | 如 `integration/sg-sprint-1`；完成后合回 `release/2.0` 并删除 |
 | `refactor/*` | 代码重构 | 如 `refactor/issue-789-repository` |
 | `docs/*` | 文档更新 | 如 `docs/issue-29-readme` |
 | `test/*` | 测试相关 | 如 `test/issue-100-unit-tests` |
 | `release/*` | 发布准备 | 如 `release/v1.1.0` |
+
+> Skywalker 不维护长期 `dev` 分支。`release/2.0` 就是当前 v2.0 开发集成线；如确需缓冲多 PR，可使用短期 `integration/*` 分支。完整研发、发版、daily build 规范见 [`docs/release-governance.md`](docs/release-governance.md)。
 
 ### v1.x ↔ v2.0 同步
 
@@ -74,16 +77,22 @@
 | **新功能 / 新模块（默认）** | **`release/2.0`** | 不再 backport 到 v1.x |
 | v2.0 Source Generator 相关实现 | `release/2.0` | Epic #182 |
 | v2.0 API 设计 / 迁移指南 | `release/2.0` | `docs/migration/v1-to-v2.md` |
+| **Messaging / Transport 新功能或改进** | **Vertex 项目**（多仓）：[`vertex-dotnet`](https://github.com/dengxuan/vertex-dotnet) .NET impl / [`vertex-go`](https://github.com/dengxuan/vertex-go) Go impl / [`Vertex`](https://github.com/dengxuan/Vertex) 规范 | Messaging/Transport 已独立项目；这里不再接收相关 PR |
 
 **决策树：**
 
 ```
-是 bug 修复？
-├─ 是 → 影响 v1.x 已发布用户吗？
-│       ├─ 是 → target: main
-│       └─ 否 → target: release/2.0
-└─ 否（是新功能） → 默认 target: release/2.0
-          └─ 例外：明确承诺 backport 到 v1.x 的小增强（罕见，需维护者预先同意）→ target: main
+是 Messaging / Transport 相关？
+├─ 是 → 是 .NET 实现 bug / 改进？
+│       ├─ 是 → 去 https://github.com/dengxuan/vertex-dotnet 开 PR
+│       ├─ 否，是 Go 实现？ → https://github.com/dengxuan/vertex-go
+│       └─ 否，是 wire / 协议规范？ → https://github.com/dengxuan/Vertex（spec 仓，需多语言 impl 同步 PR）
+└─ 否 → 是 bug 修复？
+        ├─ 是 → 影响 v1.x 已发布用户吗？
+        │       ├─ 是 → target: main
+        │       └─ 否 → target: release/2.0
+        └─ 否（是新功能） → 默认 target: release/2.0
+                  └─ 例外：明确承诺 backport 到 v1.x 的小增强（罕见，需维护者预先同意）→ target: main
 ```
 
 ### 版本生命周期
@@ -91,7 +100,29 @@
 | 版本 | 状态 | 策略 |
 |---|---|---|
 | **v1.x** | 维护期 | 只接受 bug fix / 安全修复；不再加新功能；v2.0 GA 后进入 **6 个月 LTS**（仅安全修复），之后 EOL |
-| **v2.0** | 开发中 | 在 `release/2.0` 迭代，每次 push 自动发 `2.0.0-preview.N` NuGet（见 `nupkg-publish.yml`），鼓励用户提前试用反馈；preview → rc → GA |
+| **v2.0** | 开发中 | 在 `release/2.0` 迭代，每次 push 自动发 `2.0.0-preview.1.N` NuGet，鼓励用户提前试用反馈；preview → rc → GA |
+
+> **Messaging / Transport 的版本线**：已独立为 Vertex 项目（polyrepo），版本号独立管理，不与 Skywalker 版本号绑定：
+>
+> - [`dengxuan/Vertex`](https://github.com/dengxuan/Vertex) — wire spec / protos / compat 测试
+> - [`dengxuan/vertex-dotnet`](https://github.com/dengxuan/vertex-dotnet) — NuGet 包 `Vertex.Messaging`、`Vertex.Transport.Grpc` 等
+> - [`dengxuan/vertex-go`](https://github.com/dengxuan/vertex-go) — Go module `github.com/dengxuan/vertex-go`
+>
+> 背景：[messaging-spin-out.md](docs/architecture/messaging-spin-out.md)。
+
+### 版本号与下游验证
+
+项目采用 **[MinVer](https://github.com/adamralph/minver) + git tag** 模型：
+
+- 产出版本号由构建时的 git 历史推导，**无需手工维护 `Versions.props`**
+- 分支 push = GitHub Packages 滚动验证包（`1.0.X-alpha.0.N` on main / `2.0.0-preview.1.N` on release/2.0）
+- tag push = 承诺版本（打 `v1.0.1` tag → 发 `1.0.1` GA 包）
+- `CHANGELOG.md` 的 `[Unreleased]` 记录当前滚动包已包含、但尚未固化到正式版本的变更
+- 每个用户可见 PR 必须自己提交对应 `[Unreleased]` 条目；缺失时不得合并
+
+下游提交 bug 后，维护者应先补复现测试和 `[Unreleased]` 条目，再合并修复到目标长期分支；CI 发布滚动包后，下游切换到该滚动版本验证。确认通过并浸泡 1-2 周后，再把 `[Unreleased]` 内容移动到正式版本段并打 tag。
+
+完整规则、生命周期、打 tag 操作详见 **[`docs/versioning.md`](docs/versioning.md)**。
 
 ### 分支命名规范
 
@@ -147,6 +178,11 @@ git checkout -b fix/issue-编号-简短描述
 git checkout release/2.0
 git pull upstream release/2.0
 git checkout -b feature/issue-编号-简短描述
+
+# 短期专题集成：仅维护者在需要时创建，完成后合回 release/2.0 并删除
+git checkout release/2.0
+git pull upstream release/2.0
+git checkout -b integration/sg-sprint-1
 ```
 
 ### 6. 开发与提交
@@ -256,12 +292,15 @@ BREAKING CHANGE: IRepository 接口签名已更改
 - [ ] 已更新相关 XML 注释
 - [ ] 已更新相关文档（如适用）
 - [ ] README 已更新（如适用）
+- [ ] 用户可见修复、功能、破坏性变更已在本 PR 写入 `CHANGELOG.md` 的 `[Unreleased]`
+- [ ] 如未更新 `[Unreleased]`，PR 描述已写明 `No changelog needed` 和原因
 
 ### PR 信息
 
 - [ ] PR 标题符合提交规范
 - [ ] PR 描述清晰说明了变更内容
 - [ ] 已关联相关 Issue
+- [ ] 如为下游 bugfix，说明合并后用于验证的 GitHub Packages 滚动版本
 
 ---
 

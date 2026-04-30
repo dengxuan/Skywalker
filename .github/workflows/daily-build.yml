@@ -1,0 +1,53 @@
+name: Daily Build
+
+on:
+  schedule:
+    - cron: "17 19 * * *"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  daily-build:
+    name: Daily build (${{ matrix.ref }})
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - ref: main
+            artifact: main
+          - ref: release/2.0
+            artifact: release-2.0
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v5
+        with:
+          ref: ${{ matrix.ref }}
+          fetch-depth: 0
+
+      - name: Setup .NET
+        uses: actions/setup-dotnet@v5
+        with:
+          dotnet-version: "8.0.x"
+
+      - name: Restore
+        run: dotnet restore Skywalker.sln
+
+      - name: Build
+        run: dotnet build Skywalker.sln --configuration Release --no-restore -m:1 --nologo --verbosity:minimal
+
+      - name: Test
+        run: dotnet test Skywalker.sln --configuration Release --no-build --verbosity minimal -m:1
+
+      - name: Pack
+        run: dotnet pack Skywalker.sln --configuration Release --no-build --output ./artifacts/nupkgs
+
+      - name: Upload packages
+        uses: actions/upload-artifact@v7
+        with:
+          name: daily-${{ matrix.artifact }}-nupkgs
+          path: ./artifacts/nupkgs/*.*nupkg
+          retention-days: 14
