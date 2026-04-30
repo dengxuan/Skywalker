@@ -9,6 +9,7 @@ using Skywalker.Ddd.EntityFrameworkCore.DbContextConfiguration;
 using Skywalker.Ddd.Uow.EntityFrameworkCore;
 using Skywalker.Identity.Domain.Repositories;
 using System.Linq;
+using System.Reflection;
 
 
 namespace Microsoft.Extensions.DependencyInjection;
@@ -26,6 +27,11 @@ public static class EntityFrameworkCoreIServiceCollectionExtensions
     /// <returns>���񼯺ϡ�</returns>
     private static IServiceCollection AddDefaultServices<TDbContext>(this IServiceCollection services) where TDbContext : SkywalkerDbContext<TDbContext>
     {
+        if (TryAddGeneratedDefaultServices<TDbContext>(services))
+        {
+            return services;
+        }
+
         var dbContextType = typeof(TDbContext);
         var entityTypes = DbContextHelper.GetEntityTypes(dbContextType);
         foreach (var entityType in entityTypes)
@@ -49,6 +55,35 @@ public static class EntityFrameworkCoreIServiceCollectionExtensions
             }
         }
         return services;
+    }
+
+    private static bool TryAddGeneratedDefaultServices<TDbContext>(IServiceCollection services) where TDbContext : SkywalkerDbContext<TDbContext>
+    {
+        var dbContextType = typeof(TDbContext);
+        foreach (var attribute in dbContextType.Assembly.GetCustomAttributes<SkywalkerGeneratedRepositoryRegistrationAttribute>())
+        {
+            if (attribute.DbContextType != dbContextType)
+            {
+                continue;
+            }
+
+            var method = attribute.RegistrarType.GetMethod(
+                attribute.MethodName,
+                BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Static,
+                binder: null,
+                types: [typeof(IServiceCollection)],
+                modifiers: null);
+
+            if (method is null || !typeof(IServiceCollection).IsAssignableFrom(method.ReturnType))
+            {
+                continue;
+            }
+
+            method.Invoke(null, [services]);
+            return true;
+        }
+
+        return false;
     }
 
     private static void RegisterDefaultRepository(IServiceCollection services, Type entityType, Type repositoryImplType, Type? primaryKeyType = null)

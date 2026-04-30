@@ -1,1 +1,6 @@
 #nullable enable
+Skywalker.Ddd.EntityFrameworkCore.SkywalkerGeneratedRepositoryRegistrationAttribute
+Skywalker.Ddd.EntityFrameworkCore.SkywalkerGeneratedRepositoryRegistrationAttribute.DbContextType.get -> System.Type!
+Skywalker.Ddd.EntityFrameworkCore.SkywalkerGeneratedRepositoryRegistrationAttribute.MethodName.get -> string!
+Skywalker.Ddd.EntityFrameworkCore.SkywalkerGeneratedRepositoryRegistrationAttribute.RegistrarType.get -> System.Type!
+Skywalker.Ddd.EntityFrameworkCore.SkywalkerGeneratedRepositoryRegistrationAttribute.SkywalkerGeneratedRepositoryRegistrationAttribute(System.Type! dbContextType, System.Type! registrarType, string! methodName) -> void

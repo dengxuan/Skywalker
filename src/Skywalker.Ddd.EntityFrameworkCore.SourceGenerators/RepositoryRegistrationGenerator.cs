@@ -80,6 +80,16 @@ public sealed class RepositoryRegistrationGenerator : IIncrementalGenerator
         source.AppendLine("#nullable enable");
         source.AppendLine("#pragma warning disable");
         source.AppendLine();
+        source.Append("[assembly: global::Skywalker.Ddd.EntityFrameworkCore.SkywalkerGeneratedRepositoryRegistrationAttribute(typeof(")
+            .Append(model.DbContextTypeName)
+            .Append("), typeof(global::Microsoft.Extensions.DependencyInjection.")
+            .Append(model.Identifier)
+            .Append("SkywalkerRepositoryRegistrations), nameof(global::Microsoft.Extensions.DependencyInjection.")
+            .Append(model.Identifier)
+            .Append("SkywalkerRepositoryRegistrations.AddSkywalkerGeneratedRepositoriesFor")
+            .Append(model.Identifier)
+            .AppendLine("))]");
+        source.AppendLine();
         source.AppendLine("namespace Microsoft.Extensions.DependencyInjection;");
         source.AppendLine();
         source.Append("internal static class ").Append(model.Identifier).AppendLine("SkywalkerRepositoryRegistrations");
