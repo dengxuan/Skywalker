@@ -9,6 +9,7 @@
 
 ### Added
 
+- Sprint 1 EF Repository Source Generator 起步：新增 `Skywalker.Ddd.EntityFrameworkCore.SourceGenerators` 项目，先生成 DbContext `DbSet<TEntity>` 对应的默认 repository/domain service 静态注册代码，并补充 generator 单元测试。
 - Source Generator Sprint 0 基础设施：新增 SG 测试项目、`GeneratorTestHelper`、Verify/Roslyn driver 测试流程、`sg-quality.yml` CI、8 个 sample matrix 项目、PublicApiAnalyzers baseline、诊断文档骨架、边界场景清单、`Skywalker.SourceGenerators.Common` 共享库和 `dotnet new skywalker-generator` 模板（#185-#191）。
 
 ### Changed — BREAKING (Messaging & Transport 独立为 Vertex 项目)
