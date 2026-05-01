@@ -15,6 +15,13 @@
 7. [扩展指南](#扩展指南)
 8. [最佳实践](#最佳实践)
 
+## 专题文档
+
+- [Skywalker v2.0 路线图](./v2.0-roadmap.md)
+- [Source Generator 设计规范](./source-generators-spec.md)
+- [Source Generator 质量标准](./source-generators-quality.md)
+- [NativeAOT Repository Provider 计划](./native-aot-repository-provider.md)
+
 ---
 
 ## 架构概述
