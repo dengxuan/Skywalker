@@ -106,10 +106,13 @@ jobs:
       - name: Install NativeAOT prerequisites
         run: sudo apt-get update && sudo apt-get install -y clang zlib1g-dev
 
+      - name: Build EF repository generator analyzer
+        run: dotnet build src/Skywalker.Ddd.EntityFrameworkCore.SourceGenerators/Skywalker.Ddd.EntityFrameworkCore.SourceGenerators.csproj --configuration Release -p:EnableSourceLink=false -p:EnableSourceControlManagerQueries=false -p:PublishRepositoryUrl=false -p:EmbedUntrackedSources=false -p:ContinuousIntegrationBuild=false
+
       - name: Publish AOT sample
         shell: bash
         run: |
-          set -o pipefail
+          set -euo pipefail
           dotnet publish samples/Skywalker.Sample.AspireAOT/Skywalker.Sample.AspireAOT.csproj --configuration Release -p:PublishAot=true 2>&1 | tee aot-publish.log
           if grep -E "warning IL[23][0-9]{3}" aot-publish.log; then
             echo "AOT publish produced IL2xxx/IL3xxx warnings."

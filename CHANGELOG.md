@@ -12,6 +12,7 @@
 - Sprint 1 EF Repository Source Generator 起步：新增 `Skywalker.Ddd.EntityFrameworkCore.SourceGenerators` 项目，先生成 DbContext `DbSet<TEntity>` 对应的默认 repository/domain service 静态注册代码，`AddSkywalkerDbContext<TDbContext>()` 优先调用 generated registration 并保留运行时反射 fallback，同时补充 generator/runtime 单元测试与 `Skywalker.Sample.Minimal` smoke sample。
 - `Skywalker.Sample.MultiDbContext` 填充为 EF repository source generator smoke sample，验证同一应用中两个 DbContext 的 generated registration metadata、registrar 类型和 repository/domain-service 注册彼此独立。
 - `Skywalker.Sample.LegacyMigration` 填充为 EF repository source generator 迁移期 smoke sample，验证手写 keyed repository 注册不会被 generated defaults 覆盖，同时缺失的 repository/domain-service 注册会被补齐。
+- `Skywalker.Sample.AspireAOT` 填充为 EF repository source generator NativeAOT canary，验证 generated registrar direct-call 合约可发布且不产生 IL2xxx/IL3xxx warnings。
 - Source Generator Sprint 0 基础设施：新增 SG 测试项目、`GeneratorTestHelper`、Verify/Roslyn driver 测试流程、`sg-quality.yml` CI、8 个 sample matrix 项目、PublicApiAnalyzers baseline、诊断文档骨架、边界场景清单、`Skywalker.SourceGenerators.Common` 共享库和 `dotnet new skywalker-generator` 模板（#185-#191）。
 
 ### Changed — BREAKING (Messaging & Transport 独立为 Vertex 项目)
