@@ -1,0 +1,2 @@
+﻿Diagnostic SKY3001 [Warning]: DbSet property 'Orders' on DbContext 'Demo.SalesDbContext' must be a public instance property to participate in repository generation
+<no generated sources>

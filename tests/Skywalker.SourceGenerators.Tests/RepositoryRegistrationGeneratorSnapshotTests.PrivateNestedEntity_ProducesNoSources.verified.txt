@@ -1,0 +1,2 @@
+﻿Diagnostic SKY3002 [Warning]: Entity type 'Demo.SalesDbContext.PrivateOrder' exposed by DbSet property 'Orders' must be public or internal so generated repository registrations can reference it
+<no generated sources>

@@ -1,0 +1,2 @@
+﻿Diagnostic SKY3004 [Warning]: Entity type 'Demo.AbstractOrder' exposed by DbSet property 'Orders' must be a non-abstract class
+<no generated sources>
