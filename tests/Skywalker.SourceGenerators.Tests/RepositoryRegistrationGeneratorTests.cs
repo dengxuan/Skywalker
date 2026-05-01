@@ -122,6 +122,193 @@ public sealed class RepositoryRegistrationGeneratorTests
         Assert.DoesNotContain("CatalogItem", billingSource.Source);
     }
 
+    [Fact]
+    public void ReportsDiagnostic_ForNonPublicDbSetProperty()
+    {
+        var result = GeneratorTestHelper.Run<RepositoryRegistrationGenerator>("""
+            using Microsoft.EntityFrameworkCore;
+            using Skywalker.Ddd.Domain.Entities;
+            using Skywalker.Ddd.EntityFrameworkCore;
+
+            namespace Demo;
+
+            public sealed class SalesDbContext(DbContextOptions<SalesDbContext> options) : SkywalkerDbContext<SalesDbContext>(options)
+            {
+                internal DbSet<Order> Orders { get; set; } = null!;
+            }
+
+            public sealed class Order : Entity<int>
+            {
+            }
+            """, CreateReferences());
+
+        Assert.Empty(result.GeneratedTrees);
+        AssertDiagnostic(
+            result,
+            "SKY3001",
+            "DbSet property 'Orders' on DbContext 'Demo.SalesDbContext' must be a public instance property to participate in repository generation");
+    }
+
+    [Fact]
+    public void ReportsDiagnostic_ForInaccessibleEntityType()
+    {
+        var result = GeneratorTestHelper.Run<RepositoryRegistrationGenerator>("""
+            using Microsoft.EntityFrameworkCore;
+            using Skywalker.Ddd.Domain.Entities;
+            using Skywalker.Ddd.EntityFrameworkCore;
+
+            namespace Demo;
+
+            public sealed class SalesDbContext(DbContextOptions<SalesDbContext> options) : SkywalkerDbContext<SalesDbContext>(options)
+            {
+                public DbSet<PrivateOrder> Orders { get; set; } = null!;
+
+                private sealed class PrivateOrder : Entity<int>
+                {
+                }
+            }
+            """, CreateReferences());
+
+        Assert.Empty(result.GeneratedTrees);
+        AssertDiagnostic(
+            result,
+            "SKY3002",
+            "Entity type 'Demo.SalesDbContext.PrivateOrder' exposed by DbSet property 'Orders' must be public or internal so generated repository registrations can reference it");
+    }
+
+    [Fact]
+    public void ReportsDiagnostic_ForEntityThatDoesNotImplementIEntity()
+    {
+        var result = GeneratorTestHelper.Run<RepositoryRegistrationGenerator>("""
+            using Microsoft.EntityFrameworkCore;
+            using Skywalker.Ddd.EntityFrameworkCore;
+
+            namespace Demo;
+
+            public sealed class SalesDbContext(DbContextOptions<SalesDbContext> options) : SkywalkerDbContext<SalesDbContext>(options)
+            {
+                public DbSet<PlainOrder> Orders { get; set; } = null!;
+            }
+
+            public sealed class PlainOrder
+            {
+            }
+            """, CreateReferences());
+
+        Assert.Empty(result.GeneratedTrees);
+        AssertDiagnostic(
+            result,
+            "SKY3003",
+            "Entity type 'Demo.PlainOrder' exposed by DbSet property 'Orders' must implement Skywalker.Ddd.Domain.Entities.IEntity");
+    }
+
+    [Fact]
+    public void ReportsDiagnostic_ForAbstractEntityType()
+    {
+        var result = GeneratorTestHelper.Run<RepositoryRegistrationGenerator>("""
+            using Microsoft.EntityFrameworkCore;
+            using Skywalker.Ddd.Domain.Entities;
+            using Skywalker.Ddd.EntityFrameworkCore;
+
+            namespace Demo;
+
+            public sealed class SalesDbContext(DbContextOptions<SalesDbContext> options) : SkywalkerDbContext<SalesDbContext>(options)
+            {
+                public DbSet<AbstractOrder> Orders { get; set; } = null!;
+            }
+
+            public abstract class AbstractOrder : Entity<int>
+            {
+            }
+            """, CreateReferences());
+
+        Assert.Empty(result.GeneratedTrees);
+        AssertDiagnostic(
+            result,
+            "SKY3004",
+            "Entity type 'Demo.AbstractOrder' exposed by DbSet property 'Orders' must be a non-abstract class");
+    }
+
+    [Fact]
+    public void ReportsDiagnostic_ForDuplicateDbSetEntityRegistration()
+    {
+        var result = GeneratorTestHelper.Run<RepositoryRegistrationGenerator>("""
+            using Microsoft.EntityFrameworkCore;
+            using Skywalker.Ddd.Domain.Entities;
+            using Skywalker.Ddd.EntityFrameworkCore;
+
+            namespace Demo;
+
+            public sealed class SalesDbContext(DbContextOptions<SalesDbContext> options) : SkywalkerDbContext<SalesDbContext>(options)
+            {
+                public DbSet<Order> Orders { get; set; } = null!;
+                public DbSet<Order> AlsoOrders { get; set; } = null!;
+            }
+
+            public sealed class Order : Entity<int>
+            {
+            }
+            """, CreateReferences());
+
+        var generatedSource = Assert.Single(result.GeneratedTrees).GetText().ToString();
+        Assert.Equal(1, CountOccurrences(generatedSource, "IRepository<global::Demo.Order, int>"));
+        AssertDiagnostic(
+            result,
+            "SKY3005",
+            "Entity type 'Demo.Order' is exposed by multiple DbSet properties on DbContext 'Demo.SalesDbContext': Orders, AlsoOrders");
+    }
+
+    [Fact]
+    public void ReportsDiagnostic_ForConflictingEntityKeyTypes()
+    {
+        var result = GeneratorTestHelper.Run<RepositoryRegistrationGenerator>("""
+            using System;
+            using Microsoft.EntityFrameworkCore;
+            using Skywalker.Ddd.Domain.Entities;
+            using Skywalker.Ddd.EntityFrameworkCore;
+
+            namespace Demo;
+
+            public sealed class SalesDbContext(DbContextOptions<SalesDbContext> options) : SkywalkerDbContext<SalesDbContext>(options)
+            {
+                public DbSet<ConflictingOrder> Orders { get; set; } = null!;
+            }
+
+            public sealed class ConflictingOrder : Entity<int>, IEntity<Guid>
+            {
+                Guid IEntity<Guid>.Id => Guid.Empty;
+
+                public bool Equals(Guid other) => false;
+            }
+            """, CreateReferences());
+
+        Assert.Empty(result.GeneratedTrees);
+        AssertDiagnostic(
+            result,
+            "SKY3006",
+            "Entity type 'Demo.ConflictingOrder' implements IEntity<TKey> with conflicting key types: int, System.Guid");
+    }
+
+    private static void AssertDiagnostic(GeneratorDriverRunResult result, string id, string message)
+    {
+        var diagnostic = Assert.Single(result.Diagnostics, diagnostic => diagnostic.Id == id);
+        Assert.Equal(DiagnosticSeverity.Warning, diagnostic.Severity);
+        Assert.Equal(message, diagnostic.GetMessage());
+    }
+
+    private static int CountOccurrences(string value, string search)
+    {
+        var count = 0;
+        var index = 0;
+        while ((index = value.IndexOf(search, index, StringComparison.Ordinal)) >= 0)
+        {
+            count++;
+            index += search.Length;
+        }
+
+        return count;
+    }
+
     private static IEnumerable<MetadataReference> CreateReferences()
     {
         yield return MetadataReference.CreateFromFile(typeof(DbContext).Assembly.Location);

@@ -9,6 +9,7 @@
 
 ### Added
 
+- EF Repository Source Generator 新增 `SKY3001`-`SKY3006` 诊断，覆盖非 public `DbSet`、不可访问实体、缺少 `IEntity`、抽象实体、重复 `DbSet` 暴露和冲突 key type 推断等不支持场景，并补充对应诊断文档与测试（#239）。
 - Sprint 1 EF Repository Source Generator 起步：新增 `Skywalker.Ddd.EntityFrameworkCore.SourceGenerators` 项目，先生成 DbContext `DbSet<TEntity>` 对应的默认 repository/domain service 静态注册代码，`AddSkywalkerDbContext<TDbContext>()` 优先调用 generated registration 并保留运行时反射 fallback，同时补充 generator/runtime 单元测试与 `Skywalker.Sample.Minimal` smoke sample。
 - `Skywalker.Sample.MultiDbContext` 填充为 EF repository source generator smoke sample，验证同一应用中两个 DbContext 的 generated registration metadata、registrar 类型和 repository/domain-service 注册彼此独立。
 - `Skywalker.Sample.LegacyMigration` 填充为 EF repository source generator 迁移期 smoke sample，验证手写 keyed repository 注册不会被 generated defaults 覆盖，同时缺失的 repository/domain-service 注册会被补齐。
