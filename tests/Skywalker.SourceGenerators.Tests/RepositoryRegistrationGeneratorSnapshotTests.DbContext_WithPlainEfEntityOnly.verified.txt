@@ -1,0 +1,2 @@
+﻿Diagnostic SKY3003 [Warning]: Entity type 'Demo.PlainOrder' exposed by DbSet property 'Orders' must implement Skywalker.Ddd.Domain.Entities.IEntity
+<no generated sources>

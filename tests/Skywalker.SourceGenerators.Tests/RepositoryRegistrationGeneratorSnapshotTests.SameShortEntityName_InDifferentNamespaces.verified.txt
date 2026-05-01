@@ -1,0 +1,3 @@
+﻿Diagnostic SKY3002 [Warning]: Entity type 'Billing.Order' exposed by DbSet property 'BillingOrders' must be public or internal so generated repository registrations can reference it
+Diagnostic SKY3002 [Warning]: Entity type 'Catalog.Order' exposed by DbSet property 'CatalogOrders' must be public or internal so generated repository registrations can reference it
+<no generated sources>

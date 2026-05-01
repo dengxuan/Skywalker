@@ -1,0 +1,2 @@
+﻿Diagnostic SKY3006 [Warning]: Entity type 'Demo.ConflictingOrder' implements IEntity<TKey> with conflicting key types: int, System.Guid
+<no generated sources>

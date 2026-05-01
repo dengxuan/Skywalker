@@ -18,37 +18,37 @@ Legend:
 - [ ] Record class
 - [ ] Record struct
 - [ ] Struct
-- [ ] Sealed class
-- [ ] Abstract class
+- [x] Sealed class — `RepositoryRegistrationGeneratorSnapshotTests.SingleDbContext_WithIntKey`
+- [x] Abstract class — `RepositoryRegistrationGeneratorSnapshotTests.DbContext_WithAbstractEntityOnly` reports `SKY3004`
 - [ ] Static class where unsupported scenarios must report diagnostics
 - [ ] Generic class with open type parameters
 - [ ] Closed generic derived class
-- [ ] Nested class one level deep
-- [ ] Nested class multiple levels deep
-- [ ] File-scoped type
-- [ ] Type in the global namespace
+- [x] Nested class one level deep — `RepositoryRegistrationGeneratorSnapshotTests.PublicNestedEntity_IsGenerated`
+- [x] Nested class multiple levels deep — `RepositoryRegistrationGeneratorSnapshotTests.DeepNestedEntity_IsGenerated`
+- [x] File-scoped type — `RepositoryRegistrationGeneratorSnapshotTests.SingleDbContext_WithGuidKey`
+- [x] Type in the global namespace — `RepositoryRegistrationGeneratorSnapshotTests.GlobalNamespace_IsGenerated`
 
 ## Visibility And Namespaces
 
-- [ ] Public type
-- [ ] Internal type
-- [ ] Private nested type where unsupported scenarios must report diagnostics
-- [ ] File-scoped namespace
-- [ ] Block-scoped namespace
+- [x] Public type — `RepositoryRegistrationGeneratorSnapshotTests.SingleDbContext_WithGuidKey`
+- [x] Internal type — `RepositoryRegistrationGeneratorSnapshotTests.InternalEntity_IsGenerated`
+- [x] Private nested type where unsupported scenarios must report diagnostics — `RepositoryRegistrationGeneratorSnapshotTests.PrivateNestedEntity_ProducesNoSources` reports `SKY3002`
+- [x] File-scoped namespace — `RepositoryRegistrationGeneratorSnapshotTests.SingleDbContext_WithGuidKey`
+- [x] Block-scoped namespace — `RepositoryRegistrationGeneratorSnapshotTests.BlockScopedNamespace_IsGenerated`
 - [ ] Global using affects referenced types
-- [ ] Using alias affects referenced types
-- [ ] Type name collides with generated helper name
-- [ ] Same short type name in different namespaces
+- [x] Using alias affects referenced types — `RepositoryRegistrationGeneratorSnapshotTests.UsingAlias_ForDbSet_IsGenerated`
+- [x] Type name collides with generated helper name — `RepositoryRegistrationGeneratorSnapshotTests.DbContextNameCollision_WithGeneratedHelperSuffix`
+- [x] Same short type name in different namespaces — `RepositoryRegistrationGeneratorSnapshotTests.SameShortEntityName_InDifferentNamespaces`
 
 ## Inheritance And Interfaces
 
 - [ ] Single interface implementation
-- [ ] Multiple interface implementations
+- [x] Multiple interface implementations — `RepositoryRegistrationGeneratorSnapshotTests.DbContext_WithConflictingKeyTypes` reports `SKY3006`
 - [ ] Interface inheritance chain
-- [ ] Explicit interface implementation
-- [ ] Base class in the same assembly
+- [x] Explicit interface implementation — `RepositoryRegistrationGeneratorSnapshotTests.ExplicitIEntityImplementation_IsGenerated`
+- [x] Base class in the same assembly — `RepositoryRegistrationGeneratorSnapshotTests.DerivedEntityBaseClass_InSameAssembly`
 - [ ] Base class from a referenced assembly
-- [ ] Generic base class
+- [x] Generic base class — `RepositoryRegistrationGeneratorSnapshotTests.GenericEntityClosedByDerivedClass_IsGenerated`
 - [ ] Generic interface with constraints
 
 ## Members And Signatures
@@ -83,16 +83,16 @@ Legend:
 - [ ] Consumer project references generator as analyzer
 - [ ] Generator packaged under `analyzers/dotnet/cs`
 - [ ] Incremental cache hit on repeated runs
-- [ ] Generated file name remains stable between runs
+- [x] Generated file name remains stable between runs — EF repository snapshots include generated file paths
 
 ## Diagnostics
 
 - [ ] Missing `partial` reports `SKY9001` or generator-specific diagnostic
-- [ ] Unsupported type shape reports a diagnostic instead of silently skipping
+- [x] Unsupported type shape reports a diagnostic instead of silently skipping — `RepositoryRegistrationGeneratorSnapshotTests.DbContext_WithAbstractEntityOnly`
 - [ ] Unsupported member signature reports a diagnostic instead of silently skipping
-- [ ] Duplicate generated registration reports a diagnostic with both locations where possible
-- [ ] Diagnostic `helpLinkUri` points to a `docs/diagnostics/SKYxxxx.md` page
-- [ ] Diagnostic test asserts ID, severity, message, and location
+- [x] Duplicate generated registration reports a diagnostic with both locations where possible — `RepositoryRegistrationGeneratorSnapshotTests.DbContext_WithDuplicateEntityDbSets` reports duplicate property names
+- [x] Diagnostic `helpLinkUri` points to a `docs/diagnostics/SKYxxxx.md` page — `SKY3001`-`SKY3006` descriptors
+- [x] Diagnostic test asserts ID, severity, message, and location — `RepositoryRegistrationGeneratorTests` asserts ID, severity, and message; location coverage remains future work
 
 ## Runtime And Integration
 
