@@ -17,7 +17,7 @@ as it moves from placeholder to scenario canary.
 | `Skywalker.Sample.Minimal` | Smallest app; EF repository generator analyzer + `AddSkywalkerDbContext<TDbContext>()` happy path | Sprint 1 smoke test: generated metadata + repository/domain-service registration | Sprint 1, Sprint 3 |
 | `Skywalker.Sample.MultiDbContext` | Multiple EF Core DbContexts without generated-name collisions | Sprint 1 smoke test: generated metadata + repository/domain-service registration for two DbContexts | Sprint 1 |
 | `Skywalker.Sample.GenericServices` | Open and closed generic application services | Skeleton, build/run smoke test | Sprint 1, Sprint 3 |
-| `Skywalker.Sample.NestedTypes` | Nested partial types and fully-qualified generated names | Skeleton, build/run smoke test | Sprint 3 |
+| `Skywalker.Sample.NestedTypes` | Nested DbContext/entity types and fully-qualified generated names | Sprint 1 smoke test: generated metadata + repository/domain-service registration for nested types | Sprint 1, Sprint 3 |
 | `Skywalker.Sample.InternalServices` | `internal` service types generated in the same assembly | Skeleton, build/run smoke test | Sprint 3 |
 | `Skywalker.Sample.Modular` | Cross-assembly module discovery and registration | Skeleton, single-project placeholder | Sprint 3 |
 | `Skywalker.Sample.AspireAOT` | NativeAOT publish canary | Sprint 1 smoke test: EF repository generator direct-call contract publishes with no IL2xxx/IL3xxx warnings | Sprint 1+ |
