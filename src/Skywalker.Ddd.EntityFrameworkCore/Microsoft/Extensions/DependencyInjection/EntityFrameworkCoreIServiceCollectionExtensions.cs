@@ -10,6 +10,7 @@ using Skywalker.Ddd.Uow.EntityFrameworkCore;
 using Skywalker.Identity.Domain.Repositories;
 using System.Linq;
 using System.Reflection;
+using System.Runtime.CompilerServices;
 
 
 namespace Microsoft.Extensions.DependencyInjection;
@@ -19,6 +20,8 @@ namespace Microsoft.Extensions.DependencyInjection;
 /// </summary>
 public static class EntityFrameworkCoreIServiceCollectionExtensions
 {
+    private const string DisableReflectionRepositoryFallbackSwitch = "Skywalker.Ddd.EntityFrameworkCore.DisableReflectionRepositoryFallback";
+
     /// <summary>
     /// ͨ�� DbContext �������Ӳִ��������ȡ���е� DbSet Ȼ�󹹽��ִ���
     /// </summary>
@@ -33,6 +36,11 @@ public static class EntityFrameworkCoreIServiceCollectionExtensions
         }
 
         var dbContextType = typeof(TDbContext);
+        if (!IsReflectionRepositoryFallbackEnabled())
+        {
+            throw new InvalidOperationException($"EF repository source generator did not emit registration metadata for '{dbContextType.FullName}'. Reflection fallback is disabled; enable the source generator or call the generated repository registrar directly.");
+        }
+
         var entityTypes = DbContextHelper.GetEntityTypes(dbContextType);
         foreach (var entityType in entityTypes)
         {
@@ -84,6 +92,16 @@ public static class EntityFrameworkCoreIServiceCollectionExtensions
         }
 
         return false;
+    }
+
+    private static bool IsReflectionRepositoryFallbackEnabled()
+    {
+        if (AppContext.TryGetSwitch(DisableReflectionRepositoryFallbackSwitch, out var disabled) && disabled)
+        {
+            return false;
+        }
+
+        return RuntimeFeature.IsDynamicCodeSupported;
     }
 
     private static void RegisterDefaultRepository(IServiceCollection services, Type entityType, Type repositoryImplType, Type? primaryKeyType = null)
