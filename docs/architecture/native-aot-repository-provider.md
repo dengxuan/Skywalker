@@ -44,6 +44,26 @@ v2 的 EF 目标是：
 - AOT/trimmed 场景下避免 Skywalker 自己引入新的 reflection warning
 - 文档清楚标注 full EF Core NativeAOT 取决于 EF Core 与具体 provider
 
+#### EF AOT 支持边界
+
+`Skywalker.Sample.AspireAOT` 是 EF repository source generator 的 **registration contract canary**。它验证：
+
+- consumer assembly 中会生成 EF repository registrar
+- 应用可以直接调用 generated registrar，不依赖 runtime assembly scanning
+- `IRepository<TEntity, TKey>`、`IRepository<TEntity>`、`IDomainService<TEntity, TKey>`、`IDomainService<TEntity>` 注册形状正确
+- 该 direct-call 路径可以 `dotnet publish -p:PublishAot=true`，且不产生 IL2xxx / IL3xxx warnings
+
+它不验证，也不承诺：
+
+- EF Core runtime 本身完全 NativeAOT ready
+- 具体 EF provider 完全 NativeAOT ready
+- EF change tracking、LINQ translation、navigation loading、migrations 在 NativeAOT 下零 warning
+- Skywalker 的 reflection fallback path 可用于 AOT-first 应用
+
+因此 v2.0 的准确表述是：**Skywalker EF repository registration path is generated-first and AOT-friendly; full EF Core NativeAOT readiness depends on EF Core and the selected provider.**
+
+对 NativeAOT-first persistence，推荐路线不是强行把完整 EF Core 作为 gate，而是走本计划定义的 Dapper.AOT / ADO.NET repository provider track。
+
 ### 3.2 Dapper.AOT / ADO.NET Provider
 
 Dapper.AOT / ADO.NET 是 NativeAOT repository path 的优先候选：
@@ -161,6 +181,14 @@ SQL Server / MySQL / PostgreSQL 可作为后续 matrix，不作为第一版 bloc
 - EF repository registration is generated-first and AOT-friendly.
 - Full EF Core NativeAOT readiness depends on EF Core and provider support.
 - NativeAOT repository provider is planned as a separate v2.x track.
+
+推荐 release notes wording：
+
+```text
+Skywalker v2.0 moves EF repository registration to a generated-first path. The generated registrar can be rooted directly by NativeAOT applications and is covered by an AOT publish canary with no IL2xxx/IL3xxx warnings.
+
+This does not mean the full EF Core runtime or every EF provider is NativeAOT-ready. EF Core remains Skywalker's rich ORM provider, while NativeAOT-first persistence is tracked separately through the planned Dapper.AOT / ADO.NET repository provider.
+```
 
 ### v2.x Preview
 
