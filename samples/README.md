@@ -21,7 +21,7 @@ as it moves from placeholder to scenario canary.
 | `Skywalker.Sample.InternalServices` | `internal` service types generated in the same assembly | Skeleton, build/run smoke test | Sprint 3 |
 | `Skywalker.Sample.Modular` | Cross-assembly module discovery and registration | Skeleton, single-project placeholder | Sprint 3 |
 | `Skywalker.Sample.AspireAOT` | NativeAOT publish canary | Skeleton; requires local AOT toolchain for publish | Sprint 1+ |
-| `Skywalker.Sample.LegacyMigration` | v1.x manual registration coexisting with v2.0 SG registration | Skeleton, build/run smoke test | Sprint 1, Sprint 5 |
+| `Skywalker.Sample.LegacyMigration` | v1.x manual registration coexisting with v2.0 SG registration | Sprint 1 smoke test: manual keyed repository registration survives generated defaults | Sprint 1, Sprint 5 |
 
 `Skywalker.Sample.RealWorldShop` is intentionally out of this Sprint 0 matrix and
 belongs to a later sprint once the generator stack is mature enough for a full app.
