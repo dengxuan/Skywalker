@@ -20,7 +20,7 @@
   </ItemGroup>
 
   <ItemGroup Condition="'$(PublishAot)' != 'true'">
-    <ProjectReference Include="..\..\src\Skywalker.Ddd.EntityFrameworkCore.SourceGenerators\Skywalker.Ddd.EntityFrameworkCore.SourceGenerators.csproj" OutputItemType="Analyzer" ReferenceOutputAssembly="false" />
+    <ProjectReference Include="..\..\src\Skywalker.Ddd.EntityFrameworkCore.SourceGenerators\Skywalker.Ddd.EntityFrameworkCore.SourceGenerators.csproj" OutputItemType="Analyzer" ReferenceOutputAssembly="false" AdditionalProperties="ContinuousIntegrationBuild=false;DeterministicSourcePaths=false;EnableSourceControlManagerQueries=false" />
   </ItemGroup>
 
   <ItemGroup Condition="'$(PublishAot)' == 'true'">
@@ -28,7 +28,7 @@
   </ItemGroup>
 
   <Target Name="BuildEntityFrameworkCoreSourceGeneratorForAotPublish" BeforeTargets="CoreCompile" Condition="'$(PublishAot)' == 'true' and '$(NoBuild)' != 'true'">
-		<MSBuild Projects="..\..\src\Skywalker.Ddd.EntityFrameworkCore.SourceGenerators\Skywalker.Ddd.EntityFrameworkCore.SourceGenerators.csproj" Targets="Restore;Build" Properties="Configuration=$(Configuration);PublishAot=false;PublishTrimmed=false;SelfContained=false;EnableSourceControlManagerQueries=false" RemoveProperties="RuntimeIdentifier;RuntimeIdentifiers" />
+    <MSBuild Projects="..\..\src\Skywalker.Ddd.EntityFrameworkCore.SourceGenerators\Skywalker.Ddd.EntityFrameworkCore.SourceGenerators.csproj" Targets="Restore;Build" Properties="Configuration=$(Configuration);PublishAot=false;PublishTrimmed=false;SelfContained=false;ContinuousIntegrationBuild=false;DeterministicSourcePaths=false;EnableSourceControlManagerQueries=false" RemoveProperties="RuntimeIdentifier;RuntimeIdentifiers" />
   </Target>
 
 </Project>
