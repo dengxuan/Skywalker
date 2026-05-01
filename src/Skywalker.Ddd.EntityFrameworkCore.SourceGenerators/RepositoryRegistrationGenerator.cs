@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using System.Collections.Immutable;
 using System.Linq;
 using System.Text;
@@ -15,6 +16,61 @@ public sealed class RepositoryRegistrationGenerator : IIncrementalGenerator
     private const string DbSetMetadataName = "Microsoft.EntityFrameworkCore.DbSet`1";
     private const string EntityMetadataName = "Skywalker.Ddd.Domain.Entities.IEntity";
     private const string EntityWithKeyMetadataName = "Skywalker.Ddd.Domain.Entities.IEntity`1";
+    private const string Category = "Skywalker.Ddd.EntityFrameworkCore.SourceGenerators";
+
+    private static readonly DiagnosticDescriptor DbSetMustBePublicInstance = new(
+        id: "SKY3001",
+        title: "DbSet property must be public instance",
+        messageFormat: "DbSet property '{0}' on DbContext '{1}' must be a public instance property to participate in repository generation",
+        category: Category,
+        defaultSeverity: DiagnosticSeverity.Warning,
+        isEnabledByDefault: true,
+        helpLinkUri: "https://github.com/dengxuan/Skywalker/blob/main/docs/diagnostics/SKY3001.md");
+
+    private static readonly DiagnosticDescriptor EntityTypeMustBeAccessible = new(
+        id: "SKY3002",
+        title: "Entity type must be accessible to generated code",
+        messageFormat: "Entity type '{0}' exposed by DbSet property '{1}' must be public or internal so generated repository registrations can reference it",
+        category: Category,
+        defaultSeverity: DiagnosticSeverity.Warning,
+        isEnabledByDefault: true,
+        helpLinkUri: "https://github.com/dengxuan/Skywalker/blob/main/docs/diagnostics/SKY3002.md");
+
+    private static readonly DiagnosticDescriptor EntityTypeMustImplementEntity = new(
+        id: "SKY3003",
+        title: "Entity type must implement IEntity",
+        messageFormat: "Entity type '{0}' exposed by DbSet property '{1}' must implement Skywalker.Ddd.Domain.Entities.IEntity",
+        category: Category,
+        defaultSeverity: DiagnosticSeverity.Warning,
+        isEnabledByDefault: true,
+        helpLinkUri: "https://github.com/dengxuan/Skywalker/blob/main/docs/diagnostics/SKY3003.md");
+
+    private static readonly DiagnosticDescriptor EntityTypeMustBeConcreteClass = new(
+        id: "SKY3004",
+        title: "Entity type must be a concrete class",
+        messageFormat: "Entity type '{0}' exposed by DbSet property '{1}' must be a non-abstract class",
+        category: Category,
+        defaultSeverity: DiagnosticSeverity.Warning,
+        isEnabledByDefault: true,
+        helpLinkUri: "https://github.com/dengxuan/Skywalker/blob/main/docs/diagnostics/SKY3004.md");
+
+    private static readonly DiagnosticDescriptor DuplicateEntityRegistration = new(
+        id: "SKY3005",
+        title: "Entity type is exposed by multiple DbSet properties",
+        messageFormat: "Entity type '{0}' is exposed by multiple DbSet properties on DbContext '{1}': {2}",
+        category: Category,
+        defaultSeverity: DiagnosticSeverity.Warning,
+        isEnabledByDefault: true,
+        helpLinkUri: "https://github.com/dengxuan/Skywalker/blob/main/docs/diagnostics/SKY3005.md");
+
+    private static readonly DiagnosticDescriptor ConflictingEntityKeyTypes = new(
+        id: "SKY3006",
+        title: "Entity key type inference is ambiguous",
+        messageFormat: "Entity type '{0}' implements IEntity<TKey> with conflicting key types: {1}",
+        category: Category,
+        defaultSeverity: DiagnosticSeverity.Warning,
+        isEnabledByDefault: true,
+        helpLinkUri: "https://github.com/dengxuan/Skywalker/blob/main/docs/diagnostics/SKY3006.md");
 
     public void Initialize(IncrementalGeneratorInitializationContext context)
     {
@@ -37,29 +93,93 @@ public sealed class RepositoryRegistrationGenerator : IIncrementalGenerator
         }
 
         var entityBuilder = ImmutableArray.CreateBuilder<EntityRegistrationModel>();
+        var diagnosticBuilder = ImmutableArray.CreateBuilder<DiagnosticModel>();
+        var entityProperties = new Dictionary<string, List<string>>(StringComparer.Ordinal);
         foreach (var member in dbContextSymbol.GetMembers().OfType<IPropertySymbol>())
         {
-            if (member.DeclaredAccessibility != Accessibility.Public || member.IsStatic)
+            if (!TryGetDbSetEntityType(member, out var entityType))
             {
                 continue;
             }
 
-            if (member.Type is not INamedTypeSymbol propertyType
-                || !HasMetadataName(propertyType.ConstructedFrom, DbSetMetadataName)
-                || propertyType.TypeArguments.Length != 1
-                || propertyType.TypeArguments[0] is not INamedTypeSymbol entityType
-                || !Implements(entityType, EntityMetadataName))
+            if (member.DeclaredAccessibility != Accessibility.Public || member.IsStatic)
             {
+                diagnosticBuilder.Add(DiagnosticModel.Create(
+                    DbSetMustBePublicInstance,
+                    member.Locations.FirstOrDefault(),
+                    member.Name,
+                    FormatType(dbContextSymbol)));
+                continue;
+            }
+
+            if (!IsAccessibleToGeneratedCode(entityType))
+            {
+                diagnosticBuilder.Add(DiagnosticModel.Create(
+                    EntityTypeMustBeAccessible,
+                    member.Locations.FirstOrDefault(),
+                    FormatType(entityType),
+                    member.Name));
+                continue;
+            }
+
+            if (!Implements(entityType, EntityMetadataName))
+            {
+                diagnosticBuilder.Add(DiagnosticModel.Create(
+                    EntityTypeMustImplementEntity,
+                    member.Locations.FirstOrDefault(),
+                    FormatType(entityType),
+                    member.Name));
+                continue;
+            }
+
+            if (entityType.TypeKind != TypeKind.Class || entityType.IsAbstract)
+            {
+                diagnosticBuilder.Add(DiagnosticModel.Create(
+                    EntityTypeMustBeConcreteClass,
+                    member.Locations.FirstOrDefault(),
+                    FormatType(entityType),
+                    member.Name));
+                continue;
+            }
+
+            var entityTypeName = entityType.GetFullyQualifiedName();
+            if (!entityProperties.TryGetValue(entityTypeName, out var propertyNames))
+            {
+                propertyNames = new List<string>();
+                entityProperties.Add(entityTypeName, propertyNames);
+            }
+
+            propertyNames.Add(member.Name);
+            if (propertyNames.Count > 1)
+            {
+                diagnosticBuilder.Add(DiagnosticModel.Create(
+                    DuplicateEntityRegistration,
+                    member.Locations.FirstOrDefault(),
+                    FormatType(entityType),
+                    FormatType(dbContextSymbol),
+                    string.Join(", ", propertyNames)));
+                continue;
+            }
+
+            var keyResolution = ResolvePrimaryKeyType(entityType);
+            if (keyResolution.ConflictingKeyTypes is not null)
+            {
+                diagnosticBuilder.Add(DiagnosticModel.Create(
+                    ConflictingEntityKeyTypes,
+                    member.Locations.FirstOrDefault(),
+                    FormatType(entityType),
+                    keyResolution.ConflictingKeyTypes));
                 continue;
             }
 
             entityBuilder.Add(new EntityRegistrationModel(
-                entityType.GetFullyQualifiedName(),
-                FindPrimaryKeyType(entityType)?.GetFullyQualifiedName()));
+                entityTypeName,
+                keyResolution.PrimaryKeyType?.GetFullyQualifiedName()));
         }
 
         var entities = entityBuilder.ToImmutable();
-        if (entities.Length == 0)
+        var diagnostics = diagnosticBuilder.ToImmutable();
+        if (entities.Length == 0 && diagnostics.Length == 0)
         {
             return null;
         }
@@ -67,11 +187,22 @@ public sealed class RepositoryRegistrationGenerator : IIncrementalGenerator
         return new DbContextRegistrationModel(
             dbContextSymbol.GetFullyQualifiedName(),
             CreateIdentifier(dbContextSymbol),
-            new EquatableArray<EntityRegistrationModel>(entities));
+            new EquatableArray<EntityRegistrationModel>(entities),
+            new EquatableArray<DiagnosticModel>(diagnostics));
     }
 
     private static void Generate(SourceProductionContext context, DbContextRegistrationModel model)
     {
+        foreach (var diagnostic in model.Diagnostics)
+        {
+            context.ReportDiagnostic(diagnostic.Create());
+        }
+
+        if (model.Entities.Length == 0)
+        {
+            return;
+        }
+
         var source = new StringBuilder();
         source.AppendLine("// <auto-generated/>");
         source.AppendLine("// This file was generated by Skywalker Source Generators.");
@@ -155,19 +286,62 @@ public sealed class RepositoryRegistrationGenerator : IIncrementalGenerator
             .AppendLine(")));");
     }
 
-    private static ITypeSymbol? FindPrimaryKeyType(INamedTypeSymbol entityType)
+    private static KeyResolutionResult ResolvePrimaryKeyType(INamedTypeSymbol entityType)
     {
+        var keyTypes = ImmutableArray.CreateBuilder<ITypeSymbol>();
         foreach (var interfaceType in entityType.AllInterfaces)
         {
-            if (HasMetadataName(interfaceType.ConstructedFrom, EntityWithKeyMetadataName)
-                && interfaceType.TypeArguments.Length == 1)
+            if (!HasMetadataName(interfaceType.ConstructedFrom, EntityWithKeyMetadataName)
+                || interfaceType.TypeArguments.Length != 1)
             {
-                return interfaceType.TypeArguments[0];
+                continue;
+            }
+
+            var keyType = interfaceType.TypeArguments[0];
+            if (!keyTypes.Any(existing => SymbolEqualityComparer.Default.Equals(existing, keyType)))
+            {
+                keyTypes.Add(keyType);
             }
         }
 
-        return null;
+        return keyTypes.Count switch
+        {
+            0 => new KeyResolutionResult(null, null),
+            1 => new KeyResolutionResult(keyTypes[0], null),
+            _ => new KeyResolutionResult(null, string.Join(", ", keyTypes.Select(FormatType)))
+        };
     }
+
+    private static bool TryGetDbSetEntityType(IPropertySymbol property, out INamedTypeSymbol entityType)
+    {
+        entityType = null!;
+        if (property.Type is not INamedTypeSymbol propertyType
+            || !HasMetadataName(propertyType.ConstructedFrom, DbSetMetadataName)
+            || propertyType.TypeArguments.Length != 1
+            || propertyType.TypeArguments[0] is not INamedTypeSymbol dbSetEntityType)
+        {
+            return false;
+        }
+
+        entityType = dbSetEntityType;
+        return true;
+    }
+
+    private static bool IsAccessibleToGeneratedCode(INamedTypeSymbol type)
+    {
+        for (INamedTypeSymbol? current = type; current is not null; current = current.ContainingType)
+        {
+            if (current.DeclaredAccessibility is not (Accessibility.Public or Accessibility.Internal or Accessibility.ProtectedOrInternal))
+            {
+                return false;
+            }
+        }
+
+        return true;
+    }
+
+    private static string FormatType(ITypeSymbol type)
+        => type.ToDisplayString(SymbolDisplayFormat.CSharpErrorMessageFormat);
 
     private static bool Implements(INamedTypeSymbol type, string metadataName)
         => type.AllInterfaces.Any(interfaceType => HasMetadataName(interfaceType.ConstructedFrom, metadataName));
@@ -207,11 +381,16 @@ public sealed class RepositoryRegistrationGenerator : IIncrementalGenerator
 
 internal readonly struct DbContextRegistrationModel : IEquatable<DbContextRegistrationModel>
 {
-    public DbContextRegistrationModel(string dbContextTypeName, string identifier, EquatableArray<EntityRegistrationModel> entities)
+    public DbContextRegistrationModel(
+        string dbContextTypeName,
+        string identifier,
+        EquatableArray<EntityRegistrationModel> entities,
+        EquatableArray<DiagnosticModel> diagnostics)
     {
         DbContextTypeName = dbContextTypeName;
         Identifier = identifier;
         Entities = entities;
+        Diagnostics = diagnostics;
     }
 
     public string DbContextTypeName { get; }
@@ -220,10 +399,13 @@ internal readonly struct DbContextRegistrationModel : IEquatable<DbContextRegist
 
     public EquatableArray<EntityRegistrationModel> Entities { get; }
 
+    public EquatableArray<DiagnosticModel> Diagnostics { get; }
+
     public bool Equals(DbContextRegistrationModel other)
         => DbContextTypeName == other.DbContextTypeName
             && Identifier == other.Identifier
-            && Entities.Equals(other.Entities);
+            && Entities.Equals(other.Entities)
+            && Diagnostics.Equals(other.Diagnostics);
 
     public override bool Equals(object? obj) => obj is DbContextRegistrationModel other && Equals(other);
 
@@ -235,9 +417,62 @@ internal readonly struct DbContextRegistrationModel : IEquatable<DbContextRegist
             hash = (hash * 31) + DbContextTypeName.GetHashCode();
             hash = (hash * 31) + Identifier.GetHashCode();
             hash = (hash * 31) + Entities.GetHashCode();
+            hash = (hash * 31) + Diagnostics.GetHashCode();
             return hash;
         }
     }
+}
+
+internal readonly struct DiagnosticModel : IEquatable<DiagnosticModel>
+{
+    private DiagnosticModel(DiagnosticDescriptor descriptor, Location? location, EquatableArray<string> messageArgs)
+    {
+        Descriptor = descriptor;
+        Location = location;
+        MessageArgs = messageArgs;
+    }
+
+    public DiagnosticDescriptor Descriptor { get; }
+
+    public Location? Location { get; }
+
+    public EquatableArray<string> MessageArgs { get; }
+
+    public static DiagnosticModel Create(DiagnosticDescriptor descriptor, Location? location, params string[] messageArgs)
+        => new(descriptor, location, new EquatableArray<string>(messageArgs));
+
+    public Diagnostic Create()
+        => Diagnostic.Create(Descriptor, Location, MessageArgs.AsImmutableArray().Cast<object>().ToArray());
+
+    public bool Equals(DiagnosticModel other)
+        => Descriptor.Id == other.Descriptor.Id
+            && MessageArgs.Equals(other.MessageArgs);
+
+    public override bool Equals(object? obj) => obj is DiagnosticModel other && Equals(other);
+
+    public override int GetHashCode()
+    {
+        unchecked
+        {
+            var hash = 17;
+            hash = (hash * 31) + Descriptor.Id.GetHashCode();
+            hash = (hash * 31) + MessageArgs.GetHashCode();
+            return hash;
+        }
+    }
+}
+
+internal readonly struct KeyResolutionResult
+{
+    public KeyResolutionResult(ITypeSymbol? primaryKeyType, string? conflictingKeyTypes)
+    {
+        PrimaryKeyType = primaryKeyType;
+        ConflictingKeyTypes = conflictingKeyTypes;
+    }
+
+    public ITypeSymbol? PrimaryKeyType { get; }
+
+    public string? ConflictingKeyTypes { get; }
 }
 
 internal readonly struct EntityRegistrationModel : IEquatable<EntityRegistrationModel>
