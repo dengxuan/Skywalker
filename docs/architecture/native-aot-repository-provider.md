@@ -44,6 +44,17 @@ v2 的 EF 目标是：
 - AOT/trimmed 场景下避免 Skywalker 自己引入新的 reflection warning
 - 文档清楚标注 full EF Core NativeAOT 取决于 EF Core 与具体 provider
 
+#### EF reflection fallback policy
+
+v2.0 保留 EF repository reflection fallback 作为 **non-AOT compatibility path**，只服务于尚未启用 source generator 的普通 JIT 应用迁移。最终策略如下：
+
+- generated registration metadata 始终优先；只要 consumer assembly 中存在 `SkywalkerGeneratedRepositoryRegistrationAttribute`，runtime bridge 会调用 generated registrar，不进入 fallback。
+- fallback reflection 仅在 `RuntimeFeature.IsDynamicCodeSupported == true` 且未显式禁用时启用。
+- NativeAOT 下动态代码不可用时，缺失 generated metadata 会失败并提示启用 source generator 或直接调用 generated registrar。
+- trimmed/JIT 应用若要验证 AOT 边界，可设置 AppContext switch `Skywalker.Ddd.EntityFrameworkCore.DisableReflectionRepositoryFallback=true`，强制禁止 fallback。
+
+这意味着 AOT 指南不能依赖 fallback reflection。AOT-first 应用必须使用 generated registration path；完整持久化场景仍应按本计划继续推进 Dapper.AOT / ADO.NET repository provider track。
+
 #### EF AOT 支持边界
 
 `Skywalker.Sample.AspireAOT` 是 EF repository source generator 的 **registration contract canary**。它验证：
