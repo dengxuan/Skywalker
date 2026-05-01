@@ -1,6 +1,7 @@
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.DependencyInjection.Extensions;
 using Skywalker.Ddd.Domain.Entities;
 using Skywalker.Ddd.EntityFrameworkCore;
 
@@ -28,6 +29,25 @@ public sealed class GeneratedRepositoryRegistrationBridgeTests
 
         Assert.Contains(services, descriptor => descriptor.ServiceType == typeof(GeneratedRegistrationMarker));
     }
+
+    [Fact]
+    public void AddSkywalkerDbContext_DoesNotOverwriteExistingRegistration_WhenGeneratedRegistrarUsesTryAdd()
+    {
+        var services = new ServiceCollection();
+        var existingMarker = new GeneratedRegistrationMarker();
+        services.AddLogging();
+        services.AddSingleton<IConfiguration>(new ConfigurationBuilder().Build());
+        services.AddSkywalker(typeof(GeneratedRepositoryRegistrationBridgeTests).Assembly);
+        services.AddSingleton(existingMarker);
+
+        services.AddSkywalkerDbContext<GeneratedRegistrationDbContext>(options =>
+        {
+            options.Configure(context => context.DbContextOptions.UseInMemoryDatabase("GeneratedRegistrationPreservesManualDb"));
+        });
+
+        var descriptor = Assert.Single(services, descriptor => descriptor.ServiceType == typeof(GeneratedRegistrationMarker));
+        Assert.Same(existingMarker, descriptor.ImplementationInstance);
+    }
 }
 
 public sealed class GeneratedRegistrationDbContext(DbContextOptions<GeneratedRegistrationDbContext> options) : SkywalkerDbContext<GeneratedRegistrationDbContext>(options)
@@ -47,7 +67,7 @@ internal static class GeneratedRegistrationRegistrar
 {
     public static IServiceCollection AddGeneratedServices(IServiceCollection services)
     {
-        services.AddTransient<GeneratedRegistrationMarker>();
+        services.TryAddTransient<GeneratedRegistrationMarker>();
         return services;
     }
 }
