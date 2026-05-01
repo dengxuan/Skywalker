@@ -71,6 +71,57 @@ public sealed class RepositoryRegistrationGeneratorTests
         Assert.Empty(result.GeneratedTrees);
     }
 
+    [Fact]
+    public void GeneratesDistinctRegistrars_ForMultipleDbContextsInSameAssembly()
+    {
+        var result = GeneratorTestHelper.Run<RepositoryRegistrationGenerator>("""
+            using Microsoft.EntityFrameworkCore;
+            using Skywalker.Ddd.Domain.Entities;
+            using Skywalker.Ddd.EntityFrameworkCore;
+
+            namespace Demo;
+
+            public sealed class CatalogDbContext(DbContextOptions<CatalogDbContext> options) : SkywalkerDbContext<CatalogDbContext>(options)
+            {
+                public DbSet<CatalogItem> Items { get; set; } = null!;
+            }
+
+            public sealed class BillingDbContext(DbContextOptions<BillingDbContext> options) : SkywalkerDbContext<BillingDbContext>(options)
+            {
+                public DbSet<BillingInvoice> Invoices { get; set; } = null!;
+            }
+
+            public sealed class CatalogItem : Entity<System.Guid>
+            {
+            }
+
+            public sealed class BillingInvoice : Entity<long>
+            {
+            }
+            """, CreateReferences());
+
+        Assert.Equal(2, result.GeneratedTrees.Length);
+
+        var generatedSources = result.GeneratedTrees
+            .Select(tree => (tree.FilePath, Source: tree.GetText().ToString()))
+            .ToArray();
+
+        var catalogSource = Assert.Single(generatedSources, source => source.FilePath.EndsWith("Demo_CatalogDbContext.SkywalkerRepositoryRegistrations.g.cs"));
+        var billingSource = Assert.Single(generatedSources, source => source.FilePath.EndsWith("Demo_BillingDbContext.SkywalkerRepositoryRegistrations.g.cs"));
+
+        Assert.Contains("typeof(global::Demo.CatalogDbContext)", catalogSource.Source);
+        Assert.Contains("typeof(global::Microsoft.Extensions.DependencyInjection.Demo_CatalogDbContextSkywalkerRepositoryRegistrations)", catalogSource.Source);
+        Assert.Contains("nameof(global::Microsoft.Extensions.DependencyInjection.Demo_CatalogDbContextSkywalkerRepositoryRegistrations.AddSkywalkerGeneratedRepositoriesForDemo_CatalogDbContext)", catalogSource.Source);
+        Assert.Contains("IRepository<global::Demo.CatalogItem, global::System.Guid>", catalogSource.Source);
+        Assert.DoesNotContain("BillingInvoice", catalogSource.Source);
+
+        Assert.Contains("typeof(global::Demo.BillingDbContext)", billingSource.Source);
+        Assert.Contains("typeof(global::Microsoft.Extensions.DependencyInjection.Demo_BillingDbContextSkywalkerRepositoryRegistrations)", billingSource.Source);
+        Assert.Contains("nameof(global::Microsoft.Extensions.DependencyInjection.Demo_BillingDbContextSkywalkerRepositoryRegistrations.AddSkywalkerGeneratedRepositoriesForDemo_BillingDbContext)", billingSource.Source);
+        Assert.Contains("IRepository<global::Demo.BillingInvoice, long>", billingSource.Source);
+        Assert.DoesNotContain("CatalogItem", billingSource.Source);
+    }
+
     private static IEnumerable<MetadataReference> CreateReferences()
     {
         yield return MetadataReference.CreateFromFile(typeof(DbContext).Assembly.Location);
