@@ -37,6 +37,25 @@ public static class GeneratorTestHelper
         return driver.GetRunResult();
     }
 
+    public static (GeneratorDriverRunResult RunResult, Compilation Compilation) RunWithCompilation(
+        string source,
+        IIncrementalGenerator generator,
+        IEnumerable<MetadataReference>? references = null,
+        CSharpCompilationOptions? compilationOptions = null)
+    {
+        var syntaxTree = CSharpSyntaxTree.ParseText(source, ParseOptions);
+        var compilation = CSharpCompilation.Create(
+            assemblyName: "Skywalker.SourceGenerator.Tests.Target",
+            syntaxTrees: [syntaxTree],
+            references: CreateReferences(references),
+            options: compilationOptions ?? CreateCompilationOptions());
+
+        GeneratorDriver driver = CSharpGeneratorDriver.Create(generator);
+        driver = driver.RunGeneratorsAndUpdateCompilation(compilation, out var updatedCompilation, out _);
+
+        return (driver.GetRunResult(), updatedCompilation);
+    }
+
     public static ImmutableArray<Diagnostic> GetCompilationDiagnostics(
         string source,
         IEnumerable<MetadataReference>? references = null,
