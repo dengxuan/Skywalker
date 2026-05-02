@@ -9,6 +9,7 @@
 
 ### Added
 
+- DynamicProxy Source Generator preview.4 scaffolding：新增 analyzer-only `Skywalker.Extensions.DynamicProxies.SourceGenerators` 项目和 no-op 候选发现 smoke tests，为后续静态代理生成与 Castle.Core 移除做准备（#265）。
 - EF Repository registration 明确 reflection fallback 策略：generated registration 优先；fallback 仅作为 non-AOT 兼容路径保留，并可通过 AppContext switch 禁用以验证 AOT/trimmed 边界（#241）。
 - `Skywalker.Sample.NestedTypes` 填充为 EF repository source generator smoke sample，验证 nested DbContext/entity types 的 generated metadata 与 repository/domain-service 注册（#242）。
 - EF Repository Source Generator 新增 `SKY3001`-`SKY3006` 诊断，覆盖非 public `DbSet`、不可访问实体、缺少 `IEntity`、抽象实体、重复 `DbSet` 暴露和冲突 key type 推断等不支持场景，并补充对应诊断文档与测试（#239）。
