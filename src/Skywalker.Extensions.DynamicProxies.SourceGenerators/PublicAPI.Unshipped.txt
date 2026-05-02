@@ -1,0 +1,4 @@
+#nullable enable
+Skywalker.Extensions.DynamicProxies.SourceGenerators.DynamicProxyRegistrationGenerator
+Skywalker.Extensions.DynamicProxies.SourceGenerators.DynamicProxyRegistrationGenerator.DynamicProxyRegistrationGenerator() -> void
+Skywalker.Extensions.DynamicProxies.SourceGenerators.DynamicProxyRegistrationGenerator.Initialize(Microsoft.CodeAnalysis.IncrementalGeneratorInitializationContext context) -> void
