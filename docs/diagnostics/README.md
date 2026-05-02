@@ -11,8 +11,9 @@ the diagnostic ID as the file name: `docs/diagnostics/SKYxxxx.md`.
 | Range | Area |
 |---|---|
 | `SKY1xxx` | DI and service registration |
-| `SKY2xxx` | DynamicProxy and interceptors |
-| `SKY3xxx` | EF Repository generation |
+| `SKY2xxx` | DynamicProxy runtime and interceptors |
+| `SKY300x` | EF Repository generation |
+| `SKY31xx` | DynamicProxy source generation |
 | `SKY4xxx` | EventBus handler generation |
 | `SKY5xxx` | Permission, localization, and settings generators |
 | `SKY9xxx` | Common source-generator diagnostics |
@@ -27,6 +28,12 @@ the diagnostic ID as the file name: `docs/diagnostics/SKYxxxx.md`.
 | `SKY3004` | Entity type must be a concrete class |
 | `SKY3005` | Entity type is exposed by multiple DbSet properties |
 | `SKY3006` | Entity key type inference is ambiguous |
+
+## DynamicProxy Source Generation
+
+| ID | Title |
+|---|---|
+| `SKY3101` | Intercepted service method signature is not supported |
 
 ## Required Page Structure
 
