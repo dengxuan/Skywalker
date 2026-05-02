@@ -10,6 +10,10 @@ Sprint 0 created the sample matrix skeleton. Sprint 1 starts filling it in with
 real generator-driven code. Each sample should stay buildable and runnable in CI
 as it moves from placeholder to scenario canary.
 
+All `Skywalker.Sample.*` projects are part of `Skywalker.sln` and the
+`sg-quality.yml` sample matrix. A new sample is not considered wired in until it
+is added to both places and can pass build/run smoke validation.
+
 ## Sample Matrix
 
 | Sample | Scenario | Sprint 0 status | Filled in by |
@@ -31,6 +35,10 @@ belongs to a later sprint once the generator stack is mature enough for a full a
 `samples/Common/` is reserved for simple entities, service contracts, fixtures, and
 helpers that are reused by multiple samples. Keep shared code dependency-light so
 individual samples remain clear edge-case canaries rather than hidden mini-apps.
+
+Prefer keeping sample-specific types inside the sample project until at least two
+samples need the same type. Moving code into `samples/Common/` should make the
+scenario easier to understand, not hide the behavior being validated.
 
 ## Verify Locally
 
@@ -54,3 +62,10 @@ dotnet publish samples/Skywalker.Sample.AspireAOT/Skywalker.Sample.AspireAOT.csp
 
 On Windows, NativeAOT publish requires the Visual Studio C++ toolchain, including the
 Desktop development with C++ workload.
+
+On PowerShell, the equivalent build/run smoke commands are:
+
+```powershell
+Get-ChildItem samples\Skywalker.Sample.*\*.csproj | ForEach-Object { dotnet build $_.FullName }
+Get-ChildItem samples\Skywalker.Sample.*\*.csproj | ForEach-Object { dotnet run --project $_.FullName --no-build }
+```
