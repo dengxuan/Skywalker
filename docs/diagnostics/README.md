@@ -29,6 +29,12 @@ the diagnostic ID as the file name: `docs/diagnostics/SKYxxxx.md`.
 | `SKY3005` | Entity type is exposed by multiple DbSet properties |
 | `SKY3006` | Entity key type inference is ambiguous |
 
+## DI And Service Registration
+
+| ID | Title |
+|---|---|
+| `SKY1002` | Service type must be assignable from implementation type |
+
 ## DynamicProxy Source Generation
 
 | ID | Title |
