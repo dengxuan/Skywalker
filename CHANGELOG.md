@@ -9,6 +9,7 @@
 
 ### Added
 
+- DI auto-registration Source Generator preview.5 scaffolding：新增 analyzer-only `Skywalker.Ddd.Abstractions.SourceGenerators` 项目、首版 incremental generator skeleton、`SKY1xxx` diagnostics infrastructure 和最小 smoke tests；runtime package 暂不消费该 generator，后续 #280/#281 接入生成注册元数据与 `AddSkywalker()`（#279）。
 - DI auto-registration Source Generator preview.5 设计契约：定义 `[Service]` / `[ApplicationService]` / `[Repository]` / `[EventHandler]` attribute model、generated registrar shape、`AddSkywalker()` integration、convention fallback、`SKY1xxx` diagnostic candidates 和 readiness gates（#278）。
 - DynamicProxy Source Generator preview.4 迁移与诊断文档：补全 Castle → source-generated static proxy 的 before/after、支持/限制清单、`SKY3101` 修复指南和 preview.4 readiness 链接（#270）。
 - DynamicProxies v2.0 移除 Castle.Core runtime fallback：`AddInterceptedServices()` 现在只接受 source-generated static proxy metadata，缺少 generated proxy 的 legacy Castle-only 注册会给出明确迁移错误（#269）。
