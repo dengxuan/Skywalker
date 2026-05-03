@@ -109,6 +109,9 @@ jobs:
       - name: Build EF repository generator analyzer
         run: dotnet build src/Skywalker.Ddd.EntityFrameworkCore.SourceGenerators/Skywalker.Ddd.EntityFrameworkCore.SourceGenerators.csproj --configuration Release -p:EnableSourceLink=false -p:EnableSourceControlManagerQueries=false -p:PublishRepositoryUrl=false -p:EmbedUntrackedSources=false -p:ContinuousIntegrationBuild=false
 
+      - name: Build DynamicProxy generator analyzer
+        run: dotnet build src/Skywalker.Extensions.DynamicProxies.SourceGenerators/Skywalker.Extensions.DynamicProxies.SourceGenerators.csproj --configuration Release -p:EnableSourceLink=false -p:EnableSourceControlManagerQueries=false -p:PublishRepositoryUrl=false -p:EmbedUntrackedSources=false -p:ContinuousIntegrationBuild=false
+
       - name: Publish AOT sample
         shell: bash
         run: |

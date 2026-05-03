@@ -24,7 +24,7 @@ is added to both places and can pass build/run smoke validation.
 | `Skywalker.Sample.NestedTypes` | Nested DbContext/entity types and fully-qualified generated names | Sprint 1 smoke test: generated metadata + repository/domain-service registration for nested types | Sprint 1, Sprint 3 |
 | `Skywalker.Sample.InternalServices` | `internal` service types generated in the same assembly | Skeleton, build/run smoke test | Sprint 3 |
 | `Skywalker.Sample.Modular` | Cross-assembly module discovery and registration | Skeleton, single-project placeholder | Sprint 3 |
-| `Skywalker.Sample.AspireAOT` | NativeAOT publish canary | Sprint 1 smoke test: EF repository generator direct-call contract publishes with no IL2xxx/IL3xxx warnings | Sprint 1+ |
+| `Skywalker.Sample.AspireAOT` | NativeAOT publish canary | Sprint 2 smoke test: EF repository generated registration plus DynamicProxy generated static proxies publish with no IL2xxx/IL3xxx warnings | Sprint 1+ |
 | `Skywalker.Sample.LegacyMigration` | v1.x manual registration coexisting with v2.0 SG registration | Sprint 1 smoke test: manual keyed repository registration survives generated defaults | Sprint 1, Sprint 5 |
 
 `Skywalker.Sample.RealWorldShop` is intentionally out of this Sprint 0 matrix and
