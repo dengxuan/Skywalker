@@ -278,7 +278,7 @@ private static readonly DiagnosticDescriptor MustBePartial = new(
     category: "Skywalker.SourceGenerators",
     defaultSeverity: DiagnosticSeverity.Error,
     isEnabledByDefault: true,
-    description: "Skywalker source generators emit additional members into your class. The class must be 'partial'.",
+    description: "This Skywalker source generator emits additional members into your class. The class must be 'partial'.",
     helpLinkUri: "https://skywalker.dev/diagnostics/SKY9001");
 ```
 
@@ -371,6 +371,7 @@ Skywalker.Xxx/
 - [ ] 用户标注满足 §4.1 约定
 - [ ] 提供命名约定 fallback
 - [ ] 所有"不能生成"场景报 `SKYxxxx` 诊断
+- [ ] 仅在生成器向用户类型注入成员时要求用户类型 `partial`
 - [ ] 每个诊断有 `docs/diagnostics/` 文档页
 - [ ] Snapshot 测试覆盖 §EDGE_CASES.md 相关场景
 - [ ] 至少 1 个 sample 项目使用该 generator

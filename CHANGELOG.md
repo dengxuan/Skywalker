@@ -9,6 +9,7 @@
 
 ### Added
 
+- DI auto-registration Source Generator preview.5 设计契约：定义 `[Service]` / `[ApplicationService]` / `[Repository]` / `[EventHandler]` attribute model、generated registrar shape、`AddSkywalker()` integration、convention fallback、`SKY1xxx` diagnostic candidates 和 readiness gates（#278）。
 - DynamicProxy Source Generator preview.4 迁移与诊断文档：补全 Castle → source-generated static proxy 的 before/after、支持/限制清单、`SKY3101` 修复指南和 preview.4 readiness 链接（#270）。
 - DynamicProxies v2.0 移除 Castle.Core runtime fallback：`AddInterceptedServices()` 现在只接受 source-generated static proxy metadata，缺少 generated proxy 的 legacy Castle-only 注册会给出明确迁移错误（#269）。
 - `Skywalker.Sample.AspireAOT` 扩展为 DynamicProxy Source Generator AOT canary：在 NativeAOT publish gate 中同时验证 EF repository generated registration 与 DynamicProxy generated static proxy/interceptor 路径零 IL2xxx/IL3xxx warning（#268）。
