@@ -26,6 +26,10 @@ public sealed class DependencyInjectionRegistrationGenerator : IIncrementalGener
         "Skywalker.DependencyInjection.RepositoryAttribute",
         "Skywalker.DependencyInjection.EventHandlerAttribute");
 
+    private static readonly ImmutableArray<string> ExcludedInterfaceMetadataNames = ImmutableArray.Create(
+        "System.IDisposable",
+        "System.IAsyncDisposable");
+
     public void Initialize(IncrementalGeneratorInitializationContext context)
     {
         context.RegisterPostInitializationOutput(static context =>
@@ -55,9 +59,18 @@ public sealed class DependencyInjectionRegistrationGenerator : IIncrementalGener
 
         context.RegisterSourceOutput(registrations, static (context, models) =>
         {
+            foreach (var diagnostic in models.Select(static model => model.Diagnostic).Where(static diagnostic => diagnostic is not null))
+            {
+                context.ReportDiagnostic(diagnostic!);
+            }
+
             if (models.Length > 0)
             {
-                context.AddSource("Skywalker.Generated.DependencyInjectionRegistrar.g.cs", GenerateRegistrar(models));
+                var source = GenerateRegistrar(models);
+                if (!string.IsNullOrEmpty(source))
+                {
+                    context.AddSource("Skywalker.Generated.DependencyInjectionRegistrar.g.cs", source);
+                }
             }
         });
     }
@@ -65,7 +78,108 @@ public sealed class DependencyInjectionRegistrationGenerator : IIncrementalGener
     private static ServiceRegistrationModel CreateModel(GeneratorAttributeSyntaxContext context)
     {
         var type = (INamedTypeSymbol)context.TargetSymbol;
-        return new ServiceRegistrationModel(type.ToDisplayString(SymbolDisplayFormat.FullyQualifiedFormat));
+        var attribute = context.Attributes[0];
+        var implementationTypeName = type.ToDisplayString(SymbolDisplayFormat.FullyQualifiedFormat);
+        var serviceType = GetExplicitServiceType(attribute);
+        var lifetime = GetLifetime(attribute);
+
+        if (serviceType is not null)
+        {
+            if (!IsAssignableTo(type, serviceType))
+            {
+                var diagnostic = Diagnostic.Create(
+                    ServiceTypeMustBeAssignable,
+                    Location.None,
+                    serviceType.ToDisplayString(SymbolDisplayFormat.FullyQualifiedFormat),
+                    implementationTypeName);
+
+                return new ServiceRegistrationModel(
+                    implementationTypeName,
+                    lifetime,
+                    serviceType.ToDisplayString(SymbolDisplayFormat.FullyQualifiedFormat),
+                    diagnostic);
+            }
+
+            return new ServiceRegistrationModel(
+                implementationTypeName,
+                lifetime,
+                serviceType.ToDisplayString(SymbolDisplayFormat.FullyQualifiedFormat),
+                null);
+        }
+
+        var serviceTypeNames = type.Interfaces
+            .Where(static candidate => !IsExcludedInterface(candidate))
+            .Select(static candidate => candidate.ToDisplayString(SymbolDisplayFormat.FullyQualifiedFormat))
+            .Distinct()
+            .OrderBy(static name => name, StringComparer.Ordinal)
+            .ToArray();
+
+        if (serviceTypeNames.Length == 0)
+        {
+            serviceTypeNames = new[] { implementationTypeName };
+        }
+
+        return new ServiceRegistrationModel(
+            implementationTypeName,
+            lifetime,
+            string.Join("|", serviceTypeNames),
+            null);
+    }
+
+    private static INamedTypeSymbol? GetExplicitServiceType(AttributeData attribute)
+    {
+        foreach (var argument in attribute.NamedArguments)
+        {
+            if (argument.Key == "ServiceType" && argument.Value.Value is INamedTypeSymbol serviceType)
+            {
+                return serviceType;
+            }
+        }
+
+        return null;
+    }
+
+    private static string GetLifetime(AttributeData attribute)
+    {
+        var attributeName = attribute.AttributeClass?.ToDisplayString(SymbolDisplayFormat.FullyQualifiedFormat);
+        return attributeName == "global::Skywalker.DependencyInjection.EventHandlerAttribute"
+            ? "Transient"
+            : "Scoped";
+    }
+
+    private static bool IsAssignableTo(INamedTypeSymbol implementationType, INamedTypeSymbol serviceType)
+    {
+        if (SymbolEqualityComparer.Default.Equals(implementationType, serviceType))
+        {
+            return true;
+        }
+
+        foreach (var candidate in implementationType.AllInterfaces)
+        {
+            if (SymbolEqualityComparer.Default.Equals(candidate, serviceType))
+            {
+                return true;
+            }
+        }
+
+        var baseType = implementationType.BaseType;
+        while (baseType is not null)
+        {
+            if (SymbolEqualityComparer.Default.Equals(baseType, serviceType))
+            {
+                return true;
+            }
+
+            baseType = baseType.BaseType;
+        }
+
+        return false;
+    }
+
+    private static bool IsExcludedInterface(INamedTypeSymbol candidate)
+    {
+        var metadataName = candidate.ToDisplayString(SymbolDisplayFormat.CSharpErrorMessageFormat);
+        return ExcludedInterfaceMetadataNames.Contains(metadataName, StringComparer.Ordinal);
     }
 
     private static string GenerateAttributes()
@@ -108,9 +222,27 @@ public sealed class DependencyInjectionRegistrationGenerator : IIncrementalGener
 
     private static string GenerateRegistrar(ImmutableArray<ServiceRegistrationModel> models)
     {
+        var validModels = models
+            .Where(static model => model.Diagnostic is null)
+            .ToArray();
+
+        if (validModels.Length == 0)
+        {
+            return string.Empty;
+        }
+
         var registrations = string.Join(
             "\n",
-            models.Select(static model => $"        // TODO #280: emit descriptor for {model.ImplementationTypeName}"));
+            validModels.SelectMany(static model => model.ServiceTypeNames
+                .Split(new[] { '|' }, StringSplitOptions.RemoveEmptyEntries)
+                .Select(serviceTypeName => $$"""
+                        global::Microsoft.Extensions.DependencyInjection.Extensions.ServiceCollectionDescriptorExtensions.TryAdd(
+                            services,
+                            global::Microsoft.Extensions.DependencyInjection.ServiceDescriptor.Describe(
+                                typeof({{serviceTypeName}}),
+                                typeof({{model.ImplementationTypeName}}),
+                                global::Microsoft.Extensions.DependencyInjection.ServiceLifetime.{{model.Lifetime}}));
+                    """)));
 
         return $$"""
             // <auto-generated/>
@@ -132,5 +264,9 @@ public sealed class DependencyInjectionRegistrationGenerator : IIncrementalGener
             """;
     }
 
-    private readonly record struct ServiceRegistrationModel(string ImplementationTypeName);
+    private readonly record struct ServiceRegistrationModel(
+        string ImplementationTypeName,
+        string Lifetime,
+        string ServiceTypeNames,
+        Diagnostic? Diagnostic);
 }
