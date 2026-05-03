@@ -5,6 +5,7 @@ using System.Reflection;
 using Microsoft.Extensions.DependencyInjection.Extensions;
 using Skywalker;
 using Skywalker.ApplicationParts;
+using Skywalker.DependencyInjection;
 using Skywalker.Extensions.DynamicProxies;
 
 namespace Microsoft.Extensions.DependencyInjection;
@@ -65,6 +66,8 @@ public static class SkywalkerServiceCollectionExtensions
             }
         }
 
+        AddGeneratedDependencyInjectionRegistrars(services, partManager);
+
         // 通过 PartManager 统一收集所有服务描述符
         var feature = new ServiceRegistrationFeature { ServiceCollection = services };
         partManager.PopulateFeature(feature);
@@ -85,5 +88,28 @@ public static class SkywalkerServiceCollectionExtensions
         services.AddInterceptedServices();
 
         return new SkywalkerBuilder(services, partManager);
+    }
+
+    private static void AddGeneratedDependencyInjectionRegistrars(IServiceCollection services, SkywalkerPartManager partManager)
+    {
+        foreach (var part in partManager.ApplicationParts.OfType<AssemblyPart>())
+        {
+            foreach (var attribute in part.Assembly.GetCustomAttributes<SkywalkerGeneratedDependencyInjectionRegistrationAttribute>())
+            {
+                var method = attribute.RegistrarType.GetMethod(
+                    attribute.MethodName,
+                    BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Static,
+                    binder: null,
+                    types: [typeof(IServiceCollection)],
+                    modifiers: null);
+
+                if (method is null || !typeof(IServiceCollection).IsAssignableFrom(method.ReturnType))
+                {
+                    throw new InvalidOperationException($"DI source generator emitted invalid registration metadata for '{part.Assembly.FullName}'. Registrar '{attribute.RegistrarType.FullName}.{attribute.MethodName}' must be a static method that accepts IServiceCollection and returns IServiceCollection.");
+                }
+
+                method.Invoke(null, [services]);
+            }
+        }
     }
 }

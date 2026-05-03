@@ -1,6 +1,7 @@
 using Microsoft.CodeAnalysis;
 using Microsoft.Extensions.DependencyInjection;
 using Skywalker.Ddd.Abstractions.SourceGenerators;
+using Skywalker.DependencyInjection;
 
 namespace Skywalker.SourceGenerators.Tests;
 
@@ -9,6 +10,7 @@ public sealed class DependencyInjectionRegistrationGeneratorTests
     private static readonly MetadataReference[] DependencyInjectionReferences =
     [
         MetadataReference.CreateFromFile(typeof(IServiceCollection).Assembly.Location),
+        MetadataReference.CreateFromFile(typeof(SkywalkerGeneratedDependencyInjectionRegistrationAttribute).Assembly.Location),
         CreateRuntimeReference("System.ComponentModel.dll"),
     ];
 
@@ -56,7 +58,9 @@ public sealed class DependencyInjectionRegistrationGeneratorTests
         var registrarSource = registrarTree.GetText().ToString();
 
         Assert.Contains("__SkywalkerDependencyInjectionRegistrar", registrarSource);
-        Assert.Contains("Register(global::Microsoft.Extensions.DependencyInjection.IServiceCollection services)", registrarSource);
+        Assert.Contains("[assembly: global::Skywalker.DependencyInjection.SkywalkerGeneratedDependencyInjectionRegistrationAttribute", registrarSource);
+        Assert.Contains("AddSkywalkerGeneratedServices(global::Microsoft.Extensions.DependencyInjection.IServiceCollection services)", registrarSource);
+        Assert.Contains("return services;", registrarSource);
         Assert.Contains("typeof(global::Demo.OrderService)", registrarSource);
         Assert.Contains("ServiceLifetime.Scoped", registrarSource);
         Assert.Contains("ServiceCollectionDescriptorExtensions.TryAdd", registrarSource);
