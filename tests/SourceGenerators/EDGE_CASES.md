@@ -12,7 +12,7 @@ Legend:
 
 ## Type Shapes
 
-- [ ] Plain class
+- [x] Plain class — `DependencyInjectionRegistrationGeneratorSnapshotTests.SelfRegisteredService`
 - [ ] Partial class
 - [ ] Partial class split across multiple files
 - [ ] Record class
@@ -42,7 +42,7 @@ Legend:
 
 ## Inheritance And Interfaces
 
-- [ ] Single interface implementation
+- [x] Single interface implementation — `DependencyInjectionRegistrationGeneratorSnapshotTests.DiscoveredInterface`
 - [x] Multiple interface implementations — `RepositoryRegistrationGeneratorSnapshotTests.DbContext_WithConflictingKeyTypes` reports `SKY3006`
 - [ ] Interface inheritance chain
 - [x] Explicit interface implementation — `RepositoryRegistrationGeneratorSnapshotTests.ExplicitIEntityImplementation_IsGenerated`
@@ -90,7 +90,7 @@ Legend:
 - [ ] Missing `partial` reports `SKY9001` or generator-specific diagnostic
 - [x] Unsupported type shape reports a diagnostic instead of silently skipping — `RepositoryRegistrationGeneratorSnapshotTests.DbContext_WithAbstractEntityOnly`
 - [ ] Unsupported member signature reports a diagnostic instead of silently skipping
-- [x] Duplicate generated registration reports a diagnostic with both locations where possible — `RepositoryRegistrationGeneratorSnapshotTests.DbContext_WithDuplicateEntityDbSets` reports duplicate property names
+- [x] Duplicate generated registration reports a diagnostic with both locations where possible — `RepositoryRegistrationGeneratorSnapshotTests.DbContext_WithDuplicateEntityDbSets` reports duplicate property names; DI generated registrar idempotency covered by `GeneratedDependencyInjectionRegistrationBridgeTests.AddSkywalker_GeneratedDependencyInjectionRegistration_IsIdempotent`
 - [x] Diagnostic `helpLinkUri` points to a `docs/diagnostics/SKYxxxx.md` page — `SKY3001`-`SKY3006` descriptors
 - [x] Diagnostic test asserts ID, severity, message, and location — `RepositoryRegistrationGeneratorTests` asserts ID, severity, and message; location coverage remains future work
 
