@@ -107,13 +107,14 @@ public class UnitOfWorkInterceptorIntegrationTests
     }
 
     [Fact]
-    public void CastleProxy_IsCreated_ForUowService()
+    public void GeneratedProxy_IsCreated_ForUowService()
     {
         using var provider = BuildConsoleAppProvider();
         using var scope = provider.CreateScope();
         var service = scope.ServiceProvider.GetRequiredService<ITestUowOrderService>();
-        // Castle.DynamicProxy creates a runtime proxy — type differs from the concrete class
+
         Assert.NotEqual(typeof(TestUowOrderService), service.GetType());
+        Assert.Contains("SkywalkerProxy", service.GetType().Name);
     }
 
     [Fact]

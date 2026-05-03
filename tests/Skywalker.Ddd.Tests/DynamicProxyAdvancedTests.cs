@@ -44,7 +44,7 @@ public interface IComplexParamService : IInterceptable
 /// <summary>
 /// 包含泛型方法的服务接口。
 /// </summary>
-public interface IGenericMethodService : IInterceptable
+public interface IGenericMethodService
 {
     Task<T> GetAsync<T>(string key) where T : class;
     Task<TResult> TransformAsync<TInput, TResult>(TInput input) where TInput : class where TResult : class;
@@ -100,25 +100,27 @@ public class DynamicProxyAdvancedTests
         return services.BuildServiceProvider();
     }
 
-    #region Proxy Verification (Castle.DynamicProxy)
+    #region Proxy Verification
 
     [Fact]
-    public void CastleProxy_Created_ForComplexParamService()
+    public void GeneratedProxy_Created_ForComplexParamService()
     {
         using var provider = BuildProvider();
         using var scope = provider.CreateScope();
         var service = scope.ServiceProvider.GetRequiredService<IComplexParamService>();
-        // Castle.DynamicProxy creates runtime proxy types
+
         Assert.NotEqual(typeof(ComplexParamService), service.GetType());
+        Assert.Contains("SkywalkerProxy", service.GetType().Name);
     }
 
     [Fact]
-    public void CastleProxy_Created_ForGenericMethodService()
+    public void GenericMethodService_RemainsConcrete_WhenNotInterceptable()
     {
         using var provider = BuildProvider();
         using var scope = provider.CreateScope();
         var service = scope.ServiceProvider.GetRequiredService<IGenericMethodService>();
-        Assert.NotEqual(typeof(GenericMethodService), service.GetType());
+
+        Assert.IsType<GenericMethodService>(service);
     }
 
     #endregion

@@ -32,7 +32,7 @@
 ```
 Skywalker.Ddd (整合包)
 ├── Skywalker.Ddd.Abstractions
-│   └── Skywalker.Extensions.DynamicProxies (Castle.DynamicProxy)
+│   └── Skywalker.Extensions.DynamicProxies (source-generated static proxies)
 ├── Skywalker.Ddd.Domain
 │   ├── Skywalker.Exceptions.Abstractions
 │   └── Skywalker.EventBus.Abstractions

@@ -8,8 +8,8 @@ namespace Skywalker.Extensions.DynamicProxies;
 /// </summary>
 /// <remarks>
 /// <para>
-/// 实现此接口的服务在 DI 注册时会被 Castle.DynamicProxy 自动包装为代理实例，
-/// 代理会注入所有注册的 <see cref="IInterceptor"/> 实现。
+/// 实现此接口的服务在 DI 注册时会通过 source-generated static proxy 包装为代理实例，
+/// generated proxy 会注入所有注册的 <see cref="IInterceptor"/> 实现。
 /// </para>
 /// <para>
 /// 每个拦截器通过检查目标类/方法上的特性（如 <c>[UnitOfWork]</c>、<c>[Audited]</c>）

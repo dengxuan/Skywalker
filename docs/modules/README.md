@@ -39,7 +39,7 @@
                                   │
                                   ▼
                       ┌───────────────────────┐
-                      │ Extensions.DynamicProxies │── Castle.DynamicProxy 动态代理
+                      │ Extensions.DynamicProxies │── source-generated static proxies
                       └───────────────────────┘
 
         ┌───────────────────────────┼───────────────────────────┐

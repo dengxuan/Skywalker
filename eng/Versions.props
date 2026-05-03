@@ -40,7 +40,6 @@
   </PropertyGroup>
 
   <PropertyGroup Label="Third-Party">
-    <CastleCoreVersion>5.1.1</CastleCoreVersion>
     <FluentValidationVersion>11.9.0</FluentValidationVersion>
     <GoogleProtobufVersion>3.28.3</GoogleProtobufVersion>
     <GrpcNetClientVersion>2.66.0</GrpcNetClientVersion>

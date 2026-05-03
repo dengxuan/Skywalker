@@ -43,6 +43,32 @@ public sealed class GeneratedProxyServiceCollectionTests
         Assert.Equal("plain", service.GetName());
     }
 
+    [Fact]
+    public void AddInterceptedServices_DoesNotThrow_ForInterceptableMarkerInterfaceWithoutMethods()
+    {
+        var services = new ServiceCollection();
+        services.AddTransient<IEmptyMarkerService, EmptyMarkerService>();
+
+        services.AddInterceptedServices();
+
+        using var provider = services.BuildServiceProvider();
+        var service = provider.GetRequiredService<IEmptyMarkerService>();
+
+        Assert.IsType<EmptyMarkerService>(service);
+    }
+
+    [Fact]
+    public void AddInterceptedServices_Throws_WhenGeneratedProxyMetadataIsMissing()
+    {
+        var services = new ServiceCollection();
+        services.AddTransient<IPrivateLegacyService, PrivateLegacyService>();
+
+        var exception = Assert.Throws<InvalidOperationException>(() => services.AddInterceptedServices());
+
+        Assert.Contains("no source-generated DynamicProxy metadata was found", exception.Message);
+        Assert.Contains("Castle.DynamicProxy fallback was removed", exception.Message);
+    }
+
     public interface IGeneratedOrderService : IInterceptable
     {
         Task<string> SubmitAsync(string number);
@@ -64,6 +90,24 @@ public sealed class GeneratedProxyServiceCollectionTests
     public sealed class PlainGeneratedService : IPlainGeneratedService
     {
         public string GetName() => "plain";
+    }
+
+    private interface IPrivateLegacyService : IInterceptable
+    {
+        string GetName();
+    }
+
+    private sealed class PrivateLegacyService : IPrivateLegacyService
+    {
+        public string GetName() => "legacy";
+    }
+
+    public interface IEmptyMarkerService : IInterceptable
+    {
+    }
+
+    public sealed class EmptyMarkerService : IEmptyMarkerService
+    {
     }
 
     private sealed class RecordingInterceptor : IInterceptor

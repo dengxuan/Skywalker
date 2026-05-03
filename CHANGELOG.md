@@ -9,6 +9,7 @@
 
 ### Added
 
+- DynamicProxies v2.0 移除 Castle.Core runtime fallback：`AddInterceptedServices()` 现在只接受 source-generated static proxy metadata，缺少 generated proxy 的 legacy Castle-only 注册会给出明确迁移错误（#269）。
 - `Skywalker.Sample.AspireAOT` 扩展为 DynamicProxy Source Generator AOT canary：在 NativeAOT publish gate 中同时验证 EF repository generated registration 与 DynamicProxy generated static proxy/interceptor 路径零 IL2xxx/IL3xxx warning（#268）。
 - DynamicProxy Source Generator preview.4 测试安全网：新增 50 个静态代理 snapshot 场景、generated proxy DI runtime 覆盖，并让 `AddInterceptedServices()` 优先使用生成代理元数据，Castle 继续作为兼容 fallback（#267）。
 - DynamicProxy Source Generator preview.4 新增首版接口静态代理生成：为实现 `IInterceptable` 的 public/internal 服务生成同步与 Task/ValueTask 方法代理，并对暂不支持的方法签名报告 `SKY3101` 诊断（#266）。
