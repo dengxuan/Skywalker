@@ -1,11 +1,5 @@
 #nullable enable
 Microsoft.Extensions.DependencyInjection.DynamicProxyServiceCollectionExtensions
-Skywalker.Extensions.DynamicProxies.CastleProxyGenerator
-Skywalker.Extensions.DynamicProxies.CastleProxyGenerator.CastleProxyGenerator(System.Collections.Generic.IEnumerable<Skywalker.Extensions.DynamicProxies.IInterceptor!>! interceptors) -> void
-Skywalker.Extensions.DynamicProxies.CastleProxyGenerator.CreateClassProxy(System.Type! classType, params object![]! arguments) -> object!
-Skywalker.Extensions.DynamicProxies.CastleProxyGenerator.CreateClassProxy<TClass>(params object![]! arguments) -> TClass!
-Skywalker.Extensions.DynamicProxies.CastleProxyGenerator.CreateInterfaceProxy(System.Type! interfaceType, object! target) -> object!
-Skywalker.Extensions.DynamicProxies.CastleProxyGenerator.CreateInterfaceProxy<TInterface>(TInterface! target) -> TInterface!
 Skywalker.Extensions.DynamicProxies.IInterceptable
 Skywalker.Extensions.DynamicProxies.IInterceptor
 Skywalker.Extensions.DynamicProxies.IInterceptor.InterceptAsync(Skywalker.Extensions.DynamicProxies.IMethodInvocation! invocation) -> System.Threading.Tasks.Task!
@@ -39,11 +33,6 @@ Skywalker.Extensions.DynamicProxies.InterceptorContext.ReturnValue.get -> object
 Skywalker.Extensions.DynamicProxies.InterceptorContext.ReturnValue.set -> void
 Skywalker.Extensions.DynamicProxies.InterceptorContext.Target.get -> object!
 Skywalker.Extensions.DynamicProxies.InterceptorDelegate
-Skywalker.Extensions.DynamicProxies.IProxyGenerator
-Skywalker.Extensions.DynamicProxies.IProxyGenerator.CreateClassProxy(System.Type! classType, params object![]! arguments) -> object!
-Skywalker.Extensions.DynamicProxies.IProxyGenerator.CreateClassProxy<TClass>(params object![]! arguments) -> TClass!
-Skywalker.Extensions.DynamicProxies.IProxyGenerator.CreateInterfaceProxy(System.Type! interfaceType, object! target) -> object!
-Skywalker.Extensions.DynamicProxies.IProxyGenerator.CreateInterfaceProxy<TInterface>(TInterface! target) -> TInterface!
 static Microsoft.Extensions.DependencyInjection.DynamicProxyServiceCollectionExtensions.AddDynamicProxies(this Microsoft.Extensions.DependencyInjection.IServiceCollection! services) -> Microsoft.Extensions.DependencyInjection.IServiceCollection!
 static Microsoft.Extensions.DependencyInjection.DynamicProxyServiceCollectionExtensions.AddInterceptedServices(this Microsoft.Extensions.DependencyInjection.IServiceCollection! services) -> Microsoft.Extensions.DependencyInjection.IServiceCollection!
 static Skywalker.Extensions.DynamicProxies.InterceptorChainBuilderExtensions.UseInterceptor(this Skywalker.Extensions.DynamicProxies.IInterceptorChainBuilder! builder, Skywalker.Extensions.DynamicProxies.IInterceptor! interceptor) -> Skywalker.Extensions.DynamicProxies.IInterceptorChainBuilder!

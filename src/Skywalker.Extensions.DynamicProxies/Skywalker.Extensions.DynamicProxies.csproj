@@ -2,11 +2,10 @@
 
   <PropertyGroup>
     <RootNamespace></RootNamespace>
-    <Description>Skywalker 动态代理基础设施，基于 Castle.DynamicProxy</Description>
+    <Description>Skywalker 动态代理基础设施，基于 source-generated static proxies</Description>
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="Castle.Core" Version="$(CastleCoreVersion)" />
     <PackageReference Include="Microsoft.Extensions.DependencyInjection.Abstractions" Version="$(MicrosoftExtensionsVersion)" />
   </ItemGroup>
 

@@ -20,7 +20,7 @@
 
 | 模块 | NuGet 包 | 说明 |
 |------|----------|------|
-| Skywalker.Extensions.DynamicProxies | `Skywalker.Extensions.DynamicProxies` | 动态代理（Castle.DynamicProxy） |
+| Skywalker.Extensions.DynamicProxies | `Skywalker.Extensions.DynamicProxies` | 动态代理（source-generated static proxies） |
 | Skywalker.Extensions.Threading | `Skywalker.Extensions.Threading` | 线程和异步工具 |
 | Skywalker.Extensions.Timezone | `Skywalker.Extensions.Timezone` | 时区处理 |
 | Skywalker.Extensions.VirtualFileSystem | `Skywalker.Extensions.VirtualFileSystem` | 虚拟文件系统 |
@@ -33,7 +33,7 @@
 
 ### 简介
 
-动态代理基础设施模块，基于 [Castle.DynamicProxy](https://github.com/castleproject/Core) 实现 AOP 拦截能力。此模块是独立的通用基础设施，不依赖 DDD 或任何业务模块。
+动态代理基础设施模块，基于 source-generated static proxies 实现 AOP 拦截能力。此模块是独立的通用基础设施，不依赖 DDD 或任何业务模块。
 
 ### 安装
 
@@ -45,7 +45,6 @@ dotnet add package Skywalker.Extensions.DynamicProxies
 
 ```
 Skywalker.Extensions.DynamicProxies
-├── Castle.Core (Castle.DynamicProxy)
 └── Microsoft.Extensions.DependencyInjection.Abstractions
 ```
 
@@ -62,7 +61,7 @@ namespace Skywalker.Extensions.DynamicProxies;
 public interface IInterceptable { }
 ```
 
-实现此接口的服务在调用 `AddInterceptedServices()` 时会被 Castle.DynamicProxy 自动包装为代理实例。**无需任何 DI 标记接口**，只要服务已注册到 `IServiceCollection` 且实现了 `IInterceptable` 即可。
+实现此接口的服务在调用 `AddInterceptedServices()` 时会被 source-generated static proxy 包装为代理实例。**无需任何 DI 标记接口**，只要服务已注册到 `IServiceCollection`、实现了 `IInterceptable`，并且消费项目引用了 DynamicProxy source generator analyzer 即可。
 
 #### IInterceptor - 拦截器接口
 

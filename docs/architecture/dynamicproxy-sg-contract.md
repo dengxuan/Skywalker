@@ -125,8 +125,8 @@ Generated proxies should avoid repeating expensive work per call:
 
 ## Castle Compatibility Boundary
 
-Castle.Core remains a transition dependency until generated interface proxies, tests,
-and samples are in place. The v2.0 supported path is generated static proxies.
+Castle.Core was a transition dependency until generated interface proxies, tests,
+and samples were in place. The v2.0 supported path is generated static proxies.
 
 Compatibility policy:
 
@@ -134,9 +134,9 @@ Compatibility policy:
 - Existing `IInterceptable` markers remain the initial discovery signal.
 - `AddInterceptedServices()` may become a generated-registration bridge or a
   compatibility wrapper around generated metadata.
-- Runtime calls to `IProxyGenerator`/`CastleProxyGenerator` are not guaranteed to stay
-  supported after the Castle removal issue. If retained temporarily, they should be
-  marked obsolete and documented as non-AOT compatibility only.
+- Runtime calls to `IProxyGenerator`/`CastleProxyGenerator` are removed in the v2.0
+  path. Existing users should migrate to interface registrations that are covered by
+  the DynamicProxy source generator.
 - No NativeAOT path may require Castle.Core, runtime IL emit, or dynamic proxy
   construction.
 

@@ -1,4 +1,15 @@
 #nullable enable
+*REMOVED*Skywalker.Extensions.DynamicProxies.CastleProxyGenerator
+*REMOVED*Skywalker.Extensions.DynamicProxies.CastleProxyGenerator.CastleProxyGenerator(System.Collections.Generic.IEnumerable<Skywalker.Extensions.DynamicProxies.IInterceptor!>! interceptors) -> void
+*REMOVED*Skywalker.Extensions.DynamicProxies.CastleProxyGenerator.CreateClassProxy(System.Type! classType, params object![]! arguments) -> object!
+*REMOVED*Skywalker.Extensions.DynamicProxies.CastleProxyGenerator.CreateClassProxy<TClass>(params object![]! arguments) -> TClass!
+*REMOVED*Skywalker.Extensions.DynamicProxies.CastleProxyGenerator.CreateInterfaceProxy(System.Type! interfaceType, object! target) -> object!
+*REMOVED*Skywalker.Extensions.DynamicProxies.CastleProxyGenerator.CreateInterfaceProxy<TInterface>(TInterface! target) -> TInterface!
+*REMOVED*Skywalker.Extensions.DynamicProxies.IProxyGenerator
+*REMOVED*Skywalker.Extensions.DynamicProxies.IProxyGenerator.CreateClassProxy(System.Type! classType, params object![]! arguments) -> object!
+*REMOVED*Skywalker.Extensions.DynamicProxies.IProxyGenerator.CreateClassProxy<TClass>(params object![]! arguments) -> TClass!
+*REMOVED*Skywalker.Extensions.DynamicProxies.IProxyGenerator.CreateInterfaceProxy(System.Type! interfaceType, object! target) -> object!
+*REMOVED*Skywalker.Extensions.DynamicProxies.IProxyGenerator.CreateInterfaceProxy<TInterface>(TInterface! target) -> TInterface!
 Skywalker.Extensions.DynamicProxies.SkywalkerGeneratedDynamicProxyAttribute
 Skywalker.Extensions.DynamicProxies.SkywalkerGeneratedDynamicProxyAttribute.ImplementationType.get -> System.Type!
 Skywalker.Extensions.DynamicProxies.SkywalkerGeneratedDynamicProxyAttribute.ProxyType.get -> System.Type!

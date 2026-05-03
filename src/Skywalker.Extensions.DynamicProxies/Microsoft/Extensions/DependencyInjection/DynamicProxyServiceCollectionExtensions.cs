@@ -13,13 +13,12 @@ namespace Microsoft.Extensions.DependencyInjection;
 public static class DynamicProxyServiceCollectionExtensions
 {
     /// <summary>
-    /// 添加动态代理服务（Castle.DynamicProxy）。
+    /// 添加动态代理服务。
     /// </summary>
     /// <param name="services">服务集合。</param>
     /// <returns>服务集合。</returns>
     public static IServiceCollection AddDynamicProxies(this IServiceCollection services)
     {
-        services.TryAddSingleton<IProxyGenerator, CastleProxyGenerator>();
         return services;
     }
 
@@ -68,17 +67,19 @@ public static class DynamicProxyServiceCollectionExtensions
             // 确保实现类型本身已注册（代理工厂需要解析原始实例）
             services.TryAdd(new ServiceDescriptor(implType, implType, lifetime));
 
-            var proxyDescriptor = generatedProxies.TryGetValue((serviceType, implType), out var proxyType)
-                ? new ServiceDescriptor(serviceType, sp => CreateGeneratedProxy(sp, implType, proxyType), lifetime)
-                : new ServiceDescriptor(
-                    serviceType,
-                    sp =>
-                    {
-                        var target = sp.GetRequiredService(implType);
-                        var proxyGenerator = sp.GetRequiredService<IProxyGenerator>();
-                        return proxyGenerator.CreateInterfaceProxy(serviceType, target);
-                    },
-                    lifetime);
+            if (!generatedProxies.TryGetValue((serviceType, implType), out var proxyType))
+            {
+                if (!HasInterceptableMethods(serviceType))
+                {
+                    continue;
+                }
+
+                throw new InvalidOperationException(
+                    $"Service '{serviceType.FullName}' implemented by '{implType.FullName}' is marked with IInterceptable, but no source-generated DynamicProxy metadata was found. " +
+                    "Reference Skywalker.Extensions.DynamicProxies.SourceGenerators as an analyzer and use a supported interface proxy shape, or remove IInterceptable from this registration. Castle.DynamicProxy fallback was removed in Skywalker v2.0.");
+            }
+
+            var proxyDescriptor = new ServiceDescriptor(serviceType, sp => CreateGeneratedProxy(sp, implType, proxyType), lifetime);
 
             services.Replace(proxyDescriptor);
         }
@@ -98,6 +99,11 @@ public static class DynamicProxyServiceCollectionExtensions
         }
 
         return proxies;
+    }
+
+    private static bool HasInterceptableMethods(Type serviceType)
+    {
+        return serviceType.GetMethods().Any(static method => !method.IsSpecialName);
     }
 
     private static object CreateGeneratedProxy(IServiceProvider serviceProvider, Type implementationType, Type proxyType)

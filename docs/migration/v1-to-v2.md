@@ -102,6 +102,7 @@ builder.Services.AddSkywalker<Startup>(cfg =>
 
 **v2.0 目标**：
 - 完全移除 `Castle.Core` 依赖。
+- `AddInterceptedServices()` 仅支持 source-generated interface proxy metadata；缺少生成代理的 legacy Castle-only 注册会在启动期给出迁移错误。
 - 由 SG 在编译期生成静态代理类型。
 - 新 API：`[Intercept<TInterceptor>]` 强类型拦截器标注。
 
