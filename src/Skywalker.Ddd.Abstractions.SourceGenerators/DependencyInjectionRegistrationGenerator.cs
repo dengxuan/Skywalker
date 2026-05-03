@@ -252,13 +252,16 @@ public sealed class DependencyInjectionRegistrationGenerator : IIncrementalGener
             #nullable enable
             #pragma warning disable
 
+            [assembly: global::Skywalker.DependencyInjection.SkywalkerGeneratedDependencyInjectionRegistrationAttribute(typeof(global::Skywalker.Generated.__SkywalkerDependencyInjectionRegistrar), nameof(global::Skywalker.Generated.__SkywalkerDependencyInjectionRegistrar.AddSkywalkerGeneratedServices))]
+
             namespace Skywalker.Generated;
 
             internal static class __SkywalkerDependencyInjectionRegistrar
             {
-                internal static void Register(global::Microsoft.Extensions.DependencyInjection.IServiceCollection services)
+                public static global::Microsoft.Extensions.DependencyInjection.IServiceCollection AddSkywalkerGeneratedServices(global::Microsoft.Extensions.DependencyInjection.IServiceCollection services)
                 {
             {{registrations}}
+                    return services;
                 }
             }
             """;

@@ -1,7 +1,7 @@
 # DI Auto-Registration Source Generator Contract
 
 > Status: Draft for v2.0.0-preview.5  
-> Tracking: #254, #278  
+> Tracking: #254, #278, #281
 > Last updated: 2026-05-03
 
 This contract defines the supported shape for the DI auto-registration source generator. The goal is to move `AddSkywalker()` from runtime feature-provider scanning toward compile-time generated service registration metadata while preserving the existing service registration semantics.
@@ -108,23 +108,24 @@ Each consumer assembly that contains supported services gets one generated regis
 #nullable enable
 #pragma warning disable
 
+[assembly: global::Skywalker.DependencyInjection.SkywalkerGeneratedDependencyInjectionRegistrationAttribute(
+  typeof(global::Skywalker.Generated.__SkywalkerDependencyInjectionRegistrar),
+  nameof(global::Skywalker.Generated.__SkywalkerDependencyInjectionRegistrar.AddSkywalkerGeneratedServices))]
+
 namespace Skywalker.Generated;
 
 internal static class __SkywalkerDependencyInjectionRegistrar
 {
-    internal static void Register(Microsoft.Extensions.DependencyInjection.IServiceCollection services)
+  public static Microsoft.Extensions.DependencyInjection.IServiceCollection AddSkywalkerGeneratedServices(
+    Microsoft.Extensions.DependencyInjection.IServiceCollection services)
     {
         // generated TryAdd / Replace calls
+    return services;
     }
 }
 ```
 
-The implementation can choose one of two runtime bridge shapes:
-
-1. Assembly metadata attribute that points to the generated registrar method.
-2. Module initializer that registers the assembly and delegate with a runtime registry.
-
-Preview.5 should prefer the module-initializer registry only if it avoids extra reflection and works for library assemblies. Otherwise, an assembly metadata attribute is acceptable as an intermediate bridge because EF Repository SG and DynamicProxy SG already use generated metadata attributes successfully.
+Preview.5 uses an assembly metadata attribute, `SkywalkerGeneratedDependencyInjectionRegistrationAttribute`, that points `AddSkywalker()` to the generated registrar method. The method must be static, accept `IServiceCollection`, and return `IServiceCollection`. Invalid generated metadata fails with an actionable `InvalidOperationException` instead of being ignored.
 
 ## AddSkywalker Integration
 
@@ -132,7 +133,7 @@ Preview.5 should prefer the module-initializer registry only if it avoids extra 
 
 1. Discover generated registrars for the entry assembly and related Skywalker assemblies.
 2. Invoke generated registration for assemblies that provide metadata.
-3. Run the runtime feature-provider path only for assemblies without generated metadata, unless the generated path is configured as strict.
+3. Run the runtime feature-provider path as the compatibility fallback, including when no generated DI metadata exists.
 4. Apply `AddInterceptedServices()` after service descriptors are finalized, matching current behavior.
 
 Generated registrations must keep existing ordering rules:
