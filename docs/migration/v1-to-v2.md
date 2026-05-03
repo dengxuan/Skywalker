@@ -94,22 +94,110 @@ builder.Services.AddSkywalker<Startup>(cfg =>
 
 ## 3. DynamicProxy 拦截器
 
-### 3.1 Castle.DynamicProxy → SG 静态代理
+### 3.1 Castle.DynamicProxy → Source-generated static proxies
 
-**状态**：规划中（Sprint 2，v2.0 最大单体工作量）
+**状态**：✅ 已落地（preview.4 track，#264-#270）
 
-**现象**：v1.x 依赖 `Castle.Core` (~600 KB) 在运行时 IL Emit 代理类，AOT 不友好。
+**现象**：v1.x 依赖 `Castle.Core` (~600 KB) 在运行时 IL Emit 代理类，AOT 不友好。v1.x 中只要服务实现 `IInterceptable`，`AddInterceptedServices()` 就会尝试用 Castle 在运行时创建接口代理或类代理。
 
-**v2.0 目标**：
-- 完全移除 `Castle.Core` 依赖。
-- `AddInterceptedServices()` 仅支持 source-generated interface proxy metadata；缺少生成代理的 legacy Castle-only 注册会在启动期给出迁移错误。
-- 由 SG 在编译期生成静态代理类型。
-- 新 API：`[Intercept<TInterceptor>]` 强类型拦截器标注。
+**原因**：v2.0 的 DynamicProxy 支持路径改为编译期生成静态代理。这样可以移除 `Castle.Core` 传递依赖、避免运行时 IL Emit，并让 NativeAOT publish gate 能验证代理路径。
 
-**迁移步骤**（占位）：
-- [ ] 自定义 `IAsyncInterceptor` 实现的迁移
-- [ ] 异步 / 泛型 / `ref`-`out` 方法的 edge case
-- [ ] AOT publish 零警告验证方法
+**v2.0 行为**：
+- `Castle.Core`、`CastleProxyGenerator`、`IProxyGenerator` 已从 `Skywalker.Extensions.DynamicProxies` 移除。
+- `AddDynamicProxies()` 保留为兼容 no-op，不再注册运行时代理工厂。
+- `AddInterceptedServices()` 只会在找到 source-generated proxy metadata 时替换服务注册。
+- 对带有可拦截接口方法、但缺少 generated proxy metadata 的 legacy Castle-only 注册，启动期会抛出明确迁移错误。
+- 对没有接口方法的 marker registration，保持原注册，避免 DDD 自动注册中的空 marker 接口被误判为需要代理。
+
+#### 必需项目引用
+
+消费项目需要同时引用 runtime 包和 source generator analyzer。项目引用写法如下；NuGet 使用时 generator 包也应作为 analyzer/private asset 引入。
+
+```xml
+<ItemGroup>
+  <PackageReference Include="Skywalker.Extensions.DynamicProxies" Version="2.0.0-preview.*" />
+  <PackageReference Include="Skywalker.Extensions.DynamicProxies.SourceGenerators" Version="2.0.0-preview.*" PrivateAssets="all" OutputItemType="Analyzer" ReferenceOutputAssembly="false" />
+</ItemGroup>
+```
+
+仓库内项目引用示例：
+
+```xml
+<ProjectReference Include="..\..\src\Skywalker.Extensions.DynamicProxies.SourceGenerators\Skywalker.Extensions.DynamicProxies.SourceGenerators.csproj" OutputItemType="Analyzer" ReferenceOutputAssembly="false" PrivateAssets="all" />
+```
+
+#### Before: v1.x Castle-backed interception
+
+```csharp
+public interface IOrderService : IInterceptable
+{
+    Task<string> SubmitAsync(string number);
+}
+
+public sealed class OrderService : IOrderService
+{
+    public Task<string> SubmitAsync(string number)
+        => Task.FromResult($"submitted:{number}");
+}
+
+services.AddTransient<IOrderService, OrderService>();
+services.AddTransient<IInterceptor, AuditInterceptor>();
+services.AddInterceptedServices(); // v1.x used Castle at runtime
+```
+
+#### After: v2.0 generated interface proxy
+
+```csharp
+public interface IOrderService : IInterceptable
+{
+    Task<string> SubmitAsync(string number);
+}
+
+public sealed class OrderService : IOrderService
+{
+    public Task<string> SubmitAsync(string number)
+        => Task.FromResult($"submitted:{number}");
+}
+
+services.AddTransient<IOrderService, OrderService>();
+services.AddTransient<IInterceptor, AuditInterceptor>();
+services.AddInterceptedServices(); // v2.0 uses generated proxy metadata
+```
+
+No startup code change is required for supported interface-proxy shapes. The critical migration step is adding the DynamicProxy source generator analyzer to the consuming project and keeping the service shape supported.
+
+#### Supported preview.4 service shape
+
+- Service is registered through an interface, for example `IOrderService -> OrderService`.
+- The implementation type is `public` or `internal` in the consuming assembly.
+- The implementation implements `IInterceptable` through the service interface or another interface.
+- Intercepted methods are ordinary instance interface methods.
+- Supported return shapes: `void`, synchronous value, `Task`, `Task<T>`, `ValueTask`, `ValueTask<T>`.
+- Supported parameter passing: by-value parameters only.
+- Supported generic shape: closed generic service interfaces, such as `IEntityService<string>`.
+
+#### Known limitations in preview.4
+
+- No class-only proxy replacement. Register services through interfaces.
+- No `ref`, `out`, or `in` parameters. The generator reports `SKY3101`.
+- No generic methods such as `T Echo<T>(T value)` in preview.4. The generator reports `SKY3101`.
+- No open generic service registration proxy bridge unless a generated closed shape exists.
+- No factory/instance registration proxying when the implementation type cannot be known at compile time.
+- `IProxyGenerator` and `CastleProxyGenerator` calls must be removed; there is no runtime factory replacement in v2.0.
+
+#### Migration checklist
+
+1. Remove direct references to `Castle.Core`, `Castle.DynamicProxy`, `CastleProxyGenerator`, and `IProxyGenerator`.
+2. Add the DynamicProxy source generator analyzer to each project that declares intercepted services.
+3. Keep intercepted services registered as interface-to-implementation descriptors.
+4. Move class-only interception to an interface service contract.
+5. Replace `ref` / `out` / `in` parameters with by-value request/response models.
+6. Replace generic methods with non-generic methods on closed generic service interfaces, or keep them un-intercepted until a later preview supports generic methods.
+7. Run the source generator quality workflow or the AOT canary publish command to confirm no proxy-related `IL2xxx` / `IL3xxx` warnings.
+
+#### Diagnostics
+
+`SKY3101` documents unsupported method signatures: [SKY3101](../diagnostics/SKY3101.md).
 
 ---
 
@@ -212,7 +300,8 @@ dotnet publish samples/AotConsoleSample -c Release /p:PublishAot=true
 | 删除的 API / 包 | 在哪个 PR 删除 | 替换方案 |
 |---|---|---|
 | `AutoMapper` 依赖 | #181（main） | Mapperly |
-| *（待后续 PR 填充）* | — | — |
+| `Castle.Core` dependency from `Skywalker.Extensions.DynamicProxies` | #269 | DynamicProxy source generator analyzer + generated interface proxies |
+| `CastleProxyGenerator` / `IProxyGenerator` | #269 | Interface service registration covered by `Skywalker.Extensions.DynamicProxies.SourceGenerators` |
 
 ---
 
