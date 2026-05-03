@@ -1,0 +1,4 @@
+﻿#nullable enable
+Skywalker.Ddd.Abstractions.SourceGenerators.DependencyInjectionRegistrationGenerator
+Skywalker.Ddd.Abstractions.SourceGenerators.DependencyInjectionRegistrationGenerator.DependencyInjectionRegistrationGenerator() -> void
+Skywalker.Ddd.Abstractions.SourceGenerators.DependencyInjectionRegistrationGenerator.Initialize(Microsoft.CodeAnalysis.IncrementalGeneratorInitializationContext context) -> void
