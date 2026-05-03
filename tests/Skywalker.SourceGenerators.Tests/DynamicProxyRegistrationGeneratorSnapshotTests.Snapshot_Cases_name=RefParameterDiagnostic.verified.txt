@@ -1,0 +1,2 @@
+﻿Diagnostic SKY3101 [Warning]: Method 'Touch' on intercepted service interface 'Demo.IOrderService' cannot be proxied by the DynamicProxy source generator: ref, out, and in parameters are not supported
+<no generated sources>

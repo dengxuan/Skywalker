@@ -123,11 +123,12 @@ public sealed class DynamicProxyRegistrationGenerator : IIncrementalGenerator
 
         var returnKind = GetReturnKind(method.ReturnType);
         var parameters = method.Parameters
-            .Select(static parameter => new ParameterModel(parameter.Name, parameter.Type.GetFullyQualifiedName()))
+            .Select(static parameter => new ParameterModel(EscapeIdentifier(parameter.Name), parameter.Type.GetFullyQualifiedName()))
             .ToImmutableArray();
 
         model = new MethodModel(
             method.Name,
+            EscapeIdentifier(method.Name),
             method.ReturnType.GetFullyQualifiedName(),
             returnKind,
             GetResultTypeName(method.ReturnType, returnKind),
@@ -206,6 +207,8 @@ public sealed class DynamicProxyRegistrationGenerator : IIncrementalGenerator
         source.AppendLine("#nullable enable");
         source.AppendLine("#pragma warning disable");
         source.AppendLine();
+        source.Append("[assembly: global::Skywalker.Extensions.DynamicProxies.SkywalkerGeneratedDynamicProxyAttribute(typeof(").Append(proxy.ServiceTypeName).Append("), typeof(").Append(model.ImplementationTypeName).Append("), typeof(").Append(CreateProxyTypeName(model, proxy)).AppendLine("))]");
+        source.AppendLine();
 
         if (!string.IsNullOrEmpty(model.Namespace))
         {
@@ -276,13 +279,13 @@ public sealed class DynamicProxyRegistrationGenerator : IIncrementalGenerator
 
     private static void AppendMethod(StringBuilder source, MethodModel method)
     {
-        source.Append("    public ").Append(method.ReturnTypeName).Append(' ').Append(method.Name).Append('(');
+        source.Append("    public ").Append(method.ReturnTypeName).Append(' ').Append(method.SourceName).Append('(');
         AppendParameters(source, method);
         source.AppendLine(")");
         source.AppendLine("    {");
-        source.Append("        var invocation = new SkywalkerGeneratedMethodInvocation(_target, ").Append(method.MethodFieldName).Append(", ");
+        source.Append("        var skywalkerInvocation = new SkywalkerGeneratedMethodInvocation(_target, ").Append(method.MethodFieldName).Append(", ");
         AppendArguments(source, method);
-        source.AppendLine(", _interceptors, async generatedInvocation =>");
+        source.AppendLine(", _interceptors, async skywalkerGeneratedInvocation =>");
         source.AppendLine("        {");
         AppendTargetCall(source, method);
         source.AppendLine("        });");
@@ -290,24 +293,24 @@ public sealed class DynamicProxyRegistrationGenerator : IIncrementalGenerator
         switch (method.ReturnKind)
         {
             case ReturnKind.Void:
-                source.AppendLine("        invocation.ProceedAsync().GetAwaiter().GetResult();");
+                source.AppendLine("        skywalkerInvocation.ProceedAsync().GetAwaiter().GetResult();");
                 source.AppendLine("        return;");
                 break;
             case ReturnKind.SyncValue:
-                source.AppendLine("        invocation.ProceedAsync().GetAwaiter().GetResult();");
-                source.Append("        return (").Append(method.ReturnTypeName).AppendLine(")invocation.ReturnValue!;");
+                source.AppendLine("        skywalkerInvocation.ProceedAsync().GetAwaiter().GetResult();");
+                source.Append("        return (").Append(method.ReturnTypeName).AppendLine(")skywalkerInvocation.ReturnValue!;");
                 break;
             case ReturnKind.Task:
-                source.AppendLine("        return invocation.ProceedAsync();");
+                source.AppendLine("        return skywalkerInvocation.ProceedAsync();");
                 break;
             case ReturnKind.TaskOfT:
-                source.Append("        return AwaitResultAsync<").Append(method.ResultTypeName).AppendLine(">(invocation);");
+                source.Append("        return AwaitResultAsync<").Append(method.ResultTypeName).AppendLine(">(skywalkerInvocation);");
                 break;
             case ReturnKind.ValueTask:
-                source.AppendLine("        return new global::System.Threading.Tasks.ValueTask(invocation.ProceedAsync());");
+                source.AppendLine("        return new global::System.Threading.Tasks.ValueTask(skywalkerInvocation.ProceedAsync());");
                 break;
             case ReturnKind.ValueTaskOfT:
-                source.Append("        return new global::System.Threading.Tasks.ValueTask<").Append(method.ResultTypeName).Append(">(AwaitResultAsync<").Append(method.ResultTypeName).AppendLine(">(invocation));");
+                source.Append("        return new global::System.Threading.Tasks.ValueTask<").Append(method.ResultTypeName).Append(">(AwaitResultAsync<").Append(method.ResultTypeName).AppendLine(">(skywalkerInvocation));");
                 break;
         }
 
@@ -318,7 +321,7 @@ public sealed class DynamicProxyRegistrationGenerator : IIncrementalGenerator
     {
         if (method.ReturnKind is ReturnKind.Void)
         {
-            source.Append("            _service.").Append(method.Name).Append('(');
+            source.Append("            _service.").Append(method.SourceName).Append('(');
             AppendArgumentNames(source, method);
             source.AppendLine(");");
             source.AppendLine("            await global::System.Threading.Tasks.Task.CompletedTask.ConfigureAwait(false);");
@@ -327,7 +330,7 @@ public sealed class DynamicProxyRegistrationGenerator : IIncrementalGenerator
 
         if (method.ReturnKind is ReturnKind.SyncValue)
         {
-            source.Append("            generatedInvocation.ReturnValue = _service.").Append(method.Name).Append('(');
+            source.Append("            skywalkerGeneratedInvocation.ReturnValue = _service.").Append(method.SourceName).Append('(');
             AppendArgumentNames(source, method);
             source.AppendLine(");");
             source.AppendLine("            await global::System.Threading.Tasks.Task.CompletedTask.ConfigureAwait(false);");
@@ -336,13 +339,13 @@ public sealed class DynamicProxyRegistrationGenerator : IIncrementalGenerator
 
         if (method.ReturnKind is ReturnKind.Task or ReturnKind.ValueTask)
         {
-            source.Append("            await _service.").Append(method.Name).Append('(');
+            source.Append("            await _service.").Append(method.SourceName).Append('(');
             AppendArgumentNames(source, method);
             source.AppendLine(").ConfigureAwait(false);");
             return;
         }
 
-        source.Append("            generatedInvocation.ReturnValue = await _service.").Append(method.Name).Append('(');
+        source.Append("            skywalkerGeneratedInvocation.ReturnValue = await _service.").Append(method.SourceName).Append('(');
         AppendArgumentNames(source, method);
         source.AppendLine(").ConfigureAwait(false);");
     }
@@ -428,6 +431,11 @@ public sealed class DynamicProxyRegistrationGenerator : IIncrementalGenerator
         return $"{CreateIdentifier(implementation)}_{CreateIdentifier(serviceInterface)}SkywalkerProxy";
     }
 
+    private static string CreateProxyTypeName(ServiceModel model, ProxyModel proxy)
+    {
+        return string.IsNullOrEmpty(model.Namespace) ? proxy.Name : $"global::{model.Namespace}.{proxy.Name}";
+    }
+
     private static string CreateMethodFieldName(IMethodSymbol method)
     {
         var builder = new StringBuilder("s_").Append(method.Name);
@@ -438,6 +446,11 @@ public sealed class DynamicProxyRegistrationGenerator : IIncrementalGenerator
 
         builder.Append("Method");
         return builder.ToString();
+    }
+
+    private static string EscapeIdentifier(string name)
+    {
+        return CSharpKeywords.Contains(name) ? "@" + name : name;
     }
 
     private static string CreateIdentifier(ITypeSymbol symbol)
@@ -470,6 +483,11 @@ public sealed class DynamicProxyRegistrationGenerator : IIncrementalGenerator
             return hash;
         }
     }
+
+    private static readonly HashSet<string> CSharpKeywords = new(StringComparer.Ordinal)
+    {
+        "abstract", "as", "base", "bool", "break", "byte", "case", "catch", "char", "checked", "class", "const", "continue", "decimal", "default", "delegate", "do", "double", "else", "enum", "event", "explicit", "extern", "false", "finally", "fixed", "float", "for", "foreach", "goto", "if", "implicit", "in", "int", "interface", "internal", "is", "lock", "long", "namespace", "new", "null", "object", "operator", "out", "override", "params", "private", "protected", "public", "readonly", "ref", "return", "sbyte", "sealed", "short", "sizeof", "stackalloc", "static", "string", "struct", "switch", "this", "throw", "true", "try", "typeof", "uint", "ulong", "unchecked", "unsafe", "ushort", "using", "virtual", "void", "volatile", "while"
+    };
 
     private enum ReturnKind
     {
@@ -519,9 +537,10 @@ public sealed class DynamicProxyRegistrationGenerator : IIncrementalGenerator
 
     private readonly struct MethodModel : IEquatable<MethodModel>
     {
-        public MethodModel(string name, string returnTypeName, ReturnKind returnKind, string? resultTypeName, string methodFieldName, EquatableArray<ParameterModel> parameters)
+        public MethodModel(string name, string sourceName, string returnTypeName, ReturnKind returnKind, string? resultTypeName, string methodFieldName, EquatableArray<ParameterModel> parameters)
         {
             Name = name;
+            SourceName = sourceName;
             ReturnTypeName = returnTypeName;
             ReturnKind = returnKind;
             ResultTypeName = resultTypeName;
@@ -530,14 +549,15 @@ public sealed class DynamicProxyRegistrationGenerator : IIncrementalGenerator
         }
 
         public string Name { get; }
+        public string SourceName { get; }
         public string ReturnTypeName { get; }
         public ReturnKind ReturnKind { get; }
         public string? ResultTypeName { get; }
         public string MethodFieldName { get; }
         public EquatableArray<ParameterModel> Parameters { get; }
-        public bool Equals(MethodModel other) => Name == other.Name && ReturnTypeName == other.ReturnTypeName && ReturnKind == other.ReturnKind && ResultTypeName == other.ResultTypeName && MethodFieldName == other.MethodFieldName && Parameters.Equals(other.Parameters);
+        public bool Equals(MethodModel other) => Name == other.Name && SourceName == other.SourceName && ReturnTypeName == other.ReturnTypeName && ReturnKind == other.ReturnKind && ResultTypeName == other.ResultTypeName && MethodFieldName == other.MethodFieldName && Parameters.Equals(other.Parameters);
         public override bool Equals(object? obj) => obj is MethodModel other && Equals(other);
-        public override int GetHashCode() => CombineHash(Name, ReturnTypeName, ReturnKind, ResultTypeName, MethodFieldName, Parameters);
+        public override int GetHashCode() => CombineHash(Name, SourceName, ReturnTypeName, ReturnKind, ResultTypeName, MethodFieldName, Parameters);
     }
 
     private readonly struct ParameterModel : IEquatable<ParameterModel>
