@@ -11,6 +11,7 @@
 
 - DI auto-registration Source Generator preview.5 首版 registration metadata 输出：属性标注服务会生成 `__SkywalkerDependencyInjectionRegistrar`，支持接口 fallback、显式 `ServiceType`、Scoped/Transient lifetime 映射，并对不可赋值服务类型报告 `SKY1002`（#280）。
 - DI auto-registration Source Generator preview.5 runtime bridge：`AddSkywalker()` 现在可通过 assembly metadata 消费生成的 DI registrar，并保留现有 FeatureProvider fallback 路径（#281）。
+- DI auto-registration Source Generator preview.5 测试安全网：新增主要 registrar 生成形状的 snapshot 覆盖，以及 generated registration 的解析、Scoped lifetime、idempotency runtime 测试（#282）。
 - DI auto-registration Source Generator preview.5 scaffolding：新增 analyzer-only `Skywalker.Ddd.Abstractions.SourceGenerators` 项目、首版 incremental generator skeleton、`SKY1xxx` diagnostics infrastructure 和最小 smoke tests；runtime package 暂不消费该 generator，后续 #280/#281 接入生成注册元数据与 `AddSkywalker()`（#279）。
 - DI auto-registration Source Generator preview.5 设计契约：定义 `[Service]` / `[ApplicationService]` / `[Repository]` / `[EventHandler]` attribute model、generated registrar shape、`AddSkywalker()` integration、convention fallback、`SKY1xxx` diagnostic candidates 和 readiness gates（#278）。
 - DynamicProxy Source Generator preview.4 迁移与诊断文档：补全 Castle → source-generated static proxy 的 before/after、支持/限制清单、`SKY3101` 修复指南和 preview.4 readiness 链接（#270）。

@@ -38,6 +38,50 @@ public sealed class GeneratedDependencyInjectionRegistrationBridgeTests
     }
 
     [Fact]
+    public void AddSkywalker_ResolvesGeneratedDependencyInjectionRegistration()
+    {
+        var services = CreateServices();
+
+        services.AddSkywalker(typeof(GeneratedDependencyInjectionRegistrationBridgeTests).Assembly);
+
+        using var provider = services.BuildServiceProvider();
+        using var scope = provider.CreateScope();
+
+        var service = scope.ServiceProvider.GetRequiredService<IGeneratedDependencyInjectionService>();
+        Assert.IsType<GeneratedDependencyInjectionService>(service);
+    }
+
+    [Fact]
+    public void AddSkywalker_GeneratedDependencyInjectionRegistration_IsScoped()
+    {
+        var services = CreateServices();
+
+        services.AddSkywalker(typeof(GeneratedDependencyInjectionRegistrationBridgeTests).Assembly);
+
+        using var provider = services.BuildServiceProvider();
+        using var firstScope = provider.CreateScope();
+        using var secondScope = provider.CreateScope();
+
+        var first = firstScope.ServiceProvider.GetRequiredService<IGeneratedDependencyInjectionService>();
+        var sameScope = firstScope.ServiceProvider.GetRequiredService<IGeneratedDependencyInjectionService>();
+        var second = secondScope.ServiceProvider.GetRequiredService<IGeneratedDependencyInjectionService>();
+
+        Assert.Same(first, sameScope);
+        Assert.NotSame(first, second);
+    }
+
+    [Fact]
+    public void AddSkywalker_GeneratedDependencyInjectionRegistration_IsIdempotent()
+    {
+        var services = CreateServices();
+
+        services.AddSkywalker(typeof(GeneratedDependencyInjectionRegistrationBridgeTests).Assembly);
+        services.AddSkywalker(typeof(GeneratedDependencyInjectionRegistrationBridgeTests).Assembly);
+
+        Assert.Single(services, descriptor => descriptor.ServiceType == typeof(IGeneratedDependencyInjectionService));
+    }
+
+    [Fact]
     public void AddSkywalker_KeepsFeatureProviderFallback_WhenGeneratedDependencyInjectionMetadataIsMissing()
     {
         var services = CreateServices();
