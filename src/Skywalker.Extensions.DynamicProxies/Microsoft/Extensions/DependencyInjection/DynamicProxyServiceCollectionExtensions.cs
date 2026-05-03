@@ -1,6 +1,7 @@
 // Licensed to the Gordon under one or more agreements.
 // Gordon licenses this file to you under the MIT license.
 
+using System.Reflection;
 using Microsoft.Extensions.DependencyInjection.Extensions;
 using Skywalker.Extensions.DynamicProxies;
 
@@ -39,6 +40,7 @@ public static class DynamicProxyServiceCollectionExtensions
 
         // 快照当前注册，避免在遍历时修改集合
         var descriptors = services.ToList();
+        var generatedProxies = GetGeneratedDynamicProxies();
 
         foreach (var descriptor in descriptors)
         {
@@ -66,20 +68,52 @@ public static class DynamicProxyServiceCollectionExtensions
             // 确保实现类型本身已注册（代理工厂需要解析原始实例）
             services.TryAdd(new ServiceDescriptor(implType, implType, lifetime));
 
-            // 用代理工厂替换原有注册
-            var proxyDescriptor = new ServiceDescriptor(
-                serviceType,
-                sp =>
-                {
-                    var target = sp.GetRequiredService(implType);
-                    var proxyGenerator = sp.GetRequiredService<IProxyGenerator>();
-                    return proxyGenerator.CreateInterfaceProxy(serviceType, target);
-                },
-                lifetime);
+            var proxyDescriptor = generatedProxies.TryGetValue((serviceType, implType), out var proxyType)
+                ? new ServiceDescriptor(serviceType, sp => CreateGeneratedProxy(sp, implType, proxyType), lifetime)
+                : new ServiceDescriptor(
+                    serviceType,
+                    sp =>
+                    {
+                        var target = sp.GetRequiredService(implType);
+                        var proxyGenerator = sp.GetRequiredService<IProxyGenerator>();
+                        return proxyGenerator.CreateInterfaceProxy(serviceType, target);
+                    },
+                    lifetime);
 
             services.Replace(proxyDescriptor);
         }
 
         return services;
+    }
+
+    private static Dictionary<(Type ServiceType, Type ImplementationType), Type> GetGeneratedDynamicProxies()
+    {
+        var proxies = new Dictionary<(Type ServiceType, Type ImplementationType), Type>();
+        foreach (var assembly in AppDomain.CurrentDomain.GetAssemblies())
+        {
+            foreach (var attribute in assembly.GetCustomAttributes(typeof(SkywalkerGeneratedDynamicProxyAttribute)).OfType<SkywalkerGeneratedDynamicProxyAttribute>())
+            {
+                proxies[(attribute.ServiceType, attribute.ImplementationType)] = attribute.ProxyType;
+            }
+        }
+
+        return proxies;
+    }
+
+    private static object CreateGeneratedProxy(IServiceProvider serviceProvider, Type implementationType, Type proxyType)
+    {
+        var target = serviceProvider.GetRequiredService(implementationType);
+        var interceptors = serviceProvider.GetServices<IInterceptor>();
+        var constructor = proxyType.GetConstructor(
+            BindingFlags.Instance | BindingFlags.Public | BindingFlags.NonPublic,
+            binder: null,
+            types: new[] { implementationType, typeof(IEnumerable<IInterceptor>) },
+            modifiers: null);
+        if (constructor is null)
+        {
+            throw new InvalidOperationException($"Generated proxy type '{proxyType.FullName}' does not expose the expected constructor.");
+        }
+
+        return constructor.Invoke(new object[] { target, interceptors });
     }
 }

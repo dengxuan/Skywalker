@@ -1,0 +1,2 @@
+﻿Diagnostic SKY3101 [Warning]: Method 'Echo' on intercepted service interface 'Demo.IOrderService' cannot be proxied by the DynamicProxy source generator: generic methods are deferred from preview.4 static proxy generation
+<no generated sources>

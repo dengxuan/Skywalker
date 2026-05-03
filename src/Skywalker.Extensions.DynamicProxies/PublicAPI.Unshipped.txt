@@ -1,1 +1,6 @@
 #nullable enable
+Skywalker.Extensions.DynamicProxies.SkywalkerGeneratedDynamicProxyAttribute
+Skywalker.Extensions.DynamicProxies.SkywalkerGeneratedDynamicProxyAttribute.ImplementationType.get -> System.Type!
+Skywalker.Extensions.DynamicProxies.SkywalkerGeneratedDynamicProxyAttribute.ProxyType.get -> System.Type!
+Skywalker.Extensions.DynamicProxies.SkywalkerGeneratedDynamicProxyAttribute.ServiceType.get -> System.Type!
+Skywalker.Extensions.DynamicProxies.SkywalkerGeneratedDynamicProxyAttribute.SkywalkerGeneratedDynamicProxyAttribute(System.Type! serviceType, System.Type! implementationType, System.Type! proxyType) -> void

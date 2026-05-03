@@ -9,6 +9,7 @@
 
 ### Added
 
+- DynamicProxy Source Generator preview.4 测试安全网：新增 50 个静态代理 snapshot 场景、generated proxy DI runtime 覆盖，并让 `AddInterceptedServices()` 优先使用生成代理元数据，Castle 继续作为兼容 fallback（#267）。
 - DynamicProxy Source Generator preview.4 新增首版接口静态代理生成：为实现 `IInterceptable` 的 public/internal 服务生成同步与 Task/ValueTask 方法代理，并对暂不支持的方法签名报告 `SKY3101` 诊断（#266）。
 - DynamicProxy Source Generator preview.4 scaffolding：新增 analyzer-only `Skywalker.Extensions.DynamicProxies.SourceGenerators` 项目和 no-op 候选发现 smoke tests，为后续静态代理生成与 Castle.Core 移除做准备（#265）。
 - EF Repository registration 明确 reflection fallback 策略：generated registration 优先；fallback 仅作为 non-AOT 兼容路径保留，并可通过 AppContext switch 禁用以验证 AOT/trimmed 边界（#241）。
