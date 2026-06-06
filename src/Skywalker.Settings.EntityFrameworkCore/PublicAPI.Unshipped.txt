@@ -1,1 +1,6 @@
 #nullable enable
+Skywalker.Settings.EntityFrameworkCore.Specifications.SettingProviderSpecification
+Skywalker.Settings.EntityFrameworkCore.Specifications.SettingProviderSpecification.SettingProviderSpecification(string! providerName, string? providerKey) -> void
+override Skywalker.Settings.EntityFrameworkCore.Specifications.SettingProviderSpecification.ToExpression() -> System.Linq.Expressions.Expression<System.Func<Skywalker.Settings.EntityFrameworkCore.Entities.Setting!, bool>!>!
+virtual Skywalker.Settings.EntityFrameworkCore.SettingManager.FindAsync(string! name, string! providerName, string? providerKey = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) -> System.Threading.Tasks.Task<Skywalker.Settings.SettingValue?>!
+virtual Skywalker.Settings.EntityFrameworkCore.SettingManager.GetAllByProviderAsync(string! providerName, string? providerKey = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) -> System.Threading.Tasks.Task<System.Collections.Generic.List<Skywalker.Settings.SettingValue!>!>!

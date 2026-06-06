@@ -1,1 +1,3 @@
 #nullable enable
+Skywalker.Settings.Abstractions.ISettingManager.FindAsync(string! name, string! providerName, string? providerKey = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) -> System.Threading.Tasks.Task<Skywalker.Settings.SettingValue?>!
+Skywalker.Settings.Abstractions.ISettingManager.GetAllByProviderAsync(string! providerName, string? providerKey = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) -> System.Threading.Tasks.Task<System.Collections.Generic.List<Skywalker.Settings.SettingValue!>!>!

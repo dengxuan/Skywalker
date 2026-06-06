@@ -115,6 +115,34 @@ public interface ISettingStore
 }
 ```
 
+#### ISettingManager - 设置管理接口
+
+```csharp
+namespace Skywalker.Settings.Abstractions;
+
+public interface ISettingManager
+{
+    /// <summary>
+    /// 列出指定 provider 范围下所有已存设置，加密项自动解密。
+    /// </summary>
+    Task<List<SettingValue>> GetAllByProviderAsync(
+        string providerName,
+        string? providerKey = null,
+        CancellationToken cancellationToken = default);
+
+    /// <summary>
+    /// 按 name/providerName/providerKey 精确查找单个已存设置，不存在时返回 null，加密项自动解密。
+    /// </summary>
+    Task<SettingValue?> FindAsync(
+        string name,
+        string providerName,
+        string? providerKey = null,
+        CancellationToken cancellationToken = default);
+}
+```
+
+后台管理跨用户或跨商户设置时，优先使用 `ISettingManager` 的显式 provider 读取 API，避免上层直接引用 `Skywalker.Settings.EntityFrameworkCore` 或读取 `IRepository<Setting>`。
+
 #### ISettingValueProvider - 设置值提供者接口
 
 ```csharp

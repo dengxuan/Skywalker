@@ -58,3 +58,27 @@ public class SettingsSpecification : Specification<Setting>
         return s => _names.Contains(s.Name) && s.ProviderName == _providerName && s.ProviderKey == _providerKey;
     }
 }
+
+/// <summary>
+/// Specification for querying all settings by provider.
+/// </summary>
+public class SettingProviderSpecification : Specification<Setting>
+{
+    private readonly string _providerName;
+    private readonly string _providerKey;
+
+    /// <summary>
+    /// Creates a specification for a provider scope.
+    /// </summary>
+    public SettingProviderSpecification(string providerName, string? providerKey)
+    {
+        _providerName = providerName;
+        _providerKey = providerKey ?? string.Empty;
+    }
+
+    /// <inheritdoc />
+    public override Expression<Func<Setting, bool>> ToExpression()
+    {
+        return s => s.ProviderName == _providerName && s.ProviderKey == _providerKey;
+    }
+}

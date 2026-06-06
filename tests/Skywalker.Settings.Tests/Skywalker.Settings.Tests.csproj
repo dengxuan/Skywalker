@@ -25,6 +25,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\..\src\Skywalker.Settings.Abstractions\Skywalker.Settings.Abstractions.csproj" />
+    <ProjectReference Include="..\..\src\Skywalker.Settings.EntityFrameworkCore\Skywalker.Settings.EntityFrameworkCore.csproj" />
   </ItemGroup>
 
 </Project>

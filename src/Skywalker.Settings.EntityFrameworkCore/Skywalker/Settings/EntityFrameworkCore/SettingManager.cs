@@ -19,6 +19,32 @@ public class SettingManager(
     ISettingEncryptionService settingEncryptionService) : ISettingManager
 {
     /// <inheritdoc />
+    public virtual async Task<List<SettingValue>> GetAllByProviderAsync(string providerName, string? providerKey = null, CancellationToken cancellationToken = default)
+    {
+        ISpecification<Setting> specification = new SettingProviderSpecification(providerName, providerKey);
+        var settings = await repository.GetListAsync(specification, cancellationToken);
+        var definitions = settingDefinitionManager.GetAll().ToDictionary(static definition => definition.Name);
+
+        return settings
+            .Select(setting => new SettingValue(setting.Name, GetValue(setting, definitions.GetValueOrDefault(setting.Name))))
+            .ToList();
+    }
+
+    /// <inheritdoc />
+    public virtual async Task<SettingValue?> FindAsync(string name, string providerName, string? providerKey = null, CancellationToken cancellationToken = default)
+    {
+        ISpecification<Setting> specification = new SettingSpecification(name, providerName, providerKey);
+        var setting = await repository.FindAsync(specification, cancellationToken);
+
+        if (setting is null)
+        {
+            return null;
+        }
+
+        return new SettingValue(setting.Name, GetValue(setting, settingDefinitionManager.GetOrNull(name)));
+    }
+
+    /// <inheritdoc />
     public virtual async Task SetAsync(string name, string value, string providerName, string? providerKey = null, CancellationToken cancellationToken = default)
     {
         // Validate that the setting is defined
@@ -54,5 +80,12 @@ public class SettingManager(
         {
             await repository.DeleteAsync(setting, autoSave: true, cancellationToken);
         }
+    }
+
+    private string? GetValue(Setting setting, SettingDefinition? definition)
+    {
+        return definition?.IsEncrypted == true
+            ? settingEncryptionService.Decrypt(setting.Value)
+            : setting.Value;
     }
 }

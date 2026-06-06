@@ -9,6 +9,23 @@ namespace Skywalker.Settings.Abstractions;
 public interface ISettingManager
 {
     /// <summary>
+    /// Gets all stored setting values for the specified provider.
+    /// </summary>
+    /// <param name="providerName">The provider name.</param>
+    /// <param name="providerKey">The provider key. Null for global settings.</param>
+    /// <param name="cancellationToken">A cancellation token.</param>
+    Task<List<SettingValue>> GetAllByProviderAsync(string providerName, string? providerKey = null, CancellationToken cancellationToken = default);
+
+    /// <summary>
+    /// Finds a stored setting value for the specified provider.
+    /// </summary>
+    /// <param name="name">The name of the setting.</param>
+    /// <param name="providerName">The provider name.</param>
+    /// <param name="providerKey">The provider key. Null for global settings.</param>
+    /// <param name="cancellationToken">A cancellation token.</param>
+    Task<SettingValue?> FindAsync(string name, string providerName, string? providerKey = null, CancellationToken cancellationToken = default);
+
+    /// <summary>
     /// Sets the value of a setting for the specified provider.
     /// </summary>
     /// <param name="name">The name of the setting.</param>
