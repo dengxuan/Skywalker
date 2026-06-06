@@ -1,7 +1,7 @@
 <Project>
 
   <!--
-    Inherit the repo-wide defaults (TargetFramework=net8.0, Nullable=enable, MinVer, SourceLink, ...)
+    Inherit the repo-wide defaults (TargetFramework=net8.0, Nullable=enable, MinVer, ...)
     then layer sample-specific overrides on top.
   -->
   <Import Project="$([MSBuild]::GetPathOfFileAbove('Directory.Build.props', '$(MSBuildThisFileDirectory)..\'))" />
@@ -10,6 +10,15 @@
     <!-- Samples are console apps, not NuGet packages. -->
     <OutputType>Exe</OutputType>
     <IsPackable>false</IsPackable>
+
+        <!-- Samples are CI smoke tests rather than shipped packages, so keep package
+          source metadata disabled. This also keeps analyzer ProjectReference builds
+          from invoking SourceLink targets while building sample applications. -->
+        <EnableSourceLink>false</EnableSourceLink>
+        <EnableSourceControlManagerQueries>false</EnableSourceControlManagerQueries>
+        <PublishRepositoryUrl>false</PublishRepositoryUrl>
+        <EmbedUntrackedSources>false</EmbedUntrackedSources>
+        <ContinuousIntegrationBuild>false</ContinuousIntegrationBuild>
 
     <!--
       Samples often pull in v1.x APIs that we know will fire warnings during the v2.0

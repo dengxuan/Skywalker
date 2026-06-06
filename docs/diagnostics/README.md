@@ -18,6 +18,12 @@ the diagnostic ID as the file name: `docs/diagnostics/SKYxxxx.md`.
 | `SKY5xxx` | Permission, localization, and settings generators |
 | `SKY9xxx` | Common source-generator diagnostics |
 
+## DI and Service Registration
+
+| ID | Title |
+|---|---|
+| `SKY1002` | Service type must be assignable from implementation type |
+
 ## EF Repository Generation
 
 | ID | Title |

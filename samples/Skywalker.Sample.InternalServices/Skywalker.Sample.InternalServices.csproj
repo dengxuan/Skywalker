@@ -1,2 +1,13 @@
 <Project Sdk="Microsoft.NET.Sdk">
+
+	<ItemGroup>
+		<PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="$(MicrosoftExtensionsVersion)" />
+		<PackageReference Include="Microsoft.Extensions.Logging" Version="$(MicrosoftExtensionsVersion)" />
+	</ItemGroup>
+
+	<ItemGroup>
+		<ProjectReference Include="..\..\src\Skywalker.Ddd.Abstractions\Skywalker.Ddd.Abstractions.csproj" />
+		<ProjectReference Include="..\..\src\Skywalker.Ddd.Abstractions.SourceGenerators\Skywalker.Ddd.Abstractions.SourceGenerators.csproj" OutputItemType="Analyzer" ReferenceOutputAssembly="false" />
+	</ItemGroup>
+
 </Project>

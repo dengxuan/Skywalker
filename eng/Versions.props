@@ -5,7 +5,7 @@
     Do NOT add MajorVersion / MinorVersion / PatchVersion / PackageVersion here.
   -->
 
-  <!-- ==================== 集中管理 NuGet 包版本 ==================== -->
+  <!-- ==================== 集中管理 NuGet 包版�?==================== -->
 
   <PropertyGroup Label="Microsoft.Extensions">
     <MicrosoftExtensionsVersion>9.0.0</MicrosoftExtensionsVersion>
@@ -50,7 +50,7 @@
     <PomeloEntityFrameworkCoreMySqlVersion>9.0.0</PomeloEntityFrameworkCoreMySqlVersion>
     <RabbitMQClientVersion>6.8.1</RabbitMQClientVersion>
     <RazorLightVersion>2.3.1</RazorLightVersion>
-    <ScribanVersion>7.0.3</ScribanVersion>
+    <ScribanVersion>7.2.3</ScribanVersion>
     <ScrutorVersion>5.0.1</ScrutorVersion>
     <StackExchangeRedisVersion>2.8.22</StackExchangeRedisVersion>
     <TimeZoneConverterVersion>6.1.0</TimeZoneConverterVersion>

@@ -199,6 +199,8 @@ No startup code change is required for supported interface-proxy shapes. The cri
 
 `SKY3101` documents unsupported method signatures: [SKY3101](../diagnostics/SKY3101.md).
 
+DI auto-registration diagnostics are documented in the diagnostics index. `SKY1002` covers explicit service types that are not assignable from their implementation: [SKY1002](../diagnostics/SKY1002.md).
+
 ---
 
 ## 4. EventBus

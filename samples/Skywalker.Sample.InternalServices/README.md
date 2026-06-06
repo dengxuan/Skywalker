@@ -1,18 +1,18 @@
 # Skywalker.Sample.InternalServices
 
-App that exposes services as `internal` rather than `public`.
+App that verifies `internal` service declarations are still discoverable by the DI
+auto-registration source generator in the same assembly.
 
 ## What this sample validates
 
-- `internal partial class OrderAppService` is still picked up by the SG
-- The generated `__SkywalkerModuleInitializer__` registers it via its concrete type
-- `InternalsVisibleTo` is **not** required for SG output to compile — the generated
-  partial lives in the same assembly as the user code
+- `[ApplicationService] internal sealed class InternalGreetingService` is discovered by the DI SG.
+- The generated registrar is consumed by `AddSkywalker(typeof(Program).Assembly)`.
+- `IInternalGreetingService -> InternalGreetingService` is registered as scoped and can be resolved from the provider.
+- Visibility does not force runtime reflection fallback for services that are accessible from generated code in the same compilation.
 
-## Current state (Sprint 0)
+## Verify Locally
 
-Skeleton. Internal-visibility scenario will materialise alongside DI auto-register SG.
-
-## Filled in by
-
-- **Sprint 3 (DI 自动注册 SG)** — adds `internal` service fixtures
+```powershell
+dotnet build samples\Skywalker.Sample.InternalServices\Skywalker.Sample.InternalServices.csproj
+dotnet run --project samples\Skywalker.Sample.InternalServices\Skywalker.Sample.InternalServices.csproj --no-build
+```

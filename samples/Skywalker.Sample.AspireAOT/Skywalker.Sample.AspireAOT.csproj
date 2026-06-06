@@ -21,8 +21,8 @@
   </ItemGroup>
 
   <ItemGroup Condition="'$(PublishAot)' != 'true'">
-    <ProjectReference Include="..\..\src\Skywalker.Ddd.EntityFrameworkCore.SourceGenerators\Skywalker.Ddd.EntityFrameworkCore.SourceGenerators.csproj" OutputItemType="Analyzer" ReferenceOutputAssembly="false" AdditionalProperties="EnableSourceLink=false;EnableSourceControlManagerQueries=false;PublishRepositoryUrl=false;EmbedUntrackedSources=false;ContinuousIntegrationBuild=false" />
-    <ProjectReference Include="..\..\src\Skywalker.Extensions.DynamicProxies.SourceGenerators\Skywalker.Extensions.DynamicProxies.SourceGenerators.csproj" OutputItemType="Analyzer" ReferenceOutputAssembly="false" AdditionalProperties="EnableSourceLink=false;EnableSourceControlManagerQueries=false;PublishRepositoryUrl=false;EmbedUntrackedSources=false;ContinuousIntegrationBuild=false" />
+    <ProjectReference Include="..\..\src\Skywalker.Ddd.EntityFrameworkCore.SourceGenerators\Skywalker.Ddd.EntityFrameworkCore.SourceGenerators.csproj" OutputItemType="Analyzer" ReferenceOutputAssembly="false" />
+    <ProjectReference Include="..\..\src\Skywalker.Extensions.DynamicProxies.SourceGenerators\Skywalker.Extensions.DynamicProxies.SourceGenerators.csproj" OutputItemType="Analyzer" ReferenceOutputAssembly="false" />
   </ItemGroup>
 
   <ItemGroup Condition="'$(PublishAot)' == 'true'">

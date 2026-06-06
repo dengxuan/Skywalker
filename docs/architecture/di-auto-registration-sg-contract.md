@@ -168,7 +168,7 @@ Initial diagnostic candidates:
 | ID | Condition | Severity |
 |---|---|---|
 | `SKY1001` | Implementation type is not accessible from generated code. | Warning |
-| `SKY1002` | Service type cannot be assigned from implementation type. | Error |
+| [`SKY1002`](../diagnostics/SKY1002.md) | Service type cannot be assigned from implementation type. | Error |
 | `SKY1003` | Open generic registration is not supported in preview.5. | Warning |
 | `SKY1004` | Keyed service key cannot be emitted as generated code. | Warning |
 | `SKY1005` | Multiple attributes define conflicting lifetimes or service types. | Warning |
