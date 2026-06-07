@@ -41,6 +41,12 @@ the diagnostic ID as the file name: `docs/diagnostics/SKYxxxx.md`.
 |---|---|
 | `SKY3101` | Intercepted service method signature is not supported |
 
+## Common Source Generator Diagnostics
+
+| ID | Title |
+|---|---|
+| `SKY9001` | Service class must be partial |
+
 ## Required Page Structure
 
 Each diagnostic page must include:
