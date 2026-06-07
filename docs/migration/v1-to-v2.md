@@ -1,6 +1,6 @@
 # Skywalker v1.x → v2.0 迁移指南
 
-> 状态：**草案 (Living Document)**　|　目标版本：**v2.0.0**　|　最后更新：2026-04-23
+> 状态：**RC 候选迁移手册**　|　目标版本：**v2.0.0**　|　最后更新：2026-06-06
 
 本文档是 v1.x 用户升级到 v2.0 的**权威迁移手册**。每一项 breaking change 在 `release/2.0` 落地时，**同一个 PR 必须同步更新本文档的对应条目**，否则不合并。
 
@@ -31,8 +31,8 @@
 
 1. **试 preview 包**：`2.0.0-preview.N`（来自 `release/2.0` 分支自动发布）
 2. **对照本文档**逐模块迁移
-3. **必选步骤**：在项目根添加 `<EnableSkywalkerSourceGenerator>true</EnableSkywalkerSourceGenerator>`（具体 property 名待 Sprint 1 确认）
-4. 跑测试，确认无反射残留（参考 [`3. NativeAOT 零警告验证`](#7-nativeaot--零警告验证)）
+3. 给声明 source-generator 覆盖类型的项目添加对应 analyzer 包引用；使用 Skywalker NuGet 包时 analyzer 随 generator 包进入 `analyzers/dotnet/cs`。
+4. 跑测试，确认无 source-generator 诊断和 AOT/trim 警告（参考 [`7. NativeAOT 零警告验证`](#7-nativeaot--零警告验证)）。
 5. 发现遗漏请提 issue 并打标签 `migration`
 
 ---
@@ -41,11 +41,18 @@
 
 ### 1.1 `AddSkywalker()` 统一入口
 
-**状态**：规划中（Sprint 3）
+**状态**：✅ 已落地（preview.5 scope，#254、#278-#284）
 
 **现象**：v1.x 需要多个 `AddXxx()` 调用散落各处，启动代码冗长。
 
-**v2.0 目标**：
+**v2.0 行为**：
+
+- `AddSkywalker()` 会先消费 generated DI registrar metadata，再保留现有 FeatureProvider fallback。
+- `[Service]`、`[ApplicationService]`、`[Repository]`、`[EventHandler]` 可触发 DI auto-registration source generator。
+- 支持 interface fallback、显式 `ServiceType`、Scoped/Transient lifetime 映射。
+- `ServiceType` 不能赋值给 implementation 时报告 `SKY1002`。
+
+推荐的 v2.0 启动形状是保留一处统一入口，再由各模块扩展配置数据库、缓存、事件总线等能力：
 
 ```csharp
 // v1.x
@@ -55,16 +62,22 @@ builder.Services.AddSkywalkerDbContext<AppDbContext>(...);
 builder.Services.AddEventBusLocal();
 builder.Services.AddRedisCaching(...);
 
-// v2.0（规划）
-builder.Services.AddSkywalker<Startup>(cfg =>
+// v2.0
+builder.Services.AddSkywalker();
+builder.Services.AddSkywalkerDbContext<AppDbContext>(options =>
 {
-    cfg.UseEntityFrameworkCore<AppDbContext>(options => options.UseMySql(...));
-    cfg.UseLocalEventBus();
-    cfg.UseRedisCaching(...);
+    options.Configure(context => context.DbContextOptions.UseMySql(...));
 });
 ```
 
-**迁移步骤**：待 API 冻结后补充。
+**迁移步骤**：
+
+1. 把可自动注册的应用服务、仓储、事件处理器标注为 `[ApplicationService]`、`[Repository]`、`[EventHandler]` 或通用 `[Service]`。
+2. 如果默认 interface fallback 不是想要的服务类型，使用 `ServiceType = typeof(IMyService)` 显式指定。
+3. 确认 implementation 实现了显式 `ServiceType`；否则按 [SKY1002](../diagnostics/SKY1002.md) 修复。
+4. 保留 `AddSkywalker()` 作为统一入口；已有手动注册仍可在 `AddSkywalker()` 前后按 DI ordering 规则覆盖。
+
+**已知限制**：preview.5 不支持 open generic implementation registration、runtime-only dynamic service discovery、private nested implementation types 或运行时 factory 生成。详见 [DI auto-registration SG contract](../architecture/di-auto-registration-sg-contract.md)。
 
 ---
 
@@ -72,23 +85,27 @@ builder.Services.AddSkywalker<Startup>(cfg =>
 
 ### 2.1 仓储注册反射 → Source Generator
 
-**状态**：规划中（Sprint 1）
+**状态**：✅ 已落地（Sprint 1 generated-registration scope，#239-#242）
 
 **现象**：v1.x 在启动期用 `MakeGenericType` + 反射为每个实体注册 `IRepository<T, TKey>` 和 `IDbSet<T>` 相关服务。
 
-**v2.0 目标**：
-- 在 `DbContext` 内由 SG 扫描 `DbSet<T>` 属性，编译期生成注册代码。
-- `IRepository<Order, Guid>` 的具体实现类由 SG 生成，**零运行时反射、AOT 友好**。
+**v2.0 行为**：
+- 在 `DbContext` 内由 SG 扫描 `DbSet<T>` 属性，编译期生成 repository/domain-service registration metadata。
+- `AddSkywalkerDbContext<TDbContext>()` 优先调用 generated registration。
+- Reflection fallback 仅作为 non-AOT 兼容路径保留；NativeAOT/dynamic-code-disabled 场景应依赖 generated metadata。
 
-**迁移步骤**（占位）：
-- [ ] 实体必须加 `partial` 标记？待 spec 确认
-- [ ] 自定义 `IOrderRepository : IRepository<Order, Guid>` 是否需要调整？待 spec 确认
+**迁移步骤**：
+1. 在消费项目中引用 EF Repository source generator analyzer。
+2. 保持 `DbSet<TEntity>` 为 public instance property，并确保 entity 类型可被 generated code 访问。
+3. 确保实体实现 `IEntity`，且不是 abstract class。
+4. 遇到 `SKY3001`-`SKY3006` 时按对应诊断页修复。
+5. 继续通过 `AddSkywalkerDbContext<TDbContext>()` 注册 DbContext；支持形状会走 generated-first path。
 
-### 2.2 其他预留小节
+### 2.2 EF / Repository 已知限制
 
-- [ ] **2.2** 自定义 Repository 扩展的注册方式
-- [ ] **2.3** Specification 用法是否有变化
-- [ ] **2.4** UnitOfWork 拦截器的换装
+- Skywalker 的 repository registration path 是 AOT-friendly；full EF Core NativeAOT readiness 仍取决于 EF Core 和具体 provider。
+- 不支持的 `DbSet` / entity shape 会报告 `SKY3001`-`SKY3006`，而不是静默跳过。
+- 自定义手写 repository 注册不会被 generated defaults 覆盖；迁移期可继续保留手动注册。
 
 ---
 
@@ -207,19 +224,17 @@ DI auto-registration diagnostics are documented in the diagnostics index. `SKY10
 
 ### 4.1 Handler 发现：反射 → SG
 
-**状态**：规划中（Sprint 3 之后）
+**状态**：延期至 v2.x；不作为 `v2.0.0-rc.1` blocker
 
 **现象**：v1.x 启动期扫描所有程序集找 `ILocalEventHandler<T>` 实现并注册。
 
-**v2.0 目标**：SG 编译期收集 handler 元数据；启动时无反射扫描。
-
-**迁移步骤**（占位）
+**v2.0 口径**：Handler 自动发现 SG 不进入 `v2.0.0-rc.1` release scope。v2.0 用户按现有 EventBus API 迁移；后续 v2.x 如果引入 EventBus SG，会以独立 issue 和迁移条目补充。
 
 ### 4.2 领域事件系统统一
 
 **关联 issue**：#155（「重构领域事件系统：统一为显式事件模型」）
 
-待 PR 落地后填充。
+该重构已从 `v2.0.0` milestone 移出，保留为后续 v2.x 架构议题，不阻塞 rc.1。
 
 ---
 
@@ -283,15 +298,16 @@ API 语义保持不变（`IMessageBus`、`IRpcClient`、`MessagingChannel`、`IT
 
 ## 7. NativeAOT 零警告验证
 
-**状态**：规划中（v2.0 收尾）
+**状态**：✅ CI gate 已接入；RC 候选继续验证
 
-v2.0 GA 前的硬门禁：`dotnet publish -c Release /p:PublishAot=true` 必须 **0 个 trim/AOT 警告**。
+v2.0 GA 前的硬门禁：source-generator 覆盖路径的 AOT canary publish 必须 **0 个 trim/AOT 警告**。
 
-验证方法（预留章节）：
+验证方法：
 ```bash
-# 占位
-dotnet publish samples/AotConsoleSample -c Release /p:PublishAot=true
+dotnet publish samples/Skywalker.Sample.AspireAOT/Skywalker.Sample.AspireAOT.csproj -c Release /p:PublishAot=true
 ```
+
+已知边界：EF Core 作为 rich ORM provider 继续保留；EF full NativeAOT 能力取决于 EF Core/provider。NativeAOT-first repository provider（Dapper.AOT / ADO.NET）属于 v2.x 规划，不阻塞 rc.1。
 
 ---
 
