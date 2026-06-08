@@ -39,8 +39,6 @@ $EnhancementPrefixes = @(
 
 # Temporary allow-list of real-but-tracked violations. Remove an entry when its issue is fixed.
 $AllowList = @(
-  'Skywalker.Caching.Redis -> Skywalker.Ddd.Abstractions',                        # #293 (ISkywalkerBuilder lives in Ddd.Abstractions)
-  'Skywalker.EventBus.RabbitMQ -> Skywalker.Ddd.Abstractions',                    # #293 (ISkywalkerBuilder lives in Ddd.Abstractions)
   'Skywalker.Settings.EntityFrameworkCore -> Skywalker.Ddd.Domain',               # #294
   'Skywalker.Settings.EntityFrameworkCore -> Skywalker.Ddd.EntityFrameworkCore',  # #294
   'Skywalker.Localization.EntityFrameworkCore -> Skywalker.Ddd.EntityFrameworkCore', # #294
