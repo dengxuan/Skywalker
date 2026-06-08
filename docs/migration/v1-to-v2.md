@@ -107,6 +107,18 @@ builder.Services.AddSkywalkerDbContext<AppDbContext>(options =>
 - 不支持的 `DbSet` / entity shape 会报告 `SKY3001`-`SKY3006`，而不是静默跳过。
 - 自定义手写 repository 注册不会被 generated defaults 覆盖；迁移期可继续保留手动注册。
 
+### 2.3 已知问题：EF Core 9 + Pomelo 设计时关系模型 NRE（#291）
+
+**状态**：已知问题，调查中；**不阻塞 rc.1**（应用运行时不受影响）
+
+**现象**：继承 `SkywalkerDbContext<TDbContext>` 的项目，在 **EF Core 9.0.x + Pomelo.EntityFrameworkCore.MySql 9.0.0** 下执行任何走设计时关系模型的命令——`dotnet ef migrations add / remove / script`、`database update` 脚手架，或任何访问 `IDesignTimeModel.Model`（→ `GetRelationalModel(designTime:true)`）的路径——会抛 `NullReferenceException`，栈顶在 `RelationalTypeMappingSource.FindCollectionMapping`。
+
+**范围**：仅设计时；应用运行时（CRUD、查询、运行时关系模型）正常。换成不继承 `SkywalkerDbContext` 的普通 `DbContext`、相同实体形状则不复现，所以根因在 `SkywalkerDbContext` 的模型/服务配置（疑点：`OnConfiguring` 中 `ReplaceService<IValueGeneratorSelector, SkywalkerValueGeneratorSelector>()`，以及 `AggregateRoot` 的 `ICollection<object>` 事件字段在设计时被当作 element collection），而非 EF/Pomelo/业务实体本身。
+
+**临时绕过**：用一个**不继承** `SkywalkerDbContext` 的普通 `DbContext`（实体配置等价）来生成迁移脚本，再应用到目标库。
+
+**跟踪**：[#291](https://github.com/dengxuan/Skywalker/issues/291)。
+
 ---
 
 ## 3. DynamicProxy 拦截器
@@ -236,6 +248,8 @@ DI auto-registration diagnostics are documented in the diagnostics index. `SKY10
 
 该重构已从 `v2.0.0` milestone 移出，保留为后续 v2.x 架构议题，不阻塞 rc.1。
 
+**已知限制（事件持久性，#292）**：当前领域/分布式事件经 `AggregateRoot.AddDistributedEvent(...)` 收集，在**业务事务提交后**由 `IUnitOfWork.OnCompleted` 发布——**非持久**：提交与发布之间进程崩溃或事件总线失败会**丢事件**，无 at-least-once 保证；自动实体变更事件（Created/Updated/Deleted）在本版本**不从 EF 仓储路径发出**。对"绝不能丢"的事件，应用层需自建事务性 outbox。框架内置的事务性 outbox 与显式事件模型规划在 v2.x（[#292](https://github.com/dengxuan/Skywalker/issues/292)、[#155](https://github.com/dengxuan/Skywalker/issues/155)）。
+
 ---
 
 ## 5. Messaging & Transport → **已独立为 Vertex 项目**
@@ -320,6 +334,7 @@ dotnet publish samples/Skywalker.Sample.AspireAOT/Skywalker.Sample.AspireAOT.csp
 | `AutoMapper` 依赖 | #181（main） | Mapperly |
 | `Castle.Core` dependency from `Skywalker.Extensions.DynamicProxies` | #269 | DynamicProxy source generator analyzer + generated interface proxies |
 | `CastleProxyGenerator` / `IProxyGenerator` | #269 | Interface service registration covered by `Skywalker.Extensions.DynamicProxies.SourceGenerators` |
+| `ISkywalkerBuilder.AddRedisCaching()` / `.AddRabbitMQEventBus()` 重载（含 `Action<Options>` 形式） | #293（PR #301） | 改用 `services.AddRedisCaching()` / `services.AddEventBusRabbitMQ()`（`IServiceCollection` 扩展，未变）。增强模块不再链式挂 `AddSkywalker()`：`services.AddSkywalker(); services.AddRedisCaching();`。原因：这些重载是纯语法糖、却把 `Caching.Redis`/`EventBus.RabbitMQ` 拴到 `Ddd.Abstractions`，破坏“非 DDD 模块可独立安装”原则（Epic #300） |
 
 ---
 
