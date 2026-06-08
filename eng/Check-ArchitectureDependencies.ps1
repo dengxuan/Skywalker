@@ -10,6 +10,9 @@
   build on any ProjectReference that breaks the following invariants:
 
     INV-1 (standalone)        non-Ddd family must NOT depend on Skywalker.Ddd.*
+                              (exception: *.EntityFrameworkCore packages are DDD-EF
+                              persistence adapters = legitimate DDD consumers; the
+                              feature's standalone path is its DDD-free *.Abstractions)
     INV-2 (kernel minimality) Skywalker.Ddd.* must NOT depend on an enhancement family
     INV-2b (kernel purity)    Skywalker.Ddd.* must depend on EventBus.Abstractions (the
                               port), NOT on a concrete EventBus implementation
@@ -39,9 +42,6 @@ $EnhancementPrefixes = @(
 
 # Temporary allow-list of real-but-tracked violations. Remove an entry when its issue is fixed.
 $AllowList = @(
-  'Skywalker.Settings.EntityFrameworkCore -> Skywalker.Ddd.Domain',               # #294
-  'Skywalker.Settings.EntityFrameworkCore -> Skywalker.Ddd.EntityFrameworkCore',  # #294
-  'Skywalker.Localization.EntityFrameworkCore -> Skywalker.Ddd.EntityFrameworkCore', # #294
   'Skywalker.Ddd.Domain -> Skywalker.EventBus.Local',                             # #295
   'Skywalker.Extensions.Emailing.Template -> Skywalker.Template.Abstractions'     # #296
 )
@@ -84,7 +84,16 @@ foreach ($proj in $projects) {
 
     $reason = $null
     if ($fromFamily -ne 'ddd' -and $fromFamily -ne 'exceptions' -and $toFamily -eq 'ddd') {
-      $reason = "INV-1 standalone: non-Ddd '$name' depends on Ddd '$refName'"
+      if ($name -like '*.EntityFrameworkCore') {
+        # DDD-EF persistence adapter (e.g. Settings/Localization.EntityFrameworkCore):
+        # a legitimate DDD consumer modelling its store with Entity/AggregateRoot/
+        # IRepository on SkywalkerDbContext. The feature's standalone path lives in its
+        # DDD-free *.Abstractions package, so this dependency is allowed by design.
+        Write-Host "::notice::[ddd-ef-adapter] $edge (allowed: DDD persistence adapter)"
+      }
+      else {
+        $reason = "INV-1 standalone: non-Ddd '$name' depends on Ddd '$refName'"
+      }
     }
     elseif ($fromFamily -eq 'ddd' -and (Test-IsEnhancement $refName)) {
       $reason = "INV-2 kernel-minimality: Ddd '$name' depends on enhancement '$refName'"
