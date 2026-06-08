@@ -42,7 +42,7 @@ $EnhancementPrefixes = @(
 
 # Temporary allow-list of real-but-tracked violations. Remove an entry when its issue is fixed.
 $AllowList = @(
-  'Skywalker.Ddd.Domain -> Skywalker.EventBus.Local',                             # #295
+  'Skywalker.Ddd.Domain -> Skywalker.EventBus.Local',                             # #295 -> folded into #155 (default in-process bus wiring + dead EntityChangedEvent)
   'Skywalker.Extensions.Emailing.Template -> Skywalker.Template.Abstractions'     # #296
 )
 
