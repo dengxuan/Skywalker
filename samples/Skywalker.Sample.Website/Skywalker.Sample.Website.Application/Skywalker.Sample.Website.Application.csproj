@@ -1,0 +1,24 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <OutputType>Library</OutputType>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Skywalker.Sample.Website.Domain\Skywalker.Sample.Website.Domain.csproj" />
+    <ProjectReference Include="..\..\..\src\Skywalker.Ddd.Application\Skywalker.Ddd.Application.csproj" />
+    <ProjectReference Include="..\..\..\src\Skywalker.EventBus.Abstractions\Skywalker.EventBus.Abstractions.csproj" />
+    <ProjectReference Include="..\..\..\src\Skywalker.Emailing.Abstractions\Skywalker.Emailing.Abstractions.csproj" />
+    <ProjectReference Include="..\..\..\src\Skywalker.Sms.Abstractions\Skywalker.Sms.Abstractions.csproj" />
+    <ProjectReference Include="..\..\..\src\Skywalker.Template.Abstractions\Skywalker.Template.Abstractions.csproj" />
+    <ProjectReference Include="..\..\..\src\Skywalker.Caching.Abstractions\Skywalker.Caching.Abstractions.csproj" />
+    <ProjectReference Include="..\..\..\src\Skywalker.Settings.Abstractions\Skywalker.Settings.Abstractions.csproj" />
+    <ProjectReference Include="..\..\..\src\Skywalker.Localization.Abstractions\Skywalker.Localization.Abstractions.csproj" />
+    <ProjectReference Include="..\..\..\src\Skywalker.Permissions.Abstractions\Skywalker.Permissions.Abstractions.csproj" />
+    <ProjectReference Include="..\..\..\src\Skywalker.Validation.FluentValidation\Skywalker.Validation.FluentValidation.csproj" />
+    <ProjectReference Include="..\..\..\src\Skywalker.Extensions.DynamicProxies\Skywalker.Extensions.DynamicProxies.csproj" />
+    <ProjectReference Include="..\..\..\src\Skywalker.Ddd.Abstractions.SourceGenerators\Skywalker.Ddd.Abstractions.SourceGenerators.csproj" OutputItemType="Analyzer" ReferenceOutputAssembly="false" />
+    <ProjectReference Include="..\..\..\src\Skywalker.Extensions.DynamicProxies.SourceGenerators\Skywalker.Extensions.DynamicProxies.SourceGenerators.csproj" OutputItemType="Analyzer" ReferenceOutputAssembly="false" />
+  </ItemGroup>
+
+</Project>

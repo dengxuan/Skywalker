@@ -18,6 +18,7 @@
 
 ### Added
 
+- `Skywalker.Sample.Website` 全功能参考站点：按 DDD 四层（Domain/Application/EntityFrameworkCore/Web）组织的小型商城，组合全部功能族——EF SG 仓储、DI SG 注册、DynamicProxy 静态代理 + UoW 拦截、EventBus.Local 领域事件、Emailing/Sms（Null 投递）、Scriban 模板、JSON 本地化（中英）、Settings、Permissions、Caching、FluentValidation、HealthChecks、异常处理/响应包装中间件。带 20 项断言的进程内全栈 smoke（`--smoke`），已纳入 Source Generator Quality CI。
 - 运行时包捆绑 source generator analyzer（#298）：`Skywalker.Ddd.EntityFrameworkCore`、`Skywalker.Ddd.Abstractions`、`Skywalker.Extensions.DynamicProxies` 现在把各自的 SG analyzer DLL 打进包内 `analyzers/dotnet/cs`——只装运行时包的 NuGet 用户默认即获得零反射 generated registration / static proxies，不再静默落到反射 fallback（NativeAOT 下不再抛错）。独立的 `*.SourceGenerators` opt-in 包继续发布，显式引用者不受影响。
 - 架构依赖方向护栏：`eng/Check-ArchitectureDependencies.ps1` + `.github/workflows/arch-guard.yml`，CI 强制“除 `Skywalker.Ddd` 外一切不得反向依赖 `Skywalker.Ddd`、内核不得拉入增强家族、`Extensions.*` 保持最底层、内核依赖 EventBus 端口而非实现”等不变量，防止架构回归；`*.EntityFrameworkCore` 识别为合法 DDD 持久化适配器（#297，Epic #300）。
 - DI auto-registration Source Generator preview.5 首版 registration metadata 输出：属性标注服务会生成 `__SkywalkerDependencyInjectionRegistrar`，支持接口 fallback、显式 `ServiceType`、Scoped/Transient lifetime 映射，并对不可赋值服务类型报告 `SKY1002`（#280）。

@@ -1,0 +1,27 @@
+<Project Sdk="Microsoft.NET.Sdk.Web">
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.EntityFrameworkCore.InMemory" Version="$(MicrosoftEntityFrameworkCoreVersion)" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Skywalker.Sample.Website.Application\Skywalker.Sample.Website.Application.csproj" />
+    <ProjectReference Include="..\Skywalker.Sample.Website.EntityFrameworkCore\Skywalker.Sample.Website.EntityFrameworkCore.csproj" />
+    <ProjectReference Include="..\..\..\src\Skywalker.Ddd.AspNetCore\Skywalker.Ddd.AspNetCore.csproj" />
+    <ProjectReference Include="..\..\..\src\Skywalker.EventBus.Local\Skywalker.EventBus.Local.csproj" />
+    <ProjectReference Include="..\..\..\src\Skywalker.Template.Scriban\Skywalker.Template.Scriban.csproj" />
+    <ProjectReference Include="..\..\..\src\Skywalker.Localization.AspNetCore\Skywalker.Localization.AspNetCore.csproj" />
+    <ProjectReference Include="..\..\..\src\Skywalker.Localization.Json\Skywalker.Localization.Json.csproj" />
+    <ProjectReference Include="..\..\..\src\Skywalker.Permissions\Skywalker.Permissions.csproj" />
+    <ProjectReference Include="..\..\..\src\Skywalker.Security\Skywalker.Security.csproj" />
+    <ProjectReference Include="..\..\..\src\Skywalker.Extensions.VirtualFileSystem\Skywalker.Extensions.VirtualFileSystem.csproj" />
+    <ProjectReference Include="..\..\..\src\Skywalker.HealthChecks.AspNetCore\Skywalker.HealthChecks.AspNetCore.csproj" />
+    <ProjectReference Include="..\..\..\src\Skywalker.Ddd.Abstractions.SourceGenerators\Skywalker.Ddd.Abstractions.SourceGenerators.csproj" OutputItemType="Analyzer" ReferenceOutputAssembly="false" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <EmbeddedResource Include="Templates\*.tpl" />
+    <EmbeddedResource Include="Localization\*.json" />
+  </ItemGroup>
+
+</Project>
