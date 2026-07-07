@@ -14,4 +14,10 @@
     <ProjectReference Include="$(LibrariesProjectRoot)Skywalker.Extensions.DynamicProxies\Skywalker.Extensions.DynamicProxies.csproj" />
   </ItemGroup>
 
+  <!-- 捆绑 DI auto-registration source generator：装运行时包即获得零反射 generated registration（#298） -->
+  <ItemGroup>
+    <ProjectReference Include="$(LibrariesProjectRoot)Skywalker.Ddd.Abstractions.SourceGenerators\Skywalker.Ddd.Abstractions.SourceGenerators.csproj" ReferenceOutputAssembly="false" PrivateAssets="all" />
+    <None Include="$(LibrariesProjectRoot)Skywalker.Ddd.Abstractions.SourceGenerators\bin\$(Configuration)\netstandard2.0\Skywalker.Ddd.Abstractions.SourceGenerators.dll" Pack="true" PackagePath="analyzers/dotnet/cs" Visible="false" />
+  </ItemGroup>
+
 </Project>
