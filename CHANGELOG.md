@@ -55,6 +55,7 @@
 
 ### Changed
 
+- 清理 `eng/Versions.props` 中无引用的版本变量：Messaging/Transport spin-out 遗留的 NetMQ/Grpc.\*/Google.Protobuf/MessagePack 以及反射扫描时代遗留的 Scrutor，全仓无任何项目引用。
 - Source Generator sample projects 统一关闭 package SourceLink/SCM metadata，避免 sample app 构建触发打包专用 SourceLink target；`AspireAOT` analyzer project references 同步简化，防止 solution build 中生成器项目重复实例造成文件锁。
 - `Scriban` 升级到 `7.2.3`，解除 `NU1903` 高危漏洞 advisory 对 warnings-as-errors build 的阻塞。
 - 迁移到 [MinVer](https://github.com/adamralph/minver) 由 git tag 驱动版本号 (#213, #215)。
