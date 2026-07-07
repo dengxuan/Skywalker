@@ -37,6 +37,10 @@
 - `Skywalker.Sample.AspireAOT` 填充为 EF repository source generator NativeAOT canary，验证 generated registrar direct-call 合约可发布且不产生 IL2xxx/IL3xxx warnings。
 - Source Generator Sprint 0 基础设施：新增 SG 测试项目、`GeneratorTestHelper`、Verify/Roslyn driver 测试流程、`sg-quality.yml` CI、8 个 sample matrix 项目、PublicApiAnalyzers baseline、诊断文档骨架、边界场景清单、`Skywalker.SourceGenerators.Common` 共享库和 `dotnet new skywalker-generator` 模板（#185-#191）。
 
+### Fixed
+
+- `AddSkywalkerDbContextPool<TDbContext>` 修复池化 DbContext 全链路不可用：补上 `IRepository<,>` / `IDomainService<,>` 默认注册（generated-first + 反射 fallback，与非池化对齐）；移除抢占 `DbContextOptions<TDbContext>` 的错误注册，调用方的 options 配置不再被静默忽略；`IValueGeneratorSelector` 替换前移到池的 options 构建阶段，`OnConfiguring` 检测到已替换时跳过，池化上下文不再抛出 "OnConfiguring cannot be used to modify DbContextOptions"（#299）。
+
 ### Changed — BREAKING (Messaging & Transport 独立为 Vertex 项目)
 
 - **`Skywalker.Messaging.*`** 和 **`Skywalker.Transport.*`** 共 5 个包**从 Skywalker 仓移除**，迁入独立的跨语言项目 [**Vertex**](https://github.com/dengxuan/Vertex)（polyrepo）：
