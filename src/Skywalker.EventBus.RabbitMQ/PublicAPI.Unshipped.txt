@@ -1,1 +1,4 @@
 #nullable enable
+*REMOVED*Microsoft.Extensions.DependencyInjection.SkywalkerBuilderRabbitMQEventBusExtensions
+*REMOVED*static Microsoft.Extensions.DependencyInjection.SkywalkerBuilderRabbitMQEventBusExtensions.AddRabbitMQEventBus(this Skywalker.ISkywalkerBuilder! builder) -> Skywalker.ISkywalkerBuilder!
+*REMOVED*static Microsoft.Extensions.DependencyInjection.SkywalkerBuilderRabbitMQEventBusExtensions.AddRabbitMQEventBus(this Skywalker.ISkywalkerBuilder! builder, System.Action<Skywalker.EventBus.RabbitMQ.RabbitMqEventBusOptions!>! configure) -> Skywalker.ISkywalkerBuilder!
