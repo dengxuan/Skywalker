@@ -1,1 +1,3 @@
 #nullable enable
+*REMOVED*Skywalker.EventBus.Local.LocalChannelEventBus.LocalChannelEventBus(Skywalker.EventBus.Abstractions.IEventHandlerFactory! handlerFactory, Skywalker.EventBus.Abstractions.IEventHandlerInvoker! handlerInvoker, Microsoft.Extensions.Options.IOptions<Skywalker.EventBus.Local.LocalEventBusOptions!>! options) -> void
+Skywalker.EventBus.Local.LocalChannelEventBus.LocalChannelEventBus(Skywalker.EventBus.Abstractions.IEventHandlerFactory! handlerFactory, Skywalker.EventBus.Abstractions.IEventHandlerInvoker! handlerInvoker, Microsoft.Extensions.Options.IOptions<Skywalker.EventBus.Local.LocalEventBusOptions!>! options, Microsoft.Extensions.Logging.ILogger<Skywalker.EventBus.Local.LocalChannelEventBus!>? logger = null) -> void

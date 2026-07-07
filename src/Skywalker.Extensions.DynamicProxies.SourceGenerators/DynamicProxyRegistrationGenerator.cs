@@ -45,6 +45,12 @@ public sealed class DynamicProxyRegistrationGenerator : IIncrementalGenerator
             return null;
         }
 
+        // 泛型实现类不支持静态代理（代理按封闭类型生成；开放泛型会产出无效代码甚至拖垮编译器），跳过（#308）
+        if (implementation.IsGenericType)
+        {
+            return null;
+        }
+
         var proxies = ImmutableArray.CreateBuilder<ProxyModel>();
         foreach (var serviceInterface in implementation.AllInterfaces
             .Where(static type => type.OriginalDefinition.ToDisplayString() != InterceptableMetadataName)

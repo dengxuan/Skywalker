@@ -61,6 +61,14 @@ public static class DynamicProxyServiceCollectionExtensions
                 continue;
             }
 
+            // 跳过闭合泛型实现：source generator 按编译期声明的类型生成代理，
+            // 运行时构造的泛型实现（如 EF SG 生成注册的 EntityFrameworkCoreDomainService<TEntity, TKey>）
+            // 不可能拥有生成代理，保持原注册不代理（#308）。
+            if (implType.IsConstructedGenericType)
+            {
+                continue;
+            }
+
             var serviceType = descriptor.ServiceType;
             var lifetime = descriptor.Lifetime;
 
