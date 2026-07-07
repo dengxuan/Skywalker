@@ -3,6 +3,7 @@ using System.Linq.Expressions;
 using System.Reflection;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.ChangeTracking;
+using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using Microsoft.EntityFrameworkCore.ValueGeneration;
@@ -64,7 +65,12 @@ public abstract class SkywalkerDbContext<TDbContext>(DbContextOptions<TDbContext
 
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
     {
-        optionsBuilder.ReplaceService<IValueGeneratorSelector, SkywalkerValueGeneratorSelector>();
+        // 池化 DbContext 禁止在 OnConfiguring 中修改 options；池化路径已在 AddSkywalkerDbContextPool 构建 options 时完成替换。
+        var replacedServices = optionsBuilder.Options.FindExtension<CoreOptionsExtension>()?.ReplacedServices;
+        if (replacedServices?.ContainsKey((typeof(IValueGeneratorSelector), null)) != true)
+        {
+            optionsBuilder.ReplaceService<IValueGeneratorSelector, SkywalkerValueGeneratorSelector>();
+        }
         base.OnConfiguring(optionsBuilder);
     }
 
