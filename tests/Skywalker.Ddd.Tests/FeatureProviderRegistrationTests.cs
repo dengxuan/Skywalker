@@ -230,6 +230,10 @@ public class UserDefinedFeatureProvider : IApplicationFeatureProvider<ServiceReg
 /// <summary>
 /// 验证 AddSkywalker() 一站式注册能自动发现 FeatureProvider 并正确注册所有服务。
 /// </summary>
+// 与 GeneratedRepositoryRegistrationBridgeTests 同一 collection 串行执行：
+// 该类会翻转进程级的 DisableReflectionRepositoryFallback 开关，本类的 AddSkywalkerDbContext
+// 测试依赖反射 fallback，并行执行会间歇性失败。
+[Collection("ReflectionRepositoryFallbackSwitch")]
 public class FeatureProviderRegistrationTests
 {
     private static ServiceProvider BuildProvider()
