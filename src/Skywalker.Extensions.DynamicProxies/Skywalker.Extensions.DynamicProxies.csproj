@@ -9,4 +9,10 @@
     <PackageReference Include="Microsoft.Extensions.DependencyInjection.Abstractions" Version="$(MicrosoftExtensionsVersion)" />
   </ItemGroup>
 
+  <!-- 捆绑 DynamicProxy source generator：装运行时包即获得 source-generated static proxies（#298） -->
+  <ItemGroup>
+    <ProjectReference Include="$(LibrariesProjectRoot)Skywalker.Extensions.DynamicProxies.SourceGenerators\Skywalker.Extensions.DynamicProxies.SourceGenerators.csproj" ReferenceOutputAssembly="false" PrivateAssets="all" />
+    <None Include="$(LibrariesProjectRoot)Skywalker.Extensions.DynamicProxies.SourceGenerators\bin\$(Configuration)\netstandard2.0\Skywalker.Extensions.DynamicProxies.SourceGenerators.dll" Pack="true" PackagePath="analyzers/dotnet/cs" Visible="false" />
+  </ItemGroup>
+
 </Project>

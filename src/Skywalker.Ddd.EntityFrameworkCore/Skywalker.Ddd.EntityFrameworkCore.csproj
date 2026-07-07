@@ -17,4 +17,10 @@
     <ProjectReference Include="$(LibrariesProjectRoot)Skywalker.Extensions.Timezone\Skywalker.Extensions.Timezone.csproj" />
   </ItemGroup>
 
+  <!-- 捆绑 EF 仓储注册 source generator：装运行时包即获得零反射 generated registration（#298） -->
+  <ItemGroup>
+    <ProjectReference Include="$(LibrariesProjectRoot)Skywalker.Ddd.EntityFrameworkCore.SourceGenerators\Skywalker.Ddd.EntityFrameworkCore.SourceGenerators.csproj" ReferenceOutputAssembly="false" PrivateAssets="all" />
+    <None Include="$(LibrariesProjectRoot)Skywalker.Ddd.EntityFrameworkCore.SourceGenerators\bin\$(Configuration)\netstandard2.0\Skywalker.Ddd.EntityFrameworkCore.SourceGenerators.dll" Pack="true" PackagePath="analyzers/dotnet/cs" Visible="false" />
+  </ItemGroup>
+
 </Project>

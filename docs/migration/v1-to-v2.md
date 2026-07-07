@@ -31,7 +31,7 @@
 
 1. **试 preview 包**：`2.0.0-preview.N`（来自 `release/2.0` 分支自动发布）
 2. **对照本文档**逐模块迁移
-3. 给声明 source-generator 覆盖类型的项目添加对应 analyzer 包引用；使用 Skywalker NuGet 包时 analyzer 随 generator 包进入 `analyzers/dotnet/cs`。
+3. 使用 Skywalker NuGet 包时无需额外引用 analyzer：runtime 包（`Skywalker.Ddd.EntityFrameworkCore` / `Skywalker.Ddd.Abstractions` / `Skywalker.Extensions.DynamicProxies`）已把对应 SG analyzer 捆绑进 `analyzers/dotnet/cs`（#298）。仓库内项目引用（非 NuGet）仍需按下文示例显式加 analyzer ProjectReference。
 4. 跑测试，确认无 source-generator 诊断和 AOT/trim 警告（参考 [`7. NativeAOT 零警告验证`](#7-nativeaot--零警告验证)）。
 5. 发现遗漏请提 issue 并打标签 `migration`
 
@@ -140,12 +140,11 @@ builder.Services.AddSkywalkerDbContext<AppDbContext>(options =>
 
 #### 必需项目引用
 
-消费项目需要同时引用 runtime 包和 source generator analyzer。项目引用写法如下；NuGet 使用时 generator 包也应作为 analyzer/private asset 引入。
+NuGet 使用时只需引用 runtime 包——SG analyzer 已捆绑在包内 `analyzers/dotnet/cs`，自动生效（#298）：
 
 ```xml
 <ItemGroup>
   <PackageReference Include="Skywalker.Extensions.DynamicProxies" Version="2.0.0-preview.*" />
-  <PackageReference Include="Skywalker.Extensions.DynamicProxies.SourceGenerators" Version="2.0.0-preview.*" PrivateAssets="all" OutputItemType="Analyzer" ReferenceOutputAssembly="false" />
 </ItemGroup>
 ```
 
