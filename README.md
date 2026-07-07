@@ -436,7 +436,7 @@ public class OrderAppService : ApplicationService, IOrderAppService
 
 | 模块 | NuGet 包 | 说明 |
 |------|----------|------|
-| **邮件服务** | `Skywalker.Extensions.Emailing` | 邮件发送服务 |
+| **邮件服务** | `Skywalker.Emailing.Abstractions` / `Skywalker.Emailing.Smtp` | 邮件发送契约层与 SMTP 投递 provider |
 | **阿里云短信** | `Skywalker.Sms.Aliyun` | 阿里云短信服务集成 |
 | **健康检查** | `Skywalker.HealthChecks.AspNetCore` | ASP.NET Core 健康检查端点 |
 

@@ -9,6 +9,11 @@
 
 ### Changed — BREAKING (架构治理：非 DDD 模块与 DDD 解耦，Epic #300)
 
+- **Emailing 重组为独立增强家族**（对标 `Skywalker.Sms.*` 结构：契约层 + 可插拔投递 provider，#296，Epic #300）：
+    - `Skywalker.Extensions.Emailing` 改组为 `Skywalker.Emailing.Abstractions`（契约层：`IEmailSender`、`EmailSenderOptions`、`NullEmailSender` 兜底、`AddEmailing()`）+ `Skywalker.Emailing.Smtp`（SMTP 投递 provider）。发邮件是完整功能组件而非底层通用工具，不再占用 `Extensions.*` 层；未来三方代发（DirectMail/SendGrid 等）作为并列 provider 包加入。命名空间 `Skywalker.Extensions.Emailing[.Smtp]` → `Skywalker.Emailing[.Smtp]`。
+    - **移除模板邮件子系统**（`Skywalker.Extensions.Emailing.Template` 整包：`ITemplateEmailSender`、内置 Welcome/ResetPassword/VerifyEmail/Notification 模板及 Model）。Emailing 只负责发送；邮件内容由调用方构造——用什么模板引擎、什么模板内容是应用的决定，需要时用 Template 家族渲染后再调 `IEmailSender.SendAsync(...)`。INV-3 违规随之消除。
+    - 配置拆分：新增 `EmailSenderOptions`（发件人默认地址/显示名，契约层）；`SmtpEmailSenderConfiguration` 继承它并移入 Smtp 包，只保留 SMTP 连接字段。
+    - DI 变化：`AddEmailing()` 仅注册契约层（NullEmailSender 兜底）并新增 `AddEmailing(Action<EmailSenderOptions>)` 重载；SMTP 注册改用 **`AddSmtpEmailing(Action<SmtpEmailSenderConfiguration>)`**（原 `AddEmailing(Action<SmtpEmailSenderConfiguration>)` 移除）。
 - **移除** `ISkywalkerBuilder` 上的 `AddRedisCaching()` / `AddRabbitMQEventBus()` 扩展重载（含 `Action<Options>` 形式）。它们只是链式语法糖，却让 `Skywalker.Caching.Redis` / `Skywalker.EventBus.RabbitMQ` 依赖 `Skywalker.Ddd.Abstractions`，破坏“非 DDD 模块可脱离 DDD 独立安装”原则。改用未变的 `IServiceCollection` 扩展：`services.AddSkywalker(); services.AddRedisCaching(); services.AddEventBusRabbitMQ();`。DDD 家族模块（EF Core / AspNetCore）的 `AddSkywalker().AddXxx()` 链式不受影响（#293）。
 
 ### Added

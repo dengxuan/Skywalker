@@ -1,0 +1,29 @@
+#nullable enable
+abstract Skywalker.Emailing.EmailSenderBase.SendEmailAsync(System.Net.Mail.MailMessage! mail) -> System.Threading.Tasks.Task!
+Microsoft.Extensions.DependencyInjection.EmailingIServiceCollectionExtensions
+override Skywalker.Emailing.NullEmailSender.SendEmailAsync(System.Net.Mail.MailMessage! mail) -> System.Threading.Tasks.Task!
+Skywalker.Emailing.EmailSenderBase
+Skywalker.Emailing.EmailSenderBase.EmailSenderBase(Skywalker.Emailing.EmailSenderOptions! options) -> void
+Skywalker.Emailing.EmailSenderBase.Options.get -> Skywalker.Emailing.EmailSenderOptions!
+Skywalker.Emailing.EmailSenderOptions
+Skywalker.Emailing.EmailSenderOptions.DefaultFromAddress.get -> string?
+Skywalker.Emailing.EmailSenderOptions.DefaultFromAddress.set -> void
+Skywalker.Emailing.EmailSenderOptions.DefaultFromDisplayName.get -> string?
+Skywalker.Emailing.EmailSenderOptions.DefaultFromDisplayName.set -> void
+Skywalker.Emailing.EmailSenderOptions.EmailSenderOptions() -> void
+Skywalker.Emailing.IEmailSender
+Skywalker.Emailing.IEmailSender.SendAsync(string! from, string! to, string! subject, string! body, bool isBodyHtml = true) -> System.Threading.Tasks.Task!
+Skywalker.Emailing.IEmailSender.SendAsync(string! to, string! subject, string! body, bool isBodyHtml = true) -> System.Threading.Tasks.Task!
+Skywalker.Emailing.IEmailSender.SendAsync(System.Net.Mail.MailMessage! mail, bool normalize = true) -> System.Threading.Tasks.Task!
+Skywalker.Emailing.NullEmailSender
+Skywalker.Emailing.NullEmailSender.Logger.get -> Microsoft.Extensions.Logging.ILogger<Skywalker.Emailing.NullEmailSender!>!
+Skywalker.Emailing.NullEmailSender.Logger.set -> void
+Skywalker.Emailing.NullEmailSender.NullEmailSender(Microsoft.Extensions.Options.IOptions<Skywalker.Emailing.EmailSenderOptions!>! options) -> void
+static Microsoft.Extensions.DependencyInjection.EmailingIServiceCollectionExtensions.AddEmailing(this Microsoft.Extensions.DependencyInjection.IServiceCollection! services) -> Microsoft.Extensions.DependencyInjection.IServiceCollection!
+static Microsoft.Extensions.DependencyInjection.EmailingIServiceCollectionExtensions.AddEmailing(this Microsoft.Extensions.DependencyInjection.IServiceCollection! services, System.Action<Skywalker.Emailing.EmailSenderOptions!>! configure) -> Microsoft.Extensions.DependencyInjection.IServiceCollection!
+virtual Skywalker.Emailing.EmailSenderBase.NormalizeMailAsync(System.Net.Mail.MailMessage! mail) -> System.Threading.Tasks.Task!
+virtual Skywalker.Emailing.EmailSenderBase.QueueAsync(string! from, string! to, string! subject, string! body, bool isBodyHtml = true) -> System.Threading.Tasks.Task!
+virtual Skywalker.Emailing.EmailSenderBase.QueueAsync(string! to, string! subject, string! body, bool isBodyHtml = true) -> System.Threading.Tasks.Task!
+virtual Skywalker.Emailing.EmailSenderBase.SendAsync(string! from, string! to, string! subject, string! body, bool isBodyHtml = true) -> System.Threading.Tasks.Task!
+virtual Skywalker.Emailing.EmailSenderBase.SendAsync(string! to, string! subject, string! body, bool isBodyHtml = true) -> System.Threading.Tasks.Task!
+virtual Skywalker.Emailing.EmailSenderBase.SendAsync(System.Net.Mail.MailMessage! mail, bool normalize = true) -> System.Threading.Tasks.Task!

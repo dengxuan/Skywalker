@@ -37,13 +37,12 @@ $ErrorActionPreference = 'Stop'
 # Enhancement feature families (each must be independently installable).
 $EnhancementPrefixes = @(
   'Caching', 'Permissions', 'Settings', 'Localization', 'Validation',
-  'Template', 'Security', 'Sms', 'HealthChecks', 'Messaging', 'Transport'
+  'Template', 'Security', 'Sms', 'Emailing', 'HealthChecks', 'Messaging', 'Transport'
 )
 
 # Temporary allow-list of real-but-tracked violations. Remove an entry when its issue is fixed.
 $AllowList = @(
-  'Skywalker.Ddd.Domain -> Skywalker.EventBus.Local',                             # #295 -> folded into #155 (default in-process bus wiring + dead EntityChangedEvent)
-  'Skywalker.Extensions.Emailing.Template -> Skywalker.Template.Abstractions'     # #296
+  'Skywalker.Ddd.Domain -> Skywalker.EventBus.Local'                              # #295 -> folded into #155 (default in-process bus wiring + dead EntityChangedEvent)
 )
 
 function Get-Family([string]$name) {

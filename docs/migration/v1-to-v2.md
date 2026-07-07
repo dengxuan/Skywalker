@@ -26,6 +26,7 @@
 | ~~`Skywalker.Messaging.*` / `Skywalker.Transport.*`~~ | 1.0.1（最终版，带 `[TypeForwardedTo]`）| —（已迁出）| **迁移到独立项目 Vertex (polyrepo)** —— 改用 `Vertex.*` NuGet 包 ([`vertex-dotnet`](https://github.com/dengxuan/vertex-dotnet))，或 Go 的 `github.com/dengxuan/vertex-go`；详见 §5 |
 | `Skywalker.EventBus.*` | 1.x | 2.0.0 | 基本兼容（Handler 自动发现改为 SG） |
 | `Skywalker.Caching.*` / `Skywalker.Localization.*` / `Skywalker.Permissions.*` / `Skywalker.Settings.*` | 1.x | 2.0.0 | 基本兼容 |
+| ~~`Skywalker.Extensions.Emailing` / `Skywalker.Extensions.Emailing.Template`~~ | 1.x | —（已重组） | **改组为 Emailing 家族**：`Skywalker.Emailing.Abstractions`（契约）+ `Skywalker.Emailing.Smtp`（SMTP provider），命名空间去掉 `Extensions.` 前缀，SMTP 注册改用 `AddSmtpEmailing(...)`。**模板邮件子系统移除**——内容由调用方构造，需要模板时用 Template 家族渲染后再发送（#296） |
 
 ### 升级路径
 
