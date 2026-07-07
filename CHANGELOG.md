@@ -7,8 +7,13 @@
 
 ## [Unreleased]
 
+### Changed — BREAKING (架构治理：非 DDD 模块与 DDD 解耦，Epic #300)
+
+- **移除** `ISkywalkerBuilder` 上的 `AddRedisCaching()` / `AddRabbitMQEventBus()` 扩展重载（含 `Action<Options>` 形式）。它们只是链式语法糖，却让 `Skywalker.Caching.Redis` / `Skywalker.EventBus.RabbitMQ` 依赖 `Skywalker.Ddd.Abstractions`，破坏“非 DDD 模块可脱离 DDD 独立安装”原则。改用未变的 `IServiceCollection` 扩展：`services.AddSkywalker(); services.AddRedisCaching(); services.AddEventBusRabbitMQ();`。DDD 家族模块（EF Core / AspNetCore）的 `AddSkywalker().AddXxx()` 链式不受影响（#293）。
+
 ### Added
 
+- 架构依赖方向护栏：`eng/Check-ArchitectureDependencies.ps1` + `.github/workflows/arch-guard.yml`，CI 强制“除 `Skywalker.Ddd` 外一切不得反向依赖 `Skywalker.Ddd`、内核不得拉入增强家族、`Extensions.*` 保持最底层、内核依赖 EventBus 端口而非实现”等不变量，防止架构回归；`*.EntityFrameworkCore` 识别为合法 DDD 持久化适配器（#297，Epic #300）。
 - DI auto-registration Source Generator preview.5 首版 registration metadata 输出：属性标注服务会生成 `__SkywalkerDependencyInjectionRegistrar`，支持接口 fallback、显式 `ServiceType`、Scoped/Transient lifetime 映射，并对不可赋值服务类型报告 `SKY1002`（#280）。
 - DI auto-registration Source Generator preview.5 runtime bridge：`AddSkywalker()` 现在可通过 assembly metadata 消费生成的 DI registrar，并保留现有 FeatureProvider fallback 路径（#281）。
 - DI auto-registration Source Generator preview.5 测试安全网：新增主要 registrar 生成形状的 snapshot 覆盖，以及 generated registration 的解析、Scoped lifetime、idempotency runtime 测试（#282）。

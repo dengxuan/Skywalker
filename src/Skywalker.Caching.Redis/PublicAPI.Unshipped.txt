@@ -1,1 +1,4 @@
 #nullable enable
+*REMOVED*Microsoft.Extensions.DependencyInjection.SkywalkerBuilderRedisCachingExtensions
+*REMOVED*static Microsoft.Extensions.DependencyInjection.SkywalkerBuilderRedisCachingExtensions.AddRedisCaching(this Skywalker.ISkywalkerBuilder! builder) -> Skywalker.ISkywalkerBuilder!
+*REMOVED*static Microsoft.Extensions.DependencyInjection.SkywalkerBuilderRedisCachingExtensions.AddRedisCaching(this Skywalker.ISkywalkerBuilder! builder, System.Action<Skywalker.Caching.Redis.RedisOptions!>! configure) -> Skywalker.ISkywalkerBuilder!

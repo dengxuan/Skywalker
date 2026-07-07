@@ -1,0 +1,34 @@
+name: Architecture Guard
+
+# Enforces Skywalker's dependency-direction invariants (Epic #300):
+#   - nothing outside Skywalker.Ddd.* may depend on Skywalker.Ddd.*
+#   - the DDD kernel must not pull in enhancement families
+#   - Extensions.* must stay the lowest generic layer
+# Real-but-tracked debt is allow-listed in eng/Check-ArchitectureDependencies.ps1.
+
+on:
+  push:
+    branches:
+      - main
+      - dev
+      - release/2.0
+  pull_request:
+    branches:
+      - main
+      - dev
+      - release/2.0
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  arch-guard:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v5
+
+      - name: Check architecture dependency invariants
+        shell: pwsh
+        run: ./eng/Check-ArchitectureDependencies.ps1
