@@ -14,6 +14,9 @@ using Skywalker.Identity.Domain.Repositories;
 
 namespace Skywalker.Ddd.Tests;
 
+// 与 FeatureProviderRegistrationTests 同一 collection 串行执行：本类会翻转进程级的
+// DisableReflectionRepositoryFallback AppContext 开关，与依赖反射 fallback 的测试并行会间歇性失败。
+[Collection("ReflectionRepositoryFallbackSwitch")]
 public sealed class GeneratedRepositoryRegistrationBridgeTests
 {
     private const string DisableReflectionRepositoryFallbackSwitch = "Skywalker.Ddd.EntityFrameworkCore.DisableReflectionRepositoryFallback";
