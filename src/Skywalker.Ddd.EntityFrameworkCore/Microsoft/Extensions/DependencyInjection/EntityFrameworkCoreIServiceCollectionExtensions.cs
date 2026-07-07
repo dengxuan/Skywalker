@@ -1,4 +1,5 @@
 using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.ValueGeneration;
 using Microsoft.Extensions.DependencyInjection.Extensions;
 using Skywalker.Ddd.Data;
 using Skywalker.Ddd.Domain.Entities;
@@ -161,10 +162,14 @@ public static class EntityFrameworkCoreIServiceCollectionExtensions
     /// <returns>服务集合。</returns>
     public static IServiceCollection AddSkywalkerDbContextPool<TDbContext>(this IServiceCollection services, Action<DbContextOptionsBuilder> options) where TDbContext : SkywalkerDbContext<TDbContext>
     {
-        services.Configure(options);
-        services.AddTransient(SkywalkerDbContextOptionsFactory.Create<TDbContext>);
+        services.AddDefaultServices<TDbContext>();
         services.AddSingleton<IDbContextProvider<TDbContext>, UnitOfWorkDbContextProvider<TDbContext>>();
-        services.AddDbContextPool<TDbContext>(options);
+        services.AddDbContextPool<TDbContext>(builder =>
+        {
+            // 池化上下文不允许在 OnConfiguring 中替换服务，需在构建 options 时替换。
+            builder.ReplaceService<IValueGeneratorSelector, SkywalkerValueGeneratorSelector>();
+            options(builder);
+        });
         return services;
     }
 }
