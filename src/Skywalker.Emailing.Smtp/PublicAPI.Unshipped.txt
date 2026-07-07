@@ -1,0 +1,26 @@
+#nullable enable
+Microsoft.Extensions.DependencyInjection.SmtpEmailingIServiceCollectionExtensions
+override Skywalker.Emailing.Smtp.SmtpEmailSender.SendEmailAsync(System.Net.Mail.MailMessage! mail) -> System.Threading.Tasks.Task!
+Skywalker.Emailing.Smtp.ISmtpEmailSender
+Skywalker.Emailing.Smtp.ISmtpEmailSender.BuildClientAsync() -> System.Threading.Tasks.Task<System.Net.Mail.SmtpClient!>!
+Skywalker.Emailing.Smtp.SmtpEmailSender
+Skywalker.Emailing.Smtp.SmtpEmailSender.BuildClientAsync() -> System.Threading.Tasks.Task<System.Net.Mail.SmtpClient!>!
+Skywalker.Emailing.Smtp.SmtpEmailSender.Options.get -> Skywalker.Emailing.Smtp.SmtpEmailSenderConfiguration!
+Skywalker.Emailing.Smtp.SmtpEmailSender.SmtpEmailSender(Microsoft.Extensions.Options.IOptions<Skywalker.Emailing.Smtp.SmtpEmailSenderConfiguration!>! smtpConfiguration) -> void
+Skywalker.Emailing.Smtp.SmtpEmailSenderConfiguration
+Skywalker.Emailing.Smtp.SmtpEmailSenderConfiguration.Domain.get -> string?
+Skywalker.Emailing.Smtp.SmtpEmailSenderConfiguration.Domain.set -> void
+Skywalker.Emailing.Smtp.SmtpEmailSenderConfiguration.EnableSsl.get -> bool
+Skywalker.Emailing.Smtp.SmtpEmailSenderConfiguration.EnableSsl.set -> void
+Skywalker.Emailing.Smtp.SmtpEmailSenderConfiguration.Host.get -> string?
+Skywalker.Emailing.Smtp.SmtpEmailSenderConfiguration.Host.set -> void
+Skywalker.Emailing.Smtp.SmtpEmailSenderConfiguration.Password.get -> string?
+Skywalker.Emailing.Smtp.SmtpEmailSenderConfiguration.Password.set -> void
+Skywalker.Emailing.Smtp.SmtpEmailSenderConfiguration.Port.get -> int
+Skywalker.Emailing.Smtp.SmtpEmailSenderConfiguration.Port.set -> void
+Skywalker.Emailing.Smtp.SmtpEmailSenderConfiguration.SmtpEmailSenderConfiguration() -> void
+Skywalker.Emailing.Smtp.SmtpEmailSenderConfiguration.UseDefaultCredentials.get -> bool
+Skywalker.Emailing.Smtp.SmtpEmailSenderConfiguration.UseDefaultCredentials.set -> void
+Skywalker.Emailing.Smtp.SmtpEmailSenderConfiguration.UserName.get -> string?
+Skywalker.Emailing.Smtp.SmtpEmailSenderConfiguration.UserName.set -> void
+static Microsoft.Extensions.DependencyInjection.SmtpEmailingIServiceCollectionExtensions.AddSmtpEmailing(this Microsoft.Extensions.DependencyInjection.IServiceCollection! services, System.Action<Skywalker.Emailing.Smtp.SmtpEmailSenderConfiguration!>! configure) -> Microsoft.Extensions.DependencyInjection.IServiceCollection!

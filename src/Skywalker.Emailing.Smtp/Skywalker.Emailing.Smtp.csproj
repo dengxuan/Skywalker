@@ -1,0 +1,12 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <RootNamespace></RootNamespace>
+    <Description>Skywalker 邮件组件的 SMTP 投递 provider</Description>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="$(LibrariesProjectRoot)Skywalker.Emailing.Abstractions\Skywalker.Emailing.Abstractions.csproj" />
+  </ItemGroup>
+
+</Project>
