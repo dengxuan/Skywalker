@@ -1,5 +1,7 @@
 using System.Collections.Concurrent;
 using System.Threading.Channels;
+using Microsoft.Extensions.Logging;
+using Microsoft.Extensions.Logging.Abstractions;
 using Microsoft.Extensions.Options;
 using Skywalker.EventBus.Abstractions;
 
@@ -12,6 +14,7 @@ public class LocalChannelEventBus : EventBusBase, ILocalEventBus, IAsyncDisposab
 {
     private readonly IEventHandlerFactory _handlerFactory;
     private readonly IEventHandlerInvoker _handlerInvoker;
+    private readonly ILogger<LocalChannelEventBus> _logger;
     private readonly ConcurrentDictionary<Type, List<Type>> _handlerTypes;
     private readonly Channel<EventMessage> _channel;
     private readonly Task _processingTask;
@@ -21,10 +24,12 @@ public class LocalChannelEventBus : EventBusBase, ILocalEventBus, IAsyncDisposab
     public LocalChannelEventBus(
         IEventHandlerFactory handlerFactory,
         IEventHandlerInvoker handlerInvoker,
-        IOptions<LocalEventBusOptions> options)
+        IOptions<LocalEventBusOptions> options,
+        ILogger<LocalChannelEventBus>? logger = null)
     {
         _handlerFactory = handlerFactory;
         _handlerInvoker = handlerInvoker;
+        _logger = logger ?? NullLogger<LocalChannelEventBus>.Instance;
         _handlerTypes = new ConcurrentDictionary<Type, List<Type>>();
         _cts = new CancellationTokenSource();
 
@@ -121,6 +126,13 @@ public class LocalChannelEventBus : EventBusBase, ILocalEventBus, IAsyncDisposab
                         // Service provider was disposed during shutdown, ignore
                         break;
                     }
+                    catch (Exception exception)
+                    {
+                        // 单个处理器失败不能杀死消费循环，否则后续所有事件被静默丢弃（#309）
+                        _logger.LogError(exception,
+                            "Event handler {HandlerType} failed for event {EventType}.",
+                            handlerType.FullName, message.EventType.FullName);
+                    }
                 }
             }
         }
@@ -131,6 +143,11 @@ public class LocalChannelEventBus : EventBusBase, ILocalEventBus, IAsyncDisposab
         catch (ObjectDisposedException)
         {
             // Service provider was disposed during shutdown, ignore
+        }
+        catch (Exception exception)
+        {
+            // 兜底：消费循环意外终止必须可观测（#309）
+            _logger.LogCritical(exception, "Local event bus processing loop terminated unexpectedly.");
         }
     }
 

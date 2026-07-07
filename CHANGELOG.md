@@ -46,6 +46,8 @@
 
 ### Fixed
 
+- `AddInterceptedServices()` 不再对闭合泛型实现的注册抛启动异常：source generator 按编译期声明类型生成代理，运行时构造的泛型实现（如 EF SG 生成注册的 `EntityFrameworkCoreDomainService<TEntity, TKey>`）不可能有生成代理，现跳过并保留原注册——修复"任何同时使用 `AddSkywalkerDbContext` + `AddInterceptedServices` 的应用无法启动"。DynamicProxy SG 同时对泛型实现类设防（此前开放泛型候选会拖垮编译器 csc 崩溃）（#308）。
+- `LocalChannelEventBus` 消费循环不再因单个处理器异常而静默死亡：处理器失败按事件记录 `ILogger` 错误并继续消费；循环意外终止记 Critical 日志。此前首个抛异常的处理器会杀死消费循环，之后所有事件被静默丢弃（#309）。
 - `AddSkywalkerDbContextPool<TDbContext>` 修复池化 DbContext 全链路不可用：补上 `IRepository<,>` / `IDomainService<,>` 默认注册（generated-first + 反射 fallback，与非池化对齐）；移除抢占 `DbContextOptions<TDbContext>` 的错误注册，调用方的 options 配置不再被静默忽略；`IValueGeneratorSelector` 替换前移到池的 options 构建阶段，`OnConfiguring` 检测到已替换时跳过，池化上下文不再抛出 "OnConfiguring cannot be used to modify DbContextOptions"（#299）。
 
 ### Changed — BREAKING (Messaging & Transport 独立为 Vertex 项目)
