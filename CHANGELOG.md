@@ -18,6 +18,12 @@
 - **已发布的 `Skywalker.Messaging.1.0.0` 等 NuGet 包保留不动**，老用户可继续 pin 至 `1.0.0`；不会有 `Skywalker.Messaging.1.0.1+` 继续发布。需要新功能 / bug fix 时请升级到 `Vertex.*`。
 - _后续_ 可能发布 `Skywalker.Messaging.1.0.1` 等带 `[TypeForwardedTo]` 的桥接包，指向 `Vertex.*`。是否发布、何时发布视下游实际迁移情况而定；目前**不**自动发。
 
+### Fixed
+
+- **Localization：缺翻译时回落默认语言而不是把 key 露到界面上**。`SkywalkerStringLocalizer` 查完当前 UI 文化父链（en-US → en）后再查资源的 `DefaultCultureName`，没配再查新增的全局 `LocalizationOptions.DefaultCultureName`（`UseSkywalkerRequestLocalization` 自动按默认语言填）；回落值的 `ResourceNotFound` 仍为 true。此前这两个字段声明了但运行时无人读取。
+- **Localization.Json：ASP.NET Core 下静默加载 0 条**。`JsonLocalizationResourceContributor` 只从 DI 取 `IFileProvider`，而 ASP.NET Core 不注册该类型，`_fileProvider` 恒为 null。现在依次取显式 `IFileProvider` → `IHostEnvironment.ContentRootFileProvider` → `PhysicalFileProvider(AppContext.BaseDirectory)`，并兼容以 `/` 开头的虚拟路径。
+- **Localization：`{name}` 命名占位符**。`localizer["剩余 {n} 天", new { n = 3 }]` / 传字典均可；漏传的参数原样保留（不吞成空串）；`{0}` 位置占位保持不变。
+
 ### Changed
 
 - 依赖升级：Scriban 7.0.3 → 7.4.0。7.0.3 带两条高危 / 两条中危已知漏洞（GHSA-24c8-4792-22hx、GHSA-7jvp-hj45-2f2m 等），NuGet 审计 NU1903 视为错误，main 的 Daily Build 自 9 月起持续失败。

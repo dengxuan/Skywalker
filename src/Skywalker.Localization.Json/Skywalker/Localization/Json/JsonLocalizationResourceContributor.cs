@@ -1,4 +1,5 @@
 using Microsoft.Extensions.FileProviders;
+using Microsoft.Extensions.Hosting;
 
 namespace Skywalker.Localization.Json;
 
@@ -28,7 +29,13 @@ public class JsonLocalizationResourceContributor : ILocalizationResourceContribu
     /// <inheritdoc/>
     public void Initialize(LocalizationResourceInitializationContext context)
     {
-        _fileProvider = context.ServiceProvider.GetService(typeof(IFileProvider)) as IFileProvider;
+        // ASP.NET Core does not register a bare IFileProvider — only IHostEnvironment.ContentRootFileProvider.
+        // Resolving IFileProvider alone silently loaded nothing. Order: explicit IFileProvider (VFS / embedded)
+        // → host content root → physical base directory (console apps, tests).
+        var sp = context.ServiceProvider;
+        _fileProvider = sp.GetService(typeof(IFileProvider)) as IFileProvider
+            ?? (sp.GetService(typeof(IHostEnvironment)) as IHostEnvironment)?.ContentRootFileProvider
+            ?? new PhysicalFileProvider(AppContext.BaseDirectory);
         _dictionaries = new Dictionary<string, Dictionary<string, string>>(StringComparer.OrdinalIgnoreCase);
 
         LoadResources();
@@ -81,7 +88,12 @@ public class JsonLocalizationResourceContributor : ILocalizationResourceContribu
             return;
         }
 
+        // PhysicalFileProvider wants relative paths; the virtual-path convention here is "/Localization/Res".
         var directoryContents = _fileProvider.GetDirectoryContents(_virtualPath);
+        if (!directoryContents.Exists && _virtualPath.StartsWith('/'))
+        {
+            directoryContents = _fileProvider.GetDirectoryContents(_virtualPath.TrimStart('/'));
+        }
         if (!directoryContents.Exists)
         {
             return;

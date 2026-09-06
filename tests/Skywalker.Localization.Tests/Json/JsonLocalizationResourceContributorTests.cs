@@ -20,6 +20,33 @@ public class JsonLocalizationResourceContributorTests
     }
 
     [Fact]
+    public void Initialize_WithoutIFileProvider_UsesHostContentRoot()
+    {
+        // ASP.NET Core 不注册裸 IFileProvider，只有 IHostEnvironment.ContentRootFileProvider；原实现这里静默加载 0 条
+        var root = Directory.CreateTempSubdirectory("skywalker-loc-");
+        try
+        {
+            var dir = Directory.CreateDirectory(Path.Combine(root.FullName, "Localization", "TestResource"));
+            File.WriteAllText(Path.Combine(dir.FullName, "zh-CN.json"), """{"Hello": "你好"}""", Encoding.UTF8);
+
+            var env = Substitute.For<Microsoft.Extensions.Hosting.IHostEnvironment>();
+            env.ContentRootFileProvider.Returns(new PhysicalFileProvider(root.FullName));
+            var services = new ServiceCollection();
+            services.AddSingleton(env);
+            var sp = services.BuildServiceProvider();
+
+            var contributor = new JsonLocalizationResourceContributor("/Localization/TestResource");
+            contributor.Initialize(new LocalizationResourceInitializationContext(new LocalizationResource(typeof(TestResource)), sp));
+
+            Assert.Equal("你好", contributor.GetOrNull("zh-CN", "Hello")?.Value);
+        }
+        finally
+        {
+            root.Delete(recursive: true);
+        }
+    }
+
+    [Fact]
     public void GetOrNull_BeforeInitialize_ReturnsNull()
     {
         var contributor = new JsonLocalizationResourceContributor("/Localization");
