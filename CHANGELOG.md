@@ -26,6 +26,7 @@
 
 ### Changed
 
+- 依赖升级：Scriban 7.0.3 → 7.4.0。7.0.3 带两条高危 / 两条中危已知漏洞（GHSA-24c8-4792-22hx、GHSA-7jvp-hj45-2f2m 等），NuGet 审计 NU1903 视为错误，main 的 Daily Build 自 9 月起持续失败。
 - 迁移到 [MinVer](https://github.com/adamralph/minver) 由 git tag 驱动版本号 (#213, #215)。
 - 新增权威的版本策略文档 [docs/versioning.md](docs/versioning.md)，从 CONTRIBUTING 链接 (#216)。
 - 简化 forward-merge 冲突处理路径，发布工作流增加 `workflow_dispatch` 触发 (#217)。
