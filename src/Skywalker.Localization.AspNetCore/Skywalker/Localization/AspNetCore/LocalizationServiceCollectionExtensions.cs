@@ -49,6 +49,8 @@ public static class LocalizationServiceCollectionExtensions
 
         var supportedCultures = languages.Select(l => l.CultureName).ToArray();
         var defaultCulture = languages.FirstOrDefault(l => l.IsDefault)?.CultureName ?? supportedCultures[0];
+        // Same default for the middleware and for the localizer's last-resort fallback — one source of truth.
+        options.Value.DefaultCultureName ??= defaultCulture;
 
         var requestLocalizationOptions = new RequestLocalizationOptions()
             .SetDefaultCulture(defaultCulture)
