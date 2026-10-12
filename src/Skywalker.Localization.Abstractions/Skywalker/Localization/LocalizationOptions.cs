@@ -26,6 +26,13 @@ public class LocalizationOptions
     public List<LanguageInfo> Languages { get; }
 
     /// <summary>
+    /// Global default culture used as the last fallback when a key is missing in the current UI culture chain
+    /// and the resource has no <see cref="LocalizationResource.DefaultCultureName"/> of its own.
+    /// <c>UseSkywalkerRequestLocalization</c> fills it from the default <see cref="LanguageInfo"/> when not set.
+    /// </summary>
+    public string? DefaultCultureName { get; set; }
+
+    /// <summary>
     /// Creates a new instance of <see cref="LocalizationOptions"/>.
     /// </summary>
     public LocalizationOptions()

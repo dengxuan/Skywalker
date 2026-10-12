@@ -1,1 +1,3 @@
 #nullable enable
+Skywalker.Localization.LocalizationOptions.DefaultCultureName.get -> string?
+Skywalker.Localization.LocalizationOptions.DefaultCultureName.set -> void

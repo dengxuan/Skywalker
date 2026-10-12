@@ -49,6 +49,9 @@
 - `AddInterceptedServices()` 不再对闭合泛型实现的注册抛启动异常：source generator 按编译期声明类型生成代理，运行时构造的泛型实现（如 EF SG 生成注册的 `EntityFrameworkCoreDomainService<TEntity, TKey>`）不可能有生成代理，现跳过并保留原注册——修复"任何同时使用 `AddSkywalkerDbContext` + `AddInterceptedServices` 的应用无法启动"。DynamicProxy SG 同时对泛型实现类设防（此前开放泛型候选会拖垮编译器 csc 崩溃）（#308）。
 - `LocalChannelEventBus` 消费循环不再因单个处理器异常而静默死亡：处理器失败按事件记录 `ILogger` 错误并继续消费；循环意外终止记 Critical 日志。此前首个抛异常的处理器会杀死消费循环，之后所有事件被静默丢弃（#309）。
 - `AddSkywalkerDbContextPool<TDbContext>` 修复池化 DbContext 全链路不可用：补上 `IRepository<,>` / `IDomainService<,>` 默认注册（generated-first + 反射 fallback，与非池化对齐）；移除抢占 `DbContextOptions<TDbContext>` 的错误注册，调用方的 options 配置不再被静默忽略；`IValueGeneratorSelector` 替换前移到池的 options 构建阶段，`OnConfiguring` 检测到已替换时跳过，池化上下文不再抛出 "OnConfiguring cannot be used to modify DbContextOptions"（#299）。
+- **Localization：缺翻译时回落默认语言而不是把 key 露到界面上**。`SkywalkerStringLocalizer` 查完当前 UI 文化父链（en-US → en）后再查资源的 `DefaultCultureName`，没配再查新增的全局 `LocalizationOptions.DefaultCultureName`（`UseSkywalkerRequestLocalization` 自动按默认语言填）；回落值的 `ResourceNotFound` 仍为 true。此前这两个字段声明了但运行时无人读取。
+- **Localization.Json：ASP.NET Core 下静默加载 0 条**。`JsonLocalizationResourceContributor` 只从 DI 取 `IFileProvider`，而 ASP.NET Core 不注册该类型，`_fileProvider` 恒为 null。现在依次取显式 `IFileProvider` → `IHostEnvironment.ContentRootFileProvider` → `PhysicalFileProvider(AppContext.BaseDirectory)`，并兼容以 `/` 开头的虚拟路径。
+- **Localization：`{name}` 命名占位符**。`localizer["剩余 {n} 天", new { n = 3 }]` / 传字典均可；漏传的参数原样保留（不吞成空串）；`{0}` 位置占位保持不变。
 
 ### Changed — BREAKING (Messaging & Transport 独立为 Vertex 项目)
 
@@ -65,7 +68,7 @@
 
 - 清理 `eng/Versions.props` 中无引用的版本变量：Messaging/Transport spin-out 遗留的 NetMQ/Grpc.\*/Google.Protobuf/MessagePack 以及反射扫描时代遗留的 Scrutor，全仓无任何项目引用。
 - Source Generator sample projects 统一关闭 package SourceLink/SCM metadata，避免 sample app 构建触发打包专用 SourceLink target；`AspireAOT` analyzer project references 同步简化，防止 solution build 中生成器项目重复实例造成文件锁。
-- `Scriban` 升级到 `7.2.3`，解除 `NU1903` 高危漏洞 advisory 对 warnings-as-errors build 的阻塞。
+- 依赖升级：Scriban 7.0.3 → 7.4.0。7.0.3 带两条高危 / 两条中危已知漏洞（GHSA-24c8-4792-22hx、GHSA-7jvp-hj45-2f2m 等），NuGet 审计 NU1903 视为错误，main 的 Daily Build 自 9 月起持续失败。
 - 迁移到 [MinVer](https://github.com/adamralph/minver) 由 git tag 驱动版本号 (#213, #215)。
 - 新增权威的版本策略文档 [docs/versioning.md](docs/versioning.md)，从 CONTRIBUTING 链接 (#216)。
 - 简化 forward-merge 冲突处理路径，发布工作流增加 `workflow_dispatch` 触发 (#217)。
