@@ -70,13 +70,8 @@ services.AddSingleton<Microsoft.Extensions.FileProviders.IFileProvider>(sp => sp
 services.AddTemplate(options =>
 {
     options.DefinitionProviders.Add<WebsiteTemplateDefinitionProvider>();
-    options.ContentContributors.Add<Skywalker.Template.VirtualFiles.VirtualFileTemplateContentContributor>();
 });
 services.AddScribanTemplate();
-// Template 管线按具体类型从 DI 解析 options 里登记的引擎/贡献者，补注册具体类型
-services.AddTransient<Skywalker.Template.Scriban.ScribanTemplateRenderingEngine>();
-services.AddTransient<Skywalker.Template.VirtualFiles.VirtualFileTemplateContentContributor>();
-services.AddSingleton<WebsiteTemplateDefinitionProvider>();
 
 // ── 本地化（JSON 资源，中英双语）──
 // Scriban 模板引擎依赖微软的 IStringLocalizerFactory，两套本地化并存
@@ -90,24 +85,15 @@ services.AddSkywalkerLocalization(options =>
 });
 
 // ── 设置（定义默认值 + appsettings 覆盖）──
-services.AddSettings(options =>
-{
-    options.ValueProviders.Add<ConfigurationSettingValueProvider>();
-    options.ValueProviders.Add<DefaultValueSettingValueProvider>();
-});
+services.AddSettings();
 services.AddSingleton<ISettingDefinitionProvider, WebsiteSettingDefinitionProvider>();
 
-// ── 权限（角色/用户值提供者 + 内存授权）──
+// ── 权限（内置 User > Role > Client 值提供者 + 内存授权）──
 services.AddPermissions();
 services.Configure<PermissionOptions>(options =>
 {
     options.DefinitionProviders.Add<WebsitePermissionDefinitionProvider>();
-    options.ValueProviders.Add<RolePermissionValueProvider>();
-    options.ValueProviders.Add<UserPermissionValueProvider>();
 });
-services.AddSingleton<WebsitePermissionDefinitionProvider>();
-services.AddSingleton<RolePermissionValueProvider>();
-services.AddSingleton<UserPermissionValueProvider>();
 
 // ── 安全（ICurrentUser 读取 HttpContext.User）──
 services.AddSecurity();

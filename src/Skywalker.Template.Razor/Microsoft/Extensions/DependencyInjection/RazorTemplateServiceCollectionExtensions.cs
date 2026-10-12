@@ -1,4 +1,5 @@
 using Microsoft.Extensions.DependencyInjection.Extensions;
+using Microsoft.Extensions.Localization;
 using Skywalker.Template;
 using Skywalker.Template.Abstractions;
 using Skywalker.Template.Razor;
@@ -26,9 +27,11 @@ public static class RazorTemplateServiceCollectionExtensions
             services.Configure(configureOptions);
         }
 
-        services.AddTransient<ITemplateRenderingEngine, RazorTemplateRenderingEngine>();
-        // SkywalkerTemplateRenderer 按 options.RenderingEngines 登记的具体类型从 DI 解析（#310）
-        services.TryAddTransient<RazorTemplateRenderingEngine>();
+        // SkywalkerTemplateRenderer 按 options.RenderingEngines 登记的具体类型从 DI 解析（#310）；
+        // 未注册 IStringLocalizerFactory 时以 NullStringLocalizerFactory 兜底（#312）
+        services.TryAddTransient(sp => ActivatorUtilities.CreateInstance<RazorTemplateRenderingEngine>(
+            sp, sp.GetService<IStringLocalizerFactory>() ?? NullStringLocalizerFactory.Instance));
+        services.AddTransient<ITemplateRenderingEngine>(sp => sp.GetRequiredService<RazorTemplateRenderingEngine>());
 
         // Register the engine in template options
         services.Configure<SkywalkerTextTemplatingOptions>(options =>

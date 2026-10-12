@@ -30,15 +30,14 @@ public class TemplateServiceCollectionExtensionsTests
     {
         public Task<string?> GetOrNullAsync(TemplateContentContributorContext context)
         {
-            return Task.FromResult<string?>(context.TemplateDefinition.Name == TemplateName ? "Hello, {{ model.name }}!" : null);
+            return Task.FromResult<string?>(context.TemplateDefinition.Name == TemplateName ? "{{ L \"Hello\" }}, {{ model.name }}!" : null);
         }
     }
 
     private static ServiceProvider BuildProvider()
     {
         var services = new ServiceCollection();
-        // Scriban 引擎依赖 Microsoft.Extensions.Localization 的工厂（见 #312）
-        services.AddSingleton(Substitute.For<IStringLocalizerFactory>());
+        // 刻意不注册 IStringLocalizerFactory：引擎应以 NullStringLocalizerFactory 兜底（#312）
         services.AddTemplate(options =>
         {
             options.DefinitionProviders.Add<TestTemplateDefinitionProvider>();
@@ -89,5 +88,36 @@ public class TemplateServiceCollectionExtensionsTests
         var result = await renderer.RenderAsync(TemplateName, new { Name = "World" });
 
         Assert.Equal("Hello, World!", result);
+    }
+
+    [Fact]
+    public async Task RenderAsync_UsesRegisteredStringLocalizerFactory_WhenPresent()
+    {
+        var localizer = Substitute.For<IStringLocalizer>();
+        localizer["Hello"].Returns(new LocalizedString("Hello", "你好"));
+        var factory = Substitute.For<IStringLocalizerFactory>();
+        factory.Create(typeof(TemplateServiceCollectionExtensionsTests)).Returns(localizer);
+
+        var services = new ServiceCollection();
+        services.AddSingleton(factory);
+        services.AddTemplate(options =>
+        {
+            options.DefinitionProviders.Add<LocalizedTemplateDefinitionProvider>();
+            options.ContentContributors.Add<InMemoryTemplateContentContributor>();
+        });
+        services.AddScribanTemplate();
+        using var provider = services.BuildServiceProvider();
+
+        var result = await provider.GetRequiredService<ITemplateRenderer>().RenderAsync(TemplateName, new { Name = "World" });
+
+        Assert.Equal("你好, World!", result);
+    }
+
+    private sealed class LocalizedTemplateDefinitionProvider : TemplateDefinitionProvider
+    {
+        public override void Define(ITemplateDefinitionContext context)
+        {
+            context.Add(new TemplateDefinition(TemplateName, localizationResource: typeof(TemplateServiceCollectionExtensionsTests)));
+        }
     }
 }

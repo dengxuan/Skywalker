@@ -35,8 +35,7 @@ public sealed class WebsiteTemplateDefinitionProvider : TemplateDefinitionProvid
 {
     public override void Define(ITemplateDefinitionContext context)
     {
-        // 单文件模板必须 isInlineLocalized: true——内容提供器只在 inline-localized 模式下
-        // 才会用 culture 无关方式读取单文件内容
+        // 单文件模板内用 L "key" 做内联本地化，故 isInlineLocalized: true
         context.Add(new TemplateDefinition(WebsiteTemplates.VerificationEmail, typeof(WebsiteResource))
             .WithVirtualFilePath("/Templates/VerificationEmail.tpl", isInlineLocalized: true));
 

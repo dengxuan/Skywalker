@@ -1,1 +1,5 @@
 #nullable enable
+Skywalker.Template.NullStringLocalizerFactory
+Skywalker.Template.NullStringLocalizerFactory.Create(string! baseName, string! location) -> Microsoft.Extensions.Localization.IStringLocalizer!
+Skywalker.Template.NullStringLocalizerFactory.Create(System.Type! resourceSource) -> Microsoft.Extensions.Localization.IStringLocalizer!
+static Skywalker.Template.NullStringLocalizerFactory.Instance.get -> Skywalker.Template.NullStringLocalizerFactory!

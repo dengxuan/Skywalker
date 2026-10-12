@@ -43,6 +43,7 @@ public abstract class TemplateRenderingEngineBase : ITemplateRenderingEngine
             return StringLocalizerFactory.Create(templateDefinition.LocalizationResource);
         }
 
-        return StringLocalizerFactory.Create("", "");
+        // 未指定本地化资源时不向工厂传空 baseName（MS 实现会抛 ArgumentException，#312）
+        return PassThroughStringLocalizer.Instance;
     }
 }
