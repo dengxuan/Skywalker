@@ -51,6 +51,7 @@
 - `AddSkywalkerDbContextPool<TDbContext>` 修复池化 DbContext 全链路不可用：补上 `IRepository<,>` / `IDomainService<,>` 默认注册（generated-first + 反射 fallback，与非池化对齐）；移除抢占 `DbContextOptions<TDbContext>` 的错误注册，调用方的 options 配置不再被静默忽略；`IValueGeneratorSelector` 替换前移到池的 options 构建阶段，`OnConfiguring` 检测到已替换时跳过，池化上下文不再抛出 "OnConfiguring cannot be used to modify DbContextOptions"（#299）。
 - **Localization：缺翻译时回落默认语言而不是把 key 露到界面上**。`SkywalkerStringLocalizer` 查完当前 UI 文化父链（en-US → en）后再查资源的 `DefaultCultureName`，没配再查新增的全局 `LocalizationOptions.DefaultCultureName`（`UseSkywalkerRequestLocalization` 自动按默认语言填）；回落值的 `ResourceNotFound` 仍为 true。此前这两个字段声明了但运行时无人读取。
 - **Localization.Json：ASP.NET Core 下静默加载 0 条**。`JsonLocalizationResourceContributor` 只从 DI 取 `IFileProvider`，而 ASP.NET Core 不注册该类型，`_fileProvider` 恒为 null。现在依次取显式 `IFileProvider` → `IHostEnvironment.ContentRootFileProvider` → `PhysicalFileProvider(AppContext.BaseDirectory)`，并兼容以 `/` 开头的虚拟路径。
+- **Localization.Json：VFS 中的 JSON 资源加载不到**（#311）。`AddVirtualFileSystem()` 只注册 `IVirtualFileProvider`，不注册 `IFileProvider`，嵌入资源里的 JSON 因此静默加载 0 条。现在 `JsonLocalizationResourceContributor` 依次尝试显式 `IFileProvider` → `IVirtualFileProvider` → `IHostEnvironment.ContentRootFileProvider` → `PhysicalFileProvider(AppContext.BaseDirectory)`，取第一个实际存在资源目录的；VFS 仅用于模板时也不会遮蔽磁盘上的 JSON。不再需要手动 `AddSingleton<IFileProvider>(sp => sp.GetRequiredService<IVirtualFileProvider>())` 桥接。
 - **Localization：`{name}` 命名占位符**。`localizer["剩余 {n} 天", new { n = 3 }]` / 传字典均可；漏传的参数原样保留（不吞成空串）；`{0}` 位置占位保持不变。
 
 ### Changed — BREAKING (Messaging & Transport 独立为 Vertex 项目)

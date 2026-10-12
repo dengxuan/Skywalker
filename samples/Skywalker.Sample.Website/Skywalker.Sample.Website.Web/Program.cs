@@ -65,8 +65,6 @@ services.Configure<SkywalkerVirtualFileSystemOptions>(options =>
 {
     options.FileSets.AddEmbedded<Program>(baseNamespace: "Skywalker.Sample.Website.Web");
 });
-// Localization.Json 解析的是 IFileProvider，把 VFS 桥接过去
-services.AddSingleton<Microsoft.Extensions.FileProviders.IFileProvider>(sp => sp.GetRequiredService<IVirtualFileProvider>());
 services.AddTemplate(options =>
 {
     options.DefinitionProviders.Add<WebsiteTemplateDefinitionProvider>();

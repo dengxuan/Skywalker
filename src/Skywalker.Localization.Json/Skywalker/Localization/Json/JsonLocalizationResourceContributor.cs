@@ -1,5 +1,6 @@
 using Microsoft.Extensions.FileProviders;
 using Microsoft.Extensions.Hosting;
+using Skywalker.Extensions.VirtualFileSystem;
 
 namespace Skywalker.Localization.Json;
 
@@ -10,7 +11,6 @@ public class JsonLocalizationResourceContributor : ILocalizationResourceContribu
 {
     private readonly string _virtualPath;
     private readonly string _fileExtension;
-    private IFileProvider? _fileProvider;
 
     // Culture -> (Key -> Value)
     private Dictionary<string, Dictionary<string, string>>? _dictionaries;
@@ -29,16 +29,9 @@ public class JsonLocalizationResourceContributor : ILocalizationResourceContribu
     /// <inheritdoc/>
     public void Initialize(LocalizationResourceInitializationContext context)
     {
-        // ASP.NET Core does not register a bare IFileProvider — only IHostEnvironment.ContentRootFileProvider.
-        // Resolving IFileProvider alone silently loaded nothing. Order: explicit IFileProvider (VFS / embedded)
-        // → host content root → physical base directory (console apps, tests).
-        var sp = context.ServiceProvider;
-        _fileProvider = sp.GetService(typeof(IFileProvider)) as IFileProvider
-            ?? (sp.GetService(typeof(IHostEnvironment)) as IHostEnvironment)?.ContentRootFileProvider
-            ?? new PhysicalFileProvider(AppContext.BaseDirectory);
         _dictionaries = new Dictionary<string, Dictionary<string, string>>(StringComparer.OrdinalIgnoreCase);
 
-        LoadResources();
+        LoadResources(GetCandidateFileProviders(context.ServiceProvider));
     }
 
     /// <inheritdoc/>
@@ -81,20 +74,44 @@ public class JsonLocalizationResourceContributor : ILocalizationResourceContribu
         return _dictionaries?.Keys ?? Enumerable.Empty<string>();
     }
 
-    private void LoadResources()
+    /// <summary>
+    /// Candidate providers in priority order: explicit <see cref="IFileProvider"/> → <see cref="IVirtualFileProvider"/>
+    /// (registered by <c>AddVirtualFileSystem</c> under its own service type, #311) → host content root
+    /// (ASP.NET Core registers no bare IFileProvider) → physical base directory (console apps, tests).
+    /// </summary>
+    private static IEnumerable<IFileProvider> GetCandidateFileProviders(IServiceProvider serviceProvider)
     {
-        if (_fileProvider == null || _dictionaries == null)
+        if (serviceProvider.GetService(typeof(IFileProvider)) is IFileProvider fileProvider)
+        {
+            yield return fileProvider;
+        }
+
+        if (serviceProvider.GetService(typeof(IVirtualFileProvider)) is IVirtualFileProvider virtualFileProvider)
+        {
+            yield return virtualFileProvider;
+        }
+
+        if (serviceProvider.GetService(typeof(IHostEnvironment)) is IHostEnvironment { ContentRootFileProvider: { } contentRoot })
+        {
+            yield return contentRoot;
+        }
+
+        yield return new PhysicalFileProvider(AppContext.BaseDirectory);
+    }
+
+    private void LoadResources(IEnumerable<IFileProvider> fileProviders)
+    {
+        if (_dictionaries == null)
         {
             return;
         }
 
-        // PhysicalFileProvider wants relative paths; the virtual-path convention here is "/Localization/Res".
-        var directoryContents = _fileProvider.GetDirectoryContents(_virtualPath);
-        if (!directoryContents.Exists && _virtualPath.StartsWith('/'))
-        {
-            directoryContents = _fileProvider.GetDirectoryContents(_virtualPath.TrimStart('/'));
-        }
-        if (!directoryContents.Exists)
+        // Use the first provider that actually has the resource directory, so e.g. a VFS registered only for
+        // templates does not shadow JSON files that live under the content root.
+        var directoryContents = fileProviders
+            .Select(GetDirectoryContents)
+            .FirstOrDefault(contents => contents.Exists);
+        if (directoryContents == null)
         {
             return;
         }
@@ -115,6 +132,18 @@ public class JsonLocalizationResourceContributor : ILocalizationResourceContribu
                 _dictionaries[cultureName] = dictionary;
             }
         }
+    }
+
+    private IDirectoryContents GetDirectoryContents(IFileProvider fileProvider)
+    {
+        // PhysicalFileProvider wants relative paths; the virtual-path convention here is "/Localization/Res".
+        var directoryContents = fileProvider.GetDirectoryContents(_virtualPath);
+        if (!directoryContents.Exists && _virtualPath.StartsWith('/'))
+        {
+            directoryContents = fileProvider.GetDirectoryContents(_virtualPath.TrimStart('/'));
+        }
+
+        return directoryContents;
     }
 
     private string GetCultureFromFileName(string fileName)

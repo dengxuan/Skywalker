@@ -2,6 +2,7 @@ using System.Text;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.FileProviders;
 using NSubstitute;
+using Skywalker.Extensions.VirtualFileSystem;
 using Skywalker.Localization;
 using Skywalker.Localization.Json;
 using Xunit;
@@ -43,6 +44,69 @@ public class JsonLocalizationResourceContributorTests
         finally
         {
             root.Delete(recursive: true);
+        }
+    }
+
+    private static DirectoryInfo CreateResourceRoot(string value)
+    {
+        var root = Directory.CreateTempSubdirectory("skywalker-loc-");
+        var dir = Directory.CreateDirectory(Path.Combine(root.FullName, "Localization", "TestResource"));
+        File.WriteAllText(Path.Combine(dir.FullName, "zh-CN.json"), $$"""{"Hello": "{{value}}"}""", Encoding.UTF8);
+        return root;
+    }
+
+    private static IVirtualFileProvider CreateVirtualFileProvider(IFileProvider inner)
+    {
+        var vfs = Substitute.For<IVirtualFileProvider>();
+        vfs.GetDirectoryContents(Arg.Any<string>()).Returns(ci => inner.GetDirectoryContents(ci.Arg<string>()));
+        return vfs;
+    }
+
+    [Fact]
+    public void Initialize_WithOnlyVirtualFileProvider_LoadsFromVfs()
+    {
+        // AddVirtualFileSystem 只注册 IVirtualFileProvider，不注册 IFileProvider；原实现这里静默加载 0 条（#311）
+        var root = CreateResourceRoot("你好");
+        try
+        {
+            var services = new ServiceCollection();
+            services.AddSingleton(CreateVirtualFileProvider(new PhysicalFileProvider(root.FullName)));
+            var sp = services.BuildServiceProvider();
+
+            var contributor = new JsonLocalizationResourceContributor("/Localization/TestResource");
+            contributor.Initialize(new LocalizationResourceInitializationContext(new LocalizationResource(typeof(TestResource)), sp));
+
+            Assert.Equal("你好", contributor.GetOrNull("zh-CN", "Hello")?.Value);
+        }
+        finally
+        {
+            root.Delete(recursive: true);
+        }
+    }
+
+    [Fact]
+    public void Initialize_VfsWithoutResourceDirectory_FallsBackToHostContentRoot()
+    {
+        var vfsRoot = Directory.CreateTempSubdirectory("skywalker-vfs-");
+        var contentRoot = CreateResourceRoot("来自 ContentRoot");
+        try
+        {
+            var env = Substitute.For<Microsoft.Extensions.Hosting.IHostEnvironment>();
+            env.ContentRootFileProvider.Returns(new PhysicalFileProvider(contentRoot.FullName));
+            var services = new ServiceCollection();
+            services.AddSingleton(CreateVirtualFileProvider(new PhysicalFileProvider(vfsRoot.FullName)));
+            services.AddSingleton(env);
+            var sp = services.BuildServiceProvider();
+
+            var contributor = new JsonLocalizationResourceContributor("/Localization/TestResource");
+            contributor.Initialize(new LocalizationResourceInitializationContext(new LocalizationResource(typeof(TestResource)), sp));
+
+            Assert.Equal("来自 ContentRoot", contributor.GetOrNull("zh-CN", "Hello")?.Value);
+        }
+        finally
+        {
+            vfsRoot.Delete(recursive: true);
+            contentRoot.Delete(recursive: true);
         }
     }
 
