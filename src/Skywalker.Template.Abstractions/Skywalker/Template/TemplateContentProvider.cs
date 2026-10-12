@@ -24,7 +24,7 @@ public class TemplateContentProvider : ITemplateContentProvider
     public virtual Task<string?> GetContentOrNullAsync(string templateName, string? cultureName = null, bool tryDefaults = true, bool useCurrentCultureIfCultureNameIsNull = true)
     {
         var template = _templateDefinitionManager.Get(templateName);
-        return GetContentOrNullAsync(template, cultureName);
+        return GetContentOrNullAsync(template, cultureName, tryDefaults, useCurrentCultureIfCultureNameIsNull);
     }
 
     public virtual async Task<string?> GetContentOrNullAsync(TemplateDefinition templateDefinition, string? cultureName = null, bool tryDefaults = true, bool useCurrentCultureIfCultureNameIsNull = true)
@@ -95,6 +95,14 @@ public class TemplateContentProvider : ITemplateContentProvider
                         return templateString;
                     }
                 }
+
+                //Try to get culture independent content: 单文件模板不区分文化，只响应 null culture（#312）
+                templateString = await GetContentOrNullAsync(contributors, new TemplateContentContributorContext(templateDefinition, scope.ServiceProvider, null));
+
+                if (templateString != null)
+                {
+                    return templateString;
+                }
             }
         }
 
@@ -105,7 +113,7 @@ public class TemplateContentProvider : ITemplateContentProvider
     protected virtual ITemplateContentContributor[] CreateTemplateContentContributors(IServiceProvider serviceProvider)
     {
         return Options.ContentContributors
-            .Select(type => (ITemplateContentContributor)serviceProvider.GetRequiredService(type))
+            .Select(type => (ITemplateContentContributor)ActivatorUtilities.GetServiceOrCreateInstance(serviceProvider, type))
             .Reverse()
             .ToArray();
     }

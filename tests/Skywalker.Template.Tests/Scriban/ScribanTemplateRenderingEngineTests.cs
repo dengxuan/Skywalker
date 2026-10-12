@@ -85,7 +85,7 @@ public class ScribanTemplateRenderingEngineTests
         var templateName = "TestTemplate";
         var templateContent = "{{ L 'Greeting' }}";
 
-        var templateDefinition = new TemplateDefinition(templateName);
+        var templateDefinition = new TemplateDefinition(templateName, localizationResource: typeof(ScribanTemplateRenderingEngineTests));
         _templateDefinitionManager.Get(templateName).Returns(templateDefinition);
         _templateContentProvider.GetContentOrNullAsync(templateDefinition, Arg.Any<string?>(), Arg.Any<bool>(), Arg.Any<bool>())
             .Returns(Task.FromResult<string?>(templateContent));
@@ -97,6 +97,24 @@ public class ScribanTemplateRenderingEngineTests
 
         // Assert
         Assert.Equal("Hello!", result);
+    }
+
+    [Fact]
+    public async Task RenderAsync_WithoutLocalizationResource_RendersKeyWithoutCallingFactory()
+    {
+        // Arrange
+        var templateName = "TestTemplate";
+        var templateDefinition = new TemplateDefinition(templateName);
+        _templateDefinitionManager.Get(templateName).Returns(templateDefinition);
+        _templateContentProvider.GetContentOrNullAsync(templateDefinition, Arg.Any<string?>(), Arg.Any<bool>(), Arg.Any<bool>())
+            .Returns(Task.FromResult<string?>("{{ L 'Greeting' }}"));
+
+        // Act
+        var result = await _engine.RenderAsync(templateName);
+
+        // Assert
+        Assert.Equal("Greeting", result);
+        _stringLocalizerFactory.DidNotReceive().Create(Arg.Any<string>(), Arg.Any<string>());
     }
 
     [Fact]

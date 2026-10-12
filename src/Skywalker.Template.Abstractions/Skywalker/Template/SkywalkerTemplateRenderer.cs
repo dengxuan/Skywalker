@@ -36,7 +36,7 @@ public class SkywalkerTemplateRenderer : ITemplateRenderer
         {
             using (var scope = ServiceScopeFactory.CreateScope())
             {
-                var templateRenderingEngine = (ITemplateRenderingEngine)scope.ServiceProvider.GetRequiredService(providerType);
+                var templateRenderingEngine = (ITemplateRenderingEngine)ActivatorUtilities.GetServiceOrCreateInstance(scope.ServiceProvider, providerType);
                 return await templateRenderingEngine.RenderAsync(templateName, model, cultureName, globalContext);
             }
         }

@@ -1,3 +1,5 @@
+using Microsoft.Extensions.DependencyInjection.Extensions;
+using Microsoft.Extensions.Localization;
 using Skywalker.Template;
 using Skywalker.Template.Abstractions;
 using Skywalker.Template.Scriban;
@@ -25,7 +27,11 @@ public static class ScribanTemplateServiceCollectionExtensions
             services.Configure(configureOptions);
         }
 
-        services.AddTransient<ITemplateRenderingEngine, ScribanTemplateRenderingEngine>();
+        // SkywalkerTemplateRenderer 按 options.RenderingEngines 登记的具体类型从 DI 解析（#310）；
+        // 未注册 IStringLocalizerFactory 时以 NullStringLocalizerFactory 兜底（#312）
+        services.TryAddTransient(sp => ActivatorUtilities.CreateInstance<ScribanTemplateRenderingEngine>(
+            sp, sp.GetService<IStringLocalizerFactory>() ?? NullStringLocalizerFactory.Instance));
+        services.AddTransient<ITemplateRenderingEngine>(sp => sp.GetRequiredService<ScribanTemplateRenderingEngine>());
 
         // Register the engine in template options
         services.Configure<SkywalkerTextTemplatingOptions>(options =>

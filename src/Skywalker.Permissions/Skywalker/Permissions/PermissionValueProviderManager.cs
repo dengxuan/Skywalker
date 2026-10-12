@@ -23,7 +23,7 @@ public class PermissionValueProviderManager : IPermissionValueProviderManager
         _lazyProviders = new Lazy<List<IPermissionValueProvider>>(
             () => Options
                 .ValueProviders
-                .Select(c => (IPermissionValueProvider)serviceProvider.GetRequiredService(c))
+                .Select(c => (IPermissionValueProvider)ActivatorUtilities.GetServiceOrCreateInstance(serviceProvider, c))
                 .ToList(),
             true
         );
