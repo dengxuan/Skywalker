@@ -122,6 +122,10 @@ builder.Services.AddSkywalkerDbContext<AppDbContext>(options =>
 
 ---
 
+### 2.4 已知限制：工作单元中间件仅覆盖 MVC controller（#313）
+
+`UnitOfWorkMiddleware` 依赖 endpoint 的 `ActionDescriptor` 判定是否开启工作单元，**Minimal API 端点会被静默跳过**，端点内的仓储调用会抛 "A DbContext can only be created inside a unit of work"。v2.0 中请在 MVC controller 中使用仓储，或在 Minimal API handler 内通过 `IUnitOfWorkManager` 显式开启工作单元。基于 endpoint metadata 的支持规划在 v2.1（[#313](https://github.com/dengxuan/Skywalker/issues/313)）。
+
 ## 3. DynamicProxy 拦截器
 
 ### 3.1 Castle.DynamicProxy → Source-generated static proxies
