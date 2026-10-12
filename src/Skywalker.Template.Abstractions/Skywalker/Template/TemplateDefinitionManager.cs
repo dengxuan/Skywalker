@@ -50,7 +50,7 @@ public class TemplateDefinitionManager : ITemplateDefinitionManager
         {
             var providers = Options
                 .DefinitionProviders
-                .Select(p => scope.ServiceProvider.GetRequiredService(p) as ITemplateDefinitionProvider)
+                .Select(p => ActivatorUtilities.GetServiceOrCreateInstance(scope.ServiceProvider, p) as ITemplateDefinitionProvider)
                 .ToList();
 
             var context = new TemplateDefinitionContext(templates);

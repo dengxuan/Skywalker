@@ -21,7 +21,7 @@ public class SettingValueProviderManager : ISettingValueProviderManager
             // Create providers in the order defined in Options.ValueProviders
             foreach (var providerType in Options.ValueProviders)
             {
-                var provider = (ISettingValueProvider)serviceProvider.GetRequiredService(providerType);
+                var provider = (ISettingValueProvider)ActivatorUtilities.GetServiceOrCreateInstance(serviceProvider, providerType);
                 providers.Add(provider);
             }
 

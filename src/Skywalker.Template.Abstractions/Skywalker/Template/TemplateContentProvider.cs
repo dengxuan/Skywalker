@@ -105,7 +105,7 @@ public class TemplateContentProvider : ITemplateContentProvider
     protected virtual ITemplateContentContributor[] CreateTemplateContentContributors(IServiceProvider serviceProvider)
     {
         return Options.ContentContributors
-            .Select(type => (ITemplateContentContributor)serviceProvider.GetRequiredService(type))
+            .Select(type => (ITemplateContentContributor)ActivatorUtilities.GetServiceOrCreateInstance(serviceProvider, type))
             .Reverse()
             .ToArray();
     }

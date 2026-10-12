@@ -1,3 +1,4 @@
+using Microsoft.Extensions.DependencyInjection.Extensions;
 using Skywalker.Template;
 using Skywalker.Template.Abstractions;
 using Skywalker.Template.Scriban;
@@ -26,6 +27,8 @@ public static class ScribanTemplateServiceCollectionExtensions
         }
 
         services.AddTransient<ITemplateRenderingEngine, ScribanTemplateRenderingEngine>();
+        // SkywalkerTemplateRenderer 按 options.RenderingEngines 登记的具体类型从 DI 解析（#310）
+        services.TryAddTransient<ScribanTemplateRenderingEngine>();
 
         // Register the engine in template options
         services.Configure<SkywalkerTextTemplatingOptions>(options =>

@@ -1,3 +1,4 @@
+using Microsoft.Extensions.DependencyInjection.Extensions;
 using Skywalker.Template;
 using Skywalker.Template.Abstractions;
 using Skywalker.Template.Razor;
@@ -26,6 +27,8 @@ public static class RazorTemplateServiceCollectionExtensions
         }
 
         services.AddTransient<ITemplateRenderingEngine, RazorTemplateRenderingEngine>();
+        // SkywalkerTemplateRenderer 按 options.RenderingEngines 登记的具体类型从 DI 解析（#310）
+        services.TryAddTransient<RazorTemplateRenderingEngine>();
 
         // Register the engine in template options
         services.Configure<SkywalkerTextTemplatingOptions>(options =>

@@ -26,6 +26,21 @@ public static class SettingsServiceCollectionExtensions
         services.AddSingleton<DefaultValueSettingValueProvider>();
         services.AddSingleton<ConfigurationSettingValueProvider>();
 
+        // 默认登记内置值提供者（优先级从高到低：Configuration > Default），
+        // 否则开箱 ISettingProvider 永远返回 null（#310）。用户 Configure 在其后执行，可增删调序。
+        services.Configure<SkywalkerSettingOptions>(options =>
+        {
+            if (!options.ValueProviders.Contains<ConfigurationSettingValueProvider>())
+            {
+                options.ValueProviders.Add<ConfigurationSettingValueProvider>();
+            }
+
+            if (!options.ValueProviders.Contains<DefaultValueSettingValueProvider>())
+            {
+                options.ValueProviders.Add<DefaultValueSettingValueProvider>();
+            }
+        });
+
         // Core services
         services.AddTransient<ISettingEncryptionService, SettingEncryptionService>();
         services.AddTransient<ISettingProvider, SettingProvider>();
